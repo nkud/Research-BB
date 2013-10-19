@@ -11,9 +11,7 @@
  * =====================================================================================
  */
 
-const int TAG_LEN_A = 20;
-
-#define FOR(i, m)	for(int (i)=0; (i)<(m); (i)++)			/* i: 0 ~ (m-1) */
+#include "Global.h"
 
 class Agent
 {
@@ -27,6 +25,6 @@ Agent :: Agent()
 {
 	FOR(i, TAG_LEN_A)
 	{
-		tag_[i] = 0;
+		tag_[i] = 0;                            /* 0で初期化 */
 	}
 }

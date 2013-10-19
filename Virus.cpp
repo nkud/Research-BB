@@ -11,7 +11,7 @@
  * =====================================================================================
  */
 
-const int TAG_LEN_V = 3;                        /* ウイルスのタグの長さ */
+#include "Global.h"
 
 class Virus                                     /* ウイルスのクラス*/
 {
@@ -23,7 +23,7 @@ class Virus                                     /* ウイルスのクラス*/
 
 Virus :: Virus()
 {
-	for(int i=0; i<TAG_LEN_V; i++)
+	FOR(i, TAG_LEN_V)
 	{
 		tag_[i] = 0;                             /* 0で初期化 */
 	}
