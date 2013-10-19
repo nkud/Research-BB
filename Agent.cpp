@@ -15,16 +15,16 @@
 
 class Agent
 {
-	private:
-	public:
-		Agent();
-		int tag_[TAG_LEN_A];
+    private:
+    public:
+        Agent();
+        int tag_[TAG_LEN_A];
 };
 
 Agent :: Agent()
 {
-	FOR(i, TAG_LEN_A)
-	{
-		tag_[i] = 0;                            /* 0で初期化 */
-	}
+    FOR(i, TAG_LEN_A)
+    {
+        tag_[i] = 0;                            /* 0で初期化 */
+    }
 }
