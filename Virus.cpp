@@ -18,13 +18,13 @@ class Virus                                     /* ウイルスのクラス*/
 	private:
 	public:
 		Virus();                                /* コンストラクタ */
-		int tag[TAG_LEN_V];                     /* ウイルスのタグ */
+		int tag_[TAG_LEN_V];                     /* ウイルスのタグ */
 };
 
 Virus :: Virus()
 {
 	for(int i=0; i<TAG_LEN_V; i++)
 	{
-		tag[i] = 0;                             /* 0で初期化 */
+		tag_[i] = 0;                             /* 0で初期化 */
 	}
 }
