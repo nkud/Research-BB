@@ -28,20 +28,29 @@ int ham_distance(int *a, int *b, int n)
  *                最小ハミング距離が n        -> return  n
  * =====================================================================================
  */
-int min_ham_distance(int *a, int *b, int an, int bn) /* XXX: a > b だけ想定している */
+int min_ham_distance(int *a, int *v, int an, int vn) /* XXX: a > b だけ想定している */
 {
     int m = an;                                 /* 最小値 */
-    int sp = 0;                                 /* タグを比べる位置。少しずつずらす */
+    int sp = -1;                                 /* タグを比べる位置。少しずつずらす */
 
-    FOR( sp, bn+sp <= an )
+    int tm = m;
+    FOR( i, an-vn+1 )
     {
-        m = std::min( m, ham_distance( a+i, b, bn ) ); /* ハミング距離の最小値を更新 */
+        tm = ham_distance( a+i, v, vn );
+        if( tm == 0 ) return -1;
+        if( m > tm )
+        {
+            m = tm;                             /* 最小値を更新 */
+            sp = i;                             /* タグの位置を記録 */
+        }
     }
-
-    if( m == an ) return -1;                    /* 免疫獲得済み */
-    else return sp;                             /* ウイルスのタグがとりつく位置を返す */
+    return sp;                             /* ウイルスのタグがとりつく位置を返す */
 }
 
+
+/*-----------------------------------------------------------------------------
+ *  RANDOMIZE SET
+ *-----------------------------------------------------------------------------*/
 int rand_interval_int(int min, int max)
 {
     return (int)( rand() * (max + min + 1.0) / (1.0 + RAND_MAX) );

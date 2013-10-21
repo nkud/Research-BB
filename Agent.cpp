@@ -1,5 +1,5 @@
 #include "Agent.h"
-#include "Virus.h"
+// #include "Virus.h"
 #include "Function.h"
 
 Agent :: Agent( int len ) :
@@ -12,10 +12,49 @@ Agent :: Agent( int len ) :
     }
 }
 
-bool Agent :: hasImmunity( Virus &v )           /* true -> 免疫獲得済み */
+/* *--------------------------------------------------------------------------------------
+ *      Method:  Agent :: hasImmunity( __TagInterface & )
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+bool Agent :: hasImmunity( __TagInterface &v )           /* true -> 免疫獲得済み */
 {
-    if( min_ham_distance( tag_, v.tag_, len_, v.len_ ) > 0 )
-        return false;                           /* 最小ハミング距離が１以上なら */
-    else
-        return true;
+    if( min_ham_distance( tag_, v.tag_, len_, v.len_ ) < 0 ) /* 最小が -1 以下なら*/
+        return true;                            /* 免疫獲得済み */
+    else                                        /* 0 以上なら*/
+        return false;                           /* 未獲得 */
+}
+
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  flip_once
+ *  Description:  
+ * =====================================================================================
+ */
+int flip_once( tag_t *a, tag_t *b, int len )            /* 一回だけフリップ */
+{
+    FOR( i, len )                               /* タグの長さだけ繰り返す */
+    {
+        if( *a == *b ) continue;                /* 同じなら次に移動 */
+        else                                    /* 違ったら */
+        {
+            *a = *b;                            /* ひとつタグをフリップ */
+            return 0;                             /* 終了 */
+        }
+    }
+    return -1;                                  /* 同じタグだった */
+}
+
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Agent :: responce( __TagInterface & )
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+void Agent :: response( __TagInterface &v )
+{
+    int sp = min_ham_distance( tag_, v.tag_, len_, v.len_ );
+    flip_once( tag_+sp, v.tag_, v.len_ );
 }

@@ -18,6 +18,7 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <string>
 using namespace std;
 
 int main()
@@ -30,9 +31,17 @@ int main()
     // --------------------------------
     cout << "start" << endl;
 
-    FOR(i,TAG_LEN_A) cout << a.tag_[i]; cout << endl;
-    FOR(i,TAG_LEN_V) cout << v.tag_[i]; cout << endl;
-    log( a.hasImmunity( v ) );
+    FOR(j, 2)
+    {
+        FOR(i,TAG_LEN_A) cout << a.tag_[i] << " "; cout << endl;
+        FOR(i,TAG_LEN_V) cout << v.tag_[i] << " "; cout << endl;
+        log( a.hasImmunity( v ) );
+        if( !a.hasImmunity( v ) )
+        {
+            a.response(v);
+        }
+    }
+    log( "---" );
     log( sizeof( Agent ) );
     log( sizeof( Virus ) );
     log( sizeof( __TagInterface ) );

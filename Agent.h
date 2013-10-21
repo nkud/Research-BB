@@ -17,7 +17,7 @@
 #include "Global.h"
 #include "TagInterface.h"
 
-class Virus;
+// class Virus;
 
 /*
  * =====================================================================================
@@ -29,11 +29,10 @@ class Agent : public __TagInterface
 {
     private:
     public:
-        Agent( int );
-        bool hasImmunity( Virus & );                     /* 免疫獲得しているかどうか */
+        Agent( int );                           /* コンストラクタ */
 
-        // TODO
-        // void response();                        /* 免疫応答する */
+        bool hasImmunity( __TagInterface & );   /* 免疫獲得しているかどうか */
+        void response( __TagInterface & );      /* 免疫応答する */
 };
 
 #endif

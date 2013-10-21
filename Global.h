@@ -18,7 +18,9 @@
 
 #define FOR(i, m)   for(int (i)=0; (i)<(m); (i)++)    /* i: 0 ~ (m-1) */
 
-const int TAG_LEN_A = 20 ; 
+typedef int tag_t;
+
+const int TAG_LEN_A = 10 ; 
 const int TAG_LEN_V = 5 ;                            /* ウイルスのタグの長さ */
 
 template < typename T >                         /* デバッグ用 */
