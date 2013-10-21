@@ -29,11 +29,14 @@ class __TagInterface
 {
     private:
     public:
+        int len;
+
         tag_t *tag_;
         __TagInterface( int );                  /* コンストラクタ */
                                                 /* タグの長さを初期化する */
 
         int *getTag_();                         /* タグ配列へのポインタを返す */
+        // int hamDistanceWith( tag_t * );
 };
 
 #endif

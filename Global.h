@@ -14,9 +14,14 @@
 #ifndef ___GLOBAL
 #define ___GLOBAL
 
+#include <iostream>
+
 #define FOR(i, m)   for(int (i)=0; (i)<(m); (i)++)    /* i: 0 ~ (m-1) */
 
 const int TAG_LEN_V = 3  ;                            /* ウイルスのタグの長さ */
 const int TAG_LEN_A = 20 ; 
+
+template < typename T >                         /* デバッグ用 */
+void log(T str) { int static i=0;std::cout<<i++<<":"<<str<<std::endl; }
 
 #endif

@@ -1,64 +1,17 @@
-/*
- * =====================================================================================
- *
- *       Filename:  Agent.cpp
- *
- *    Description:  
- *
- *         Author:  Noaki Ueda
- *   Organization:  OPU, 3G
- *
- * =====================================================================================
- */
+#include "Agent.h"
+#include "Virus.h"
+#include "Function.h"
 
-#ifndef ___AGENT
-#define ___AGENT
-
-#include "Global.h"
-#include "TagInterface.h"
-
-/*
- * =====================================================================================
- *        Class:  Agent
- *  Description:  
- * =====================================================================================
- */
-class Agent : public __TagInterface
+Agent :: Agent( int len ) :
+    __TagInterface( len )
 {
-    private:
-        // int tag_[ TAG_LEN_A ];                  /* エージェントのタグ */
-    public:
-        Agent( int n ) : __TagInterface( n ) {};
-        // int *getTag_();                         /* タグへのポインタを返す */
+    log("init agent");
+}
 
-        // TODO
-        bool hasImmunity();                     /* 免疫獲得しているかどうか */
-        void response();                        /* 免疫応答する */
-};
-
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Agent :: Agent()
- * Description:  
- *--------------------------------------------------------------------------------------
- */
-//Agent :: Agent()
-//{
-//    FOR(i, TAG_LEN_A)
-//    {
-//        tag_[i] = 0;                            /* 0で初期化 */
-//    }
-//}
-
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Agent :: getTag_()
- * Description:  
- *--------------------------------------------------------------------------------------
- */
-//int *Agent :: getTag_()
-//{
-//    return tag_;
-//}
-
-#endif
+bool Agent :: hasImmunity( Virus &v )           /* true -> 免疫獲得済み */
+{
+    if( min_ham_distance( tag_, v.tag_, len, v.len ) > 0 )
+        return false;                           /* 最小ハミング距離が１以上なら */
+    else
+        return true;
+}

@@ -13,19 +13,24 @@
 #include "Global.h"
 #include "Function.h"
 
-#include "Agent.cpp"
-#include "Virus.cpp"
+#include "Agent.h"
+#include "Virus.h"
 
+#include <cstdlib>
 #include <iostream>
 using namespace std;
 
 int main()
 {
-    Agent a(10);
-    Virus v(3);
+    srand(time(NULL));                          /* 乱数初期化 */
 
+    Agent a ( 10 ) ;
+    Virus v ( 3  ) ;
+
+    // --------------------------------
     cout << "start" << endl;
     cout << a.tag_[0] << endl;
+    cout << a.tag_[1] << endl;
     cout << "end" << endl;
 
     return 0;
