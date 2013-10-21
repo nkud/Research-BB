@@ -1,7 +1,8 @@
 TARGET = main.out
-OBJ = main.o Virus.o Agent.o Function.o TagInterface.o
+SRC = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp
+OBJ = $(SRC:.cpp=.o)
 
-$(TARGET): $(OBJ)
+$(TARGET): $(OBJ) Global.h
 	@echo -n "Cretating $(TARGET)...\t" 
 	@g++ $(OBJ) -o $@
 	@echo "OK!"
@@ -11,10 +12,12 @@ run:
 	@./$(TARGET)
 	@echo "[ exit ]"
 
-%.o: %.cpp %.h
+%.o: %.cpp %.h Global.h
 	@echo -n "Compiling $@...\t" 
 	@g++ -c $< -o $@
 	@echo "OK!"
+
+build: clean $(TARGET)
 
 clean:
 	@rm -rfv *.o

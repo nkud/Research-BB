@@ -20,7 +20,9 @@
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-__TagInterface :: __TagInterface( int n )
+__TagInterface :: __TagInterface( int n ) :
+    len_(0),
+    tag_(0)
 {
     len_ = n;
     tag_ = new tag_t[ n ];                      /* タグを初期化 */
