@@ -22,7 +22,7 @@
  */
 __TagInterface :: __TagInterface( int n )
 {
-    len = n;
+    len_ = n;
     tag_ = new tag_t[ n ];                      /* タグを初期化 */
     FOR( i, n )
     {

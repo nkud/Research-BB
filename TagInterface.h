@@ -29,7 +29,7 @@ class __TagInterface
 {
     private:
     public:
-        int len;
+        int len_;
 
         tag_t *tag_;
         __TagInterface( int );                  /* コンストラクタ */
