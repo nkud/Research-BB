@@ -19,7 +19,10 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace std;
+
+const int TERM = 10;
 
 int main()
 {
@@ -28,15 +31,29 @@ int main()
     Agent agent[ NUM_A ];
     Virus virus;
 
-    FOR( i, NUM_A )
-    {
-        Agent &a = agent[ i ];
-        if( !a.hasImmunity( virus ) )
-            continue;
-        a.response( virus ); 
-        log(&a);
-    }
+    ofstream ofs("A_hasImmunity.dat");
 
+    int healthy = 0;
+
+    FOR( i, TERM )
+    {
+        FOR( j, NUM_A )
+        {
+            Agent &a = agent[ j ];
+            if( a.hasImmunity( virus ) )
+                continue;
+            a.response( virus ); 
+            log(&a);
+        }
+        healthy = 0;
+        FOR( j, NUM_A )
+        {
+            if( agent[j].hasImmunity( virus ) ) healthy++;
+        }
+        ofs << i << SEPARATOR
+            << healthy << SEPARATOR
+            << NUM_A - healthy << endl;
+    }
     // --------------------------------
 //    FOR(j, 10)
 //    {

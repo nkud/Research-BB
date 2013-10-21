@@ -17,11 +17,13 @@
 #include <iostream>
 
 #define FOR(i, m)   for(int (i)=0; (i)<(m); (i)++)    /* i: 0 ~ (m-1) */
+#define SEPARATOR   " "
 
 typedef int tag_t;
 
-const int TAG_LEN_A = 10 ;
-const int TAG_LEN_V = 8 ;                            /* ウイルスのタグの長さ */
+const int TAG_LEN_A = 20 ;
+const int TAG_LEN_V = 10 ;                            /* ウイルスのタグの長さ */
+
 const int NUM_A     = 100 ;                            /* ウイルスのタグの長さ */
 
 template < typename T >                         /* デバッグ用 */
