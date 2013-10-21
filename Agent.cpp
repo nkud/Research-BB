@@ -1,11 +1,17 @@
 #include "Agent.h"
 #include "Function.h"
 
-Agent :: Agent( int len ) :
-    __TagInterface( len )
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Agent :: Agent()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+Agent :: Agent() :
+    __TagInterface( TAG_LEN_A )
 {
-    log("init agent");
-    FOR( i, len_ )
+    FOR( i, TAG_LEN_A )
     {
         tag_[ i ] = rand_binary();
     }

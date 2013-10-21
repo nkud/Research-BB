@@ -29,7 +29,7 @@ class Agent : public __TagInterface
 {
     private:
     public:
-        Agent( int );                           /* コンストラクタ */
+        Agent();                           /* コンストラクタ */
 
         bool hasImmunity( __TagInterface & );   /* 免疫獲得しているかどうか */
         void response( __TagInterface & );      /* 免疫応答する */

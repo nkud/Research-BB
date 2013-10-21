@@ -20,8 +20,9 @@
 
 typedef int tag_t;
 
-const int TAG_LEN_A = 10 ; 
+const int TAG_LEN_A = 10 ;
 const int TAG_LEN_V = 8 ;                            /* ウイルスのタグの長さ */
+const int NUM_A     = 100 ;                            /* ウイルスのタグの長さ */
 
 template < typename T >                         /* デバッグ用 */
 void log(T str) { int static i=0;std::cout<<i++<<":"<<str<<std::endl; }

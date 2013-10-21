@@ -1,11 +1,10 @@
 #include "Virus.h"
 #include "Function.h"
 
-Virus :: Virus( int len ) :
-    __TagInterface( len )
+Virus :: Virus() :
+    __TagInterface(TAG_LEN_V)
 {
-    log("init virus");
-    FOR( i, len_ )
+    FOR( i, TAG_LEN_V )
     {
         tag_[i] = rand_binary();
     }

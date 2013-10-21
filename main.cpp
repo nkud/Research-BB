@@ -25,28 +25,33 @@ int main()
 {
     srand((unsigned int)time(NULL)/2);                          /* 乱数初期化 */
 
-    Agent a ( TAG_LEN_A ) ;
-    Virus v ( TAG_LEN_V  ) ;
+    Agent agent[ NUM_A ];
+    Virus virus;
+
+    FOR( i, NUM_A )
+    {
+        Agent &a = agent[ i ];
+        if( !a.hasImmunity( virus ) )
+            continue;
+        a.response( virus ); 
+        log(&a);
+    }
 
     // --------------------------------
-    cout << "start" << endl;
-
-    FOR(j, 10)
-    {
-        FOR(i,TAG_LEN_A) cout << a.tag_[i]; cout << endl;
-        FOR(i,TAG_LEN_V) cout << v.tag_[i]; cout << endl;
-        log( a.hasImmunity( v ) );
-        if( !a.hasImmunity( v ) )
-        {
-            a.response(v);
-        }
-    }
+//    FOR(j, 10)
+//    {
+//        FOR(i,TAG_LEN_A) cout << a[0].tag_[i]; cout << endl;
+//        FOR(i,TAG_LEN_V) cout << v.tag_[i]; cout << endl;
+//        log( a[0].hasImmunity( v ) );
+//        if( !a[0].hasImmunity( v ) )
+//        {
+//            a[0].response(v);
+//        }
+//    }
     log( "---" );
     log( sizeof( Agent ) );
     log( sizeof( Virus ) );
     log( sizeof( __TagInterface ) );
-
-    cout << "end" << endl;
 
     return 0;
 }

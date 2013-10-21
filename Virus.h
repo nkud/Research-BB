@@ -27,7 +27,7 @@ class Virus : public __TagInterface                                    /* ウイ
 {
     private:
     public:
-        Virus( int );
+        Virus();
 };
 
 #endif
