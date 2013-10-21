@@ -1,6 +1,7 @@
 TARGET = main.out
 SRC = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp
 OBJ = $(SRC:.cpp=.o)
+LIB = $(SRC:.cpp=.h)
 
 $(TARGET): $(OBJ) Global.h
 	@echo -n "Cretating $(TARGET)...\t" 
@@ -22,4 +23,9 @@ build: clean $(TARGET)
 clean:
 	@rm -rfv *.o
 
-all: $(TARGET) run
+tags:
+	@ctags $(OBJ) $(LIB) Global.h
+
+all: tags $(TARGET) run
+
+rebuild: tags build run
