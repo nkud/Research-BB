@@ -31,10 +31,10 @@ int main()
     // --------------------------------
     cout << "start" << endl;
 
-    FOR(j, 2)
+    FOR(j, 10)
     {
-        FOR(i,TAG_LEN_A) cout << a.tag_[i] << " "; cout << endl;
-        FOR(i,TAG_LEN_V) cout << v.tag_[i] << " "; cout << endl;
+        FOR(i,TAG_LEN_A) cout << a.tag_[i]; cout << endl;
+        FOR(i,TAG_LEN_V) cout << v.tag_[i]; cout << endl;
         log( a.hasImmunity( v ) );
         if( !a.hasImmunity( v ) )
         {

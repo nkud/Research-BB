@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include <algorithm>
 
-
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  ham_distance( int *, int *, int )
@@ -30,21 +29,21 @@ int ham_distance(int *a, int *b, int n)
  */
 int min_ham_distance(int *a, int *v, int an, int vn) /* XXX: a > b だけ想定している */
 {
-    int m = an;                                 /* 最小値 */
-    int sp = -1;                                 /* タグを比べる位置。少しずつずらす */
+    int min = an;                               /* 最小値 */
+    int sp = 0;                                 /* タグを比べる位置 */
 
-    int tm = m;
+    int tm = min;
     FOR( i, an-vn+1 )
     {
         tm = ham_distance( a+i, v, vn );
-        if( tm == 0 ) return -1;
-        if( m > tm )
+        if( min > tm )
         {
-            m = tm;                             /* 最小値を更新 */
+            min = tm;                           /* 最小値を更新 */
             sp = i;                             /* タグの位置を記録 */
         }
     }
-    return sp;                             /* ウイルスのタグがとりつく位置を返す */
+    if( min <= 0 ) return -1;                   /* 免疫獲得済み */
+    return sp;                                  /* ウイルスのタグがとりつく位置を返す */
 }
 
 

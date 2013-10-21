@@ -1,5 +1,4 @@
 #include "Agent.h"
-// #include "Virus.h"
 #include "Function.h"
 
 Agent :: Agent( int len ) :
@@ -12,12 +11,13 @@ Agent :: Agent( int len ) :
     }
 }
 
-/* *--------------------------------------------------------------------------------------
+/* 
+ *--------------------------------------------------------------------------------------
  *      Method:  Agent :: hasImmunity( __TagInterface & )
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-bool Agent :: hasImmunity( __TagInterface &v )           /* true -> 免疫獲得済み */
+bool Agent :: hasImmunity( __TagInterface &v )  /* true -> 免疫獲得済み */
 {
     if( min_ham_distance( tag_, v.tag_, len_, v.len_ ) < 0 ) /* 最小が -1 以下なら*/
         return true;                            /* 免疫獲得済み */
@@ -25,27 +25,29 @@ bool Agent :: hasImmunity( __TagInterface &v )           /* true -> 免疫獲得
         return false;                           /* 未獲得 */
 }
 
-
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  flip_once
  *  Description:  
  * =====================================================================================
  */
-int flip_once( tag_t *a, tag_t *b, int len )            /* 一回だけフリップ */
+int flip_once( tag_t *a, tag_t *b, int len )    /* 一回だけフリップ */
 {
+    log(__FUNCTION__);
     FOR( i, len )                               /* タグの長さだけ繰り返す */
     {
-        if( *a == *b ) continue;                /* 同じなら次に移動 */
+        if( *(a+i) == *(b+i) )
+        {
+            continue;                /* 同じなら次に移動 */
+        }
         else                                    /* 違ったら */
         {
-            *a = *b;                            /* ひとつタグをフリップ */
-            return 0;                             /* 終了 */
+            *(a+i) = *(b+i);                            /* ひとつタグをフリップ */
+            return 0;                           /* 終了 */
         }
     }
     return -1;                                  /* 同じタグだった */
 }
-
 
 /*
  *--------------------------------------------------------------------------------------
