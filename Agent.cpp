@@ -39,7 +39,6 @@ bool Agent :: hasImmunity( __TagInterface &v )  /* true -> 免疫獲得済み */
  */
 int flip_once( tag_t *a, tag_t *b, int len )    /* 一回だけフリップ */
 {
-    log(__FUNCTION__);
     FOR( i, len )                               /* タグの長さだけ繰り返す */
     {
         if( *(a+i) == *(b+i) )

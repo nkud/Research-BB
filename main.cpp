@@ -22,7 +22,7 @@
 #include <fstream>
 using namespace std;
 
-const int TERM = 10;
+const int TERM = 20;
 
 int main()
 {
@@ -43,7 +43,6 @@ int main()
             if( a.hasImmunity( virus ) )
                 continue;
             a.response( virus ); 
-            log(&a);
         }
         healthy = 0;
         FOR( j, NUM_A )
@@ -54,21 +53,6 @@ int main()
             << healthy << SEPARATOR
             << NUM_A - healthy << endl;
     }
-    // --------------------------------
-//    FOR(j, 10)
-//    {
-//        FOR(i,TAG_LEN_A) cout << a[0].tag_[i]; cout << endl;
-//        FOR(i,TAG_LEN_V) cout << v.tag_[i]; cout << endl;
-//        log( a[0].hasImmunity( v ) );
-//        if( !a[0].hasImmunity( v ) )
-//        {
-//            a[0].response(v);
-//        }
-//    }
-    log( "---" );
-    log( sizeof( Agent ) );
-    log( sizeof( Virus ) );
-    log( sizeof( __TagInterface ) );
 
     return 0;
 }
