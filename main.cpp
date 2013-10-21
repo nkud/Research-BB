@@ -22,11 +22,11 @@ using namespace std;
 
 int main()
 {
-	Agent a;
-	Virus v;
+    Agent a;
+    Virus v;
 
-	cout << "start" << endl;
-	cout << "end" << endl;
+    cout << "start" << endl;
+    cout << "end" << endl;
 
-	return 0;
+    return 0;
 }
