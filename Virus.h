@@ -23,11 +23,10 @@
  *  Description:  
  * =====================================================================================
  */
-class Virus : public __TagInterface                                    /* ウイルスのクラス*/
+class Virus : public __TagInterface             /* ウイルスのクラス*/
 {
-    private:
     public:
-        Virus();
+        Virus();                                /* コンストラクタ */
 };
 
 #endif
