@@ -35,7 +35,7 @@ class Agent : public __TagInterface
 
         bool hasImmunity( __TagInterface & );   /* 免疫獲得済みか */
         void infection( __TagInterface & );     /* 感染プロセス */
-        void response( __TagInterface & );      /* 免疫応答する（タグフリップ） */
+        void response();      /* 免疫応答する（タグフリップ） */
 };
 
 struct VirusBuffer

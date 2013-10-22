@@ -47,7 +47,7 @@ int main()
 //            if( agent[j].hasImmunity( v ) ) {    /* ウイルスに対して免疫獲得済みなら */
 //                continue;                       /* スキップ */
 //            }
-            agent[j].response( v );             /* そうでないなら免疫応答 */
+            agent[j].response();             /* そうでないなら免疫応答 */
         }
 
         // CALCULATE
