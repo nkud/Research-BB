@@ -21,7 +21,7 @@ using namespace std;
 #include "Agent.h"
 #include "Virus.h"
 
-const int TERM = 20;                            /* 期間 */
+const int TERM = 50;                            /* 期間 */
 
 int main()
 {
@@ -46,9 +46,6 @@ int main()
                                                 /* 感染確率は等しい */
 
             agent[j].infection( v );
-//            if( agent[j].hasImmunity( v ) ) {    /* ウイルスに対して免疫獲得済みなら */
-//                continue;                       /* スキップ */
-//            }
             agent[j].response();                /* そうでないなら免疫応答 */
         }
 
