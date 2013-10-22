@@ -10,48 +10,50 @@
  *
  * =====================================================================================
  */
-#include "Global.h"
-#include "Function.h"
-
-#include "Agent.h"
-#include "Virus.h"
-
 #include <cstdlib>
 #include <iostream>
 #include <string>
 #include <fstream>
 using namespace std;
 
-const int TERM = 20;
+#include "Global.h"
+#include "Function.h"
+#include "Agent.h"
+#include "Virus.h"
+
+const int TERM = 20;                            /* 期間 */
 
 int main()
 {
-    srand((unsigned int)time(NULL)/2);                          /* 乱数初期化 */
+    srand((unsigned int)time(NULL)/2);          /* 乱数初期化 */
 
-    Agent agent[ NUM_A ];
-    Virus virus;
+    Agent agent[ NUM_A ];                       /* エージェントは複数 */
+    Virus virus;                                /* ウイルスは一個 */
 
-    ofstream ofs("A_hasImmunity.dat");
+    ofstream ofs("A_hasImmunity.dat");          /* 出力ファイル */
 
-    int healthy = 0;
+    int healthy = 0;                            /* 免疫獲得者カウンタ */
 
-    FOR( i, TERM )
+    FOR( i, TERM )                              /* 開始 */
     {
-        FOR( j, NUM_A )
+        FOR( j, NUM_A )                         /* エージェント全員に対して */
         {
-            Agent &a = agent[ j ];
-            if( a.hasImmunity( virus ) )
-                continue;
-            a.response( virus ); 
+            if( a[j].hasImmunity( virus ) )     /* ウイルスに対して免疫獲得済みなら */
+                continue;                       /* スキップ */
+            a[j].response( virus );             /* そうでないなら免疫応答 */
         }
+
+        // CALCULATE
         healthy = 0;
-        FOR( j, NUM_A )
+        FOR( j, NUM_A )                         /* 免疫獲得者を計算 */
         {
             if( agent[j].hasImmunity( virus ) ) healthy++;
         }
-        ofs << i << SEPARATOR
-            << healthy << SEPARATOR
-            << NUM_A - healthy << endl;
+
+        // OUTPUT
+        ofs << i << SEPARATOR                   /* ファイルに出力 */
+            << healthy << SEPARATOR             /* 免疫獲得者数 */
+            << NUM_A - healthy << endl;         /* 免疫 未 獲得者数 */
     }
 
     return 0;

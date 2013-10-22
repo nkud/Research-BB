@@ -7,19 +7,19 @@ OBJ    = $(SRC:.cpp=.o)
 LIB    = $(SRC:.cpp=.h)
 
 $(TARGET): $(OBJ) Global.h
-	@$(PRINT) -n "Cretating $(TARGET)...\t" 
+	@$(PRINT) -ne 'Cretating $(TARGET)...\t'
 	@$(CC) $(OBJ) -o $@
-	@$(PRINT) "OK!"
+	@$(PRINT) OK!
 
 run:
-	@$(PRINT) "[ run ]"
+	@$(PRINT) [ run ]
 	@./$(TARGET)
-	@$(PRINT) "[ exit ]"
+	@$(PRINT) [ exit ]
 
 %.o: %.cpp %.h Global.h
-	@$(PRINT) -n "Compiling $@...\t" 
+	@$(PRINT) -ne 'Compiling $@...\t'
 	@$(CC) -c $< -o $@
-	@$(PRINT) "OK!"
+	@$(PRINT) OK!
 
 main.o: Global.h
 
@@ -31,6 +31,10 @@ clean:
 tags:
 	@ctags $(OBJ) $(LIB) Global.h
 
-all: tags $(TARGET) run
+all: tags $(TARGET) run plot
 
 rebuild: tags build run
+
+plot:
+	@echo [ plot start ]
+	@gnuplot plot.gpi

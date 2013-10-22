@@ -1,0 +1,2 @@
+plot "A_hasImmunity.dat" w lp
+pause -1
