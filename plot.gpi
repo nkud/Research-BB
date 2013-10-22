@@ -1,3 +1,5 @@
 plot "A_hasImmunity.dat" w lp
 replot "A_hasImmunity.dat" using 1:3 w lp
+replot "A_hasImmunity.dat" using 1:4 w lp
+replot "A_hasImmunity.dat" using 1:5 w lp
 pause -1
