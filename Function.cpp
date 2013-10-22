@@ -60,6 +60,10 @@ double rand_interval_double(double min, double max)
     return (double)( rand() * (max + min + 1.0) / (1.0 + RAND_MAX) );
 }
 
+int rand_array( int n ) {
+    return rand() % n;
+}
+
 int rand_binary()
 {
     int ret;
