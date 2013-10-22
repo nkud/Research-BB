@@ -50,7 +50,6 @@ int main()
             agent[j].response();             /* そうでないなら免疫応答 */
         }
 
-        log("calc");
         // CALCULATE
         healthy0 = 0;
         healthy1 = 0;
@@ -64,7 +63,6 @@ int main()
         ofs << i << SEPARATOR                   /* ファイルに出力 */
             << healthy0 << SEPARATOR             /* 免疫獲得者数 */
             << healthy1 << endl;         /* 免疫 未 獲得者数 */
-        log("end");
     }
 
     return 0;
