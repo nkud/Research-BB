@@ -38,9 +38,9 @@ int main()
     {
         FOR( j, NUM_A )                         /* エージェント全員に対して */
         {
-            if( a[j].hasImmunity( virus ) )     /* ウイルスに対して免疫獲得済みなら */
+            if( agent[j].hasImmunity( virus ) )     /* ウイルスに対して免疫獲得済みなら */
                 continue;                       /* スキップ */
-            a[j].response( virus );             /* そうでないなら免疫応答 */
+            agent[j].response( virus );             /* そうでないなら免疫応答 */
         }
 
         // CALCULATE
