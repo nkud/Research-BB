@@ -21,8 +21,8 @@
 
 typedef int tag_t;
 
-const int TAG_LEN_A = 20 ;
-const int TAG_LEN_V = 10 ;                      /* ウイルスのタグの長さ */
+const int TAG_LEN_A = 30 ;
+const int TAG_LEN_V = 15 ;                      /* ウイルスのタグの長さ */
 
 const int NUM_A     = 10000;
 const int NUM_V     = 2;
