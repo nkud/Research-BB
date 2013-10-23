@@ -22,22 +22,11 @@ class VirusData;
 
 /*
  * =====================================================================================
- *        Class:  Agent
- *  Description:  
+ *        Class:  VirusList, VirusData
+ *  Description:  エージェントの保持ウイルスデータ
+ *                線形リストを用いてキュー形式で
  * =====================================================================================
  */
-class Agent : public __TagInterface
-{
-    private:
-        VirusList *vl_;
-    public:
-        Agent();                                /* コンストラクタ */
-
-        bool hasImmunity( __TagInterface & );   /* 免疫獲得済みか */
-        void infection( __TagInterface & );     /* 感染プロセス */
-        void response();      /* 免疫応答する（タグフリップ） */
-};
-
 struct VirusData
 {
     int sp_;                                    /* スタートポイント */
@@ -50,6 +39,29 @@ struct VirusList
 {
     VirusData *head_;
     VirusData *crnt_;
+
+    VirusData *search( __TagInterface * );
+    void insertRear( VirusData * );
+    void removeCurrent();
+    VirusData *setVirus( VirusData *, __TagInterface *, int, VirusData *);
+};
+
+/*
+ * =====================================================================================
+ *        Class:  Agent
+ *  Description:  
+ * =====================================================================================
+ */
+class Agent : public __TagInterface
+{
+    private:
+        VirusList *vlist_;
+    public:
+        Agent();                                /* コンストラクタ */
+
+        bool hasImmunity( __TagInterface & );   /* 免疫獲得済みか */
+        void infection( __TagInterface & );     /* 感染プロセス */
+        void response();      /* 免疫応答する（タグフリップ） */
 };
 
 #endif
