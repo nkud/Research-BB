@@ -123,12 +123,9 @@ Agent :: Agent() :
  */
 void Agent :: infection( __TagInterface &v )
 {
-    VirusData *cursor_vdata = vlist_->head_;
-
     if( vlist_->search( &v ) ) {                // 既に保持しているウイルスなら終了 
         return;
     }
-
     if( hasImmunity( v ) ) {                    // 免疫獲得済みなら 
         return;                                 // 感染せずに終了 
     }
