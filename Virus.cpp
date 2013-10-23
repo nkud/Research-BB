@@ -10,8 +10,8 @@
  *
  * =====================================================================================
  */
-#include <stdlib.h>
 #include <cstdlib>
+#include <cstring>
 
 #include "Virus.h"
 #include "Function.h"
