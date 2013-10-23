@@ -20,13 +20,12 @@
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-__TagInterface :: __TagInterface( int n ) :
-    len_(0),
+__TagInterface :: __TagInterface( int l ) :
+    len_(l),
     tag_(0)
 {
-    len_ = n;
-    tag_ = new tag_t[ n ];                      /* タグを初期化 */
-    FOR( i, n )
+    tag_ = new tag_t[ l ];                      /* タグを初期化 */
+    FOR( i, l )
     {
         tag_[i] = 0;                            /* すべてを０で初期化 */
     }
@@ -42,15 +41,3 @@ int *__TagInterface :: getTag_()
 {
     return tag_;
 }
-
-
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  __TagInterface :: hamDistanceWith( tag_t * )
- * Description:  
- *--------------------------------------------------------------------------------------
- */
-//int __TagInterface :: hamDistanceWith( tag_t *t )
-//{
-//    return ham
-//}

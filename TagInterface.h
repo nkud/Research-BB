@@ -34,7 +34,6 @@ class __TagInterface
                                                 /* タグの長さを初期化する */
 
         int *getTag_();                         /* タグ配列へのポインタを返す */
-        // int hamDistanceWith( tag_t * );
 };
 
 #endif

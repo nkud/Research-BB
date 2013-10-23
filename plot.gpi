@@ -1,6 +1,5 @@
 set title "hasImmunity"
-plot "A_hasImmunity.dat" w l title "virus A"
-replot "A_hasImmunity.dat" using 1:3 w l title "virus B"
-replot "A_hasImmunity.dat" using 1:4 w l title "virus C"
-replot "A_hasImmunity.dat" using 1:5 w l title "virus all"
+plot "A_hasImmunity.dat" w lp title "virus A"
+replot "A_hasImmunity.dat" using 1:3 w lp title "virus B"
+replot "A_hasImmunity.dat" using 1:4 w lp title "virus all"
 pause -1
