@@ -1,8 +1,13 @@
-/* 
- * ===  FUNCTION  ======================================================================
- *         Name:  ham_distance
- *  Description:  ハミング距離を求める。
- *                同じ長さ限定。
+/*
+ * =====================================================================================
+ *
+ *       Filename:  Function.h
+ *
+ *    Description:  
+ *
+ *         Author:  Naoki Ueda
+ *   Organization:  OPU, 3G
+ *
  * =====================================================================================
  */
 
@@ -10,6 +15,9 @@
 #define ___FUNCTION
 
 #include "Global.h"
+
+// tag set
+int flip_once( tag_t *, tag_t *, int );    /* 一回だけフリップ */
 
 // hamming set
 int ham_distance( int *, int *, int );
