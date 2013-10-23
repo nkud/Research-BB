@@ -21,7 +21,7 @@ using namespace std;
 #include "Agent.h"
 #include "Virus.h"
 
-const int TERM = 50;                            /* 期間 */
+const int TERM = 30;                            /* 期間 */
 
 int main()
 {
@@ -30,10 +30,10 @@ int main()
     Agent agent[ NUM_A ];                       /* エージェントは複数 */
     Virus virus[ NUM_V ];                       /* ウイルスは一個 */
 
-    int healthy0 = 0;                            /* 免疫獲得者カウンタ */
-    int healthy1 = 0;                            /* 免疫獲得者カウンタ */
-    int healthy2 = 0;                            /* 免疫獲得者カウンタ */
-    int healthyAll = 0;                            /* 免疫獲得者カウンタ */
+    int healthy0 = 0;                           /* 免疫獲得者カウンタ */
+    int healthy1 = 0;                           /* 免疫獲得者カウンタ */
+    int healthy2 = 0;                           /* 免疫獲得者カウンタ */
+    int healthyAll = 0;                         /* 免疫獲得者カウンタ */
 
     ofstream ofs("A_hasImmunity.dat");          /* 出力ファイル */
 
