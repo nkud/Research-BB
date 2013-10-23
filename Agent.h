@@ -18,7 +18,33 @@
 #include "TagInterface.h"
 
 class VirusList;
-class VirusBuffer;
+class VirusData;
+
+/*
+ * =====================================================================================
+ *        Class:  VirusList, VirusData
+ *  Description:  エージェントの保持ウイルスデータ
+ *                線形リストを用いてキュー形式で
+ * =====================================================================================
+ */
+struct VirusData
+{
+    int sp_;                                    /* スタートポイント */
+    __TagInterface *v_;                          /* 保持ウイルスへのポインタ */
+
+    VirusData *next_;                          /* 後続リストへのポインタ */
+};
+
+struct VirusList
+{
+    VirusData *head_;
+    VirusData *crnt_;
+
+    VirusData *search( __TagInterface * );
+    void insertRear( VirusData * );
+    void removeCurrent();
+    VirusData *setVirus( VirusData *, __TagInterface *, int, VirusData *);
+};
 
 /*
  * =====================================================================================
@@ -29,27 +55,13 @@ class VirusBuffer;
 class Agent : public __TagInterface
 {
     private:
-        VirusList *vl_;
+        VirusList *vlist_;
     public:
         Agent();                                /* コンストラクタ */
 
         bool hasImmunity( __TagInterface & );   /* 免疫獲得済みか */
         void infection( __TagInterface & );     /* 感染プロセス */
         void response();      /* 免疫応答する（タグフリップ） */
-};
-
-struct VirusBuffer
-{
-    int sp_;                                    /* スタートポイント */
-    __TagInterface *v_;                          /* 保持ウイルスへのポインタ */
-
-    VirusBuffer *next_;                          /* 後続リストへのポインタ */
-};
-
-struct VirusList
-{
-    VirusBuffer *head_;
-    VirusBuffer *crnt_;
 };
 
 #endif
