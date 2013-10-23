@@ -30,41 +30,19 @@ Agent :: Agent() :
     vl_->head_ = 0;                                /* 保持ウイルスリストを初期化 */
     vl_->crnt_ = 0;
 }
-/* 
- * ===  FUNCTION  ======================================================================
- *         Name:  flip_once
- *  Description:  
- * =====================================================================================
- */
-int flip_once( tag_t *a, tag_t *b, int len )    /* 一回だけフリップ */
-{
-    FOR( i, len )                               /* タグの長さだけ繰り返す */
-    {
-        if( *(a+i) == *(b+i) )
-        {
-            continue;                           /* 同じなら次に移動 */
-        }
-        else                                    /* 違ったら */
-        {
-            *(a+i) = *(b+i);                    /* ひとつタグをフリップ */
-            return 0;                           /* 終了 */
-        }
-    }
-    return -1;                                  /* 同じタグだった */
-}
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Agent :: infection( __TagInterface & )
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-VirusBuffer *search( VirusList *vl, __TagInterface *v )
+VirusData *search( VirusList *vl, __TagInterface *v )
 {
     if( vl->head_ == NULL ) {
         vl->crnt_ = NULL;                       /* 何もなければNULLをさす */
         return vl->crnt_;                                 /* 終了 */
     }
-    VirusBuffer *cursor = vl->head_;
+    VirusData *cursor = vl->head_;
     while( cursor != NULL ) {
         if( cursor->v_ == v ) {
             vl->crnt_ = cursor;                 /* 見つかれば今のカーソルをさす */
@@ -75,13 +53,13 @@ VirusBuffer *search( VirusList *vl, __TagInterface *v )
     vl->crnt_ = NULL;                           /* 見つからなければNULLをさす */
     return vl->crnt_;
 }
-void insert_rear( VirusList *vl, VirusBuffer *vb )
+void insert_rear( VirusList *vl, VirusData *vb )
 {
     if( vl->head_ == NULL ) {
         vl->head_ = vb;
         return;
     }
-    VirusBuffer *cursor = vl->head_;
+    VirusData *cursor = vl->head_;
     while( cursor->next_ != NULL ) {
         cursor = cursor->next_;
     }
@@ -92,7 +70,7 @@ void remove_current( VirusList *vl )
     if( vl->head_ == NULL ) {                   /* リストに何もないとき */
         return;
     }
-    VirusBuffer *cursor = vl->head_;
+    VirusData *cursor = vl->head_;
     if( vl->head_ == cursor ) {               /* リストの一つ目を削除 */
         vl->crnt_ = cursor->next_;
         vl->head_ = cursor->next_;
@@ -109,7 +87,7 @@ void remove_current( VirusList *vl )
     vl->crnt_ = cursor->next_;
     delete cursor;
 }
-VirusBuffer *set_virus( VirusBuffer *vb, __TagInterface *v, int sp, VirusBuffer *next )
+VirusData *set_virus( VirusData *vb, __TagInterface *v, int sp, VirusData *next )
 {
     vb->v_ = v;
     vb->sp_ = sp;
@@ -119,7 +97,7 @@ VirusBuffer *set_virus( VirusBuffer *vb, __TagInterface *v, int sp, VirusBuffer 
 
 void Agent :: infection( __TagInterface &v )
 {
-    VirusBuffer *cursor_vb = vl_->head_;
+    VirusData *cursor_vb = vl_->head_;
 
     // hasImmunity
 //    while( cursor_vb )                          /*  = > search */
@@ -139,8 +117,8 @@ void Agent :: infection( __TagInterface &v )
         return;                                 /* 感染せずに終了 */
     }
     // 感染リストに追加
-    VirusBuffer *vb = set_virus(                /* 新しいウイルスデータを作成 */
-            new VirusBuffer,
+    VirusData *vb = set_virus(                /* 新しいウイルスデータを作成 */
+            new VirusData,
             &v,
             min_ham_distance( tag_, v.tag_, len_, v.len_ ), /* スタートポイント */
             NULL
@@ -160,7 +138,7 @@ void Agent :: response()
 {
     if( vl_->head_ == NULL ) return;            /* 保持ウイルスなし、終了 */
 
-    VirusBuffer *cursor = vl_->head_;
+    VirusData *cursor = vl_->head_;
     while( cursor != NULL ) {
         flip_once( tag_+cursor->sp_, cursor->v_->tag_, cursor->v_->len_ ); /* ひとつフリップ */
 

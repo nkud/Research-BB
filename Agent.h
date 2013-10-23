@@ -18,7 +18,7 @@
 #include "TagInterface.h"
 
 class VirusList;
-class VirusBuffer;
+class VirusData;
 
 /*
  * =====================================================================================
@@ -38,18 +38,18 @@ class Agent : public __TagInterface
         void response();      /* 免疫応答する（タグフリップ） */
 };
 
-struct VirusBuffer
+struct VirusData
 {
     int sp_;                                    /* スタートポイント */
     __TagInterface *v_;                          /* 保持ウイルスへのポインタ */
 
-    VirusBuffer *next_;                          /* 後続リストへのポインタ */
+    VirusData *next_;                          /* 後続リストへのポインタ */
 };
 
 struct VirusList
 {
-    VirusBuffer *head_;
-    VirusBuffer *crnt_;
+    VirusData *head_;
+    VirusData *crnt_;
 };
 
 #endif
