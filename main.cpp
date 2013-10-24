@@ -21,9 +21,9 @@ using namespace std;
 #include "Agent.h"
 #include "Virus.h"
 
-const int TERM  = 50;                          // 期間 
+const int TERM  = 30;                          // 期間 
 const int NUM_V = 2;                            // ウイルスの種類 
-const int NUM_A = 10000;                        // エージェントの数 
+const int NUM_A = 1000;                        // エージェントの数 
 
 int main()
 {
@@ -33,9 +33,16 @@ int main()
 
     Virus virus[ NUM_V ] = {                    // ウイルス生成 
       // 123456789012345
-        "1111111",
-        "1000110110110"
+        "1111110011",
+        "1000111101"
     };
+
+    for(int i = 0; i<0; i++) {
+        agent[i].infection( virus[0] );
+    }
+    for(int i = 0; i<NUM_A; i++) {
+        agent[i].infection( virus[1] );
+    }
 
     int healthy0 = 0;                           // 免疫獲得者カウンタ 
     int healthy1 = 0;                           // 免疫獲得者カウンタ 
