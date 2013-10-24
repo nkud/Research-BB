@@ -20,6 +20,7 @@ using namespace std;
 #include "Function.h"
 #include "Agent.h"
 #include "Virus.h"
+#include "Monitor.h"
 
 const int TERM  = 30;                          /* 期間  */
 
@@ -36,6 +37,7 @@ int main()
         "1111110011",
         "1000111101"
     };
+    Monitor &monitor = Monitor::getInstance();  /* エージェントを内部からモニター */
 
     int healthyAll = 0;                         /* 免疫獲得者カウンタ  */
 
