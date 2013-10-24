@@ -32,6 +32,7 @@ class __TagInterface
         tag_t *tag_;
         __TagInterface( int );                  /* コンストラクタ */
                                                 /* タグの長さを初期化する */
+        __TagInterface( const char * );                  /* コンストラクタ */
 
         int *getTag_();                         /* タグ配列へのポインタを返す */
 };

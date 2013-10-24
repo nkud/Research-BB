@@ -23,9 +23,8 @@
  *--------------------------------------------------------------------------------------
  */
 Virus :: Virus() :
-    __TagInterface(TAG_LEN_V)
+    __TagInterface( TAG_LEN_V )
 {
-    log("init with default");
     FOR( i, TAG_LEN_V ) {
         tag_[i] = rand_binary();
     }
@@ -36,12 +35,6 @@ Virus :: Virus() :
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-Virus :: Virus( const char *tag ) :
-    __TagInterface( strlen(tag) )
-{
-    log("init with char");
-    int len = strlen(tag);
-    FOR( i, len ) {
-        tag_[i] = tag[i] - '0';
-    }
-}
+Virus :: Virus( const char *str ) :
+    __TagInterface( str )
+{}
