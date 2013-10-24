@@ -41,8 +41,6 @@ Virus :: Virus( const char *tag ) :
 {
     log("init with char");
     int len = strlen(tag);
-    log(len);
-    log(tag);
     FOR( i, len ) {
         tag_[i] = tag[i] - '0';
     }

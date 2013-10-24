@@ -52,6 +52,7 @@ class Agent : public __TagInterface
         bool isInfected( __TagInterface & );    // ウイルス v に感染しているか
         bool hasImmunity( __TagInterface & );   // 免疫獲得済みか 
         int numOfVirus();                       // 感染しているウイルスの数
+        bool hasVirus( __TagInterface & );
 
         void infection( __TagInterface & );     // 感染プロセス 
         void response();                        // 免疫応答する（タグフリップ） 

@@ -21,7 +21,7 @@ using namespace std;
 #include "Agent.h"
 #include "Virus.h"
 
-const int TERM  = 100;                          // 期間 
+const int TERM  = 50;                          // 期間 
 const int NUM_V = 2;                            // ウイルスの種類 
 const int NUM_A = 10000;                        // エージェントの数 
 
@@ -32,9 +32,9 @@ int main()
     Agent agent[ NUM_A ];                       // エージェントは複数 
 
     Virus virus[ NUM_V ] = {                    // ウイルス生成 
-      // 1234567890
-        "10101",
-        "10111"
+      // 123456789012345
+        "110111001101100",
+        "10011101101100"
     };
 
     int healthy0 = 0;                           // 免疫獲得者カウンタ 
@@ -42,6 +42,7 @@ int main()
     int healthyAll = 0;                         // 免疫獲得者カウンタ 
 
     ofstream ofs("A_hasImmunity.dat");          // 出力ファイル 
+    ofstream ofs_log("A_log.dat");          // 出力ファイル 
 
     /* Log */
     FOR(i, virus[0].len_) cout<<virus[0].tag_[i];cout<<endl;
@@ -83,16 +84,13 @@ int main()
 
     /* --------------- */
     /* log */
-    FOR(i, agent[0].len_) cout<<agent[0].tag_[i];
-    cout<<" "<<agent[0].numOfVirus();
-    cout<<" "<<agent[0].hasImmunity(virus[0]);
-    cout<<" "<<agent[0].hasImmunity(virus[1]);
-    cout<<endl;
-    FOR(i, agent[1].len_) cout<<agent[1].tag_[i];
-    cout<<" "<<agent[1].numOfVirus();
-    cout<<" "<<agent[1].hasImmunity(virus[0]);
-    cout<<" "<<agent[1].hasImmunity(virus[1]);
-    cout<<endl;
+    FOR(i, NUM_A) {
+        FOR(j, agent[0].len_) ofs_log<<agent[i].tag_[j];
+        ofs_log<<" "<<agent[i].numOfVirus();
+        ofs_log<<" "<<agent[i].hasImmunity(virus[0]);
+        ofs_log<<" "<<agent[i].hasImmunity(virus[1]);
+        ofs_log<<endl;
+    }
     /* --------------- */
 
     return 0;

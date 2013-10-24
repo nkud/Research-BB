@@ -21,7 +21,7 @@
 
 typedef int tag_t;
 
-const int TAG_LEN_A = 10;
+const int TAG_LEN_A = 20;
 const int TAG_LEN_V = 5;                      /* ウイルスのタグの長さ */
 
 template < typename T >                         /* デバッグ用 */

@@ -118,3 +118,14 @@ bool Agent :: isInfected( __TagInterface &v ) {
 int Agent :: numOfVirus() {
     return vlist_.size();
 }
+
+bool Agent :: hasVirus( __TagInterface &v ) {
+    std::list<VirusData>::iterator it = vlist_.begin();
+    while( it != vlist_.end() ) {             // 既に保持しているウイルスなら終了 
+        if( it->v_ == &v ) {
+            return true;
+        }
+        it++;
+    }
+    return false;
+}
