@@ -39,10 +39,11 @@ Agent :: Agent() :
 void Agent :: infection( __TagInterface &v )
 {
     std::list<VirusData>::iterator it = vlist_.begin();
-    while( it++ != vlist_.end() ) {             // 既に保持しているウイルスなら終了 
+    while( it != vlist_.end() ) {             // 既に保持しているウイルスなら終了 
         if( it->v_ == &v ) {
             return;
         }
+        it++;
     }
     if( hasImmunity( v ) ) {                    // 免疫獲得済みなら 
         return;                                 // 感染せずに終了 
