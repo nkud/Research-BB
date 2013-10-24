@@ -3,9 +3,9 @@
  *
  *       Filename:  Agent.h
  *
- *    Description:  
+ *    Description:  エージェントクラス
  *
- *         Author:  Noaki Ueda
+ *         Author:  Naoki Ueda
  *   Organization:  OPU, 3G
  *
  * =====================================================================================
@@ -18,8 +18,8 @@
 #include "TagInterface.h"
 #include <list>
 
-class VirusList;
 class VirusData;
+class Agent;
 
 /*
  * =====================================================================================
@@ -32,7 +32,8 @@ struct VirusData                                // 保持ウイルスデータ
     __TagInterface *v_;                         // 保持ウイルスへのポインタ 
     int sp_;                                    // スタートポイント 
 
-    VirusData( __TagInterface *v, int sp ) : v_(v), sp_(sp) {};
+    VirusData( __TagInterface *v, int sp ) :    // データの初期化
+        v_(v), sp_(sp) {};
 };
 
 /*
@@ -45,17 +46,18 @@ struct VirusData                                // 保持ウイルスデータ
 class Agent : public __TagInterface
 {
     private:
-        std::list<VirusData> vlist_;
+        std::list<VirusData> vlist_;            // 保持ウイルスのリスト
+
     public:
         Agent();                                // コンストラクタ 
 
-        bool isInfected( __TagInterface & );    // ウイルス v に感染しているか
-        bool hasImmunity( __TagInterface & );   // 免疫獲得済みか 
-        int numOfVirus();                       // 感染しているウイルスの数
-        bool hasVirus( __TagInterface & );
-
         void infection( __TagInterface & );     // 感染プロセス 
         void response();                        // 免疫応答する（タグフリップ） 
+
+        bool isInfected( __TagInterface & );    // v に感染しているか
+        bool hasImmunity( __TagInterface & );   // v の免疫獲得済みか 
+        bool hasVirus( __TagInterface & );      // v を保持している /*  */
+        int numHoldingVirus();                  // 現在保持しているウイルスの数
 };
 
 #endif

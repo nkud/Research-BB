@@ -37,30 +37,21 @@ int main()
         "1000111101"
     };
 
-    for(int i = 0; i<0; i++) {
-        agent[i].infection( virus[0] );
-    }
-    for(int i = 0; i<NUM_A; i++) {
-        agent[i].infection( virus[1] );
-    }
-
     int healthy0 = 0;                           // 免疫獲得者カウンタ 
     int healthy1 = 0;                           // 免疫獲得者カウンタ 
     int healthyAll = 0;                         // 免疫獲得者カウンタ 
 
     ofstream ofs("A_hasImmunity.dat");          // 出力ファイル 
-    ofstream ofs_log("A_log.dat");          // 出力ファイル 
+    ofstream ofs_log("A_log.dat");              // 出力ファイル 
 
     /* Log */
     FOR(i, virus[0].len_) cout<<virus[0].tag_[i];cout<<endl;
     FOR(i, virus[1].len_) cout<<virus[1].tag_[i];cout<<endl;
-    FOR(i, agent[0].len_) cout<<agent[0].tag_[i];cout<<" "<<agent[0].numOfVirus();cout<<endl;
-    FOR(i, agent[1].len_) cout<<agent[1].tag_[i];cout<<" "<<agent[0].numOfVirus();cout<<endl;
+    FOR(i, agent[0].len_) cout<<agent[0].tag_[i];cout<<" "<<agent[0].numHoldingVirus();cout<<endl;
+    FOR(i, agent[1].len_) cout<<agent[1].tag_[i];cout<<" "<<agent[0].numHoldingVirus();cout<<endl;
 
     FOR( i, TERM )                              // 開始 
     {
-/* log("----- new term"); */
-
         FOR( j, NUM_A )                         // エージェント全員に対して 
         {
             Virus &v = virus[ rand_array(NUM_V) ]; // ランダムにウイルスを選ぶ 
@@ -87,13 +78,12 @@ int main()
             << healthy0 << SEPARATOR            // 免疫獲得者数 
             << healthy1 << SEPARATOR            // 免疫獲得者数 
             << healthyAll << endl;              // 全免疫獲得者数 
-    }
 
     /* --------------- */
     /* log */
     FOR(i, NUM_A) {
         FOR(j, agent[0].len_) ofs_log<<agent[i].tag_[j];
-        ofs_log<<" "<<agent[i].numOfVirus();
+        ofs_log<<" "<<agent[i].numHoldingVirus();
         ofs_log<<" "<<agent[i].hasImmunity(virus[0]);
         ofs_log<<" "<<agent[i].hasImmunity(virus[1]);
         ofs_log<<endl;

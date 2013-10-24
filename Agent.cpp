@@ -110,11 +110,11 @@ bool Agent :: isInfected( __TagInterface &v ) {
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Agent :: numOfVirus()
+ *      Method:  Agent :: numHoldingVirus()
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-int Agent :: numOfVirus() {
+int Agent :: numHoldingVirus() {
     return vlist_.size();
 }
 
