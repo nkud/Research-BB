@@ -60,3 +60,17 @@ int *__TagInterface :: getTag_()
 {
     return tag_;
 }
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  __TagInterface :: printTag()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+void __TagInterface :: printTag() {
+    std::cout << "[ " <<this<< " ]" << ": ";
+    FOR( i, len_ ) {
+        std::cout << tag_[i];
+    }
+    std::cout << std::endl;
+}

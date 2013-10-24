@@ -21,6 +21,9 @@
 
 typedef int tag_t;
 
+const int NUM_V = 2;                            // ウイルスの種類 
+const int NUM_A = 1000;                        // エージェントの数 
+
 const int TAG_LEN_A = 20;
 const int TAG_LEN_V = 5;                      /* ウイルスのタグの長さ */
 

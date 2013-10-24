@@ -118,13 +118,37 @@ int Agent :: numHoldingVirus() {
     return vlist_.size();
 }
 
-bool Agent :: hasVirus( __TagInterface &v ) {
-    std::list<VirusData>::iterator it = vlist_.begin();
-    while( it != vlist_.end() ) {             // 既に保持しているウイルスなら終了 
-        if( it->v_ == &v ) {
-            return true;
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  AgentManager :: numIsInfected( __TagInterface & )
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+int AgentManager :: numIsInfected( __TagInterface &v ) {
+    int ret = 0;
+
+    FOR( i, num_agent_ ) {
+        if( agent_[i].isInfected( v ) ) {       /* v に感染していれば */
+            ret++;                              /* インクリメント */
         }
-        it++;
     }
-    return false;
+    return ret;                                 /* v の感染者数を返す */
+}
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  AgentManager :: numHasImmunity( __TagInterface & )
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+int AgentManager :: numHasImmunity( __TagInterface &v ) {
+    int ret = 0;
+
+    FOR( i, num_agent_ ) {
+        if (agent_[i].hasImmunity( v ) ) {
+            ret++;
+        }
+    }
+    return ret;
 }
