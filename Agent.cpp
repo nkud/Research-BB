@@ -13,91 +13,9 @@
 #include "Agent.h"
 #include "Function.h"
 
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  VirusList :: search( __TagInterface * )
- * Description:  
- *--------------------------------------------------------------------------------------
- */
-VirusData *VirusList :: search( __TagInterface *v )
-{
-    if( head_ == NULL ) {
-        crnt_ = NULL;                           // 何もなければNULLをさす 
-        return crnt_;                           // 終了 
-    }
-    VirusData *cursor = head_;
-    while( cursor != NULL ) {
-        if( cursor->v_ == v ) {
-            crnt_ = cursor;                     // 見つかれば今のカーソルをさす 
-            return crnt_;
-        }
-        cursor = cursor->next_;
-    }
-    crnt_ = NULL;                               // 見つからなければNULLをさす 
-    return crnt_;
-}
+#include <list>
 
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  VirusList :: insertRear( VirusData * )
- * Description:  
- *--------------------------------------------------------------------------------------
- */
-void VirusList :: insertRear( VirusData *vdata )
-{
-    if( head_ == NULL ) {
-        head_ = vdata;
-        return;
-    }
-    VirusData *cursor = head_;
-    while( cursor->next_ != NULL ) {
-        cursor = cursor->next_;
-    }
-    cursor->next_ = vdata;
-}
-
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  VirusList :: removeCurrent()
- * Description:  
- *--------------------------------------------------------------------------------------
- */
-void VirusList :: removeCurrent()
-{
-    if( head_ == NULL ) {                       // リストに何もないとき 
-        return;
-    }
-    VirusData *cursor = head_;
-    if( head_ == cursor ) {                     // リストの一つ目を削除 
-        crnt_ = cursor->next_;
-        head_ = cursor->next_;
-        delete cursor;
-        return;
-    }
-    while( cursor->next_ != crnt_ ) {           // ふたつ以上あるとき 
-        log(cursor);
-        log(cursor->next_);
-        log(crnt_);
-        cursor = cursor->next_;
-    }
-    cursor->next_ = crnt_->next_;
-    crnt_ = cursor->next_;
-    delete cursor;
-}
-
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  VirusList :: setVirus( VirusData *, __TagInterface *, int, VirusData * )
- * Description:  
- *--------------------------------------------------------------------------------------
- */
-VirusData *VirusList :: setVirus( VirusData *vdata, __TagInterface *v, int sp, VirusData *next )
-{
-    vdata->v_ = v;
-    vdata->sp_ = sp;
-    vdata->next_ = next;
-    return vdata;
-}
+#define LIST_ITERATOR std::list<VirusData>::iterator
 
 /*
  *--------------------------------------------------------------------------------------
@@ -106,14 +24,11 @@ VirusData *VirusList :: setVirus( VirusData *vdata, __TagInterface *v, int sp, V
  *--------------------------------------------------------------------------------------
  */
 Agent :: Agent() :
-    __TagInterface( TAG_LEN_A ),                // タグの長さを初期化 
-    vlist_(new VirusList)                       // 保持ウイルスリストを作成 
+    __TagInterface( TAG_LEN_A )                 // タグの長さを初期化 
 {
     FOR( i, TAG_LEN_A ) {                       // タグをランダムに初期化 
         tag_[ i ] = rand_binary();
     }
-    vlist_->head_ = 0;                          // 保持ウイルスリストを初期化 
-    vlist_->crnt_ = 0;
 }
 /*
  *--------------------------------------------------------------------------------------
@@ -123,20 +38,18 @@ Agent :: Agent() :
  */
 void Agent :: infection( __TagInterface &v )
 {
-    if( vlist_->search( &v ) ) {                // 既に保持しているウイルスなら終了 
-        return;
+    std::list<VirusData>::iterator it = vlist_.begin();
+    while( it++ != vlist_.end() ) {             // 既に保持しているウイルスなら終了 
+        if( it->v_ == &v ) {
+            return;
+        }
     }
     if( hasImmunity( v ) ) {                    // 免疫獲得済みなら 
         return;                                 // 感染せずに終了 
     }
     /* 感染リストに追加 */
-    VirusData *vdata = vlist_->setVirus(        // 新しいウイルスデータを作成 
-            new VirusData,
-            &v,
-            min_ham_distance( tag_, v.tag_, len_, v.len_ ), // スタートポイント 
-            NULL
-            );
-    vlist_->insertRear( vdata );
+    VirusData vdata( &v, min_ham_distance( tag_, v.tag_, len_, v.len_ ) ); // スタートポイント 
+    vlist_.push_back( vdata );
 }
 
 /*
@@ -147,20 +60,20 @@ void Agent :: infection( __TagInterface &v )
  */
 void Agent :: response()
 {
-    if( vlist_->head_ == NULL ) return;         // 保持ウイルスなし、終了 
+    if( vlist_.empty() ) return;                // 保持ウイルスなし、終了 
 
-    VirusData *cursor = vlist_->head_;
-    while( cursor != NULL ) {
-        flip_once( tag_+cursor->sp_, cursor->v_->tag_, cursor->v_->len_ ); // ひとつフリップ 
+    std::list<VirusData>::iterator it = vlist_.begin();
+    while( it != vlist_.end() ) {
+        flip_once( tag_+it->sp_, it->v_->tag_, it->v_->len_ ); // ひとつフリップ 
 
         /* 免疫獲得すれば、データを削除する */
-        if( hasImmunity( *(cursor->v_) ) ) {
-            vlist_->crnt_ = cursor;             // 削除する位置を決定 
-            cursor = cursor->next_;             // カーソルを次に移動させておく 
-            vlist_->removeCurrent();            // 削除 
-        } else {
-            cursor = cursor->next_;             // カーソルを次に移動 
+        if( hasImmunity( *(it->v_) ) ) {
+            std::list<VirusData>::iterator ep = it;
+            it++;
+            vlist_.erase( ep );
+            continue;
         }
+        it++;
     }
 }
 
@@ -178,3 +91,29 @@ bool Agent :: hasImmunity( __TagInterface &v )  // true -> 免疫獲得済み
         return false;                           // 未獲得 
 }
 
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Agent :: isInfected( __TagInterface & )
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+bool Agent :: isInfected( __TagInterface &v ) {
+    LIST_ITERATOR it = vlist_.begin();
+    while( it != vlist_.end() ) {
+        if( it->v_ == &v ) { // 感染済みだった
+            return true;
+        }
+        it++;
+    }
+    return false; // 未感染だった
+}
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Agent :: numOfVirus()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+int Agent :: numOfVirus() {
+    return vlist_.size();
+}

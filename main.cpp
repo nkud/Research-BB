@@ -21,7 +21,7 @@ using namespace std;
 #include "Agent.h"
 #include "Virus.h"
 
-const int TERM = 30;                            /* 期間 */
+const int TERM = 100;                            /* 期間 */
 
 int main()
 {
@@ -31,8 +31,8 @@ int main()
 
     Virus virus[ NUM_V ] = {                    /* ウイルス発生 */
 //       1---5----0"
-        "111111111111111",
-        "010101010101010"
+        "1111110000",
+        "010101"
     };
 
     int healthy0 = 0;                           /* 免疫獲得者カウンタ */
@@ -41,9 +41,14 @@ int main()
 
     ofstream ofs("A_hasImmunity.dat");          /* 出力ファイル */
 
+    FOR(i, virus[0].len_) cout<<virus[0].tag_[i];cout<<endl;
+    FOR(i, virus[1].len_) cout<<virus[1].tag_[i];cout<<endl;
+    FOR(i, agent[0].len_) cout<<agent[0].tag_[i];cout<<" "<<agent[0].numOfVirus();cout<<endl;
+    FOR(i, agent[1].len_) cout<<agent[1].tag_[i];cout<<" "<<agent[0].numOfVirus();cout<<endl;
+
     FOR( i, TERM )                              /* 開始 */
     {
-        log("----- new term");
+//         log("----- new term");
 
         FOR( j, NUM_A )                         /* エージェント全員に対して */
         {
@@ -60,10 +65,10 @@ int main()
         healthyAll = 0;
         FOR( j, NUM_A )                         /* 免疫獲得者を計算 */
         {
-            if( agent[j].hasImmunity( virus[0] ) ) healthy0++;
-            if( agent[j].hasImmunity( virus[1] ) ) healthy1++;
-            if( agent[j].hasImmunity( virus[0] ) &&
-                    agent[j].hasImmunity( virus[1] ) ) healthyAll++;
+            if( agent[j].isInfected( virus[0] ) ) healthy0++;
+            if( agent[j].isInfected( virus[1] ) ) healthy1++;
+            if( agent[j].isInfected( virus[0] ) &&
+                    agent[j].isInfected( virus[1] ) ) healthyAll++;
         }
 
         // OUTPUT
@@ -73,8 +78,17 @@ int main()
             << healthyAll << endl;              /* ALL免疫獲得者数 */
     }
 
-    FOR(i, virus[0].len_) cout<<virus[0].tag_[i];cout<<endl;
-    FOR(i, virus[1].len_) cout<<virus[1].tag_[i];cout<<endl;
+    // ---------------
+    FOR(i, agent[0].len_) cout<<agent[0].tag_[i];
+    cout<<" "<<agent[0].numOfVirus();
+    cout<<" "<<agent[0].hasImmunity(virus[0]);
+    cout<<" "<<agent[0].hasImmunity(virus[1]);
+    cout<<endl;
+    FOR(i, agent[1].len_) cout<<agent[1].tag_[i];
+    cout<<" "<<agent[1].numOfVirus();
+    cout<<" "<<agent[1].hasImmunity(virus[0]);
+    cout<<" "<<agent[1].hasImmunity(virus[1]);
+    cout<<endl;
 
     return 0;
 }
