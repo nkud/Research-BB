@@ -27,17 +27,18 @@ class Landscape;
 class Administrator {
     private:
         Agent *agent_;                          /* エージェントの集合 */
-        Virus *virus_;
-        Landscape *landscape_;
+        Virus *virus_;                          /* ウイルスの集合 */
+        Landscape *landscape_;                  /* 土地 */
 
     public:
         Administrator( Agent *, Virus *, Landscape * );
-        int numHasVirus( __TagInterface & );  /* v に感染している人の数 */
+        void responseAgent();                   /* 免疫応答させる */
+        void relocateAgent();                   /* 再配置 */
+        void contactAgent();                    /* 近隣に接触して感染させる */
+        void initInfectAgentInRatio( Virus &, double );
+
+        int numHasVirus( __TagInterface & );    /* v に感染している人の数 */
         int numHasAllVirus();                   /* 全ウイルスに感染している人の数 */
         int numHasImmunity( __TagInterface & ); /* v の免疫獲得者数 */
-
-        void responseAgent();
-        void relocateAgent();
-        void contactAgent();
 };
 

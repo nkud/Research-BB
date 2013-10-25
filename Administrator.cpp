@@ -136,7 +136,7 @@ void Administrator :: contactAgent() {
                 INT_ITERATOR it = landscape_->agent_map_[ tx+i ][ ty+j ].begin();
                 while( it != landscape_->agent_map_[ tx+i ][ ty+j ].end() ) { /* その位置にいる人全員に */
                     agent_[ *it ].infection( *tvdata.v_ ); /* ウイルスを感染させる */
-                    it++;                       /* その位置の次にいる人 */
+                    it++;                       /* 着目をその位置の次にいる人 */
                 }
             }
         }
@@ -156,4 +156,21 @@ int Administrator :: numHasAllVirus() {
         if( agent_[ i ].numHoldingVirus() == NUM_V ) ret++;
     }
     return ret;
+}
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Administrator :: initInfectAgentInRatio( Virus &, double )
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+void Administrator :: initInfectAgentInRatio( Virus &v, double r ) {
+    int infected_num = (int)( NUM_A * r );
+    FOR( i, infected_num ) {
+        int n = rand_interval_int( 0, NUM_A );;
+        while( agent_[ n ].hasVirus( v ) ) {
+            n = (n+1) % NUM_A;
+        };
+        agent_[ i ].infection( v );
+    }
 }
