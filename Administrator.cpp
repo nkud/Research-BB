@@ -166,9 +166,9 @@ int Administrator :: numHasAllVirus() {
  */
 void Administrator :: initInfectAgentInRatio( Virus &v, double r ) {
     int infected_num = (int)( NUM_A * r );
+    int n;
     FOR( i, infected_num ) {
-        int n = rand_interval_int( 0, NUM_A );;
-        while( agent_[ n ].hasVirus( v ) ) {
+        while( agent_[ n=rand_array(NUM_A) ].hasVirus( v ) ) {
             n = (n+1) % NUM_A;
         };
         agent_[ i ].infection( v );

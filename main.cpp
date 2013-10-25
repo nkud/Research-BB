@@ -24,7 +24,7 @@ using namespace std;
 #include "Monitor.h"
 #include "Administrator.h"
 
-const int TERM  = 300;                           /* 期間  */
+const int TERM  = 100;                           /* 期間  */
 
 int main()
 {
@@ -34,8 +34,8 @@ int main()
     Agent agent[ NUM_A ];                       /* エージェントは複数  */
     Virus virus[ NUM_V ] = {                    /* ウイルス生成  */
       // 1234567890
-        "110101010",
-        "100010111"
+        "11010101",
+        "10001011"
     };
     Landscape *landscape = new Landscape;       /* ランドスケープ初期化 */
 
@@ -45,7 +45,7 @@ int main()
     ofstream ofs_log("A_log.dat");              /* 出力ファイル  */
 
 
-    AD.initInfectAgentInRatio( virus[0], 0.1 );   /* 感染させる */
+    AD.initInfectAgentInRatio( virus[0], 0.8 );   /* 感染させる */
     AD.initInfectAgentInRatio( virus[1], 0.1 );
 
     Monitor::getInstance().resetAll();
