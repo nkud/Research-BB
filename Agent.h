@@ -61,23 +61,4 @@ class Agent : public __TagInterface
         int numHoldingVirus();                  /* 現在保持しているウイルスの数 */
 };
 
-/*
- * =====================================================================================
- *        Class:  AgentManager
- *  Description:  エージェントをまとめるクラス
- * =====================================================================================
- */
-class AgentManager {
-    private:
-        Agent *agent_;                 /* エージェントの集合 */
-        int num_agent_;
-
-    public:
-        AgentManager( Agent *a ) : agent_( a ), num_agent_( NUM_A ) {}
-        int numIsInfected( __TagInterface & );  /* v に感染している人の数 */
-        int numHasImmunity( __TagInterface & ); /* v の免疫獲得者数 */
-
-        void allResponse();
-};
-
 #endif

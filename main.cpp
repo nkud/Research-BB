@@ -21,6 +21,7 @@ using namespace std;
 #include "Agent.h"
 #include "Virus.h"
 #include "Monitor.h"
+#include "Administrator.h"
 
 const int TERM  = 30;                          /* 期間  */
 
@@ -29,7 +30,6 @@ int main()
     srand((unsigned int)time(NULL)/2);          /* 乱数初期化  */
 
     Agent agent[ NUM_A ];                       /* エージェントは複数  */
-    AgentManager AM( agent );                   /* エージェントマネージャー */
                                                 /* エージェントをまとめて動かす */
 
     Virus virus[ NUM_V ] = {                    /* ウイルス生成  */
@@ -38,6 +38,8 @@ int main()
         "1000111101"
     };
     Monitor &monitor = Monitor::getInstance();  /* エージェントを内部からモニター */
+
+    Administrator AD( agent, virus );                   /* エージェントマネージャー */
 
     int healthyAll = 0;                         /* 免疫獲得者カウンタ  */
 
@@ -60,7 +62,7 @@ int main()
             agent[j].infection( v );            /* ウイルス v を感染させる */
         }
 
-        AM.allResponse();                       /* 免疫応答（タグフリップ） */
+        AD.allResponse();                       /* 免疫応答（タグフリップ） */
 
         // CALCULATE 
         healthyAll = 0;                         /* 全ウイルスへの免疫獲得者数 */
@@ -72,8 +74,8 @@ int main()
 
         // OUTPUT 
         ofs << i << SEPARATOR                   /* ファイルに出力  */
-            << AM.numHasImmunity( virus[0] ) << SEPARATOR            /* 免疫獲得者数  */
-            << AM.numHasImmunity( virus[1] ) << SEPARATOR            /* 免疫獲得者数  */
+            << AD.numHasImmunity( virus[0] ) << SEPARATOR            /* 免疫獲得者数  */
+            << AD.numHasImmunity( virus[1] ) << SEPARATOR            /* 免疫獲得者数  */
             << healthyAll << endl;              /* 全免疫獲得者数  */
     }
 

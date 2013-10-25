@@ -11,3 +11,10 @@
  * =====================================================================================
  */
 
+#include "Global.h"
+
+class Landscape {
+    public:
+        Landscape();
+        int landscape_[WIDTH][WIDTH];
+};

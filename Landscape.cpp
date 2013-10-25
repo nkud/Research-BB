@@ -10,5 +10,15 @@
  *
  * =====================================================================================
  */
-#include <stdlib.h>
 
+#include "Landscape.h"
+
+Landscape :: Landscape() :
+    landscape_( )
+{
+    FOR( i, WIDTH ) {
+        FOR( j, WIDTH ) {
+            landscape_[ i ][ j ] = 0;
+        }
+    }
+}
