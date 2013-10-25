@@ -21,29 +21,28 @@ using namespace std;
 #include "Agent.h"
 #include "Virus.h"
 #include "Landscape.h"
-#include "Monitor.h"
+// #include "Monitor.h"
 #include "Administrator.h"
 
-const int TERM  = 30;                           /* 期間  */
+const int TERM  = 50;                           /* 期間  */
 
 int main()
 {
     srand((unsigned int)time(NULL)/2);          /* 乱数初期化  */
 
     Agent agent[ NUM_A ];                       /* エージェントは複数  */
-    /* エージェントをまとめて動かす */
 
     Virus virus[ NUM_V ] = {                    /* ウイルス生成  */
         /* 123456789012345 */
-        "1111110011",
-        "1000111101"
+        "110111011",
+        "100011100"
     };
-    //    Monitor &monitor = Monitor::getInstance();  /* エージェントを内部からモニター */
+
     Landscape *landscape = new Landscape;       /* ランドスケープ初期化 */
 
     Administrator AD( agent, virus, landscape ); /* 管理者に登録 */
 
-    int healthyAll = 0;                         /* 免疫獲得者カウンタ  */
+    int infected_all = 0;                         /* 免疫獲得者カウンタ  */
 
     ofstream ofs("A_hasImmunity.dat");          /* 出力ファイル  */
     ofstream ofs_log("A_log.dat");              /* 出力ファイル  */
@@ -56,6 +55,9 @@ int main()
 
     for(int i=0; i<10; i++) {
         agent[ i ].infection( virus[0] );
+    }
+    for(int i=10; i<20; i++) {
+        agent[ i ].infection( virus[1] );
     }
 
     FOR( i, TERM )                              /* 開始  */
@@ -72,18 +74,18 @@ int main()
         AD.responseAgent();                     /* 免疫応答（タグフリップ） */
 
         // CALCULATE 
-        healthyAll = 0;                         /* 全ウイルスへの免疫獲得者数 */
+        infected_all = 0;                         /* 全ウイルスへの免疫獲得者数 */
         FOR( j, NUM_A )                         /* 免疫獲得者を計算  */
         {
-            if( agent[j].hasImmunity( virus[0] ) &&
-                    agent[j].hasImmunity( virus[1] ) ) healthyAll++;
+            if( agent[j].isInfected( virus[0] ) &&
+                    agent[j].isInfected( virus[1] ) ) infected_all++;
         }
 
         // OUTPUT 
         ofs << i << SEPARATOR                   /* ファイルに出力  */
-            << AD.numHasImmunity( virus[0] ) << SEPARATOR            /* 免疫獲得者数  */
-            << AD.numHasImmunity( virus[1] ) << SEPARATOR            /* 免疫獲得者数  */
-            << healthyAll << endl;              /* 全免疫獲得者数  */
+            << AD.numIsInfected( virus[0] ) << SEPARATOR            /* 免疫獲得者数  */
+            << AD.numIsInfected( virus[1] ) << SEPARATOR            /* 免疫獲得者数  */
+            << infected_all << endl;              /* 全免疫獲得者数  */
     }
 
     // --------------- 
