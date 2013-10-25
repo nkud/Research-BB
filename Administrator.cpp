@@ -12,6 +12,7 @@
  */
 
 #include "Global.h"
+#include "Function.h"
 #include "Administrator.h"
 #include "Agent.h"
 #include "Virus.h"
@@ -88,8 +89,8 @@ void Administrator :: relocateAgent() {
         tx = rand_interval_int( 0, WIDTH-1 );   /* ランダムに設定 */
         ty = rand_interval_int( 0, WIDTH-1 );
         while( landscape_->map_[ tx ][ ty ] > 0 ) { /* もし他の誰かがいたら */
-            tx += rand_sign * 1;                /* となりを見てみる */
-            ty += rand_sign * 1;
+            tx += rand_sign() * 1;                /* となりを見てみる */
+            ty += rand_sign() * 1;
         }
         agent_[ i ].x_ = tx;                    /* 配置 */
         agent_[ i ].y_ = ty;
