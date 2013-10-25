@@ -16,6 +16,7 @@
 class __TagInterface;
 class Agent;
 class Virus;
+class Landscape;
 
 /*
  * =====================================================================================
@@ -25,15 +26,16 @@ class Virus;
  */
 class Administrator {
     private:
-        Agent *agent_;                 /* エージェントの集合 */
+        Agent *agent_;                          /* エージェントの集合 */
         Virus *virus_;
-        int num_agent_;
+        Landscape *landscape_;
 
     public:
-        Administrator( Agent *, Virus * );
+        Administrator( Agent *, Virus *, Landscape * );
         int numIsInfected( __TagInterface & );  /* v に感染している人の数 */
         int numHasImmunity( __TagInterface & ); /* v の免疫獲得者数 */
 
         void allResponse();
+        void relocateAgent();
 };
 

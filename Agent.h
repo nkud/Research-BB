@@ -47,10 +47,11 @@ struct VirusData                                /* 保持ウイルスデータ  
 class Agent : public __TagInterface
 {
     private:
-        std::list<VirusData> vlist_;            /* 保持ウイルスのリスト */
         Monitor *monitor_;
 
     public:
+        int x_, y_;
+        std::list<VirusData> vlist_;            /* 保持ウイルスのリスト */
         Agent();                                /* コンストラクタ  */
 
         void infection( __TagInterface & );     /* 感染プロセス  */

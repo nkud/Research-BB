@@ -20,6 +20,7 @@ using namespace std;
 #include "Function.h"
 #include "Agent.h"
 #include "Virus.h"
+#include "Landscape.h"
 #include "Monitor.h"
 #include "Administrator.h"
 
@@ -38,8 +39,9 @@ int main()
         "1000111101"
     };
     Monitor &monitor = Monitor::getInstance();  /* エージェントを内部からモニター */
+    Landscape *landscape = new Landscape;       /* ランドスケープ初期化 */
 
-    Administrator AD( agent, virus );                   /* エージェントマネージャー */
+    Administrator AD( agent, virus, landscape ); /* 管理者に登録 */
 
     int healthyAll = 0;                         /* 免疫獲得者カウンタ  */
 

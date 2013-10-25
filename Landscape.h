@@ -16,5 +16,5 @@
 class Landscape {
     public:
         Landscape();
-        int landscape_[WIDTH][WIDTH];
+        int map_[WIDTH][WIDTH];
 };
