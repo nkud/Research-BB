@@ -53,6 +53,8 @@ void Agent :: infection( __TagInterface &v )
     /* 感染リストに追加 */
     VirusData vdata( &v, min_ham_distance( tag_, v.tag_, len_, v.len_ ) ); // スタートポイント 
     vlist_.push_back( vdata );
+
+    monitor_->count_infection_contact_++;       /* 感染のために接触した回数を増やす */
 }
 
 /*
@@ -70,7 +72,7 @@ void Agent :: response()
     flip_once( tag_+it->sp_, it->v_->tag_, it->v_->len_ ); /* ひとつフリップ  */
 
     if( hasImmunity( *(it->v_) ) ) {            /* 免疫獲得すれば */
-        vlist_.erase( it );                     /* リストから v を削除 */
+        vlist_.erase( it );                     /* 保持ウイルスから v を削除 */
     }
 }
 
@@ -95,6 +97,16 @@ bool Agent :: hasImmunity( __TagInterface &v )  // true -> 免疫獲得済み
  *--------------------------------------------------------------------------------------
  */
 bool Agent :: isInfected( __TagInterface &v ) {
+    LIST_ITERATOR it = vlist_.begin();
+    while( it != vlist_.end() ) {
+        if( it->v_ == &v ) {                    // 感染済みだった
+            return true;
+        }
+        it++;
+    }
+    return false;                               // 未感染だった
+}
+bool Agent :: hasVirus( __TagInterface &v ) {
     LIST_ITERATOR it = vlist_.begin();
     while( it != vlist_.end() ) {
         if( it->v_ == &v ) {                    // 感染済みだった

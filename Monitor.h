@@ -27,6 +27,8 @@ class Monitor {
     public:
         static Monitor& getInstance();
 
+        int count_infection_contact_;
+
         void resetAll();                           /* 値をすべてリセット */
 };
 

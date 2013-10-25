@@ -21,7 +21,7 @@ using namespace std;
 #include "Agent.h"
 #include "Virus.h"
 #include "Landscape.h"
-// #include "Monitor.h"
+#include "Monitor.h"
 #include "Administrator.h"
 
 const int TERM  = 50;                           /* 期間  */
@@ -30,60 +30,44 @@ int main()
 {
     srand((unsigned int)time(NULL)/2);          /* 乱数初期化  */
 
+    // 初期化
     Agent agent[ NUM_A ];                       /* エージェントは複数  */
-
     Virus virus[ NUM_V ] = {                    /* ウイルス生成  */
-      /* 123456789012345 */
-        "11011",
-        "10001"
+      // 123456789
+        "1101100101",
+        "1000100110"
     };
-
     Landscape *landscape = new Landscape;       /* ランドスケープ初期化 */
 
     Administrator AD( agent, virus, landscape ); /* 管理者に登録 */
 
-    int infected_all = 0;                       /* 免疫獲得者カウンタ  */
-
     ofstream ofs("A_hasVirus.dat");             /* 出力ファイル  */
     ofstream ofs_log("A_log.dat");              /* 出力ファイル  */
 
-    // Log 
-    virus[0].printTag();
-    virus[1].printTag();
 
-    for(int i=0; i<10; i++) {                   /* 感染させる */
+    for(int i=0; i<1; i++) {                   /* 感染させる */
         agent[ i ].infection( virus[0] );
     }
-    for(int i=10; i<20; i++) {
+    for(int i=10; i<15; i++) {
         agent[ i ].infection( virus[1] );
     }
 
+
     FOR( i, TERM )                              /* 開始  */
     {
-        log("start");
+        log("------------ start");
+        log(agent[0].x_);
+        log(agent[0].numHoldingVirus());
 
-        log("relocateAgent");
-        AD.relocateAgent();                     /* 再配置 */
-
-        log("contactAgent");
+        AD.relocateAgent();                     /* ランダムに再配置 */
         AD.contactAgent();                      /* 感染 */
-
-        log("responseAgent");
         AD.responseAgent();                     /* 免疫応答（タグフリップ） */
 
-        // CALCULATE 
-        infected_all = 0;                       /* 全ウイルスへの免疫獲得者数 */
-        FOR( j, NUM_A )                         /* 免疫獲得者を計算  */
-        {
-            if( agent[j].isInfected( virus[0] ) &&
-                    agent[j].isInfected( virus[1] ) ) infected_all++;
-        }
-
         // OUTPUT 
-        ofs << i << SEPARATOR                   /* ファイルに出力  */
-            << AD.numIsInfected( virus[0] ) << SEPARATOR            /* 免疫獲得者数  */
-            << AD.numIsInfected( virus[1] ) << SEPARATOR            /* 免疫獲得者数  */
-            << infected_all << endl;            /* 全免疫獲得者数  */
+        ofs << i << SEPARATOR                   /* ファイルに出力 */
+            << AD.numHasVirus( virus[0] ) << SEPARATOR            /* ウイルス０保持者 */
+            << AD.numHasVirus( virus[1] ) << SEPARATOR            /* ウイルス１保持者 */
+            << AD.numHasAllVirus() << endl;     /* 全ウイルス保持者 */
     }
     return 0;
 }

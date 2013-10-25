@@ -32,7 +32,8 @@ class Administrator {
 
     public:
         Administrator( Agent *, Virus *, Landscape * );
-        int numIsInfected( __TagInterface & );  /* v に感染している人の数 */
+        int numHasVirus( __TagInterface & );  /* v に感染している人の数 */
+        int numHasAllVirus();                   /* 全ウイルスに感染している人の数 */
         int numHasImmunity( __TagInterface & ); /* v の免疫獲得者数 */
 
         void responseAgent();

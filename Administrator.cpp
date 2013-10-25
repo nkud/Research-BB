@@ -20,6 +20,8 @@
 
 #include <vector>
 
+#define INT_ITERATOR    std::vector<int>::iterator
+
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: Administrator( Agent *, Virus * )
@@ -34,11 +36,11 @@ Administrator :: Administrator( Agent *a, Virus *v, Landscape *l ) :
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Administrator :: numIsInfected( __TagInterface & )
+ *      Method:  Administrator :: numHasVirus( __TagInterface & )
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-int Administrator :: numIsInfected( __TagInterface &v ) {
+int Administrator :: numHasVirus( __TagInterface &v ) {
     int ret = 0;
 
     FOR( i, NUM_A ) {
@@ -82,42 +84,41 @@ void Administrator :: responseAgent() {
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator:: relocateAgent()
  * Description:  エージェントをランダムに再配置
- *               １つの位置には１人だけ
+ *               １つのところに複数人数も許可
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: relocateAgent() {
-//     if( WIDTH*WIDTH < NUM_A-1 ) return;           /* 土地に人数が入らない！ */
-
     int tx, ty;                                 /* 移動させる場所 */
     FOR( i, NUM_A ) {
         tx = rand_interval_int( 0, WIDTH-1 );   /* ランダムに設定 */
         ty = rand_interval_int( 0, WIDTH-1 );
         agent_[ i ].x_ = tx;                    /* 配置 */
         agent_[ i ].y_ = ty;
-        landscape_->agent_map_[ tx ][ ty ].push_back( i );
+        landscape_->agent_map_[ tx ][ ty ].push_back( i ); /* エージェントを登録 */
     }
 }
 
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: contactAgent()
- * Description:  
+ * Description:  自分の周囲（自マス含め９マス）に対して
+ *               自分の保持ウイルスリストからランダムに１つ選び出し全員に感染させる
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: contactAgent() {
 
     std::vector<int> infected_agent;            /* 現時点での感染者リスト */
-    FOR( i, NUM_A ) {
+    FOR( i, NUM_A ) {                           /* 全員に対して */
         if( agent_[ i ].numHoldingVirus() > 0 ) {/* 何らかのウイルスを保持していたら */
             infected_agent.push_back( i );      /* 感染者リストに加える */
         }
     }
 
-    std::vector<int>::iterator it_infected = infected_agent.begin();
-    int tx, ty;                                 /* 感染させるエージェントの位置 */
-    VirusData tvdata;                           /* 感染させるウイルス */
-    Agent *myself;                              /* 感染者 */
+    int tx, ty;
+    VirusData tvdata;
+    Agent *myself;
 
+    INT_ITERATOR it_infected = infected_agent.begin();
     while( it_infected != infected_agent.end() ) {      /* 感染者リストの数だけ繰り返す */
         myself = &agent_[ *it_infected ];       /* 感染者自身 */
         tx = myself->x_;                        /* 感染者自身の位置 */
@@ -125,19 +126,33 @@ void Administrator :: contactAgent() {
 
         REP( i, -1, 1 ) {                       /* 自分の周囲１マスに感染させる（計９マス） */
             REP( j, -1, 1 ) {
+                if( i*j != 0 ) continue;
                 if( !(landscape_->isOnMap( tx+i, ty+j )) ) continue; /* 土地からはみ出てたらスキップ */
 
                 tvdata =                        /* ランダムに保持ウイルスから選んで */
                     myself->vlist_.at( rand_array(myself->vlist_.size()) );
 
-                std::vector<int>::iterator it = landscape_->agent_map_[ tx+i ][ ty+j ].begin();
+                INT_ITERATOR it = landscape_->agent_map_[ tx+i ][ ty+j ].begin();
                 while( it != landscape_->agent_map_[ tx+i ][ ty+j ].end() ) { /* その位置にいる人全員に */
-                    agent_[ *it ].infection( *tvdata.v_ ); /* ウイルスに感染させる */
-                    it++;                       /* その位置にいるの人 */
+                    agent_[ *it ].infection( *tvdata.v_ ); /* ウイルスを感染させる */
+                    it++;                       /* その位置の次にいる人 */
                 }
-//                agent_[ landscape_->map_[tx+i][ty+j] ].infection( *tvdata.v_ ); /* ウイルスを感染させる */
             }
         }
         it_infected++;                          /* 次の感染者 */
     }
+}
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Administrator :: numHasAllVirus()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+int Administrator :: numHasAllVirus() {
+    int ret = 0;
+    FOR( i, NUM_A ) {
+        if( agent_[ i ].numHoldingVirus() == NUM_A ) ret++;
+    }
+    return ret;
 }
