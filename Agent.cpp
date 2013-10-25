@@ -152,3 +152,15 @@ int AgentManager :: numHasImmunity( __TagInterface &v ) {
     }
     return ret;
 }
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  AgentManager :: allResponse()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+void AgentManager :: allResponse() {
+    FOR( i, num_agent_ ) {
+        agent_[ i ].response();
+    }
+}

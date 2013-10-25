@@ -58,8 +58,9 @@ int main()
                                                 /* 感染確率は等しい  */
 
             agent[j].infection( v );            /* ウイルス v を感染させる */
-            agent[j].response();                /* そうでないなら免疫応答  */
         }
+
+        AM.allResponse();                       /* 免疫応答（タグフリップ） */
 
         // CALCULATE 
         healthyAll = 0;                         /* 全ウイルスへの免疫獲得者数 */
