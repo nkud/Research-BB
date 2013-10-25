@@ -55,26 +55,26 @@ void Agent :: infection( __TagInterface &v )
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Agent :: responce( __TagInterface & )
- * Description:  
+ * Description:  先頭のウイルスに対する免疫を獲得するまで、
+ *               １期間に１つタグをフリップさせていく。
  *--------------------------------------------------------------------------------------
  */
 void Agent :: response()
 {
-    if( vlist_.empty() ) return;                // 保持ウイルスなし、終了 
+    if( vlist_.empty() ) return;                /* 保持ウイルスなし、終了  */
 
-    std::list<VirusData>::iterator it = vlist_.begin();
-    while( it != vlist_.end() ) {
-        flip_once( tag_+it->sp_, it->v_->tag_, it->v_->len_ ); // ひとつフリップ 
+    LIST_ITERATOR it = vlist_.begin();
+    //    while( it != vlist_.end() ) {
+    flip_once( tag_+it->sp_, it->v_->tag_, it->v_->len_ ); /* ひとつフリップ  */
 
-        /* 免疫獲得すれば、データを削除する */
-        if( hasImmunity( *(it->v_) ) ) {
-            std::list<VirusData>::iterator ep = it;
-            it++;
-            vlist_.erase( ep );
-            continue;
-        }
-        it++;
+    if( hasImmunity( *(it->v_) ) ) {            /* 免疫獲得すれば */
+        std::list<VirusData>::iterator ep = it;
+//        it++;
+        vlist_.erase( ep );                     /* リストから v を削除 */
+//        continue;
     }
+//        it++;
+//    }
 }
 
 /* 
