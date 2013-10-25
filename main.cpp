@@ -54,6 +54,10 @@ int main()
     agent[0].printTag();
     agent[1].printTag();
 
+    for(int i=0; i<10; i++) {
+        agent[ i ].infection( virus[0] );
+    }
+
     FOR( i, TERM )                              /* 開始  */
     {
         log("start");
