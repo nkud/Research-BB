@@ -18,6 +18,8 @@
 #include "Virus.h"
 #include "Landscape.h"
 
+#include <vector>
+
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: Administrator( Agent *, Virus * )
@@ -84,20 +86,21 @@ void Administrator :: responseAgent() {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: relocateAgent() {
-    if( WIDTH*WIDTH < NUM_A-1 ) return;           /* 土地に人数が入らない！ */
+//     if( WIDTH*WIDTH < NUM_A-1 ) return;           /* 土地に人数が入らない！ */
 
     int tx, ty;                                 /* 移動させる場所 */
     FOR( i, NUM_A ) {
         tx = rand_interval_int( 0, WIDTH-1 );   /* ランダムに設定 */
         ty = rand_interval_int( 0, WIDTH-1 );
-        while( landscape_->map_[ tx ][ ty ] >= 0 ) { /* もし他の誰かがいたら */
-            tx += rand_sign() * 1;              /* となりを見てみる */
-            ty += rand_sign() * 1;
-            landscape_->putBackOnMap( tx, ty ); /* 土地の外なら戻す */
-        }
+//        while( landscape_->map_[ tx ][ ty ] >= 0 ) { /* もし他の誰かがいたら */
+//            tx += rand_sign() * 1;              /* となりを見てみる */
+//            ty += rand_sign() * 1;
+//            landscape_->putBackOnMap( tx, ty ); /* 土地の外なら戻す */
+//        }
         agent_[ i ].x_ = tx;                    /* 配置 */
         agent_[ i ].y_ = ty;
-        landscape_->map_[ tx ][ ty ] = i;       /* エージェントのナンバーを記録 */
+//        landscape_->map_[ tx ][ ty ] = i;       /* エージェントのナンバーを記録 */
+        landscape_->agent_map_[ tx ][ ty ].push_back( i );
         log(i);
     }
 }
@@ -123,19 +126,23 @@ void Administrator :: contactAgent() {
     Agent *myself;                              /* 感染者 */
 
     while( itv != infected_agent.end() ) {      /* 感染者リストの数だけ繰り返す */
-        myself = &agent_[ *itv ];               /* 感染者 */
+        myself = &agent_[ *itv ];               /* 感染者自身 */
         tx = myself->x_;                        /* 感染者自身の位置 */
         ty = myself->y_;
 
         REP( i, -1, 1 ) {                       /* 自分の縦横１マスに感染させる（計４マス） */
             REP( j, -1, 1 ) {
-                if( i*j != 0 ) continue;        /* 斜めはカウントしないのでスキップ */
+//                if( i*j != 0 ) continue;        /* 斜めはカウントしないのでスキップ */
                 if( !(landscape_->isOnMap( tx+i, ty+j )) ) continue; /* 土地からはみ出てたらスキップ */
 
                 tvdata =                        /* ランダムに保持ウイルスから選んで */
                     myself->vlist_.at( rand_array(myself->vlist_.size()) - 1 );
 
-                agent_[ landscape_->map_[tx+i][ty+j] ].infection( *tvdata.v_ ); /* ウイルスを感染させる */
+                std::vector<int>::iterator it = landscape_->agent_map_[ tx+i ][ ty+j ].begin();
+                while( it != landscape_->agent_map_[ tx+i ][ ty+j ].end() ) { /* その位置にいる人全員に */
+                    agent_[ *it ].infection( *tvdata.v_ ); /* ウイルスに感染させる */
+                }
+//                agent_[ landscape_->map_[tx+i][ty+j] ].infection( *tvdata.v_ ); /* ウイルスを感染させる */
             }
         }
         itv++;                                  /* 次の感染者 */

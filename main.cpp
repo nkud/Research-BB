@@ -80,7 +80,6 @@ int main()
             << AD.numHasImmunity( virus[0] ) << SEPARATOR            /* 免疫獲得者数  */
             << AD.numHasImmunity( virus[1] ) << SEPARATOR            /* 免疫獲得者数  */
             << healthyAll << endl;              /* 全免疫獲得者数  */
-        log(agent[0].x_);
     }
 
     // --------------- 
