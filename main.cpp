@@ -34,7 +34,7 @@ int main()
     Agent agent[ NUM_A ];                       /* エージェントは複数  */
     Virus virus[ NUM_V ] = {                    /* ウイルス生成  */
       // 1234567890
-        "1101001",
+        "1101001010",
         "1000100"
     };
     Landscape *landscape = new Landscape;       /* ランドスケープ初期化 */
@@ -45,7 +45,7 @@ int main()
     ofstream ofs_log("A_log.dat");              /* 出力ファイル  */
 
 
-    AD.initInfectAgentInRatio( virus[0], 0.5 );   /* 感染させる */
+    AD.initInfectAgentInRatio( virus[0], 0.1 );   /* 感染させる */
     AD.initInfectAgentInRatio( virus[1], 0.1 );
 
 
