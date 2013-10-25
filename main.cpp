@@ -45,7 +45,7 @@ int main()
     ofstream ofs_log("A_log.dat");              /* 出力ファイル  */
 
 
-    for(int i=0; i<1; i++) {                   /* 感染させる */
+    for(int i=0; i<1000; i++) {                   /* 感染させる */
         agent[ i ].infection( virus[0] );
     }
     for(int i=10; i<15; i++) {
@@ -72,7 +72,7 @@ int main()
 
     // log
     FOR(i, NUM_A) {
-        FOR(j, agent[0].len_) ofs_log<<agent[0].tag_[j];
+        FOR(j, agent[0].len_) ofs_log<<agent[i].tag_[j];
         ofs_log<<" "<<agent[i].numHoldingVirus();
         ofs_log<<endl;
     }
