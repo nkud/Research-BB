@@ -35,7 +35,7 @@ class Administrator {
         int numIsInfected( __TagInterface & );  /* v に感染している人の数 */
         int numHasImmunity( __TagInterface & ); /* v の免疫獲得者数 */
 
-        void allResponse();
+        void responseAgent();
         void relocateAgent();
         void contactAgent();
 };

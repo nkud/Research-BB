@@ -16,7 +16,7 @@
 
 #include "Global.h"
 #include "TagInterface.h"
-#include <list>
+#include <vector>
 
 class VirusData;
 class Agent;
@@ -33,7 +33,8 @@ struct VirusData                                /* 保持ウイルスデータ  
     __TagInterface *v_;                         /* 保持ウイルスへのポインタ  */
     int sp_;                                    /* スタートポイント  */
 
-    VirusData( __TagInterface *v, int sp ) :    /* データの初期化 */
+    VirusData(): v_( 0 ), sp_( 0 ) {};
+    VirusData( __TagInterface *v, int sp ):    /* データの初期化 */
         v_(v), sp_(sp) {};
 };
 

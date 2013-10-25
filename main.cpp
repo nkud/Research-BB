@@ -24,21 +24,21 @@ using namespace std;
 #include "Monitor.h"
 #include "Administrator.h"
 
-const int TERM  = 30;                          /* 期間  */
+const int TERM  = 30;                           /* 期間  */
 
 int main()
 {
     srand((unsigned int)time(NULL)/2);          /* 乱数初期化  */
 
     Agent agent[ NUM_A ];                       /* エージェントは複数  */
-                                                /* エージェントをまとめて動かす */
+    /* エージェントをまとめて動かす */
 
     Virus virus[ NUM_V ] = {                    /* ウイルス生成  */
-      /* 123456789012345 */
+        /* 123456789012345 */
         "1111110011",
         "1000111101"
     };
-    Monitor &monitor = Monitor::getInstance();  /* エージェントを内部からモニター */
+    //    Monitor &monitor = Monitor::getInstance();  /* エージェントを内部からモニター */
     Landscape *landscape = new Landscape;       /* ランドスケープ初期化 */
 
     Administrator AD( agent, virus, landscape ); /* 管理者に登録 */
@@ -56,17 +56,16 @@ int main()
 
     FOR( i, TERM )                              /* 開始  */
     {
+        log("start");
+
+        log("relocateAgent");
         AD.relocateAgent();                     /* 再配置 */
 
-        FOR( j, NUM_A )                         /* エージェント全員に対して  */
-        {
-            Virus &v = virus[ rand_array(NUM_V) ]; /* ランダムにウイルスを選ぶ  */
-                                                /* 感染確率は等しい  */
+        log("contactAgent");
+        AD.contactAgent();                      /* 感染 */
 
-            agent[j].infection( v );            /* ウイルス v を感染させる */
-        }
-
-        AD.allResponse();                       /* 免疫応答（タグフリップ） */
+        log("responseAgent");
+        AD.responseAgent();                     /* 免疫応答（タグフリップ） */
 
         // CALCULATE 
         healthyAll = 0;                         /* 全ウイルスへの免疫獲得者数 */
