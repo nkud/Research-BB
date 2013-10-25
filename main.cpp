@@ -24,7 +24,7 @@ using namespace std;
 #include "Monitor.h"
 #include "Administrator.h"
 
-const int TERM  = 50;                           /* 期間  */
+const int TERM  = 100;                           /* 期間  */
 
 int main()
 {
@@ -34,7 +34,7 @@ int main()
     Agent agent[ NUM_A ];                       /* エージェントは複数  */
     Virus virus[ NUM_V ] = {                    /* ウイルス生成  */
       // 123456789
-        "1101100101",
+        "1101001",
         "1000100110"
     };
     Landscape *landscape = new Landscape;       /* ランドスケープ初期化 */
@@ -69,5 +69,13 @@ int main()
             << AD.numHasVirus( virus[1] ) << SEPARATOR            /* ウイルス１保持者 */
             << AD.numHasAllVirus() << endl;     /* 全ウイルス保持者 */
     }
+
+    // log
+    FOR(i, NUM_A) {
+        FOR(j, agent[0].len_) ofs_log<<agent[0].tag_[j];
+        ofs_log<<" "<<agent[i].numHoldingVirus();
+        ofs_log<<endl;
+    }
+    //
     return 0;
 }
