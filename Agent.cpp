@@ -13,9 +13,9 @@
 #include "Agent.h"
 #include "Function.h"
 
-#include <list>
+#include <vector>
 
-#define LIST_ITERATOR std::list<VirusData>::iterator
+#define LIST_ITERATOR std::vector<VirusData>::iterator
 
 /*
  *--------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ Agent :: Agent() :
  */
 void Agent :: infection( __TagInterface &v )
 {
-    std::list<VirusData>::iterator it = vlist_.begin();
+    std::vector<VirusData>::iterator it = vlist_.begin();
     while( it != vlist_.end() ) {             // 既に保持しているウイルスなら終了 
         if( it->v_ == &v ) {
             return;
@@ -71,7 +71,7 @@ void Agent :: response()
     flip_once( tag_+it->sp_, it->v_->tag_, it->v_->len_ ); /* ひとつフリップ  */
 
     if( hasImmunity( *(it->v_) ) ) {            /* 免疫獲得すれば */
-        std::list<VirusData>::iterator ep = it;
+        std::vector<VirusData>::iterator ep = it;
 //        it++;
         vlist_.erase( ep );                     /* リストから v を削除 */
 //        continue;

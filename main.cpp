@@ -56,6 +56,8 @@ int main()
 
     FOR( i, TERM )                              /* 開始  */
     {
+        AD.relocateAgent();                     /* 再配置 */
+
         FOR( j, NUM_A )                         /* エージェント全員に対して  */
         {
             Virus &v = virus[ rand_array(NUM_V) ]; /* ランダムにウイルスを選ぶ  */
@@ -79,6 +81,7 @@ int main()
             << AD.numHasImmunity( virus[0] ) << SEPARATOR            /* 免疫獲得者数  */
             << AD.numHasImmunity( virus[1] ) << SEPARATOR            /* 免疫獲得者数  */
             << healthyAll << endl;              /* 全免疫獲得者数  */
+        log(agent[0].x_);
     }
 
     // --------------- 

@@ -37,5 +37,6 @@ class Administrator {
 
         void allResponse();
         void relocateAgent();
+        void contactAgent();
 };
 

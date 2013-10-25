@@ -18,15 +18,38 @@ Landscape :: Landscape() :
 {
     FOR( i, WIDTH ) {
         FOR( j, WIDTH ) {
-            map_[ i ][ j ] = 0;
+            map_[ i ][ j ] = -1;
         }
     }
 }
 
-bool Landscape :: isOnMap( int x, int y) {
-    if( x < 0 ) return false;
-    if( y < 0 ) return false;
-    if( x > WIDTH-1 ) return false;
-    if( y > WIDTH-1 ) return false;
+void Landscape :: putBackOnMap( int &x, int &y) {
+    if( x < 0 ) {
+        x = 0;
+    }
+    if( y < 0 ) {
+        y = 0;
+    }
+    if( x > WIDTH-1 ) {
+        x = WIDTH-1;
+    }
+    if( y > WIDTH-1 ) {
+        y = WIDTH-1;
+    }
+}
+
+bool Landscape :: isOnMap( const int x, const int y) {
+    if( x < 0 ) {
+        return false;
+    }
+    if( y < 0 ) {
+        return false;
+    }
+    if( x > WIDTH-1 ) {
+        return false;
+    }
+    if( y > WIDTH-1 ) {
+        return false;
+    }
     return true;
 }

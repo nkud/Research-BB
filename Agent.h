@@ -51,7 +51,7 @@ class Agent : public __TagInterface
 
     public:
         int x_, y_;
-        std::list<VirusData> vlist_;            /* 保持ウイルスのリスト */
+        std::vector<VirusData> vlist_;            /* 保持ウイルスのリスト */
         Agent();                                /* コンストラクタ  */
 
         void infection( __TagInterface & );     /* 感染プロセス  */
