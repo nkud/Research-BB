@@ -88,6 +88,7 @@ void Administrator :: responseAgent() {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: relocateAgent() {
+    landscape_->clearAgentMap();                 /* エージェントの位置をリセット */
     int tx, ty;                                 /* 移動させる場所 */
     FOR( i, NUM_A ) {
         tx = rand_interval_int( 0, WIDTH-1 );   /* ランダムに設定 */
@@ -152,7 +153,7 @@ void Administrator :: contactAgent() {
 int Administrator :: numHasAllVirus() {
     int ret = 0;
     FOR( i, NUM_A ) {
-        if( agent_[ i ].numHoldingVirus() == NUM_A ) ret++;
+        if( agent_[ i ].numHoldingVirus() == NUM_V ) ret++;
     }
     return ret;
 }

@@ -53,3 +53,17 @@ bool Landscape :: isOnMap( const int x, const int y) {
     }
     return true;
 }
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Landscape :: clearAgentMap()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+void Landscape :: clearAgentMap() {
+    FOR( i, WIDTH ) {
+        FOR( j, WIDTH ) {
+            agent_map_[ i ][ j ].clear();
+        }
+    }
+}
