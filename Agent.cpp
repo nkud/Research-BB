@@ -27,7 +27,7 @@ Agent :: Agent() :
     __TagInterface( TAG_LEN_A ),
     x_( 0 ),
     y_( 0 )
-{               // タグの長さを初期化 
+{                                               // タグの長さを初期化 
     FOR( i, TAG_LEN_A ) {                       // タグをランダムに初期化 
         tag_[ i ] = rand_binary();
     }
@@ -41,7 +41,7 @@ Agent :: Agent() :
 void Agent :: infection( __TagInterface &v )
 {
     std::vector<VirusData>::iterator it = vlist_.begin();
-    while( it != vlist_.end() ) {             // 既に保持しているウイルスなら終了 
+    while( it != vlist_.end() ) {               // 既に保持しているウイルスなら終了 
         if( it->v_ == &v ) {
             return;
         }
@@ -66,18 +66,12 @@ void Agent :: response()
 {
     if( vlist_.empty() ) return;                /* 保持ウイルスなし、終了  */
 
-    LIST_ITERATOR it = vlist_.begin();
-    //    while( it != vlist_.end() ) {
+    LIST_ITERATOR it = vlist_.begin();          /* 先頭のウイルスに対し */
     flip_once( tag_+it->sp_, it->v_->tag_, it->v_->len_ ); /* ひとつフリップ  */
 
     if( hasImmunity( *(it->v_) ) ) {            /* 免疫獲得すれば */
-        std::vector<VirusData>::iterator ep = it;
-//        it++;
-        vlist_.erase( ep );                     /* リストから v を削除 */
-//        continue;
+        vlist_.erase( it );                     /* リストから v を削除 */
     }
-//        it++;
-//    }
 }
 
 /* 
@@ -103,12 +97,12 @@ bool Agent :: hasImmunity( __TagInterface &v )  // true -> 免疫獲得済み
 bool Agent :: isInfected( __TagInterface &v ) {
     LIST_ITERATOR it = vlist_.begin();
     while( it != vlist_.end() ) {
-        if( it->v_ == &v ) { // 感染済みだった
+        if( it->v_ == &v ) {                    // 感染済みだった
             return true;
         }
         it++;
     }
-    return false; // 未感染だった
+    return false;                               // 未感染だった
 }
 
 /*
