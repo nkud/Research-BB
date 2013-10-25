@@ -22,3 +22,11 @@ Landscape :: Landscape() :
         }
     }
 }
+
+bool Landscape :: isOnMap( int x, int y) {
+    if( x < 0 ) return false;
+    if( y < 0 ) return false;
+    if( x > WIDTH-1 ) return false;
+    if( y > WIDTH-1 ) return false;
+    return true;
+}
