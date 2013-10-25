@@ -17,3 +17,7 @@ Monitor& Monitor :: getInstance() {
     static Monitor coredata;
     return coredata;
 }
+
+void Monitor :: resetAll() {
+    count_infection_contact_ = 0;
+}

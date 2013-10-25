@@ -28,7 +28,7 @@ const int NUM_V     = 2     ;                   /* ウイルスの種類  */
 const int NUM_A     = 10000 ;                   /* エージェントの数  */
 
 const int TAG_LEN_A = 10    ; 
-const int TAG_LEN_V = 5     ;                   /* ウイルスのタグの長さ */
+const int TAG_LEN_V = 10    ;                   /* ウイルスのタグの長さ */
 
 template < typename T >                         /* デバッグ用 */
 void log(T str) { int static i=0;std::cout<<i++<<":"<<str<<std::endl; }

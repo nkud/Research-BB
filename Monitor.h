@@ -14,7 +14,6 @@
 #ifndef ___MONITOR
 #define ___MONITOR
 
-
 /*
  * =====================================================================================
  *        Class:  Monitor
@@ -23,13 +22,13 @@
  */
 class Monitor {
     private:
-        Monitor() {}                            /* コンストラクタ */
+        Monitor(): count_infection_contact_( 0 ) {};                              /* コンストラクタ */
     public:
         static Monitor& getInstance();
 
         int count_infection_contact_;
 
-        void resetAll();                           /* 値をすべてリセット */
+        void resetAll();                 /* 値をすべてリセット */
 };
 
 #endif
