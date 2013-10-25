@@ -2,7 +2,7 @@ CC     = g++
 PRINT  = /bin/echo
 
 TARGET = main.out
-SRC    = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp Monitor.cpp
+SRC    = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp Monitor.cpp Administrator.cpp Landscape.cpp
 OBJ    = $(SRC:.cpp=.o)
 LIB    = $(SRC:.cpp=.h)
 
