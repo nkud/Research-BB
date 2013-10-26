@@ -26,7 +26,7 @@ using namespace std;
 
 #define HAS_VIRUS_FNAME     "A_hasVirus.dat"
 
-const int TERM  = 1000;                          /* 期間  */
+const int TERM  = 200;                          /* 期間  */
 
 int main()
 {
@@ -44,9 +44,8 @@ int main()
 
     Administrator AD( agent, virus, landscape ); /* 管理者に登録 */
 
-    AD.initInfectAgentInRatio( virus[0], 0.2 ); /* 感染させる */
+    AD.initInfectAgentInRatio( virus[0], 1.0 ); /* 感染させる */
     AD.initInfectAgentInRatio( virus[1], 0.2 );
-    AD.initInfectAgentInRatio( virus[2], 0.2 );
 
     Monitor::getInstance().resetAll();          /* モニターのカウンターをリセット */
 
