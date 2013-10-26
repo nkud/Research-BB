@@ -27,6 +27,7 @@ class Virus : public __TagInterface             /* ウイルスのクラス*/
 {
     public:
         Virus( const char * );                  /* コンストラクタ */
+        Virus( int );                           /* コンストラクタ */
         Virus();                                /* コンストラクタ */
 };
 

@@ -178,14 +178,15 @@ void Administrator :: initInfectAgentInRatio( Virus &v, double r ) {
 
 /*--------------------------------------------------------------------------------------
  *      Method:  Administrator :: outputFile_HasVirus
- * Description:  
+ * Description:  ファイルに出力する
+ *               ウイルスの数によって、列を調整できる
  *----------------------------------------------------------------------------------- */
 void Administrator :: outputFile_HasVirus( const char *fname ) {
-    static std::ofstream ofs(fname);
-    static int i = 0;
-    ofs << i++ << SEPARATOR;                  /* ファイルに出力 */
+    static std::ofstream ofs(fname);            /* インスタンスは１つだけ */
+    static int i = 0;                           /* 期間をカウント */
+    ofs << i++ << SEPARATOR;                    /* ファイルに出力 */
     FOR( j, NUM_V ) {
-        ofs << numHasVirus( virus_[j] ) << SEPARATOR;            /* ウイルス i 保持者 */
+        ofs << numHasVirus( virus_[j] ) << SEPARATOR;            /* ウイルス i の保持者 */
     }
-    ofs << numHasAllVirus() << std::endl;     /* 全ウイルス保持者 */
+    ofs << numHasAllVirus() << std::endl;       /* 全ウイルス保持者 */
 }
