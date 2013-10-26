@@ -35,8 +35,8 @@ int main()
     // 初期化
     Agent agent[ NUM_A ];                       /* エージェントの集合  */
     Virus virus[ NUM_V ] = {                    /* ウイルス生成  */
-        15,                                     /* 長さ、タグなど初期化 */
-        12
+        20,                                     /* 長さ、タグなど初期化 */
+        15
 //        "01010110",
 //        "10000110"
     };
@@ -44,8 +44,8 @@ int main()
 
     Administrator AD( agent, virus, landscape ); /* 管理者に登録 */
 
-    AD.initInfectAgentInRatio( virus[0], 0.1 ); /* 感染させる */
-    AD.initInfectAgentInRatio( virus[1], 0.5 );
+    AD.initInfectAgentInRatio( virus[0], 0.5 ); /* 感染させる */
+    AD.initInfectAgentInRatio( virus[1], 0.8 );
 
     Monitor::getInstance().resetAll();          /* モニターのカウンターをリセット */
 
