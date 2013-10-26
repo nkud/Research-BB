@@ -80,7 +80,7 @@ void Agent :: response()
 /* 
  *--------------------------------------------------------------------------------------
  *      Method:  Agent :: hasImmunity( __TagInterface & )
- * Description:  
+ * Description:  免疫を獲得しているかどうか
  *--------------------------------------------------------------------------------------
  */
 bool Agent :: hasImmunity( __TagInterface &v )  // true -> 免疫獲得済み 
@@ -107,6 +107,12 @@ bool Agent :: isInfected( __TagInterface &v ) {
     }
     return false;                               // 未感染だった
 }
+
+/*--------------------------------------------------------------------------------------
+ *      Method:  Agent :: hasVirus( __TagInterface & )
+ * Description:  特定のウイルスを保持しているかどうか
+ *               リストを走査することで確かめる
+ *----------------------------------------------------------------------------------- */
 bool Agent :: hasVirus( __TagInterface &v ) {
     LIST_ITERATOR it = vlist_.begin();
     while( it != vlist_.end() ) {
@@ -121,7 +127,7 @@ bool Agent :: hasVirus( __TagInterface &v ) {
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Agent :: numHoldingVirus()
- * Description:  
+ * Description:  保持しているウイルスの数
  *--------------------------------------------------------------------------------------
  */
 int Agent :: numHoldingVirus() {
