@@ -77,7 +77,7 @@ int main()
         ofs_log<<"["<<virus[i].tag_<<"]:";
         FOR(j, agent[i].len_) {
             ofs_log<<virus[i].tag_[j];
-        } cout<<endl;
+        } ofs_log<<endl;
     }
     FOR(i, NUM_A) {
         FOR(j, agent[0].len_) ofs_log<<agent[i].tag_[j];
