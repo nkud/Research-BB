@@ -19,6 +19,7 @@
 #include "Landscape.h"
 
 #include <vector>
+#include <fstream>
 
 #define INT_ITERATOR    std::vector<int>::iterator
 
@@ -173,4 +174,18 @@ void Administrator :: initInfectAgentInRatio( Virus &v, double r ) {
         };
         agent_[ i ].infection( v );
     }
+}
+
+/*--------------------------------------------------------------------------------------
+ *      Method:  Administrator :: outputFile_HasVirus
+ * Description:  
+ *----------------------------------------------------------------------------------- */
+void Administrator :: outputFile_HasVirus( const char *fname ) {
+    static std::ofstream ofs(fname);
+    static int i = 0;
+    ofs << i++ << SEPARATOR;                  /* ファイルに出力 */
+    FOR( j, NUM_V ) {
+        ofs << numHasVirus( virus_[j] ) << SEPARATOR;            /* ウイルス i 保持者 */
+    }
+    ofs << numHasAllVirus() << std::endl;     /* 全ウイルス保持者 */
 }

@@ -29,6 +29,7 @@ class Monitor {
         int count_infection_contact_;
 
         void resetAll();                 /* 値をすべてリセット */
+        void generatePlotScript();
 };
 
 #endif

@@ -34,19 +34,30 @@ int main()
     Agent agent[ NUM_A ];                       /* エージェントは複数  */
     Virus virus[ NUM_V ] = {                    /* ウイルス生成  */
       // 1234567890
-        "110101010",
-        "100010110"
+//        "01010110",
+//        "10000110"
     };
     Landscape *landscape = new Landscape;       /* ランドスケープ初期化 */
 
     Administrator AD( agent, virus, landscape ); /* 管理者に登録 */
 
-    ofstream ofs("A_hasVirus.dat");             /* 出力ファイル  */
+    // ofstream ofs("A_hasVirus.dat");             /* 出力ファイル  */
     ofstream ofs_log("A_log.dat");              /* 出力ファイル  */
 
 
     AD.initInfectAgentInRatio( virus[0], 0.1 );   /* 感染させる */
-    AD.initInfectAgentInRatio( virus[1], 1.0 );
+    AD.initInfectAgentInRatio( virus[1], 0.5 );
+//    AD.initInfectAgentInRatio( virus[2], 0.5 );
+//    AD.initInfectAgentInRatio( virus[3], 0.5 );
+//    AD.initInfectAgentInRatio( virus[4], 0.5 );
+//    AD.initInfectAgentInRatio( virus[5], 0.5 );
+//    AD.initInfectAgentInRatio( virus[6], 0.5 );
+//    AD.initInfectAgentInRatio( virus[7], 0.5 );
+//    AD.initInfectAgentInRatio( virus[8], 0.5 );
+//    AD.initInfectAgentInRatio( virus[9], 0.5 );
+//    FOR( i, NUM_V ) {
+//        AD.initInfectAgentInRatio( virus[ i ], 0.1 );
+//    }
 
     Monitor::getInstance().resetAll();
     log(Monitor::getInstance().count_infection_contact_);
@@ -61,13 +72,14 @@ int main()
         AD.contactAgent();                      /* 感染 */
         AD.responseAgent();                     /* 免疫応答（タグフリップ） */
 
-        // OUTPUT 
-        ofs << i << SEPARATOR                   /* ファイルに出力 */
-            << AD.numHasVirus( virus[0] ) << SEPARATOR            /* ウイルス０保持者 */
-            << AD.numHasVirus( virus[1] ) << SEPARATOR            /* ウイルス１保持者 */
-            << AD.numHasAllVirus() << endl;     /* 全ウイルス保持者 */
+        AD.outputFile_HasVirus("A_hasVirus.dat"); /* ファイルに出力 */
+
         log(Monitor::getInstance().count_infection_contact_);
     }
+
+    Monitor::getInstance().generatePlotScript();  /* gnuplot用スクリプト */
+    
+    FOR( i, NUM_V ) virus[ i ].printTag();
 
     // log
     FOR(i, NUM_A) {

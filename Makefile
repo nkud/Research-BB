@@ -37,4 +37,4 @@ rebuild: tags build run
 
 plot:
 	@echo [ plot start ]
-	@gnuplot plot.gpi
+	@gnuplot plot2.gpi
