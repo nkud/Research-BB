@@ -73,6 +73,12 @@ int main()
 
     // エージェントの最終的な状態
     ofstream ofs_log("A_log.dat");              /* 出力ファイル  */
+    FOR(i,NUM_V) {
+        ofs_log<<"["<<virus[i].tag_<<"]:";
+        FOR(j, agent[i].len_) {
+            ofs_log<<virus[i].tag_[j];
+        } cout<<endl;
+    }
     FOR(i, NUM_A) {
         FOR(j, agent[0].len_) ofs_log<<agent[i].tag_[j];
         ofs_log<<" "<<agent[i].numHoldingVirus();
