@@ -45,11 +45,11 @@ int Administrator :: numHasVirus( __TagInterface &v ) {
     int ret = 0;
 
     FOR( i, NUM_A ) {
-        if( agent_[i].isInfected( v ) ) {       /* v に感染していれば */
-            ret++;                              /* インクリメント */
+        if( agent_[i].isInfected( v ) ) {                  /* v に感染していれば */
+            ret++;                                         /* インクリメント */
         }
     }
-    return ret;                                 /* v の感染者数を返す */
+    return ret;                                            /* v の感染者数を返す */
 }
 
 /*
@@ -89,12 +89,12 @@ void Administrator :: responseAgent() {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: relocateAgent() {
-    landscape_->clearAgentMap();                 /* エージェントの位置をリセット */
-    int tx, ty;                                 /* 移動させる場所 */
+    landscape_->clearAgentMap();                           /* エージェントの位置をリセット */
+    int tx, ty;                                            /* 移動させる場所 */
     FOR( i, NUM_A ) {
-        tx = rand_interval_int( 0, WIDTH-1 );   /* ランダムに設定 */
+        tx = rand_interval_int( 0, WIDTH-1 );              /* ランダムに設定 */
         ty = rand_interval_int( 0, WIDTH-1 );
-        agent_[ i ].x_ = tx;                    /* 配置 */
+        agent_[ i ].x_ = tx;                               /* 配置 */
         agent_[ i ].y_ = ty;
         landscape_->agent_map_[ tx ][ ty ].push_back( i ); /* エージェントを登録 */
     }
@@ -167,17 +167,14 @@ int Administrator :: numHasAllVirus() {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: initInfectAgentInRatio( Virus &v, double r ) {
-    static int infected_from = 0;            /* ０番目のエージェントから順に感染させる */
+    static int infected_from = 0;                          /* ０番目のエージェントから順に感染させる */
     int infected_to;
     infected_to = infected_from + (int)( NUM_A * r );
     int n;
     REP( i, infected_from, infected_to ) {
-//        while( agent_[ n=rand_array(NUM_A) ].hasVirus( v ) ) {
-//            n = (n+1) % NUM_A;
-//        };
         agent_[ i%NUM_A ].infection( v );
     }
-    infected_from = ( infected_to + 1 ) % NUM_A;            /* 次の感染は、感染した次のエージェントから始まる */
+    infected_from = ( infected_to + 1 ) % NUM_A;           /* 次の感染は、感染した次のエージェントから始まる */
 }
 
 /*--------------------------------------------------------------------------------------
@@ -186,11 +183,11 @@ void Administrator :: initInfectAgentInRatio( Virus &v, double r ) {
  *               ウイルスの数によって、列を調整できる
  *----------------------------------------------------------------------------------- */
 void Administrator :: outputFile_HasVirus( const char *fname ) {
-    static std::ofstream ofs(fname);            /* インスタンスは１つだけ */
-    static int i = 0;                           /* 期間をカウント */
-    ofs << i++ << SEPARATOR;                    /* ファイルに出力 */
+    static std::ofstream ofs(fname);                       /* インスタンスは１つだけ */
+    static int i = 0;                                      /* 期間をカウント */
+    ofs << i++ << SEPARATOR;                               /* ファイルに出力 */
     FOR( j, NUM_V ) {
-        ofs << numHasVirus( virus_[j] ) << SEPARATOR;            /* ウイルス i の保持者 */
+        ofs << numHasVirus( virus_[j] ) << SEPARATOR;      /* ウイルス i の保持者 */
     }
-    ofs << numHasAllVirus() << std::endl;       /* 全ウイルス保持者 */
+    ofs << numHasAllVirus() << std::endl;                  /* 全ウイルス保持者 */
 }
