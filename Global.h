@@ -22,7 +22,7 @@
 
 typedef int tag_t   ; 
 
-const int WIDTH     = 120   ;                   /* ランドスケープの幅 */
+const int WIDTH     = 200   ;                   /* ランドスケープの幅 */
 
 const int NUM_V     = 2     ;                   /* ウイルスの種類  */
 const int NUM_A     = 10000 ;                   /* エージェントの数  */

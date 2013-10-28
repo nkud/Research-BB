@@ -26,7 +26,7 @@ using namespace std;
 
 #define HAS_VIRUS_FNAME     "A_hasVirus.dat"
 
-const int TERM  = 500;                                     /* 期間  */
+const int TERM  = 200;                                     /* 期間  */
 
 int main()
 {
@@ -35,10 +35,10 @@ int main()
     // 初期化
     Agent agent[ NUM_A ];                                  /* エージェントの集合  */
     Virus virus[ NUM_V ] = {                               /* ウイルス生成  */
-        15,                                                /* 長さ、タグなど初期化 */
-        15
-//        "11011010101010001100",
-//        "00011100111001111011"
+        12,                                                /* 長さ、タグなど初期化 */
+        12
+//        "111110000100000",
+//        "101110001111110"
     };
     Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
 
@@ -46,23 +46,25 @@ int main()
 
     Monitor &monitor = Monitor::Instance();                /* モニター */
 
-    AD.initInfectAgentInRatio( virus[0], 0.2 );            /* 感染させる */
-    AD.initInfectAgentInRatio( virus[1], 0.2 );
+    AD.initInfectAgentInRatio( virus[0], 0.1 );            /* 感染させる */
+    AD.initInfectAgentInRatio( virus[1], 0.1 );
 
     /* 計測開始 */
     FOR( i, TERM )                                         /* 計算開始  */
     {
         log("------------ start");
 
-        monitor.resetAll();                    /* カウンターをリセット */
+        monitor.resetAll();                     /* カウンターをリセット */
 
-        AD.relocateAgent();                                /* ランダムに再配置 */
+        AD.relocateAgent();                     /* ランダムに再配置 */
         AD.contactAgent();                                 /* 近隣に感染させる */
         AD.responseAgent();                                /* 免疫応答（タグフリップ） */
 
         /* 出力 */
         AD.outputFile_HasVirus( HAS_VIRUS_FNAME );         /* 出力: ウイルスの保持状況 */
         AD.outputFile_InfectionContactRatio( "A_infectionContact.dat" );         /* 出力: ウイルスの保持状況 */
+
+        log(monitor.num_infection_contact_);
     }
 
     monitor.generatePlotScript();                          /* gnuplot用スクリプト */
