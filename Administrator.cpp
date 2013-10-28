@@ -103,7 +103,7 @@ void Administrator :: relocateAgent() {
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: contactAgent()
- * Description:  自分の周囲（自マス含め９マス）に対して
+ * Description:  自分の縦横自マス（計５マス）に対して
  *               自分の保持ウイルスリストからランダムに１つ選び出し全員に感染させる
  *--------------------------------------------------------------------------------------
  */
@@ -126,7 +126,7 @@ void Administrator :: contactAgent() {
         tx = myself->x_;                                   /* 感染者自身の位置 */
         ty = myself->y_;
 
-        REP( i, -1, 1 ) {                                  /* 自分の周囲１マスに感染させる（計９マス） */
+        REP( i, -1, 1 ) {                                  /* 自分の縦・横・自マスに感染させる（計５マス） */
             REP( j, -1, 1 ) {
                 if( i*j != 0 ) continue;
                 if( !(landscape_->isOnMap( tx+i, ty+j )) ) continue; /* 土地からはみ出てたらスキップ */
@@ -167,14 +167,17 @@ int Administrator :: numHasAllVirus() {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: initInfectAgentInRatio( Virus &v, double r ) {
-    int infected_num = (int)( NUM_A * r );
+    static int infected_from = 0;            /* ０番目のエージェントから順に感染させる */
+    int infected_to;
+    infected_to = infected_from + (int)( NUM_A * r );
     int n;
-    FOR( i, infected_num ) {
-        while( agent_[ n=rand_array(NUM_A) ].hasVirus( v ) ) {
-            n = (n+1) % NUM_A;
-        };
-        agent_[ i ].infection( v );
+    REP( i, infected_from, infected_to ) {
+//        while( agent_[ n=rand_array(NUM_A) ].hasVirus( v ) ) {
+//            n = (n+1) % NUM_A;
+//        };
+        agent_[ i%NUM_A ].infection( v );
     }
+    infected_from = ( infected_to + 1 ) % NUM_A;            /* 次の感染は、感染した次のエージェントから始まる */
 }
 
 /*--------------------------------------------------------------------------------------
