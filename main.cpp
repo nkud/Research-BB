@@ -26,7 +26,7 @@ using namespace std;
 
 #define HAS_VIRUS_FNAME     "A_hasVirus.dat"
 
-const int TERM  = 200;                                     /* 期間  */
+const int TERM  = 500;                                     /* 期間  */
 
 int main()
 {
@@ -35,8 +35,8 @@ int main()
     // 初期化
     Agent agent[ NUM_A ];                                  /* エージェントの集合  */
     Virus virus[ NUM_V ] = {                               /* ウイルス生成  */
-        20,                                                /* 長さ、タグなど初期化 */
-        20
+        15,                                                /* 長さ、タグなど初期化 */
+        15
 //        "11011010101010001100",
 //        "00011100111001111011"
     };
@@ -46,7 +46,7 @@ int main()
 
     Monitor &monitor = Monitor::Instance();                /* モニター */
 
-    AD.initInfectAgentInRatio( virus[0], 1.0 );            /* 感染させる */
+    AD.initInfectAgentInRatio( virus[0], 0.2 );            /* 感染させる */
     AD.initInfectAgentInRatio( virus[1], 0.2 );
 
     /* 計測開始 */
