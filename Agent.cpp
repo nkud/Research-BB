@@ -27,7 +27,8 @@
 Agent :: Agent() :
     __TagInterface( TAG_LEN_A ),
     x_( 0 ),
-    y_( 0 )
+    y_( 0 ),
+    monitor_( Monitor::Instance() )
 {                                               // タグの長さを初期化 
     FOR( i, TAG_LEN_A ) {                       // タグをランダムに初期化 
         tag_[ i ] = rand_binary();
@@ -55,7 +56,7 @@ void Agent :: infection( __TagInterface &v )
     VirusData vdata( &v, min_ham_distance( tag_, v.tag_, len_, v.len_ ) ); // スタートポイント 
     vlist_.push_back( vdata );
 
-    Monitor::Instance().countUpInfectionContact();       /* 感染のために接触した回数を増やす */
+    monitor_.countUpInfectionContact();       /* 感染のために接触した回数を増やす */
 }
 
 /*

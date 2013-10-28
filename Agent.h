@@ -48,7 +48,7 @@ struct VirusData                                /* 保持ウイルスデータ  
 class Agent : public __TagInterface
 {
     private:
-        Monitor *monitor_;
+        Monitor &monitor_;
 
     public:
         int x_, y_;

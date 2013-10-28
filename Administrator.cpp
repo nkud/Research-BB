@@ -33,7 +33,8 @@
 Administrator :: Administrator( Agent *a, Virus *v, Landscape *l ) :
     agent_( a ),
     virus_( v ),
-    landscape_( l )
+    landscape_( l ),
+    monitor_( Monitor::Instance() )
 {}
 
 /*
@@ -205,11 +206,11 @@ void Administrator :: outputFile_InfectionContactRatio( const char *fname ) {
     static int i = 0;                                      /* 期間をカウント */
     double ratio = 0;
     ofs << i++ << SEPARATOR;                               /* ファイルに出力 */
-    if( Monitor::Instance().num_contact_ == 0 ||
-            Monitor::Instance().num_infection_contact_ == 0) 
+    if( monitor_.num_contact_ == 0 ||
+            monitor_.num_infection_contact_ == 0) 
         ratio = 0;
     else
-        ratio = (double)Monitor::Instance().num_infection_contact_ /
-            (double)Monitor::Instance().num_contact_;
+        ratio = (double)monitor_.num_infection_contact_ /
+            (double)monitor_.num_contact_;
     ofs << ratio << std::endl;      /* ウイルス i の保持者 */
 }

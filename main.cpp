@@ -44,18 +44,17 @@ int main()
 
     Administrator AD( agent, virus, landscape );           /* 管理者に登録 */
 
+    Monitor &monitor = Monitor::Instance();                /* モニター */
+
     AD.initInfectAgentInRatio( virus[0], 1.0 );            /* 感染させる */
     AD.initInfectAgentInRatio( virus[1], 0.2 );
-
-    Monitor::Instance().resetAll();                     /* モニターのカウンターをリセット */
 
     /* 計測開始 */
     FOR( i, TERM )                                         /* 計算開始  */
     {
         log("------------ start");
 
-        Monitor::Instance().resetAll();                 /* カウンターをリセット */
-//        Monitor::Instance().num_infection_contact_ = 0; /* XXX: 関数化 */
+        monitor.resetAll();                    /* カウンターをリセット */
 
         AD.relocateAgent();                                /* ランダムに再配置 */
         AD.contactAgent();                                 /* 近隣に感染させる */
@@ -66,11 +65,11 @@ int main()
         AD.outputFile_InfectionContactRatio( "A_infectionContact.dat" );         /* 出力: ウイルスの保持状況 */
 //        log( Monitor::Instance().num_infection_contact_ );
 //        log( Monitor::Instance().num_contact_ );
-        log( (double)Monitor::Instance().num_infection_contact_/
-                Monitor::Instance().num_contact_);
+        log( (double)monitor.num_infection_contact_/
+                monitor.num_contact_);
     }
 
-    Monitor::Instance().generatePlotScript();           /* gnuplot用スクリプト */
+    monitor.generatePlotScript();                          /* gnuplot用スクリプト */
     
     FOR( i, NUM_V ) virus[ i ].printTag();                 /* 全ウイルスのタグを表示 */
 
