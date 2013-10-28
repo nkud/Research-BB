@@ -63,10 +63,6 @@ int main()
         /* 出力 */
         AD.outputFile_HasVirus( HAS_VIRUS_FNAME );         /* 出力: ウイルスの保持状況 */
         AD.outputFile_InfectionContactRatio( "A_infectionContact.dat" );         /* 出力: ウイルスの保持状況 */
-//        log( Monitor::Instance().num_infection_contact_ );
-//        log( Monitor::Instance().num_contact_ );
-        log( (double)monitor.num_infection_contact_/
-                monitor.num_contact_);
     }
 
     monitor.generatePlotScript();                          /* gnuplot用スクリプト */
