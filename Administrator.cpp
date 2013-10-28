@@ -109,10 +109,10 @@ void Administrator :: relocateAgent() {
  */
 void Administrator :: contactAgent() {
 
-    std::vector<int> infected_agent;            /* 現時点での感染者リスト */
-    FOR( i, NUM_A ) {                           /* 全員に対して */
-        if( agent_[ i ].numHoldingVirus() > 0 ) {/* 何らかのウイルスを保持していたら */
-            infected_agent.push_back( i );      /* 感染者リストに加える */
+    std::vector<int> infected_agent;                       /* 現時点での感染者リスト */
+    FOR( i, NUM_A ) {                                      /* 全員に対して */
+        if( agent_[ i ].numHoldingVirus() > 0 ) {          /* 何らかのウイルスを保持していたら */
+            infected_agent.push_back( i );                 /* 感染者リストに加える */
         }
     }
 
@@ -121,27 +121,28 @@ void Administrator :: contactAgent() {
     Agent *myself;
 
     INT_ITERATOR it_infected = infected_agent.begin();
-    while( it_infected != infected_agent.end() ) {      /* 感染者リストの数だけ繰り返す */
-        myself = &agent_[ *it_infected ];       /* 感染者自身 */
-        tx = myself->x_;                        /* 感染者自身の位置 */
+    while( it_infected != infected_agent.end() ) {         /* 感染者リストの数だけ繰り返す */
+        myself = &agent_[ *it_infected ];                  /* 感染者自身 */
+        tx = myself->x_;                                   /* 感染者自身の位置 */
         ty = myself->y_;
 
-        REP( i, -1, 1 ) {                       /* 自分の周囲１マスに感染させる（計９マス） */
+        REP( i, -1, 1 ) {                                  /* 自分の周囲１マスに感染させる（計９マス） */
             REP( j, -1, 1 ) {
                 if( i*j != 0 ) continue;
                 if( !(landscape_->isOnMap( tx+i, ty+j )) ) continue; /* 土地からはみ出てたらスキップ */
 
-                tvdata =                        /* ランダムに保持ウイルスから選んで */
+                INT_ITERATOR it = landscape_->agent_map_[ tx+i ][ ty+j ].begin();
+                while( it != landscape_->agent_map_[ tx+i ][ ty+j ].end() )
+                {                                          /* その位置にいる人全員に */
+                tvdata =                                   /* ランダムに保持ウイルスから選んで */
                     myself->vlist_.at( rand_array(myself->vlist_.size()) );
 
-                INT_ITERATOR it = landscape_->agent_map_[ tx+i ][ ty+j ].begin();
-                while( it != landscape_->agent_map_[ tx+i ][ ty+j ].end() ) { /* その位置にいる人全員に */
                     agent_[ *it ].infection( *tvdata.v_ ); /* ウイルスを感染させる */
-                    it++;                       /* 着目をその位置の次にいる人 */
+                    it++;                                  /* 着目をその位置の次にいる人 */
                 }
             }
         }
-        it_infected++;                          /* 次の感染者 */
+        it_infected++;                                     /* 次の感染者 */
     }
 }
 

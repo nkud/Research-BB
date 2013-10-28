@@ -1,5 +1,7 @@
 CC     = g++
 PRINT  = /bin/echo
+RM     = rm -rfv
+CTAGS  = ctags
 
 TARGET = main.out
 SRC    = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp Monitor.cpp Administrator.cpp Landscape.cpp
@@ -26,10 +28,10 @@ main.o: Global.h
 build: clean $(TARGET)
 
 clean:
-	@rm -rfv *.o
+	@$(RM) -rfv *.o
 
 tags:
-	@ctags $(OBJ) $(LIB) Global.h
+	@$(CTAGS) $(SRC) $(LIB) Global.h
 
 all: tags $(TARGET) run plot
 
