@@ -1,6 +1,10 @@
-set title "hasVirus" font "helvetica, 24"
-plot "A_hasVirus.dat" w l
-replot "A_hasVirus.dat" using 1:3 w l
-replot "A_hasVirus.dat" using 1:4 w l
+set title "ウイルス保持者" font "helvetica, 24"
+plot "A_hasVirus.dat" w l title "ウイルス0保持"
+replot "A_hasVirus.dat" using 1:3 w l title "ウイルス1保持"
+replot "A_hasVirus.dat" using 1:4 w l title "全ウイルス保持"
+set output
+pause -1
+set title "infectioncontact" font "helvetica, 24"
+plot "A_infectionContact.dat" w l title "ratio"
 set output
 pause -1

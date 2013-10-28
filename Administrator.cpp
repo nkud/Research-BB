@@ -17,6 +17,7 @@
 #include "Agent.h"
 #include "Virus.h"
 #include "Landscape.h"
+#include "Monitor.h"
 
 #include <vector>
 #include <fstream>
@@ -139,6 +140,8 @@ void Administrator :: contactAgent() {
 
                     agent_[ *it ].infection( *tvdata.v_ ); /* ウイルスを感染させる */
                     it++;                                  /* 着目をその位置の次にいる人 */
+
+                    Monitor::Instance().countUpContact();
                 }
             }
         }
@@ -190,4 +193,23 @@ void Administrator :: outputFile_HasVirus( const char *fname ) {
         ofs << numHasVirus( virus_[j] ) << SEPARATOR;      /* ウイルス i の保持者 */
     }
     ofs << numHasAllVirus() << std::endl;                  /* 全ウイルス保持者 */
+}
+
+/*--------------------------------------------------------------------------------------
+ *      Method:  Administrator :: outputFile_InfectionContactRatio
+ * Description:  ファイルに出力する
+ *               ウイルスの数によって、列を調整できる
+ *----------------------------------------------------------------------------------- */
+void Administrator :: outputFile_InfectionContactRatio( const char *fname ) {
+    static std::ofstream ofs(fname);                       /* インスタンスは１つだけ */
+    static int i = 0;                                      /* 期間をカウント */
+    double ratio = 0;
+    ofs << i++ << SEPARATOR;                               /* ファイルに出力 */
+    if( Monitor::Instance().num_contact_ == 0 ||
+            Monitor::Instance().num_infection_contact_ == 0) 
+        ratio = 0;
+    else
+        ratio = (double)Monitor::Instance().num_infection_contact_ /
+            (double)Monitor::Instance().num_contact_;
+    ofs << ratio << std::endl;      /* ウイルス i の保持者 */
 }
