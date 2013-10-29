@@ -80,7 +80,7 @@ int main()
     ofs_log << "TAG_LEN_V:" << TAG_LEN_V << endl;
     FOR(i,NUM_V) {
         ofs_log<<"["<<virus[i].tag_<<"]:";
-        FOR(j, agent[i].len_) {
+        FOR(j, virus[i].len_) {
             ofs_log<<virus[i].tag_[j];
         } ofs_log<<endl;
     }
