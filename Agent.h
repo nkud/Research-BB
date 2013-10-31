@@ -18,7 +18,7 @@
 #include "TagInterface.h"
 #include <vector>
 
-class VirusData;
+struct VirusData;
 class Agent;
 class Monitor;
 
@@ -34,7 +34,7 @@ struct VirusData                                /* 保持ウイルスデータ  
     int sp_;                                    /* スタートポイント  */
 
     VirusData(): v_( 0 ), sp_( 0 ) {};
-    VirusData( __TagInterface *v, int sp ):    /* データの初期化 */
+    VirusData( __TagInterface *v, int sp ):     /* データの初期化 */
         v_(v), sp_(sp) {};
 };
 

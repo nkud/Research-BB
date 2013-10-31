@@ -36,8 +36,9 @@ Virus :: Virus() :
  * Description:  ウイルスの長さを指定して初期化
  *               タグはランダム
  *----------------------------------------------------------------------------------- */
-Virus :: Virus( int l ):
-    __TagInterface( l )
+Virus :: Virus( int l, double r ):
+    __TagInterface( l ),
+    rate_( r )
 {
     FOR( i, l ) {
         tag_[i] = rand_binary();

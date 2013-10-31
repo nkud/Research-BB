@@ -14,6 +14,7 @@
 #include <iostream>
 #include <cstring>
 #include <fstream>
+#include <ctime>
 using namespace std;
 
 #include "Global.h"
@@ -35,10 +36,8 @@ int main()
     // 初期化
     Agent agent[ NUM_A ];                                  /* エージェントの集合  */
     Virus virus[ NUM_V ] = {                               /* ウイルス生成  */
-        12,                                                /* 長さ、タグなど初期化 */
-        12
-//        "111110000100000",
-//        "101110001111110"
+        *(new Virus(12, 0.5)),                             /* 長さ、タグなど初期化 */
+        *(new Virus(12, 0.5))
     };
     Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
 
@@ -46,17 +45,17 @@ int main()
 
     Monitor &monitor = Monitor::Instance();                /* モニター */
 
-    AD.initInfectAgentInRatio( virus[0], 0.1 );            /* 感染させる */
-    AD.initInfectAgentInRatio( virus[1], 0.1 );
+    AD.initInfectAgentInRatio( virus[0], 0.5 );            /* 感染させる */
+    AD.initInfectAgentInRatio( virus[1], 0.5 );
 
     /* 計測開始 */
     FOR( i, TERM )                                         /* 計算開始  */
     {
         log("------------ start");
 
-        monitor.resetAll();                     /* カウンターをリセット */
+        monitor.resetAll();                                /* カウンターをリセット */
 
-        AD.relocateAgent();                     /* ランダムに再配置 */
+        AD.relocateAgent();                                /* ランダムに再配置 */
         AD.contactAgent();                                 /* 近隣に感染させる */
         AD.responseAgent();                                /* 免疫応答（タグフリップ） */
 
@@ -67,7 +66,7 @@ int main()
         log(monitor.num_infection_contact_);
     }
 
-    monitor.generatePlotScript();                          /* gnuplot用スクリプト */
+    monitor.generatePlotScript();                          /* XXX: gnuplot用 */
     
     FOR( i, NUM_V ) virus[ i ].printTag();                 /* 全ウイルスのタグを表示 */
 

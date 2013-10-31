@@ -71,11 +71,11 @@ int min_ham_distance(int *a, int *v, int an, int vn) /* XXX: a > b だけ想定�
  *  RANDOMIZE SET
  *-----------------------------------------------------------------------------*/
 int rand_interval_int(int min, int max) {
-    return (int)( rand() * (max + min + 1.0) / (1.0 + RAND_MAX) );
+    return min + (int)( rand() * (max - min + 1.0) / (1.0 + RAND_MAX) );
 }
 
 double rand_interval_double(double min, double max) {
-    return (double)( rand() * (max + min + 1.0) / (1.0 + RAND_MAX) );
+    return min + (double)( rand() * (max - min) / (1.0 + RAND_MAX) ); /* XXX: これでいいか？ */
 }
 
 int rand_array( int n ) {

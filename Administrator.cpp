@@ -119,7 +119,6 @@ void Administrator :: contactAgent() {
     }
 
     int tx, ty;
-    VirusData tvdata;
     Agent *myself;
 
     INT_ITERATOR it_infected = infected_agent.begin();
@@ -136,10 +135,14 @@ void Administrator :: contactAgent() {
                 INT_ITERATOR it = landscape_->agent_map_[ tx+i ][ ty+j ].begin();
                 while( it != landscape_->agent_map_[ tx+i ][ ty+j ].end() )
                 {                                          /* その位置にいる人全員に */
-                tvdata =                                   /* ランダムに保持ウイルスから選んで */
-                    myself->vlist_.at( rand_array(myself->vlist_.size()) );
+                    VirusData &tvdata =                    /* ランダムに保持ウイルスから選んで */
+                        myself->vlist_.at( rand_array(myself->vlist_.size()) );
 
-                    agent_[ *it ].infection( *tvdata.v_ ); /* ウイルスを感染させる */
+                    if( static_cast<Virus *>(tvdata.v_)->rate_ > rand_interval_double(0,1) ) { /* ウイルス特有の感染確率で */
+                                                           /* XXX: static cast */
+                                                           /* XXX: 他に方法ないか？ */
+                        agent_[ *it ].infection( *tvdata.v_ ); /* ウイルスを感染させる */
+                    }
                     it++;                                  /* 着目をその位置の次にいる人 */
 
                     Monitor::Instance().countUpContact();

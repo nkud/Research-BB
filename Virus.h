@@ -26,9 +26,11 @@
 class Virus : public __TagInterface             /* ウイルスのクラス*/
 {
     public:
-        Virus( const char * );                  /* コンストラクタ */
-        Virus( int );                           /* コンストラクタ */
-        Virus();                                /* コンストラクタ */
+        Virus( const char * );                  /* コンストラクタ: タグ */
+        Virus( int, double );                   /* コンストラクタ: タグ長, 感染率 */
+        Virus();                                /* コンストラクタ: default */
+
+        double rate_;                           /* 感染確率 */
 };
 
 #endif
