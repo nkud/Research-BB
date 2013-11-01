@@ -5,6 +5,7 @@ replot "A_hasVirus.txt" using 1:4 w l title "全ウイルス保持"
 set output
 pause -1
 set title "infectioncontact" font "helvetica, 24"
-plot "A_infectionContact.txt" w l title "ratio"
+plot "A_infectionContact.txt" w l title "contact"
+replot "A_infectionContact.txt" using 1:3 w l title "infection_contact"
 set output
 pause -1

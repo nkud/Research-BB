@@ -72,7 +72,8 @@ void Monitor :: generatePlotScript() {
         << "pause -1" << std::endl;
 
     ofs << "set title \"infectioncontact\" font \"helvetica, 24\"" << std::endl
-        << "plot \"A_infectionContact.txt\" w l title \"ratio\"" << std::endl;
+        << "plot \"A_infectionContact.txt\" w l title \"infect_contact\"" << std::endl
+        << "replot \"A_infectionContact.txt\" using 1:3 w l title \"contact\"" << std::endl;
     ofs << "set output" << std::endl
         << "pause -1" << std::endl;
 }

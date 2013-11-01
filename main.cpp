@@ -38,8 +38,8 @@ int main()
     Agent agent[ NUM_A ];                                  /* エージェントの集合  */
     Virus virus[ NUM_V ] = {                               /* ウイルス生成 */
 
-        *( new Virus(12, 0.8 )),                           /* タグ長、感染確率 */
-        *( new Virus(15, 0.8 ))
+        *( new Virus(12, 0.4 )),                           /* タグ長、感染確率 */
+        *( new Virus(12, 0.8 ))
 
     };
     Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
@@ -48,8 +48,8 @@ int main()
 
     Monitor &monitor = Monitor::Instance();                /* モニター */
 
-    AD.initInfectAgentInRatio( virus[0], 0.05 );            /* 感染させる */
-    AD.initInfectAgentInRatio( virus[1], 0.2 );
+    AD.initInfectAgentInRatio( virus[0], 0.1 );            /* 感染させる */
+    AD.initInfectAgentInRatio( virus[1], 0.1 );
 
     /* 計測開始 */
     FOR( i, TERM )                                         /* 計算開始  */
