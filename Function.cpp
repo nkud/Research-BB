@@ -1,4 +1,4 @@
-﻿#include "Function.h"
+#include "Function.h"
 #include <cstdlib>
 #include <algorithm>
 
