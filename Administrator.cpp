@@ -141,7 +141,7 @@ void Administrator :: contactAgent() {
                     if( static_cast<Virus *>(tvdata.v_)->rate_ > rand_interval_double(0,1) ) { /* ウイルス特有の感染確率で */
                                                            /* XXX: static castは使いたくない... */
 //                        agent_[ *it ].infection( *tvdata.v_ ); /* ウイルスを感染させる */
-                        agent_[ *it ].stand_by_virus_->push_back( tvdata.v_ ); /* 待機ウイルスにする */
+                        agent_[ *it ].stand_by_virus_.push_back( tvdata.v_ ); /* 待機ウイルスにする */
                     }
                     it++;                                  /* 着目をその位置の次にいる人 */
 
@@ -160,17 +160,16 @@ void Administrator :: contactAgent() {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: infectAgent() {
-    int n;
     FOR( i, NUM_A )
     {
-        if( agent_[ i ].stand_by_virus_->empty() ) continue;/* 待機ウイルスが無ければスキップ */
+        if( agent_[ i ].stand_by_virus_.empty() ) continue;/* 待機ウイルスが無ければスキップ */
         else
         {                                                  /* あれば */
-            std::vector<__TagInterface *>::iterator it = agent_[ i ].stand_by_virus_->begin();
-            while( it != agent_[ i ].stand_by_virus_->end() ){
+            std::vector<__TagInterface *>::iterator it = agent_[ i ].stand_by_virus_.begin();
+            while( it != agent_[ i ].stand_by_virus_.end() ){
                 agent_[ i ].infection( **it );                  /* 感染させて */
             }
-            agent_[ i ].stand_by_virus_->clear();            /* 待機ウイルスをクリア */
+            agent_[ i ].stand_by_virus_.clear();            /* 待機ウイルスをクリア */
         }
     }
 }
