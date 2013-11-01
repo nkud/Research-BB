@@ -59,7 +59,8 @@ int main()
         monitor.resetAll();                                /* カウンターをリセット */
 
         AD.relocateAgent();                                /* ランダムに再配置 */
-        AD.contactAgent();                                 /* 近隣に感染させる */
+        AD.contactAgent();                                 /* 近隣に接触する */
+        AD.infectAgent();                       /* 待機ウイルスを感染させる */
         AD.responseAgent();                                /* 免疫応答（タグフリップ） */
 
         /* 出力 */
