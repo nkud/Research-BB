@@ -25,8 +25,8 @@ using namespace std;
 #include "Monitor.h"
 #include "Administrator.h"
 
-#define HAS_VIRUS_FNAME     "A_hasVirus.dat"
-#define CONTACT_FNAME       "A_infectionContact.dat"
+#define HAS_VIRUS_FNAME     "A_hasVirus.txt"
+#define CONTACT_FNAME       "A_infectionContact.txt"
 
 const int TERM  = 200;                                     /* 期間  */
 
