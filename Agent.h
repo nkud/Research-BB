@@ -56,7 +56,7 @@ class Agent : public __TagInterface
         std::vector<__TagInterface *> stand_by_virus_;
         Agent();                                /* コンストラクタ  */
 
-        void infection( __TagInterface & );     /* 感染プロセス  */
+        bool infection( __TagInterface & );     /* 感染プロセス  */
         void response();                        /* 免疫応答する（タグフリップ）  */
 
         bool isInfected( __TagInterface & );    /* v に感染しているか */

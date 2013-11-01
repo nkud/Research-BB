@@ -37,8 +37,8 @@ int main()
     // 初期化
     Agent agent[ NUM_A ];                                  /* エージェントの集合  */
     Virus virus[ NUM_V ] = {                               /* ウイルス生成 */
-        *( new Virus(30, 0.1 )),                           /* タグ長、感染確率 */
-        *( new Virus(20, 0.9 ))
+        *( new Virus(35, 0.1 )),                           /* タグ長、感染確率 */
+        *( new Virus(25, 0.9 ))
     };
     Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
 
@@ -72,6 +72,7 @@ int main()
 
     monitor.generatePlotScript();                          /* XXX: gnuplot用 */
     
+    // 確認用 -----------------------------------------------------------------
     cout << "WIDTH:" << WIDTH << endl;
     cout << "NUM_A:" << NUM_A << endl;
     cout << "NUM_V:" << NUM_V << endl;

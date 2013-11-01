@@ -40,26 +40,27 @@ Agent :: Agent() :
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Agent :: infection( __TagInterface & )
- * Description:  
+ * Description:  感染したら、true を返す
  *--------------------------------------------------------------------------------------
  */
-void Agent :: infection( __TagInterface &v )
+bool Agent :: infection( __TagInterface &v )
 {
     std::vector<VirusData>::iterator it = vlist_.begin();
     while( it != vlist_.end() ) {               // 既に保持しているウイルスなら終了 
         if( it->v_ == &v ) {
-            return;
+            return false;
         }
         it++;
     }
     if( hasImmunity( v ) ) {                    // 免疫獲得済みなら 
-        return;                                 // 感染せずに終了 
+        return false;                                 // 感染せずに終了 
     }
     /* 感染リストに追加 */
     VirusData vdata( &v, min_ham_distance( tag_, v.tag_, len_, v.len_ ) ); // スタートポイント 
     vlist_.push_back( vdata );
 
     monitor_.countUpInfectionContact(vdata.v_);       /* 感染のために接触した回数を増やす */
+    return true;
 }
 
 /*
