@@ -231,12 +231,13 @@ void Administrator :: outputFile_InfectionContactRatio( const char *fname ) {
     double ratio = 0;
     ofs << i++ << SEPARATOR;                               /* ファイルに出力 */
     if( monitor_.num_contact_ == 0 ||
-            monitor_.num_infection_contact_ == 0) 
+            monitor_.num_infection_contact_[0] == 0) 
         ratio = 0;
     else
-        ratio = (double)monitor_.num_infection_contact_ /
+        ratio = (double)monitor_.num_infection_contact_[0] /
             (double)monitor_.num_contact_;
     ofs << monitor_.num_contact_ << SEPARATOR
-        << monitor_.num_infection_contact_ << SEPARATOR
+        << monitor_.num_infection_contact_[&virus_[0]] << SEPARATOR
+        << monitor_.num_infection_contact_[&virus_[1]] << SEPARATOR
         << ratio << std::endl;                             /* ウイルス i の保持者 */
 }

@@ -37,17 +37,17 @@ int main()
     // 初期化
     Agent agent[ NUM_A ];                                  /* エージェントの集合  */
     Virus virus[ NUM_V ] = {                               /* ウイルス生成 */
-
         *( new Virus(12, 0.4 )),                           /* タグ長、感染確率 */
         *( new Virus(12, 0.8 ))
-
     };
     Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
 
-    Administrator AD( agent, virus, landscape );           /* 管理者に登録 */
+    // 管理者に登録
+    Administrator AD( agent, virus, landscape );
 
     Monitor &monitor = Monitor::Instance();                /* モニター */
 
+    // 初期感染
     AD.initInfectAgentInRatio( virus[0], 0.1 );            /* 感染させる */
     AD.initInfectAgentInRatio( virus[1], 0.1 );
 
@@ -67,7 +67,7 @@ int main()
         AD.outputFile_HasVirus( HAS_VIRUS_FNAME );         /* 出力: ウイルスの保持状況 */
         AD.outputFile_InfectionContactRatio( CONTACT_FNAME );         /* 出力: ウイルスの保持状況 */
 
-        log(monitor.num_infection_contact_);
+        log(monitor.num_contact_);
     }
 
     monitor.generatePlotScript();                          /* XXX: gnuplot用 */

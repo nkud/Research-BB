@@ -30,14 +30,14 @@ Monitor& Monitor :: Instance() {
  *--------------------------------------------------------------------------------------
  */
 void Monitor :: resetAll() {
-    num_infection_contact_ = 0;
     num_contact_ = 0;
     num_has_immunity_all_virus_ = 0;
     num_infect_others = 0;
+    num_infection_contact_.clear();
 }
 
-void Monitor :: countUpInfectionContact() {
-    num_infection_contact_++;
+void Monitor :: countUpInfectionContact(__TagInterface *pv) {
+    num_infection_contact_[pv]++;
 }
 void Monitor :: countUpContact() {
     num_contact_++;

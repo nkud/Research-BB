@@ -59,7 +59,7 @@ void Agent :: infection( __TagInterface &v )
     VirusData vdata( &v, min_ham_distance( tag_, v.tag_, len_, v.len_ ) ); // スタートポイント 
     vlist_.push_back( vdata );
 
-    monitor_.countUpInfectionContact();       /* 感染のために接触した回数を増やす */
+    monitor_.countUpInfectionContact(vdata.v_);       /* 感染のために接触した回数を増やす */
 }
 
 /*
