@@ -26,6 +26,7 @@ using namespace std;
 #include "Administrator.h"
 
 #define HAS_VIRUS_FNAME     "A_hasVirus.txt"
+#define HAS_IMMUNITY_FNAME     "A_hasImmunity.txt"
 #define CONTACT_FNAME       "A_infectionContact.txt"
 
 const int TERM  = 500;                                     /* 期間  */
@@ -37,8 +38,8 @@ int main()
     // 初期化
     Agent agent[ NUM_A ];                                  /* エージェントの集合  */
     Virus virus[ NUM_V ] = {                               /* ウイルス生成 */
-        *( new Virus(60, 0.05 )),                           /* タグ長、感染確率 */
-        *( new Virus(40, 0.95 ))
+        *( new Virus(25, 0.05 )),                           /* タグ長、感染確率 */
+        *( new Virus(15, 0.95 ))
     };
     Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
 
@@ -48,8 +49,8 @@ int main()
     Monitor &monitor = Monitor::Instance();                /* モニター */
 
     // 初期感染
-    AD.initInfectAgentInRatio( virus[0], 0.8 );            /* 感染させる */
-    AD.initInfectAgentInRatio( virus[1], 0.2 );
+    AD.initInfectAgentInRatio( virus[0], 0.1 );            /* 感染させる */
+    AD.initInfectAgentInRatio( virus[1], 0.1 );
     int initial_num_a = AD.numHasVirus( virus[0] ); /* 記録しておく */
     int initial_num_b = AD.numHasVirus( virus[1] );
 
@@ -67,6 +68,7 @@ int main()
 
         /* 出力 */
         AD.outputFile_HasVirus( HAS_VIRUS_FNAME );         /* 出力: ウイルスの保持状況 */
+        AD.outputFile_HasImmunity( HAS_IMMUNITY_FNAME );         /* 出力: ウイルスの保持状況 */
         AD.outputFile_InfectionContactRatio( CONTACT_FNAME );         /* 出力: ウイルスの保持状況 */
 
         log(monitor.num_contact_);

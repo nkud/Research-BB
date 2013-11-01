@@ -71,6 +71,13 @@ void Monitor :: generatePlotScript() {
     ofs << "set output" << std::endl
         << "pause -1" << std::endl;
 
+    ofs << "set title \"hasImmunity\" font \"helvetica, 24\"" << std::endl
+        << "plot \"A_hasImmunity.txt\" w l title \"has_immunity_a\"" << std::endl
+        << "replot \"A_hasImmunity.txt\" using 1:3 w l title \"has_immunity_b\"" << std::endl
+        << "replot \"A_hasImmunity.txt\" using 1:4 w l title \"has_all_immunity\"" << std::endl;
+    ofs << "set output" << std::endl
+        << "pause -1" << std::endl;
+
     ofs << "set title \"infectioncontact\" font \"helvetica, 24\"" << std::endl
         << "plot \"A_infectionContact.txt\" using 1:3 w l title \"infect_contact_a\"" << std::endl
         << "replot \"A_infectionContact.txt\" using 1:4 w l title \"infect_contact_b\"" << std::endl;

@@ -90,7 +90,7 @@ void Agent :: response()
  */
 bool Agent :: hasImmunity( __TagInterface &v )  // true -> 免疫獲得済み 
 {
-    if( min_ham_distance( tag_, v.tag_, len_, v.len_ ) < 0 ) // 最小が -1 以下なら
+    if( min_ham_distance( tag_, v.tag_, len_, v.len_ ) < 0 ) // スタートポイントが -1 以下なら
         return true;                            // 免疫獲得済み 
     else                                        // 0 以上なら
         return false;                           // 未獲得 

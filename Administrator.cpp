@@ -47,7 +47,7 @@ int Administrator :: numHasVirus( __TagInterface &v ) {
     int ret = 0;
 
     FOR( i, NUM_A ) {
-        if( agent_[i].isInfected( v ) ) {                  /* v に感染していれば */
+        if( agent_[i].hasVirus( v ) ) {                  /* v に感染していれば */
             ret++;                                         /* インクリメント */
         }
     }
@@ -202,6 +202,27 @@ int Administrator :: numHasAllVirus() {
     }
     return ret;
 }
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Administrator :: numHasAllImmunity()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+int Administrator :: numHasAllImmunity() {
+    int ret = 0;
+    int flag = 1;
+    FOR( i, NUM_A ) {
+        FOR( j, NUM_V ) {
+            if( ! agent_[ i ].hasImmunity( virus_[ j ] ) ) { /* もし免疫を持っていなければ、 */
+                flag = 0;                                  /* フラッグを下ろす */
+                break;
+            }
+        }
+        if( flag == 1 ) ret++;
+        flag = 1;                                          /* フラッグを戻す */
+    }
+    return ret;
+}
 
 /*
  *--------------------------------------------------------------------------------------
@@ -232,6 +253,21 @@ void Administrator :: outputFile_HasVirus( const char *fname ) {
         ofs << numHasVirus( virus_[j] ) << SEPARATOR;      /* ウイルス i の保持者 */
     }
     ofs << numHasAllVirus() << std::endl;                  /* 全ウイルス保持者 */
+}
+
+/*--------------------------------------------------------------------------------------
+ *      Method:  Administrator :: outputFile_HasImmunity
+ * Description:  ファイルに出力する
+ *               ウイルスの数によって、列を調整できる
+ *----------------------------------------------------------------------------------- */
+void Administrator :: outputFile_HasImmunity( const char *fname ) {
+    static std::ofstream ofs(fname);                       /* インスタンスは１つだけ */
+    static int i = 0;                                      /* 期間をカウント */
+    ofs << i++ << SEPARATOR;                               /* ファイルに出力 */
+    FOR( j, NUM_V ) {
+        ofs << numHasImmunity( virus_[j] ) << SEPARATOR;      /* ウイルス i の保持者 */
+    }
+    ofs << numHasAllImmunity() << std::endl;                  /* 全ウイルス保持者 */
 }
 
 /*--------------------------------------------------------------------------------------

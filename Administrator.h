@@ -44,8 +44,10 @@ class Administrator {
         int numHasVirus( __TagInterface & );               /* v に感染している人の数 */
         int numHasAllVirus();                              /* 全ウイルスに感染している人の数 */
         int numHasImmunity( __TagInterface & );            /* v の免疫獲得者数 */
+        int numHasAllImmunity();                /* 全ウイルスの免疫獲得者数 */
 
         void outputFile_HasVirus( const char * );          /* ファイルに出力 */
+        void outputFile_HasImmunity( const char * );          /* ファイルに出力 */
         void outputFile_InfectionContactRatio( const char * ); /* ファイルに出力 */
 };
 
