@@ -177,7 +177,6 @@ void Administrator :: initInfectAgentInRatio( Virus &v, double r ) {
     static int infected_from = 0;                          /* ０番目のエージェントから順に感染させる */
     int infected_to;
     infected_to = infected_from + (int)( NUM_A * r );
-    int n;
     REP( i, infected_from, infected_to ) {
         agent_[ i%NUM_A ].infection( v );
     }
