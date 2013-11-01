@@ -1,4 +1,4 @@
-CC     = gcc
+CC     = g++
 PRINT  = /bin/echo
 RM     = rm -rfv
 CTAGS  = ctags

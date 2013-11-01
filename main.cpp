@@ -75,7 +75,7 @@ int main()
     FOR( i, NUM_V ) virus[ i ].printTag();                 /* 全ウイルスのタグを表示 */
 
     // エージェントの最終的な状態など -----------------------------------------
-    ofstream ofs_log("A_log.dat");                         /* 出力ファイル  */
+    ofstream ofs_log("A_log.txt");                         /* 出力ファイル  */
     ofs_log << "WIDTH:" << WIDTH << endl;
     ofs_log << "NUM_A:" << NUM_A << endl;
     ofs_log << "NUM_V:" << NUM_V << endl;
