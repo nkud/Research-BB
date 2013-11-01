@@ -165,9 +165,10 @@ void Administrator :: infectAgent() {
         if( agent_[ i ].stand_by_virus_.empty() ) continue;/* 待機ウイルスが無ければスキップ */
         else
         {                                                  /* あれば */
-            std::vector<__TagInterface *>::iterator it = agent_[ i ].stand_by_virus_.begin();
-            while( it != agent_[ i ].stand_by_virus_.end() ){
-                agent_[ i ].infection( **it );                  /* 感染させて */
+            std::vector<__TagInterface *>::iterator itt = agent_[ i ].stand_by_virus_.begin();
+            while( itt != agent_[ i ].stand_by_virus_.end() ){
+                agent_[ i ].infection( **itt );                  /* 感染させて */
+                itt++;                                     /* 次の待機ウイルス */
             }
             agent_[ i ].stand_by_virus_.clear();            /* 待機ウイルスをクリア */
         }
