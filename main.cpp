@@ -28,7 +28,7 @@ using namespace std;
 #define HAS_VIRUS_FNAME     "A_hasVirus.txt"
 #define CONTACT_FNAME       "A_infectionContact.txt"
 
-const int TERM  = 200;                                     /* 期間  */
+const int TERM  = 500;                                     /* 期間  */
 
 int main()
 {
@@ -37,8 +37,8 @@ int main()
     // 初期化
     Agent agent[ NUM_A ];                                  /* エージェントの集合  */
     Virus virus[ NUM_V ] = {                               /* ウイルス生成 */
-        *( new Virus(35, 0.1 )),                           /* タグ長、感染確率 */
-        *( new Virus(25, 0.9 ))
+        *( new Virus(60, 0.05 )),                           /* タグ長、感染確率 */
+        *( new Virus(40, 0.95 ))
     };
     Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
 
@@ -48,8 +48,10 @@ int main()
     Monitor &monitor = Monitor::Instance();                /* モニター */
 
     // 初期感染
-    AD.initInfectAgentInRatio( virus[0], 0.1 );            /* 感染させる */
-    AD.initInfectAgentInRatio( virus[1], 0.1 );
+    AD.initInfectAgentInRatio( virus[0], 0.8 );            /* 感染させる */
+    AD.initInfectAgentInRatio( virus[1], 0.2 );
+    int initial_num_a = AD.numHasVirus( virus[0] ); /* 記録しておく */
+    int initial_num_b = AD.numHasVirus( virus[1] );
 
     /* 計測開始 */
     FOR( i, TERM )                                         /* 計算開始  */
@@ -80,6 +82,8 @@ int main()
     cout << "TAG_LEN_V:" << TAG_LEN_V << endl;
     cout << "RATE_0: " << virus[0].rate_ << endl;
     cout << "RATE_1: " << virus[1].rate_ << endl;
+    cout << "INIT_NUM_0: " << initial_num_a << endl;
+    cout << "INIT_NUM_1: " << initial_num_b << endl;
     FOR( i, NUM_V ) virus[ i ].printTag();                 /* 全ウイルスのタグを表示 */
 
     // エージェントの最終的な状態など -----------------------------------------
