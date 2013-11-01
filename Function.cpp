@@ -44,7 +44,7 @@ int ham_distance(int *a, int *b, int n) {
  * ===  FUNCTION  ======================================================================
  *         Name:  min_ham_distance
  *  Description:  最小ハミング距離が 0（なし）-> return -1
- *                最小ハミング距離が n        -> return  sp（タグの位置）
+ *                最小ハミング距離が n（ >0 ）-> return sp（タグの位置）
  * =====================================================================================
  */                                             /* XXX: 名前を変える */
 int min_ham_distance(int *a, int *v, int an, int vn) /* XXX: a > b だけ想定している */
@@ -56,6 +56,7 @@ int min_ham_distance(int *a, int *v, int an, int vn) /* XXX: a > b だけ想定�
     FOR( i, an-vn+1 )                           /* ずらせる回数繰り返す */
     {
         tm = ham_distance( a+i, v, vn );        /* ずらした位置でのハミング距離 */
+        if( tm <= 0 ) return -1;                /* (免疫獲得済み) */
         if( min > tm )                          /* の方が小さかったら */
         {
             min = tm;                           /* 最小値を更新 */
