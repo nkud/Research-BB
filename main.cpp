@@ -92,6 +92,7 @@ int main()
         ofs_log<<" "<<agent[i].numHoldingVirus();
         ofs_log<<endl;
     }
+    // ------------------------------------------------------------------------
 
     return 0;
 }

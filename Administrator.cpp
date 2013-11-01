@@ -139,17 +139,38 @@ void Administrator :: contactAgent() {
                         myself->vlist_.at( rand_array(myself->vlist_.size()) );
 
                     if( static_cast<Virus *>(tvdata.v_)->rate_ > rand_interval_double(0,1) ) { /* ウイルス特有の感染確率で */
-                                                           /* XXX: static cast */
-                                                           /* XXX: 他に方法ないか？ */
-                        agent_[ *it ].infection( *tvdata.v_ ); /* ウイルスを感染させる */
+                                                           /* XXX: static castは使いたくない... */
+//                        agent_[ *it ].infection( *tvdata.v_ ); /* ウイルスを感染させる */
+                        agent_[ *it ].stand_by_vdata_ = &tvdata; /* 待機ウイルスにする */
                     }
                     it++;                                  /* 着目をその位置の次にいる人 */
 
-                    Monitor::Instance().countUpContact();
+                    Monitor::Instance().countUpContact();  /* モニタリング */
                 }
             }
         }
         it_infected++;                                     /* 次の感染者 */
+    }
+}
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Administrator :: infectAgent()
+ * Description:  待機ウイルスを感染させる
+ *--------------------------------------------------------------------------------------
+ */
+void Administrator :: infectAgent() {
+    VirusData *tvdata;
+    FOR( i, NUM_A )
+    {
+        tvdata = agent_[ i ].stand_by_vdata_;
+
+        if( tvdata == NULL ) continue;                     /* 待機ウイルスが無ければスキップ */
+        else
+        {                                                  /* あれば */
+            agent_[ i ].infection( *(tvdata->v_) );        /* 感染させて */
+            agent_[ i ].stand_by_vdata_ = NULL;            /* 待機ウイルスを空に */
+        }
     }
 }
 
@@ -216,5 +237,5 @@ void Administrator :: outputFile_InfectionContactRatio( const char *fname ) {
             (double)monitor_.num_contact_;
     ofs << monitor_.num_contact_ << SEPARATOR
         << monitor_.num_infection_contact_ << SEPARATOR
-        << ratio << std::endl;      /* ウイルス i の保持者 */
+        << ratio << std::endl;                             /* ウイルス i の保持者 */
 }

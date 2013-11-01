@@ -30,6 +30,7 @@ class Administrator {
         Agent *agent_;                                     /* エージェントの集合 */
         Virus *virus_;                                     /* ウイルスの集合 */
         Landscape *landscape_;                             /* 土地 */
+
         Monitor &monitor_;
 
     public:
@@ -38,6 +39,7 @@ class Administrator {
         void relocateAgent();                              /* 再配置 */
         void contactAgent();                               /* 近隣に接触して感染させる */
         void initInfectAgentInRatio( Virus &, double );
+        void infectAgent();                     /* 待機ウイルスを感染させる */
 
         int numHasVirus( __TagInterface & );               /* v に感染している人の数 */
         int numHasAllVirus();                              /* 全ウイルスに感染している人の数 */

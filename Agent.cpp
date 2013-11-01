@@ -28,6 +28,7 @@ Agent :: Agent() :
     __TagInterface( TAG_LEN_A ),
     x_( 0 ),
     y_( 0 ),
+    stand_by_vdata_( 0 ),
     monitor_( Monitor::Instance() )
 {                                               // タグの長さを初期化 
     FOR( i, TAG_LEN_A ) {                       // タグをランダムに初期化 
