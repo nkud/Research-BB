@@ -38,8 +38,8 @@ int main()
     // 初期化
     Agent agent[ NUM_A ];                                  /* エージェントの集合  */
     Virus virus[ NUM_V ] = {                               /* ウイルス生成 */
-//        *( new Virus(60, 0.1 )),                           /* タグ長、感染確率 */
-//        *( new Virus(50, 0.8 ))
+        *( new Virus(60, 0.1 )),                           /* タグ長、感染確率 */
+        *( new Virus(50, 0.8 ))
     };
     Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
 
@@ -51,14 +51,6 @@ int main()
     // 初期感染
     AD.initInfectAgentInRatio( virus[0], 0.1 );            /* 感染させる */
     AD.initInfectAgentInRatio( virus[1], 0.1 );
-    AD.initInfectAgentInRatio( virus[2], 0.1 );
-    AD.initInfectAgentInRatio( virus[3], 0.1 );
-    AD.initInfectAgentInRatio( virus[4], 0.1 );
-    AD.initInfectAgentInRatio( virus[5], 0.1 );
-    AD.initInfectAgentInRatio( virus[6], 0.1 );
-    AD.initInfectAgentInRatio( virus[7], 0.1 );
-    AD.initInfectAgentInRatio( virus[8], 0.1 );
-    AD.initInfectAgentInRatio( virus[9], 0.1 );
     int initial_num_a = AD.numHasVirus( virus[0] ); /* 記録しておく */
     int initial_num_b = AD.numHasVirus( virus[1] );
 
