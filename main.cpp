@@ -26,6 +26,7 @@ using namespace std;
 #include "Administrator.h"
 
 #define HAS_VIRUS_FNAME     "A_hasVirus.dat"
+#define CONTACT_FNAME       "A_infectionContact.dat"
 
 const int TERM  = 200;                                     /* 期間  */
 
@@ -45,8 +46,8 @@ int main()
 
     Monitor &monitor = Monitor::Instance();                /* モニター */
 
-    AD.initInfectAgentInRatio( virus[0], 0.5 );            /* 感染させる */
-    AD.initInfectAgentInRatio( virus[1], 0.5 );
+    AD.initInfectAgentInRatio( virus[0], 0.2 );            /* 感染させる */
+    AD.initInfectAgentInRatio( virus[1], 0.2 );
 
     /* 計測開始 */
     FOR( i, TERM )                                         /* 計算開始  */
@@ -61,7 +62,7 @@ int main()
 
         /* 出力 */
         AD.outputFile_HasVirus( HAS_VIRUS_FNAME );         /* 出力: ウイルスの保持状況 */
-        AD.outputFile_InfectionContactRatio( "A_infectionContact.dat" );         /* 出力: ウイルスの保持状況 */
+        AD.outputFile_InfectionContactRatio( CONTACT_FNAME );         /* 出力: ウイルスの保持状況 */
 
         log(monitor.num_infection_contact_);
     }
