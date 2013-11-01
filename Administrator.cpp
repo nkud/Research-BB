@@ -161,14 +161,24 @@ void Administrator :: contactAgent() {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: infectAgent() {
+    std::vector<__TagInterface *>::iterator itt;
     FOR( i, NUM_A )
     {
-        if( agent_[ i ].stand_by_virus_.empty() ) continue;/* 待機ウイルスが無ければスキップ */
+        if( agent_[i].stand_by_virus_.empty() ) continue;/* 待機ウイルスが無ければスキップ */
         else
         {                                                  /* あれば */
-            agent_[ i ].infection(                         /* ランダムに一個選んで感染させる */
-                    *(agent_[ i ].stand_by_virus_.at( rand_array(agent_[ i ].stand_by_virus_.size() ) ))
-                    );
+            while( ! agent_[i].stand_by_virus_.empty() ) {
+                int n = rand_array(agent_[i].stand_by_virus_.size() ); /* ランダムに一個の */
+                __TagInterface *tv = agent_[i].stand_by_virus_.at( n ); /* ウイルスを選んで */
+                if( agent_[i].infection( *tv ) ) {       /* 感染させて */
+                    break;                                 /* 次のエージェントへ */
+                } else {
+                    itt = agent_[i].stand_by_virus_.begin();
+                    while(n-->0) { itt++; }
+                    agent_[i].stand_by_virus_.erase( itt );  /* 感染しなければ、別の待機ウイルス */
+                }
+            }
+
 //            std::vector<__TagInterface *>::iterator itt = agent_[ i ].stand_by_virus_.begin();
 //            while( itt != agent_[ i ].stand_by_virus_.end() ){
 //                agent_[ i ].infection( **itt );            /* 感染させて */
