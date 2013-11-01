@@ -28,7 +28,7 @@ using namespace std;
 #define HAS_VIRUS_FNAME     "A_hasVirus.txt"
 #define CONTACT_FNAME       "A_infectionContact.txt"
 
-const int TERM  = 200;                                     /* 期間  */
+const int TERM  = 1000;                                     /* 期間  */
 
 int main()
 {
@@ -38,8 +38,8 @@ int main()
     Agent agent[ NUM_A ];                                  /* エージェントの集合  */
     Virus virus[ NUM_V ] = {                               /* ウイルス生成 */
 
-        *( new Virus(12, 0.5 )),                           /* タグ長、感染確率 */
-        *( new Virus(12, 0.5 ))
+        *( new Virus(12, 0.8 )),                           /* タグ長、感染確率 */
+        *( new Virus(15, 0.8 ))
 
     };
     Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
@@ -48,7 +48,7 @@ int main()
 
     Monitor &monitor = Monitor::Instance();                /* モニター */
 
-    AD.initInfectAgentInRatio( virus[0], 0.2 );            /* 感染させる */
+    AD.initInfectAgentInRatio( virus[0], 0.05 );            /* 感染させる */
     AD.initInfectAgentInRatio( virus[1], 0.2 );
 
     /* 計測開始 */

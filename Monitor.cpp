@@ -16,7 +16,7 @@
 #include <fstream>
 
 #define GPLOT_FILENAME      "plot2.gpi"
-#define OUTPUT_FILENAME     "\"A_hasVirus.dat\""
+#define OUTPUT_FILENAME     "\"A_hasVirus.txt\""
 
 Monitor& Monitor :: Instance() {
     static Monitor coredata;
@@ -72,7 +72,7 @@ void Monitor :: generatePlotScript() {
         << "pause -1" << std::endl;
 
     ofs << "set title \"infectioncontact\" font \"helvetica, 24\"" << std::endl
-        << "plot \"A_infectionContact.dat\" w l title \"ratio\"" << std::endl;
+        << "plot \"A_infectionContact.txt\" w l title \"ratio\"" << std::endl;
     ofs << "set output" << std::endl
         << "pause -1" << std::endl;
 }
