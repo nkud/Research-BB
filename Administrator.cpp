@@ -157,6 +157,7 @@ void Administrator :: contactAgent() {
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: infectAgent()
  * Description:  待機ウイルスを感染させる
+ *               待機ウイルスの中からランダムに一個選び、感染する
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: infectAgent() {
@@ -165,12 +166,15 @@ void Administrator :: infectAgent() {
         if( agent_[ i ].stand_by_virus_.empty() ) continue;/* 待機ウイルスが無ければスキップ */
         else
         {                                                  /* あれば */
-            std::vector<__TagInterface *>::iterator itt = agent_[ i ].stand_by_virus_.begin();
-            while( itt != agent_[ i ].stand_by_virus_.end() ){
-                agent_[ i ].infection( **itt );                  /* 感染させて */
-                itt++;                                     /* 次の待機ウイルス */
-            }
-            agent_[ i ].stand_by_virus_.clear();            /* 待機ウイルスをクリア */
+            agent_[ i ].infection(                         /* ランダムに一個選んで感染させる */
+                    *(agent_[ i ].stand_by_virus_.at( rand_array(agent_[ i ].stand_by_virus_.size() ) ))
+                    );
+//            std::vector<__TagInterface *>::iterator itt = agent_[ i ].stand_by_virus_.begin();
+//            while( itt != agent_[ i ].stand_by_virus_.end() ){
+//                agent_[ i ].infection( **itt );            /* 感染させて */
+//                itt++;                                     /* 次の待機ウイルス */
+//            }
+            agent_[ i ].stand_by_virus_.clear();           /* 待機ウイルスをクリア */
         }
     }
 }
