@@ -1,4 +1,4 @@
-/*
+﻿/*
  * =====================================================================================
  *
  *       Filename:  main.cpp
@@ -32,13 +32,15 @@ const int TERM  = 200;                                     /* 期間  */
 
 int main()
 {
-    srand((unsigned int)time(NULL)/2);                     /* 乱数初期化  */
+    srand( (unsigned int)time(NULL)/2 );                   /* 乱数初期化  */
 
     // 初期化
     Agent agent[ NUM_A ];                                  /* エージェントの集合  */
-    Virus virus[ NUM_V ] = {                               /* ウイルス生成  */
-        *(new Virus(12, 0.5)),                             /* 長さ、タグなど初期化 */
-        *(new Virus(12, 0.5))
+    Virus virus[ NUM_V ] = {                               /* ウイルス生成 */
+
+        *( new Virus(12, 0.5 )),                           /* タグ長、感染確率 */
+        *( new Virus(12, 0.5 ))
+
     };
     Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
 
