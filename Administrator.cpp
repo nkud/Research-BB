@@ -141,7 +141,7 @@ void Administrator :: contactAgent() {
                     if( static_cast<Virus *>(tvdata.v_)->rate_ > rand_interval_double(0,1) ) { /* ウイルス特有の感染確率で */
                                                            /* XXX: static castは使いたくない... */
 //                        agent_[ *it ].infection( *tvdata.v_ ); /* ウイルスを感染させる */
-                        agent_[ *it ].stand_by_vdata_ = &tvdata; /* 待機ウイルスにする */
+                        agent_[ *it ].stand_by_virus_ = tvdata.v_; /* 待機ウイルスにする */
                     }
                     it++;                                  /* 着目をその位置の次にいる人 */
 
@@ -160,16 +160,16 @@ void Administrator :: contactAgent() {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: infectAgent() {
-    VirusData *tvdata;
+    __TagInterface *tv;
     FOR( i, NUM_A )
     {
-        tvdata = agent_[ i ].stand_by_vdata_;
+        tv = agent_[ i ].stand_by_virus_;
 
-        if( tvdata == NULL ) continue;                     /* 待機ウイルスが無ければスキップ */
+        if( tv == NULL ) continue;                     /* 待機ウイルスが無ければスキップ */
         else
         {                                                  /* あれば */
-            agent_[ i ].infection( *(tvdata->v_) );        /* 感染させて */
-            agent_[ i ].stand_by_vdata_ = NULL;            /* 待機ウイルスを空に */
+            agent_[ i ].infection( *tv );        /* 感染させて */
+            agent_[ i ].stand_by_virus_ = NULL;            /* 待機ウイルスを空に */
         }
     }
 }
