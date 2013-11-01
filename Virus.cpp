@@ -24,7 +24,8 @@
  *--------------------------------------------------------------------------------------
  */
 Virus :: Virus() :
-    __TagInterface( TAG_LEN_V )
+    __TagInterface( TAG_LEN_V ),
+    rate_( INFECTION_RATE )
 {
     FOR( i, TAG_LEN_V ) {
         tag_[i] = rand_binary();

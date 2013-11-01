@@ -1,7 +1,15 @@
 set title "ウイルス保持者" font "helvetica, 24"
 plot "A_hasVirus.txt" w l title "ウイルス0保持"
 replot "A_hasVirus.txt" using 1:3 w l title "ウイルス1保持"
-replot "A_hasVirus.txt" using 1:4 w l title "全ウイルス保持"
+replot "A_hasVirus.txt" using 1:4 w l title "ウイルス2保持"
+replot "A_hasVirus.txt" using 1:5 w l title "ウイルス3保持"
+replot "A_hasVirus.txt" using 1:6 w l title "ウイルス4保持"
+replot "A_hasVirus.txt" using 1:7 w l title "ウイルス5保持"
+replot "A_hasVirus.txt" using 1:8 w l title "ウイルス6保持"
+replot "A_hasVirus.txt" using 1:9 w l title "ウイルス7保持"
+replot "A_hasVirus.txt" using 1:10 w l title "ウイルス8保持"
+replot "A_hasVirus.txt" using 1:11 w l title "ウイルス9保持"
+replot "A_hasVirus.txt" using 1:12 w l title "全ウイルス保持"
 set output
 pause -1
 set title "hasImmunity" font "helvetica, 24"
