@@ -22,12 +22,12 @@
 
 typedef int tag_t; 
 
-const int WIDTH             = 150   ; /* ランドスケープの幅 */
+const int WIDTH             = 200   ; /* ランドスケープの幅 */
 
 const int NUM_V             = 2     ; /* ウイルスの種類  */
 const int NUM_A             = 10000 ; /* エージェントの数  */
 
-const int TAG_LEN_A         = 30    ; 
+const int TAG_LEN_A         = 50    ; 
 const int TAG_LEN_V         = 15    ; /* ウイルスのタグのでフォルトの長さ */
 
 const double INFECTION_RATE = 0.5   ; /* デフォルトの感染率 */
