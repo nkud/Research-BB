@@ -25,56 +25,54 @@ using namespace std;
 #include "Monitor.h"
 #include "Administrator.h"
 
-#define HAS_VIRUS_FNAME     "A_hasVirus.csv"
-#define HAS_IMMUNITY_FNAME     "A_hasImmunity.csv"
-#define CONTACT_FNAME       "A_infectionContact.csv"
-
-const int TERM  = 500;                                     /* 期間  */
+const int TERM  = 100;                          /* 期間  */
 
 int main()
 {
-    srand( (unsigned int)time(NULL)/2 );                   /* 乱数初期化  */
+    srand( (unsigned int)time(NULL)/2 );        /* 乱数初期化  */
 
     // 初期化
-    Agent agent[ NUM_A ];                                  /* エージェントの集合  */
-    Virus virus[ NUM_V ] = {                               /* ウイルス生成 */
-        *( new Virus(35, 0.35 )),                           /* タグ長、感染確率 */
-        *( new Virus(25, 0.55 ))
+    Agent agent[ NUM_A ];                       /* エージェントの集合  */
+    Virus virus[ NUM_V ] = {                    /* ウイルス生成 */
+        *( new Virus(20, 0.15 )),               /* タグ長、感染確率 */
+        *( new Virus(20, 0.30 )),               /* タグ長、感染確率 */
+        *( new Virus(20, 0.20 ))
     };
-    Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
+    Landscape *landscape = new Landscape;       /* ランドスケープ初期化 */
 
     // 管理者に登録
     Administrator AD( agent, virus, landscape );
 
-    Monitor &monitor = Monitor::Instance();                /* モニター */
+    Monitor &monitor = Monitor::Instance();     /* モニター */
 
     // 初期感染
-    AD.initInfectAgentInRatio( virus[0], 0.5 );            /* 感染させる */
-    AD.initInfectAgentInRatio( virus[1], 0.5 );
+    AD.initInfectAgentInRatio( virus[0], 0.1 ); /* 感染させる */
+    AD.initInfectAgentInRatio( virus[1], 0.1 );
+    AD.initInfectAgentInRatio( virus[2], 0.1 );
     int initial_num_a = AD.numHasVirus( virus[0] ); /* 記録しておく */
     int initial_num_b = AD.numHasVirus( virus[1] );
 
     /* 計測開始 */
-    FOR( i, TERM )                                         /* 計算開始  */
+    FOR( i, TERM )                              /* 計算開始  */
     {
         log("------------ start");
 
-        monitor.resetAll();                                /* カウンターをリセット */
+        monitor.resetAll();                     /* カウンターをリセット */
 
-        AD.relocateAgent();                                /* ランダムに再配置 */
-        AD.contactAgent();                                 /* 近隣に接触する */
+        AD.relocateAgent();                     /* ランダムに再配置 */
+        AD.contactAgent();                      /* 近隣に接触する */
         AD.infectAgent();                       /* 待機ウイルスを感染させる */
-        AD.responseAgent();                                /* 免疫応答（タグフリップ） */
+        AD.responseAgent();                     /* 免疫応答（タグフリップ） */
 
         /* 出力 */
-        AD.outputFile_HasVirus( HAS_VIRUS_FNAME );         /* 出力: ウイルスの保持状況 */
-        AD.outputFile_HasImmunity( HAS_IMMUNITY_FNAME );         /* 出力: ウイルスの保持状況 */
-        AD.outputFile_InfectionContactRatio( CONTACT_FNAME );         /* 出力: ウイルスの保持状況 */
+        AD.outputFile_HasVirus( "A_hasVirus.txt" );         /* 出力: ウイルスの保持状況 */
+        AD.outputFile_HasImmunity( "A_hasImmunity.txt" );
+        AD.outputFile_InfectionContactRatio( "A_infectionContact.txt" );
 
         log(monitor.num_contact_);
     }
 
-    monitor.generatePlotScript();                          /* XXX: gnuplot用 */
+    monitor.generatePlotScript();               /* XXX: gnuplot用 */
     
     // 確認用 -----------------------------------------------------------------
     cout << "WIDTH:" << WIDTH << endl;
@@ -86,10 +84,10 @@ int main()
     cout << "RATE_1: " << virus[1].rate_ << endl;
     cout << "INIT_NUM_0: " << initial_num_a << endl;
     cout << "INIT_NUM_1: " << initial_num_b << endl;
-    FOR( i, NUM_V ) virus[ i ].printTag();                 /* 全ウイルスのタグを表示 */
+    FOR( i, NUM_V ) virus[ i ].printTag();      /* 全ウイルスのタグを表示 */
 
     // エージェントの最終的な状態など -----------------------------------------
-    ofstream ofs_log("A_log.txt");                         /* 出力ファイル  */
+    ofstream ofs_log("A_log.txt");              /* 出力ファイル  */
     ofs_log << "WIDTH:" << WIDTH << endl;
     ofs_log << "NUM_A:" << NUM_A << endl;
     ofs_log << "NUM_V:" << NUM_V << endl;

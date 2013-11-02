@@ -47,11 +47,11 @@ int Administrator :: numHasVirus( __TagInterface &v ) {
     int ret = 0;
 
     FOR( i, NUM_A ) {
-        if( agent_[i].hasVirus( v ) ) {                  /* v に感染していれば */
-            ret++;                                         /* インクリメント */
+        if( agent_[i].hasVirus( v ) ) {                              /* v に感染していれば */
+            ret++;                                                   /* インクリメント */
         }
     }
-    return ret;                                            /* v の感染者数を返す */
+    return ret;                                                      /* v の感染者数を返す */
 }
 
 /*
@@ -91,14 +91,14 @@ void Administrator :: responseAgent() {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: relocateAgent() {
-    landscape_->clearAgentMap();                           /* エージェントの位置をリセット */
-    int tx, ty;                                            /* 移動させる場所 */
+    landscape_->clearAgentMap();                                     /* エージェントの位置をリセット */
+    int tx, ty;                                                      /* 移動させる場所 */
     FOR( i, NUM_A ) {
-        tx = rand_interval_int( 0, WIDTH-1 );              /* ランダムに設定 */
+        tx = rand_interval_int( 0, WIDTH-1 );                        /* ランダムに設定 */
         ty = rand_interval_int( 0, WIDTH-1 );
-        agent_[ i ].x_ = tx;                               /* 配置 */
+        agent_[ i ].x_ = tx;                                         /* 配置 */
         agent_[ i ].y_ = ty;
-        landscape_->agent_map_[ tx ][ ty ].push_back( i ); /* エージェントを登録 */
+        landscape_->agent_map_[ tx ][ ty ].push_back( i );           /* エージェントを登録 */
     }
 }
 
@@ -111,10 +111,10 @@ void Administrator :: relocateAgent() {
  */
 void Administrator :: contactAgent() {
 
-    std::vector<int> infected_agent;                       /* 現時点での感染者リスト */
-    FOR( i, NUM_A ) {                                      /* 全員に対して */
-        if( agent_[ i ].numHoldingVirus() > 0 ) {          /* 何らかのウイルスを保持していたら */
-            infected_agent.push_back( i );                 /* 感染者リストに加える */
+    std::vector<int> infected_agent;                                 /* 現時点での感染者リスト */
+    FOR( i, NUM_A ) {                                                /* 全員に対して */
+        if( agent_[ i ].numHoldingVirus() > 0 ) {                    /* 何らかのウイルスを保持していたら */
+            infected_agent.push_back( i );                           /* 感染者リストに加える */
         }
     }
 
@@ -122,34 +122,34 @@ void Administrator :: contactAgent() {
     Agent *myself;
 
     INT_ITERATOR it_infected = infected_agent.begin();
-    while( it_infected != infected_agent.end() ) {         /* 感染者リストの数だけ繰り返す */
-        myself = &agent_[ *it_infected ];                  /* 感染者自身 */
-        tx = myself->x_;                                   /* 感染者自身の位置 */
+    while( it_infected != infected_agent.end() ) {                   /* 感染者リストの数だけ繰り返す */
+        myself = &agent_[ *it_infected ];                            /* 感染者自身 */
+        tx = myself->x_;                                             /* 感染者自身の位置 */
         ty = myself->y_;
 
-        REP( i, -1, 1 ) {                                  /* 自分の縦・横・自マスに感染させる（計５マス） */
+        REP( i, -1, 1 ) {                                            /* 自分の縦・横・自マスに感染させる（計５マス） */
             REP( j, -1, 1 ) {
-                if( i*j != 0 ) continue;
-                if( !(landscape_->isOnMap( tx+i, ty+j )) ) continue; /* 土地からはみ出てたらスキップ */
+                if( i*j != 0 ) continue;                             /* 斜めは入れない */
+                if( ! (landscape_->isOnMap( tx+i, ty+j )) ) continue;/* 土地からはみ出てたらスキップ */
 
                 INT_ITERATOR it = landscape_->agent_map_[ tx+i ][ ty+j ].begin();
                 while( it != landscape_->agent_map_[ tx+i ][ ty+j ].end() )
-                {                                          /* その位置にいる人全員に */
-                    VirusData &tvdata =                    /* ランダムに保持ウイルスから選んで */
+                {                                                    /* その位置にいる人全員に */
+                    VirusData &tvdata =                              /* ランダムに保持ウイルスから選んで */
                         myself->vlist_.at( rand_array(myself->vlist_.size()) );
 
-                    if( static_cast<Virus *>(tvdata.v_)->rate_ > rand_interval_double(0,1) ) { /* ウイルス特有の感染確率で */
-                                                           /* XXX: static castは使いたくない... */
-//                        agent_[ *it ].infection( *tvdata.v_ ); /* ウイルスを感染させる */
+                    if( static_cast<Virus *>(tvdata.v_)->rate_ > rand_interval_double(0,1) )
+                    {                                                /* ウイルス特有の感染確率で */
+                                                                     /* XXX: static castは使いたくない... */
                         agent_[ *it ].stand_by_virus_.push_back( tvdata.v_ ); /* 待機ウイルスにする */
                     }
-                    it++;                                  /* 着目をその位置の次にいる人 */
+                    it++;                                            /* 着目をその位置の次にいる人 */
 
-                    Monitor::Instance().countUpContact();  /* モニタリング */
+                    Monitor::Instance().countUpContact();            /* モニタリング */
                 }
             }
         }
-        it_infected++;                                     /* 次の感染者 */
+        it_infected++;                                               /* 次の感染者 */
     }
 }
 
@@ -162,29 +162,26 @@ void Administrator :: contactAgent() {
  */
 void Administrator :: infectAgent() {
     std::vector<__TagInterface *>::iterator itt;
-    FOR( i, NUM_A )
+    __TagInterface *tv;
+    int n;
+
+    FOR( i, NUM_A )                                                  /* エージェントの数だけ */
     {
-        if( agent_[i].stand_by_virus_.empty() ) continue;/* 待機ウイルスが無ければスキップ */
+        if( agent_[i].stand_by_virus_.empty() ) continue;            /* 待機ウイルスが無ければスキップ */
         else
-        {                                                  /* あれば */
-            while( ! agent_[i].stand_by_virus_.empty() ) {
-                int n = rand_array(agent_[i].stand_by_virus_.size() ); /* ランダムに一個の */
-                __TagInterface *tv = agent_[i].stand_by_virus_.at( n ); /* ウイルスを選んで */
-                if( agent_[i].infection( *tv ) ) {       /* 感染させて */
-                    break;                                 /* 次のエージェントへ */
+        {                                                            /* あれば */
+            while( ! agent_[i].stand_by_virus_.empty() ) {           /* 待機ウイルスがなくなるまで */
+                n = rand_array(agent_[i].stand_by_virus_.size() );   /* ランダムに一個の */
+                tv = agent_[i].stand_by_virus_.at( n );              /* ウイルスを選んで */
+                if( agent_[i].infection( *tv ) ) {                   /* 感染させたら */
+                    break;                                           /* 次のエージェントへ */
                 } else {
-                    itt = agent_[i].stand_by_virus_.begin();
-                    while(n-->0) { itt++; }
-                    agent_[i].stand_by_virus_.erase( itt );  /* 感染しなければ、別の待機ウイルス */
+                    itt = agent_[i].stand_by_virus_.begin();         /* もし感染しなければ */
+                    while(n-->0) { itt++; }                          /* そのウイルスを */
+                    agent_[i].stand_by_virus_.erase( itt );          /* 待機ウイルスからはずして次のウイルス */
                 }
             }
-
-//            std::vector<__TagInterface *>::iterator itt = agent_[ i ].stand_by_virus_.begin();
-//            while( itt != agent_[ i ].stand_by_virus_.end() ){
-//                agent_[ i ].infection( **itt );            /* 感染させて */
-//                itt++;                                     /* 次の待機ウイルス */
-//            }
-            agent_[ i ].stand_by_virus_.clear();           /* 待機ウイルスをクリア */
+            agent_[ i ].stand_by_virus_.clear();                     /* 待機ウイルスをクリア */
         }
     }
 }
@@ -213,13 +210,13 @@ int Administrator :: numHasAllImmunity() {
     int flag = 1;
     FOR( i, NUM_A ) {
         FOR( j, NUM_V ) {
-            if( ! agent_[ i ].hasImmunity( virus_[ j ] ) ) { /* もし免疫を持っていなければ、 */
-                flag = 0;                                  /* フラッグを下ろす */
+            if( ! agent_[ i ].hasImmunity( virus_[ j ] ) ) {         /* もし免疫を持っていなければ、 */
+                flag = 0;                                            /* フラッグを下ろす */
                 break;
             }
         }
         if( flag == 1 ) ret++;
-        flag = 1;                                          /* フラッグを戻す */
+        flag = 1;                                                    /* フラッグを戻す */
     }
     return ret;
 }
@@ -231,13 +228,13 @@ int Administrator :: numHasAllImmunity() {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: initInfectAgentInRatio( Virus &v, double r ) {
-    static int infected_from = 0;                          /* ０番目のエージェントから順に感染させる */
+    static int infected_from = 0;                                    /* ０番目のエージェントから順に感染させる */
     int infected_to;
     infected_to = infected_from + (int)( NUM_A * r );
     REP( i, infected_from, infected_to ) {
         agent_[ i%NUM_A ].infection( v );
     }
-    infected_from = ( infected_to + 1 ) % NUM_A;           /* 次の感染は、感染した次のエージェントから始まる */
+    infected_from = ( infected_to + 1 ) % NUM_A;                     /* 次の感染は、感染した次のエージェントから始まる */
 }
 
 /*--------------------------------------------------------------------------------------
@@ -246,13 +243,13 @@ void Administrator :: initInfectAgentInRatio( Virus &v, double r ) {
  *               ウイルスの数によって、列を調整できる
  *----------------------------------------------------------------------------------- */
 void Administrator :: outputFile_HasVirus( const char *fname ) {
-    static std::ofstream ofs(fname);                       /* インスタンスは１つだけ */
-    static int i = 0;                                      /* 期間をカウント */
-    ofs << i++ << SEPARATOR;                               /* ファイルに出力 */
+    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
+    static int i = 0;                                                /* 期間をカウント */
+    ofs << i++ << SEPARATOR;                                         /* ファイルに出力 */
     FOR( j, NUM_V ) {
-        ofs << numHasVirus( virus_[j] ) << SEPARATOR;      /* ウイルス i の保持者 */
+        ofs << numHasVirus( virus_[j] ) << SEPARATOR;                /* ウイルス j の保持者 */
     }
-    ofs << numHasAllVirus() << std::endl;                  /* 全ウイルス保持者 */
+    ofs << numHasAllVirus() << std::endl;                            /* 全ウイルス保持者 */
 }
 
 /*--------------------------------------------------------------------------------------
@@ -261,13 +258,13 @@ void Administrator :: outputFile_HasVirus( const char *fname ) {
  *               ウイルスの数によって、列を調整できる
  *----------------------------------------------------------------------------------- */
 void Administrator :: outputFile_HasImmunity( const char *fname ) {
-    static std::ofstream ofs(fname);                       /* インスタンスは１つだけ */
-    static int i = 0;                                      /* 期間をカウント */
-    ofs << i++ << SEPARATOR;                               /* ファイルに出力 */
+    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
+    static int i = 0;                                                /* 期間をカウント */
+    ofs << i++ << SEPARATOR;                                         /* ファイルに出力 */
     FOR( j, NUM_V ) {
-        ofs << numHasImmunity( virus_[j] ) << SEPARATOR;      /* ウイルス i の保持者 */
+        ofs << numHasImmunity( virus_[j] ) << SEPARATOR;
     }
-    ofs << numHasAllImmunity() << std::endl;                  /* 全ウイルス保持者 */
+    ofs << numHasAllImmunity() << std::endl;
 }
 
 /*--------------------------------------------------------------------------------------
@@ -276,18 +273,17 @@ void Administrator :: outputFile_HasImmunity( const char *fname ) {
  *               ウイルスの数によって、列を調整できる
  *----------------------------------------------------------------------------------- */
 void Administrator :: outputFile_InfectionContactRatio( const char *fname ) {
-    static std::ofstream ofs(fname);                       /* インスタンスは１つだけ */
-    static int i = 0;                                      /* 期間をカウント */
+    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
+    static int i = 0;                                                /* 期間をカウント */
     double ratio = 0;
-    ofs << i++ << SEPARATOR;                               /* ファイルに出力 */
-    if( monitor_.num_contact_ == 0 ||
-            monitor_.num_infection_contact_[0] == 0) 
-        ratio = 0;
-    else
-        ratio = (double)monitor_.num_infection_contact_[0] /
-            (double)monitor_.num_contact_;
-    ofs << monitor_.num_contact_ << SEPARATOR
-        << monitor_.num_infection_contact_[&virus_[0]] << SEPARATOR
-        << monitor_.num_infection_contact_[&virus_[1]] << SEPARATOR
-        << ratio << std::endl;                             /* ウイルス i の保持者 */
+    int sum = 0;
+
+    ofs << i++ << SEPARATOR;                                         /* 期間 */
+    ofs << monitor_.num_contact_ << SEPARATOR;                       /* 総接触数 */
+    FOR( j, NUM_V ) {                                                /* その内感染した回数 */
+        ofs << (sum += monitor_.num_infection_contact_[&virus_[j]]) << SEPARATOR;
+    }
+
+    if( sum > 0 ) ratio = (double)sum / (double)monitor_.num_contact_; 
+    ofs << ratio << std::endl;
 }
