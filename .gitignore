@@ -2,3 +2,7 @@
 *.swp
 *.out
 tags
+
+*.dat
+*.csv
+*.txt
