@@ -25,7 +25,7 @@ using namespace std;
 #include "Monitor.h"
 #include "Administrator.h"
 
-const int TERM  = 100;                          /* 期間  */
+const int TERM  = 200;                          /* 期間  */
 
 int main()
 {
@@ -34,9 +34,9 @@ int main()
     // 初期化
     Agent agent[ NUM_A ];                       /* エージェントの集合  */
     Virus virus[ NUM_V ] = {                    /* ウイルス生成 */
-        *( new Virus(20, 0.15 )),               /* タグ長、感染確率 */
+        *( new Virus(10, 0.80 )),               /* タグ長、感染確率 */
         *( new Virus(20, 0.30 )),               /* タグ長、感染確率 */
-        *( new Virus(20, 0.20 ))
+        *( new Virus(30, 0.80 ))
     };
     Landscape *landscape = new Landscape;       /* ランドスケープ初期化 */
 
@@ -75,13 +75,13 @@ int main()
     monitor.generatePlotScript();               /* XXX: gnuplot用 */
     
     // 確認用 -----------------------------------------------------------------
-    cout << "WIDTH:" << WIDTH << endl;
+    cout << "WIDTH:" << WIDTH << endl;          /* => AD.info() */
     cout << "NUM_A:" << NUM_A << endl;
     cout << "NUM_V:" << NUM_V << endl;
     cout << "TAG_LEN_A:" << TAG_LEN_A << endl;
-    cout << "TAG_LEN_V:" << TAG_LEN_V << endl;
-    cout << "RATE_0: " << virus[0].rate_ << endl;
-    cout << "RATE_1: " << virus[1].rate_ << endl;
+    cout << "VIRUS:" << endl;
+    FOR(i,NUM_V) { cout<<"\trate_"<<i<<":\t"<<virus[i].rate_;
+        cout<<"\tlen_"<<i<<":\t"<<virus[i].len_<<endl; }
     cout << "INIT_NUM_0: " << initial_num_a << endl;
     cout << "INIT_NUM_1: " << initial_num_b << endl;
     FOR( i, NUM_V ) virus[ i ].printTag();      /* 全ウイルスのタグを表示 */
@@ -93,18 +93,11 @@ int main()
     ofs_log << "NUM_V:" << NUM_V << endl;
     ofs_log << "TAG_LEN_A:" << TAG_LEN_A << endl;
     ofs_log << "TAG_LEN_V:" << TAG_LEN_V << endl;
-    FOR(i,NUM_V) {
-        ofs_log<<"["<<virus[i].tag_<<"]:";
-        FOR(j, virus[i].len_) {
-            ofs_log<<virus[i].tag_[j];
-        } ofs_log<<endl;
-    }
+    FOR(i,NUM_V) { ofs_log<<"["<<virus[i].tag_<<"]:";
+        FOR(j, virus[i].len_) { ofs_log<<virus[i].tag_[j]; } ofs_log<<endl; }
     ofs_log << ">>> Agent Last Status" << endl;
-    FOR(i, NUM_A) {
-        FOR(j, agent[0].len_) ofs_log<<agent[i].tag_[j];
-        ofs_log<<" "<<agent[i].numHoldingVirus();
-        ofs_log<<endl;
-    }
+    FOR(i, NUM_A) { FOR(j, agent[0].len_) ofs_log<<agent[i].tag_[j];
+        ofs_log<<" "<<agent[i].numHoldingVirus(); ofs_log<<endl; }
     // ------------------------------------------------------------------------
 
     return 0;
