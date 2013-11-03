@@ -25,7 +25,7 @@ using namespace std;
 #include "Monitor.h"
 #include "Administrator.h"
 
-const int TERM  = 200;                          /* 期間  */
+const int TERM  = 300;                          /* 期間  */
 
 int main()
 {
@@ -34,9 +34,9 @@ int main()
     // 初期化
     Agent agent[ NUM_A ];                       /* エージェントの集合  */
     Virus virus[ NUM_V ] = {                    /* ウイルス生成 */
-        *( new Virus(10, 0.80 )),               /* タグ長、感染確率 */
-        *( new Virus(20, 0.30 )),               /* タグ長、感染確率 */
-        *( new Virus(30, 0.80 ))
+        *( new Virus(15, 0.90 )),               /* タグ長、感染確率 */
+        *( new Virus(20, 0.60 )),               /* タグ長、感染確率 */
+        *( new Virus(35, 0.15 ))
     };
     Landscape *landscape = new Landscape;       /* ランドスケープ初期化 */
 
