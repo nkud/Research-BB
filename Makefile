@@ -36,7 +36,7 @@ clean:
 tags:
 	@$(CTAGS) $(SRC) $(LIB) Global.h
 
-all: tags $(TARGET) run plot
+all: $(TARGET) run plot
 
 rebuild: tags build run
 
