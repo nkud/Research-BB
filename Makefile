@@ -1,12 +1,15 @@
-CC     = g++
-PRINT  = /bin/echo
-RM     = rm -rfv
-CTAGS  = ctags
+CC       = g++
+PRINT    = /bin/echo
+RM       = rm -rfv
+CTAGS    = ctags
 
-TARGET = main.out
-SRC    = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp Monitor.cpp Administrator.cpp Landscape.cpp
-OBJ    = $(SRC:.cpp=.o)
-LIB    = $(SRC:.cpp=.h)
+TARGET   = main.out
+SRC      = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp Monitor.cpp Administrator.cpp Landscape.cpp
+OBJ      = $(SRC:.cpp=.o)
+LIB      = $(SRC:.cpp=.h)
+
+VPATH    = src include
+CPPFLAGS = -I include
 
 $(TARGET): $(OBJ) Global.h
 	@$(PRINT) -ne 'Cretating $(TARGET)...\t'
@@ -20,7 +23,7 @@ run:
 
 %.o: %.cpp %.h Global.h
 	@$(PRINT) -ne 'Compiling $@...\t'
-	@$(CC) -c $< -o $@
+	@$(CC) -c $< -o $@ $(CPPFLAGS)
 	@$(PRINT) OK!
 
 main.o: Global.h
