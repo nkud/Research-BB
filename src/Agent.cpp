@@ -53,13 +53,13 @@ bool Agent :: infection( __TagInterface &v )
         it++;
     }
     if( hasImmunity( v ) ) {                    // 免疫獲得済みなら 
-        return false;                                 // 感染せずに終了 
+        return false;                           // 感染せずに終了 
     }
     /* 感染リストに追加 */
     VirusData vdata( &v, min_ham_distance( tag_, v.tag_, len_, v.len_ ) ); // スタートポイント 
     vlist_.push_back( vdata );
 
-    monitor_.countUpInfectionContact(vdata.v_);       /* 感染のために接触した回数を増やす */
+    monitor_.countUpInfectionContact(vdata.v_); /* 感染のために接触した回数を増やす */
     return true;
 }
 
