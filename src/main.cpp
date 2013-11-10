@@ -113,5 +113,7 @@ int main()
     // 計測時間出力                             /* XXX: ??? */
     end = gettime();                                                           /* 実行時間計測終了 */
     cout << end-start << endl;
+    log(sizeof(Agent));
+    log(sizeof(Virus));
     return 0;
 }

@@ -136,12 +136,12 @@ void Administrator :: contactAgent() {
                 while( it != landscape_->agent_map_[ tx+i ][ ty+j ].end() )
                 {                                                              /* その位置にいる人全員に */
                     VirusData *tvdata =                                        /* ランダムに保持ウイルスから選んで */
-                        myself->getVirusDataAt( rand_array(myself->getVirusDataSize()) );
+                        myself->getVirusDataAt( rand_array(myself->getVirusListSize()) );
 
                     if( static_cast<Virus *>(tvdata->v_)->rate_ > rand_interval_double(0,1) )
                     {                                                          /* ウイルス特有の感染確率で */
                                                                      /* XXX: static castは使いたくない... */
-                        agent_[ *it ].stand_by_virus_.push_back( tvdata->v_ ); /* 待機ウイルスにする */
+                        agent_[ *it ].pushStandByVirus( tvdata->v_ ); /* 待機ウイルスにする */
                     }
                     it++;                                                      /* 着目をその位置の次にいる人 */
 
@@ -167,21 +167,21 @@ void Administrator :: infectAgent() {
 
     FOR( i, NUM_A )                                                            /* エージェントの数だけ */
     {
-        if( agent_[i].stand_by_virus_.empty() ) continue;                      /* 待機ウイルスが無ければスキップ */
+        if( agent_[i].hasNoStandByVirus() ) continue;                      /* 待機ウイルスが無ければスキップ */
         else
         {                                                                      /* あれば */
-            while( ! agent_[i].stand_by_virus_.empty() ) {                     /* 待機ウイルスがなくなるまで */
-                n = rand_array(agent_[i].stand_by_virus_.size() );             /* ランダムに一個の */
-                tv = agent_[i].stand_by_virus_.at( n );                        /* ウイルスを選んで */
+            while( ! agent_[i].hasNoStandByVirus() ) {                     /* 待機ウイルスがなくなるまで */
+                n = rand_array(agent_[i].getStandByListSize() );             /* ランダムに一個の */
+                tv = agent_[i].getStandByVirusAt( n );                        /* ウイルスを選んで */
                 if( agent_[i].infection( *tv ) ) {                             /* 感染させたら */
                     break;                                                     /* 次のエージェントへ */
                 } else {
-                    itt = agent_[i].stand_by_virus_.begin();                   /* もし感染しなければ */
+                    itt = agent_[i].getStandByListBeginIterator();                   /* もし感染しなければ */
                     while(n-->0) { itt++; }                                    /* そのウイルスを */
-                    agent_[i].stand_by_virus_.erase( itt );                    /* 待機ウイルスからはずして次のウイルス */
+                    agent_[i].eraseStandByVirus( itt );                    /* 待機ウイルスからはずして次のウイルス */
                 }
             }
-            agent_[ i ].stand_by_virus_.clear();                               /* 待機ウイルスをクリア */
+            agent_[ i ].clearStandByVirus();                               /* 待機ウイルスをクリア */
         }
     }
 }
