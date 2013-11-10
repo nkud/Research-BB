@@ -16,8 +16,6 @@
 
 #include <vector>
 
-#define LIST_ITERATOR std::vector<VirusData *>::iterator
-
 /*--------------------------------------------------------------------------------------
  *      Method:  Agent :: *
  * Description:  セッタ、ゲッタ関連
@@ -79,7 +77,7 @@ Agent :: Agent() :
  */
 bool Agent :: infection( __TagInterface &v )
 {
-    std::vector<VirusData *>::iterator it = getVirusListBeginIterator();
+    ITERATOR(VirusData *) it = getVirusListBeginIterator();
     while( it != getVirusListEndIterator() ) {                                 // 既に保持しているウイルスなら終了 
         if( (*it)->v_ == &v ) {
             return false;
@@ -108,7 +106,7 @@ void Agent :: response()
 {
     if( hasNoVirusData() ) return;                                             /* 保持ウイルスなし、終了  */
 
-    LIST_ITERATOR it = getVirusListBeginIterator();                            /* 先頭のウイルスに対し */
+    ITERATOR(VirusData *) it = getVirusListBeginIterator();                            /* 先頭のウイルスに対し */
     flip_once( tag_+(*it)->sp_, (*it)->v_->getTag(), (*it)->v_->getLen() );            /* ひとつフリップ  */
 
     if( hasImmunity( *((*it)->v_) ) ) {                                        /* 免疫獲得すれば */
@@ -137,7 +135,7 @@ bool Agent :: hasImmunity( __TagInterface &v )                                 /
  *--------------------------------------------------------------------------------------
  */
 bool Agent :: isInfected( __TagInterface &v ) {
-    LIST_ITERATOR it = vlist_.begin();
+    ITERATOR(VirusData *) it = vlist_.begin();
     while( it != vlist_.end() ) {
         if( (*it)->v_ == &v ) {                                                // 感染済みだった
             return true;
@@ -153,7 +151,7 @@ bool Agent :: isInfected( __TagInterface &v ) {
  *               リストを走査することで確かめる
  *----------------------------------------------------------------------------------- */
 bool Agent :: hasVirus( __TagInterface &v ) {
-    LIST_ITERATOR it = vlist_.begin();
+    ITERATOR(VirusData *) it = vlist_.begin();
     while( it != vlist_.end() ) {
         if( (*it)->v_ == &v ) {                                                // 感染済みだった
             return true;

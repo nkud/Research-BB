@@ -25,7 +25,7 @@
 #define HAS_IMMUNITY_FNAME  A_hasImmunity.txt
 #define CONTACT_FNAME       A_infectionContact.txt
 
-#define VITERATOR(type)     (std::vector<(type)>::iterator)
+#define ITERATOR(type)      std::vector< type >::iterator
 
 typedef int tag_t; 
 

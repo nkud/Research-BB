@@ -22,8 +22,6 @@
 #include <vector>
 #include <fstream>
 
-#define INT_ITERATOR    std::vector<int>::iterator
-
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: Administrator( Agent *, Virus * )
@@ -121,7 +119,7 @@ void Administrator :: contactAgent() {
     int tx, ty;
     Agent *myself;
 
-    INT_ITERATOR it_infected = infected_agent.begin();
+    ITERATOR(int) it_infected = infected_agent.begin();
     while( it_infected != infected_agent.end() ) {                             /* 感染者リストの数だけ繰り返す */
         myself = &agent_[ *it_infected ];                                      /* 感染者自身 */
         tx = myself->getX();                                                   /* 感染者自身の位置 */
@@ -132,7 +130,7 @@ void Administrator :: contactAgent() {
                 if( i*j != 0 ) continue;                                       /* 斜めは入れない */
                 if( ! (landscape_->isOnMap( tx+i, ty+j )) ) continue;          /* 土地からはみ出てたらスキップ */
 
-                INT_ITERATOR it = landscape_->agent_map_[ tx+i ][ ty+j ].begin();
+                ITERATOR(int) it = landscape_->agent_map_[ tx+i ][ ty+j ].begin();
                 while( it != landscape_->agent_map_[ tx+i ][ ty+j ].end() )
                 {                                                              /* その位置にいる人全員に */
                     VirusData *tvdata =                                        /* ランダムに保持ウイルスから選んで */
