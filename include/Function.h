@@ -17,7 +17,7 @@
 #include "Global.h"
 
 // tag set
-int flip_once( tag_t *, tag_t *, int );    /* 一回だけフリップ */
+int flip_once( tag_t *, tag_t *, const int len );    /* 一回だけフリップ */
 
 // hamming set
 int ham_distance( int *, int *, int );

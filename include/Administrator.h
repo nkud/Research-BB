@@ -39,15 +39,15 @@ class Administrator {
         void relocateAgent();                              /* 再配置 */
         void contactAgent();                               /* 近隣に接触して感染させる */
         void initInfectAgentInRatio( Virus &, double );
-        void infectAgent();                     /* 待機ウイルスを感染させる */
+        void infectAgent();                                /* 待機ウイルスを感染させる */
 
         int numHasVirus( __TagInterface & );               /* v に感染している人の数 */
         int numHasAllVirus();                              /* 全ウイルスに感染している人の数 */
         int numHasImmunity( __TagInterface & );            /* v の免疫獲得者数 */
-        int numHasAllImmunity();                /* 全ウイルスの免疫獲得者数 */
+        int numHasAllImmunity();                           /* 全ウイルスの免疫獲得者数 */
 
         void outputFile_HasVirus( const char * );          /* ファイルに出力 */
-        void outputFile_HasImmunity( const char * );          /* ファイルに出力 */
+        void outputFile_HasImmunity( const char * );       /* ファイルに出力 */
         void outputFile_InfectionContactRatio( const char * ); /* ファイルに出力 */
 };
 

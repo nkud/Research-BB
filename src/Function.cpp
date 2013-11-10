@@ -8,7 +8,7 @@
  *  Description:  
  * =====================================================================================
  */
-int flip_once( tag_t *a, tag_t *b, int len )    /* 一回だけフリップ */
+int flip_once( tag_t *a, tag_t *b, const int len )    /* 一回だけフリップ */
 {
     FOR( i, len )                               /* タグの長さだけ繰り返す */
     {

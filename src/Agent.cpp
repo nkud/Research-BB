@@ -16,7 +16,39 @@
 
 #include <vector>
 
-#define LIST_ITERATOR std::vector<VirusData>::iterator
+#define LIST_ITERATOR std::vector<VirusData *>::iterator
+
+/*--------------------------------------------------------------------------------------
+ *      Method:  Agent :: *
+ * Description:  セッタ、ゲッタ関連
+ *----------------------------------------------------------------------------------- */
+void Agent :: setX( int x ) { x_ = x; }
+void Agent :: setY( int y ) { y_ = y; }
+int Agent :: getX() { return x_; }
+int Agent :: getY() { return y_; }
+
+VirusData *Agent :: getVirusDataAt( int n ) {
+    return vlist_.at( n );
+}
+void Agent :: pushVirusData( VirusData *vd ) {
+    vlist_.push_back( vd );
+}
+void Agent :: eraseVirusData( std::vector<VirusData *>::iterator it ) {
+    vlist_.erase( it );
+}
+int Agent :: getVirusDataSize() {
+    return vlist_.size();
+}
+std::vector<VirusData *>::iterator Agent :: getVirusDataBeginIterator() {
+    return vlist_.begin();
+}
+std::vector<VirusData *>::iterator Agent :: getVirusDataEndIterator() {
+    return vlist_.end();
+}
+bool Agent :: hasNoVirusData() {
+    if( vlist_.empty() ) return true;
+    else return false;
+}
 
 /*
  *--------------------------------------------------------------------------------------
@@ -30,12 +62,12 @@ Agent :: Agent() :
     y_( 0 ),
     stand_by_virus_( 0 ),
     monitor_( Monitor::Instance() )
-{                                               // タグの長さを初期化 
-    FOR( i, TAG_LEN_A ) {                       // タグをランダムに初期化 
+{                                                                              // タグの長さを初期化 
+    FOR( i, TAG_LEN_A ) {                                                      // タグをランダムに初期化 
         tag_[ i ] = rand_binary();
     }
-    vlist_.clear();                             /* 配列を空に */
-    stand_by_virus_.clear();                    /* 配列を空に */
+    vlist_.clear();                                                            /* 配列を空に */
+    stand_by_virus_.clear();                                                   /* 配列を空に */
 }
 /*
  *--------------------------------------------------------------------------------------
@@ -45,21 +77,21 @@ Agent :: Agent() :
  */
 bool Agent :: infection( __TagInterface &v )
 {
-    std::vector<VirusData>::iterator it = vlist_.begin();
-    while( it != vlist_.end() ) {               // 既に保持しているウイルスなら終了 
-        if( it->v_ == &v ) {
+    std::vector<VirusData *>::iterator it = getVirusDataBeginIterator();
+    while( it != getVirusDataEndIterator() ) {                                 // 既に保持しているウイルスなら終了 
+        if( (*it)->v_ == &v ) {
             return false;
         }
         it++;
     }
-    if( hasImmunity( v ) ) {                    // 免疫獲得済みなら 
-        return false;                           // 感染せずに終了 
+    if( hasImmunity( v ) ) {                                                   // 免疫獲得済みなら 
+        return false;                                                          // 感染せずに終了 
     }
     /* 感染リストに追加 */
-    VirusData vdata( &v, min_ham_distance( tag_, v.tag_, len_, v.len_ ) ); // スタートポイント 
-    vlist_.push_back( vdata );
+    VirusData *vdata = new VirusData( v, min_ham_distance( tag_, v.tag_, len_, v.len_ ) );     // スタートポイント 
+    pushVirusData( vdata );
 
-    monitor_.countUpInfectionContact(vdata.v_); /* 感染のために接触した回数を増やす */
+    monitor_.countUpInfectionContact(vdata->v_);                                /* 感染のために接触した回数を増やす */
     return true;
 }
 
@@ -72,13 +104,13 @@ bool Agent :: infection( __TagInterface &v )
  */
 void Agent :: response()
 {
-    if( vlist_.empty() ) return;                /* 保持ウイルスなし、終了  */
+    if( hasNoVirusData() ) return;                                             /* 保持ウイルスなし、終了  */
 
-    LIST_ITERATOR it = vlist_.begin();          /* 先頭のウイルスに対し */
-    flip_once( tag_+it->sp_, it->v_->tag_, it->v_->len_ ); /* ひとつフリップ  */
+    LIST_ITERATOR it = getVirusDataBeginIterator();                            /* 先頭のウイルスに対し */
+    flip_once( tag_+(*it)->sp_, (*it)->v_->tag_, (*it)->v_->len_ );            /* ひとつフリップ  */
 
-    if( hasImmunity( *(it->v_) ) ) {            /* 免疫獲得すれば */
-        vlist_.erase( it );                     /* 保持ウイルスから v を削除 */
+    if( hasImmunity( *((*it)->v_) ) ) {                                        /* 免疫獲得すれば */
+        eraseVirusData( it );                                                  /* 保持ウイルスから v を削除 */
     }
 }
 
@@ -88,12 +120,12 @@ void Agent :: response()
  * Description:  免疫を獲得しているかどうか
  *--------------------------------------------------------------------------------------
  */
-bool Agent :: hasImmunity( __TagInterface &v )  // true -> 免疫獲得済み 
+bool Agent :: hasImmunity( __TagInterface &v )                                 // true -> 免疫獲得済み 
 {
-    if( min_ham_distance( tag_, v.tag_, len_, v.len_ ) < 0 ) // スタートポイントが -1 以下なら
-        return true;                            // 免疫獲得済み 
-    else                                        // 0 以上なら
-        return false;                           // 未獲得 
+    if( min_ham_distance( tag_, v.tag_, len_, v.len_ ) < 0 )                   // スタートポイントが -1 以下なら
+        return true;                                                           // 免疫獲得済み 
+    else                                                                       // 0 以上なら
+        return false;                                                          // 未獲得 
 }
 
 /*
@@ -105,12 +137,12 @@ bool Agent :: hasImmunity( __TagInterface &v )  // true -> 免疫獲得済み
 bool Agent :: isInfected( __TagInterface &v ) {
     LIST_ITERATOR it = vlist_.begin();
     while( it != vlist_.end() ) {
-        if( it->v_ == &v ) {                    // 感染済みだった
+        if( (*it)->v_ == &v ) {                                                // 感染済みだった
             return true;
         }
         it++;
     }
-    return false;                               // 未感染だった
+    return false;                                                              // 未感染だった
 }
 
 /*--------------------------------------------------------------------------------------
@@ -121,12 +153,12 @@ bool Agent :: isInfected( __TagInterface &v ) {
 bool Agent :: hasVirus( __TagInterface &v ) {
     LIST_ITERATOR it = vlist_.begin();
     while( it != vlist_.end() ) {
-        if( it->v_ == &v ) {                    // 感染済みだった
+        if( (*it)->v_ == &v ) {                                                // 感染済みだった
             return true;
         }
         it++;
     }
-    return false;                               // 未感染だった
+    return false;                                                              // 未感染だった
 }
 
 /*

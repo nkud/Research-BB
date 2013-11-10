@@ -15,6 +15,7 @@
 #define ___GLOBAL
 
 #include <iostream>
+#include <vector>
 
 #define FOR(i, m)           for(int (i)=0; (i)<(m); (i)++)    /* i: 0 ~ (m-1) */
 #define REP(i, min, max)    for(int (i)=(min); (i)<=(max); (i)++)
@@ -23,6 +24,8 @@
 #define HAS_VIRUS_FNAME     A_hasVirus.txt
 #define HAS_IMMUNITY_FNAME  A_hasImmunity.txt
 #define CONTACT_FNAME       A_infectionContact.txt
+
+#define VITERATOR(type)     (std::vector<(type)>::iterator)
 
 typedef int tag_t; 
 
