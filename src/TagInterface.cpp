@@ -56,9 +56,26 @@ __TagInterface :: __TagInterface( const char *str ) :
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-int *__TagInterface :: getTag_()
+tag_t *__TagInterface :: getTag_()
 {
     return tag_;
+}
+
+/*--------------------------------------------------------------------------------------
+ *      Method:  __TagInterface :: getTagLen()
+ * Description:  
+ *----------------------------------------------------------------------------------- */
+int __TagInterface :: getTagLen() {
+    return len_;
+}
+
+/*--------------------------------------------------------------------------------------
+ *      Method:  __TagInterface :: tagAt( int )
+ * Description:  
+ *----------------------------------------------------------------------------------- */
+tag_t __TagInterface :: tagAt( const int n ) {
+    if( n >= len_ ) return -1;                   /* ERROR */
+    return tag_[ n ];
 }
 
 /*

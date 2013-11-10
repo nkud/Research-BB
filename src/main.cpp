@@ -91,7 +91,7 @@ int main()
     cout << "TAG_LEN_A:" << TAG_LEN_A << endl;
     cout << "VIRUS:" << endl;
     FOR(i,NUM_V) { cout<<"\trate_"<<i<<":\t"<<virus[i].rate_;
-        cout<<"\tlen_"<<i<<":\t"<<virus[i].len_<<endl; }
+        cout<<"\tlen_"<<i<<":\t"<<virus[i].getTagLen()<<endl; }
     cout << "INIT_NUM_0: " << initial_num_a << endl;
     cout << "INIT_NUM_1: " << initial_num_b << endl;
     FOR( i, NUM_V ) virus[ i ].printTag();                                     /* 全ウイルスのタグを表示 */
@@ -103,10 +103,10 @@ int main()
     ofs_log << "NUM_V:" << NUM_V << endl;
     ofs_log << "TAG_LEN_A:" << TAG_LEN_A << endl;
     ofs_log << "TAG_LEN_V:" << TAG_LEN_V << endl;
-    FOR(i,NUM_V) { ofs_log<<"["<<virus[i].tag_<<"]:";
-        FOR(j, virus[i].len_) { ofs_log<<virus[i].tag_[j]; } ofs_log<<endl; }
+    FOR(i,NUM_V) { ofs_log<<"["<<virus[i].getTagLen()<<"]:";
+        FOR(j, virus[i].getTagLen()) { ofs_log<<int(virus[i].tagAt(j)); } ofs_log<<endl; }
     ofs_log << ">>> Agent Last Status" << endl;
-    FOR(i, NUM_A) { FOR(j, agent[0].len_) ofs_log<<agent[i].tag_[j];
+    FOR(i, NUM_A) { FOR(j, agent[0].getTagLen()) ofs_log<<agent[i].tagAt(j);
         ofs_log<<" "<<agent[i].numHoldingVirus(); ofs_log<<endl; }
     // ------------------------------------------------------------------------
 

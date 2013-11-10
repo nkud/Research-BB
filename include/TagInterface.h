@@ -25,16 +25,19 @@
  */
 class __TagInterface
 {
-    private:
+    protected:
+        int len_;
+        tag_t *tag_;
+
     public:
         __TagInterface( int );                  /* コンストラクタ */
                                                 /* タグの長さを初期化する */
         __TagInterface( const char * );         /* コンストラクタ */
 
-        int len_;
-        tag_t *tag_;
-
-        int *getTag_();                         /* タグ配列へのポインタを返す */
+        tag_t *getTag_();                         /* タグ配列へのポインタを返す */
+        int getTagLen();
+        tag_t tagAt( const int );
+        
         void printTag();                        /* タグを表示 */
 };
 
