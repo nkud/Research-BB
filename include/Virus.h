@@ -25,12 +25,15 @@
  */
 class Virus : public __TagInterface             /* ウイルスのクラス*/
 {
+        double rate_;                           /* 感染確率 */
+
     public:
         Virus( const char * );                  /* コンストラクタ: タグ */
         Virus( int, double );                   /* コンストラクタ: タグ長, 感染率 */
         Virus();                                /* コンストラクタ: default */
 
-        double rate_;                           /* 感染確率 */
+        double getRate() { return rate_; }
+        void setRate( double r ) { rate_ = r; }
 };
 
 #endif

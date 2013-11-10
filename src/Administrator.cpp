@@ -138,7 +138,7 @@ void Administrator :: contactAgent() {
                     VirusData *tvdata =                                        /* ランダムに保持ウイルスから選んで */
                         myself->getVirusDataAt( rand_array(myself->getVirusListSize()) );
 
-                    if( static_cast<Virus *>(tvdata->v_)->rate_ > rand_interval_double(0,1) )
+                    if( static_cast<Virus *>(tvdata->v_)->getRate() > rand_interval_double(0,1) )
                     {                                                          /* ウイルス特有の感染確率で */
                                                                      /* XXX: static castは使いたくない... */
                         agent_[ *it ].pushStandByVirus( tvdata->v_ ); /* 待機ウイルスにする */

@@ -31,6 +31,7 @@ class Monitor {
         static Monitor& Instance();
 
         std::map<__TagInterface *, int> num_infection_contact_;
+
         int num_contact_;
         int num_has_immunity_all_virus_;
         int num_infect_others;
