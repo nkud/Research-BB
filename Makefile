@@ -3,10 +3,11 @@ PRINT    = /bin/echo
 RM       = rm -rfv
 CTAGS    = ctags
 
-TARGET   = main.out
-SRC      = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp Monitor.cpp Administrator.cpp Landscape.cpp
 OBJ      = $(SRC:.cpp=.o)
 LIB      = $(SRC:.cpp=.h)
+
+TARGET   = main.out
+SRC      = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp Monitor.cpp Administrator.cpp Landscape.cpp
 
 VPATH    = src include
 CPPFLAGS = -I include
