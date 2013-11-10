@@ -22,33 +22,35 @@
  *      Method:  Agent :: *
  * Description:  セッタ、ゲッタ関連
  *----------------------------------------------------------------------------------- */
+/*
+ * エージェントの位置
+ */
 void Agent :: setX( int x ) { x_ = x; }
 void Agent :: setY( int y ) { y_ = y; }
 int Agent :: getX() { return x_; }
 int Agent :: getY() { return y_; }
+/*
+ * 保持ウイルスセット
+ */
+VirusData *Agent :: getVirusDataAt( int n ) { return vlist_.at( n ); }
+void Agent :: pushVirusData( VirusData *vd ) { vlist_.push_back( vd ); }
+void Agent :: eraseVirusData( std::vector<VirusData *>::iterator it ) { vlist_.erase( it ); }
+int Agent :: getVirusListSize() { return vlist_.size(); }
+std::vector<VirusData *>::iterator Agent :: getVirusListBeginIterator() { return vlist_.begin(); }
+std::vector<VirusData *>::iterator Agent :: getVirusListEndIterator() { return vlist_.end(); }
+bool Agent :: hasNoVirusData() { if( vlist_.empty() ) return true; else return false; }
+/*
+ * 待機ウイルスセット
+ */
+void Agent :: pushStandByVirus( __TagInterface *v ) { stand_by_list_.push_back( v ); }
+bool Agent :: hasNoStandByVirus() { return stand_by_list_.empty(); }
+int Agent :: getStandByListSize() { return stand_by_list_.size(); }
+__TagInterface *Agent :: getStandByVirusAt( int n ) { return stand_by_list_[n]; }
+std::vector<__TagInterface *>::iterator Agent :: getStandByListBeginIterator() { return stand_by_list_.begin(); }
+std::vector<__TagInterface *>::iterator Agent :: getStandByListEndIterator() { return stand_by_list_.end(); }
+void Agent :: eraseStandByVirus( std::vector<__TagInterface *>::iterator it ) { stand_by_list_.erase( it ); }
+void Agent :: clearStandByVirus() { stand_by_list_.clear(); }
 
-VirusData *Agent :: getVirusDataAt( int n ) {
-    return vlist_.at( n );
-}
-void Agent :: pushVirusData( VirusData *vd ) {
-    vlist_.push_back( vd );
-}
-void Agent :: eraseVirusData( std::vector<VirusData *>::iterator it ) {
-    vlist_.erase( it );
-}
-int Agent :: getVirusListSize() {
-    return vlist_.size();
-}
-std::vector<VirusData *>::iterator Agent :: getVirusListBeginIterator() {
-    return vlist_.begin();
-}
-std::vector<VirusData *>::iterator Agent :: getVirusListEndIterator() {
-    return vlist_.end();
-}
-bool Agent :: hasNoVirusData() {
-    if( vlist_.empty() ) return true;
-    else return false;
-}
 
 /*
  *--------------------------------------------------------------------------------------
