@@ -75,6 +75,7 @@ class Agent : public __TagInterface
         std::vector<VirusData *>::iterator getVirusListBeginIterator();        /* 先頭へのイテレータを返す */
         std::vector<VirusData *>::iterator getVirusListEndIterator();          /* 末尾へのイテレータを返す */
 
+        /* 位置 */
         void setX( int ); int getX();                                          /* セッタ、ゲッタ */
         void setY( int ); int getY();
 

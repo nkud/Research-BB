@@ -29,10 +29,10 @@
 
 typedef int tag_t; 
 
-const int WIDTH             = 200   ; /* ランドスケープの幅 */
+const int WIDTH             = 50   ; /* ランドスケープの幅 */
 
 const int NUM_V             = 3     ; /* ウイルスの種類  */
-const int NUM_A             = 10000 ; /* エージェントの数  */
+const int NUM_A             = 1000  ; /* エージェントの数  */
 
 const int TAG_LEN_A         = 50    ; 
 const int TAG_LEN_V         = 15  ; /* ウイルスのタグのでフォルトの長さ */
