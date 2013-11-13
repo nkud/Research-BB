@@ -80,7 +80,7 @@ int main()
         AD.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ;
         AD.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ;
 
-        log( monitor.num_contact_ );
+        log( monitor.getContactNum() );
     }
 
     monitor.generatePlotScript();                          /* XXX: gnuplot用 */

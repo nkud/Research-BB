@@ -26,22 +26,28 @@ class __TagInterface;
  */
 class Monitor {
     private:
-        Monitor() {}                              /* コンストラクタ */
+        Monitor() {}                                       /* コンストラクタ */
+
+        int num_has_immunity_all_virus_;                   /* 全ウイルスに対しての免疫獲得者数 */
+
+        int num_contact_;                                  /* 接触回数 */
+        std::map<__TagInterface *, int> num_infection_contact_; /* 感染させた接触回数 */
+
     public:
-        static Monitor& Instance();
+        static Monitor& Instance();                        /* インスタンスを返す */
 
-        std::map<__TagInterface *, int> num_infection_contact_;
+        /* ゲッタ */
+        int getContactNum();
+        int getInfectionContactNum( __TagInterface * );
+        int getHasImmunityAllVirusNum();
+        int getInfectOthersNum();
 
-        int num_contact_;
-        int num_has_immunity_all_virus_;
-        int num_infect_others;
+        void countUpContact();                             /* 接触しした回数 */
+        void countUpInfectionContact( __TagInterface * );  /* 感染のために接触した回数 */
+        void countUpHasImmunityAllVirus();                 /* すべてのウイルスに対して免疫獲得している人の数 */
 
-        void countUpInfectionContact(__TagInterface *);         /* 感染のために接触した回数 */
-        void countUpContact();                  /* 接触しした回数 */
-        void countUpHasImmunityAllVirus();      /* すべてのウイルスに対して免疫獲得している人の数 */
-        void countUpInfectOthers();             /* 他人に感染させた回数 */
+        void resetAll();                                   /* 値をすべてリセット */
 
-        void resetAll();                        /* 値をすべてリセット */
         void generatePlotScript();
 };
 

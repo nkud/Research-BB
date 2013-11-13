@@ -277,19 +277,20 @@ void Administrator :: outputFile_InfectionContactRatio( const char *fname ) {
     int sum = 0;
 
     ofs << i++ << SEPARATOR;                                                   /* 期間 */
-    ofs << Monitor::Instance().num_contact_ << SEPARATOR;                                 /* 総接触数 */
+    ofs << Monitor::Instance().getContactNum() << SEPARATOR;                                 /* 総接触数 */
     FOR( j, NUM_V ) {                                                          /* その内感染した回数 */
-        ofs << (sum += Monitor::Instance().num_infection_contact_[&virus_[j]]) << SEPARATOR;
+        sum += Monitor::Instance().getInfectionContactNum(&virus_[j]);
+        ofs << Monitor::Instance().getInfectionContactNum(&virus_[j]) << SEPARATOR;
     }
 
-    if( sum > 0 ) ratio = (double)sum / (double) Monitor::Instance().num_contact_; 
+    if( sum > 0 ) ratio = (double)sum / (double) Monitor::Instance().getContactNum(); 
     ofs << ratio << std::endl;
 }
 
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: printInfo()
- * Description:  初期状態を出力（端末）
+ * Description:  初期状態を表示（端末）
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: printInfo() {
