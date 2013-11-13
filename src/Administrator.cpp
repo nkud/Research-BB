@@ -271,14 +271,14 @@ void Administrator :: outputFile_HasImmunity( const char *fname ) {
  *               ウイルスの数によって、列を調整できる
  *----------------------------------------------------------------------------------- */
 void Administrator :: outputFile_InfectionContactRatio( const char *fname ) {
-    static std::ofstream ofs(fname);                                           /* インスタンスは１つだけ */
-    static int i = 0;                                                          /* 期間をカウント */
+    static std::ofstream ofs(fname);                       /* インスタンスは１つだけ */
+    static int i = 0;                                      /* 期間をカウント */
     double ratio = 0;
-    int sum = 0;
+    int sum = 0;                                           /* 何らかのウイルスに感染した接触回数 */
 
-    ofs << i++ << SEPARATOR;                                                   /* 期間 */
-    ofs << Monitor::Instance().getContactNum() << SEPARATOR;                                 /* 総接触数 */
-    FOR( j, NUM_V ) {                                                          /* その内感染した回数 */
+    ofs << i++ << SEPARATOR;                               /* 期間 */
+    ofs << Monitor::Instance().getContactNum() << SEPARATOR; /* 総接触数 */
+    FOR( j, NUM_V ) {                                      /* その内感染した回数 */
         sum += Monitor::Instance().getInfectionContactNum(&virus_[j]);
         ofs << Monitor::Instance().getInfectionContactNum(&virus_[j]) << SEPARATOR;
     }
@@ -294,17 +294,17 @@ void Administrator :: outputFile_InfectionContactRatio( const char *fname ) {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: printInfo() {
-    std::cout << "WIDTH:" << WIDTH << std::endl;
-    std::cout << "NUM_A:" << NUM_A << std::endl;
-    std::cout << "NUM_V:" << NUM_V << std::endl;
-    std::cout << "TAG_LEN_A:" << TAG_LEN_A << std::endl;
+    std::cout << "WIDTH:" << WIDTH << std::endl;           /* 幅 */
+    std::cout << "\nNUM_A:\t\t" << NUM_A << std::endl;
+    std::cout << "TAG_LEN_A:\t" << TAG_LEN_A << std::endl;
+    std::cout << "\nNUM_V:\t\t" << NUM_V << std::endl;
 
-    std::cout << "VIRUS:" << std::endl;
+    std::cout << "VIRUS:" << std::endl;                    /* ウイルス情報 */
     FOR(i,NUM_V) { std::cout<<"\trate_"<<i<<":\t"<<virus_[i].getRate();
         std::cout<<"\tlen_"<<i<<":\t"<<virus_[i].getLen()<<std::endl; }
+    FOR( i, NUM_V ) virus_[ i ].printTag();                 /* 全ウイルスのタグを表示 */
 
 //    std::cout << "INIT_NUM_0: " << initial_num_a << std::endl;
 //    std::cout << "INIT_NUM_1: " << initial_num_b << std::endl;
 
-    FOR( i, NUM_V ) virus_[ i ].printTag();                 /* 全ウイルスのタグを表示 */
 }
