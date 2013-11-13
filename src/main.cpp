@@ -59,6 +59,7 @@ int main()
     AD.initInfectAgentInRatio( virus[0], 0.1 );            /* 感染させる */
     AD.initInfectAgentInRatio( virus[1], 0.1 );
     AD.initInfectAgentInRatio( virus[2], 0.1 );
+
     int initial_num_a = AD.numHasVirus( virus[0] );        /* 記録しておく */
     int initial_num_b = AD.numHasVirus( virus[1] );
 
@@ -75,17 +76,17 @@ int main()
         AD.responseAgent();                                /* 免疫応答（タグフリップ） */
 
         /* 出力 */
-        AD.outputFile_HasVirus( "A_hasVirus.txt" );        /* 出力: ウイルスの保持状況 */
-        AD.outputFile_HasImmunity( "A_hasImmunity.txt" );
-        AD.outputFile_InfectionContactRatio( "A_infectionContact.txt" );
+        AD.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ;        /* 出力: ウイルスの保持状況 */
+        AD.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ;
+        AD.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ;
 
-        log(monitor.num_contact_);
+        log( monitor.num_contact_ );
     }
 
     monitor.generatePlotScript();                          /* XXX: gnuplot用 */
     
     // 確認用 -----------------------------------------------------------------
-    AD.printInfo();
+    AD.printInfo();                                        /* 初期状態を表示 */
 
     // エージェントの最終的な状態など -----------------------------------------
     ofstream ofs_log("A_log.txt");                         /* 出力ファイル  */

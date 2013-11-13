@@ -17,7 +17,6 @@
 class Landscape {
     public:
         Landscape();
-        int map_[WIDTH][WIDTH];
         void putBackOnMap( int &, int & );
         bool isOnMap( int , int );
 

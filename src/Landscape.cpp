@@ -15,11 +15,6 @@
 
 Landscape :: Landscape()
 {
-    FOR( i, WIDTH ) {
-        FOR( j, WIDTH ) {
-            map_[ i ][ j ] = -1;
-        }
-    }
     log("init Landscape");
 }
 
