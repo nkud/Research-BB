@@ -44,9 +44,9 @@ int main()
     // 初期化
     Agent agent[ NUM_A ];                                  /* エージェントの集合  */
     Virus virus[ NUM_V ] = {                               /* ウイルス生成 */
-        *( new Virus(20, 0.40 )),                          /* タグ長、感染確率 */
-        *( new Virus(20, 0.40 )),                          /* タグ長、感染確率 */
-        *( new Virus(20, 0.40 ))
+        *( new Virus(20, 0.80 )),                          /* タグ長、感染確率 */
+        *( new Virus(20, 0.50 )),                          /* タグ長、感染確率 */
+        *( new Virus(20, 0.20 ))
     };
     Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
 
