@@ -44,9 +44,9 @@ int main()
     // 初期化
     Agent agent[ NUM_A ];                                  /* エージェントの集合  */
     Virus virus[ NUM_V ] = {                               /* ウイルス生成 */
-        *( new Virus(20, 0.70 )),                          /* タグ長、感染確率 */
-        *( new Virus(20, 0.70 )),                          /* タグ長、感染確率 */
-        *( new Virus(20, 0.70 ))
+//        *( new Virus(20, 0.70 )),                          /* タグ長、感染確率 */
+//        *( new Virus(20, 0.70 )),                          /* タグ長、感染確率 */
+//        *( new Virus(20, 0.70 ))
     };
     Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
 
@@ -56,9 +56,9 @@ int main()
     Monitor &monitor = Monitor::Instance();                /* モニター */
 
     // 初期感染
-    AD.initInfectAgentInRatio( virus[0], 0.1 );            /* 感染させる */
-    AD.initInfectAgentInRatio( virus[1], 0.1 );
-    AD.initInfectAgentInRatio( virus[2], 0.1 );
+    FOR( i, NUM_V ) {
+        AD.initInfectAgentInRatio( virus[i], INIT_INFECT_RATIO );            /* 感染させる */
+    }
 
     int initial_num_a = AD.numHasVirus( virus[0] );        /* 記録しておく */
     int initial_num_b = AD.numHasVirus( virus[1] );

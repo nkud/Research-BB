@@ -60,7 +60,6 @@ int min_ham_distance(int *a, int *v, int an, int vn) /* XXX: a > b だけ想定�
         if( min >= tm )                          /* の方が小さかったら */ /* XXX: あってる？ */
         {
             if( min == tm ) {                   /* もしハミング距離が同じなら */
-                log("update");
                 if( rand_binary() == 1 ) break; /* 1/2 の確率で上書きする */
             }
             min = tm;                           /* 最小値を更新 */

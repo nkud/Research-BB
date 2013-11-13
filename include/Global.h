@@ -29,16 +29,19 @@
 
 typedef int tag_t; 
 
-const int WIDTH             = 50   ;                       /* ランドスケープの幅 */
+// Configure
+const int WIDTH                = 20                    ;   /* ランドスケープの幅 */
 
-const int NUM_V             = 3     ;                      /* ウイルスの種類  */
-const int NUM_A             = 1000  ;                      /* エージェントの数  */
+const int NUM_V                = 4                     ;   /* ウイルスの種類  */
+const int NUM_A                = 100                   ;   /* エージェントの数  */
 
-const int LEN_SCALE         = 1.5;
-const int TAG_LEN_V         = 20  ;                        /* ウイルスのタグのでフォルトの長さ */
-const int TAG_LEN_A         = LEN_SCALE * TAG_LEN_V    ; 
+const double LEN_SCALE         = 3                     ; 
+const int TAG_LEN_V            = 20                    ;   /* ウイルスのタグのでフォルトの長さ */
+const int TAG_LEN_A            = LEN_SCALE * TAG_LEN_V ; 
 
-const double INFECTION_RATE = 0.6   ;                      /* デフォルトの感染率 */
+const double INFECTION_RATE    = 0.8                   ;   /* デフォルトの感染率 */
+const double INIT_INFECT_RATIO = 0.2                   ;   /* 初期感染率 */
+// ---------
 
 template < typename T >                                    /* デバッグ用 */
 void log(T str) { int static i=0;std::cout<<i++<<":\t"<<str<<std::endl; }
