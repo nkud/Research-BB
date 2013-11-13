@@ -260,7 +260,7 @@ void Administrator :: outputFile_HasImmunity( const char *fname ) {
     static int i = 0;                                                          /* 期間をカウント */
     ofs << i++ << SEPARATOR;                                                   /* ファイルに出力 */
     FOR( j, NUM_V ) {
-        ofs << numHasImmunity( virus_[j] ) << SEPARATOR;
+        ofs << numHasImmunity( virus_[j] ) << SEPARATOR;   /* ウイルスに対する免疫獲得者数 */
     }
     ofs << numHasAllImmunity() << std::endl;
 }

@@ -59,6 +59,9 @@ int min_ham_distance(int *a, int *v, int an, int vn) /* XXX: a > b だけ想定�
         if( tm <= 0 ) return -1;                /* (免疫獲得済み) */
         if( min > tm )                          /* の方が小さかったら */
         {
+            if( min == tm ) {                   /* もしハミング距離が同じなら */
+                if( rand_binary() == 1 ) break; /* 1/2 の確率で上書きする */
+            }
             min = tm;                           /* 最小値を更新 */
             sp = i;                             /* タグの位置を記録 */
         }
