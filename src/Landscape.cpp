@@ -62,3 +62,22 @@ void Landscape :: clearAgentMap() {
         }
     }
 }
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Landscape :: pushAgentNumber( int, int, int )
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+void Landscape :: pushAgent( int x, int y, int n ) {
+    agent_map_[ x ][ y ].push_back( n );
+}
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Landscape :: *
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+ITERATOR(int) Landscape :: getLandscapeBeginIterator(int x, int y) { return agent_map_[x][y].begin(); }
+ITERATOR(int) Landscape :: getLandscapeEndIterator(int x, int y) { return agent_map_[x][y].end(); }

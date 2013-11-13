@@ -96,7 +96,7 @@ void Administrator :: relocateAgent() {
         ty = rand_interval_int( 0, WIDTH-1 );
         agent_[ i ].setX( tx );                                                /* 配置 */
         agent_[ i ].setY( ty );
-        landscape_->agent_map_[ tx ][ ty ].push_back( i );                     /* エージェントを登録 */
+        landscape_->pushAgent( tx, ty, i );                     /* エージェントを登録 */
     }
 }
 
@@ -130,8 +130,8 @@ void Administrator :: contactAgent() {
                 if( i*j != 0 ) continue;                                       /* 斜めは入れない */
                 if( ! (landscape_->isOnMap( tx+i, ty+j )) ) continue;          /* 土地からはみ出てたらスキップ */
 
-                ITERATOR(int) it = landscape_->agent_map_[ tx+i ][ ty+j ].begin();
-                while( it != landscape_->agent_map_[ tx+i ][ ty+j ].end() )
+                ITERATOR(int) it = landscape_->getLandscapeBeginIterator( tx+i, ty+j );
+                while( it != landscape_->getLandscapeEndIterator( tx+i, ty+j ) )
                 {                                                              /* その位置にいる人全員に */
                     VirusData *tvdata =                                        /* ランダムに保持ウイルスから選んで */
                         myself->getVirusDataAt( rand_array(myself->getVirusListSize()) );
