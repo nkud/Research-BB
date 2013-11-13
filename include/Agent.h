@@ -20,7 +20,6 @@
 
 struct VirusData;
 class Agent;
-class Monitor;
 
 /*
  * =====================================================================================
@@ -47,7 +46,6 @@ struct VirusData                                                               /
 class Agent : public __TagInterface
 {
     private:
-        Monitor &monitor_;
 
         int x_, y_;
         std::vector<VirusData *> vlist_;                                       /* 保持ウイルスのリスト */

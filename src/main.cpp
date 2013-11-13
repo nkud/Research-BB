@@ -32,7 +32,7 @@ double gettime() {                                         /* ベンチマーク
     return tv.tv_sec + tv.tv_usec * 1e-6;
 }
 
-const int TERM  = 500;                                      /* 期間  */
+const int TERM  = 300;                                      /* 期間  */
 
 int main()
 {
@@ -44,9 +44,9 @@ int main()
     // 初期化
     Agent agent[ NUM_A ];                                  /* エージェントの集合  */
     Virus virus[ NUM_V ] = {                               /* ウイルス生成 */
-        *( new Virus(20, 0.80 )),                          /* タグ長、感染確率 */
-        *( new Virus(20, 0.50 )),                          /* タグ長、感染確率 */
-        *( new Virus(20, 0.20 ))
+        *( new Virus(20, 0.70 )),                          /* タグ長、感染確率 */
+        *( new Virus(20, 0.70 )),                          /* タグ長、感染確率 */
+        *( new Virus(20, 0.70 ))
     };
     Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
 
@@ -85,16 +85,7 @@ int main()
     monitor.generatePlotScript();                          /* XXX: gnuplot用 */
     
     // 確認用 -----------------------------------------------------------------
-    cout << "WIDTH:" << WIDTH << endl;                     /* => AD.info() */
-    cout << "NUM_A:" << NUM_A << endl;
-    cout << "NUM_V:" << NUM_V << endl;
-    cout << "TAG_LEN_A:" << TAG_LEN_A << endl;
-    cout << "VIRUS:" << endl;
-    FOR(i,NUM_V) { cout<<"\trate_"<<i<<":\t"<<virus[i].getRate();
-        cout<<"\tlen_"<<i<<":\t"<<virus[i].getLen()<<endl; }
-    cout << "INIT_NUM_0: " << initial_num_a << endl;
-    cout << "INIT_NUM_1: " << initial_num_b << endl;
-    FOR( i, NUM_V ) virus[ i ].printTag();                 /* 全ウイルスのタグを表示 */
+    AD.printInfo();
 
     // エージェントの最終的な状態など -----------------------------------------
     ofstream ofs_log("A_log.txt");                         /* 出力ファイル  */

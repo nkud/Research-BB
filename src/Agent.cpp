@@ -16,6 +16,25 @@
 
 #include <vector>
 
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Agent :: Agent()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+Agent :: Agent() :
+    __TagInterface( TAG_LEN_A ),
+    x_( 0 ),
+    y_( 0 ),
+    stand_by_list_( 0 )
+{                                                                              // タグの長さを初期化 
+    FOR( i, TAG_LEN_A ) {                                                      // タグをランダムに初期化 
+        tag_[ i ] = rand_binary();
+    }
+    vlist_.clear();                                                            /* 配列を空に */
+    stand_by_list_.clear();                                                   /* 配列を空に */
+}
+
 /*--------------------------------------------------------------------------------------
  *      Method:  Agent :: *
  * Description:  セッタ、ゲッタ関連
@@ -49,26 +68,6 @@ std::vector<__TagInterface *>::iterator Agent :: getStandByListEndIterator() { r
 void Agent :: eraseStandByVirus( std::vector<__TagInterface *>::iterator it ) { stand_by_list_.erase( it ); }
 void Agent :: clearStandByVirus() { stand_by_list_.clear(); }
 
-
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Agent :: Agent()
- * Description:  
- *--------------------------------------------------------------------------------------
- */
-Agent :: Agent() :
-    __TagInterface( TAG_LEN_A ),
-    x_( 0 ),
-    y_( 0 ),
-    stand_by_list_( 0 ),
-    monitor_( Monitor::Instance() )
-{                                                                              // タグの長さを初期化 
-    FOR( i, TAG_LEN_A ) {                                                      // タグをランダムに初期化 
-        tag_[ i ] = rand_binary();
-    }
-    vlist_.clear();                                                            /* 配列を空に */
-    stand_by_list_.clear();                                                   /* 配列を空に */
-}
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Agent :: infection( __TagInterface & )
@@ -91,7 +90,7 @@ bool Agent :: infection( __TagInterface &v )
     VirusData *vdata = new VirusData( v, min_ham_distance( tag_, v.getTag(), len_, v.getLen() ) );     // スタートポイント 
     pushVirusData( vdata );
 
-    monitor_.countUpInfectionContact(vdata->v_);                                /* 感染のために接触した回数を増やす */
+    Monitor::Instance().countUpInfectionContact(vdata->v_);                                /* 感染のために接触した回数を増やす */
     return true;
 }
 

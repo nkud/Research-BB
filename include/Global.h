@@ -34,7 +34,7 @@ const int WIDTH             = 50   ; /* ランドスケープの幅 */
 const int NUM_V             = 3     ; /* ウイルスの種類  */
 const int NUM_A             = 1000  ; /* エージェントの数  */
 
-const int N = 2;
+const int N = 1.5;
 const int TAG_LEN_V         = 20  ; /* ウイルスのタグのでフォルトの長さ */
 const int TAG_LEN_A         = N * TAG_LEN_V    ; 
 

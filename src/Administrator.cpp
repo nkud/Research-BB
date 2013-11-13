@@ -21,6 +21,7 @@
 
 #include <vector>
 #include <fstream>
+#include <iostream>
 
 /*
  *--------------------------------------------------------------------------------------
@@ -31,8 +32,7 @@
 Administrator :: Administrator( Agent *a, Virus *v, Landscape *l ) :
     agent_( a ),
     virus_( v ),
-    landscape_( l ),
-    monitor_( Monitor::Instance() )
+    landscape_( l )
 {}
 
 /*
@@ -277,11 +277,33 @@ void Administrator :: outputFile_InfectionContactRatio( const char *fname ) {
     int sum = 0;
 
     ofs << i++ << SEPARATOR;                                                   /* 期間 */
-    ofs << monitor_.num_contact_ << SEPARATOR;                                 /* 総接触数 */
+    ofs << Monitor::Instance().num_contact_ << SEPARATOR;                                 /* 総接触数 */
     FOR( j, NUM_V ) {                                                          /* その内感染した回数 */
-        ofs << (sum += monitor_.num_infection_contact_[&virus_[j]]) << SEPARATOR;
+        ofs << (sum += Monitor::Instance().num_infection_contact_[&virus_[j]]) << SEPARATOR;
     }
 
-    if( sum > 0 ) ratio = (double)sum / (double)monitor_.num_contact_; 
+    if( sum > 0 ) ratio = (double)sum / (double) Monitor::Instance().num_contact_; 
     ofs << ratio << std::endl;
+}
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Administrator :: printInfo()
+ * Description:  初期状態を出力（端末）
+ *--------------------------------------------------------------------------------------
+ */
+void Administrator :: printInfo() {
+    std::cout << "WIDTH:" << WIDTH << std::endl;
+    std::cout << "NUM_A:" << NUM_A << std::endl;
+    std::cout << "NUM_V:" << NUM_V << std::endl;
+    std::cout << "TAG_LEN_A:" << TAG_LEN_A << std::endl;
+
+    std::cout << "VIRUS:" << std::endl;
+    FOR(i,NUM_V) { std::cout<<"\trate_"<<i<<":\t"<<virus_[i].getRate();
+        std::cout<<"\tlen_"<<i<<":\t"<<virus_[i].getLen()<<std::endl; }
+
+//    std::cout << "INIT_NUM_0: " << initial_num_a << std::endl;
+//    std::cout << "INIT_NUM_1: " << initial_num_b << std::endl;
+
+    FOR( i, NUM_V ) virus_[ i ].printTag();                 /* 全ウイルスのタグを表示 */
 }
