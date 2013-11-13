@@ -32,8 +32,6 @@ double gettime() {                                         /* ベンチマーク
     return tv.tv_sec + tv.tv_usec * 1e-6;
 }
 
-const int TERM  = 300;                                      /* 期間  */
-
 int main()
 {
     double start, end;                                     /* タイマー */
@@ -57,7 +55,7 @@ int main()
 
     // 初期感染
     FOR( i, NUM_V ) {
-        AD.initInfectAgentInRatio( virus[i], INIT_INFECT_RATIO );            /* 感染させる */
+        AD.initInfectAgentInRatio( virus[i], INIT_INFECTED_RATIO );            /* 感染させる */
     }
 
     int initial_num_a = AD.numHasVirus( virus[0] );        /* 記録しておく */

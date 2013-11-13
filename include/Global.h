@@ -30,17 +30,18 @@
 typedef int tag_t; 
 
 // Configure
-const int WIDTH                = 20                    ;   /* ランドスケープの幅 */
+const int TERM                   = 500                   ; /* 期間  */
+const int WIDTH                  = 20                    ; /* ランドスケープの幅 */
 
-const int NUM_V                = 4                     ;   /* ウイルスの種類  */
-const int NUM_A                = 100                   ;   /* エージェントの数  */
+const int NUM_V                  = 3                     ; /* ウイルスの種類  */
+const int NUM_A                  = 200                   ; /* エージェントの数  */
 
-const double LEN_SCALE         = 3                     ; 
-const int TAG_LEN_V            = 20                    ;   /* ウイルスのタグのでフォルトの長さ */
-const int TAG_LEN_A            = LEN_SCALE * TAG_LEN_V ; 
+const double LEN_SCALE           = 1.5                   ; 
+const int TAG_LEN_V              = 20                    ; /* ウイルスのタグのでフォルトの長さ */
+const int TAG_LEN_A              = LEN_SCALE * TAG_LEN_V ; 
 
-const double INFECTION_RATE    = 0.8                   ;   /* デフォルトの感染率 */
-const double INIT_INFECT_RATIO = 0.2                   ;   /* 初期感染率 */
+const double INFECTION_RATE      = 0.5                   ; /* デフォルトの感染率 */
+const double INIT_INFECTED_RATIO = 0.2                   ; /* 初期感染率 */
 // ---------
 
 template < typename T >                                    /* デバッグ用 */
