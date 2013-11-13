@@ -210,12 +210,13 @@ int Administrator :: numHasAllImmunity() {
         FOR( j, NUM_V ) {
             if( ! agent_[ i ].hasImmunity( virus_[ j ] ) ) {                   /* もし免疫を持っていなければ、 */
                 flag = 0;                                                      /* フラッグを下ろす */
-                break;
+//                break;
             }
         }
         if( flag == 1 ) ret++;
         flag = 1;                                                              /* フラッグを戻す */
     }
+    log(ret);
     return ret;
 }
 
@@ -259,8 +260,8 @@ void Administrator :: outputFile_HasImmunity( const char *fname ) {
     static std::ofstream ofs(fname);                                           /* インスタンスは１つだけ */
     static int i = 0;                                                          /* 期間をカウント */
     ofs << i++ << SEPARATOR;                                                   /* ファイルに出力 */
-    FOR( j, NUM_V ) {
-        ofs << numHasImmunity( virus_[j] ) << SEPARATOR;   /* ウイルスに対する免疫獲得者数 */
+    FOR( k, NUM_V ) {
+        ofs << numHasImmunity( virus_[k] ) << SEPARATOR;   /* ウイルスに対する免疫獲得者数 */
     }
     ofs << numHasAllImmunity() << std::endl;
 }

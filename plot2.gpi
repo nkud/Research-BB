@@ -9,7 +9,7 @@ set title "hasImmunity" font "helvetica, 24"
 plot "A_hasImmunity.txt" w l title "has_immunity_0"
 replot "A_hasImmunity.txt" using 1:3 w l title "has_immunity_1"
 replot "A_hasImmunity.txt" using 1:4 w l title "has_immunity_2"
-replot "A_hasVirus.txt" using 1:5 w l title "has_all_immunity"
+replot "A_hasImmunity.txt" using 1:5 w l title "has_all_immunity"
 set output
 pause -1
 set title "infectioncontact" font "helvetica, 24"

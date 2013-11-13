@@ -94,7 +94,7 @@ void Monitor :: generatePlotScript() {
             << " using 1:" << i+3 << " w l"
             << " title " << "\"has_immunity_" << i+1 << "\"" << std::endl;
     }
-    ofs << "replot " << HAS_VIRUS_OUTPUT
+    ofs << "replot " << HAS_IMMUNITY_OUTPUT
         << " using 1:" << NUM_V+2 << " w l"
         << " title " << "\"has_all_immunity\"" << std::endl;
     ofs << "set output" << std::endl
