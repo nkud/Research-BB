@@ -91,7 +91,7 @@ bool Agent :: infection( __TagInterface &v )
     pushVirusData( vdata );
 
     Monitor::Instance().countUpInfectionContact(vdata->v_);                                /* 感染のために接触した回数を増やす */
-    return true;
+    return true;                                /* 感染したら true を返す */
 }
 
 /*
