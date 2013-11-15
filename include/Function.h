@@ -21,7 +21,7 @@ int flip_once( tag_t *, tag_t *, const int len );    /* 一回だけフリップ
 
 // hamming set
 int ham_distance( const int *, const int *, const int );
-int min_ham_distance( int *, int *, int, int );
+int min_ham_distance_point( int *, int *, int, int );
 
 // randomize set
 int rand_interval_int( int, int );

@@ -33,9 +33,9 @@ main.o: Global.h Function.h Agent.h Virus.h Landscape.h Monitor.h Administrator.
 Administrator.o: Global.h Function.h Administrator.h Agent.h Virus.h Landscape.h Monitor.h
 Monitor.o: Monitor.h Global.h
 TagInterface.o: TagInterface.h Global.h
-Agent.o: Agent.h Function.h Monitor.h
-Virus.o: Virus.h Function.h
-Landscape.o: Landscape.h
+Agent.o: Agent.h Function.h Monitor.h Global.h
+Virus.o: Virus.h Function.h Global.h
+Landscape.o: Landscape.h Global.h
 Function.o: Function.h
 
 build: clean $(TARGET)

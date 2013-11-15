@@ -87,7 +87,7 @@ bool Agent :: infection( __TagInterface &v )
         return false;                                                          // 感染せずに終了 
     }
     /* 感染リストに追加 */
-    VirusData *vdata = new VirusData( v, min_ham_distance( tag_, v.getTag(), len_, v.getLen() ) );     // スタートポイント 
+    VirusData *vdata = new VirusData( v, min_ham_distance_point( tag_, v.getTag(), len_, v.getLen() ) );     // スタートポイント 
     pushVirusData( vdata );
 
     Monitor::Instance().countUpInfectionContact(vdata->v_);                                /* 感染のために接触した回数を増やす */
@@ -121,7 +121,7 @@ void Agent :: response()
  */
 bool Agent :: hasImmunity( __TagInterface &v )                                 // true -> 免疫獲得済み 
 {
-    if( min_ham_distance( tag_, v.getTag(), len_, v.getLen() ) < 0 )                   // スタートポイントが -1 以下なら
+    if( min_ham_distance_point( tag_, v.getTag(), len_, v.getLen() ) < 0 )                   // スタートポイントが -1 以下なら
         return true;                                                           // 免疫獲得済み 
     else                                                                       // 0 以上なら
         return false;                                                          // 未獲得 
