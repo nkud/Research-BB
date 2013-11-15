@@ -53,8 +53,8 @@ VirusData *Agent :: getVirusDataAt( int n ) { return vlist_.at( n ); }
 void Agent :: pushVirusData( VirusData *vd ) { vlist_.push_back( vd ); }
 void Agent :: eraseVirusData( std::vector<VirusData *>::iterator it ) { vlist_.erase( it ); }
 int Agent :: getVirusListSize() { return vlist_.size(); }
-std::vector<VirusData *>::iterator Agent :: getVirusListBeginIterator() { return vlist_.begin(); }
-std::vector<VirusData *>::iterator Agent :: getVirusListEndIterator() { return vlist_.end(); }
+std::vector<VirusData *>::iterator Agent :: getVirusListIteratorBegin() { return vlist_.begin(); }
+std::vector<VirusData *>::iterator Agent :: getVirusListIteratorEnd() { return vlist_.end(); }
 bool Agent :: hasNoVirusData() { if( vlist_.empty() ) return true; else return false; }
 /*
  * 待機ウイルスセット
@@ -63,8 +63,8 @@ void Agent :: pushStandByVirus( __TagInterface *v ) { stand_by_list_.push_back( 
 bool Agent :: hasNoStandByVirus() { return stand_by_list_.empty(); }
 int Agent :: getStandByListSize() { return stand_by_list_.size(); }
 __TagInterface *Agent :: getStandByVirusAt( int n ) { return stand_by_list_[n]; }
-std::vector<__TagInterface *>::iterator Agent :: getStandByListBeginIterator() { return stand_by_list_.begin(); }
-std::vector<__TagInterface *>::iterator Agent :: getStandByListEndIterator() { return stand_by_list_.end(); }
+std::vector<__TagInterface *>::iterator Agent :: getStandByListIteratorBegin() { return stand_by_list_.begin(); }
+std::vector<__TagInterface *>::iterator Agent :: getStandByListIteratorEnd() { return stand_by_list_.end(); }
 void Agent :: eraseStandByVirus( std::vector<__TagInterface *>::iterator it ) { stand_by_list_.erase( it ); }
 void Agent :: clearStandByVirus() { stand_by_list_.clear(); }
 
@@ -76,8 +76,8 @@ void Agent :: clearStandByVirus() { stand_by_list_.clear(); }
  */
 bool Agent :: infection( __TagInterface &v )
 {
-    ITERATOR(VirusData *) it = getVirusListBeginIterator();
-    while( it != getVirusListEndIterator() ) {                                 // 既に保持しているウイルスなら終了 
+    ITERATOR(VirusData *) it = getVirusListIteratorBegin();
+    while( it != getVirusListIteratorEnd() ) {                                 // 既に保持しているウイルスなら終了 
         if( (*it)->v_ == &v ) {
             return false;
         }
@@ -105,11 +105,11 @@ void Agent :: response()
 {
     if( hasNoVirusData() ) return;                                             /* 保持ウイルスなし、終了  */
 
-    ITERATOR(VirusData *) it = getVirusListBeginIterator();                            /* 先頭のウイルスに対し */
+    ITERATOR(VirusData *) it = getVirusListIteratorBegin();                            /* 先頭のウイルスに対し */
     flip_once( tag_+(*it)->sp_, (*it)->v_->getTag(), (*it)->v_->getLen() );            /* ひとつフリップ  */
 
     if( hasImmunity( *((*it)->v_) ) ) {                                        /* 免疫獲得すれば */
-        eraseVirusData( it );                                                  /* 保持ウイルスから v を削除 */
+        eraseVirusData( it );                                                  /* 保持ウイルスから v(先頭) を削除 */
     }
 }
 

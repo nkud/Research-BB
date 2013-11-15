@@ -61,8 +61,8 @@ class Agent : public __TagInterface
         void eraseStandByVirus( std::vector<__TagInterface *>::iterator it );  /* 指定の待機ウイルスを削除 */
         void clearStandByVirus();                                              /* 待機ウイルスをすべて削除 */
         bool hasNoStandByVirus();                                              /* ウイルスを保持していない */
-        std::vector<__TagInterface *>::iterator getStandByListBeginIterator(); /* 先頭へのイテレータを返す */
-        std::vector<__TagInterface *>::iterator getStandByListEndIterator();   /* 末尾へのイテレータを返す */
+        std::vector<__TagInterface *>::iterator getStandByListIteratorBegin(); /* 先頭へのイテレータを返す */
+        std::vector<__TagInterface *>::iterator getStandByListIteratorEnd();   /* 末尾へのイテレータを返す */
 
         /* 保持ウイルスを操作するセット */
         VirusData *getVirusDataAt( int );                                      /* 指定の保持ウイルスを返す */
@@ -70,8 +70,8 @@ class Agent : public __TagInterface
         void pushVirusData( VirusData * );                                     /* 保持ウイルスに追加する */
         void eraseVirusData( std::vector<VirusData *>::iterator );             /* 指定の保持ウイルスを削除する */
         bool hasNoVirusData();                                                 /* ウイルスを保持していない */
-        std::vector<VirusData *>::iterator getVirusListBeginIterator();        /* 先頭へのイテレータを返す */
-        std::vector<VirusData *>::iterator getVirusListEndIterator();          /* 末尾へのイテレータを返す */
+        std::vector<VirusData *>::iterator getVirusListIteratorBegin();        /* 先頭へのイテレータを返す */
+        std::vector<VirusData *>::iterator getVirusListIteratorEnd();          /* 末尾へのイテレータを返す */
 
         /* 位置 */
         void setX( int ); int getX();                                          /* セッタ、ゲッタ */

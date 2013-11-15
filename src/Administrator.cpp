@@ -174,7 +174,7 @@ void Administrator :: infectAgent() {
                 if( agent_[i].infection( *tv ) ) {                             /* 感染させたら */
                     break;                                                     /* 次のエージェントへ */
                 } else {
-                    itt = agent_[i].getStandByListBeginIterator();                   /* もし感染しなければ */
+                    itt = agent_[i].getStandByListIteratorBegin();                   /* もし感染しなければ */
                     while(n-->0) { itt++; }                                    /* そのウイルスを */
                     agent_[i].eraseStandByVirus( itt );                    /* 待機ウイルスからはずして次のウイルス */
                 }

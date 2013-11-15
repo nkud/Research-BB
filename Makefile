@@ -1,7 +1,7 @@
 CC       = g++
 PRINT    = /bin/echo
 RM       = rm -rfv
-CTAGS    = ctags
+CTAGS    = $(shell which ctags)
 
 OBJ      = $(SRC:.cpp=.o)
 LIB      = $(SRC:.cpp=.h)
@@ -16,6 +16,8 @@ $(TARGET): $(OBJ) Global.h
 	@$(PRINT) -ne 'Cretating $(TARGET)...\t'
 	@$(CC) $(OBJ) -o $@
 	@$(PRINT) OK!
+
+.PHONY: run clean build rebuild
 
 run:
 	@$(PRINT) [ run ]
@@ -39,15 +41,15 @@ Function.o: Function.h
 build: clean $(TARGET)
 
 clean:
-	@$(RM) -rfv *.o
+	@$(RM) *.o
 
 tags:
-	@$(CTAGS) $(SRC) $(LIB) Global.h
+	@$(CTAGS) $(wildcard src/*) $(wildcard include/*)
 
 all: $(TARGET) run plot
 
-rebuild: tags build run
+rebuild: tags build run plot
 
-plot:
+plot :
 	@echo [ plot start ]
 	@gnuplot plot2.gpi
