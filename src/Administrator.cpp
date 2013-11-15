@@ -209,13 +209,12 @@ int Administrator :: numHasAllImmunity() {
         FOR( j, NUM_V ) {
             if( ! agent_[ i ].hasImmunity( virus_[ j ] ) ) {                   /* もし免疫を持っていなければ、 */
                 flag = 0;                                                      /* フラッグを下ろす */
-//                break;
+                break;
             }
         }
         if( flag == 1 ) ret++;
         flag = 1;                                                              /* フラッグを戻す */
     }
-    log(ret);
     return ret;
 }
 

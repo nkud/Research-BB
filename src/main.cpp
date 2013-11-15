@@ -79,7 +79,6 @@ int main()
         AD.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ;
         AD.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ;
 
-        log( agent[0].getY() );
         log( monitor.getContactNum() );
     }
 
