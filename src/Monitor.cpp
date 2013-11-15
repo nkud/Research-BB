@@ -32,7 +32,6 @@ Monitor& Monitor :: Instance() {
  *--------------------------------------------------------------------------------------
  */
 int Monitor :: getContactNum() { return num_contact_; }
-int Monitor :: getHasImmunityAllVirusNum() { return num_has_immunity_all_virus_; }
 int Monitor :: getInfectionContactNum( __TagInterface *t ) { return num_infection_contact_[ t ]; }
 
 /*
@@ -43,7 +42,6 @@ int Monitor :: getInfectionContactNum( __TagInterface *t ) { return num_infectio
  */
 void Monitor :: resetAll() {
     num_contact_ = 0;
-    num_has_immunity_all_virus_ = 0;
 
     num_infection_contact_.clear();
 }
@@ -59,7 +57,6 @@ void Monitor :: countUpInfectionContact( __TagInterface *pv ) {
     num_infection_contact_[ pv ]++;
 }
 void Monitor :: countUpContact() { num_contact_++; }
-void Monitor :: countUpHasImmunityAllVirus() { num_has_immunity_all_virus_++; }
 
 /*
  *--------------------------------------------------------------------------------------

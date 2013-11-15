@@ -28,8 +28,6 @@ class Monitor {
     private:
         Monitor() {}                                       /* コンストラクタ */
 
-        int num_has_immunity_all_virus_;                   /* 全ウイルスに対しての免疫獲得者数 */
-
         int num_contact_;                                  /* 接触回数 */
         std::map<__TagInterface *, int> num_infection_contact_; /* 感染させた接触回数 */
 
@@ -42,9 +40,9 @@ class Monitor {
         int getHasImmunityAllVirusNum();
         int getInfectOthersNum();
 
+        /* カウント */
         void countUpContact();                             /* 接触しした回数 */
-        void countUpInfectionContact( __TagInterface * );  /* 感染のために接触した回数 */
-        void countUpHasImmunityAllVirus();                 /* すべてのウイルスに対して免疫獲得している人の数 */
+        void countUpInfectionContact( __TagInterface * );  /* 感染のために接触してあるウイルスに感染した回数 */
 
         void resetAll();                                   /* 値をすべてリセット */
 

@@ -22,12 +22,19 @@ run:
 	@./$(TARGET)
 	@$(PRINT) [ exit ]
 
-%.o: %.cpp %.h Global.h
+%.o: %.cpp
 	@$(PRINT) -ne 'Compiling $@...\t'
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
 	@$(PRINT) OK!
 
-main.o: Global.h
+main.o: Global.h Function.h Agent.h Virus.h Landscape.h Monitor.h Administrator.h
+Administrator.o: Global.h Function.h Administrator.h Agent.h Virus.h Landscape.h Monitor.h
+Monitor.o: Monitor.h Global.h
+TagInterface.o: TagInterface.h Global.h
+Agent.o: Agent.h Function.h Monitor.h
+Virus.o: Virus.h Function.h
+Landscape.o: Landscape.h
+Function.o: Function.h
 
 build: clean $(TARGET)
 
