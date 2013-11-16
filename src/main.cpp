@@ -85,20 +85,10 @@ int main()
     monitor.generatePlotScript();                          /* XXX: gnuplot用 */
     
     // 確認用 -----------------------------------------------------------------
-    AD.printInfo();                                        /* 初期状態を表示 */
+    AD.printInitInfo();                                        /* 初期状態を表示 */
 
     // エージェントの最終的な状態など -----------------------------------------
-    ofstream ofs_log("A_log.txt");                         /* 出力ファイル  */
-    ofs_log << "WIDTH:" << WIDTH << endl;
-    ofs_log << "NUM_A:" << NUM_A << endl;
-    ofs_log << "NUM_V:" << NUM_V << endl;
-    ofs_log << "TAG_LEN_A:" << TAG_LEN_A << endl;
-    ofs_log << "TAG_LEN_V:" << TAG_LEN_V << endl;
-    FOR(i,NUM_V) { ofs_log<<"["<<virus[i].getLen()<<"]:";
-        FOR(j, virus[i].getLen()) { ofs_log<<int(virus[i].tagAt(j)); } ofs_log<<endl; }
-    ofs_log << ">>> Agent Last Status" << endl;
-    FOR(i, NUM_A) { FOR(j, agent[0].getLen()) ofs_log<<agent[i].tagAt(j);
-        ofs_log<<" "<<agent[i].numHoldingVirus(); ofs_log<<endl; }
+    AD.outputFile_LastLog( "A_log.txt" );
     // ------------------------------------------------------------------------
 
     // 計測時間出力                             /* XXX: ??? */

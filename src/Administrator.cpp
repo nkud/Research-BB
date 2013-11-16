@@ -277,14 +277,27 @@ void Administrator :: outputFile_InfectionContactRatio( const char *fname ) {
     if( sum > 0 ) ratio = (double)sum / (double) Monitor::Instance().getContactNum(); 
     ofs << ratio << std::endl;
 }
+void Administrator :: outputFile_LastLog( const char *fname ) {
+    static std::ofstream ofs(fname);
+    ofs << "WIDTH:" << WIDTH << std::endl;
+    ofs << "NUM_A:" << NUM_A << std::endl;
+    ofs << "NUM_V:" << NUM_V << std::endl;
+    ofs << "TAG_LEN_A:" << TAG_LEN_A << std::endl;
+    ofs << "TAG_LEN_V:" << TAG_LEN_V << std::endl;
+    FOR(i,NUM_V) { ofs<<"["<<virus_[i].getLen()<<"]:";
+        FOR(j, virus_[i].getLen()) { ofs<<int(virus_[i].tagAt(j)); } ofs<<std::endl; }
+    ofs << ">>> Agent Last Status" << std::endl;
+    FOR(i, NUM_A) { FOR(j, agent_[0].getLen()) ofs<<agent_[i].tagAt(j);
+        ofs<<" "<<agent_[i].numHoldingVirus(); ofs<<std::endl; }
+}
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Administrator :: printInfo()
+ *      Method:  Administrator :: printInitInfo()
  * Description:  初期状態を表示（端末）
  *--------------------------------------------------------------------------------------
  */
-void Administrator :: printInfo() {
+void Administrator :: printInitInfo() {
     std::cout << "WIDTH:" << WIDTH << std::endl;           /* 幅 */
     std::cout << "\nNUM_A:\t\t" << NUM_A << std::endl;
     std::cout << "TAG_LEN_A:\t" << TAG_LEN_A << std::endl;
