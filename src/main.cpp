@@ -62,6 +62,8 @@ int main()
     int initial_num_a = AD.numHasVirus( virus[0] );        /* 記録しておく */
     int initial_num_b = AD.numHasVirus( virus[1] );
 
+    monitor.generatePlotScript();                          /* XXX: gnuplot用 */
+
     /* 計測開始 */
     FOR( i, TERM )                                         /* 計算開始  */
     {
@@ -81,8 +83,6 @@ int main()
 
         log( monitor.getContactNum() );
     }
-
-    monitor.generatePlotScript();                          /* XXX: gnuplot用 */
     
     // 確認用 -----------------------------------------------------------------
     AD.printInitInfo();                                        /* 初期状態を表示 */
