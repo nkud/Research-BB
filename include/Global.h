@@ -31,18 +31,21 @@
 typedef int tag_t;                                         /* タグの型（通常 int ） */
 
 // Configure
-const int TERM                   = 1000                   ; /* 期間  */
-const int WIDTH                  = 15                    ; /* ランドスケープの幅 */
+const int TERM                          = 1000                  ; /* 期間  */
+const int WIDTH                         = 50                    ; /* ランドスケープの幅 */
 
-const int NUM_V                  = 5                      ; /* ウイルスの種類  */
-const int NUM_A                  = 100                  ;  /* エージェントの数  */
+const int NUM_V                         = 3                     ; /* ウイルスの種類  */
+const int NUM_A                         = 1000                  ; /* エージェントの数  */
 
-const double LEN_SCALE           = 5.0                   ; /* ウイルスに対するエージェントのタグスケール */
-const int TAG_LEN_V              = 20                    ; /* ウイルスのタグのデフォルトの長さ */
-const int TAG_LEN_A              = LEN_SCALE * TAG_LEN_V ; /* エージェントのタグ長 */
+const double LEN_SCALE                  = 3.0                   ; /* ウイルスに対するエージェントのタグスケール */
+const int TAG_LEN_V                     = 20                    ; /* ウイルスのタグのデフォルトの長さ */
+const int TAG_LEN_A                     = LEN_SCALE * TAG_LEN_V ; /* エージェントのタグ長 */
 
-const double INFECTION_RATE      = 0.8                   ; /* デフォルトの感染率 */
-const double INIT_INFECTED_RATIO = 0.2                   ; /* 初期感染率 */
+const double INFECTION_RATE             = 0.5                   ; /* デフォルトの感染率 */
+const double INIT_INFECTED_RATIO        = 0.3                   ; /* 初期感染率 */
+
+const int MAX_VIRUS_AGENT_HAVE          = NUM_V - 3             ; /* 最大保持ウイルス */
+const int MAX_STAND_BY_VIRUS_AGENT_HAVE = NUM_V - 1             ; /* 最大待機ウイルス */
 // ---------
 
 template < typename T >                                    /* デバッグ用 */

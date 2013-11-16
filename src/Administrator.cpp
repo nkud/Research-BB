@@ -120,7 +120,9 @@ void Administrator :: contactAgent() {
 
         REP( i, -1, 1 ) {                                                      /* 自分の縦・横・自マスに感染させる（計５マス） */
             REP( j, -1, 1 ) {
+#ifdef NO_DIAGONAL
                 if( i*j != 0 ) continue;                                       /* 斜めは入れない */
+#endif
                 if( ! (landscape_->isOnMap( tx+i, ty+j )) ) continue;          /* 土地からはみ出てたらスキップ */
 
                 ITERATOR(int) it = landscape_->getLandscapeIteratorBeginAt( tx+i, ty+j );
@@ -131,7 +133,6 @@ void Administrator :: contactAgent() {
 
                     if( tvdata->v_->getRate() > rand_interval_double(0,1) )
                     {                                                          /* ウイルス特有の感染確率で */
-                                                                     /* XXX: static castは使いたくない... */
                         agent_[ *it ].pushStandByVirus( tvdata->v_ );          /* 待機ウイルスにする */
                     }
                     it++;                                                      /* 着目をその位置の次にいる人 */

@@ -13,6 +13,7 @@
 #include "Agent.h"
 #include "Function.h"
 #include "Monitor.h"
+#include "Global.h"
 
 #include <vector>
 
@@ -81,22 +82,25 @@ void Agent :: clearStandByVirus() { (*stand_by_list_).clear(); }
  */
 bool Agent :: infection( Virus &v )
 {
+    if( getVirusListSize() >= MAX_VIRUS_AGENT_HAVE ) {      /* 最大値を越えてたら */
+        return false;                                      /* 感染せずに終了 */
+    }
     ITERATOR(VirusData *) it = getVirusListIteratorBegin();
-    while( it != getVirusListIteratorEnd() ) {                                 // 既に保持しているウイルスなら終了 
+    while( it != getVirusListIteratorEnd() ) {             /* 既に保持しているウイルスなら終了 */
         if( (*it)->v_ == &v ) {
             return false;
         }
         it++;
     }
-    if( hasImmunity( v ) ) {                                                   // 免疫獲得済みなら 
-        return false;                                                          // 感染せずに終了 
+    if( hasImmunity( v ) ) {                               /* 免疫獲得済みなら  */
+        return false;                                      /* 感染せずに終了 */
     }
-    /* 感染リストに追加 */
-    VirusData *vdata = new VirusData( v, min_ham_distance_point( tag_, v.getTag(), len_, v.getLen() ) );     // スタートポイント 
+    /* 感染リストに追加  */
+    VirusData *vdata = new VirusData( v, min_ham_distance_point( tag_, v.getTag(), len_, v.getLen() ) );     /* スタートポイント */
     pushVirusData( vdata );
 
     Monitor::Instance().countUpInfectionContact(vdata->v_);                                /* 感染のために接触した回数を増やす */
-    return true;                                /* 感染したら true を返す */
+    return true;                                           /* 感染したら true を返す */
 }
 
 /*
