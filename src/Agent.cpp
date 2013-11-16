@@ -28,13 +28,16 @@ Agent :: Agent() :
     y_( 0 ),
     stand_by_list_( 0 )
 {                                               /* タグの長さを初期化  */
+    vlist_ = new std::vector<VirusData *>;
+    stand_by_list_ = new std::vector<Virus *>;
+
     FOR( i, TAG_LEN_A ) {                       /* タグをランダムに初期化  */
         tag_[ i ] = rand_binary();
     }
-    vlist_.reserve( NUM_V );                    /* 領域確保 */
-    stand_by_list_.reserve( NUM_V );            /* 領域確保 */
-    vlist_.clear();                             /* 配列を空に */
-    stand_by_list_.clear();                     /* 配列を空に */
+    (*vlist_).reserve( NUM_V );                    /* 領域確保 */
+    (*stand_by_list_).reserve( NUM_V );            /* 領域確保 */
+    (*vlist_).clear();                             /* 配列を空に */
+    (*stand_by_list_).clear();                     /* 配列を空に */
 }
 
 /*--------------------------------------------------------------------------------------
@@ -51,24 +54,24 @@ int Agent :: getY() const { return y_; }
 /*
  * 保持ウイルスセット
  */
-VirusData *Agent :: getVirusDataAt( int n ) const { return vlist_.at( n ); }
-void Agent :: pushVirusData( VirusData *vd ) { vlist_.push_back( vd ); }
-void Agent :: eraseVirusData( std::vector<VirusData *>::iterator it ) { vlist_.erase( it ); }
-int Agent :: getVirusListSize() const { return vlist_.size(); }
-std::vector<VirusData *>::iterator Agent :: getVirusListIteratorBegin() { return vlist_.begin(); }
-std::vector<VirusData *>::iterator Agent :: getVirusListIteratorEnd() { return vlist_.end(); }
-bool Agent :: hasNoVirusData() const { if( vlist_.empty() ) return true; else return false; }
+VirusData *Agent :: getVirusDataAt( int n ) const { return (*vlist_).at( n ); }
+void Agent :: pushVirusData( VirusData *vd ) { (*vlist_).push_back( vd ); }
+void Agent :: eraseVirusData( std::vector<VirusData *>::iterator it ) { (*vlist_).erase( it ); }
+int Agent :: getVirusListSize() const { return (*vlist_).size(); }
+std::vector<VirusData *>::iterator Agent :: getVirusListIteratorBegin() { return (*vlist_).begin(); }
+std::vector<VirusData *>::iterator Agent :: getVirusListIteratorEnd() { return (*vlist_).end(); }
+bool Agent :: hasNoVirusData() const { if( (*vlist_).empty() ) return true; else return false; }
 /*
  * 待機ウイルスセット
  */
-void Agent :: pushStandByVirus( Virus *v ) { stand_by_list_.push_back( v ); }
-bool Agent :: hasNoStandByVirus() const { return stand_by_list_.empty(); }
-int Agent :: getStandByListSize() const { return stand_by_list_.size(); }
-Virus *Agent :: getStandByVirusAt( int n ) const { return stand_by_list_[n]; }
-std::vector<Virus *>::iterator Agent :: getStandByListIteratorBegin() { return stand_by_list_.begin(); }
-std::vector<Virus *>::iterator Agent :: getStandByListIteratorEnd() { return stand_by_list_.end(); }
-void Agent :: eraseStandByVirus( std::vector<Virus *>::iterator it ) { stand_by_list_.erase( it ); }
-void Agent :: clearStandByVirus() { stand_by_list_.clear(); }
+void Agent :: pushStandByVirus( Virus *v ) { (*stand_by_list_).push_back( v ); }
+bool Agent :: hasNoStandByVirus() const { return (*stand_by_list_).empty(); }
+int Agent :: getStandByListSize() const { return (*stand_by_list_).size(); }
+Virus *Agent :: getStandByVirusAt( int n ) const { return (*stand_by_list_).at(n); }
+std::vector<Virus *>::iterator Agent :: getStandByListIteratorBegin() { return (*stand_by_list_).begin(); }
+std::vector<Virus *>::iterator Agent :: getStandByListIteratorEnd() { return (*stand_by_list_).end(); }
+void Agent :: eraseStandByVirus( std::vector<Virus *>::iterator it ) { (*stand_by_list_).erase( it ); }
+void Agent :: clearStandByVirus() { (*stand_by_list_).clear(); }
 
 /*
  *--------------------------------------------------------------------------------------
@@ -136,8 +139,8 @@ bool Agent :: hasImmunity( __TagInterface &v ) const                            
  *--------------------------------------------------------------------------------------
  */
 bool Agent :: isInfected( __TagInterface &v ) const {
-    C_ITERATOR(VirusData *) it = vlist_.begin();
-    while( it != vlist_.end() ) {
+    C_ITERATOR(VirusData *) it = (*vlist_).begin();
+    while( it != (*vlist_).end() ) {
         if( (*it)->v_ == &v ) {                                                // 感染済みだった
             return true;
         }
@@ -152,8 +155,8 @@ bool Agent :: isInfected( __TagInterface &v ) const {
  *               リストを走査することで確かめる
  *----------------------------------------------------------------------------------- */
 bool Agent :: hasVirus( __TagInterface &v ) const {
-    C_ITERATOR(VirusData *) it = vlist_.begin();
-    while( it != vlist_.end() ) {
+    C_ITERATOR(VirusData *) it = (*vlist_).begin();
+    while( it != (*vlist_).end() ) {
         if( (*it)->v_ == &v ) {                                                // 感染済みだった
             return true;
         }

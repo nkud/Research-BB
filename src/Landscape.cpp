@@ -15,6 +15,7 @@
 
 Landscape :: Landscape()
 {
+    FOR( i, WIDTH ) FOR( j, WIDTH ) agent_map_[i][j].clear();
     log("init Landscape");
 }
 
