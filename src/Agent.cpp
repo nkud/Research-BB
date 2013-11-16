@@ -61,13 +61,13 @@ bool Agent :: hasNoVirusData() const { if( vlist_.empty() ) return true; else re
 /*
  * 待機ウイルスセット
  */
-void Agent :: pushStandByVirus( __TagInterface *v ) { stand_by_list_.push_back( v ); }
+void Agent :: pushStandByVirus( Virus *v ) { stand_by_list_.push_back( v ); }
 bool Agent :: hasNoStandByVirus() const { return stand_by_list_.empty(); }
 int Agent :: getStandByListSize() const { return stand_by_list_.size(); }
-__TagInterface *Agent :: getStandByVirusAt( int n ) const { return stand_by_list_[n]; }
-std::vector<__TagInterface *>::iterator Agent :: getStandByListIteratorBegin() { return stand_by_list_.begin(); }
-std::vector<__TagInterface *>::iterator Agent :: getStandByListIteratorEnd() { return stand_by_list_.end(); }
-void Agent :: eraseStandByVirus( std::vector<__TagInterface *>::iterator it ) { stand_by_list_.erase( it ); }
+Virus *Agent :: getStandByVirusAt( int n ) const { return stand_by_list_[n]; }
+std::vector<Virus *>::iterator Agent :: getStandByListIteratorBegin() { return stand_by_list_.begin(); }
+std::vector<Virus *>::iterator Agent :: getStandByListIteratorEnd() { return stand_by_list_.end(); }
+void Agent :: eraseStandByVirus( std::vector<Virus *>::iterator it ) { stand_by_list_.erase( it ); }
 void Agent :: clearStandByVirus() { stand_by_list_.clear(); }
 
 /*
@@ -76,7 +76,7 @@ void Agent :: clearStandByVirus() { stand_by_list_.clear(); }
  * Description:  感染したら、true を返す
  *--------------------------------------------------------------------------------------
  */
-bool Agent :: infection( __TagInterface &v )
+bool Agent :: infection( Virus &v )
 {
     ITERATOR(VirusData *) it = getVirusListIteratorBegin();
     while( it != getVirusListIteratorEnd() ) {                                 // 既に保持しているウイルスなら終了 

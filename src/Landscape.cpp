@@ -33,7 +33,8 @@ void Landscape :: putBackOnMap( int &x, int &y) {
     }
 }
 
-bool Landscape :: isOnMap( const int x, const int y) {
+bool Landscape :: isOnMap( const int x, const int y) const
+{
     if( x < 0 ) {
         return false;
     }
@@ -79,5 +80,5 @@ void Landscape :: pushAgent( int x, int y, int n ) {
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-ITERATOR(int) Landscape :: getLandscapeBeginIterator(int x, int y) { return agent_map_[x][y].begin(); }
-ITERATOR(int) Landscape :: getLandscapeEndIterator(int x, int y) { return agent_map_[x][y].end(); }
+ITERATOR(int) Landscape :: getLandscapeIteratorBeginAt(int x, int y) { return agent_map_[x][y].begin(); }
+ITERATOR(int) Landscape :: getLandscapeIteratorEndAt(int x, int y) { return agent_map_[x][y].end(); }

@@ -109,19 +109,12 @@ void Administrator :: relocateAgent() {
  */
 void Administrator :: contactAgent() {
 
-    std::vector<int> infected_agent;                                           /* 現時点での感染者リスト */
-    FOR( i, NUM_A ) {                                                          /* 全員に対して */
-        if( agent_[ i ].numHoldingVirus() > 0 ) {                              /* 何らかのウイルスを保持していたら */
-            infected_agent.push_back( i );                                     /* 感染者リストに加える */
-        }
-    }
-
     int tx, ty;
     Agent *myself;
 
-    ITERATOR(int) it_infected = infected_agent.begin();
-    while( it_infected != infected_agent.end() ) {                             /* 感染者リストの数だけ繰り返す */
-        myself = &agent_[ *it_infected ];                                      /* 感染者自身 */
+    FOR( i, NUM_A ) {
+        myself = &agent_[ i ];                                                 /* 感染者自身 */
+        if( myself->numHoldingVirus() <= 0 ) continue;                         /* 健康ならスキップ */
         tx = myself->getX();                                                   /* 感染者自身の位置 */
         ty = myself->getY();
 
@@ -130,16 +123,16 @@ void Administrator :: contactAgent() {
                 if( i*j != 0 ) continue;                                       /* 斜めは入れない */
                 if( ! (landscape_->isOnMap( tx+i, ty+j )) ) continue;          /* 土地からはみ出てたらスキップ */
 
-                ITERATOR(int) it = landscape_->getLandscapeBeginIterator( tx+i, ty+j );
-                while( it != landscape_->getLandscapeEndIterator( tx+i, ty+j ) )
+                ITERATOR(int) it = landscape_->getLandscapeIteratorBeginAt( tx+i, ty+j );
+                while( it != landscape_->getLandscapeIteratorEndAt( tx+i, ty+j ) )
                 {                                                              /* その位置にいる人全員に */
                     VirusData *tvdata =                                        /* ランダムに保持ウイルスから選んで */
                         myself->getVirusDataAt( rand_array(myself->getVirusListSize()) );
 
-                    if( static_cast<Virus *>(tvdata->v_)->getRate() > rand_interval_double(0,1) )
+                    if( tvdata->v_->getRate() > rand_interval_double(0,1) )
                     {                                                          /* ウイルス特有の感染確率で */
                                                                      /* XXX: static castは使いたくない... */
-                        agent_[ *it ].pushStandByVirus( tvdata->v_ ); /* 待機ウイルスにする */
+                        agent_[ *it ].pushStandByVirus( tvdata->v_ );          /* 待機ウイルスにする */
                     }
                     it++;                                                      /* 着目をその位置の次にいる人 */
 
@@ -147,7 +140,6 @@ void Administrator :: contactAgent() {
                 }
             }
         }
-        it_infected++;                                                         /* 次の感染者 */
     }
 }
 
@@ -159,8 +151,8 @@ void Administrator :: contactAgent() {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: infectAgent() {
-    ITERATOR(__TagInterface *) itt;
-    __TagInterface *tv;
+    ITERATOR(Virus *) itt;
+    Virus *tv;
     int n;
 
     FOR( i, NUM_A )                                                            /* エージェントの数だけ */
@@ -168,7 +160,7 @@ void Administrator :: infectAgent() {
         if( agent_[i].hasNoStandByVirus() ) continue;                      /* 待機ウイルスが無ければスキップ */
         else {                                                                      /* あれば */
             while( ! agent_[i].hasNoStandByVirus() ) {                     /* 待機ウイルスがなくなるまで */
-                n = rand_array(agent_[i].getStandByListSize() );             /* ランダムに一個の */
+                n = rand_array( agent_[i].getStandByListSize() );             /* ランダムに一個の */
                 tv = agent_[i].getStandByVirusAt( n );                        /* ウイルスを選んで */
                 if( agent_[i].infection( *tv ) ) {                             /* 感染させたら */
                     break;                                                     /* 次のエージェントへ */

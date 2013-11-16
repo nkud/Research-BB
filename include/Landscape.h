@@ -23,9 +23,9 @@ class Landscape {
         Landscape();
 
         void putBackOnMap( int &, int & );      /* マップ上に配置しなおす */
-        bool isOnMap( int , int );              /* マップの上にあるか */
+        bool isOnMap( int , int ) const;              /* マップの上にあるか */
         void clearAgentMap();                   /* マップを初期化 */
         void pushAgent( int, int, int );        /* エージェントを登録 */
-        ITERATOR(int) getLandscapeBeginIterator( int, int );
-        ITERATOR(int) getLandscapeEndIterator( int, int );
+        ITERATOR(int) getLandscapeIteratorBeginAt( int, int );
+        ITERATOR(int) getLandscapeIteratorEndAt( int, int );
 };
