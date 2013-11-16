@@ -26,6 +26,7 @@
 #define CONTACT_FNAME       A_infectionContact.txt
 
 #define ITERATOR(type)      std::vector< type >::iterator
+#define C_ITERATOR(type)    std::vector< type >::const_iterator
 
 typedef int tag_t;                                         /* タグの型（通常 int ） */
 

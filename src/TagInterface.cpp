@@ -23,8 +23,8 @@
  *--------------------------------------------------------------------------------------
  */
 __TagInterface :: __TagInterface( int l ) :
-    len_(l),
-    tag_(0)
+    len_( l ),
+    tag_( 0 )
 {
     tag_ = new tag_t[ l ];                      /* タグを初期化 */
     FOR( i, l )
@@ -56,7 +56,7 @@ __TagInterface :: __TagInterface( const char *str ) :
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-tag_t *__TagInterface :: getTag()
+tag_t *__TagInterface :: getTag() const
 {
     return tag_;
 }
@@ -65,7 +65,7 @@ tag_t *__TagInterface :: getTag()
  *      Method:  __TagInterface :: getTagLen()
  * Description:  
  *----------------------------------------------------------------------------------- */
-int __TagInterface :: getLen() {
+int __TagInterface :: getLen() const {
     return len_;
 }
 

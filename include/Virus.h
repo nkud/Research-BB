@@ -32,7 +32,7 @@ class Virus : public __TagInterface             /* ウイルスのクラス*/
         Virus( int, double );                   /* コンストラクタ: タグ長, 感染率 */
         Virus();                                /* コンストラクタ: default */
 
-        double getRate();                       /* 感染確率を返す */
+        double getRate() const;                 /* 感染確率を返す */
         void setRate( const double r );         /* 感染確率を設定 */
 };
 

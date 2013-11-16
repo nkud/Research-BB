@@ -36,7 +36,7 @@ Virus :: Virus() :
  *      Method:  Virus :: *
  * Description:  セッタ、ゲッタ関連
  *----------------------------------------------------------------------------------- */
-double Virus :: getRate() { return rate_; }
+double Virus :: getRate() const { return rate_; }
 void Virus :: setRate( const double r ) { rate_ = r; }
 
 /*--------------------------------------------------------------------------------------

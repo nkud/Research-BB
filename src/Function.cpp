@@ -8,7 +8,7 @@
  *  Description:  
  * =====================================================================================
  */
-int flip_once( tag_t *a, tag_t *b, const int len )    /* 一回だけフリップ */
+int flip_once( tag_t * const a, const tag_t * const b, const int len )    /* 一回だけフリップ */
 {
     FOR( i, len )                               /* タグの長さだけ繰り返す */
     {
@@ -30,7 +30,7 @@ int flip_once( tag_t *a, tag_t *b, const int len )    /* 一回だけフリッ�
  *  Description:  ハミング距離を返す
  * =====================================================================================
  */
-int ham_distance(const int *a, const int *b, const int n) {
+int ham_distance(const int * const a, const int * const b, const int n) {
     int diff = 0;
     FOR(i, n) {
         if( a[i] != b[i] )
@@ -73,31 +73,27 @@ int min_ham_distance_point(int *a, int *v, int an, int vn) /* XXX: a > b だけ�
 /*-----------------------------------------------------------------------------
  *  RANDOMIZE SET
  *-----------------------------------------------------------------------------*/
-int rand_interval_int(int min, int max) {
+int rand_interval_int(const int min, const int max) {
     return min + (int)( rand() * (max - min + 1.0) / (1.0 + RAND_MAX) );
 }
 
-double rand_interval_double(double min, double max) {
+double rand_interval_double(const double min, const double max) {
     return min + (double)( rand() * (max - min) / (1.0 + RAND_MAX) ); /* XXX: これでいいか？ */
 }
 
-int rand_array( int n ) {
+int rand_array( const int n ) {
     return rand() % n;
 }
 
 int rand_binary() {
-    int ret;
-
-    ret = rand() % 2;
-
+    int ret; 
+    ret = rand() % 2; 
     return ret;
 }
 
 int rand_sign() {
-    int ret;
-
-    ret = rand()%2 ? 1 : -1;
-
+    int ret; 
+    ret = rand()%2 ? 1 : -1; 
     return ret;
 }
 

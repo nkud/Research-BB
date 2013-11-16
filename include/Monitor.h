@@ -35,10 +35,10 @@ class Monitor {
         static Monitor& Instance();                        /* インスタンスを返す */
 
         /* ゲッタ */
-        int getContactNum();
+        int getContactNum() const;
         int getInfectionContactNum( __TagInterface * );
-        int getHasImmunityAllVirusNum();
-        int getInfectOthersNum();
+        int getHasImmunityAllVirusNum() const;
+        int getInfectOthersNum() const;
 
         /* カウント */
         void countUpContact();                             /* 接触しした回数 */

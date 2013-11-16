@@ -31,7 +31,7 @@ Monitor& Monitor :: Instance() {
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-int Monitor :: getContactNum() { return num_contact_; }
+int Monitor :: getContactNum() const { return num_contact_; }
 int Monitor :: getInfectionContactNum( __TagInterface *t ) { return num_infection_contact_[ t ]; }
 
 /*
