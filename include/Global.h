@@ -31,20 +31,21 @@
 typedef int tag_t;                                         /* タグの型（通常 int ） */
 
 // Configure
-const int TERM                          = 500                  ; /* 期間  */
+const int TERM                          = 2000                  ; /* 期間 */
 const int WIDTH                         = 50                    ; /* ランドスケープの幅 */
 
-const int NUM_V                         = 3                     ; /* ウイルスの種類  */
-const int NUM_A                         = 1000                  ; /* エージェントの数  */
+const int NUM_V                         = 3                     ; /* ウイルスの種類 */
+const int NUM_A                         = 1000                  ; /* エージェントの数 */
 
-const double LEN_SCALE                  = 2.4                   ; /* ウイルスに対するエージェントのタグスケール */
+const double LEN_SCALE                  = 1.8                   ; /* ウイルスに対するエージェントのタグスケール */ /* :w
+:*/
 const int TAG_LEN_V                     = 20                    ; /* ウイルスのタグのデフォルトの長さ */
 const int TAG_LEN_A                     = LEN_SCALE * TAG_LEN_V ; /* エージェントのタグ長 */
 
 const double INFECTION_RATE             = 0.5                   ; /* デフォルトの感染率 */
 const double INIT_INFECTED_RATIO        = 0.1                   ; /* 初期感染率 */
 
-const int MAX_VIRUS_AGENT_HAVE          = NUM_V - 2             ; /* 最大保持ウイルス */
+const int MAX_VIRUS_AGENT_HAVE          = 1                     ; /* 最大保持ウイルス */
 //const int MAX_STAND_BY_VIRUS_AGENT_HAVE = NUM_V - 1             ; /* 最大待機ウイルス */
 // ---------
 

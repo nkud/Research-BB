@@ -64,6 +64,7 @@ int main()
 
     monitor.generatePlotScript();                          /* XXX: gnuplot用 */
 
+    int zero_count = 0;
     /* 計測開始 */
     FOR( i, TERM )                                         /* 計算開始  */
     {
@@ -82,6 +83,8 @@ int main()
         AD.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ;
 
         log( monitor.getContactNum() );
+        if( monitor.getContactNum()==0 ) zero_count++;
+        if( zero_count >= 10 ) break;
     }
     
     // 確認用 -----------------------------------------------------------------
