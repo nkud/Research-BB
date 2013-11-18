@@ -25,11 +25,25 @@
 
 /*
  *--------------------------------------------------------------------------------------
+ *      Method:  Administrator :: *
+ * Description:  期間系の関数
+ *--------------------------------------------------------------------------------------
+ */
+void Administrator :: incrementTerm() {
+    term_++;
+}
+int Administrator :: getTerm() {
+    return term_;
+}
+
+/*
+ *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: Administrator( Agent *, Virus * )
  * Description:  
  *--------------------------------------------------------------------------------------
  */
 Administrator :: Administrator( Agent *a, Virus *v, Landscape *l ) :
+    term_( 0 ),
     agent_( a ),
     virus_( v ),
     landscape_( l )

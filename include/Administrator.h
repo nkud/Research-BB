@@ -31,8 +31,13 @@ class Administrator {
         Virus *virus_;                                     /* ウイルスの集合 */
         Landscape *landscape_;                             /* 土地 */
 
+        int term_;
+
     public:
         Administrator( Agent *, Virus *, Landscape * );
+        void incrementTerm();                              /* 期間を 1 進める */
+        int getTerm();                                     /* 進んだ期間 */
+
         void responseAgent();                              /* 免疫応答させる */
         void relocateAgent();                              /* 再配置 */
         void contactAgent();                               /* 近隣に接触して感染させる */
@@ -44,7 +49,7 @@ class Administrator {
         int numHasImmunity( __TagInterface & );            /* v の免疫獲得者数 */
         int numHasAllImmunity();                           /* 全ウイルスの免疫獲得者数 */
 
-        void printInitInfo();                                  /* 初期状態の情報を端末に出力 */
+        void printInitInfo();                              /* 初期状態の情報を端末に出力 */
         void outputFile_HasVirus( const char * );          /* ファイルに出力 */
         void outputFile_HasImmunity( const char * );       /* ファイルに出力 */
         void outputFile_InfectionContactRatio( const char * ); /* ファイルに出力 */
