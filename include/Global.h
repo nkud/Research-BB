@@ -32,7 +32,7 @@ typedef int tag_t;                                         /* タグの型（通
 
 // Configure
 const int TERM                          = 2000                  ; /* 期間 */
-const int OUTPUT_INTERVAL               = TERM / 10             ;
+const int OUTPUT_INTERVAL               = 1                     ;
 const int WIDTH                         = 50                    ; /* ランドスケープの幅 */
 
 const int NUM_V                         = 3                     ; /* ウイルスの種類 */
@@ -40,7 +40,7 @@ const int NUM_A                         = 1000                  ; /* エージ�
 
 const double LEN_SCALE                  = 1.8                   ; /* ウイルスに対するエージェントのタグスケール */ /* :w
 :*/
-const int TAG_LEN_V                     = 50                    ; /* ウイルスのタグのデフォルトの長さ */
+const int TAG_LEN_V                     = 20                    ; /* ウイルスのタグのデフォルトの長さ */
 const int TAG_LEN_A                     = LEN_SCALE * TAG_LEN_V ; /* エージェントのタグ長 */
 
 const double INFECTION_RATE             = 0.5                   ; /* デフォルトの感染率 */

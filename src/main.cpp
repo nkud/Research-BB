@@ -50,17 +50,17 @@ int main()
     Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
 
     // 管理者に登録
-    Administrator AD( agent, virus, landscape );
+    Administrator admin( agent, virus, landscape );
 
     Monitor &monitor = Monitor::Instance();                /* モニター */
 
     // 初期感染
     FOR( i, NUM_V ) {
-        AD.initInfectAgentInRatio( virus[i], INIT_INFECTED_RATIO );            /* 感染させる */
+        admin.initInfectAgentInRatio( virus[i], INIT_INFECTED_RATIO );            /* 感染させる */
     }
 
-    int initial_num_a = AD.numHasVirus( virus[0] );        /* 記録しておく */
-    int initial_num_b = AD.numHasVirus( virus[1] );
+    int initial_num_a = admin.numHasVirus( virus[0] );        /* 記録しておく */
+    int initial_num_b = admin.numHasVirus( virus[1] );
 
     monitor.generatePlotScript();                          /* XXX: gnuplot用 */
 
@@ -69,18 +69,19 @@ int main()
     FOR( i, TERM )                                         /* 計算開始  */
     {
         log("------------ start");
+        admin.incrementTerm();                             /* 期間を進める */
 
         monitor.resetAll();                                /* カウンターをリセット */
 
-        AD.relocateAgent();                                /* ランダムに再配置 */
-        AD.contactAgent();                                 /* 近隣に接触する */
-        AD.infectAgent();                                  /* 待機ウイルスを感染させる */
-        AD.responseAgent();                                /* 免疫応答（タグフリップ） */
+        admin.relocateAgent();                             /* ランダムに再配置 */
+        admin.contactAgent();                              /* 近隣に接触する */
+        admin.infectAgent();                               /* 待機ウイルスを感染させる */
+        admin.responseAgent();                             /* 免疫応答（タグフリップ） */
 
         /* 出力 */
-        AD.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ;        /* 出力: ウイルスの保持状況 */
-        AD.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ;
-        AD.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ;
+        admin.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ;        /* 出力: ウイルスの保持状況 */
+        admin.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ;
+        admin.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ;
 
         log( monitor.getContactNum() );
         if( monitor.getContactNum()==0 ) zero_count++;
@@ -88,10 +89,10 @@ int main()
     }
     
     // 確認用 -----------------------------------------------------------------
-    AD.printInitInfo();                                        /* 初期状態を表示 */
+    admin.printInitInfo();                                        /* 初期状態を表示 */
 
     // エージェントの最終的な状態など -----------------------------------------
-    AD.outputFile_LastLog( "A_log.txt" );
+    admin.outputFile_LastLog( "A_log.txt" );
     // ------------------------------------------------------------------------
 
     // 計測時間出力                             /* XXX: ??? */

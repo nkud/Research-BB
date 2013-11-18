@@ -262,9 +262,9 @@ void Administrator :: outputFile_HasVirus( const char *fname ) {
  *               ウイルスの数によって、列を調整できる
  *----------------------------------------------------------------------------------- */
 void Administrator :: outputFile_HasImmunity( const char *fname ) {
+    if( getTerm() % OUTPUT_INTERVAL != 0 ) return;
     static std::ofstream ofs(fname);                                           /* インスタンスは１つだけ */
-    static int i = 0;                                                          /* 期間をカウント */
-    ofs << i++ << SEPARATOR;                                                   /* ファイルに出力 */
+    ofs << getTerm() << SEPARATOR;                                                   /* ファイルに出力 */
     FOR( k, NUM_V ) {
         ofs << numHasImmunity( virus_[k] ) << SEPARATOR;   /* ウイルスに対する免疫獲得者数 */
     }
