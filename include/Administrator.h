@@ -40,6 +40,7 @@ class Administrator {
 
         void responseAgent();                              /* 免疫応答させる */
         void relocateAgent();                              /* 再配置 */
+        void moveAgent();                                  /* 移動させる */
         void contactAgent();                               /* 近隣に接触して感染させる */
         void initInfectAgentInRatio( Virus &, double );
         void infectAgent();                                /* 待機ウイルスを感染させる */

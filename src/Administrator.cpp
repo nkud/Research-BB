@@ -116,6 +116,27 @@ void Administrator :: relocateAgent() {
 
 /*
  *--------------------------------------------------------------------------------------
+ *      Method:  Administrator :: moveAgent()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+void Administrator :: moveAgent() {
+    landscape_->clearAgentMap();                           /* エージェントの位置をリセット */
+    FOR( i, NUM_A ) {
+        int tx = rand_interval_int( -MOVE_DISTANCE, MOVE_DISTANCE ); /* 相対的に x を動かす量*/
+        int ty = rand_interval_int( -MOVE_DISTANCE, MOVE_DISTANCE ); /* 相対的に y を動かす量 */
+        int xx = tx + agent_[i].getX();                    /* x 座標を設定 */
+        int yy = ty + agent_[i].getY();                    /* y 座標を設定 */
+        if( ! landscape_->isOnMap( xx, yy ) ) {            /* もし移動先が土地の上になっていなければ */
+            landscape_->putBackOnMap( xx, yy );            /* 土地の上に戻す */
+        }
+        agent_[i].setX( xx );                              /* 移動を実行 */
+        agent_[i].setY( yy );
+        landscape_->pushAgent( xx, yy, i );                /* エージェントを土地に登録 */
+    }
+}
+/*
+ *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: contactAgent()
  * Description:  自分の縦横自マス（計５マス）に対して
  *               自分の保持ウイルスリストからランダムに１つ選び出し全員に感染させる

@@ -65,6 +65,7 @@ int main()
     monitor.generatePlotScript();                          /* XXX: gnuplot用 */
 
     int zero_count = 0;
+    admin.relocateAgent();                             /* ランダムに再配置 */
     /* 計測開始 */
     FOR( i, TERM )                                         /* 計算開始  */
     {
@@ -73,7 +74,7 @@ int main()
 
         monitor.resetAll();                                /* カウンターをリセット */
 
-        admin.relocateAgent();                             /* ランダムに再配置 */
+        admin.moveAgent();                      /* 移動する */
         admin.contactAgent();                              /* 近隣に接触する */
         admin.infectAgent();                               /* 待機ウイルスを感染させる */
         admin.responseAgent();                             /* 免疫応答（タグフリップ） */
@@ -84,6 +85,8 @@ int main()
         admin.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ;
 
         log( monitor.getContactNum() );
+        log( agent[0].getX() );
+        log( agent[0].getY() );
         if( monitor.getContactNum()==0 ) zero_count++;
         if( zero_count >= 10 ) break;
     }

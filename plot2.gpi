@@ -1,31 +1,22 @@
 set title "ウイルス保持者" font "helvetica, 24"
 plot "A_hasVirus.txt" w l title "ウイルス0保持"
 replot "A_hasVirus.txt" using 1:3 w l title "ウイルス1保持"
-replot "A_hasVirus.txt" using 1:4 w l title "ウイルス2保持"
-replot "A_hasVirus.txt" using 1:5 w l title "ウイルス3保持"
-replot "A_hasVirus.txt" using 1:6 w l title "ウイルス4保持"
-replot "A_hasVirus.txt" using 1:7 w l title "全ウイルス保持"
+replot "A_hasVirus.txt" using 1:4 w l title "全ウイルス保持"
 set output
 pause -1
 set title "hasImmunity" font "helvetica, 24"
 plot "A_hasImmunity.txt" w l title "has_immunity_0"
 replot "A_hasImmunity.txt" using 1:3 w l title "has_immunity_1"
-replot "A_hasImmunity.txt" using 1:4 w l title "has_immunity_2"
-replot "A_hasImmunity.txt" using 1:5 w l title "has_immunity_3"
-replot "A_hasImmunity.txt" using 1:6 w l title "has_immunity_4"
-replot "A_hasImmunity.txt" using 1:7 w l title "has_all_immunity"
+replot "A_hasImmunity.txt" using 1:4 w l title "has_all_immunity"
 set output
 pause -1
 set title "infectioncontact" font "helvetica, 24"
 plot "A_infectionContact.txt" w l title "contact"
 replot "A_infectionContact.txt" using 1:3 w l title "infect_contact_1"
 replot "A_infectionContact.txt" using 1:4 w l title "infect_contact_2"
-replot "A_infectionContact.txt" using 1:5 w l title "infect_contact_3"
-replot "A_infectionContact.txt" using 1:6 w l title "infect_contact_4"
-replot "A_infectionContact.txt" using 1:7 w l title "infect_contact_5"
 set output
 pause -1
 set title "infectioncontactratio" font "helvetica, 24"
-plot "A_infectionContact.txt" using 1:8 w l title "ratio"
+plot "A_infectionContact.txt" using 1:5 w l title "ratio"
 set output
 pause -1
