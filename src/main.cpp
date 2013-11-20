@@ -41,12 +41,7 @@ int main()
 
     // 初期化
     Agent agent[ NUM_A ];                                  /* エージェントの集合  */
-    Virus virus[ NUM_V ] =
-    {                                                      /* ウイルス生成 */
-//        *( new Virus(5, 0.60 )),                           /* タグ長、感染確率 */
-//        *( new Virus(10, 0.60 )),                          /* タグ長、感染確率 */
-//        *( new Virus(15, 0.60 ))
-    };
+    Virus virus[ NUM_V ];                                  /* ウイルス生成 */
     Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
 
     // 管理者に登録
@@ -59,13 +54,11 @@ int main()
         admin.initInfectAgentInRatio( virus[i], INIT_INFECTED_RATIO );            /* 感染させる */
     }
 
-    int initial_num_a = admin.numHasVirus( virus[0] );        /* 記録しておく */
-    int initial_num_b = admin.numHasVirus( virus[1] );
-
     monitor.generatePlotScript();                          /* XXX: gnuplot用 */
 
     int zero_count = 0;
-    admin.relocateAgent();                             /* ランダムに再配置 */
+
+    admin.relocateAgent();                                 /* ランダムに再配置 */
     /* 計測開始 */
     FOR( i, TERM )                                         /* 計算開始  */
     {
@@ -74,7 +67,7 @@ int main()
 
         monitor.resetAll();                                /* カウンターをリセット */
 
-        admin.moveAgent();                      /* 移動する */
+        admin.moveAgent();                                 /* 移動する */
         admin.contactAgent();                              /* 近隣に接触する */
         admin.infectAgent();                               /* 待機ウイルスを感染させる */
         admin.responseAgent();                             /* 免疫応答（タグフリップ） */
@@ -84,6 +77,7 @@ int main()
         admin.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ;
         admin.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ;
 
+        /* 途中経過 */
         log( monitor.getContactNum() );
         log( agent[0].getX() );
         log( agent[0].getY() );
@@ -92,7 +86,7 @@ int main()
     }
     
     // 確認用 -----------------------------------------------------------------
-    admin.printInitInfo();                                        /* 初期状態を表示 */
+    admin.printInitInfo();                                 /* 初期状態を表示 */
 
     // エージェントの最終的な状態など -----------------------------------------
     admin.outputFile_LastLog( "A_log.txt" );
