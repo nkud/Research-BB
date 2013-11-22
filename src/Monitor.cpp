@@ -108,6 +108,15 @@ void Monitor :: generatePlotScript() {
     ofs << "set output" << std::endl
         << "pause -1" << std::endl;
 
+    // SIR_0
+    ofs << "set title \"SIR_0\" font \"helvetica, 24\"" << std::endl;
+    ofs << "plot " << HAS_IMMUNITY_OUTPUT << " w l"
+        << " title " << "\"R\"" << std::endl;
+    ofs << "replot " << HAS_VIRUS_OUTPUT << " w l"
+        << " title " << "\"I\"" << std::endl;
+    ofs << "set output" << std::endl
+        << "pause -1" << std::endl;
+
     // contact
     ofs << "set title \"infectioncontact\" font \"helvetica, 24\"" << std::endl
         << "plot "<< CONTACT_OUTPUT << " w l"

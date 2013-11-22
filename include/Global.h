@@ -38,10 +38,10 @@ const int TERM                          = 500                   ; /* 期間 */
 const int OUTPUT_INTERVAL               = 1                     ; /* 出力する間隔 */
 
 /* landscape */
-const int WIDTH                         = 60                    ; /* ランドスケープの幅 */
+const int WIDTH                         = 15                    ; /* ランドスケープの幅 */
 
 const int NUM_V                         = 1                     ; /* ウイルスの種類 */
-const int NUM_A                         = 1000                    ; /* エージェントの数 */
+const int NUM_A                         = 100                    ; /* エージェントの数 */
 
 const double LEN_SCALE                  = 1.0                  ; /* ウイルスに対するエージェントのタグスケール */
 const int TAG_LEN_V                     = 30                    ; /* ウイルスのタグのデフォルトの長さ */
