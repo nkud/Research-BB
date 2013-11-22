@@ -67,6 +67,7 @@ void Monitor :: countUpContact() { num_contact_++; }
 void Monitor :: generatePlotScript() {
     std::ofstream ofs(GPLOT_FILENAME);
 
+#ifdef OUTPUT_HAS_VIRUS
     // hasVirus
     ofs << "set title \"ウイルス保持者\" font \"helvetica, 24\"" << std::endl
         << "plot " << HAS_VIRUS_OUTPUT << " w l"
@@ -81,7 +82,8 @@ void Monitor :: generatePlotScript() {
         << " title " << "\"全ウイルス保持\"" << std::endl;
     ofs << "set output" << std::endl
         << "pause -1" << std::endl;
-
+#endif
+#ifdef OUTPUT_HAS_IMMUNITY
     // hasImmunity
     ofs << "set title \"hasImmunity\" font \"helvetica, 24\"" << std::endl
         << "plot "<< HAS_IMMUNITY_OUTPUT << " w l"
@@ -96,7 +98,8 @@ void Monitor :: generatePlotScript() {
         << " title " << "\"has_all_immunity\"" << std::endl;
     ofs << "set output" << std::endl
         << "pause -1" << std::endl;
-
+#endif
+#ifdef OUTPUT_SIR
     // SIR
     ofs << "set title \"SIR\" font \"helvetica, 24\"" << std::endl;
     ofs << "plot " << HAS_IMMUNITY_OUTPUT
@@ -116,7 +119,8 @@ void Monitor :: generatePlotScript() {
         << " title " << "\"I\"" << std::endl;
     ofs << "set output" << std::endl
         << "pause -1" << std::endl;
-
+#endif
+#ifdef OUTPUT_CONTACT
     // contact
     ofs << "set title \"infectioncontact\" font \"helvetica, 24\"" << std::endl
         << "plot "<< CONTACT_OUTPUT << " w l"
@@ -134,4 +138,5 @@ void Monitor :: generatePlotScript() {
         << " title \"ratio\"" << std::endl;
     ofs << "set output" << std::endl
         << "pause -1" << std::endl;
+#endif
 }
