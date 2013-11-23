@@ -14,6 +14,7 @@
 #include "Function.h"
 #include "Monitor.h"
 #include "Global.h"
+#include "TagInterface.h"
 
 #include <vector>
 
@@ -27,20 +28,41 @@ Agent :: Agent() :
     __TagInterface( TAG_LEN_A ),
     x_( 0 ),
     y_( 0 ),
+    age_( 0 ),
+    sex_( __MALE__ ),
+    life_( __ALIVE__ ),
     stand_by_list_( 0 )
-{                                               /* タグの長さを初期化  */
-    vlist_ = new std::vector<VirusData *>;
-    stand_by_list_ = new std::vector<Virus *>;
+{
+    vlist_ = new std::vector<VirusData *>;      /* 保持ウイルスリストを初期化 */
+    stand_by_list_ = new std::vector<Virus *>;  /* 待機ウイルスリストを初期化 */
 
-    FOR( i, TAG_LEN_A ) {                       /* タグをランダムに初期化  */
-        tag_[ i ] = rand_binary();
+    if( rand_binary() ) sex_ = __MALE__;        /* 性別をランダムに初期化 */
+    else sex_ = __FEMALE__;
+
+    FOR( i, TAG_LEN_A )
+    {
+        tag_[ i ] = rand_binary();              /* タグをランダムに初期化  */
     }
-    (*vlist_).reserve( NUM_V );                    /* 領域確保 */
-    (*stand_by_list_).reserve( NUM_V );            /* 領域確保 */
-    (*vlist_).clear();                             /* 配列を空に */
-    (*stand_by_list_).clear();                     /* 配列を空に */
+
+    (*vlist_).reserve( NUM_V );                 /* 領域確保 */
+    (*stand_by_list_).reserve( NUM_V );         /* 領域確保 */
+    (*vlist_).clear();                          /* 配列を空に */
+    (*stand_by_list_).clear();                  /* 配列を空に */
 }
 
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Agent :: resetParam()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+void Agent :: resetParam() {
+    age_ = 0;
+    sex_ = __MALE__;
+    life_ = __ALIVE__;
+    (*vlist_).clear();
+    (*stand_by_list_).clear();
+}
 /*--------------------------------------------------------------------------------------
  *      Method:  Agent :: *
  * Description:  セッタ、ゲッタ関連
@@ -73,6 +95,24 @@ std::vector<Virus *>::iterator Agent :: getStandByListIteratorBegin() { return (
 std::vector<Virus *>::iterator Agent :: getStandByListIteratorEnd() { return (*stand_by_list_).end(); }
 void Agent :: eraseStandByVirus( std::vector<Virus *>::iterator it ) { (*stand_by_list_).erase( it ); }
 void Agent :: clearStandByVirus() { (*stand_by_list_).clear(); }
+/* パラメータ */
+__LABEL__ Agent :: getSex() const { return sex_; }
+int Agent :: getAge() const { return age_; }
+
+void Agent :: setLife( __LABEL__ l ) { life_ = l; }
+bool Agent :: isAlive() const { if( life_ == __ALIVE__ ) return true; else return false; }
+bool Agent :: isDead() const { if( life_ == __DEATH__ ) return false; else return true; }
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Agent :: aging
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+int Agent :: aging() {
+    age_++;
+    return age_;
+}
 
 /*
  *--------------------------------------------------------------------------------------
@@ -177,4 +217,54 @@ bool Agent :: hasVirus( __TagInterface &v ) const {
  */
 int Agent :: numHoldingVirus() const {
     return getVirusListSize();
+}
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  die( Agent & )
+ *  Description:  
+ * =====================================================================================
+ */
+void die( Agent &a ) {
+    a.setLife( __DEATH__ );                     /* 死亡する */
+}
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  childbirth( Agent &, Agent & )
+ *  Description:  親から子を作成する。
+ *                タグはそれぞれからもらう。
+ * =====================================================================================
+ */
+void childbirth( Agent &child, const Agent &a, const Agent &b ) {
+    if( ! isOppositeSex( a, b ) ) return;       /* 同性なら終了 */
+
+    child.resetParam();
+    child.changeTagLenTo( TAG_LEN_A );
+
+    tag_t *couple_tag = new tag_t[ a.getLen() + b.getLen() ];
+    tag_t *p = couple_tag;
+
+    FOR( i, a.getLen() ) {
+        *(p++) = a.tagAt( i );
+    }
+    FOR( i, b.getLen() ) {
+        *(p++) = b.tagAt( i );
+    }
+    child.setTag( couple_tag+rand_interval_int(0,a.getLen()) , TAG_LEN_A );
+
+    delete[] couple_tag;
+}
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  isOppositeSex( Agent &, Agent & )
+ *  Description:  異性であれば true
+ * =====================================================================================
+ */
+bool isOppositeSex( const Agent &a, const Agent &b ) {
+    if( a.getAge() == b.getAge() ) {            /* 性別が同じなら */
+        return false;                           /* false */
+    } else {                                    /* 異なれば */
+        return true;                            /* true */
+    }
 }

@@ -34,9 +34,12 @@ class __TagInterface
         __TagInterface( int );                  /* コンストラクタ: 長さ */
         __TagInterface( const char * );         /* コンストラクタ: 文字列 */
 
-        tag_t *getTag() const;                         /* タグ配列へのポインタを返す */
-        int getLen() const;
-        tag_t tagAt( const int );
+        tag_t *getTag() const;                  /* タグ配列へのポインタを返す */
+        void setTag( tag_t *t, int l );
+        int getLen() const;                     /* タグ長を返す */
+        tag_t tagAt( const int ) const ;
+
+        void changeTagLenTo( int n );           /* タグの長さを変える */
         
         void printTag();                        /* タグを表示 */
 };

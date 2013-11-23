@@ -32,6 +32,9 @@ class Administrator {
         Landscape *landscape_;                             /* 土地 */
 
         int term_;
+        int num_of_agent_;
+
+        int next_child_number_;
 
     public:
         Administrator( Agent *, Virus *, Landscape * );
@@ -44,6 +47,9 @@ class Administrator {
         void contactAgent();                               /* 近隣に接触して感染させる */
         void initInfectAgentInRatio( Virus &, double );
         void infectAgent();                                /* 待機ウイルスを感染させる */
+
+        void agingAgent();
+        void matingAgant();
 
         int numHasVirus( __TagInterface & );               /* v に感染している人の数 */
         int numHasAllVirus();                              /* 全ウイルスに感染している人の数 */

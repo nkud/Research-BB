@@ -41,12 +41,14 @@ typedef int tag_t;                                         /* タグの型（通
 
 const int TERM                          = 500                   ; /* 期間 */
 const int OUTPUT_INTERVAL               = 1                     ; /* 出力する間隔 */
+const int MAX_AGE = 60;
 
 /* landscape */
 const int WIDTH                         = 60                    ; /* ランドスケープの幅 */
 
 const int NUM_V                         = 1                     ; /* ウイルスの種類 */
-const int NUM_A                         = 1000                    ; /* エージェントの数 */
+const int INIT_NUM_A                    = 1000                    ; /* エージェントの数 */
+const int MAX_NUM_A                     = 1000;                   /* 最大エージェント数 */
 
 const double LEN_SCALE                  = 1.0                  ; /* ウイルスに対するエージェントのタグスケール */
 const int TAG_LEN_V                     = 10                    ; /* ウイルスのタグのデフォルトの長さ */
@@ -62,6 +64,15 @@ const int MAX_V_AGENT_INFECT_ONT_TIME   = 1                     ; /* １期間�
 
 const int MOVE_DISTANCE                 = 1                     ; /* エージェントの移動距離 */
 // ======================================================== 
+
+enum __LABEL__                                                    /* ラベル */
+{
+    __ALIVE__,                                                    /* 生存 */
+    __DEATH__,                                                    /* 死亡 */
+
+    __MALE__,                                                     /* 男性 */
+    __FEMALE__                                                    /* 女性 */
+};
 
 template < typename T >                                    /* デバッグ用 */
 void log(T str) { int static i=0;std::cout<<i++<<":\t"<<str<<std::endl; }

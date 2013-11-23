@@ -25,6 +25,55 @@
 
 /*
  *--------------------------------------------------------------------------------------
+ *      Method:  Administrator :: agingAgent()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+void Administrator :: agingAgent() {
+    FOR( i, MAX_NUM_A ) {
+        if( agent_[i].isAlive() ) {
+            agent_[i].aging();
+            if( agent_[i].getAge() > MAX_AGE ) {
+                die( agent_[i] );
+            }
+        }
+    }
+}
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Administrator :: matingAgant()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+void Administrator :: matingAgant() {
+    int tx, ty;
+    Agent *myself;
+    FOR( i, num_of_agent_ ) {
+        myself = &agent_[ i ];                             /* 感染者自身 */
+        tx = myself->getX();                               /* 感染者自身の位置 */
+        ty = myself->getY();
+
+        REP( i, -1, 1 ) {                                  /* 自分の縦・横・自マスに感染させる（計５マス） */
+            REP( j, -1, 1 ) {
+#ifdef NO_DIAGONAL
+                if( i*j != 0 ) continue;                   /* 斜めは入れない */
+#endif
+                if( ! (landscape_->isOnMap( tx+i, ty+j )) ) continue;          /* 土地からはみ出てたらスキップ */
+
+                ITERATOR(int) it = landscape_->getLandscapeIteratorBeginAt( tx+i, ty+j );
+                while( it != landscape_->getLandscapeIteratorEndAt( tx+i, ty+j ) )
+                {                                          /* その位置にいる人全員に */
+                    if( isOppositeSex( *myself, agent_[ *it ] ) ) {
+
+                    }
+                    it++;                                  /* 着目をその位置の次にいる人 */
+                }
+            }
+        }
+    }
+}
+/*
+ *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: *
  * Description:  期間系の関数
  *--------------------------------------------------------------------------------------
@@ -46,8 +95,11 @@ Administrator :: Administrator( Agent *a, Virus *v, Landscape *l ) :
     term_( 0 ),
     agent_( a ),
     virus_( v ),
-    landscape_( l )
-{}
+    landscape_( l ),
+    num_of_agent_( INIT_NUM_A ),
+    next_child_number_( MAX_NUM_A-1 )
+{
+}
 
 /*
  *--------------------------------------------------------------------------------------
@@ -58,7 +110,7 @@ Administrator :: Administrator( Agent *a, Virus *v, Landscape *l ) :
 int Administrator :: numHasVirus( __TagInterface &v ) {
     int ret = 0;
 
-    FOR( i, NUM_A ) {
+    FOR( i, num_of_agent_ ) {
         if( agent_[i].hasVirus( v ) ) {                    /* v に感染していれば */
             ret++;                                         /* インクリメント */
         }
@@ -75,7 +127,7 @@ int Administrator :: numHasVirus( __TagInterface &v ) {
 int Administrator :: numHasImmunity( __TagInterface &v ) {
     int ret = 0;
 
-    FOR( i, NUM_A ) {
+    FOR( i, num_of_agent_ ) {
         if (agent_[i].hasImmunity( v ) ) {
             ret++;
         }
@@ -90,7 +142,7 @@ int Administrator :: numHasImmunity( __TagInterface &v ) {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: responseAgent() {
-    FOR( i, NUM_A ) {
+    FOR( i, num_of_agent_ ) {
         agent_[ i ].response();
     }
 }
@@ -105,7 +157,7 @@ void Administrator :: responseAgent() {
 void Administrator :: relocateAgent() {
     landscape_->clearAgentMap();                           /* エージェントの位置をリセット */
     int tx, ty;                                            /* 移動させる場所 */
-    FOR( i, NUM_A ) {
+    FOR( i, num_of_agent_ ) {
         tx = rand_interval_int( 0, WIDTH-1 );              /* ランダムに設定 */
         ty = rand_interval_int( 0, WIDTH-1 );
         agent_[ i ].setX( tx );                            /* 配置 */
@@ -122,7 +174,7 @@ void Administrator :: relocateAgent() {
  */
 void Administrator :: moveAgent() {
     landscape_->clearAgentMap();                           /* エージェントの位置をリセット */
-    FOR( i, NUM_A ) {
+    FOR( i, num_of_agent_ ) {
         int tx = rand_interval_int( -MOVE_DISTANCE, MOVE_DISTANCE ); /* 相対的に x を動かす量*/
         int ty = rand_interval_int( -MOVE_DISTANCE, MOVE_DISTANCE ); /* 相対的に y を動かす量 */
         int xx = tx + agent_[i].getX();                    /* x 座標を設定 */
@@ -147,7 +199,7 @@ void Administrator :: contactAgent() {
     int tx, ty;
     Agent *myself;
 
-    FOR( i, NUM_A ) {
+    FOR( i, num_of_agent_ ) {
         myself = &agent_[ i ];                             /* 感染者自身 */
         if( myself->numHoldingVirus() <= 0 ) continue;     /* 健康ならスキップ */
         tx = myself->getX();                               /* 感染者自身の位置 */
@@ -192,7 +244,7 @@ void Administrator :: infectAgent() {
     int n;
     int infection_count;                                   /* 同時感染数をカウント。最大値を越えないように */
 
-    FOR( i, NUM_A )                                        /* エージェントの数だけ */
+    FOR( i, num_of_agent_ )                                        /* エージェントの数だけ */
     {
         if( agent_[i].hasNoStandByVirus() ) continue;      /* 待機ウイルスが無ければスキップ */
         else {                                             /* あれば */
@@ -229,7 +281,7 @@ void Administrator :: infectAgent() {
  */
 int Administrator :: numHasAllVirus() {
     int ret = 0;
-    FOR( i, NUM_A ) {
+    FOR( i, num_of_agent_ ) {
         if( agent_[ i ].numHoldingVirus() == NUM_V ) ret++;
     }
     return ret;
@@ -243,7 +295,7 @@ int Administrator :: numHasAllVirus() {
 int Administrator :: numHasAllImmunity() {
     int ret = 0;
     int flag = 1;
-    FOR( i, NUM_A ) {
+    FOR( i, num_of_agent_ ) {
         FOR( j, NUM_V ) {
             if( ! agent_[ i ].hasImmunity( virus_[ j ] ) ) {                   /* もし免疫を持っていなければ、 */
                 flag = 0;                                  /* フラッグを下ろす */
@@ -265,11 +317,11 @@ int Administrator :: numHasAllImmunity() {
 void Administrator :: initInfectAgentInRatio( Virus &v, double r ) {
     static int infected_from = 0;                          /* ０番目のエージェントから順に感染させる */
     int infected_to;
-    infected_to = infected_from + (int)( NUM_A * r );
+    infected_to = infected_from + (int)( num_of_agent_ * r );
     REP( i, infected_from, infected_to ) {
-        agent_[ i%NUM_A ].infection( v );
+        agent_[ i%num_of_agent_ ].infection( v );
     }
-    infected_from = ( infected_to + 1 ) % NUM_A;           /* 次の感染は、感染した次のエージェントから始まる */
+    infected_from = ( infected_to + 1 ) % num_of_agent_;           /* 次の感染は、感染した次のエージェントから始まる */
 }
 
 /*--------------------------------------------------------------------------------------
@@ -333,14 +385,14 @@ void Administrator :: outputFile_InfectionContactRatio( const char *fname ) {
 void Administrator :: outputFile_LastLog( const char *fname ) {
     static std::ofstream ofs(fname);
     ofs << "WIDTH:" << WIDTH << std::endl;
-    ofs << "NUM_A:" << NUM_A << std::endl;
+    ofs << "NUM_A:" << num_of_agent_ << std::endl;
     ofs << "NUM_V:" << NUM_V << std::endl;
     ofs << "TAG_LEN_A:" << TAG_LEN_A << std::endl;
     ofs << "TAG_LEN_V:" << TAG_LEN_V << std::endl;
     FOR(i,NUM_V) { ofs<<"["<<virus_[i].getLen()<<"]:";
         FOR(j, virus_[i].getLen()) { ofs<<int(virus_[i].tagAt(j)); } ofs<<std::endl; }
     ofs << ">>> Agent Last Status" << std::endl;
-    FOR(i, NUM_A) { FOR(j, agent_[0].getLen()) ofs<<agent_[i].tagAt(j);
+    FOR(i, num_of_agent_) { FOR(j, agent_[0].getLen()) ofs<<agent_[i].tagAt(j);
         ofs<<" "<<agent_[i].numHoldingVirus(); ofs<<std::endl; }
 }
 
@@ -352,7 +404,7 @@ void Administrator :: outputFile_LastLog( const char *fname ) {
  */
 void Administrator :: printInitInfo() {
     std::cout << "WIDTH:" << WIDTH << std::endl;           /* 幅 */
-    std::cout << "\nNUM_A:\t\t" << NUM_A << std::endl;
+    std::cout << "\nNUM_A:\t\t" << num_of_agent_ << std::endl;
     std::cout << "TAG_LEN_A:\t" << TAG_LEN_A << std::endl;
     std::cout << "\nNUM_V:\t\t" << NUM_V << std::endl;
 

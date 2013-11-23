@@ -35,6 +35,22 @@ __TagInterface :: __TagInterface( int l ) :
 
 /*
  *--------------------------------------------------------------------------------------
+ *      Method:  __TagInterface :: changeTagLenTo()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+void __TagInterface :: changeTagLenTo( int n ) { /* XXX: OK ? */
+    len_ = n;
+    delete[] tag_;                              /* 既存をメモリ削除 */
+    tag_ = new tag_t[n];                        /* 新たにメモリ割当 */
+    FOR( i, n )
+    {
+        tag_[i] = 0;                            /* すべてを０で初期化 */
+    }
+}
+
+/*
+ *--------------------------------------------------------------------------------------
  *      Method:  __TagInterface :: __TagInterface( const char * )
  * Description:  
  *--------------------------------------------------------------------------------------
@@ -73,7 +89,7 @@ int __TagInterface :: getLen() const {
  *      Method:  __TagInterface :: tagAt( int )
  * Description:  
  *----------------------------------------------------------------------------------- */
-tag_t __TagInterface :: tagAt( const int n ) {
+tag_t __TagInterface :: tagAt( const int n ) const {
     if( n >= len_ ) return -1;                   /* ERROR */
     return tag_[ n ];
 }
@@ -90,4 +106,15 @@ void __TagInterface :: printTag() {
         std::cout << tag_[i];
     }
     std::cout << std::endl;
+}
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  __TagInterface :: setTag( tag_t * )
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+void __TagInterface :: setTag( tag_t *t, int l ) {
+    changeTagLenTo( l );
+    tag_ = t;
 }
