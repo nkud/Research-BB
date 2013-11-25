@@ -57,6 +57,7 @@ class Agent : public __TagInterface
 
     public:
         Agent();                                                               /* コンストラクタ  */
+        ~Agent();                                                               /* コンストラクタ  */
 
         void resetParam();
 

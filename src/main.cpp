@@ -31,9 +31,9 @@ int main()
     srand( (unsigned int)time(NULL)/2 );                   /* 乱数初期化  */
 
     // 初期化
-    VECTOR(Agent) agent;                                   /* エージェントの集合  */
-    FOR( i, MAX_NUM_A ) {                                  /* XXX 最大エージェントの数だけ */
-        agent.push_back( *(new Agent) );                   /* エージェントを初期化 */
+    VECTOR(Agent *) agent;                                   /* エージェントの集合  */
+    FOR( i, INIT_NUM_A ) {                                  /* 初期エージェントの数だけ */
+        agent.push_back( new Agent );                   /* エージェントを初期化 */
     }
     Virus virus[ NUM_V ];                                  /* ウイルス生成 */
     Landscape landscape;                                   /* ランドスケープ初期化 */
@@ -66,6 +66,8 @@ int main()
         admin.infectAgent();                               /* 待機ウイルスを感染させる */
         admin.responseAgent();                             /* 免疫応答（タグフリップ） */
 
+        admin.agingAgent();
+
         /* 出力 */
         admin.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ;        /* 出力: ウイルスの保持状況 */
         admin.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ;
@@ -91,9 +93,10 @@ int main()
     log(sizeof(Agent));
     log(sizeof(Virus));
     log(sizeof(admin));
-    childbirth( agent[0], agent[1], agent[2] );
-    agent[0].printTag();
-    agent[1].printTag();
-    agent[2].printTag();
+    childbirth( *agent[0], *agent[1], *agent[2] );
+    agent[0]->printTag();
+    agent[1]->printTag();
+    agent[2]->printTag();
+    log(agent[0]->getAge());
     return 0;
 }

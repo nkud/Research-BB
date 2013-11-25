@@ -24,18 +24,42 @@
 
 /*
  *--------------------------------------------------------------------------------------
+ *      Method:  Administrator :: eliminateAgent()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+ITERATOR(Agent *) Administrator :: eliminateAgent( ITERATOR(Agent *) &it ) {
+    ITERATOR(Agent *) pre_it = it - 1;
+    (*it)->printTag();
+    death_agent_.push_back( *it );
+    alive_agent_.erase( it );
+    log(death_agent_.size());
+    if( death_agent_.size() > 1 ) {
+        (*(death_agent_.end()))->printTag();
+    }
+    return pre_it;
+}
+
+/*
+ *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: agingAgent()
  * Description:  
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: agingAgent() {
-    FOR( i, MAX_NUM_A ) {
-        if( agent_[i].isAlive() ) {
-            agent_[i].aging();
-            if( agent_[i].getAge() > MAX_AGE ) {
-                die( agent_[i] );
+    ITERATOR(Agent *) it = alive_agent_.begin();
+    log("aging");
+    log(alive_agent_.size());
+
+    while( it != alive_agent_.end() ) {
+        if( (*it)->isAlive() ) {
+            (*it)->aging();
+            if( (*it)->getAge() > MAX_AGE ) {   /* 寿命をこえたら */
+                die( **it );                    /* 死亡処理 */
+                it = eliminateAgent( it );           /* 生存配列から削除 */
             }
         }
+        it++;
     }
 }
 /*
@@ -47,8 +71,8 @@ void Administrator :: agingAgent() {
 void Administrator :: matingAgant() {
     int tx, ty;
     Agent *myself;
-    FOR( i, num_of_agent_ ) {
-        myself = &agent_[ i ];                             /* 感染者自身 */
+    FOR( i, alive_agent_.size() ) {
+        myself = alive_agent_[ i ];                             /* 感染者自身 */
         tx = myself->getX();                               /* 感染者自身の位置 */
         ty = myself->getY();
 
@@ -62,7 +86,7 @@ void Administrator :: matingAgant() {
                 ITERATOR(int) it = landscape_->getLandscapeIteratorBeginAt( tx+i, ty+j );
                 while( it != landscape_->getLandscapeIteratorEndAt( tx+i, ty+j ) )
                 {                                          /* その位置にいる人全員に */
-                    if( isOppositeSex( *myself, agent_[ *it ] ) ) {
+                    if( isOppositeSex( *myself, *alive_agent_[ *it ] ) ) {
 
                     }
                     it++;                                  /* 着目をその位置の次にいる人 */
@@ -90,13 +114,15 @@ int Administrator :: getTerm() {
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-Administrator :: Administrator( VECTOR(Agent) &a, Virus *v, Landscape *l ) :
+Administrator :: Administrator( VECTOR(Agent *) &a, Virus *v, Landscape *l ) :
     term_( 0 ),
-    agent_( a ),
+    alive_agent_( a ),
     virus_( v ),
-    landscape_( l ),
-    num_of_agent_( INIT_NUM_A )
+    landscape_( l )
 {
+    alive_agent_.reserve( MAX_NUM_A );
+    death_agent_.reserve( MAX_NUM_A );
+    death_agent_.clear();
 }
 
 /*
@@ -108,8 +134,8 @@ Administrator :: Administrator( VECTOR(Agent) &a, Virus *v, Landscape *l ) :
 int Administrator :: numHasVirus( __TagInterface &v ) {
     int ret = 0;
 
-    FOR( i, num_of_agent_ ) {
-        if( agent_[i].hasVirus( v ) ) {                    /* v に感染していれば */
+    FOR( i, alive_agent_.size() ) {
+        if( alive_agent_[i]->hasVirus( v ) ) {                    /* v に感染していれば */
             ret++;                                         /* インクリメント */
         }
     }
@@ -125,8 +151,8 @@ int Administrator :: numHasVirus( __TagInterface &v ) {
 int Administrator :: numHasImmunity( __TagInterface &v ) {
     int ret = 0;
 
-    FOR( i, num_of_agent_ ) {
-        if (agent_[i].hasImmunity( v ) ) {
+    FOR( i, alive_agent_.size() ) {
+        if (alive_agent_[i]->hasImmunity( v ) ) {
             ret++;
         }
     }
@@ -140,8 +166,8 @@ int Administrator :: numHasImmunity( __TagInterface &v ) {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: responseAgent() {
-    FOR( i, num_of_agent_ ) {
-        agent_[ i ].response();
+    FOR( i, alive_agent_.size() ) {
+        alive_agent_[ i ]->response();
     }
 }
 
@@ -155,11 +181,11 @@ void Administrator :: responseAgent() {
 void Administrator :: relocateAgent() {
     landscape_->clearAgentMap();                           /* エージェントの位置をリセット */
     int tx, ty;                                            /* 移動させる場所 */
-    FOR( i, num_of_agent_ ) {
+    FOR( i, alive_agent_.size() ) {
         tx = rand_interval_int( 0, WIDTH-1 );              /* ランダムに設定 */
         ty = rand_interval_int( 0, WIDTH-1 );
-        agent_[ i ].setX( tx );                            /* 配置 */
-        agent_[ i ].setY( ty );
+        alive_agent_[ i ]->setX( tx );                            /* 配置 */
+        alive_agent_[ i ]->setY( ty );
         landscape_->pushAgent( tx, ty, i );                /* エージェントを登録 */
     }
 }
@@ -172,16 +198,16 @@ void Administrator :: relocateAgent() {
  */
 void Administrator :: moveAgent() {
     landscape_->clearAgentMap();                           /* エージェントの位置をリセット */
-    FOR( i, num_of_agent_ ) {
+    FOR( i, alive_agent_.size() ) {
         int tx = rand_interval_int( -MOVE_DISTANCE, MOVE_DISTANCE ); /* 相対的に x を動かす量*/
         int ty = rand_interval_int( -MOVE_DISTANCE, MOVE_DISTANCE ); /* 相対的に y を動かす量 */
-        int xx = tx + agent_[i].getX();                    /* x 座標を設定 */
-        int yy = ty + agent_[i].getY();                    /* y 座標を設定 */
+        int xx = tx + alive_agent_[i]->getX();                    /* x 座標を設定 */
+        int yy = ty + alive_agent_[i]->getY();                    /* y 座標を設定 */
         if( ! landscape_->isOnMap( xx, yy ) ) {            /* もし移動先が土地の上になっていなければ */
             landscape_->putBackOnMap( xx, yy );            /* 土地の上に戻す */
         }
-        agent_[i].setX( xx );                              /* 移動を実行 */
-        agent_[i].setY( yy );
+        alive_agent_[i]->setX( xx );                              /* 移動を実行 */
+        alive_agent_[i]->setY( yy );
         landscape_->pushAgent( xx, yy, i );                /* エージェントを土地に登録 */
     }
 }
@@ -197,8 +223,8 @@ void Administrator :: contactAgent() {
     int tx, ty;
     Agent *myself;
 
-    FOR( i, num_of_agent_ ) {
-        myself = &(agent_[ i ]);                             /* 感染者自身 */
+    FOR( i, alive_agent_.size() ) {
+        myself = alive_agent_[ i ];                             /* 感染者自身 */
         if( myself->numHoldingVirus() <= 0 ) continue;     /* 健康ならスキップ */
         tx = myself->getX();                               /* 感染者自身の位置 */
         ty = myself->getY();
@@ -218,7 +244,7 @@ void Administrator :: contactAgent() {
 
                     if( tvdata->v_->getRate() > rand_interval_double(0,1) )
                     {                                      /* ウイルス特有の感染確率で */
-                        agent_[ *it ].pushStandByVirus( tvdata->v_ );          /* 待機ウイルスにする */
+                        alive_agent_[ *it ]->pushStandByVirus( tvdata->v_ );          /* 待機ウイルスにする */
                     }
                     it++;                                  /* 着目をその位置の次にいる人 */
 
@@ -242,30 +268,30 @@ void Administrator :: infectAgent() {
     int n;
     int infection_count;                                   /* 同時感染数をカウント。最大値を越えないように */
 
-    FOR( i, num_of_agent_ )                                        /* エージェントの数だけ */
+    FOR( i, alive_agent_.size() )                                        /* エージェントの数だけ */
     {
-        if( agent_[i].hasNoStandByVirus() ) continue;      /* 待機ウイルスが無ければスキップ */
+        if( alive_agent_[i]->hasNoStandByVirus() ) continue;      /* 待機ウイルスが無ければスキップ */
         else {                                             /* あれば */
             infection_count = 0;
 
-            while( ! agent_[i].hasNoStandByVirus() ) {     /* 待機ウイルスがなくなるまで */
+            while( ! alive_agent_[i]->hasNoStandByVirus() ) {     /* 待機ウイルスがなくなるまで */
                 if( infection_count >= MAX_V_AGENT_INFECT_ONT_TIME ) { /* もし最大同時感染数を越えそうなら */
                     break;                                 /* 次のエージェントへ */
                 }
 
-                n = rand_array( agent_[i].getStandByListSize() );             /* ランダムに一個の */
-                tv = agent_[i].getStandByVirusAt( n );     /* ウイルスを選んで */
-                if( agent_[i].infection( *tv ) ) {         /* 感染させたら */
+                n = rand_array( alive_agent_[i]->getStandByListSize() );             /* ランダムに一個の */
+                tv = alive_agent_[i]->getStandByVirusAt( n );     /* ウイルスを選んで */
+                if( alive_agent_[i]->infection( *tv ) ) {         /* 感染させたら */
                     infection_count++;                     /* カウントを増やす */
 //                    break;                                 /* 次のエージェントへ */
                 } else {
-                    itt = agent_[i].getStandByListIteratorBegin();                   /* もし感染しなければ */
+                    itt = alive_agent_[i]->getStandByListIteratorBegin();                   /* もし感染しなければ */
                     while(n-->0) { itt++; }                /* そのウイルスを */
-                    agent_[i].eraseStandByVirus( itt );    /* 待機ウイルスからはずして次のウイルス */
+                    alive_agent_[i]->eraseStandByVirus( itt );    /* 待機ウイルスからはずして次のウイルス */
                 }
 
             }
-            agent_[ i ].clearStandByVirus();               /* 待機ウイルスをクリア */
+            alive_agent_[ i ]->clearStandByVirus();               /* 待機ウイルスをクリア */
         }
     }
 }
@@ -278,8 +304,8 @@ void Administrator :: infectAgent() {
  */
 int Administrator :: numHasAllVirus() {
     int ret = 0;
-    FOR( i, num_of_agent_ ) {
-        if( agent_[ i ].numHoldingVirus() == NUM_V ) ret++;
+    FOR( i, alive_agent_.size() ) {
+        if( alive_agent_[ i ]->numHoldingVirus() == NUM_V ) ret++;
     }
     return ret;
 }
@@ -292,9 +318,9 @@ int Administrator :: numHasAllVirus() {
 int Administrator :: numHasAllImmunity() {
     int ret = 0;
     int flag = 1;
-    FOR( i, num_of_agent_ ) {
+    FOR( i, alive_agent_.size() ) {
         FOR( j, NUM_V ) {
-            if( ! agent_[ i ].hasImmunity( virus_[ j ] ) ) {                   /* もし免疫を持っていなければ、 */
+            if( ! alive_agent_[ i ]->hasImmunity( virus_[ j ] ) ) {                   /* もし免疫を持っていなければ、 */
                 flag = 0;                                  /* フラッグを下ろす */
                 break;
             }
@@ -314,11 +340,11 @@ int Administrator :: numHasAllImmunity() {
 void Administrator :: initInfectAgentInRatio( Virus &v, double r ) {
     static int infected_from = 0;                          /* ０番目のエージェントから順に感染させる */
     int infected_to;
-    infected_to = infected_from + (int)( num_of_agent_ * r );
+    infected_to = infected_from + (int)( alive_agent_.size() * r );
     REP( i, infected_from, infected_to ) {
-        agent_[ i%num_of_agent_ ].infection( v );
+        alive_agent_[ i%alive_agent_.size() ]->infection( v );
     }
-    infected_from = ( infected_to + 1 ) % num_of_agent_;           /* 次の感染は、感染した次のエージェントから始まる */
+    infected_from = ( infected_to + 1 ) % alive_agent_.size();           /* 次の感染は、感染した次のエージェントから始まる */
 }
 
 /*--------------------------------------------------------------------------------------
@@ -382,15 +408,15 @@ void Administrator :: outputFile_InfectionContactRatio( const char *fname ) {
 void Administrator :: outputFile_LastLog( const char *fname ) {
     static std::ofstream ofs(fname);
     ofs << "WIDTH:" << WIDTH << std::endl;
-    ofs << "NUM_A:" << num_of_agent_ << std::endl;
+    ofs << "NUM_A:" << alive_agent_.size() << std::endl;
     ofs << "NUM_V:" << NUM_V << std::endl;
     ofs << "TAG_LEN_A:" << TAG_LEN_A << std::endl;
     ofs << "TAG_LEN_V:" << TAG_LEN_V << std::endl;
     FOR(i,NUM_V) { ofs<<"["<<virus_[i].getLen()<<"]:";
         FOR(j, virus_[i].getLen()) { ofs<<int(virus_[i].tagAt(j)); } ofs<<std::endl; }
     ofs << ">>> Agent Last Status" << std::endl;
-    FOR(i, num_of_agent_) { FOR(j, agent_[0].getLen()) ofs<<agent_[i].tagAt(j);
-        ofs<<" "<<agent_[i].numHoldingVirus(); ofs<<std::endl; }
+    FOR(i, alive_agent_.size()) { FOR(j, alive_agent_[0]->getLen()) ofs<<alive_agent_[i]->tagAt(j);
+        ofs<<" "<<alive_agent_[i]->numHoldingVirus(); ofs<<std::endl; }
 }
 
 /*
@@ -401,7 +427,7 @@ void Administrator :: outputFile_LastLog( const char *fname ) {
  */
 void Administrator :: printInitInfo() {
     std::cout << "WIDTH:" << WIDTH << std::endl;           /* 幅 */
-    std::cout << "\nNUM_A:\t\t" << num_of_agent_ << std::endl;
+    std::cout << "\nNUM_A:\t\t" << alive_agent_.size() << std::endl;
     std::cout << "TAG_LEN_A:\t" << TAG_LEN_A << std::endl;
     std::cout << "\nNUM_V:\t\t" << NUM_V << std::endl;
 
