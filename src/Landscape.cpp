@@ -71,8 +71,8 @@ void Landscape :: clearAgentMap() {
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-void Landscape :: pushAgent( int x, int y, int n ) {
-    agent_map_[ x ][ y ].push_back( n );
+void Landscape :: pushAgent( int x, int y, Agent &a ) {
+    agent_map_[ x ][ y ].push_back( &a );
 }
 
 /*
@@ -81,5 +81,5 @@ void Landscape :: pushAgent( int x, int y, int n ) {
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-ITERATOR(int) Landscape :: getLandscapeIteratorBeginAt(int x, int y) { return agent_map_[x][y].begin(); }
-ITERATOR(int) Landscape :: getLandscapeIteratorEndAt(int x, int y) { return agent_map_[x][y].end(); }
+ITERATOR(Agent *) Landscape :: getLandscapeIteratorBeginAt(int x, int y) { return agent_map_[x][y].begin(); }
+ITERATOR(Agent *) Landscape :: getLandscapeIteratorEndAt(int x, int y) { return agent_map_[x][y].end(); }

@@ -15,9 +15,11 @@
 
 #include <vector>
 
+class Agent;
+
 class Landscape {
     private:
-        std::vector<int> agent_map_[WIDTH][WIDTH]; /* エージェントの番号を登録する配列 */
+        VECTOR(Agent *) agent_map_[WIDTH][WIDTH]; /* エージェントの番号を登録する配列 */
 
     public:
         Landscape();
@@ -25,7 +27,7 @@ class Landscape {
         void putBackOnMap( int &, int & );      /* マップ上に配置しなおす */
         bool isOnMap( int , int ) const;              /* マップの上にあるか */
         void clearAgentMap();                   /* マップを初期化 */
-        void pushAgent( int, int, int );        /* エージェントを登録 */
-        ITERATOR(int) getLandscapeIteratorBeginAt( int, int );
-        ITERATOR(int) getLandscapeIteratorEndAt( int, int );
+        void pushAgent( int, int, Agent & );        /* エージェントを登録 */
+        ITERATOR(Agent *) getLandscapeIteratorBeginAt( int, int );
+        ITERATOR(Agent *) getLandscapeIteratorEndAt( int, int );
 };

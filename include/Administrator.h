@@ -29,18 +29,20 @@ class Monitor;
  */
 class Administrator {
     private:
-        VECTOR(Agent *)& alive_agent_;                     /* エージェントの集合 */
-        VECTOR(Agent *) new_agent_;                        /* 新しく生まれるエージェント */
+        VECTOR(Agent *)& agent_;                     /* エージェントの集合 */
+        VECTOR(Agent *) new_child_;                        /* 新しく生まれるエージェント */
 
         Virus *virus_;                                     /* ウイルスの集合 */
         Landscape *landscape_;                             /* 土地 */
 
         int term_;
 
-        ITERATOR(Agent *) eliminateAgent( ITERATOR(Agent *) &it );
+        ITERATOR(Agent *) deleteAgent( ITERATOR(Agent *) &it );
 
     public:
         Administrator( VECTOR(Agent *) & , Virus *, Landscape * );
+
+        int getNumOfAgent();
         void incrementTerm();                              /* 期間を 1 進める */
         int getTerm();                                     /* 進んだ期間 */
 

@@ -60,6 +60,7 @@ int main()
     FOR( i, TERM )                                         /* 計算開始  */
     {
         log("------------ start");
+        cout << "[agent num]: " << admin.getNumOfAgent() << endl;
         admin.incrementTerm();                             /* 期間を進める */
 
         monitor.resetAll();                                /* モニターのカウンターをリセット */
@@ -69,10 +70,9 @@ int main()
         admin.infectAgent();                               /* 待機ウイルスを感染させる */
         admin.responseAgent();                             /* 免疫応答（タグフリップ） */
 
-        admin.agingAgent();
-        admin.matingAgant();
+//        admin.agingAgent();
+//        admin.matingAgant();
 
-        /* 出力 */
         admin.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ;        /* 出力: ウイルスの保持状況 */
         admin.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ;
         admin.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ;

@@ -17,6 +17,7 @@
 #include "TagInterface.h"
 
 #include <vector>
+#include <cassert>
 
 /*
  *--------------------------------------------------------------------------------------
@@ -36,8 +37,8 @@ Agent :: Agent() :
     vlist_ = new std::vector<VirusData *>;      /* 保持ウイルスリストを初期化 */
     stand_by_list_ = new std::vector<Virus *>;  /* 待機ウイルスリストを初期化 */
 
-    if( rand_binary() ) sex_ = __MALE__;        /* 性別をランダムに初期化 */
-    else sex_ = __FEMALE__;
+    if( rand_binary() == 0 ) { sex_ = __MALE__;        /* 性別をランダムに初期化 */
+    } else { sex_ = __FEMALE__; }
 
     FOR( i, TAG_LEN_A )
     {
@@ -64,9 +65,10 @@ Agent :: ~Agent() {
  *--------------------------------------------------------------------------------------
  */
 void Agent :: resetParam() {
-    age_ = 0;
-    sex_ = __MALE__;
-    life_ = __ALIVE__;
+    age_ = 0;                                   /* ０才で初期化 */
+    if( rand_binary() == 0 ) { sex_ = __MALE__;        /* 性別をランダムに初期化 */
+    } else { sex_ = __FEMALE__; }
+    life_ = __ALIVE__;                          /* 生存 */
     (*vlist_).clear();
     (*stand_by_list_).clear();
 }
@@ -242,35 +244,38 @@ void die( Agent &a ) {
  *                タグはそれぞれからもらう。
  * =====================================================================================
  */
-void childbirth( Agent &child, const Agent &a, const Agent &b ) {
-    if( ! isOppositeSex( a, b ) ) return;       /* 同性なら終了 */
+Agent* childbirth( const Agent &a, const Agent &b ) {
+    assert( isOppositeSex( a, b ) );            /* 同性ならエラー */
 
-    child.resetParam();
-    child.changeTagLenTo( TAG_LEN_A );
+    Agent *child = new Agent;                   /* 子供を作成 */
 
-    tag_t *couple_tag = new tag_t[ a.getLen() + b.getLen() ];
-    tag_t *p = couple_tag;
+    child->resetParam();                         /* パラメータをリセット */
+    child->changeTagLenTo( TAG_LEN_A );          /* タグの長さを設定 */
 
-    FOR( i, a.getLen() ) {
-        *(p++) = a.tagAt( i );
+    tag_t *couple_tag = new tag_t[ a.getLen() + b.getLen() ]; /* 両親を元にした */
+    tag_t *p = couple_tag;                      /* カップルタグを作成 */
+
+    FOR( i, a.getLen() ) {                      /* 両親の */
+        *(p++) = a.tagAt( i );                  /* タグを */
     }
-    FOR( i, b.getLen() ) {
+    FOR( i, b.getLen() ) {                      /* コピーしていく */
         *(p++) = b.tagAt( i );
     }
-    child.setTag( couple_tag+rand_interval_int(0,a.getLen()) , TAG_LEN_A );
-    if( a.getSex() == __FEMALE__ ) {
+    child->setTag( couple_tag+rand_interval_int(0,a.getLen()) , TAG_LEN_A ); /* 子供のタグを作成 */
+    if( a.getSex() == __FEMALE__ ) {            /* 母親の居場所に */
         int tx = a.getX();
         int ty = a.getY();
-        child.setX( tx );
-        child.setY( ty );
+        child->setX( tx );                       /* 子供を配置 */
+        child->setY( ty );
     } else {
         int tx = b.getX();
         int ty = b.getY();
-        child.setX( tx );
-        child.setY( ty );
+        child->setX( tx );
+        child->setY( ty );
     }
 
-    delete[] couple_tag;
+    delete[] couple_tag;                        /* カップルタグを削除 */
+    return child;                              /* 子供を返す */
 }
 
 /* 
@@ -280,7 +285,7 @@ void childbirth( Agent &child, const Agent &a, const Agent &b ) {
  * =====================================================================================
  */
 bool isOppositeSex( const Agent &a, const Agent &b ) {
-    if( a.getAge() == b.getAge() ) {            /* 性別が同じなら */
+    if( a.getSex() == b.getSex() ) {            /* 性別が同じなら */
         return false;                           /* false */
     } else {                                    /* 異なれば */
         return true;                            /* true */

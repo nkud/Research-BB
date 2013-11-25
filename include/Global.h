@@ -45,14 +45,14 @@ const int OUTPUT_INTERVAL               = 1                     ; /* 出力す�
 const int MAX_AGE = 30;
 
 /* landscape */
-const int WIDTH                         = 60                    ; /* ランドスケープの幅 */
+const int WIDTH                         = 100                    ; /* ランドスケープの幅 */
 
 const int NUM_V                         = 1                     ; /* ウイルスの種類 */
 const int INIT_NUM_A                    = 1000                    ; /* エージェントの数 */
 const int MAX_NUM_A                     = 1500;                   /* 最大エージェント数 */
 
 const double LEN_SCALE                  = 1.0                  ; /* ウイルスに対するエージェントのタグスケール */
-const int TAG_LEN_V                     = 30                    ; /* ウイルスのタグのデフォルトの長さ */
+const int TAG_LEN_V                     = 100                    ; /* ウイルスのタグのデフォルトの長さ */
 const int TAG_LEN_A                     = LEN_SCALE * TAG_LEN_V ; /* エージェントのタグ長 */
 
 /* rate */
