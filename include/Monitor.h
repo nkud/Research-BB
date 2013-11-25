@@ -15,7 +15,10 @@
 #define ___MONITOR
 
 #include <map>
+
+#ifdef __unix__
 #include <sys/time.h>
+#endif
 
 class __TagInterface;
 
@@ -50,7 +53,7 @@ class Monitor {
         void generatePlotScript();
 };
 
-
+#ifdef __unix__
 /*
  * =====================================================================================
  *        Class:  Benchmark
@@ -75,5 +78,6 @@ class Benchmark {
         void printTime() const;                              /* 計測時間を表示 */
         void printElapsedTime();                              /* 計測時間を表示 */
 };
+#endif
 
 #endif

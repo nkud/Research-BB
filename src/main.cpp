@@ -27,7 +27,9 @@ using namespace std;
 
 int main()
 {
+#ifdef __unix__
     Benchmark::Instance().startTimer();                    /* ベンチマーク計測開始 */
+#endif
     srand( (unsigned int)time(NULL)/2 );                   /* 乱数初期化  */
 
     // 初期化
@@ -88,8 +90,10 @@ int main()
     // ------------------------------------------------------------------------
     // メモ
     // 計測時間出力                             /* XXX: ??? */
+#ifdef __unix__
     Benchmark::Instance().stopTimer();                     /* ベンチマークの計測終了 */
     Benchmark::Instance().printTime();                     /* 計測時間表示 */
+#endif
     log(sizeof(Agent));
     log(sizeof(Virus));
     log(sizeof(admin));

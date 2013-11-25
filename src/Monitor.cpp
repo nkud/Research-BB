@@ -142,7 +142,7 @@ void Monitor :: generatePlotScript() {
 #endif
 }
 
-
+#ifdef __unix__
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Benchmark :: *
@@ -172,3 +172,4 @@ void Benchmark :: printElapsedTime() {
     double now = tv_.tv_sec + tv_.tv_usec * 1e-6;
     std::cout << "[ elapsed time ]: " << now - start_ << " sec" << std::endl;
 }
+#endif
