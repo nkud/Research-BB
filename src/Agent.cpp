@@ -51,7 +51,10 @@ Agent :: Agent() :
 }
 
 Agent :: ~Agent() {
+    static int i = 0;
+    i++;
     log("die");
+    log(i);
 }
 
 /*
@@ -255,6 +258,17 @@ void childbirth( Agent &child, const Agent &a, const Agent &b ) {
         *(p++) = b.tagAt( i );
     }
     child.setTag( couple_tag+rand_interval_int(0,a.getLen()) , TAG_LEN_A );
+    if( a.getSex() == __FEMALE__ ) {
+        int tx = a.getX();
+        int ty = a.getY();
+        child.setX( tx );
+        child.setY( ty );
+    } else {
+        int tx = b.getX();
+        int ty = b.getY();
+        child.setX( tx );
+        child.setY( ty );
+    }
 
     delete[] couple_tag;
 }

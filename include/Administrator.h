@@ -29,8 +29,9 @@ class Monitor;
  */
 class Administrator {
     private:
-        VECTOR(Agent *)& alive_agent_;                             /* エージェントの集合 */
-        VECTOR(Agent *) death_agent_;                             /* エージェントの集合 */
+        VECTOR(Agent *)& alive_agent_;                     /* エージェントの集合 */
+        VECTOR(Agent *) new_agent_;                        /* 新しく生まれるエージェント */
+
         Virus *virus_;                                     /* ウイルスの集合 */
         Landscape *landscape_;                             /* 土地 */
 

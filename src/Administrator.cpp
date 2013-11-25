@@ -30,13 +30,10 @@
  */
 ITERATOR(Agent *) Administrator :: eliminateAgent( ITERATOR(Agent *) &it ) {
     ITERATOR(Agent *) pre_it = it - 1;
-    (*it)->printTag();
-    death_agent_.push_back( *it );
+
+    delete *it;
     alive_agent_.erase( it );
-    log(death_agent_.size());
-    if( death_agent_.size() > 1 ) {
-        (*(death_agent_.end()))->printTag();
-    }
+
     return pre_it;
 }
 
@@ -48,8 +45,6 @@ ITERATOR(Agent *) Administrator :: eliminateAgent( ITERATOR(Agent *) &it ) {
  */
 void Administrator :: agingAgent() {
     ITERATOR(Agent *) it = alive_agent_.begin();
-    log("aging");
-    log(alive_agent_.size());
 
     while( it != alive_agent_.end() ) {
         if( (*it)->isAlive() ) {
@@ -72,7 +67,7 @@ void Administrator :: matingAgant() {
     int tx, ty;
     Agent *myself;
     FOR( i, alive_agent_.size() ) {
-        myself = alive_agent_[ i ];                             /* 感染者自身 */
+        myself = alive_agent_[ i ];                        /* 感染者自身 */
         tx = myself->getX();                               /* 感染者自身の位置 */
         ty = myself->getY();
 
@@ -86,13 +81,21 @@ void Administrator :: matingAgant() {
                 ITERATOR(int) it = landscape_->getLandscapeIteratorBeginAt( tx+i, ty+j );
                 while( it != landscape_->getLandscapeIteratorEndAt( tx+i, ty+j ) )
                 {                                          /* その位置にいる人全員に */
-                    if( isOppositeSex( *myself, *alive_agent_[ *it ] ) ) {
-
+                    if( isOppositeSex( *myself, *alive_agent_[ *it ] ) ) { /* 異性ならば */
+                        log("mating");
+                        Agent *child = new Agent;
+                        childbirth( *child, *myself, *alive_agent_[*it] );
+                        new_agent_.push_back( child );
                     }
                     it++;                                  /* 着目をその位置の次にいる人 */
                 }
             }
         }
+    }
+    ITERATOR( Agent * ) it = new_agent_.begin();
+    while( it != new_agent_.end() ) {
+        landscape_->pushAgent( (*it)->getX(), (*it)->getY(), 0 );
+        it++;
     }
 }
 /*
@@ -121,8 +124,6 @@ Administrator :: Administrator( VECTOR(Agent *) &a, Virus *v, Landscape *l ) :
     landscape_( l )
 {
     alive_agent_.reserve( MAX_NUM_A );
-    death_agent_.reserve( MAX_NUM_A );
-    death_agent_.clear();
 }
 
 /*

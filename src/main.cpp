@@ -15,6 +15,7 @@
 #include <iostream>
 #include <cstring>
 #include <fstream>
+#include <ctime>
 using namespace std;
 
 #include "Global.h"
@@ -69,6 +70,7 @@ int main()
         admin.responseAgent();                             /* 免疫応答（タグフリップ） */
 
         admin.agingAgent();
+        admin.matingAgant();
 
         /* 出力 */
         admin.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ;        /* 出力: ウイルスの保持状況 */
@@ -97,10 +99,10 @@ int main()
     log(sizeof(Agent));
     log(sizeof(Virus));
     log(sizeof(admin));
-    childbirth( *agent[0], *agent[1], *agent[2] );
-    agent[0]->printTag();
-    agent[1]->printTag();
-    agent[2]->printTag();
-    log(agent[0]->getAge());
+//    childbirth( *agent[0], *agent[1], *agent[2] );
+//    agent[0]->printTag();
+//    agent[1]->printTag();
+//    agent[2]->printTag();
+//    log(agent[0]->getAge());
     return 0;
 }

@@ -57,7 +57,7 @@ class Agent : public __TagInterface
 
     public:
         Agent();                                                               /* コンストラクタ  */
-        ~Agent();                                                               /* コンストラクタ  */
+        ~Agent();
 
         void resetParam();
 
@@ -101,7 +101,7 @@ class Agent : public __TagInterface
 };
 
 void die( Agent &a );                                                          /* 死亡処理 */
-void childbirth( Agent &chile, const Agent &a, const Agent &b );                           /* 親から子を作成 */
+void childbirth( Agent &child, const Agent &a, const Agent &b );                           /* 親から子を作成 */
 bool isOppositeSex( const Agent &a, const Agent &b );                          /* 異性かどうか */
 
 #endif
