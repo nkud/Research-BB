@@ -13,6 +13,8 @@
 
 #include "Global.h"
 
+#include <vector>
+
 class __TagInterface;
 class Agent;
 class Virus;
@@ -27,17 +29,17 @@ class Monitor;
  */
 class Administrator {
     private:
-        Agent *agent_;                                     /* エージェントの集合 */
+        VECTOR(Agent) &agent_;                             /* エージェントの集合 */
         Virus *virus_;                                     /* ウイルスの集合 */
         Landscape *landscape_;                             /* 土地 */
 
         int term_;
-        int num_of_agent_;
+        int num_of_agent_;                                 /* 現在のエージェント総数 */
 
-        int next_child_number_;
+        void eliminateAgent();
 
     public:
-        Administrator( Agent *, Virus *, Landscape * );
+        Administrator( VECTOR(Agent) & , Virus *, Landscape * );
         void incrementTerm();                              /* 期間を 1 進める */
         int getTerm();                                     /* 進んだ期間 */
 

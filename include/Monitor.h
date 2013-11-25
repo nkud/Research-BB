@@ -15,6 +15,7 @@
 #define ___MONITOR
 
 #include <map>
+#include <sys/time.h>
 
 class __TagInterface;
 
@@ -47,6 +48,32 @@ class Monitor {
         void resetAll();                                   /* 値をすべてリセット */
 
         void generatePlotScript();
+};
+
+
+/*
+ * =====================================================================================
+ *        Class:  Benchmark
+ *  Description:  ベンチマーク
+ *                シングルトンパターン
+ * =====================================================================================
+ */
+class Benchmark {
+    private:
+        Benchmark() {}
+
+        struct timeval tv_;
+        double start_;
+        double end_;
+    public:
+        static Benchmark& Instance();           /* インスタンスを返す */
+
+        void startTimer();                           /* 計測開始する */
+        void stopTimer();                            /* 計測終了する */
+
+        double getTime() const;                              /* 計測時間を返す */
+        void printTime() const;                              /* 計測時間を表示 */
+        void printElapsedTime();                              /* 計測時間を表示 */
 };
 
 #endif

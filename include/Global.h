@@ -26,6 +26,7 @@
 #define CONTACT_FNAME       A_infectionContact.txt
 
 #define ITERATOR(type)      std::vector< type >::iterator
+#define VECTOR(type)         std::vector< type >
 #define C_ITERATOR(type)    std::vector< type >::const_iterator
 
 typedef int tag_t;                                         /* タグの型（通常 int ） */
@@ -46,12 +47,12 @@ const int MAX_AGE = 60;
 /* landscape */
 const int WIDTH                         = 60                    ; /* ランドスケープの幅 */
 
-const int NUM_V                         = 1                     ; /* ウイルスの種類 */
+const int NUM_V                         = 2                     ; /* ウイルスの種類 */
 const int INIT_NUM_A                    = 1000                    ; /* エージェントの数 */
 const int MAX_NUM_A                     = 1000;                   /* 最大エージェント数 */
 
 const double LEN_SCALE                  = 1.0                  ; /* ウイルスに対するエージェントのタグスケール */
-const int TAG_LEN_V                     = 10                    ; /* ウイルスのタグのデフォルトの長さ */
+const int TAG_LEN_V                     = 30                    ; /* ウイルスのタグのデフォルトの長さ */
 const int TAG_LEN_A                     = LEN_SCALE * TAG_LEN_V ; /* エージェントのタグ長 */
 
 /* rate */

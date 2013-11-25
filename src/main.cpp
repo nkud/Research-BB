@@ -15,7 +15,6 @@
 #include <iostream>
 #include <cstring>
 #include <fstream>
-#include <sys/time.h>
 using namespace std;
 
 #include "Global.h"
@@ -26,26 +25,22 @@ using namespace std;
 #include "Monitor.h"
 #include "Administrator.h"
 
-double gettime() {                                         /* ベンチマーク */
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return tv.tv_sec + tv.tv_usec * 1e-6;
-}
-
 int main()
 {
-    double start, end;                                     /* タイマー */
-    start = gettime();                                     /* 実行時間計測開始 */
-
+    Benchmark::Instance().startTimer();
     srand( (unsigned int)time(NULL)/2 );                   /* 乱数初期化  */
 
     // 初期化
-    Agent agent[ MAX_NUM_A ];                              /* エージェントの集合  */
+    VECTOR(Agent) agent;                              /* エージェントの集合  */
+    Agent a[MAX_NUM_A];
+    FOR( i, MAX_NUM_A ) {
+        agent.push_back( a[i] );
+    }
     Virus virus[ NUM_V ];                                  /* ウイルス生成 */
-    Landscape *landscape = new Landscape;                  /* ランドスケープ初期化 */
+    Landscape landscape;                  /* ランドスケープ初期化 */
 
     // 管理者に登録
-    Administrator admin( agent, virus, landscape );
+    Administrator admin( agent, virus, &landscape );
 
     Monitor &monitor = Monitor::Instance();                /* モニター */
 
@@ -62,7 +57,6 @@ int main()
     /* 計測開始 */
     FOR( i, TERM )                                         /* 計算開始  */
     {
-        break;
         log("------------ start");
         admin.incrementTerm();                             /* 期間を進める */
 
@@ -83,7 +77,7 @@ int main()
         log( agent[0].getX() );
         log( agent[0].getY() );
         if( monitor.getContactNum()==0 ) zero_count++;
-        if( zero_count >= 10 ) break;
+        if( zero_count >= 1 ) break;
     }
     
     // 確認用 -----------------------------------------------------------------
@@ -94,10 +88,11 @@ int main()
     // ------------------------------------------------------------------------
 
     // 計測時間出力                             /* XXX: ??? */
-    end = gettime();                                       /* 実行時間計測終了 */
-    cout << end-start << endl;
+    Benchmark::Instance().stopTimer();
+    Benchmark::Instance().printTime();
     log(sizeof(Agent));
     log(sizeof(Virus));
+    log(sizeof(admin));
     childbirth( agent[0], agent[1], agent[2] );
     agent[0].printTag();
     agent[1].printTag();

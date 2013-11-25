@@ -21,7 +21,6 @@
 
 #include <vector>
 #include <fstream>
-#include <iostream>
 
 /*
  *--------------------------------------------------------------------------------------
@@ -91,13 +90,12 @@ int Administrator :: getTerm() {
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-Administrator :: Administrator( Agent *a, Virus *v, Landscape *l ) :
+Administrator :: Administrator( VECTOR(Agent) &a, Virus *v, Landscape *l ) :
     term_( 0 ),
     agent_( a ),
     virus_( v ),
     landscape_( l ),
-    num_of_agent_( INIT_NUM_A ),
-    next_child_number_( MAX_NUM_A-1 )
+    num_of_agent_( INIT_NUM_A )
 {
 }
 
@@ -200,7 +198,7 @@ void Administrator :: contactAgent() {
     Agent *myself;
 
     FOR( i, num_of_agent_ ) {
-        myself = &agent_[ i ];                             /* 感染者自身 */
+        myself = &(agent_[ i ]);                             /* 感染者自身 */
         if( myself->numHoldingVirus() <= 0 ) continue;     /* 健康ならスキップ */
         tx = myself->getX();                               /* 感染者自身の位置 */
         ty = myself->getY();
@@ -257,7 +255,6 @@ void Administrator :: infectAgent() {
 
                 n = rand_array( agent_[i].getStandByListSize() );             /* ランダムに一個の */
                 tv = agent_[i].getStandByVirusAt( n );     /* ウイルスを選んで */
-
                 if( agent_[i].infection( *tv ) ) {         /* 感染させたら */
                     infection_count++;                     /* カウントを増やす */
 //                    break;                                 /* 次のエージェントへ */
