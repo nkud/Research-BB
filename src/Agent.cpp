@@ -110,7 +110,7 @@ int Agent :: getY() const { return y_; }
  */
 VirusData *Agent :: getVirusDataAt( int n ) const { return (*vlist_).at( n ); }
 void Agent :: pushVirusData( VirusData *vd ) { (*vlist_).push_back( vd ); }
-void Agent :: eraseVirusData( std::vector<VirusData *>::iterator it ) { (*vlist_).erase( it ); }
+void Agent :: eraseVirusData( std::vector<VirusData *>::iterator it ) { delete (*it); (*vlist_).erase( it ); }
 int Agent :: getVirusListSize() const { return (*vlist_).size(); }
 std::vector<VirusData *>::iterator Agent :: getVirusListIteratorBegin() { return (*vlist_).begin(); }
 std::vector<VirusData *>::iterator Agent :: getVirusListIteratorEnd() { return (*vlist_).end(); }
@@ -272,6 +272,8 @@ Agent* childbirth( const Agent &a, const Agent &b ) {
     Agent *child = new Agent;                                        /* 子供を作成 */
 
     child->resetParam();                                             /* パラメータをリセット */
+
+#ifdef COUPLE_TAG
     child->changeTagLenTo( TAG_LEN_A );                              /* タグの長さを設定 */
 
     tag_t *couple_tag = new tag_t[ a.getLen() + b.getLen() ];        /* 両親を元にした */
@@ -286,6 +288,9 @@ Agent* childbirth( const Agent &a, const Agent &b ) {
     child->setTag(                                                   /* 子供のタグを作成 */
             couple_tag+rand_interval_int(0,a.getLen()) , TAG_LEN_A
             );
+    delete[] couple_tag;                                             /* カップルタグを削除 */
+#endif
+
     if( a.getSex() == __FEMALE__ ) {                                 /* 母親の居場所に */
         int tx = a.getX();
         int ty = a.getY();
@@ -297,7 +302,7 @@ Agent* childbirth( const Agent &a, const Agent &b ) {
         child->setX( tx );
         child->setY( ty );
     }
-    delete[] couple_tag;                                             /* カップルタグを削除 */
+
     return child;                                                    /* 子供を返す */
 }
 

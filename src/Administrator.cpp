@@ -397,7 +397,9 @@ void Administrator :: outputFile_HasVirus( const char *fname ) {
     FOR( j, NUM_V ) {
         ofs << numHasVirus( virus_[j] ) << SEPARATOR;                /* ウイルス j の保持者 */
     }
-    ofs << numHasAllVirus() << std::endl;                            /* 全ウイルス保持者 */
+    int num_has_all = numHasAllVirus();
+    ofs << num_has_all << SEPARATOR;                            /* 全ウイルス保持者 */
+    ofs << (double)num_has_all/agent_.size() << std::endl;
 }
 
 /*--------------------------------------------------------------------------------------
@@ -412,7 +414,9 @@ void Administrator :: outputFile_HasImmunity( const char *fname ) {
     FOR( k, NUM_V ) {
         ofs << numHasImmunity( virus_[k] ) << SEPARATOR;             /* ウイルスに対する免疫獲得者数 */
     }
-    ofs << numHasAllImmunity() << std::endl;
+    int num_has_all = numHasAllImmunity();
+    ofs << num_has_all << SEPARATOR;
+    ofs << (double)num_has_all/agent_.size() << std::endl;                   /* 人口に対する割合 */
 }
 /*--------------------------------------------------------------------------------------
  *      Method:  Administrator :: outputFile_Population
