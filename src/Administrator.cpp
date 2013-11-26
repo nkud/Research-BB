@@ -462,16 +462,25 @@ void Administrator :: outputFile_InfectionContactRatio( const char *fname ) {
  */
 void Administrator :: outputFile_LastLog( const char *fname ) {
     static std::ofstream ofs(fname);
+    ofs << "TERM:" << getTerm() << std::endl;
+    ofs << "MAX_AGE:" << MAX_AGE << std::endl;
+    ofs << "BIRTH_RATE:" << BIRTH_RATE << std::endl;
     ofs << "WIDTH:" << WIDTH << std::endl;
     ofs << "NUM_A:" << agent_.size() << std::endl;
+    ofs << "INIT_NUM_A:" << INIT_NUM_A << std::endl;
     ofs << "NUM_V:" << NUM_V << std::endl;
+    ofs << "INFECTION_RATE:" << INFECTION_RATE << std::endl;
+    ofs << "INIT_INFECTED_RATIO:" << INIT_INFECTED_RATIO << std::endl;
     ofs << "TAG_LEN_A:" << TAG_LEN_A << std::endl;
     ofs << "TAG_LEN_V:" << TAG_LEN_V << std::endl;
     FOR(i,NUM_V) { ofs<<"["<<virus_[i].getLen()<<"]:";
         FOR(j, virus_[i].getLen()) { ofs<<int(virus_[i].tagAt(j)); } ofs<<std::endl; }
     ofs << ">>> Agent Last Status" << std::endl;
-    FOR(i, agent_.size()) { FOR(j, agent_[0]->getLen()) ofs<<agent_[i]->tagAt(j);
-        ofs<<" "<<agent_[i]->numHoldingVirus(); ofs<<std::endl; }
+    FOR(i, agent_.size()) {
+        ofs<<"["<<&agent_[i]<<"]:";
+        FOR(j, agent_[0]->getLen()) ofs<<agent_[i]->tagAt(j);
+        ofs<<" "<<agent_[i]->numHoldingVirus(); ofs<<std::endl;
+    }
 }
 
 /*

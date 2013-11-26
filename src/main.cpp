@@ -100,7 +100,7 @@ int main()
     admin.printInitInfo();                                           /* 初期状態を表示 */
 
     // エージェントの最終的な状態など -----------------------------------------
-//    admin.outputFile_LastLog( "A_log.txt" );
+    admin.outputFile_LastLog( "A_log.txt" );
 
     // ------------------------------------------------------------------------
     // メモ
