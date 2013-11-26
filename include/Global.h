@@ -35,7 +35,7 @@
 typedef int tag_t;                                                   /* タグの型（通常 int ） */
 
 // Configure ==============================================
-//#define OUTPUT_HAS_VIRUS
+#define OUTPUT_HAS_VIRUS
 //#define OUTPUT_HAS_IMMUNITY
 #define OUTPUT_SIR                                                   /* SIR形式で表示 */
 #define OUTPUT_CONTACT                                               /* 接触回数を表示 */
@@ -51,7 +51,7 @@ const int OUTPUT_INTERVAL             = 1                     ;      /* 出力�
 const int WIDTH                       = 60                    ;      /* ランドスケープの幅 */
 
 const int MAX_AGE                     = 80                    ;      /* 寿命 */
-const double BIRTH_RATE               = 0.040                 ;      /* 出産確率 */
+const double BIRTH_RATE               = 0.04                  ;      /* 出産確率 */
 
 const int NUM_V                       = 2                     ;      /* ウイルスの種類 */
 const int INIT_NUM_A                  = 1200                  ;      /* 初期エージェントの数 */
@@ -62,7 +62,7 @@ const int TAG_LEN_V                   = 20                    ;      /* ウイ�
 const int TAG_LEN_A                   = LEN_SCALE * TAG_LEN_V ;      /* エージェントのタグ長 */
 
 const double INFECTION_RATE           = 0.3                   ;      /* デフォルトの感染率 */
-const double INIT_INFECTED_RATIO      = 0.2                   ;      /* 初期感染率 */
+const double INIT_INFECTED_RATIO      = 0.3                   ;      /* 初期感染率 */
 
 const int MAX_VIRUS_AGENT_HAVE        = NUM_V                 ;      /* 最大保持ウイルス */
 const int MAX_V_AGENT_INFECT_ONT_TIME = 1                     ;      /* １期間で感染させるウイルスの最大数 */
