@@ -66,5 +66,6 @@ class Administrator {
         void outputFile_HasImmunity( const char * );       /* ファイルに出力 */
         void outputFile_InfectionContactRatio( const char * ); /* ファイルに出力 */
         void outputFile_LastLog( const char * );
+        void outputFile_Population( const char * );
 };
 

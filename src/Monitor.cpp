@@ -20,6 +20,7 @@
 #define HAS_VIRUS_OUTPUT     "\"A_hasVirus.txt\""
 #define HAS_IMMUNITY_OUTPUT     "\"A_hasImmunity.txt\""
 #define CONTACT_OUTPUT     "\"A_infectionContact.txt\""
+#define POPULATION_OUTPUT     "\"A_Population.txt\""
 
 Monitor& Monitor :: Instance() {
     static Monitor coredata;
@@ -67,9 +68,14 @@ void Monitor :: countUpContact() { num_contact_++; }
  */
 void Monitor :: generatePlotScript() {
     std::ofstream ofs(GPLOT_FILENAME);
-
+#ifdef OUTPUT_POPULATION
+    ofs << "set title \"Population\" font \"helvetica, 24\"" << std::endl
+        << "plot " << POPULATION_OUTPUT << " w l"
+        << " title " << "\"population" << std::endl;
+    ofs << "set output" << std::endl
+        << "pause -1" << std::endl;
+#endif
 #ifdef OUTPUT_HAS_VIRUS
-    // hasVirus
     ofs << "set title \"ウイルス保持者\" font \"helvetica, 24\"" << std::endl
         << "plot " << HAS_VIRUS_OUTPUT << " w l"
         << " title " << "\"ウイルス" << 0 << "保持\"" << std::endl;
@@ -104,10 +110,10 @@ void Monitor :: generatePlotScript() {
     // SIR
     ofs << "set title \"SIR\" font \"helvetica, 24\"" << std::endl;
     ofs << "plot " << HAS_IMMUNITY_OUTPUT
-        << " using 1:" << NUM_V+2 << " w l"
+        << " using 1:" << NUM_V+1 << " w l"
         << " title " << "\"R\"" << std::endl;
     ofs << "replot " << HAS_VIRUS_OUTPUT
-        << " using 1:" << NUM_V+2 << " w l"
+        << " using 1:" << NUM_V+1 << " w l"
         << " title " << "\"I\"" << std::endl;
     ofs << "set output" << std::endl
         << "pause -1" << std::endl;

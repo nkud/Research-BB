@@ -87,7 +87,9 @@ void Administrator :: matingAgant() {
                         break;                                       /* 終了 */
                     }
                     if( isOppositeSex( *myself, **it ) ) {           /* 異性ならば */
-                        new_child_.push_back( childbirth( *myself, **it ) ); /* 新しい子供を誕生させる */
+                        if( BIRTH_RATE > rand_interval_double(0, 1) ) {
+                            new_child_.push_back( childbirth( *myself, **it ) ); /* 新しい子供を誕生させる */
+                        }
                     }
                     it++;                                            /* 着目をその位置の次にいる人にうつす */
                 }
@@ -398,6 +400,17 @@ void Administrator :: outputFile_HasImmunity( const char *fname ) {
         ofs << numHasImmunity( virus_[k] ) << SEPARATOR;             /* ウイルスに対する免疫獲得者数 */
     }
     ofs << numHasAllImmunity() << std::endl;
+}
+/*--------------------------------------------------------------------------------------
+ *      Method:  Administrator :: outputFile_Population
+ * Description:  
+ *----------------------------------------------------------------------------------- */
+void Administrator :: outputFile_Population( const char *fname ) {
+    if( getTerm() % OUTPUT_INTERVAL != 0 ) return;
+    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
+    ofs << getTerm() << SEPARATOR;                                   /* ファイルに出力 */
+    ofs << agent_.size() << SEPARATOR;                               /* ウイルスに対する免疫獲得者数 */
+    ofs << std::endl;
 }
 
 /*--------------------------------------------------------------------------------------

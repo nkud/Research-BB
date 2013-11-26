@@ -47,7 +47,7 @@ Agent :: Agent() :
         tag_[ i ] = rand_binary();              /* タグをランダムに初期化  */
     }
 
-    age_ = rand_interval_int( 0, 100 );
+    age_ = rand_interval_int( 0, MAX_AGE );
 
     (*vlist_).reserve( NUM_V );                 /* 領域確保 */
     (*stand_by_list_).reserve( NUM_V );         /* 領域確保 */
@@ -56,7 +56,6 @@ Agent :: Agent() :
 }
 
 Agent :: ~Agent() {
-    std::cout<< "die: " << this << std::endl;
     delete vlist_;
     delete stand_by_list_;
 }
