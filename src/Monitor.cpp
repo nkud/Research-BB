@@ -136,6 +136,16 @@ void Monitor :: generatePlotScript() {
         << " title " << "\"I/POPULATION\"" << std::endl;
     ofs << "set output" << std::endl
         << "pause -1" << std::endl;
+    // SIR_0_RATIO
+    ofs << "set title \"SIR_0_RATIO\" font \"helvetica, 24\"" << std::endl;
+    ofs << "plot " << HAS_IMMUNITY_OUTPUT
+        << " using 1:" << NUM_V+4 << " w l"
+        << " title " << "\"R/POPULATION\"" << std::endl;
+    ofs << "replot " << HAS_VIRUS_OUTPUT
+        << " using 1:" << NUM_V+4 << " w l"
+        << " title " << "\"I/POPULATION\"" << std::endl;
+    ofs << "set output" << std::endl
+        << "pause -1" << std::endl;
 #endif
 #ifdef OUTPUT_CONTACT
     // contact

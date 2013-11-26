@@ -66,8 +66,12 @@ int main()
         monitor.resetAll();                                          /* モニターのカウンターをリセット */
 
         /* A */
+#ifdef AGING_AGENT
         admin.agingAgent();                                          /* 老化する */
+#endif
+#ifdef MATING_AGENT
         admin.matingAgant();                                         /* 交配、出産する */
+#endif
 
 #ifdef RANDOM_LOCATE
         admin.relocateAgent();                                       /* 移動する */
