@@ -118,7 +118,7 @@ void __TagInterface :: printTag() {
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-void __TagInterface :: setTag( tag_t *t, int l ) {
+void __TagInterface :: setTag( const tag_t *t, int l ) {
     assert( l > 0 );
     changeTagLenTo( l );
     while( l-- ) {

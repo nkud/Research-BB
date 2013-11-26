@@ -73,6 +73,8 @@ void Administrator :: matingAgant() {
         tx = myself->getX();                                         /* 感染者自身の位置 */
         ty = myself->getY();
 
+        if( myself->hasAlreadyGiveBirth() ) continue;                /* 出産済みならスキップ */
+
         REP( i, -1, 1 ) {                                            /* 自分の縦・横・自マスに感染させる（計５マス） */
             REP( j, -1, 1 ) {
 #ifdef NO_DIAGONAL
@@ -86,15 +88,26 @@ void Administrator :: matingAgant() {
                     if( agent_.size()+new_child_.size() >= MAX_NUM_A ) { /* 最大エージェントをこえそうなら */
                         break;                                       /* 終了 */
                     }
-                    if( isOppositeSex( *myself, **it ) ) {           /* 異性ならば */
+                    if( isOppositeSex( *myself, **it ) &&            /* 異性かつ */
+                            !(*it)->hasAlreadyGiveBirth()) {         /* 未出産ならば */
                         if( BIRTH_RATE > rand_interval_double(0, 1) ) {
                             new_child_.push_back( childbirth( *myself, **it ) ); /* 新しい子供を誕生させる */
+                        }
+                        if( myself->getSex() == __FEMALE__ ) {       /* 女性の方を出産後にする */
+                            myself->setGiveBirth();                  /* 出産後にする */
+                        } else {
+                            (*it)->setGiveBirth();
                         }
                     }
                     it++;                                            /* 着目をその位置の次にいる人にうつす */
                 }
             }
         }
+    }
+    ITERATOR(Agent *) it_a = agent_.begin();
+    while( it_a != agent_.end() ) {                                    /* エージェント全員に対して */
+        (*it_a)->resetGiveBirth();                                      /* 未出産に戻す */
+        it_a++;
     }
     std::cout<<"[new child]: "<<new_child_.size()<<std::endl;
     ITERATOR( Agent * ) it = new_child_.begin();
@@ -471,8 +484,4 @@ void Administrator :: printInitInfo() {
     FOR(i,NUM_V) { std::cout<<"\trate_"<<i<<":\t"<<virus_[i].getRate();
         std::cout<<"\tlen_"<<i<<":\t"<<virus_[i].getLen()<<std::endl; }
     FOR( i, NUM_V ) virus_[ i ].printTag();                          /* 全ウイルスのタグを表示 */
-
-//    std::cout << "INIT_NUM_0: " << initial_num_a << std::endl;
-//    std::cout << "INIT_NUM_1: " << initial_num_b << std::endl;
-
 }

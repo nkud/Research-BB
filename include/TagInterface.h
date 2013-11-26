@@ -36,7 +36,7 @@ class __TagInterface
         ~__TagInterface();                      /* デストラクタ */
 
         tag_t *getTag() const;                  /* タグ配列へのポインタを返す */
-        void setTag( tag_t *t, int l );
+        void setTag( const tag_t *t, int l );
         int getLen() const;                     /* タグ長を返す */
         tag_t tagAt( const int ) const ;
 
