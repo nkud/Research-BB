@@ -65,13 +65,14 @@ int main()
 
         monitor.resetAll();                                /* モニターのカウンターをリセット */
 
+        /* A */
         admin.moveAgent();                                 /* 移動する */
         admin.contactAgent();                              /* 近隣に接触する */
         admin.infectAgent();                               /* 待機ウイルスを感染させる */
         admin.responseAgent();                             /* 免疫応答（タグフリップ） */
 
-        admin.agingAgent();
-        admin.matingAgant();
+        admin.agingAgent();                     /* 老化する */
+        admin.matingAgant();                    /* 交配、出産する */
 
         admin.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ;        /* 出力: ウイルスの保持状況 */
         admin.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ;
@@ -87,7 +88,7 @@ int main()
     admin.printInitInfo();                                 /* 初期状態を表示 */
 
     // エージェントの最終的な状態など -----------------------------------------
-    admin.outputFile_LastLog( "A_log.txt" );
+//    admin.outputFile_LastLog( "A_log.txt" );
 
     // ------------------------------------------------------------------------
     // メモ

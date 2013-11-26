@@ -31,10 +31,10 @@
 
 typedef int tag_t;                                         /* タグの型（通常 int ） */
 
- #define OUTPUT_HAS_VIRUS
- #define OUTPUT_HAS_IMMUNITY
+// #define OUTPUT_HAS_VIRUS
+// #define OUTPUT_HAS_IMMUNITY
 #define OUTPUT_SIR
- #define OUTPUT_CONTACT
+// #define OUTPUT_CONTACT
 
 // Configure ==============================================
 #define NO_DIAGONAL         0                              /* 対角線４マスを近隣に含まない */

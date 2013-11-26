@@ -13,6 +13,8 @@
 
 #include "Landscape.h"
 
+#include <cassert>
+ 
 Landscape :: Landscape()
 {
     FOR( i, WIDTH ) FOR( j, WIDTH ) agent_map_[i][j].clear();
@@ -67,12 +69,24 @@ void Landscape :: clearAgentMap() {
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Landscape :: pushAgentNumber( int, int, int )
+ *      Method:  Landscape :: registAgent( int, int, int )
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-void Landscape :: pushAgent( int x, int y, Agent &a ) {
+void Landscape :: registAgent( int x, int y, Agent &a ) {
     agent_map_[ x ][ y ].push_back( &a );
+}
+void Landscape :: removeAgent( const int x, const int y, Agent &a ) {
+    ITERATOR(Agent *) it_a = getLandscapeIteratorBeginAt( x, y );
+    while( it_a != getLandscapeIteratorEndAt( x, y ) ) {
+        if( *it_a == &a ) {
+            agent_map_[x][y].erase( it_a );
+            return;
+        }
+        it_a++;
+    }
+    assert( ! ">>> the agent is not here !" );
+    return;
 }
 
 /*

@@ -94,8 +94,8 @@ int __TagInterface :: getLen() const {
  * Description:  
  *----------------------------------------------------------------------------------- */
 tag_t __TagInterface :: tagAt( const int n ) const {
-    if( n >= len_ ) return -1;                   /* ERROR */
-    return tag_[ n ];
+    assert( n < len_ );
+    return tag_[n];
 }
 
 /*

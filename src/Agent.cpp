@@ -18,6 +18,8 @@
 
 #include <vector>
 #include <cassert>
+#include <cstring>
+#include <iostream>
 
 /*
  *--------------------------------------------------------------------------------------
@@ -54,7 +56,7 @@ Agent :: Agent() :
 }
 
 Agent :: ~Agent() {
-    log("die");
+    std::cout<< "die: " << this << std::endl;
     delete vlist_;
     delete stand_by_list_;
 }
@@ -252,30 +254,33 @@ Agent* childbirth( const Agent &a, const Agent &b ) {
 
 //    child->resetParam();                         /* パラメータをリセット */
 //    child->changeTagLenTo( TAG_LEN_A );          /* タグの長さを設定 */
-//
+
+//    std::cout << "len: " << a.tagAt(0) << std::endl;
+//    std::cout << "len: " << b.tagAt(0) << std::endl;
+    std::string couple_tag;
+    FOR( i, a.getLen() ) couple_tag += a.tagAt(i);
+    FOR( i, b.getLen() ) couple_tag += b.tagAt(i);
 //    tag_t *couple_tag = new tag_t[ a.getLen() + b.getLen() ]; /* 両親を元にした */
 //    tag_t *p = couple_tag;                      /* カップルタグを作成 */
 //
 //    FOR( i, a.getLen() ) {                      /* 両親の */
 //        *(p++) = a.tagAt( i );                  /* タグを */
-//        log("a");
 //    }
 //    FOR( i, b.getLen() ) {                      /* コピーしていく */
 //        *(p++) = b.tagAt( i );
-//        log("b");
 //    }
 //    child->setTag( couple_tag+rand_interval_int(0,a.getLen()) , TAG_LEN_A ); /* 子供のタグを作成 */
-//    if( a.getSex() == __FEMALE__ ) {            /* 母親の居場所に */
-//        int tx = a.getX();
-//        int ty = a.getY();
-//        child->setX( tx );                       /* 子供を配置 */
-//        child->setY( ty );
-//    } else {
-//        int tx = b.getX();
-//        int ty = b.getY();
-//        child->setX( tx );
-//        child->setY( ty );
-//    }
+    if( a.getSex() == __FEMALE__ ) {            /* 母親の居場所に */
+        int tx = a.getX();
+        int ty = a.getY();
+        child->setX( tx );                       /* 子供を配置 */
+        child->setY( ty );
+    } else {
+        int tx = b.getX();
+        int ty = b.getY();
+        child->setX( tx );
+        child->setY( ty );
+    }
 //
 //    delete[] couple_tag;                        /* カップルタグを削除 */
     return child;                              /* 子供を返す */
