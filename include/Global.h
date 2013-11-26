@@ -44,27 +44,27 @@ typedef int tag_t;                                                   /* タグ�
 const int TERM                        = 500                   ;      /* 期間 */
 const int OUTPUT_INTERVAL             = 1                     ;      /* 出力する間隔 */
 
-const int MAX_AGE                     = 100                    ;      /* 寿命 */
-const double BIRTH_RATE               = 0.2                   ;      /* 出産確率 */
+const int MAX_AGE                     = 50                    ;      /* 寿命 */
+const double BIRTH_RATE               = 0.08                ;      /* 出産確率 */
 
 /* landscape */
-const int WIDTH                       = 200                   ;      /* ランドスケープの幅 */
+const int WIDTH                       = 20                   ;      /* ランドスケープの幅 */
 
 const int NUM_V                       = 1                     ;      /* ウイルスの種類 */
-const int INIT_NUM_A                  = 1000                  ;      /* エージェントの数 */
-const int MAX_NUM_A                   = 2000                  ;      /* 最大エージェント数 */
+const int INIT_NUM_A                  = 100                  ;      /* エージェントの数 */
+const int MAX_NUM_A                   = 1000                  ;      /* 最大エージェント数 */
 
 const double LEN_SCALE                = 1.0                   ;      /* ウイルスに対するエージェントのタグスケール */
 const int TAG_LEN_V                   = 20                    ;      /* ウイルスのタグのデフォルトの長さ */
 const int TAG_LEN_A                   = LEN_SCALE * TAG_LEN_V ;      /* エージェントのタグ長 */
 
 /* rate */
-const double INFECTION_RATE           = 0.5                   ;      /* デフォルトの感染率 */
+const double INFECTION_RATE           = 0.8                  ;      /* デフォルトの感染率 */
 const double INIT_INFECTED_RATIO      = 0.1                   ;      /* 初期感染率 */
 
 /* max */
 const int MAX_VIRUS_AGENT_HAVE        = NUM_V                 ;      /* 最大保持ウイルス */
-const int MAX_V_AGENT_INFECT_ONT_TIME = 5                     ;      /* １期間で感染させるウイルスの最大数 */
+const int MAX_V_AGENT_INFECT_ONT_TIME = 1                     ;      /* １期間で感染させるウイルスの最大数 */
 
 const int MOVE_DISTANCE               = 1                     ;      /* エージェントの移動距離 */
 // ======================================================== 

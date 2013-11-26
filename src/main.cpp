@@ -66,13 +66,19 @@ int main()
         monitor.resetAll();                                          /* モニターのカウンターをリセット */
 
         /* A */
+        admin.agingAgent();                                          /* 老化する */
+        admin.matingAgant();                                         /* 交配、出産する */
+
+#ifdef RANDOM_LOCATE
+        admin.relocateAgent();                                       /* 移動する */
+#else
         admin.moveAgent();                                           /* 移動する */
+#endif
+
         admin.contactAgent();                                        /* 近隣に接触する */
         admin.infectAgent();                                         /* 待機ウイルスを感染させる */
         admin.responseAgent();                                       /* 免疫応答（タグフリップ） */
 
-        admin.agingAgent();                                          /* 老化する */
-        admin.matingAgant();                                         /* 交配、出産する */
 
         admin.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ;        /* 出力: ウイルスの保持状況 */
         admin.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ;
@@ -81,6 +87,7 @@ int main()
 
         /* 途中経過 */
         log( monitor.getContactNum() );
+        if( admin.getNumOfAgent() >= MAX_NUM_A ) break;
         if( monitor.getContactNum()==0 ) zero_count++;               /* １０回以上接触感染がなければ */
         if( zero_count >= 10 ) break;                                /* 強制的に終了する */
     }
