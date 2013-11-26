@@ -31,10 +31,10 @@
 
 typedef int tag_t;                                         /* タグの型（通常 int ） */
 
-// #define OUTPUT_HAS_VIRUS
-// #define OUTPUT_HAS_IMMUNITY
+ #define OUTPUT_HAS_VIRUS
+ #define OUTPUT_HAS_IMMUNITY
 #define OUTPUT_SIR
-// #define OUTPUT_CONTACT
+ #define OUTPUT_CONTACT
 
 // Configure ==============================================
 #define NO_DIAGONAL         0                              /* 対角線４マスを近隣に含まない */
@@ -42,14 +42,14 @@ typedef int tag_t;                                         /* タグの型（通
 
 const int TERM                          = 500                   ; /* 期間 */
 const int OUTPUT_INTERVAL               = 1                     ; /* 出力する間隔 */
-const int MAX_AGE = 30;
+const int MAX_AGE = 100;
 
 /* landscape */
-const int WIDTH                         = 100                    ; /* ランドスケープの幅 */
+const int WIDTH                         = 15                    ; /* ランドスケープの幅 */
 
 const int NUM_V                         = 1                     ; /* ウイルスの種類 */
-const int INIT_NUM_A                    = 1000                    ; /* エージェントの数 */
-const int MAX_NUM_A                     = 1500;                   /* 最大エージェント数 */
+const int INIT_NUM_A                    = 100                    ; /* エージェントの数 */
+const int MAX_NUM_A                     = 150;                   /* 最大エージェント数 */
 
 const double LEN_SCALE                  = 1.0                  ; /* ウイルスに対するエージェントのタグスケール */
 const int TAG_LEN_V                     = 100                    ; /* ウイルスのタグのデフォルトの長さ */

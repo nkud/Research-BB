@@ -45,6 +45,8 @@ Agent :: Agent() :
         tag_[ i ] = rand_binary();              /* タグをランダムに初期化  */
     }
 
+    age_ = rand_interval_int( 0, 100 );
+
     (*vlist_).reserve( NUM_V );                 /* 領域確保 */
     (*stand_by_list_).reserve( NUM_V );         /* 領域確保 */
     (*vlist_).clear();                          /* 配列を空に */
@@ -52,10 +54,9 @@ Agent :: Agent() :
 }
 
 Agent :: ~Agent() {
-    static int i = 0;
-    i++;
     log("die");
-    log(i);
+    delete vlist_;
+    delete stand_by_list_;
 }
 
 /*
@@ -249,32 +250,34 @@ Agent* childbirth( const Agent &a, const Agent &b ) {
 
     Agent *child = new Agent;                   /* 子供を作成 */
 
-    child->resetParam();                         /* パラメータをリセット */
-    child->changeTagLenTo( TAG_LEN_A );          /* タグの長さを設定 */
-
-    tag_t *couple_tag = new tag_t[ a.getLen() + b.getLen() ]; /* 両親を元にした */
-    tag_t *p = couple_tag;                      /* カップルタグを作成 */
-
-    FOR( i, a.getLen() ) {                      /* 両親の */
-        *(p++) = a.tagAt( i );                  /* タグを */
-    }
-    FOR( i, b.getLen() ) {                      /* コピーしていく */
-        *(p++) = b.tagAt( i );
-    }
-    child->setTag( couple_tag+rand_interval_int(0,a.getLen()) , TAG_LEN_A ); /* 子供のタグを作成 */
-    if( a.getSex() == __FEMALE__ ) {            /* 母親の居場所に */
-        int tx = a.getX();
-        int ty = a.getY();
-        child->setX( tx );                       /* 子供を配置 */
-        child->setY( ty );
-    } else {
-        int tx = b.getX();
-        int ty = b.getY();
-        child->setX( tx );
-        child->setY( ty );
-    }
-
-    delete[] couple_tag;                        /* カップルタグを削除 */
+//    child->resetParam();                         /* パラメータをリセット */
+//    child->changeTagLenTo( TAG_LEN_A );          /* タグの長さを設定 */
+//
+//    tag_t *couple_tag = new tag_t[ a.getLen() + b.getLen() ]; /* 両親を元にした */
+//    tag_t *p = couple_tag;                      /* カップルタグを作成 */
+//
+//    FOR( i, a.getLen() ) {                      /* 両親の */
+//        *(p++) = a.tagAt( i );                  /* タグを */
+//        log("a");
+//    }
+//    FOR( i, b.getLen() ) {                      /* コピーしていく */
+//        *(p++) = b.tagAt( i );
+//        log("b");
+//    }
+//    child->setTag( couple_tag+rand_interval_int(0,a.getLen()) , TAG_LEN_A ); /* 子供のタグを作成 */
+//    if( a.getSex() == __FEMALE__ ) {            /* 母親の居場所に */
+//        int tx = a.getX();
+//        int ty = a.getY();
+//        child->setX( tx );                       /* 子供を配置 */
+//        child->setY( ty );
+//    } else {
+//        int tx = b.getX();
+//        int ty = b.getY();
+//        child->setX( tx );
+//        child->setY( ty );
+//    }
+//
+//    delete[] couple_tag;                        /* カップルタグを削除 */
     return child;                              /* 子供を返す */
 }
 

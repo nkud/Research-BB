@@ -33,6 +33,7 @@ class __TagInterface
     public:
         __TagInterface( int );                  /* コンストラクタ: 長さ */
         __TagInterface( const char * );         /* コンストラクタ: 文字列 */
+        ~__TagInterface();                      /* デストラクタ */
 
         tag_t *getTag() const;                  /* タグ配列へのポインタを返す */
         void setTag( tag_t *t, int l );

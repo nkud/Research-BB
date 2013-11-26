@@ -29,7 +29,7 @@ class Monitor;
  */
 class Administrator {
     private:
-        VECTOR(Agent *)& agent_;                     /* エージェントの集合 */
+        VECTOR(Agent *) &agent_;                     /* エージェントの集合 */
         VECTOR(Agent *) new_child_;                        /* 新しく生まれるエージェント */
 
         Virus *virus_;                                     /* ウイルスの集合 */

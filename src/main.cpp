@@ -70,8 +70,8 @@ int main()
         admin.infectAgent();                               /* 待機ウイルスを感染させる */
         admin.responseAgent();                             /* 免疫応答（タグフリップ） */
 
-//        admin.agingAgent();
-//        admin.matingAgant();
+        admin.agingAgent();
+        admin.matingAgant();
 
         admin.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ;        /* 出力: ウイルスの保持状況 */
         admin.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ;

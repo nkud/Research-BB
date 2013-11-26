@@ -15,6 +15,7 @@
 #include "Global.h"
 
 #include <cstring>
+#include <cassert>
 
 /*
  *--------------------------------------------------------------------------------------
@@ -31,6 +32,9 @@ __TagInterface :: __TagInterface( int l ) :
     {
         tag_[i] = 0;                            /* すべてを０で初期化 */
     }
+}
+__TagInterface :: ~__TagInterface() {
+    delete[] tag_;
 }
 
 /*
@@ -115,6 +119,9 @@ void __TagInterface :: printTag() {
  *--------------------------------------------------------------------------------------
  */
 void __TagInterface :: setTag( tag_t *t, int l ) {
+    assert( l > 0 );
     changeTagLenTo( l );
-    tag_ = t;
+    while( l-- ) {
+        tag_[l] = t[l];
+    }
 }

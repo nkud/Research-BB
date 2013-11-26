@@ -26,14 +26,14 @@
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: deleteAgent()
- * Description:  
+ * Description:  配列から指定のエージェントを削除
  *--------------------------------------------------------------------------------------
  */
 ITERATOR(Agent *) Administrator :: deleteAgent( ITERATOR(Agent *) &it ) {
-    ITERATOR(Agent *) pre_it = it - 1;
+    ITERATOR(Agent *) pre_it = it - 1;          /* このエージェントの前を返す*/
 
-    delete *it;
-    agent_.erase( it );
+    delete (*it);                               /* メモリ領域を削除 */
+    agent_.erase( it );                         /* エージェントの配列から削除 */
 
     return pre_it;
 }
@@ -41,27 +41,24 @@ ITERATOR(Agent *) Administrator :: deleteAgent( ITERATOR(Agent *) &it ) {
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: agingAgent()
- * Description:  
+ * Description:  老化させる
+ *               寿命を越えたら、死亡処理をする
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: agingAgent() {
-    ITERATOR(Agent *) it = agent_.begin();
-
-    while( it != agent_.end() ) {
-        //        if( (*it)->isAlive() ) {
-        (*it)->aging();
-        if( (*it)->getAge() > MAX_AGE ) {   /* 寿命をこえたら */
-//            die( **it );                    /* 死亡処理 */
-            it = deleteAgent( it );           /* 生存配列から削除 */
+    ITERATOR(Agent *) it = agent_.begin();      /* 先頭のエージェントから */
+    while( it != agent_.end() ) {               /* エージェントの末尾まで */
+        (*it)->aging();                         /* 老化させる */
+        if( (*it)->getAge() > MAX_AGE ) {       /* もし寿命をこえたら */
+            it = deleteAgent( it );             /* 生存配列から削除される */
         }
-        //        }
-        it++;
+        it++;                                   /* 次のエージェントへ */
     }
 }
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: matingAgant()
- * Description:  
+ * Description:  交配し、新たなエージェントを誕生させる
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: matingAgant() {
@@ -96,7 +93,7 @@ void Administrator :: matingAgant() {
     std::cout<<"[new child]: "<<new_child_.size()<<std::endl;
     ITERATOR( Agent * ) it = new_child_.begin();
     while( it != new_child_.end() ) {
-//        agent_.push_back( *it );
+        agent_.push_back( *it );
         landscape_->pushAgent( (*it)->getX(), (*it)->getY(), **it );
         it++;
     }
