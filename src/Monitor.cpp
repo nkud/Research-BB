@@ -266,6 +266,7 @@ void Monitor :: generatePlotScriptForPng() {
     ofs << "set title \"InfectionContactRatio\" font \"monospace, 24\"" << std::endl
         << "plot " << CONTACT_OUTPUT << " using 1:" << NUM_V+3 << " w l"
         << " title \"ratio\"" << std::endl;
+    ofs << "output" << std::endl;
 }
 
 #ifdef __unix__
