@@ -496,8 +496,15 @@ void Administrator :: outputFile_LastLog( const char *fname ) {
     FOR(i,NUM_V) { ofs<<"["<<virus_[i].getLen()<<"]:";
         FOR(j, virus_[i].getLen()) { ofs<<int(virus_[i].tagAt(j)); } ofs<<std::endl; }
     ofs << ">>> Agent Last Status" << std::endl;
-    FOR(i, agent_.size()) { FOR(j, agent_[0]->getLen()) ofs<<agent_[i]->tagAt(j);
-        ofs<<" "<<agent_[i]->numHoldingVirus(); ofs<<std::endl; }
+    ITERATOR(Agent *) it_a = agent_.begin();
+    while(it_a!=agent_.end()) {
+        FOR(j, (*it_a)->getLen()) {
+            ofs<<(*it_a)->tagAt(j);                                  /* エージェントのタグ */
+        }
+        ofs<<" "<<(*it_a)->numHoldingVirus();                        /* エージェントの保持ウイルス数 */
+        ofs<<std::endl;
+        it_a++;
+    }
 }
 
 /*

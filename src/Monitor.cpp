@@ -253,7 +253,7 @@ void Monitor :: generatePlotScriptForPng() {
         << " title " << "\"I/POPULATION\"" << std::endl;
     // contact
     ofs << "set output \"Contact.png\"" << std::endl;
-    ofs << "set title \"infectioncontact\" font \"monospace, 24\"" << std::endl
+    ofs << "set title \"InfectionContact\" font \"monospace, 24\"" << std::endl
         << "plot "<< CONTACT_OUTPUT << " w l"
         << " title \"contact\"" << std::endl;
     FOR( i, NUM_V ) {
@@ -263,11 +263,9 @@ void Monitor :: generatePlotScriptForPng() {
             << " title " << "\"infect_contact_" << i+1 << "\"" << std::endl;
     }
     ofs << "set output \"ContactRatio.png\"" << std::endl;
-    ofs << "set title \"infectioncontactratio\" font \"monospace, 24\"" << std::endl
+    ofs << "set title \"InfectionContactRatio\" font \"monospace, 24\"" << std::endl
         << "plot " << CONTACT_OUTPUT << " using 1:" << NUM_V+3 << " w l"
         << " title \"ratio\"" << std::endl;
-    ofs << "set output" << std::endl
-        << "pause -1" << std::endl;
 }
 
 #ifdef __unix__
