@@ -3,7 +3,7 @@
  *
  *       Filename:  Monitor.cpp
  *
- *    Description:  
+ *    Description:  モニター、ベンチマーク
  *
  *         Author:  Naoki Ueda
  *   Organization:  OPU, 3G
@@ -16,11 +16,11 @@
 #include <fstream>
 #include <iostream>
 
-#define GPLOT_FILENAME      "plot2.gpi"
-#define HAS_VIRUS_OUTPUT     "\"A_hasVirus.txt\""
+#define GPLOT_FILENAME          "plot2.gpi"
+#define HAS_VIRUS_OUTPUT        "\"A_hasVirus.txt\""
 #define HAS_IMMUNITY_OUTPUT     "\"A_hasImmunity.txt\""
-#define CONTACT_OUTPUT     "\"A_infectionContact.txt\""
-#define POPULATION_OUTPUT     "\"A_Population.txt\""
+#define CONTACT_OUTPUT          "\"A_infectionContact.txt\""
+#define POPULATION_OUTPUT       "\"A_Population.txt\""
 
 Monitor& Monitor :: Instance() {
     static Monitor coredata;
@@ -30,7 +30,7 @@ Monitor& Monitor :: Instance() {
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Monitor :: *
- * Description:  
+ * Description:  ゲッタ
  *--------------------------------------------------------------------------------------
  */
 int Monitor :: getContactNum() const { return num_contact_; }
@@ -39,7 +39,7 @@ int Monitor :: getInfectionContactNum( __TagInterface *t ) { return num_infectio
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Monitor :: resetAll()
- * Description:  
+ * Description:  カウントをリセット
  *--------------------------------------------------------------------------------------
  */
 void Monitor :: resetAll() {

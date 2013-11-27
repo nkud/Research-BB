@@ -52,7 +52,7 @@ int main()
 
     admin.relocateAgent();                                           /* ランダムに配置 */
 
-    monitor.generatePlotScript();                                    /* XXX: gnuplot用 */
+    monitor.generatePlotScript();                                    /* gnuplot用のファイル出力 */
 
     int zero_count = 0;
 
@@ -84,38 +84,31 @@ int main()
         admin.responseAgent();                                       /* 免疫応答（タグフリップ） */
 
 
-        admin.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ;        /* 出力: ウイルスの保持状況 */
-        admin.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ;
-        admin.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ;
-        admin.outputFile_Population            ( "A_Population.txt"       ) ;
+        admin.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ; /* 出力：感染者 */
+        admin.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ; /* 出力：免疫獲得者 */
+        admin.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ; /* 出力：接触回数 */
+        admin.outputFile_Population            ( "A_population.txt"       ) ; /* 出力：人口 */
 
         /* 途中経過 */
         log( monitor.getContactNum() );
-        if( admin.getNumOfAgent() >= MAX_NUM_A ) break;
+        if( admin.getNumOfAgent() >= MAX_NUM_A ) break;              /* 最大エージェントを越えると終了 */
         if( monitor.getContactNum()==0 ) zero_count++;               /* １０回以上接触感染がなければ */
         if( zero_count >= 10 ) break;                                /* 強制的に終了する */
     }
     
-    // 確認用 -----------------------------------------------------------------
+    admin.outputFile_LastLog( "A_log.txt" );                         /* プログラムの初期設定など出力 */
     admin.printInitInfo();                                           /* 初期状態を表示 */
 
-    // エージェントの最終的な状態など -----------------------------------------
-//    admin.outputFile_LastLog( "A_log.txt" );
-
-    // ------------------------------------------------------------------------
-    // メモ
-    // 計測時間出力                             /* XXX: ??? */
 #ifdef __unix__
     Benchmark::Instance().stopTimer();                               /* ベンチマークの計測終了 */
     Benchmark::Instance().printTime();                               /* 計測時間表示 */
 #endif
+
+    // 確認用 -----------------------------------------------------------------
+    // メモ
+    // 計測時間出力
     log(sizeof(Agent));
     log(sizeof(Virus));
     log(sizeof(admin));
-//    childbirth( *agent[0], *agent[1], *agent[2] );
-//    agent[0]->printTag();
-//    agent[1]->printTag();
-//    agent[2]->printTag();
-//    log(agent[0]->getAge());
     return 0;
 }
