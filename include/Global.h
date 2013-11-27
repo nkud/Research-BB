@@ -36,11 +36,11 @@
 typedef int tag_t;                                                   /* タグの型（通常 int ） */
 
 // Configure ==============================================
-//#define OUTPUT_HAS_VIRUS                                             /* 感染者を表示 */
-//#define OUTPUT_HAS_IMMUNITY                                        /* 免疫獲得者を表示 */
+#define OUTPUT_HAS_VIRUS                                             /* 感染者を表示 */
+#define OUTPUT_HAS_IMMUNITY                                        /* 免疫獲得者を表示 */
 #define OUTPUT_SIR                                                   /* SIR形式で表示 */
 #define OUTPUT_CONTACT                                               /* 接触回数を表示 */
-//#define OUTPUT_POPULATION                                            /* エージェントの人口推移を表示 */
+#define OUTPUT_POPULATION                                            /* エージェントの人口推移を表示 */
 
 #define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 //#define RANDOM_LOCATE                                                /* ランダムに再配置する */

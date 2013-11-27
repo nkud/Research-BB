@@ -53,6 +53,7 @@ int main()
     admin.relocateAgent();                                           /* ランダムに配置 */
 
     monitor.generatePlotScript();                                    /* gnuplot用のファイル出力 */
+    monitor.generatePlotScriptForPng();                                /* gnuplot用のファイル出力 */
 
     int zero_count = 0;
 

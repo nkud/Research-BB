@@ -51,6 +51,7 @@ class Monitor {
         void resetAll();                                             /* 値をすべてリセット */
 
         void generatePlotScript();                                   /* プロット用のスクリプトを生成 */
+        void generatePlotScriptForPng();                               /* プロット用のスクリプトを生成 */
 };
 
 #ifdef __unix__
