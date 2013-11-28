@@ -22,6 +22,7 @@
 
 #define OFS(str)                do { ofs << str << "<br />" << std::endl; }while(0);
 #define OFS_VAL(str)            do { ofs << #str << ": " << str << "<br />" << std::endl; }while(0);
+#define OFS_IMG(str)            do { ofs << "<img src="<<#str<<"/>" << std::endl; }while(0);
 
 #define HAS_VIRUS_OUTPUT        "\"A_hasVirus.txt\""
 #define HAS_IMMUNITY_OUTPUT     "\"A_hasImmunity.txt\""
@@ -314,6 +315,15 @@ void Monitor :: generateResultHtml() {
     OFS_VAL( TAG_LEN_A );
     OFS_VAL( INFECTION_RATE );
     OFS_VAL( INIT_INFECTED_RATIO );
+    OFS( "<hr>" );
+    OFS_IMG( "Population.png" );
+    OFS_IMG( "HasVirus.png" );
+    OFS_IMG( "HasImmunity.png" );
+    OFS_IMG( "SIR.png" );
+    OFS_IMG( "SIR_RATIO.png" );
+    OFS_IMG( "SIR_0.png" );
+    OFS_IMG( "SIR_0_RATIO.png" );
+    OFS_IMG( "InfectionContactRatio.png" );
     OFS( "</code></html></body>" );
 }
 
