@@ -22,7 +22,7 @@
 
 #define OFS(str)                do { ofs << str << "<br />" << std::endl; }while(0);
 #define OFS_VAL(str)            do { ofs << #str << ": " << str << "<br />" << std::endl; }while(0);
-#define OFS_IMG(str)            do { ofs << "<img src="<<#str<<"/>" << std::endl; }while(0);
+#define OFS_IMG(str)            do { ofs << "<img src="<<#str<<" width=\"320px\" />" << std::endl; }while(0);
 
 #define HAS_VIRUS_OUTPUT        "\"A_hasVirus.txt\""
 #define HAS_IMMUNITY_OUTPUT     "\"A_hasImmunity.txt\""
