@@ -57,12 +57,12 @@ const int WIDTH                       = 60                    ;      /* ラン�
 const int MAX_AGE                     = 20                    ;      /* 寿命 */
 const double BIRTH_RATE               = 0.03                  ;      /* 出産確率 */
 
-const int NUM_V                       = 1                     ;      /* ウイルスの種類 */
+const int NUM_V                       = 4                     ;      /* ウイルスの種類 */
 const int INIT_NUM_A                  = 1000                  ;      /* 初期エージェントの数 */
 const int MAX_NUM_A                   = 6000                 ;      /* 最大エージェント数 */
 
 const double LEN_SCALE                = 1.0                   ;      /* ウイルスに対するエージェントのタグスケール */
-const int TAG_LEN_V                   = 50                    ;      /* ウイルスのタグのデフォルトの長さ */
+const int TAG_LEN_V                   = 30                    ;      /* ウイルスのタグのデフォルトの長さ */
 //const int TAG_LEN_A                   = LEN_SCALE * TAG_LEN_V ;      /* エージェントのタグ長 */
 const int TAG_LEN_A                   = 50                    ;      /* エージェントのタグ長 */
 

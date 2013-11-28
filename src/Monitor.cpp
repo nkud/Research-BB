@@ -20,19 +20,15 @@
 #define AUTO_GPLOT_FILENAME     "auto.plt"
 #define FNAME_RESULT_HTML       "RESULT.html"
 
+#define OFS_STR(str)                do { ofs << str << std::endl; }while(0);
 #define OFS(str)                do { ofs << str << "<br />" << std::endl; }while(0);
 #define OFS_VAL(str)            do { ofs << #str << ": " << str << "<br />" << std::endl; }while(0);
-#define OFS_IMG(str)            do { ofs << "<img src="<<#str<<" width=\"320px\" />" << std::endl; }while(0);
+#define OFS_IMG(str)            do { ofs << "<img src="<<#str<<"/><br />" << std::endl; }while(0);
 
 #define HAS_VIRUS_OUTPUT        "\"A_hasVirus.txt\""
 #define HAS_IMMUNITY_OUTPUT     "\"A_hasImmunity.txt\""
 #define CONTACT_OUTPUT          "\"A_infectionContact.txt\""
 #define POPULATION_OUTPUT       "\"A_population.txt\""
-
-Monitor& Monitor :: Instance() {
-    static Monitor coredata;
-    return coredata;
-}
 
 /*
  *--------------------------------------------------------------------------------------
@@ -42,6 +38,11 @@ Monitor& Monitor :: Instance() {
  */
 int Monitor :: getContactNum() const { return num_contact_; }
 int Monitor :: getInfectionContactNum( __TagInterface *t ) { return num_infection_contact_[ t ]; }
+Monitor& Monitor :: Instance() {
+    static Monitor coredata;
+    return coredata;
+}
+
 
 /*
  *--------------------------------------------------------------------------------------
@@ -116,41 +117,45 @@ void Monitor :: generatePlotScript() {
 #ifdef OUTPUT_SIR
     // SIR
     ofs << "set title \"SIR\" font \"helvetica, 24\"" << std::endl;
-    ofs << "plot " << HAS_IMMUNITY_OUTPUT
-        << " using 1:" << NUM_V+1 << " w l"
-        << " title " << "\"R\"" << std::endl;
-    ofs << "replot " << HAS_VIRUS_OUTPUT
-        << " using 1:" << NUM_V+1 << " w l"
+    ofs << "plot " << HAS_VIRUS_OUTPUT
+        << " using 1:" << NUM_V+2 << " w l"
         << " title " << "\"I\"" << std::endl;
+    ofs << "replot " << HAS_IMMUNITY_OUTPUT
+        << " using 1:" << NUM_V+2 << " w l"
+        << " title " << "\"R\"" << std::endl;
     ofs << "set output" << std::endl
         << "pause -1" << std::endl;
 
     // SIR_0
     ofs << "set title \"SIR_0\" font \"helvetica, 24\"" << std::endl;
-    ofs << "plot " << HAS_IMMUNITY_OUTPUT << " w l"
+    ofs << "replot " << HAS_IMMUNITY_OUTPUT << " w l"
         << " title " << "\"R\"" << std::endl;
-    ofs << "replot " << HAS_VIRUS_OUTPUT << " w l"
+    ofs << "plot " << HAS_VIRUS_OUTPUT << " w l"
         << " title " << "\"I\"" << std::endl;
     ofs << "set output" << std::endl
         << "pause -1" << std::endl;
     // SIR_RATIO
     ofs << "set title \"SIR_RATIO\" font \"helvetica, 24\"" << std::endl;
-    ofs << "plot " << HAS_IMMUNITY_OUTPUT
-        << " using 1:" << NUM_V+3 << " w l"
-        << " title " << "\"R/POPULATION\"" << std::endl;
-    ofs << "replot " << HAS_VIRUS_OUTPUT
+    OFS_STR( "set yrange[0:1]" );
+    ofs << "plot " << HAS_VIRUS_OUTPUT
         << " using 1:" << NUM_V+3 << " w l"
         << " title " << "\"I/POPULATION\"" << std::endl;
+    ofs << "replot " << HAS_IMMUNITY_OUTPUT
+        << " using 1:" << NUM_V+3 << " w l"
+        << " title " << "\"R/POPULATION\"" << std::endl;
+    OFS_STR ( "set autoscale y" );
     ofs << "set output" << std::endl
         << "pause -1" << std::endl;
     // SIR_0_RATIO
     ofs << "set title \"SIR_0_RATIO\" font \"helvetica, 24\"" << std::endl;
-    ofs << "plot " << HAS_IMMUNITY_OUTPUT
-        << " using 1:" << NUM_V+4 << " w l"
-        << " title " << "\"R/POPULATION\"" << std::endl;
-    ofs << "replot " << HAS_VIRUS_OUTPUT
+    OFS_STR( "set yrange[0:1]" );
+    ofs << "plot " << HAS_VIRUS_OUTPUT
         << " using 1:" << NUM_V+4 << " w l"
         << " title " << "\"I/POPULATION\"" << std::endl;
+    ofs << "replot " << HAS_IMMUNITY_OUTPUT
+        << " using 1:" << NUM_V+4 << " w l"
+        << " title " << "\"R/POPULATION\"" << std::endl;
+    OFS_STR ( "set autoscale y" );
     ofs << "set output" << std::endl
         << "pause -1" << std::endl;
 #endif
@@ -162,7 +167,7 @@ void Monitor :: generatePlotScript() {
     FOR( i, NUM_V ) {
         ofs << "replot " << CONTACT_OUTPUT
             << " using 1:" << i+3 << " w l"
-            << " title " << "\"infect_contact_" << i+1 << "\"" << std::endl;
+            << " title " << "\"infection_contact_" << i+1 << "\"" << std::endl;
     }
     ofs << "set output" << std::endl
         << "pause -1" << std::endl;
@@ -186,26 +191,26 @@ void Monitor :: generatePlotScriptForPng() {
     std::ofstream ofs(AUTO_GPLOT_FILENAME);
     ofs << "set terminal png" << std::endl;
     ofs << "set output \"Population.png\"" << std::endl;
-    ofs << "set title \"Population\" font \"monospace, 24\"" << std::endl
+    ofs << "set title \"Population\"" << std::endl
         << "plot " << POPULATION_OUTPUT << " w l"
         << " title " << "\"population\"" << std::endl;
     ofs << "set output \"HasVirus.png\"" << std::endl;
-    ofs << "set title \"ウイルス保持者\" font \"monospace, 24\"" << std::endl
+    ofs << "set title \"HasVirus\"" << std::endl
         << "plot " << HAS_VIRUS_OUTPUT << " w l"
-        << " title " << "\"ウイルス" << 0 << "保持\"" << std::endl;
+        << " title " << "\"has_virus_" << 0 << std::endl;
     FOR( i, NUM_V-1 ) {
         ofs << "set output \"HasVirus.png\"" << std::endl;
         ofs << "replot " << HAS_VIRUS_OUTPUT
             << " using 1:" << i+3 << " w l"
-            << " title " << "\"ウイルス" << i+1 << "保持\"" << std::endl;
+            << " title " << "\"has_virus_" << i+1 << std::endl;
     }
     ofs << "set output \"HasVirus.png\"" << std::endl;
     ofs << "replot " << HAS_VIRUS_OUTPUT
         << " using 1:" << NUM_V+2 << " w l"
-        << " title " << "\"全ウイルス保持\"" << std::endl;
+        << " title " << "\"has_all_virus\"" << std::endl;
     // hasImmunity
     ofs << "set output \"HasImmunity.png\"" << std::endl;
-    ofs << "set title \"hasImmunity\" font \"monospace, 24\"" << std::endl
+    ofs << "set title \"hasImmunity\"" << std::endl
         << "plot "<< HAS_IMMUNITY_OUTPUT << " w l"
         << " title \"has_immunity_0\"" << std::endl;
     FOR( i, NUM_V-1 ) {
@@ -220,46 +225,50 @@ void Monitor :: generatePlotScriptForPng() {
         << " title " << "\"has_all_immunity\"" << std::endl;
     // SIR
     ofs << "set output \"SIR.png\"" << std::endl;
-    ofs << "set title \"SIR\" font \"monospace, 24\"" << std::endl;
-    ofs << "plot " << HAS_IMMUNITY_OUTPUT
-        << " using 1:" << NUM_V+1 << " w l"
-        << " title " << "\"R\"" << std::endl;
-    ofs << "set output \"SIR.png\"" << std::endl;
-    ofs << "replot " << HAS_VIRUS_OUTPUT
-        << " using 1:" << NUM_V+1 << " w l"
+    ofs << "set title \"SIR\"" << std::endl;
+    ofs << "plot " << HAS_VIRUS_OUTPUT
+        << " using 1:" << NUM_V+2 << " w l"
         << " title " << "\"I\"" << std::endl;
+    ofs << "set output \"SIR.png\"" << std::endl;
+    ofs << "replot " << HAS_IMMUNITY_OUTPUT
+        << " using 1:" << NUM_V+2 << " w l"
+        << " title " << "\"R\"" << std::endl;
 
     // SIR_0
     ofs << "set output \"SIR_0.png\"" << std::endl;
-    ofs << "set title \"SIR_0\" font \"monospace, 24\"" << std::endl;
-    ofs << "plot " << HAS_IMMUNITY_OUTPUT << " w l"
-        << " title " << "\"R\"" << std::endl;
+    ofs << "set title \"SIR_0\"" << std::endl;
+    ofs << "plot " << HAS_VIRUS_OUTPUT << " w l"
+        << " title " << "\"I_0\"" << std::endl;
     ofs << "set output \"SIR_0.png\"" << std::endl;
-    ofs << "replot " << HAS_VIRUS_OUTPUT << " w l"
-        << " title " << "\"I\"" << std::endl;
+    ofs << "replot " << HAS_IMMUNITY_OUTPUT << " w l"
+        << " title " << "\"R_0\"" << std::endl;
     // SIR_RATIO
     ofs << "set output \"SIR_RATIO.png\"" << std::endl;
-    ofs << "set title \"SIR_RATIO\" font \"monospace, 24\"" << std::endl;
-    ofs << "plot " << HAS_IMMUNITY_OUTPUT
-        << " using 1:" << NUM_V+3 << " w l"
-        << " title " << "\"R/POPULATION\"" << std::endl;
-    ofs << "set output \"SIR_RATIO.png\"" << std::endl;
-    ofs << "replot " << HAS_VIRUS_OUTPUT
+    OFS_STR( "set yrange[0:1]" );
+    ofs << "set title \"SIR_RATIO\"" << std::endl;
+    ofs << "plot " << HAS_VIRUS_OUTPUT
         << " using 1:" << NUM_V+3 << " w l"
         << " title " << "\"I/POPULATION\"" << std::endl;
+    ofs << "set output \"SIR_RATIO.png\"" << std::endl;
+    ofs << "replot " << HAS_IMMUNITY_OUTPUT
+        << " using 1:" << NUM_V+3 << " w l"
+        << " title " << "\"R/POPULATION\"" << std::endl;
+    OFS_STR( "set autoscale y" );
     // SIR_0_RATIO
     ofs << "set output \"SIR_0_RATIO.png\"" << std::endl;
-    ofs << "set title \"SIR_0_RATIO\" font \"monospace, 24\"" << std::endl;
-    ofs << "plot " << HAS_IMMUNITY_OUTPUT
+    OFS_STR( "set yrange[0:1]" );
+    ofs << "set title \"SIR_0_RATIO\"" << std::endl;
+    ofs << "plot " << HAS_VIRUS_OUTPUT
         << " using 1:" << NUM_V+4 << " w l"
-        << " title " << "\"R/POPULATION\"" << std::endl;
+        << " title " << "\"I_0/POPULATION\"" << std::endl;
     ofs << "set output \"SIR_0_RATIO.png\"" << std::endl;
-    ofs << "replot " << HAS_VIRUS_OUTPUT
+    ofs << "replot " << HAS_IMMUNITY_OUTPUT
         << " using 1:" << NUM_V+4 << " w l"
-        << " title " << "\"I/POPULATION\"" << std::endl;
+        << " title " << "\"R_0/POPULATION\"" << std::endl;
+    OFS_STR( "set autoscale y" );
     // contact
     ofs << "set output \"Contact.png\"" << std::endl;
-    ofs << "set title \"InfectionContact\" font \"monospace, 24\"" << std::endl
+    ofs << "set title \"InfectionContact\"" << std::endl
         << "plot "<< CONTACT_OUTPUT << " w l"
         << " title \"contact\"" << std::endl;
     FOR( i, NUM_V ) {
@@ -269,10 +278,12 @@ void Monitor :: generatePlotScriptForPng() {
             << " title " << "\"infect_contact_" << i+1 << "\"" << std::endl;
     }
     ofs << "set output \"ContactRatio.png\"" << std::endl;
-    ofs << "set title \"InfectionContactRatio\" font \"monospace, 24\"" << std::endl
+    OFS_STR( "set yrange[0:1]" );
+    ofs << "set title \"InfectionContactRatio\"" << std::endl
         << "plot " << CONTACT_OUTPUT << " using 1:" << NUM_V+3 << " w l"
         << " title \"ratio\"" << std::endl;
-    ofs << "output" << std::endl;
+    OFS_STR( "set autoscale y" );
+    ofs << "set output" << std::endl;
 }
 
 /*
@@ -315,15 +326,54 @@ void Monitor :: generateResultHtml() {
     OFS_VAL( TAG_LEN_A );
     OFS_VAL( INFECTION_RATE );
     OFS_VAL( INIT_INFECTED_RATIO );
+#ifdef __unix__
+    ofs << "[実行時間]: " << Benchmark::Instance().getTime() << " sec" << std::endl;
+#endif
     OFS( "<hr>" );
     OFS_IMG( "Population.png" );
+    OFS( "</br>" );
+    // 人口
+    OFS( "population: エージェントの総人口" );
+    OFS( "<hr>" );
+    // 感染者
     OFS_IMG( "HasVirus.png" );
+    FOR( i, NUM_V ) {
+        ofs << "has_virus_" << i << ": "
+            << "ウイルス " << i << " に感染しているエージェント数<br />" << std::endl;
+    }
+    ofs << "has_all_virus" << "すべてのウイルスに感染しているエージェント数" << std::endl;
+    OFS( "<hr>" );
+    // 免疫獲得者
     OFS_IMG( "HasImmunity.png" );
+    FOR( i, NUM_V ) {
+        ofs << "has_virus_" << i << ": "
+            << "ウイルス " << i << " への免疫を獲得しているエージェント数<br />" << std::endl;
+    }
+    ofs << "has_all_virus" << "すべてのウイルスへの免疫を獲得しているエージェント数" << std::endl;
+    OFS( "<hr>" );
+    // SIR
     OFS_IMG( "SIR.png" );
+    OFS( "I: すべてのウイルスに感染しているエージェント数" );
+    OFS( "R: すべてのウイルスに対して免疫を獲得しているエージェント数" );
     OFS_IMG( "SIR_RATIO.png" );
+    OFS( "I/POPULATION: すべてのウイルスに感染しているエージェント数 / その時点での総エージェント数" );
+    OFS( "R/POPULATION: すべてのウイルスに対して免疫を獲得しているエージェント数 / その時点での総エージェント数" );
     OFS_IMG( "SIR_0.png" );
+    OFS( "I: ウイルス 0 に感染しているエージェント数" );
+    OFS( "R: ウイルス 0 に対して免疫を獲得しているエージェント数" );
     OFS_IMG( "SIR_0_RATIO.png" );
-    OFS_IMG( "InfectionContactRatio.png" );
+    OFS( "I/POPULATION: ウイルス 0 に感染しているエージェント数 / その時点での総エージェント数" );
+    OFS( "R/POPULATION: ウイルス 0 に対して免疫を獲得しているエージェント数 / その時点での総エージェント数" );
+    OFS( "<hr>" );
+    // 接触回数
+    OFS_IMG( "Contact.png" );
+    OFS( "contact: 総接触回数" );
+    FOR( i, NUM_V ) {
+        ofs << "infection_contact_" << i << ": "
+            << "ウイルス " << i << " を感染させた接触回数<br />" << std::endl;
+    }
+    OFS_IMG( "ContactRatio.png" );
+    OFS( "ratio: 何らかのウイルスを感染させた接触回数 / 総接触回数" );
     OFS( "</code></html></body>" );
 }
 

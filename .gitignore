@@ -6,6 +6,7 @@ tags
 *.dat
 *.csv
 *.txt
+*.png
 
 core
 log
