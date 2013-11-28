@@ -315,7 +315,7 @@ void Monitor :: generatePlotScriptForPng() {
 void Monitor :: generateResultHtml() {
     std::ofstream ofs( FNAME_RESULT_HTML );
     OFS( "<html><body><code><center>" );
-    OFS( "<h1>設定</h1>" );
+    OFS( "<h1 align=left>設定</h1>" );
     OFS_STR( "<div align=left>" );
 #ifdef RANDOM_LOCATE                                                 /* 移動方法 */
     OFS( "[ 移動 ] 土地にランダムで再配置される" );
@@ -358,14 +358,14 @@ void Monitor :: generateResultHtml() {
 
 #if defined(AGING_AGENT) || defined( MATING_AGENT)
     // 人口
-    OFS( "<h2>人口</h2>" );
+    OFS( "<h2 align=left>人口</h2>" );
     OFS_IMG( "Population.png" );
     OFS( "</br>" );
     OFS( "population: エージェントの総人口" );
     OFS( "<hr>" );
 #endif
     // 感染者
-    OFS( "<h2>感染者</h2>" );
+    OFS( "<h2 align=left>感染者</h2>" );
     OFS_IMG( "HasVirus.png" );
     FOR( i, NUM_V ) {
         ofs << "has_virus_" << i << ": "
@@ -374,7 +374,7 @@ void Monitor :: generateResultHtml() {
     ofs << "has_all_virus" << "すべてのウイルスに感染しているエージェント数" << std::endl;
     OFS( "<hr>" );
     // 免疫獲得者
-    OFS( "<h2>免疫獲得者</h2>" );
+    OFS( "<h2 align=left>免疫獲得者</h2>" );
     OFS_IMG( "HasImmunity.png" );
     FOR( i, NUM_V ) {
         ofs << "has_virus_" << i << ": "
@@ -383,7 +383,7 @@ void Monitor :: generateResultHtml() {
     ofs << "has_all_virus" << "すべてのウイルスへの免疫を獲得しているエージェント数" << std::endl;
     OFS( "<hr>" );
     // SIR
-    OFS( "<h2>SIR</h2>" );
+    OFS( "<h2 align=left>SIR</h2>" );
     OFS_IMG( "SIR.png" );
     OFS( "I: すべてのウイルスに感染しているエージェント数" );
     OFS( "R: すべてのウイルスに対して免疫を獲得しているエージェント数" );
@@ -398,7 +398,7 @@ void Monitor :: generateResultHtml() {
     OFS( "R/POPULATION: ウイルス 0 に対して免疫を獲得しているエージェント数 / その時点での総エージェント数" );
     OFS( "<hr>" );
     // 接触回数
-    OFS( "<h2>接触回数</h2>" );
+    OFS( "<h2 align=left>接触回数</h2>" );
     OFS_IMG( "Contact.png" );
     OFS( "contact: 総接触回数" );
     FOR( i, NUM_V ) {

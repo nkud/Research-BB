@@ -57,7 +57,7 @@ const int WIDTH                       = 60                    ;      /* ラン�
 const int MAX_AGE                     = 20                    ;      /* 寿命 */
 const double BIRTH_RATE               = 0.03                  ;      /* 出産確率 */
 
-const int NUM_V                       = 4                     ;      /* ウイルスの種類 */
+const int NUM_V                       = 10                     ;      /* ウイルスの種類 */
 const int INIT_NUM_A                  = 1000                  ;      /* 初期エージェントの数 */
 const int MAX_NUM_A                   = 6000                 ;       /* 最大エージェント数 */
 
