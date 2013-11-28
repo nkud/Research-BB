@@ -51,5 +51,6 @@ all: $(TARGET) run plot
 rebuild: tags build run plot
 
 plot :
+	@gnuplot auto.plt
 	@echo [ plot start ]
 	@gnuplot quick.plt

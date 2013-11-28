@@ -49,7 +49,7 @@ typedef int tag_t;                                                   /* タグ�
 //#define MATING_AGENT
 #define COUPLE_TAG                                                   /* カップルタグで子供を作る */
 
-const int TERM                        = 100                   ;      /* 期間 */
+const int TERM                        = 200                   ;      /* 期間 */
 const int OUTPUT_INTERVAL             = 1                     ;      /* 出力する間隔 */
 
 const int WIDTH                       = 60                    ;      /* ランドスケープの幅 */
@@ -57,17 +57,17 @@ const int WIDTH                       = 60                    ;      /* ラン�
 const int MAX_AGE                     = 20                    ;      /* 寿命 */
 const double BIRTH_RATE               = 0.03                  ;      /* 出産確率 */
 
-const int NUM_V                       = 10                     ;      /* ウイルスの種類 */
+const int NUM_V                       = 3                     ;      /* ウイルスの種類 */
 const int INIT_NUM_A                  = 1000                  ;      /* 初期エージェントの数 */
 const int MAX_NUM_A                   = 6000                 ;       /* 最大エージェント数 */
 
 const double LEN_SCALE                = 1.0                   ;      /* ウイルスに対するエージェントのタグスケール */
 const int TAG_LEN_V                   = 30                    ;      /* ウイルスのタグのデフォルトの長さ */
 //const int TAG_LEN_A                   = LEN_SCALE * TAG_LEN_V ;      /* エージェントのタグ長 */
-const int TAG_LEN_A                   = 50                    ;      /* エージェントのタグ長 */
+const int TAG_LEN_A                   = 60                    ;      /* エージェントのタグ長 */
 
-const double INFECTION_RATE           = 0.3                   ;      /* デフォルトの感染率 */
-const double INIT_INFECTED_RATIO      = 0.1                   ;      /* 初期感染率 */
+const double INFECTION_RATE           = 0.8                   ;      /* デフォルトの感染率 */
+const double INIT_INFECTED_RATIO      = 0.2                   ;      /* 初期感染率 */
 
 const int MAX_VIRUS_AGENT_HAVE        = NUM_V                 ;      /* 最大保持ウイルス */
 const int MAX_V_AGENT_INFECT_ONT_TIME = 1                     ;      /* １期間で感染させるウイルスの最大数 */

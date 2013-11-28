@@ -23,7 +23,7 @@
 #define OFS_STR(str)            do { ofs<< str << std::endl; }while(0);
 #define OFS(str)                do { ofs<<str<<"<br />"<<std::endl; }while(0);
 #define OFS_VAL(str,val)        do { ofs<<"[ "<<str<<" ]: "<<val<<"<br />"<<std::endl; }while(0);
-#define OFS_IMG(str)            do { ofs<<"<img src="<<#str<<"/><br />"<<std::endl; }while(0);
+#define OFS_IMG(str)            do { ofs<<"<br /><img src="<<#str<<" style=\"border:solid 1px gray;\"/><br />"<<std::endl; }while(0);
 #define OFS_TD(str,val)         do { ofs<<"<tr><td>"<<str<<"</td>"<<"<td>"<<val<<"</td></tr>"<<std::endl; }while(0);
 
 #define HAS_VIRUS_OUTPUT        "\"A_hasVirus.txt\""
@@ -315,30 +315,30 @@ void Monitor :: generatePlotScriptForPng() {
 void Monitor :: generateResultHtml() {
     std::ofstream ofs( FNAME_RESULT_HTML );
     OFS( "<html><body><font color=gray><code><center>" );
-    OFS( "<h1 align=left>設定</h1>" );
-    OFS_STR( "<div align=left>" );
+    OFS( "<h1><font color=black>計算結果</font></h1>" );
+    OFS( "<h2 align=left>設定</h2>" );
+    // table
+    OFS_STR( "<table style=\"border:solid 1px gray\"; width=640px>" );
 #ifdef RANDOM_LOCATE                                                 /* 移動方法 */
-    OFS( "[ 移動 ] 土地にランダムで再配置される" );
+    OFS_TD( "[ 移動 ]", "土地にランダムで再配置される" );
 #else
-    OFS( "[ 移動 ] エージェントが指定された距離をランダムに移動する" );
+    OFS_TD( "[ 移動 ]", "エージェントが指定された距離をランダムに移動する" );
 #endif
 #ifdef AGING_AGENT                                                   /* 老化 */
-    OFS( "[ 老化 ] 有" );
+    OFS_TD( "[ 老化 ]", "有" );
 #else
-    OFS( "[ 老化 ] 無" );
+    OFS_TD( "[ 老化 ]", "無" );
 #endif
 #ifdef MATING_AGENT                                                  /* 交配・出産 */
-    OFS( "[ 交配 ] 有" );
+    OFS_TD( "[ 交配 ]", "有" );
 #ifdef COUPLE_TAG                                                    /* 子供のタグ */
-    OFS( "[ 子供のタグ ] カップルタグ" );
+    OFS_TD( "[ 子供のタグ ]", "カップルタグ" );
 #else
-    OFS( "[ 子供のタグ ] 両親のタグ" );
+    OFS_TD( "[ 子供のタグ ]", "両親のタグ" );
 #endif
 #else
-    OFS( "[ 交配 ] 無" );
+    OFS_TD( "[ 交配 ]", "無" );
 #endif
-    OFS_STR( "</div>" );
-    OFS_STR( "<table style=\"border:solid 1px black\"; width=300px>" );
     OFS_TD( "<font color=blue>ウイルスの数</font>", NUM_V );
     OFS_TD( "<font color=blue>ウイルスのタグ長</font>", TAG_LEN_V );
     OFS_TD( "<font color=blue>ウイルスの感染確率</font>", INFECTION_RATE );
