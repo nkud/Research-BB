@@ -23,17 +23,17 @@
  *  Description:  
  * =====================================================================================
  */
-class Virus : public __TagInterface             /* ウイルスのクラス*/
+class Virus : public __TagInterface                                  /* ウイルスのクラス*/
 {
-        double rate_;                           /* 感染確率 */
+        double rate_;                                                /* 感染確率 */
 
     public:
-        Virus( const char * );                  /* コンストラクタ: タグ */
-        Virus( int, double );                   /* コンストラクタ: タグ長, 感染率 */
-        Virus();                                /* コンストラクタ: default */
+        Virus( const char * );                                       /* コンストラクタ: タグ */
+        Virus( int, double );                                        /* コンストラクタ: タグ長, 感染率 */
+        Virus();                                                     /* コンストラクタ: default */
 
-        double getRate() const;                 /* 感染確率を返す */
-        void setRate( const double r );         /* 感染確率を設定 */
+        double getRate() const;                                      /* 感染確率を返す */
+        void setRate( const double r );                              /* 感染確率を設定 */
 };
 
 #endif

@@ -23,8 +23,10 @@
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Agent :: Agent()
- * Description:  
+ *      Method:  Agent :: Agent() / ~Agent()
+ * Description:  コンストラクタ、デストラクタ
+ *               性別はランダムに初期化
+ *               寿命は０才から最大年齢までの範囲でランダムに初期化
  *--------------------------------------------------------------------------------------
  */
 Agent :: Agent() :
@@ -44,15 +46,13 @@ Agent :: Agent() :
 
     FOR( i, TAG_LEN_A )
     {
-        tag_[ i ] = rand_binary();                                   /* タグをランダムに初期化  */
+        tag_[i] = rand_binary();                                     /* タグをランダムに初期化  */
     }
 
     age_ = rand_interval_int( 0, MAX_AGE );                          /* 寿命をランダムに設定 */
 
     (*vlist_).reserve( NUM_V );                                      /* 領域確保 */
     (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
-    (*vlist_).clear();                                               /* 配列を空に */
-    (*stand_by_list_).clear();                                       /* 配列を空に */
 }
 
 Agent :: ~Agent() {
@@ -63,7 +63,8 @@ Agent :: ~Agent() {
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Agent :: resetParam()
- * Description:  
+ * Description:  エージェントのパラメータをリセット
+ *               年齢は０才で初期化
  *--------------------------------------------------------------------------------------
  */
 void Agent :: resetParam() {
@@ -71,14 +72,14 @@ void Agent :: resetParam() {
     if( rand_binary() == 0 ) { sex_ = __MALE__;                      /* 性別をランダムに初期化 */
     } else { sex_ = __FEMALE__; }
     life_ = __ALIVE__;                                               /* 生存 */
-    (*vlist_).clear();
-    (*stand_by_list_).clear();
+    (*vlist_).clear();                                               /* 保持ウイルスリストクリア */
+    (*stand_by_list_).clear();                                       /* 待機ウイルスリストクリア */
 }
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Agent :: hasAlreadyGiveBirth()
- * Description:  
+ *      Method:  Agent :: birthChild *
+ * Description:  出産関連の関数
  *--------------------------------------------------------------------------------------
  */
 bool Agent :: hasAlreadyGiveBirth() {
@@ -137,11 +138,11 @@ bool Agent :: isDead() const { if( life_ == __DEATH__ ) return false; else retur
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Agent :: aging
- * Description:  
+ * Description:  老化する
  *--------------------------------------------------------------------------------------
  */
 int Agent :: aging() {
-    age_++;
+    age_++;                                                          /* 年齢をインクリメント */
     return age_;
 }
 
@@ -156,22 +157,22 @@ bool Agent :: infection( Virus &v )
     if( getVirusListSize() >= MAX_VIRUS_AGENT_HAVE ) {               /* 最大値を越えてたら */
         return false;                                                /* 感染せずに終了 */
     }
-    ITERATOR(VirusData *) it = getVirusListIteratorBegin();
-    while( it != getVirusListIteratorEnd() ) {                       /* 既に保持しているウイルスなら終了 */
-        if( (*it)->v_ == &v ) {
-            return false;
+    ITERATOR(VirusData *) it_vd = getVirusListIteratorBegin();       /* 保持ウイルスリストを取得 */
+    while( it_vd != getVirusListIteratorEnd() ) {                    /* 既に保持しているウイルスなら */
+        if( (*it_vd)->v_ == &v ) {
+            return false;                                            /* 感染せずに終了 */
         }
-        it++;
+        it_vd++;                                                     /* 次の保持ウイルス */
     }
     if( hasImmunity( v ) ) {                                         /* 免疫獲得済みなら  */
         return false;                                                /* 感染せずに終了 */
     }
-    /* 感染リストに追加  */
-    VirusData *vdata = new VirusData( v, min_ham_distance_point( tag_, v.getTag(), len_, v.getLen() ) );     /* スタートポイント */
-    pushVirusData( vdata );
+    VirusData *vdata                                                 /* 新しいウイルスデータを作成して */
+        = new VirusData( v, min_ham_distance_point( tag_, v.getTag(), len_, v.getLen() ) );
+    pushVirusData( vdata );                                          /* 保持ウイルスリストに追加する */
 
     Monitor::Instance().countUpInfectionContact(vdata->v_);          /* 感染のために接触した回数を増やす */
-    return true;                                                     /* 感染したら true を返す */
+    return true;                                                     /* 感染して true を返す */
 }
 
 /*
@@ -207,37 +208,20 @@ bool Agent :: hasImmunity( __TagInterface &v ) const                 /* true -> 
         return false;                                                /* 未獲得  */
 }
 
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Agent :: isInfected( __TagInterface & )
- * Description:  
- *--------------------------------------------------------------------------------------
- */
-bool Agent :: isInfected( __TagInterface &v ) const {
-    C_ITERATOR(VirusData *) it = (*vlist_).begin();
-    while( it != (*vlist_).end() ) {
-        if( (*it)->v_ == &v ) {                                      /* 感染済みだった */
-            return true;
-        }
-        it++;
-    }
-    return false;                                                    /* 未感染だった */
-}
-
 /*--------------------------------------------------------------------------------------
  *      Method:  Agent :: hasVirus( __TagInterface & )
  * Description:  特定のウイルスを保持しているかどうか
  *               リストを走査することで確かめる
  *----------------------------------------------------------------------------------- */
 bool Agent :: hasVirus( __TagInterface &v ) const {
-    C_ITERATOR(VirusData *) it = (*vlist_).begin();                  /* ウイルスリストの先頭 */
-    while( it != (*vlist_).end() ) {
-        if( (*it)->v_ == &v ) {                                      /* 感染済みだった */
-            return true;
+    C_ITERATOR(VirusData *) it_vd = (*vlist_).begin();               /* ウイルスリストの先頭から */
+    while( it_vd != (*vlist_).end() ) {                              /* 末尾まで */
+        if( (*it_vd)->v_ == &v ) {                                   /* 感染済みであれば */
+            return true;                                             /* true を返す */
         }
-        it++;
+        it_vd++;
     }
-    return false;                                                    /* 未感染だった */
+    return false;                                                    /* 未感染なので false を返す */
 }
 
 /*
@@ -285,8 +269,8 @@ Agent* childbirth( const Agent &a, const Agent &b ) {
     FOR( i, b.getLen() ) {                                           /* コピーしていく */
         *(p++) = b.tagAt( i );
     }
-    child->setTag(                                                   /* 子供のタグを作成 */
-            couple_tag+rand_interval_int(0,a.getLen()) , TAG_LEN_A
+    child->setTag(                                                   /* カップルタグを元に */
+            couple_tag+rand_interval_int(0,a.getLen()) , TAG_LEN_A   /* 子供のタグを作成 */
             );
     delete[] couple_tag;                                             /* カップルタグを削除 */
 #endif

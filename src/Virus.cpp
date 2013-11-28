@@ -28,7 +28,7 @@ Virus :: Virus() :
     rate_( INFECTION_RATE )
 {
     FOR( i, TAG_LEN_V ) {
-        tag_[i] = rand_binary();
+        tag_[i] = rand_binary();                                     /* タグをランダムに初期化 */
     }
 }
 
@@ -49,7 +49,7 @@ Virus :: Virus( int l, double r ):
     rate_( r )
 {
     FOR( i, l ) {
-        tag_[i] = rand_binary();
+        tag_[i] = rand_binary();                                     /* タグをランダムに初期化 */
     }
 }
 

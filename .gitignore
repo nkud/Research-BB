@@ -8,6 +8,8 @@ tags
 *.txt
 
 core
-
-plot2.gpi
 log
+
+auto.plt
+quick.plt
+RESULT.html

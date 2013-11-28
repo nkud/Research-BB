@@ -3,7 +3,8 @@
  *
  *       Filename:  Administrator.cpp
  *
- *    Description:  
+ *    Description:  管理者
+ *                  エージェント、ウイルス、土地を管理、統括する
  *
  *         Author:  Naoki Ueda
  *   Organization:  OPU, 3G
@@ -67,20 +68,29 @@ void Administrator :: agingAgent()
  */
 void Administrator :: matingAgant() {
     int tx, ty;
-    Agent *myself;
-    FOR( k, agent_.size() ) {
-        myself = agent_[ k ];                                        /* 感染者自身 */
-        tx = myself->getX();                                         /* 感染者自身の位置 */
-        ty = myself->getY();
 
-        if( myself->hasAlreadyGiveBirth() ) continue;                /* 出産済みならスキップ */
+    VECTOR(Agent *) new_child_;                                      /* 新しく生まれるエージェント */
+
+    ITERATOR(Agent *) it_myself = agent_.begin();                    /* エージェント配列の先頭 */
+    while( it_myself != agent_.end() ) {                             /* 末尾まで実行 */
+        tx = (*it_myself)->getX();                                   /* 感染者自身の位置 */
+        ty = (*it_myself)->getY();
+
+        if( (*it_myself)->hasAlreadyGiveBirth() ) {
+            it_myself++;
+            continue;                                                /* 出産済みならスキップ */
+        }
 
         REP( i, -1, 1 ) {                                            /* 自分の縦・横・自マスに感染させる（計５マス） */
             REP( j, -1, 1 ) {
 #ifdef NO_DIAGONAL
-                if( i*j != 0 ) continue;                             /* 斜めは入れない */
+                if( i*j != 0 ) {
+                    continue;                                        /* 斜めは入れない */
+                }
 #endif
-                if( ! (landscape_->isOnMap( tx+i, ty+j )) ) continue;          /* 土地からはみ出てたらスキップ */
+                if( ! (landscape_->isOnMap( tx+i, ty+j )) ) {
+                    continue;                                        /* 土地からはみ出てたらスキップ */
+                }
 
                 ITERATOR(Agent *) it = landscape_->getLandscapeIteratorBeginAt( tx+i, ty+j );
                 while( it != landscape_->getLandscapeIteratorEndAt( tx+i, ty+j ) )
@@ -88,13 +98,13 @@ void Administrator :: matingAgant() {
                     if( agent_.size()+new_child_.size() >= MAX_NUM_A ) { /* 最大エージェントをこえそうなら */
                         break;                                       /* 終了 */
                     }
-                    if( isOppositeSex( *myself, **it ) &&            /* 異性かつ */
+                    if( isOppositeSex( *(*it_myself), **it ) &&      /* 異性かつ */
                             !(*it)->hasAlreadyGiveBirth()) {         /* 未出産ならば */
                         if( BIRTH_RATE > rand_interval_double(0, 1) ) {
-                            new_child_.push_back( childbirth( *myself, **it ) ); /* 新しい子供を誕生させる */
+                            new_child_.push_back( childbirth( *(*it_myself), **it ) ); /* 新しい子供を誕生させる */
                         }
-                        if( myself->getSex() == __FEMALE__ ) {       /* 女性の方を出産後にする */
-                            myself->setGiveBirth();                  /* 出産後にする */
+                        if( (*it_myself)->getSex() == __FEMALE__ ) { /* 女性の方を出産後にする */
+                            (*it_myself)->setGiveBirth();            /* 出産後にする */
                         } else {
                             (*it)->setGiveBirth();
                         }
@@ -103,20 +113,21 @@ void Administrator :: matingAgant() {
                 }
             }
         }
+        it_myself++;
     }
-    ITERATOR(Agent *) it_a = agent_.begin();
-    while( it_a != agent_.end() ) {                                    /* エージェント全員に対して */
-        (*it_a)->resetGiveBirth();                                      /* 未出産に戻す */
-        it_a++;
+    ITERATOR(Agent *) it_a = agent_.begin();                         /* エージェントの先頭 */
+    while( it_a != agent_.end() ) {                                  /* エージェント全員に対して */
+        (*it_a)->resetGiveBirth();                                   /* 未出産に戻す */
+        it_a++;                                                      /* 次のエージェント */
     }
     std::cout<<"[new child]: "<<new_child_.size()<<std::endl;
-    ITERATOR( Agent * ) it = new_child_.begin();
+    ITERATOR( Agent * ) it = new_child_.begin();                     /* 新しく誕生したエージェントを */
     while( it != new_child_.end() ) {
-        agent_.push_back( *it );
-        landscape_->registAgent( (*it)->getX(), (*it)->getY(), **it );
-        it++;
+        agent_.push_back( *it );                                     /* エージェント配列に一斉に加える */
+        landscape_->registAgent( (*it)->getX(), (*it)->getY(), **it ); /* 土地に配置 */
+        it++;                                                        /* 次のエージェントに */
     }
-    new_child_.clear();
+    new_child_.clear();                                              /* 新しく誕生したエージェントの配列をクリア */
 }
 /*
  *--------------------------------------------------------------------------------------
@@ -125,16 +136,16 @@ void Administrator :: matingAgant() {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: incrementTerm() {
-    term_++;
+    term_++;                                                         /* 期間をインクリメント */
 }
-int Administrator :: getTerm() {
-    return term_;
+int Administrator :: getTerm() const {
+    return term_;                                                    /* 現在の期間 */
 }
 
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: Administrator( Agent *, Virus * )
- * Description:  
+ * Description:  コンストラクタ
  *--------------------------------------------------------------------------------------
  */
 Administrator :: Administrator( VECTOR(Agent *) &a, Virus *v, Landscape *l ) :
@@ -143,32 +154,33 @@ Administrator :: Administrator( VECTOR(Agent *) &a, Virus *v, Landscape *l ) :
     virus_( v ),
     landscape_( l )
 {
-    agent_.reserve( MAX_NUM_A );
+    agent_.reserve( MAX_NUM_A );                                     /* 最大エージェント数まで領域確保 */
 }
 
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: getNumOfAgent()
- * Description:  
+ * Description:  現在の総エージェント数を返す
  *--------------------------------------------------------------------------------------
  */
-int Administrator :: getNumOfAgent() {
-    return agent_.size();
+int Administrator :: getNumOfAgent() const {
+    return agent_.size();                                            /* 現在の総エージェント数 */
 }
 
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: numHasVirus( __TagInterface & )
- * Description:  
+ * Description:  現在の感染者数を返す
  *--------------------------------------------------------------------------------------
  */
-int Administrator :: numHasVirus( __TagInterface &v ) {
+int Administrator :: numHasVirus( __TagInterface &v ) const {
     int ret = 0;
-
-    FOR( i, agent_.size() ) {
-        if( agent_[i]->hasVirus( v ) ) {                             /* v に感染していれば */
+    ITERATOR(Agent *) it_a = agent_.begin();
+    while( it_a != agent_.end() ) {                                  /* エージェント全員に対して */
+        if( (*it_a)->hasVirus( v ) ) {                               /* v に感染していれば */
             ret++;                                                   /* インクリメント */
         }
+        it_a++;
     }
     return ret;                                                      /* v の感染者数を返す */
 }
@@ -176,34 +188,32 @@ int Administrator :: numHasVirus( __TagInterface &v ) {
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: numHasImmunity( __TagInterface & )
- * Description:  
+ * Description:  現在の免疫獲得者数数を返す
  *--------------------------------------------------------------------------------------
  */
-int Administrator :: numHasImmunity( __TagInterface &v ) {
+int Administrator :: numHasImmunity( __TagInterface &v ) const {
     int ret = 0;
-
-    FOR( i, agent_.size() ) {
-        if (agent_[i]->hasImmunity( v ) ) {
-            ret++;
-        }
-    }
-    return ret;
+    ITERATOR(Agent *) it_a = agent_.begin();
+    while( it_a != agent_.end() ) {                                  /* エージェント全員に対して */
+        if ( (*it_a)->hasImmunity( v ) ) {                           /* v の免疫を獲得していれば*/
+            ret++;                                                   /* インクリメント */
+        }                                                                  
+        it_a++;                                                            
+    }                                                                      
+    return ret;                                                      /* v の感染者数を返す */
 }
 
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: responseAgent()
- * Description:  
+ * Description:  エージェント全員に対して免疫応答させる
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: responseAgent() {
-//    FOR( i, agent_.size() ) {
-//        agent_[ i ]->response();
-//    }
-    ITERATOR( Agent * ) it = agent_.begin();
-    while( it != agent_.end() ) {
-        (*it)->response();
-        it++;
+    ITERATOR( Agent * ) it_a = agent_.begin();
+    while( it_a != agent_.end() ) {
+        (*it_a)->response();                                         /* 免疫応答 */
+        it_a++;
     }
 }
 
@@ -217,12 +227,14 @@ void Administrator :: responseAgent() {
 void Administrator :: relocateAgent() {
     landscape_->clearAgentMap();                                     /* エージェントの位置をリセット */
     int tx, ty;                                                      /* 移動させる場所 */
-    FOR( i, agent_.size() ) {
+    ITERATOR(Agent *) it_a = agent_.begin();
+    while( it_a != agent_.end() ) {
         tx = rand_interval_int( 0, WIDTH-1 );                        /* ランダムに設定 */
         ty = rand_interval_int( 0, WIDTH-1 );
-        agent_[ i ]->setX( tx );                                     /* 配置 */
-        agent_[ i ]->setY( ty );
-        landscape_->registAgent( tx, ty, *agent_[i] );               /* エージェントを登録 */
+        (*it_a)->setX( tx );                                         /* 配置 */
+        (*it_a)->setY( ty );
+        landscape_->registAgent( tx, ty, **it_a );                   /* エージェントを登録 */
+        it_a++;
     }
 }
 
@@ -234,19 +246,19 @@ void Administrator :: relocateAgent() {
  */
 void Administrator :: moveAgent() {
     landscape_->clearAgentMap();                                     /* エージェントの位置をリセット */
-    ITERATOR(Agent *) it = agent_.begin();
-    while( it != agent_.end() ) {                                    /* エージェントの数だけ */
+    ITERATOR(Agent *) it_a = agent_.begin();
+    while( it_a != agent_.end() ) {                                  /* エージェントの数だけ */
         int tx = rand_interval_int( -MOVE_DISTANCE, MOVE_DISTANCE ); /* 相対的に x を動かす量*/
         int ty = rand_interval_int( -MOVE_DISTANCE, MOVE_DISTANCE ); /* 相対的に y を動かす量 */
-        int xx = tx + (*it)->getX();                                 /* x 座標を設定 */
-        int yy = ty + (*it)->getY();                                 /* y 座標を設定 */
+        int xx = tx + (*it_a)->getX();                               /* x 座標を設定 */
+        int yy = ty + (*it_a)->getY();                               /* y 座標を設定 */
         if( ! landscape_->isOnMap( xx, yy ) ) {                      /* もし移動先が土地の上になっていなければ */
             landscape_->putBackOnMap( xx, yy );                      /* 土地の上に戻す */
         }
-        (*it)->setX( xx );                                           /* 移動を実行 */
-        (*it)->setY( yy );
-        landscape_->registAgent( xx, yy, **it );                     /* エージェントを土地に登録 */
-        it++;
+        (*it_a)->setX( xx );                                         /* 移動を実行 */
+        (*it_a)->setY( yy );
+        landscape_->registAgent( xx, yy, **it_a );                   /* エージェントを土地に登録 */
+        it_a++;
     }
 }
 /*
@@ -259,26 +271,31 @@ void Administrator :: moveAgent() {
 void Administrator :: contactAgent() {
 
     int tx, ty;
-    Agent *myself;
 
-    FOR( i, agent_.size() ) {
-        myself = agent_[ i ];                                        /* 感染者自身 */
-        if( myself->numHoldingVirus() <= 0 ) continue;               /* 健康ならスキップ */
-        tx = myself->getX();                                         /* 感染者自身の位置 */
-        ty = myself->getY();
+    ITERATOR(Agent *) it_myself = agent_.begin();                    /* エージェントの先頭から */
+    while( it_myself != agent_.end() ) {                             /* 末尾まで */
+        if( (*it_myself)->numHoldingVirus() <= 0 ) {
+            it_myself++;
+            continue;                                                /* 健康ならスキップ */
+        }
+        tx = (*it_myself)->getX();                                   /* 感染者自身の位置 */
+        ty = (*it_myself)->getY();
 
         REP( i, -1, 1 ) {                                            /* 自分の縦・横・自マスに感染させる（計５マス） */
             REP( j, -1, 1 ) {
 #ifdef NO_DIAGONAL
-                if( i*j != 0 ) continue;                             /* 斜めは入れない */
+                if( i*j != 0 ) {
+                    continue;                                        /* 斜めは入れない */
+                }
 #endif
-                if( ! (landscape_->isOnMap( tx+i, ty+j )) ) continue;          /* 土地からはみ出てたらスキップ */
-
+                if( ! (landscape_->isOnMap( tx+i, ty+j )) ) {
+                    continue;                                        /* 土地からはみ出てたらスキップ */
+                }
                 ITERATOR(Agent *) it = landscape_->getLandscapeIteratorBeginAt( tx+i, ty+j );
                 while( it != landscape_->getLandscapeIteratorEndAt( tx+i, ty+j ) )
                 {                                                    /* その位置にいる人全員に */
                     VirusData *tvdata =                              /* ランダムに保持ウイルスから選んで */
-                        myself->getVirusDataAt( rand_array(myself->getVirusListSize()) );
+                        (*it_myself)->getVirusDataAt( rand_array((*it_myself)->getVirusListSize()) );
 
                     if( tvdata->v_->getRate() > rand_interval_double(0,1) )
                     {                                                /* ウイルス特有の感染確率で */
@@ -290,6 +307,7 @@ void Administrator :: contactAgent() {
                 }
             }
         }
+        it_myself++;
     }
 }
 
@@ -306,65 +324,72 @@ void Administrator :: infectAgent() {
     int n;
     int infection_count;                                             /* 同時感染数をカウント。最大値を越えないように */
 
-    FOR( i, agent_.size() )                                          /* エージェントの数だけ */
-    {
-        if( agent_[i]->hasNoStandByVirus() ) continue;               /* 待機ウイルスが無ければスキップ */
-        else {                                                       /* あれば */
+    ITERATOR(Agent *) it_myself = agent_.begin();
+    while( it_myself != agent_.end() ) {
+        if( (*it_myself)->hasNoStandByVirus() ) {                    /* 待機ウイルスが無ければ */
+            it_myself++;                                             /* 次のエージェントに */
+            continue;                                                /* スキップ */
+        } else {                                                     /* あれば */
             infection_count = 0;
 
-            while( ! agent_[i]->hasNoStandByVirus() ) {              /* 待機ウイルスがなくなるまで */
+            while( ! (*it_myself)->hasNoStandByVirus() ) {           /* 待機ウイルスがなくなるまで */
                 if( infection_count >= MAX_V_AGENT_INFECT_ONT_TIME ) { /* もし最大同時感染数を越えそうなら */
                     break;                                           /* 次のエージェントへ */
                 }
 
-                n = rand_array( agent_[i]->getStandByListSize() );   /* ランダムに一個の */
-                tv = agent_[i]->getStandByVirusAt( n );              /* ウイルスを選んで */
-                if( agent_[i]->infection( *tv ) ) {                  /* 感染させたら */
+                n = rand_array( (*it_myself)->getStandByListSize() );   /* ランダムに一個の */
+                tv = (*it_myself)->getStandByVirusAt( n );           /* ウイルスを選んで */
+                if( (*it_myself)->infection( *tv ) ) {               /* 感染させたら */
                     infection_count++;                               /* カウントを増やす */
-//                    break;                                 /* 次のエージェントへ */
                 } else {
-                    itt = agent_[i]->getStandByListIteratorBegin();  /* もし感染しなければ */
+                    itt = (*it_myself)->getStandByListIteratorBegin();  /* もし感染しなければ */
                     while(n-->0) { itt++; }                          /* そのウイルスを */
-                    agent_[i]->eraseStandByVirus( itt );             /* 待機ウイルスからはずして次のウイルス */
+                    (*it_myself)->eraseStandByVirus( itt );          /* 待機ウイルスからはずして次のウイルス */
                 }
-
             }
-            agent_[ i ]->clearStandByVirus();                        /* 待機ウイルスをクリア */
+            (*it_myself)->clearStandByVirus();                       /* 待機ウイルスをクリア */
         }
+        it_myself++;                                                 /* 次のエージェントに */
     }
 }
 
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: numHasAllVirus()
- * Description:  
+ * Description:  すべてのウイルスに感染している数を返す
  *--------------------------------------------------------------------------------------
  */
-int Administrator :: numHasAllVirus() {
+int Administrator :: numHasAllVirus() const {
     int ret = 0;
-    FOR( i, agent_.size() ) {
-        if( agent_[ i ]->numHoldingVirus() == NUM_V ) ret++;
+    ITERATOR(Agent *) it_a = agent_.begin();
+    while( it_a != agent_.end() ) {                                  /* エージェント全員に対して */
+        if( (*it_a)->numHoldingVirus() == NUM_V ) {                  /* 全ウイルスを保持していれば */
+            ret++;                                                   /* 数える */
+        }
+        it_a++;
     }
     return ret;
 }
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: numHasAllImmunity()
- * Description:  
+ * Description:  すべてのウイルスに対して免疫獲得している数を返す
  *--------------------------------------------------------------------------------------
  */
-int Administrator :: numHasAllImmunity() {
+int Administrator :: numHasAllImmunity() const {
     int ret = 0;
     int flag = 1;
-    FOR( i, agent_.size() ) {
+    ITERATOR(Agent *) it_a = agent_.begin();
+    while( it_a != agent_.end() ) {
         FOR( j, NUM_V ) {
-            if( ! agent_[ i ]->hasImmunity( virus_[ j ] ) ) {        /* もし免疫を持っていなければ、 */
+            if( ! (*it_a)->hasImmunity( virus_[ j ] ) ) {            /* もし免疫を持っていなければ */
                 flag = 0;                                            /* フラッグを下ろす */
-                break;
+                break;                                               /* ループを抜ける */
             }
         }
-        if( flag == 1 ) ret++;
+        if( flag == 1 ) ret++;                                       /* 免疫を持って入れば数える */
         flag = 1;                                                    /* フラッグを戻す */
+        it_a++;
     }
     return ret;
 }
@@ -372,7 +397,7 @@ int Administrator :: numHasAllImmunity() {
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: initInfectAgentInRatio( Virus &, double )
- * Description:  
+ * Description:  初期感染させる
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: initInfectAgentInRatio( Virus &v, double r ) {
@@ -398,7 +423,7 @@ void Administrator :: outputFile_HasVirus( const char *fname ) {
         ofs << numHasVirus( virus_[j] ) << SEPARATOR;                /* ウイルス j の保持者 */
     }
     int num_has_all = numHasAllVirus();
-    ofs << num_has_all << SEPARATOR;                            /* 全ウイルス保持者 */
+    ofs << num_has_all << SEPARATOR;                                 /* 全ウイルス保持者 */
     ofs << (double)num_has_all/agent_.size() << SEPARATOR;
     ofs << (double)numHasVirus(virus_[0])/agent_.size() << std::endl;
 }
@@ -422,13 +447,13 @@ void Administrator :: outputFile_HasImmunity( const char *fname ) {
 }
 /*--------------------------------------------------------------------------------------
  *      Method:  Administrator :: outputFile_Population
- * Description:  
+ * Description:  人口推移を出力する
  *----------------------------------------------------------------------------------- */
 void Administrator :: outputFile_Population( const char *fname ) {
     if( getTerm() % OUTPUT_INTERVAL != 0 ) return;
     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
-    ofs << getTerm() << SEPARATOR;                                   /* ファイルに出力 */
-    ofs << agent_.size() << SEPARATOR;                               /* ウイルスに対する免疫獲得者数 */
+    ofs << getTerm() << SEPARATOR;                                   /* 期間 */
+    ofs << agent_.size() << SEPARATOR;                               /* 人口 */
     ofs << std::endl;
 }
 
@@ -450,7 +475,8 @@ void Administrator :: outputFile_InfectionContactRatio( const char *fname ) {
         ofs << Monitor::Instance().getInfectionContactNum(&virus_[j]) << SEPARATOR;
     }
 
-    if( sum > 0 ) ratio = (double)sum / (double) Monitor::Instance().getContactNum(); 
+    if( sum > 0 ) ratio
+        = (double)sum / (double) Monitor::Instance().getContactNum(); 
     ofs << ratio << std::endl;
 }
 
@@ -476,10 +502,14 @@ void Administrator :: outputFile_LastLog( const char *fname ) {
     FOR(i,NUM_V) { ofs<<"["<<virus_[i].getLen()<<"]:";
         FOR(j, virus_[i].getLen()) { ofs<<int(virus_[i].tagAt(j)); } ofs<<std::endl; }
     ofs << ">>> Agent Last Status" << std::endl;
-    FOR(i, agent_.size()) {
-        ofs<<"["<<&agent_[i]<<"]:";
-        FOR(j, agent_[0]->getLen()) ofs<<agent_[i]->tagAt(j);
-        ofs<<" "<<agent_[i]->numHoldingVirus(); ofs<<std::endl;
+    ITERATOR(Agent *) it_a = agent_.begin();
+    while(it_a!=agent_.end()) {
+        FOR(j, (*it_a)->getLen()) {
+            ofs<<(*it_a)->tagAt(j);                                  /* エージェントのタグ */
+        }
+        ofs<<" "<<(*it_a)->numHoldingVirus();                        /* エージェントの保持ウイルス数 */
+        ofs<<std::endl;
+        it_a++;
     }
 }
 
@@ -489,7 +519,7 @@ void Administrator :: outputFile_LastLog( const char *fname ) {
  * Description:  初期状態を表示（端末）
  *--------------------------------------------------------------------------------------
  */
-void Administrator :: printInitInfo() {
+void Administrator :: printInitInfo() const {
     std::cout << "WIDTH:" << WIDTH << std::endl;                     /* 幅 */
     std::cout << "\nNUM_A:\t\t" << agent_.size() << std::endl;
     std::cout << "TAG_LEN_A:\t" << TAG_LEN_A << std::endl;
