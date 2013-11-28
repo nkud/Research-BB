@@ -190,11 +190,16 @@ void Monitor :: generatePlotScriptForPng() {
     // population
     std::ofstream ofs(AUTO_GPLOT_FILENAME);
     ofs << "set terminal png" << std::endl;
+    OFS_STR ( "set yl \"Agent\"" );
+    OFS_STR ( "set xl \"Term\"" );
     ofs << "set output \"Population.png\"" << std::endl;
     ofs << "set title \"Population\"" << std::endl
         << "plot " << POPULATION_OUTPUT << " w l"
         << " title " << "\"population\"" << std::endl;
+    // hasVirus
     ofs << "set output \"HasVirus.png\"" << std::endl;
+    OFS_STR ( "set yl \"Agent\"" );
+    OFS_STR ( "set xl \"Term\"" );
     ofs << "set title \"HasVirus\"" << std::endl
         << "plot " << HAS_VIRUS_OUTPUT << " w l"
         << " title " << "\"has_virus_" << 0 << std::endl;
@@ -210,6 +215,8 @@ void Monitor :: generatePlotScriptForPng() {
         << " title " << "\"has_all_virus\"" << std::endl;
     // hasImmunity
     ofs << "set output \"HasImmunity.png\"" << std::endl;
+    OFS_STR ( "set yl \"Agent\"" );
+    OFS_STR ( "set xl \"Term\"" );
     ofs << "set title \"hasImmunity\"" << std::endl
         << "plot "<< HAS_IMMUNITY_OUTPUT << " w l"
         << " title \"has_immunity_0\"" << std::endl;
@@ -225,6 +232,8 @@ void Monitor :: generatePlotScriptForPng() {
         << " title " << "\"has_all_immunity\"" << std::endl;
     // SIR
     ofs << "set output \"SIR.png\"" << std::endl;
+    OFS_STR ( "set yl \"Agent\"" );
+    OFS_STR ( "set xl \"Term\"" );
     ofs << "set title \"SIR\"" << std::endl;
     ofs << "plot " << HAS_VIRUS_OUTPUT
         << " using 1:" << NUM_V+2 << " w l"
@@ -236,6 +245,8 @@ void Monitor :: generatePlotScriptForPng() {
 
     // SIR_0
     ofs << "set output \"SIR_0.png\"" << std::endl;
+    OFS_STR ( "set yl \"Agent\"" );
+    OFS_STR ( "set xl \"Term\"" );
     ofs << "set title \"SIR_0\"" << std::endl;
     ofs << "plot " << HAS_VIRUS_OUTPUT << " w l"
         << " title " << "\"I_0\"" << std::endl;
@@ -244,6 +255,8 @@ void Monitor :: generatePlotScriptForPng() {
         << " title " << "\"R_0\"" << std::endl;
     // SIR_RATIO
     ofs << "set output \"SIR_RATIO.png\"" << std::endl;
+    OFS_STR ( "set yl" );
+    OFS_STR ( "set xl \"Term\"" );
     OFS_STR( "set yrange[0:1]" );
     ofs << "set title \"SIR_RATIO\"" << std::endl;
     ofs << "plot " << HAS_VIRUS_OUTPUT
@@ -256,6 +269,8 @@ void Monitor :: generatePlotScriptForPng() {
     OFS_STR( "set autoscale y" );
     // SIR_0_RATIO
     ofs << "set output \"SIR_0_RATIO.png\"" << std::endl;
+    OFS_STR ( "set yl" );
+    OFS_STR ( "set xl \"Term\"" );
     OFS_STR( "set yrange[0:1]" );
     ofs << "set title \"SIR_0_RATIO\"" << std::endl;
     ofs << "plot " << HAS_VIRUS_OUTPUT
@@ -268,6 +283,8 @@ void Monitor :: generatePlotScriptForPng() {
     OFS_STR( "set autoscale y" );
     // contact
     ofs << "set output \"Contact.png\"" << std::endl;
+    OFS_STR ( "set yl \"Agent\"" );
+    OFS_STR ( "set xl \"Term\"" );
     ofs << "set title \"InfectionContact\"" << std::endl
         << "plot "<< CONTACT_OUTPUT << " w l"
         << " title \"contact\"" << std::endl;
@@ -278,6 +295,8 @@ void Monitor :: generatePlotScriptForPng() {
             << " title " << "\"infect_contact_" << i+1 << "\"" << std::endl;
     }
     ofs << "set output \"ContactRatio.png\"" << std::endl;
+    OFS_STR ( "set yl" );
+    OFS_STR ( "set xl \"Term\"" );
     OFS_STR( "set yrange[0:1]" );
     ofs << "set title \"InfectionContactRatio\"" << std::endl
         << "plot " << CONTACT_OUTPUT << " using 1:" << NUM_V+3 << " w l"
