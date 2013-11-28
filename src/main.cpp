@@ -52,16 +52,19 @@ int main()
 
     admin.relocateAgent();                                           /* ランダムに配置 */
 
-    monitor.generatePlotScript();                                    /* gnuplot用のファイル出力 */
-    monitor.generatePlotScriptForPng();                                /* gnuplot用のファイル出力 */
+    monitor.generatePlotScript();                                    /* gnuplot用ファイル出力 */
+    monitor.generatePlotScriptForPng();                              /* gnuplot用ファイル出力 */
+    monitor.generateResultHtml();                                    /* 結果表示用HTMLファイル出力 */
 
     int zero_count = 0;
 
     /* 計測開始 */
     FOR( i, TERM )                                                   /* 計算開始  */
     {
-        log("------------ start");
-        cout << "[agent num]: " << admin.getNumOfAgent() << endl;
+        cout << "===================================" << endl;
+        LOG( i );
+        LOG( admin.getNumOfAgent() );
+
         admin.incrementTerm();                                       /* 期間を進める */
 
         monitor.resetAll();                                          /* モニターのカウンターをリセット */
@@ -91,7 +94,7 @@ int main()
         admin.outputFile_Population            ( "A_population.txt"       ) ; /* 出力：人口 */
 
         /* 途中経過 */
-        log( monitor.getContactNum() );
+        LOG( monitor.getContactNum() );
         if( admin.getNumOfAgent() >= MAX_NUM_A ) break;              /* 最大エージェントを越えると終了 */
         if( monitor.getContactNum()==0 ) zero_count++;               /* １０回以上接触感染がなければ */
         if( zero_count >= 10 ) break;                                /* 強制的に終了する */
@@ -108,8 +111,8 @@ int main()
     // 確認用 -----------------------------------------------------------------
     // メモ
     // 計測時間出力
-    log(sizeof(Agent));
-    log(sizeof(Virus));
-    log(sizeof(admin));
+    LOG(sizeof(Agent));
+    LOG(sizeof(Virus));
+    LOG(sizeof(admin));
     return 0;
 }

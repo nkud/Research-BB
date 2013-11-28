@@ -52,6 +52,7 @@ class Monitor {
 
         void generatePlotScript();                                   /* プロット用のスクリプトを生成 */
         void generatePlotScriptForPng();                               /* プロット用のスクリプトを生成 */
+        void generateResultHtml();                                   /* 結果表示用のHTMLスクリプトを生成 */
 };
 
 #ifdef __unix__

@@ -52,4 +52,4 @@ rebuild: tags build run plot
 
 plot :
 	@echo [ plot start ]
-	@gnuplot plot2.gpi
+	@gnuplot quick.plt

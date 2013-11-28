@@ -16,8 +16,13 @@
 #include <fstream>
 #include <iostream>
 
-#define GPLOT_FILENAME          "plot2.gpi"
+#define GPLOT_FILENAME          "quick.plt"
 #define AUTO_GPLOT_FILENAME     "auto.plt"
+#define FNAME_RESULT_HTML       "RESULT.html"
+
+#define OFS(str)                do { ofs << str << "<br />" << std::endl; }while(0);
+#define OFS_VAL(str)            do { ofs << #str << ": " << str << "<br />" << std::endl; }while(0);
+
 #define HAS_VIRUS_OUTPUT        "\"A_hasVirus.txt\""
 #define HAS_IMMUNITY_OUTPUT     "\"A_hasImmunity.txt\""
 #define CONTACT_OUTPUT          "\"A_infectionContact.txt\""
@@ -267,6 +272,49 @@ void Monitor :: generatePlotScriptForPng() {
         << "plot " << CONTACT_OUTPUT << " using 1:" << NUM_V+3 << " w l"
         << " title \"ratio\"" << std::endl;
     ofs << "output" << std::endl;
+}
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Monitor :: generateResultHtml()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+void Monitor :: generateResultHtml() {
+    std::ofstream ofs( FNAME_RESULT_HTML );
+    OFS( "<html><body><code>" );
+#ifdef RANDOM_LOCATE                                                 /* 移動方法 */
+    OFS( "[ 移動 ] 土地にランダムで再配置される" );
+#else
+    OFS( "[ 移動 ] エージェントが指定された距離をランダムに移動する" );
+#endif
+#ifdef AGING_AGENT                                                   /* 老化 */
+    OFS( "[ 老化 ] 有" );
+#else
+    OFS( "[ 老化 ] 無" );
+#endif
+#ifdef MATING_AGENT                                                  /* 交配・出産 */
+    OFS( "[ 交配 ] 有" );
+#ifdef COUPLE_TAG                                                    /* 子供のタグ */
+    OFS( "[ 子供のタグ ] 有" );
+#else
+    OFS( "[ 子供のタグ ] 無" );
+#endif
+#else
+    OFS( "[ 交配 ] 無" );
+#endif
+    OFS_VAL( TERM );
+    OFS_VAL( WIDTH );
+    OFS_VAL( MAX_AGE );
+    OFS_VAL( BIRTH_RATE );
+    OFS_VAL( NUM_V );
+    OFS_VAL( INIT_NUM_A );
+    OFS_VAL( MAX_NUM_A );
+    OFS_VAL( TAG_LEN_V );
+    OFS_VAL( TAG_LEN_A );
+    OFS_VAL( INFECTION_RATE );
+    OFS_VAL( INIT_INFECTED_RATIO );
+    OFS( "</code></html></body>" );
 }
 
 #ifdef __unix__

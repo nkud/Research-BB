@@ -21,9 +21,10 @@
 
 #define FOR(i, m)           for(int (i)=0; (i)<(m); (i)++)           /* i: 0 ~ (m-1) */
 #define REP(i, min, max)    for(int (i)=(min); (i)<=(max); (i)++)
+#define LOG(x)              do { std::cout<<"["<<#x"]: "<<x<<std::endl; }while(0);
 
-#define ITERATOR(type)      std::vector< type >::iterator
 #define VECTOR(type)        std::vector< type >
+#define ITERATOR(type)      std::vector< type >::iterator
 #define C_ITERATOR(type)    std::vector< type >::const_iterator
 
 #define SEPARATOR           " "                                      /* 出力データを分割する文字 */
@@ -36,11 +37,11 @@
 typedef int tag_t;                                                   /* タグの型（通常 int ） */
 
 // Configure ==============================================
-#define OUTPUT_HAS_VIRUS                                             /* 感染者を表示 */
-#define OUTPUT_HAS_IMMUNITY                                        /* 免疫獲得者を表示 */
+//#define OUTPUT_HAS_VIRUS                                             /* 感染者を表示 */
+//#define OUTPUT_HAS_IMMUNITY                                        /* 免疫獲得者を表示 */
 #define OUTPUT_SIR                                                   /* SIR形式で表示 */
-#define OUTPUT_CONTACT                                               /* 接触回数を表示 */
-#define OUTPUT_POPULATION                                            /* エージェントの人口推移を表示 */
+//#define OUTPUT_CONTACT                                               /* 接触回数を表示 */
+//#define OUTPUT_POPULATION                                            /* エージェントの人口推移を表示 */
 
 #define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 //#define RANDOM_LOCATE                                                /* ランダムに再配置する */
