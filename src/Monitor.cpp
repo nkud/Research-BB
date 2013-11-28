@@ -314,7 +314,7 @@ void Monitor :: generatePlotScriptForPng() {
  */
 void Monitor :: generateResultHtml() {
     std::ofstream ofs( FNAME_RESULT_HTML );
-    OFS( "<html><body><code><center>" );
+    OFS( "<html><body><font color=gray><code><center>" );
     OFS( "<h1 align=left>設定</h1>" );
     OFS_STR( "<div align=left>" );
 #ifdef RANDOM_LOCATE                                                 /* 移動方法 */
