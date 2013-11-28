@@ -59,7 +59,7 @@ const double BIRTH_RATE               = 0.03                  ;      /* 出産�
 
 const int NUM_V                       = 4                     ;      /* ウイルスの種類 */
 const int INIT_NUM_A                  = 1000                  ;      /* 初期エージェントの数 */
-const int MAX_NUM_A                   = 6000                 ;      /* 最大エージェント数 */
+const int MAX_NUM_A                   = 6000                 ;       /* 最大エージェント数 */
 
 const double LEN_SCALE                = 1.0                   ;      /* ウイルスに対するエージェントのタグスケール */
 const int TAG_LEN_V                   = 30                    ;      /* ウイルスのタグのデフォルトの長さ */

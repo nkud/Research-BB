@@ -20,10 +20,11 @@
 #define AUTO_GPLOT_FILENAME     "auto.plt"
 #define FNAME_RESULT_HTML       "RESULT.html"
 
-#define OFS_STR(str)                do { ofs << str << std::endl; }while(0);
-#define OFS(str)                do { ofs << str << "<br />" << std::endl; }while(0);
-#define OFS_VAL(str)            do { ofs << #str << ": " << str << "<br />" << std::endl; }while(0);
-#define OFS_IMG(str)            do { ofs << "<img src="<<#str<<"/><br />" << std::endl; }while(0);
+#define OFS_STR(str)            do { ofs<< str << std::endl; }while(0);
+#define OFS(str)                do { ofs<<str<<"<br />"<<std::endl; }while(0);
+#define OFS_VAL(str,val)        do { ofs<<"[ "<<str<<" ]: "<<val<<"<br />"<<std::endl; }while(0);
+#define OFS_IMG(str)            do { ofs<<"<img src="<<#str<<"/><br />"<<std::endl; }while(0);
+#define OFS_TD(str,val)         do { ofs<<"<tr><td>"<<str<<"</td>"<<"<td>"<<val<<"</td></tr>"<<std::endl; }while(0);
 
 #define HAS_VIRUS_OUTPUT        "\"A_hasVirus.txt\""
 #define HAS_IMMUNITY_OUTPUT     "\"A_hasImmunity.txt\""
@@ -313,7 +314,9 @@ void Monitor :: generatePlotScriptForPng() {
  */
 void Monitor :: generateResultHtml() {
     std::ofstream ofs( FNAME_RESULT_HTML );
-    OFS( "<html><body><code>" );
+    OFS( "<html><body><code><center>" );
+    OFS( "<h1>設定</h1>" );
+    OFS_STR( "<div align=left>" );
 #ifdef RANDOM_LOCATE                                                 /* 移動方法 */
     OFS( "[ 移動 ] 土地にランダムで再配置される" );
 #else
@@ -327,34 +330,42 @@ void Monitor :: generateResultHtml() {
 #ifdef MATING_AGENT                                                  /* 交配・出産 */
     OFS( "[ 交配 ] 有" );
 #ifdef COUPLE_TAG                                                    /* 子供のタグ */
-    OFS( "[ 子供のタグ ] 有" );
+    OFS( "[ 子供のタグ ] カップルタグ" );
 #else
-    OFS( "[ 子供のタグ ] 無" );
+    OFS( "[ 子供のタグ ] 両親のタグ" );
 #endif
 #else
     OFS( "[ 交配 ] 無" );
 #endif
-    OFS_VAL( TERM );
-    OFS_VAL( WIDTH );
-    OFS_VAL( MAX_AGE );
-    OFS_VAL( BIRTH_RATE );
-    OFS_VAL( NUM_V );
-    OFS_VAL( INIT_NUM_A );
-    OFS_VAL( MAX_NUM_A );
-    OFS_VAL( TAG_LEN_V );
-    OFS_VAL( TAG_LEN_A );
-    OFS_VAL( INFECTION_RATE );
-    OFS_VAL( INIT_INFECTED_RATIO );
+    OFS_STR( "</div>" );
+    OFS_STR( "<table style=\"border:solid 1px black\"; width=300px>" );
+    OFS_TD( "<font color=blue>ウイルスの数</font>", NUM_V );
+    OFS_TD( "<font color=blue>ウイルスのタグ長</font>", TAG_LEN_V );
+    OFS_TD( "<font color=blue>ウイルスの感染確率</font>", INFECTION_RATE );
+    OFS_TD( "<font color=red>エージェントの初期人数</font>", INIT_NUM_A );
+    OFS_TD( "<font color=red>エージェントの最大人数</font>", MAX_NUM_A );
+    OFS_TD( "<font color=red>エージェントのタグ長</font>", TAG_LEN_A );
+    OFS_TD( "<font color=red>寿命</font>", MAX_AGE );
+    OFS_TD( "<font color=red>出産確率</font>", BIRTH_RATE );
+    OFS_TD( "初期感染確率</font>", INIT_INFECTED_RATIO );
+    OFS_TD( "土地の幅</font>", WIDTH );
+    OFS_TD( "最大実行期間</font>", TERM );
 #ifdef __unix__
-    ofs << "[実行時間]: " << Benchmark::Instance().getTime() << " sec" << std::endl;
+    OFS_TD( "実行期間</font>", Benchmark::Instance().getTime() );
 #endif
+    OFS_STR( "</table>" );
     OFS( "<hr>" );
+
+#if defined(AGING_AGENT) || defined( MATING_AGENT)
+    // 人口
+    OFS( "<h2>人口</h2>" );
     OFS_IMG( "Population.png" );
     OFS( "</br>" );
-    // 人口
     OFS( "population: エージェントの総人口" );
     OFS( "<hr>" );
+#endif
     // 感染者
+    OFS( "<h2>感染者</h2>" );
     OFS_IMG( "HasVirus.png" );
     FOR( i, NUM_V ) {
         ofs << "has_virus_" << i << ": "
@@ -363,6 +374,7 @@ void Monitor :: generateResultHtml() {
     ofs << "has_all_virus" << "すべてのウイルスに感染しているエージェント数" << std::endl;
     OFS( "<hr>" );
     // 免疫獲得者
+    OFS( "<h2>免疫獲得者</h2>" );
     OFS_IMG( "HasImmunity.png" );
     FOR( i, NUM_V ) {
         ofs << "has_virus_" << i << ": "
@@ -371,6 +383,7 @@ void Monitor :: generateResultHtml() {
     ofs << "has_all_virus" << "すべてのウイルスへの免疫を獲得しているエージェント数" << std::endl;
     OFS( "<hr>" );
     // SIR
+    OFS( "<h2>SIR</h2>" );
     OFS_IMG( "SIR.png" );
     OFS( "I: すべてのウイルスに感染しているエージェント数" );
     OFS( "R: すべてのウイルスに対して免疫を獲得しているエージェント数" );
@@ -385,6 +398,7 @@ void Monitor :: generateResultHtml() {
     OFS( "R/POPULATION: ウイルス 0 に対して免疫を獲得しているエージェント数 / その時点での総エージェント数" );
     OFS( "<hr>" );
     // 接触回数
+    OFS( "<h2>接触回数</h2>" );
     OFS_IMG( "Contact.png" );
     OFS( "contact: 総接触回数" );
     FOR( i, NUM_V ) {
