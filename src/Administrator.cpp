@@ -73,15 +73,15 @@ void Administrator :: matingAgant() {
 
     ITERATOR(Agent *) it_myself = agent_.begin();                    /* エージェント配列の先頭 */
     while( it_myself != agent_.end() ) {                             /* 末尾まで実行 */
-        tx = (*it_myself)->getX();                                   /* 感染者自身の位置 */
+        tx = (*it_myself)->getX();                                   /* 着目エージェントの位置 */
         ty = (*it_myself)->getY();
 
-        if( (*it_myself)->hasAlreadyGiveBirth() ) {
+        if( (*it_myself)->hasAlreadyGiveBirth() ) {                  /* 既に出産済なら */
             it_myself++;
-            continue;                                                /* 出産済みならスキップ */
+            continue;                                                /* スキップ */
         }
 
-        REP( i, -1, 1 ) {                                            /* 自分の縦・横・自マスに感染させる（計５マス） */
+        REP( i, -1, 1 ) {                                            /* 自分の近隣から異性を探す */
             REP( j, -1, 1 ) {
 #ifdef NO_DIAGONAL
                 if( i*j != 0 ) {
@@ -94,19 +94,19 @@ void Administrator :: matingAgant() {
 
                 ITERATOR(Agent *) it_partner= landscape_->getLandscapeIteratorBeginAt( tx+i, ty+j );
                 while( it_partner!= landscape_->getLandscapeIteratorEndAt( tx+i, ty+j ) )
-                {                                                    /* その位置にいる人全員に */
+                {                                                    /* 自分の近隣にいる人から */
                     if( agent_.size()+new_child_.size() >= MAX_NUM_A ) { /* 最大エージェントをこえそうなら */
                         break;                                       /* 終了 */
                     }
                     if( isOppositeSex( *(*it_myself), **it_partner) &&      /* 異性かつ */
-                            !(*it_partner)->hasAlreadyGiveBirth()) {         /* 未出産ならば */
+                            !(*it_partner)->hasAlreadyGiveBirth()) { /* 未出産ならば */
                         if( BIRTH_RATE > rand_interval_double(0, 1) ) {
                             new_child_.push_back( childbirth( *(*it_myself), **it_partner) ); /* 新しい子供を誕生させる */
                         }
-                        (*it_partner)->setGiveBirth();                       /* 両親を */
+                        (*it_partner)->setGiveBirth();               /* パートナーと自分を */
                         (*it_myself)->setGiveBirth();                /* 出産済にする */
-                    }
-                    it_partner++;                                            /* 着目をその位置の次にいる人にうつす */
+                    }                                                /* XXX: パートナーを探すエージェントのランダム性 */
+                    it_partner++;                                    /* パートナーをその位置の次にいる人に移す */
                 }
             }
         }
@@ -118,11 +118,11 @@ void Administrator :: matingAgant() {
         it_a++;                                                      /* 次のエージェント */
     }
     std::cout<<"[new child]: "<<new_child_.size()<<std::endl;
-    ITERATOR( Agent * ) it_child = new_child_.begin();                     /* 新しく誕生したエージェントを */
+    ITERATOR( Agent * ) it_child = new_child_.begin();               /* 新しく誕生したエージェントを */
     while( it_child != new_child_.end() ) {
-        agent_.push_back( *it_child );                                     /* エージェント配列に一斉に加える */
+        agent_.push_back( *it_child );                               /* エージェント配列に一斉に加える */
         landscape_->registAgent( (*it_child)->getX(), (*it_child)->getY(), **it_child ); /* 土地に配置 */
-        it_child++;                                                        /* 次のエージェントに */
+        it_child++;                                                  /* 次のエージェントに */
     }
     new_child_.clear();                                              /* 新しく誕生したエージェントの配列をクリア */
 }
