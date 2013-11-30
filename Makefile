@@ -3,6 +3,8 @@ PRINT    = /bin/echo
 RM       = rm -rfv
 CTAGS    = $(shell which ctags)
 
+NOW		 = $(shell date +"%m%d%I%M%S")
+
 OBJ      = $(SRC:.cpp=.o)
 LIB      = $(SRC:.cpp=.h)
 
@@ -47,6 +49,10 @@ tags:
 	@$(CTAGS) $(wildcard src/*) $(wildcard include/*)
 
 all: $(TARGET) run plot
+
+pack:
+	@mkdir $(NOW)
+	@mv *.txt *.png *.plt RESULT.html main.out $(NOW)
 
 rebuild: tags build run plot
 
