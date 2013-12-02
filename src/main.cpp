@@ -54,7 +54,6 @@ int main()
 
     monitor.generatePlotScript();                                    /* gnuplot用ファイル出力 */
     monitor.generatePlotScriptForPng();                              /* gnuplot用ファイル出力 */
-    monitor.generateResultHtml();                                    /* 結果表示用HTMLファイル出力 */
 
     int zero_count = 0;
 
@@ -107,6 +106,8 @@ int main()
     Benchmark::Instance().stopTimer();                               /* ベンチマークの計測終了 */
     Benchmark::Instance().printTime();                               /* 計測時間表示 */
 #endif
+
+    monitor.generateResultHtml();                                    /* 結果表示用HTMLファイル出力 */
 
     // 確認用 -----------------------------------------------------------------
     // メモ

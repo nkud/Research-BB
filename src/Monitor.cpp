@@ -340,11 +340,11 @@ void Monitor :: generateResultHtml() {
     OFS_TD( "[ 交配 ]", "無" );
 #endif
     OFS_TD( "<font color=blue>ウイルスの数</font>", NUM_V );
-    OFS_TD( "<font color=blue>ウイルスのタグ長</font>", TAG_LEN_V );
+    OFS_TD( "<font color=blue>ウイルスのタグ長</font>", "<font color=blue>"<<TAG_LEN_V<<"</font>" );
     OFS_TD( "<font color=blue>ウイルスの感染確率</font>", INFECTION_RATE );
     OFS_TD( "<font color=red>エージェントの初期人数</font>", INIT_NUM_A );
     OFS_TD( "<font color=red>エージェントの最大人数</font>", MAX_NUM_A );
-    OFS_TD( "<font color=red>エージェントのタグ長</font>", TAG_LEN_A );
+    OFS_TD( "<font color=red>エージェントのタグ長</font>", "<font color=red>"<<TAG_LEN_A<<"</font>" );
     OFS_TD( "<font color=red>寿命</font>", MAX_AGE );
     OFS_TD( "<font color=red>出産確率</font>", BIRTH_RATE );
     OFS_TD( "初期感染確率</font>", INIT_INFECTED_RATIO );
