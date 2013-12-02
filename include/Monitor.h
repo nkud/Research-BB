@@ -39,10 +39,8 @@ class Monitor {
         static Monitor& Instance();                                  /* インスタンスを返す */
 
         /* ゲッタ */
-        int getContactNum() const;
+        int getContactNum() const;                                   /* 接触回数を返す */
         int getInfectionContactNum( __TagInterface * );              /* 指定のウイルスの感染接触回数を返す */
-//        int getHasImmunityAllVirusNum() const;                       /* 全ウイルスに対する免疫獲得者を返す */
-//        int getInfectOthersNum() const;                              /* 他者に感染させた回数 */
 
         /* カウント */
         void countUpContact();                                       /* 接触しした回数 */
@@ -51,7 +49,7 @@ class Monitor {
         void resetAll();                                             /* 値をすべてリセット */
 
         void generatePlotScript();                                   /* プロット用のスクリプトを生成 */
-        void generatePlotScriptForPng();                               /* プロット用のスクリプトを生成 */
+        void generatePlotScriptForPng();                             /* プロット用のスクリプトを生成 */
         void generateResultHtml();                                   /* 結果表示用のHTMLスクリプトを生成 */
 };
 

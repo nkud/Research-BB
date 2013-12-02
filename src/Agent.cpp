@@ -102,10 +102,10 @@ void Agent :: resetGiveBirth() {
 /*
  * エージェントの位置
  */
-void Agent :: setX( int x ) { x_ = x; }
-void Agent :: setY( int y ) { y_ = y; }
-int Agent :: getX() const { return x_; }
-int Agent :: getY() const { return y_; }
+void Agent :: setX( int x ) { x_ = x; }                              /* エージェントの位置を設定 */
+void Agent :: setY( int y ) { y_ = y; }                              /* エージェントの位置を設定 */
+int Agent :: getX() const { return x_; }                             /* エージェントの位置を返す */
+int Agent :: getY() const { return y_; }                             /* エージェントの位置を返す */
 /*
  * 保持ウイルスセット
  */

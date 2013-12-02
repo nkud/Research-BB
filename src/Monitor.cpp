@@ -37,11 +37,13 @@
  * Description:  ゲッタ
  *--------------------------------------------------------------------------------------
  */
-int Monitor :: getContactNum() const { return num_contact_; }
-int Monitor :: getInfectionContactNum( __TagInterface *t ) { return num_infection_contact_[ t ]; }
+int Monitor :: getContactNum() const { return num_contact_; }        /* 接触回数を返す*/
+int Monitor :: getInfectionContactNum( __TagInterface *t ) {
+    return num_infection_contact_[ t ];                              /* 感染接触回数を返す */
+}
 Monitor& Monitor :: Instance() {
     static Monitor coredata;
-    return coredata;
+    return coredata;                                                 /* インスタンスを返す */
 }
 
 
@@ -52,9 +54,9 @@ Monitor& Monitor :: Instance() {
  *--------------------------------------------------------------------------------------
  */
 void Monitor :: resetAll() {
-    num_contact_ = 0;
+    num_contact_ = 0;                                                /* 接触回数をリセット */
 
-    num_infection_contact_.clear();
+    num_infection_contact_.clear();                                  /* 感染接触回数をリセット */
 }
 
 
@@ -65,9 +67,9 @@ void Monitor :: resetAll() {
  *--------------------------------------------------------------------------------------
  */
 void Monitor :: countUpInfectionContact( __TagInterface *pv ) {
-    num_infection_contact_[ pv ]++;
+    num_infection_contact_[ pv ]++;                                  /* 指定のウイルスの感染接触回数をカウント */
 }
-void Monitor :: countUpContact() { num_contact_++; }
+void Monitor :: countUpContact() { num_contact_++; }                 /* 接触回数をカウント */
 
 /*
  *--------------------------------------------------------------------------------------
@@ -414,7 +416,7 @@ void Monitor :: generateResultHtml() {
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Benchmark :: *
- * Description:  
+ * Description:  実行時間を表示( unix only )
  *--------------------------------------------------------------------------------------
  */
 Benchmark& Benchmark :: Instance() {
