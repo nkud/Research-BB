@@ -327,29 +327,35 @@ void Monitor :: generateResultHtml() {
     OFS_TD( "[ 移動 ]", "エージェントが指定された距離をランダムに移動する" );
 #endif
 #ifdef AGING_AGENT                                                   /* 老化 */
-    OFS_TD( "[ 老化 ]", "有" );
+    OFS_TD( "[ 老化 ]", "する" );
 #else
-    OFS_TD( "[ 老化 ]", "無" );
+    OFS_TD( "[ 老化 ]", "しない" );
 #endif
 #ifdef MATING_AGENT                                                  /* 交配・出産 */
-    OFS_TD( "[ 交配 ]", "有" );
+    OFS_TD( "[ 交配 ]", "する" );
 #ifdef COUPLE_TAG                                                    /* 子供のタグ */
-    OFS_TD( "[ 子供のタグ ]", "カップルタグ" );
+    OFS_TD( "[ 子供のタグ ]", "親のタグ（カップルタグ）を元に初期化" );
 #else
-    OFS_TD( "[ 子供のタグ ]", "両親のタグ" );
+    OFS_TD( "[ 子供のタグ ]", "ランダムに初期化" );
 #endif
 #else
-    OFS_TD( "[ 交配 ]", "無" );
+    OFS_TD( "[ 交配 ]", "しない" );
 #endif
-    OFS_TD( "<font color=blue>ウイルスの数</font>", NUM_V );
     OFS_TD( "<font color=blue>ウイルスのタグ長</font>", "<font color=blue>"<<TAG_LEN_V<<"</font>" );
+    OFS_TD( "<font color=blue>ウイルスの数</font>", NUM_V );
     OFS_TD( "<font color=blue>ウイルスの感染確率</font>", INFECTION_RATE );
-    OFS_TD( "<font color=red>エージェントの初期人数</font>", INIT_NUM_A );
-    OFS_TD( "<font color=red>エージェントの最大人数</font>", MAX_NUM_A );
     OFS_TD( "<font color=red>エージェントのタグ長</font>", "<font color=red>"<<TAG_LEN_A<<"</font>" );
-    OFS_TD( "<font color=red>寿命</font>", MAX_AGE );
-    OFS_TD( "<font color=red>出産確率</font>", BIRTH_RATE );
+    OFS_TD( "<font color=red>エージェントの初期人数</font>", INIT_NUM_A );
     OFS_TD( "初期感染確率</font>", INIT_INFECTED_RATIO );
+#if defined(AGING_AGENT) || defined( MATING_AGENT)
+    OFS_TD( "<font color=red>エージェントの最大人数</font>", MAX_NUM_A );
+#endif
+#define AGING_AGENT
+    OFS_TD( "<font color=red>寿命</font>", MAX_AGE );
+#endif
+#define MATING_AGENT
+    OFS_TD( "<font color=red>出産確率</font>", BIRTH_RATE );
+#endif
     OFS_TD( "土地の幅</font>", WIDTH );
     OFS_TD( "最大実行期間</font>", TERM );
 #ifdef __unix__
