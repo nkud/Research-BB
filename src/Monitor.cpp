@@ -324,7 +324,7 @@ void Monitor :: generateResultHtml() {
 #ifdef RANDOM_LOCATE                                                 /* 移動方法 */
     OFS_TD( "[ 移動 ]", "土地にランダムに再配置される" );
 #else
-    OFS_TD( "[ 移動 ]", "エージェントが指定された距離をランダムに移動する" );
+    OFS_TD( "[ 移動 ]", "エージェントが指定された距離を各々移動する" );
 #endif
 #ifdef AGING_AGENT                                                   /* 老化 */
     OFS_TD( "[ 老化 ]", "する" );
@@ -346,7 +346,7 @@ void Monitor :: generateResultHtml() {
     OFS_TD( "<font color=blue>ウイルスの感染確率</font>", INFECTION_RATE );
     OFS_TD( "<font color=red>エージェントのタグ長</font>", "<font color=red>"<<TAG_LEN_A<<"</font>" );
     OFS_TD( "<font color=red>エージェントの初期人数</font>", INIT_NUM_A );
-    OFS_TD( "初期感染確率</font>", INIT_INFECTED_RATIO );
+    OFS_TD( "<font color=red>初期感染確率</font>", INIT_INFECTED_RATIO );
 #if defined(AGING_AGENT) || defined( MATING_AGENT)
     OFS_TD( "<font color=red>エージェントの最大人数</font>", MAX_NUM_A );
 #endif
