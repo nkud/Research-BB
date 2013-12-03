@@ -54,25 +54,32 @@ const int OUTPUT_INTERVAL             = 1                     ;      /* 出力�
 
 const int WIDTH                       = 60                    ;      /* ランドスケープの幅 */
 
-const int MAX_AGE                     = 60                    ;      /* 寿命 */
-const double BIRTH_RATE               = 0.06                  ;      /* 出産確率 */
-
-const int NUM_V                       = 1                     ;      /* ウイルスの種類 */
-const int INIT_NUM_A                  = 1500                  ;      /* 初期エージェントの数 */
-const int MAX_NUM_A                   = 6000                 ;       /* 最大エージェント数 */
-
-const double LEN_SCALE                = 1.0                   ;      /* ウイルスに対するエージェントのタグスケール */
+/* virus */                                                          /* ウイルスの設定 -------------------- */
 const int TAG_LEN_V                   = 20                    ;      /* ウイルスのタグのデフォルトの長さ */
-//const int TAG_LEN_A                   = LEN_SCALE * TAG_LEN_V ;      /* エージェントのタグ長 */
-const int TAG_LEN_A                   = 30                    ;      /* エージェントのタグ長 */
-
+const int NUM_V                       = 1                     ;      /* ウイルスの種類 */
 const double INFECTION_RATE           = 0.8                   ;      /* デフォルトの感染率 */
-const double INIT_INFECTED_RATIO      = 1.0                   ;      /* 初期感染率 */
 
 const int MAX_VIRUS_AGENT_HAVE        = NUM_V                 ;      /* 最大保持ウイルス */
 const int MAX_V_AGENT_INFECT_ONT_TIME = 1                     ;      /* １期間で感染させるウイルスの最大数 */
 
+/* agent */                                                          /* エージェントの設定 ---------------- */
+const int TAG_LEN_A                   = 30                    ;      /* エージェントのタグ長 */
+const int INIT_NUM_A                  = 1500                  ;      /* 初期エージェントの数 */
+const double INIT_INFECTED_RATIO      = 1.0                   ;      /* 初期感染率 */
+//const double LEN_SCALE                = 1.0                   ;      /* ウイルスに対するエージェントのタグスケール */
+//const int TAG_LEN_A                   = LEN_SCALE * TAG_LEN_V ;      /* エージェントのタグ長 */
+
+const int MAX_NUM_A                   = 6000                 ;       /* 最大エージェント数 */
+
+/* move config */                                                    /* 移動専用の設定 -------------------- */
 const int MOVE_DISTANCE               = 1                     ;      /* エージェントの移動距離 */
+
+/* aging config */                                                   /* 老化専用の設定 -------------------- */
+const int MAX_AGE                     = 60                    ;      /* 寿命 */
+
+/* mating config */                                                  /* 交配出産専用の設定 ---------------- */
+const double BIRTH_RATE               = 0.06                  ;      /* 出産確率 */
+
 // ======================================================== 
 
 enum __LABEL__                                                       /* ラベル */

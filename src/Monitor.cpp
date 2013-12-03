@@ -350,10 +350,10 @@ void Monitor :: generateResultHtml() {
 #if defined(AGING_AGENT) || defined( MATING_AGENT)
     OFS_TD( "<font color=red>エージェントの最大人数</font>", MAX_NUM_A );
 #endif
-#define AGING_AGENT
+#ifdef AGING_AGENT
     OFS_TD( "<font color=red>寿命</font>", MAX_AGE );
 #endif
-#define MATING_AGENT
+#ifdef MATING_AGENT
     OFS_TD( "<font color=red>出産確率</font>", BIRTH_RATE );
 #endif
     OFS_TD( "土地の幅</font>", WIDTH );
