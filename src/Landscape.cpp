@@ -30,10 +30,10 @@ Landscape :: Landscape()
  *--------------------------------------------------------------------------------------
  */
 void Landscape :: putBackOnMap( int &x, int &y) {
-    if( x < 0 ) { x = 0; }
-    if( y < 0 ) { y = 0; }
-    if( x > WIDTH-1 ) { x = WIDTH-1; }
-    if( y > WIDTH-1 ) { y = WIDTH-1; }
+    while( x < 0 ) x += WIDTH;
+    while( y < 0 ) y += WIDTH;
+    x %= WIDTH;
+    y %= WIDTH;
 }
 
 /*

@@ -67,14 +67,15 @@ void Administrator :: agingAgent()
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: matingAgant() {
+    int ax, ay;
     int tx, ty;
 
     VECTOR(Agent *) new_child_;                                      /* 新しく生まれるエージェント */
 
     ITERATOR(Agent *) it_myself = agent_.begin();                    /* エージェント配列の先頭 */
     while( it_myself != agent_.end() ) {                             /* 末尾まで実行 */
-        tx = (*it_myself)->getX();                                   /* 着目エージェントの位置 */
-        ty = (*it_myself)->getY();
+        ax = (*it_myself)->getX();                                   /* 着目エージェントの位置 */
+        ay = (*it_myself)->getY();
 
         if( (*it_myself)->hasAlreadyGiveBirth() ) {                  /* 既に出産済なら */
             it_myself++;
@@ -88,12 +89,12 @@ void Administrator :: matingAgant() {
                     continue;                                        /* 斜めは入れない */
                 }
 #endif
-                if( ! (landscape_->isOnMap( tx+i, ty+j )) ) {
-                    continue;                                        /* 土地からはみ出てたらスキップ */
-                }
+                tx = ax + i;
+                ty = ay + j;
+                landscape_->putBackOnMap( tx, ty );                              /* 土地からはみ出てたら土地の上に戻す */
 
-                ITERATOR(Agent *) it_partner= landscape_->getLandscapeIteratorBeginAt( tx+i, ty+j );
-                while( it_partner!= landscape_->getLandscapeIteratorEndAt( tx+i, ty+j ) )
+                ITERATOR(Agent *) it_partner= landscape_->getLandscapeIteratorBeginAt( tx, ty );
+                while( it_partner!= landscape_->getLandscapeIteratorEndAt( tx, ty ) )
                 {                                                    /* 自分の近隣にいる人から */
                     if( agent_.size()+new_child_.size() >= MAX_NUM_A ) { /* 最大エージェントをこえそうなら */
                         break;                                       /* 終了 */
@@ -267,6 +268,7 @@ void Administrator :: moveAgent() {
  */
 void Administrator :: contactAgent() {
 
+    int ax, ay;
     int tx, ty;
 
     ITERATOR(Agent *) it_myself = agent_.begin();                    /* エージェントの先頭から */
@@ -275,8 +277,8 @@ void Administrator :: contactAgent() {
             it_myself++;
             continue;                                                /* 健康ならスキップ */
         }
-        tx = (*it_myself)->getX();                                   /* 感染者自身の位置 */
-        ty = (*it_myself)->getY();
+        ax = (*it_myself)->getX();                                   /* 感染者自身の位置 */
+        ay = (*it_myself)->getY();
 
         REP( i, -1, 1 ) {                                            /* 自分の縦・横・自マスに感染させる（計５マス） */
             REP( j, -1, 1 ) {
@@ -285,11 +287,12 @@ void Administrator :: contactAgent() {
                     continue;                                        /* 斜めは入れない */
                 }
 #endif
-                if( ! (landscape_->isOnMap( tx+i, ty+j )) ) {
-                    continue;                                        /* 土地からはみ出てたらスキップ */
-                }
-                ITERATOR(Agent *) it = landscape_->getLandscapeIteratorBeginAt( tx+i, ty+j );
-                while( it != landscape_->getLandscapeIteratorEndAt( tx+i, ty+j ) )
+                tx = ax + i;
+                ty = ay + j;
+                landscape_->putBackOnMap( tx, ty );
+
+                ITERATOR(Agent *) it = landscape_->getLandscapeIteratorBeginAt( tx, ty );
+                while( it != landscape_->getLandscapeIteratorEndAt( tx, ty ) )
                 {                                                    /* その位置にいる人全員に */
                     VirusData *tvdata =                              /* ランダムに保持ウイルスから選んで */
                         (*it_myself)->getVirusDataAt( rand_array((*it_myself)->getVirusListSize()) );
