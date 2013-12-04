@@ -39,32 +39,34 @@ typedef int tag_t;                                                   /* タグ�
 // Configure ==============================================
 //#define OUTPUT_HAS_VIRUS                                             /* 感染者を表示 */
 //#define OUTPUT_HAS_IMMUNITY                                        /* 免疫獲得者を表示 */
-#define OUTPUT_SIR                                                   /* SIR形式で表示 */
+//#define OUTPUT_SIR                                                   /* SIR形式で表示 */
 //#define OUTPUT_CONTACT                                               /* 接触回数を表示 */
 //#define OUTPUT_POPULATION                                            /* エージェントの人口推移を表示 */
 
-#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
-//#define RANDOM_LOCATE                                                /* ランダムに再配置する */
+//#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
+#define RANDOM_LOCATE                                                /* ランダムに再配置する */
 #define AGING_AGENT
 #define MATING_AGENT
 #define COUPLE_TAG                                                   /* カップルタグで子供を作る */
 
-const int TERM                        = 200                   ;      /* 期間 */
+/* term */
+const int TERM                        = 500                   ;      /* 期間 */
 const int OUTPUT_INTERVAL             = 1                     ;      /* 出力する間隔 */
 
-const int WIDTH                       = 60                    ;      /* ランドスケープの幅 */
+/* landscape */
+const int WIDTH                       = 30                    ;      /* ランドスケープの幅 */
 
 /* virus */                                                          /* ウイルスの設定 -------------------- */
-const int TAG_LEN_V                   = 20                    ;      /* ウイルスのタグのデフォルトの長さ */
+const int TAG_LEN_V                   = 32                    ;      /* ウイルスのタグのデフォルトの長さ */
 const int NUM_V                       = 1                     ;      /* ウイルスの種類 */
-const double INFECTION_RATE           = 0.8                   ;      /* デフォルトの感染率 */
+const double INFECTION_RATE           = 1.0                  ;      /* デフォルトの感染率 */
 
 const int MAX_VIRUS_AGENT_HAVE        = NUM_V                 ;      /* 最大保持ウイルス */
-const int MAX_V_AGENT_INFECT_ONT_TIME = 1                     ;      /* １期間で感染させるウイルスの最大数 */
+const int MAX_V_AGENT_INFECT_ONT_TIME = NUM_V                     ;  /* １期間で感染させるウイルスの最大数 */
 
 /* agent */                                                          /* エージェントの設定 ---------------- */
-const int TAG_LEN_A                   = 30                    ;      /* エージェントのタグ長 */
-const int INIT_NUM_A                  = 1500                  ;      /* 初期エージェントの数 */
+const int TAG_LEN_A                   = 40                    ;      /* エージェントのタグ長 */
+const int INIT_NUM_A                  = 100                  ;      /* 初期エージェントの数 */
 const double INIT_INFECTED_RATIO      = 1.0                   ;      /* 初期感染率 */
 //const double LEN_SCALE                = 1.0                   ;      /* ウイルスに対するエージェントのタグスケール */
 //const int TAG_LEN_A                   = LEN_SCALE * TAG_LEN_V ;      /* エージェントのタグ長 */
@@ -78,7 +80,7 @@ const int MOVE_DISTANCE               = 1                     ;      /* エー�
 const int MAX_AGE                     = 60                    ;      /* 寿命 */
 
 /* mating config */                                                  /* 交配出産専用の設定 ---------------- */
-const double BIRTH_RATE               = 0.06                  ;      /* 出産確率 */
+const double BIRTH_RATE               = 0.10                  ;      /* 出産確率 */
 
 // ======================================================== 
 
