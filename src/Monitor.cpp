@@ -573,7 +573,7 @@ void Monitor :: scriptForContactPng(std::ofstream &ofs) {
  *--------------------------------------------------------------------------------------
  */
 void Monitor :: generateResultHtml( int t ) {
-    if( last_term_ < TERM ) last_term_ = MINI_SIZE_TERM;
+    if( t < MINI_SIZE_TERM ) last_term_ = MINI_SIZE_TERM;
     else last_term_ = t;
     std::ofstream ofs( FNAME_RESULT_HTML );
     OFS( "<html><link rel=\"stylesheet\" href=\"result.css\"><body><font color=gray><code>" );
