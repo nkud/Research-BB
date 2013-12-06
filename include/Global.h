@@ -37,50 +37,53 @@
 typedef int tag_t;                                                   /* タグの型（通常 int ） */
 
 // Configure ==============================================
+/* 出力 */
 //#define OUTPUT_HAS_VIRUS                                             /* 感染者を表示 */
 //#define OUTPUT_HAS_IMMUNITY                                        /* 免疫獲得者を表示 */
 //#define OUTPUT_SIR                                                   /* SIR形式で表示 */
 //#define OUTPUT_CONTACT                                               /* 接触回数を表示 */
 //#define OUTPUT_POPULATION                                            /* エージェントの人口推移を表示 */
 
-//#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
-//#define RANDOM_LOCATE                                                /* ランダムに再配置する */
-#define AGING_AGENT
-#define MATING_AGENT
-#define COUPLE_TAG                                                   /* カップルタグで子供を作る */
+#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
+
+#define RANDOM_LOCATE                                                /* ランダムに再配置する */
+//#define AGING_AGENT
+//#define MATING_AGENT
+//#define COUPLE_TAG                                                   /* カップルタグで子供を作る */
 
 /* 期間 */
-const int TERM                        = 500                   ;      /* 期間 */
+const int TERM                        = 5000                   ;      /* 期間 */
 const int OUTPUT_INTERVAL             = 1                     ;      /* 出力する間隔 */
+const int MINI_SIZE_TERM              = 100;
 
 /* 土地 */
-const int WIDTH                       = 60                    ;      /* ランドスケープの幅 */
+const int WIDTH                       = 10                    ;      /* ランドスケープの幅 */
 
 /* ウイルス */                                                          /* ウイルスの設定 -------------------- */
 const int TAG_LEN_V                   = 8                    ;      /* ウイルスのタグのデフォルトの長さ */
-const int NUM_V                       = 10                     ;      /* ウイルスの種類 */
-const double INFECTION_RATE           = 1.0                  ;      /* デフォルトの感染率 */
+const int NUM_V                       = 2                      ;     /* ウイルスの種類 */
+const double INFECTION_RATE           = 1.0                  ;       /* デフォルトの感染率 */
 
 const int MAX_VIRUS_AGENT_HAVE        = NUM_V                 ;      /* 最大保持ウイルス */
-const int MAX_V_AGENT_INFECT_ONT_TIME = 1                     ;  /* １期間で感染させるウイルスの最大数 */
+const int MAX_V_AGENT_INFECT_ONT_TIME = 1                 ;      /* １期間で感染させるウイルスの最大数 */
 
 /* エージェント */                                                          /* エージェントの設定 ---------------- */
 const int TAG_LEN_A                   = 10                    ;      /* エージェントのタグ長 */
-const int INIT_NUM_A                  = 1000                  ;      /* 初期エージェントの数 */
+const int INIT_NUM_A                  = 100                  ;       /* 初期エージェントの数 */
 const double INIT_INFECTED_RATIO      = 1.0                   ;      /* 初期感染率 */
 //const double LEN_SCALE                = 1.0                   ;      /* ウイルスに対するエージェントのタグスケール */
 //const int TAG_LEN_A                   = LEN_SCALE * TAG_LEN_V ;      /* エージェントのタグ長 */
 
-const int MAX_NUM_A                   = 6000                 ;       /* 最大エージェント数 */
+const int MAX_NUM_A                   = 30000                 ;        /* 最大エージェント数 */
 
-/* move config */                                                    /* 移動専用の設定 -------------------- */
+/* 移動 config */                                                    /* 移動専用の設定 -------------------- */
 const int MOVE_DISTANCE               = 1                     ;      /* エージェントの移動距離 */
 
-/* aging config */                                                   /* 老化専用の設定 -------------------- */
-const int MAX_AGE                     = 60                    ;      /* 寿命 */
+/* 寿命 config */                                                   /* 老化専用の設定 -------------------- */
+const int MAX_AGE                     = 80                    ;      /* 寿命 */
 
-/* mating config */                                                  /* 交配出産専用の設定 ---------------- */
-const double BIRTH_RATE               = 0.05                  ;      /* 出産確率 */
+/* 出産 config */                                                  /* 交配出産専用の設定 ---------------- */
+const double BIRTH_RATE               = 0.03                   ;     /* 出産確率 */
 
 // ======================================================== 
 

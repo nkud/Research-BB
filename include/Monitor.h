@@ -15,6 +15,7 @@
 #define ___MONITOR
 
 #include <map>
+#include <fstream>
 
 #ifdef __unix__
 #include <sys/time.h>
@@ -52,6 +53,12 @@ class Monitor {
         void generatePlotScriptForPng();                             /* プロット用のスクリプトを生成 */
         void generateResultHtml();                                   /* 結果表示用のHTMLスクリプトを生成 */
 };
+
+void scriptForPopulationPng(std::ofstream &ofs);                                       /* 画像を出力するスクリプト */
+void scriptForHasVirusPng(std::ofstream &ofs);
+void scriptForHasImmunityPng(std::ofstream &ofs);
+void scriptForSIRPng(std::ofstream &ofs);
+void scriptForContactPng(std::ofstream &ofs);
 
 #ifdef __unix__
 /*
