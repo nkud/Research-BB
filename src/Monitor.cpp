@@ -577,7 +577,7 @@ void Monitor :: generateResultHtml( int t ) {
     else last_term_ = t;
     std::ofstream ofs( FNAME_RESULT_HTML );
     OFS( "<html><link rel=\"stylesheet\" href=\"result.css\"><body><font color=gray><code>" );
-    OFS( "<h1><font color=black># 計算結果 [ "<<__DATE__<<__TIME__<<" ]</font></h1>" );
+    OFS( "<h1><font color=black># 計算結果 [ "<<__DATE__<<", "<<__TIME__<<" ]</font></h1>" );
     OFS( "<h2>設定</h2>" );
     // table
     OFS_LINE( "<table>" ); /* テーブル */
