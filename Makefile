@@ -52,7 +52,7 @@ all: $(TARGET) run plot
 
 pack:
 	@mkdir $(NOW)
-	@mv *.txt *.png *.plt RESULT.html main.out $(NOW)
+	@cp *.txt *.png *.plt RESULT.html result.css main.out $(NOW)
 
 rebuild: tags build run plot
 
