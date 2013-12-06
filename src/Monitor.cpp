@@ -20,6 +20,8 @@
 #define AUTO_GPLOT_FILENAME     "auto.plt"
 #define FNAME_RESULT_HTML       "RESULT.html"
 
+#define IMG_SIZE(w, h)          #w << "," << #h
+
 #define OFS_STR(str)            do { ofs<< str << std::endl; }while(0);
 #define OFS(str)                do { ofs<<str<<"<br />"<<std::endl; }while(0);
 #define OFS_VAL(str,val)        do { ofs<<"[ "<<str<<" ]: "<<val<<"<br />"<<std::endl; }while(0);
@@ -196,7 +198,7 @@ void Monitor :: generatePlotScript() {
  */
 void Monitor :: generatePlotScriptForPng() {
     std::ofstream ofs(AUTO_GPLOT_FILENAME);
-    ofs << "set terminal png size 1000, 250" << std::endl;
+    ofs << "set terminal png size "<< IMG_SIZE(1000, 250) << std::endl;
     // population
     scriptForPopulationPng(ofs);
     // hasVirus
