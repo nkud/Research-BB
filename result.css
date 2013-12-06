@@ -1,8 +1,18 @@
-body {
+table {
+    width: 400px;
+    border: 0.1em #eee solid;
+}
+
+.graph {
+    border: 0.5em #eee solid;
 }
 h2 {
     background: #eee;
     color: black;
+    padding: 0.5em;
 }
-img {
+p {
+    margin: 0 5em;
+    font-size: 1.0em;
 }
+

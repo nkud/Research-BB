@@ -24,14 +24,14 @@
 
 #define EVERY_LAST(t)           " every ::"<< t-MINI_SIZE_TERM<<"::"<<t<<" "
 
-#define OFS(str)                do { ofs<<str<<"<br />"<<std::endl; }while(0);
-#define OFS_LINE(str)            do { ofs<< str << std::endl; }while(0);
+#define OFS(str)                do { ofs<<"<p>"<<str<<"</p>"<<std::endl; }while(0);
+#define OFS_LINE(str)           do { ofs<< str << std::endl; }while(0);
 #define OFS_VAL(str,val)        do { ofs<<"[ "<<str<<" ]: "<<val<<"<br />"<<std::endl; }while(0);
-#define OFS_IMG(img)            do { ofs<<"<br /><img src="<<#img<<" style=\"border:solid 1px gray;\"/><br />"<<std::endl; }while(0);
-#define OFS_IMG_MINI(img,mini,last)  do { ofs<<"<br /><table><tr> \
-                                <td><img src="<<#img<<" style=\"border:solid 1px gray;\"/></td></tr><tr> \
-                                <td><img src="<<#mini<<" style=\"border:solid 1px gray;\"/></td></tr><t> \
-                                <td><img src="<<#last<<" style=\"border:solid 1px gray;\"/></td></tr> \
+#define OFS_IMG(img)            do { ofs<<"<br /><img src="<<#img<<" /><br />"<<std::endl; }while(0);
+#define OFS_IMG_MINI(img,mini,last)  do { ofs<<"<table class=\"graph\"><tr> \
+                                <td><img src="<<#img<<" /></td></tr><tr> \
+                                <td><img src="<<#mini<<" /></td></tr><t> \
+                                <td><img src="<<#last<<" /></td></tr> \
                                 </table><br />"<<std::endl; }while(0);
 #define OFS_OUTPUT(str)         do { ofs<<"set output "<<#str<< std::endl; }while(0);
 #define OFS_TD(str,val)         do { ofs<<"<tr><td>"<<str<<"</td>"<<"<td>"<<val<<"</td></tr>"<<std::endl; }while(0);
@@ -577,10 +577,10 @@ void Monitor :: generateResultHtml( int t ) {
     else last_term_ = t;
     std::ofstream ofs( FNAME_RESULT_HTML );
     OFS( "<html><link rel=\"stylesheet\" href=\"result.css\"><body><font color=gray><code>" );
-    OFS( "<h1><font color=black>計算結果</font></h1>" );
+    OFS( "<h1><font color=black># 計算結果 [ "<<__DATE__<<__TIME__<<" ]</font></h1>" );
     OFS( "<h2>設定</h2>" );
     // table
-    OFS_LINE( "<table style=\"border:solid 1px gray;\" width=640px>" ); /* テーブル */
+    OFS_LINE( "<table>" ); /* テーブル */
 #ifdef RANDOM_LOCATE                                                 /* 移動方法 */
     OFS_TD( "[ 移動 ]", "土地にランダムに再配置される" );
 #else
@@ -605,7 +605,7 @@ void Monitor :: generateResultHtml( int t ) {
 
     OFS_LINE( "<br />" );
 
-    OFS_LINE( "<table style=\"border:solid 1px gray\"; width=640px>" ); /* テーブル */
+    OFS_LINE( "<table>" ); /* テーブル */
     OFS_LINE( "<tr>" );
     OFS_LINE( "<th width=240px></th><th width=200px>タグ長</th><th width=200px>数</th>" );
     OFS_LINE( "</tr>" );
@@ -620,7 +620,7 @@ void Monitor :: generateResultHtml( int t ) {
 
     OFS_LINE( "<br />" );
 
-    OFS_LINE( "<table style=\"border:solid 1px gray\"; width=640px>" ); /* テーブル */
+    OFS_LINE( "<table>" ); /* テーブル */
     OFS_TD( "<font color=blue>ウイルスの感染確率</font>", INFECTION_RATE );
     OFS_TD( "<font color=blue>１期間で感染させるウイルスの最大数</font>", MAX_V_AGENT_INFECT_ONT_TIME );
     OFS_TD( "<font color=red>初期感染確率</font>", INIT_INFECTED_RATIO );
@@ -639,7 +639,6 @@ void Monitor :: generateResultHtml( int t ) {
     OFS_TD( "実行期間</font>", Benchmark::Instance().getTime() );
 #endif
     OFS_LINE( "</table>" );
-    OFS( "<hr>" );
 
 #if defined(AGING_AGENT) || defined( MATING_AGENT)
     // 人口
@@ -647,26 +646,23 @@ void Monitor :: generateResultHtml( int t ) {
     OFS_IMG_MINI( "Population.png", "Population_mini.png", "Population_last.png" );
     OFS( "</br>" );
     OFS( "population: エージェントの総人口" );
-    OFS( "<hr>" );
 #endif
     // 感染者
     OFS( "<h2>感染者</h2>" );
     OFS_IMG_MINI( "HasVirus.png", "HasVirus_mini.png", "HasVirus_last.png" );
     FOR( i, NUM_V ) {
-        ofs << "has_virus_" << i << ": "
-            << "ウイルス " << i << " に感染しているエージェント数<br />" << std::endl;
+        ofs << "<p>has_virus_" << i << ": "
+            << "ウイルス " << i << " に感染しているエージェント数</p>" << std::endl;
     }
-    ofs << "has_all_virus" << "すべてのウイルスに感染しているエージェント数" << std::endl;
-    OFS( "<hr>" );
+    ofs << "<p>has_all_virus" << "すべてのウイルスに感染しているエージェント数</p>" << std::endl;
     // 免疫獲得者
     OFS( "<h2>免疫獲得者</h2>" );
     OFS_IMG_MINI( "HasImmunity.png", "HasImmunity_mini.png", "HasImmunity_last.png" );
     FOR( i, NUM_V ) {
-        ofs << "has_virus_" << i << ": "
-            << "ウイルス " << i << " への免疫を獲得しているエージェント数<br />" << std::endl;
+        ofs << "<p>has_virus_" << i << ": "
+            << "ウイルス " << i << " への免疫を獲得しているエージェント数</p>" << std::endl;
     }
-    ofs << "has_all_virus" << "すべてのウイルスへの免疫を獲得しているエージェント数" << std::endl;
-    OFS( "<hr>" );
+    ofs << "<p>has_all_virus" << "すべてのウイルスへの免疫を獲得しているエージェント数</p>" << std::endl;
     // SIR
     OFS( "<h2>SIR</h2>" );
     OFS_IMG_MINI( "SIR.png", "SIR_mini.png", "SIR_last.png" );
@@ -681,14 +677,13 @@ void Monitor :: generateResultHtml( int t ) {
     OFS_IMG_MINI( "SIR_0_RATIO.png", "SIR_0_RATIO_mini.png", "SIR_0_RATIO_last.png" );
     OFS( "I/POPULATION: ウイルス 0 に感染しているエージェント数 / その時点での総エージェント数" );
     OFS( "R/POPULATION: ウイルス 0 に対して免疫を獲得しているエージェント数 / その時点での総エージェント数" );
-    OFS( "<hr>" );
     // 接触回数
     OFS( "<h2>接触回数</h2>" );
     OFS_IMG_MINI( "Contact.png", "Contact_mini.png", "Contact_last.png" );
     OFS( "contact: 総接触回数" );
     FOR( i, NUM_V ) {
-        ofs << "infection_contact_" << i << ": "
-            << "ウイルス " << i << " を感染させた接触回数<br />" << std::endl;
+        ofs << "<p>infection_contact_" << i << ": "
+            << "ウイルス " << i << " を感染させた接触回数</p>" << std::endl;
     }
     OFS_IMG_MINI( "ContactRatio.png", "ContactRatio_mini.png", "ContactRatio_last.png" );
     OFS( "ratio: 何らかのウイルスを感染させた接触回数 / 総接触回数" );
