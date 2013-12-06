@@ -52,9 +52,6 @@ int main()
 
     admin.relocateAgent();                                           /* ランダムに配置 */
 
-    monitor.generatePlotScript();                                    /* gnuplot用ファイル出力 */
-    monitor.generatePlotScriptForPng();                              /* gnuplot用ファイル出力 */
-
     int zero_count = 0;
 
     /* 計測開始 */
@@ -107,7 +104,9 @@ int main()
     Benchmark::Instance().printTime();                               /* 計測時間表示 */
 #endif
 
-    monitor.generateResultHtml();                                    /* 結果表示用HTMLファイル出力 */
+    monitor.generateResultHtml(admin.getTerm());                     /* 結果表示用HTMLファイル出力 */
+    monitor.generatePlotScriptForPng();                              /* gnuplot用ファイル出力 */
+//    monitor.generatePlotScript();                                    /* gnuplot用ファイル出力 */
 
     // 確認用 -----------------------------------------------------------------
     // メモ
