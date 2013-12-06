@@ -25,9 +25,10 @@
 #define OFS_VAL(str,val)        do { ofs<<"[ "<<str<<" ]: "<<val<<"<br />"<<std::endl; }while(0);
 #define OFS_IMG(img)            do { ofs<<"<br /><img src="<<#img<<" style=\"border:solid 1px gray;\"/><br />"<<std::endl; }while(0);
 #define OFS_IMG_MINI(img,mini)  do { ofs<<"<br /><table><tr> \
-                                <td><img src="<<#img<<" style=\"border:solid 1px gray;\"/></td> \
-                                <td><img src="<<#mini<<" style=\"border:solid 1px gray;\"/></td> \
+                                <td><img src="<<#img<<" style=\"border:solid 1px gray;\"/></td></tr> \
+                                <tr><td><img src="<<#mini<<" style=\"border:solid 1px gray;\"/></td> \
                                 </tr></table><br />"<<std::endl; }while(0);
+#define OFS_OUTPUT(str)         do { ofs<<"set output "<<#str<< std::endl; }while(0);
 #define OFS_TD(str,val)         do { ofs<<"<tr><td>"<<str<<"</td>"<<"<td>"<<val<<"</td></tr>"<<std::endl; }while(0);
 
 #define HAS_VIRUS_OUTPUT        "\"A_hasVirus.txt\""
@@ -195,6 +196,7 @@ void Monitor :: generatePlotScript() {
  */
 void Monitor :: generatePlotScriptForPng() {
     std::ofstream ofs(AUTO_GPLOT_FILENAME);
+    ofs << "set terminal png size 1000, 250" << std::endl;
     // population
     scriptForPopulationPng(ofs);
     // hasVirus
@@ -215,7 +217,6 @@ void Monitor :: generatePlotScriptForPng() {
  * =====================================================================================
  */
 void scriptForPopulationPng(std::ofstream &ofs) {
-    ofs << "set terminal png" << std::endl;
     OFS_STR ( "set yl \"Agent\"" );
     OFS_STR ( "set xl \"Term\"" );
     ofs << "set output \"Population.png\"" << std::endl;
@@ -223,7 +224,6 @@ void scriptForPopulationPng(std::ofstream &ofs) {
     ofs << "plot " << POPULATION_OUTPUT << " w l"
         << " title " << "\"population\"" << std::endl;
     // Mini size
-    ofs << "set terminal png" << std::endl;
     OFS_STR ( "set yl \"Agent\"" );
     OFS_STR ( "set xl \"Term\"" );
     ofs << "set output \"Population_mini.png\"" << std::endl;
@@ -267,7 +267,7 @@ void scriptForHasVirusPng(std::ofstream &ofs) {
         << " title " << "\"has_all_virus\"" << std::endl;
 }
 void scriptForHasImmunityPng(std::ofstream &ofs) {
-    ofs << "set output \"HasImmunity.png\"" << std::endl;
+    OFS_OUTPUT( "HasImmunity.png" );
     OFS_STR ( "set yl \"Agent\"" );
     OFS_STR ( "set xl \"Term\"" );
     ofs << "set title \"hasImmunity\"" << std::endl
@@ -279,12 +279,12 @@ void scriptForHasImmunityPng(std::ofstream &ofs) {
             << " using 1:" << i+3 << " w l"
             << " title " << "\"has_immunity_" << i+1 << "\"" << std::endl;
     }
-    ofs << "set output \"HasImmunity.png\"" << std::endl;
+    OFS_OUTPUT( "HasImmunity.png" );
     ofs << "replot " << HAS_IMMUNITY_OUTPUT
         << " using 1:" << NUM_V+2 << " w l"
         << " title " << "\"has_all_immunity\"" << std::endl;
     // Mini Size
-    ofs << "set output \"HasImmunity_mini.png\"" << std::endl;
+    OFS_OUTPUT( "HasImmunity_mini.png" );
     OFS_STR ( "set yl \"Agent\"" );
     OFS_STR ( "set xl \"Term\"" );
     ofs << "set title \"hasImmunity\"" << std::endl

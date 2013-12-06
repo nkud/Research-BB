@@ -54,7 +54,7 @@ class Monitor {
         void generateResultHtml();                                   /* 結果表示用のHTMLスクリプトを生成 */
 };
 
-void scriptForPopulationPng(std::ofstream &ofs);                                       /* 画像を出力するスクリプト */
+void scriptForPopulationPng(std::ofstream &ofs);                     /* 画像を出力するスクリプト */
 void scriptForHasVirusPng(std::ofstream &ofs);
 void scriptForHasImmunityPng(std::ofstream &ofs);
 void scriptForSIRPng(std::ofstream &ofs);
