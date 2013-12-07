@@ -60,9 +60,9 @@ const int MINI_SIZE_TERM              = 200;
 const int WIDTH                       = 20                    ;      /* ランドスケープの幅 */
 
 /* ウイルス */                                                          /* ウイルスの設定 -------------------- */
-const int TAG_LEN_V                   = 16                    ;       /* ウイルスのタグのデフォルトの長さ */
+const int TAG_LEN_V                   = 15                    ;       /* ウイルスのタグのデフォルトの長さ */
 const int NUM_V                       = 2                      ;     /* ウイルスの種類 */
-const double INFECTION_RATE           = 0.5                  ;       /* デフォルトの感染率 */
+const double INFECTION_RATE           = 1.0                  ;       /* デフォルトの感染率 */
 
 const int MAX_VIRUS_AGENT_HAVE        = NUM_V                 ;      /* 最大保持ウイルス */
 const int MAX_V_AGENT_INFECT_ONT_TIME = 1                 ;          /* １期間で感染させるウイルスの最大数 */

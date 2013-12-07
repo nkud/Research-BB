@@ -90,13 +90,13 @@ int main()
         admin.outputFile_Population            ( "A_population.txt"       ) ; /* 出力：人口 */
 
         /* 途中経過 */
-        LOG( monitor.getContactNum() );
-        if( admin.getNumOfAgent() >= MAX_NUM_A ) break;              /* 最大エージェントを越えると終了 */
+//        LOG( monitor.getContactNum() );
+//        if( admin.getNumOfAgent() >= MAX_NUM_A ) break;              /* 最大エージェントを越えると終了 */
         if( monitor.getContactNum()==0 ) zero_count++;               /* １０回以上接触感染がなければ */
         if( zero_count >= 10 ) break;                                /* 強制的に終了する */
     }
     
-    admin.outputFile_LastLog( "A_log.txt" );                         /* プログラムの初期設定など出力 */
+    admin.outputFile_LastLog( "Log.txt" );                           /* プログラムの初期設定など出力 */
     admin.printInitInfo();                                           /* 初期状態を表示 */
 
 #ifdef __unix__

@@ -1,6 +1,9 @@
 CC       = g++
 PRINT    = /bin/echo
 RM       = rm -rfv
+MKDIR	 = mkdir
+COPY	 = cp
+
 CTAGS    = $(shell which ctags)
 
 NOW		 = $(shell date +"%m%d%I%M%S")
@@ -14,7 +17,7 @@ SRC      = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp Monitor.cp
 VPATH    = src include
 CPPFLAGS = -I include
 
-$(TARGET): $(OBJ) Global.h
+$(TARGET): $(OBJ)
 	@$(PRINT) -ne 'Cretating $(TARGET)...\t'
 	@$(CC) $(OBJ) -o $@
 	@$(PRINT) OK!
@@ -27,7 +30,7 @@ run:
 	@$(PRINT) [ exit ]
 
 %.o: %.cpp
-	@$(PRINT) -ne 'Compiling $@...\t'
+	@$(PRINT) -n "Compiling $@..."
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
 	@$(PRINT) OK!
 
@@ -35,9 +38,9 @@ main.o: Global.h Function.h Agent.h Virus.h Landscape.h Monitor.h Administrator.
 Administrator.o: Global.h Function.h Administrator.h Agent.h Virus.h Landscape.h Monitor.h
 Monitor.o: Monitor.h Global.h
 TagInterface.o: TagInterface.h Global.h
-Agent.o: Agent.h Function.h Monitor.h Global.h
-Virus.o: Virus.h Function.h Global.h
-Landscape.o: Landscape.h Global.h
+Agent.o: Agent.h Function.h Monitor.h Global.h TagInterface.h
+Virus.o: Virus.h Function.h TagInterface.h
+Landscape.o: Landscape.h
 Function.o: Function.h
 
 build: clean $(TARGET)
@@ -51,12 +54,13 @@ tags:
 all: $(TARGET) run plot
 
 pack:
-	@mkdir $(NOW)
-	@cp *.txt *.png *.plt RESULT.html result.css include/Global.h src/main.cpp main.out $(NOW)
+	@$(MKDIR) $(NOW)
+	@$(COPY) *.txt *.png *.plt RESULT.html result.css include/Global.h src/main.cpp main.out $(NOW)
 
 rebuild: tags build run plot
 
 plot :
+	@$(PRINT) [ start plot ]
 	@gnuplot auto.plt
-	@echo [ plot start ]
 	@gnuplot quick.plt
+	@$(PRINT) [ end plot ]
