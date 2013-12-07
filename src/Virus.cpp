@@ -62,3 +62,16 @@ Virus :: Virus( int l, double r ):
 Virus :: Virus( const char *str ) :
     __TagInterface( str )
 {}
+
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Virus :: searchStartPoint( __TagInterface & )
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+int Virus :: searchStartPoint( __TagInterface &tag ) {
+    int sp = -1;
+    sp = min_ham_distance_point( tag.getTag(), getTag(), tag.getLen(), getLen() );
+    return sp;
+}

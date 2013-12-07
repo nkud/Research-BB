@@ -41,7 +41,7 @@ int ham_distance(const int * const a, const int * const b, const int n) {
 
 /* 
  * ===  FUNCTION  ======================================================================
- *         Name:  min_ham_distance
+ *         Name:  min_ham_distance_point
  *  Description:  最小ハミング距離が 0（なし）-> return -1
  *                最小ハミング距離が n（ >0 ）-> return sp（タグの位置）
  * =====================================================================================

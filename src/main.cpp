@@ -33,7 +33,7 @@ int main()
 #endif
     srand( (unsigned int)time(NULL)/2 );                             /* 乱数初期化  */
 
-    // 初期化
+    /* 初期化・初期設定 */
     VECTOR(Agent *) agent;                                           /* エージェントの集合  */
     FOR( i, INIT_NUM_A ) {                                           /* 初期エージェントの数だけ */
         agent.push_back( new Agent );                                /* エージェントを初期化 */
@@ -44,10 +44,10 @@ int main()
     Administrator admin( agent, virus, &landscape );                 /* 管理者に登録 */
 
     Monitor &monitor = Monitor::Instance();                          /* モニター */
-    FileGenerator &fg = FileGenerator::Instance();
-    fg.setAdministrator( admin );
+    FileGenerator &fg = FileGenerator::Instance();                   /* 出力ファイルを管理 */
+    fg.setAdministrator( admin );                                    /* 管理者を登録 */
 
-    // 初期感染
+    /* エージェントへの初期感染 */
     FOR( i, NUM_V ) {
         admin.initInfectAgentInRatio( virus[i], INIT_INFECTED_RATIO );            /* 初期感染させる */
     }
