@@ -67,7 +67,6 @@ plot :
 	@cd $(BIN); gnuplot auto.plt
 	@cd $(BIN); mkdir -p txt;  mv *.txt txt
 	@cd $(BIN); mkdir -p img;  mv *.png img
-	@cd $(BIN); mkdir -p obj;  mv *.o obj
 	@cd $(BIN); mkdir -p script;  mv *.plt script
 	#@gnuplot quick.plt
 	@$(PRINT) [ end plot ]

@@ -44,6 +44,7 @@ int main()
     Administrator admin( agent, virus, &landscape );                 /* 管理者に登録 */
 
     Monitor &monitor = Monitor::Instance();                          /* モニター */
+    FileGenerator fg;
 
     // 初期感染
     FOR( i, NUM_V ) {
@@ -104,8 +105,8 @@ int main()
     Benchmark::Instance().printTime();                               /* 計測時間表示 */
 #endif
 
-    monitor.generateResultHtml(admin.getTerm());                     /* 結果表示用HTMLファイル出力 */
-    monitor.generatePlotScriptForPng();                              /* gnuplot用ファイル出力 */
+    fg.generateResultHtml(admin.getTerm());                     /* 結果表示用HTMLファイル出力 */
+    fg.generatePlotScriptForPng();                              /* gnuplot用ファイル出力 */
 //    monitor.generatePlotScript();                                    /* gnuplot用ファイル出力 */
 
     // 確認用 -----------------------------------------------------------------

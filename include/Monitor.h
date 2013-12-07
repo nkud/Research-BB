@@ -36,13 +36,13 @@ class Monitor {
         int num_contact_;                                            /* 接触回数 */
         std::map<__TagInterface *, int> num_infection_contact_;      /* 感染させた接触回数 */
 
-        int last_term_;
-
-        void scriptForPopulationPng(std::ofstream &ofs);                     /* 画像を出力するスクリプト */
-        void scriptForHasVirusPng(std::ofstream &ofs);
-        void scriptForHasImmunityPng(std::ofstream &ofs);
-        void scriptForSIRPng(std::ofstream &ofs);
-        void scriptForContactPng(std::ofstream &ofs);
+//        int last_term_;
+//
+//        void scriptForPopulationPng(std::ofstream &ofs);             /* 画像を出力するスクリプト */
+//        void scriptForHasVirusPng(std::ofstream &ofs);
+//        void scriptForHasImmunityPng(std::ofstream &ofs);
+//        void scriptForSIRPng(std::ofstream &ofs);
+//        void scriptForContactPng(std::ofstream &ofs);
 
     public:
         static Monitor& Instance();                                  /* インスタンスを返す */
@@ -57,9 +57,30 @@ class Monitor {
 
         void resetAll();                                             /* 値をすべてリセット */
 
+//        void generatePlotScript();                                   /* プロット用のスクリプトを生成 */
+//        void generatePlotScriptForPng();                             /* プロット用のスクリプトを生成 */
+//        void generateResultHtml(int t);                              /* 結果表示用のHTMLスクリプトを生成 */
+};
+
+/*
+ * =====================================================================================
+ *        Class:  FileGenerator
+ *  Description:  
+ * =====================================================================================
+ */
+class FileGenerator {
+    private:
+        int last_term_;
+
+        void scriptForPopulationPng(std::ofstream &ofs);             /* 画像を出力するスクリプト */
+        void scriptForHasVirusPng(std::ofstream &ofs);
+        void scriptForHasImmunityPng(std::ofstream &ofs);
+        void scriptForSIRPng(std::ofstream &ofs);
+        void scriptForContactPng(std::ofstream &ofs);
+    public:
         void generatePlotScript();                                   /* プロット用のスクリプトを生成 */
         void generatePlotScriptForPng();                             /* プロット用のスクリプトを生成 */
-        void generateResultHtml(int t);                                   /* 結果表示用のHTMLスクリプトを生成 */
+        void generateResultHtml(int t);                              /* 結果表示用のHTMLスクリプトを生成 */
 };
 
 #ifdef __unix__
