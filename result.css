@@ -4,7 +4,8 @@ table {
 }
 
 .graph {
-    border: 0.5em #eee solid;
+    border: 0.3em #ccc double;
+    margin-top: 3em;
 }
 h2 {
     background: #eee;
