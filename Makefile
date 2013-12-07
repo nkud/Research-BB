@@ -1,14 +1,16 @@
 CC       = g++
 PRINT    = /bin/echo
 RM       = rm -rfv
-MKDIR	 = mkdir -v
+MKDIR	 = mkdir -vp
 COPY	 = cp
+
+BIN		 = bin
 
 CTAGS    = $(shell which ctags)
 
 NOW		 = $(shell date +"%m%d%I%M%S")
 
-OBJ      = $(SRC:.cpp=.o)
+OBJ      = $(addprefix bin/, $(SRC:.cpp=.o))
 LIB      = $(SRC:.cpp=.h)
 
 TARGET   = main.out
@@ -17,8 +19,8 @@ SRC      = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp Monitor.cp
 VPATH    = src include
 CPPFLAGS = -I include
 
-$(TARGET): $(OBJ)
-	@$(PRINT) -n 'Cretating $(TARGET)...'
+$(BIN)/$(TARGET): $(OBJ)
+	@$(PRINT) -n 'Cretating $<...'
 	@$(CC) $(OBJ) -o $@
 	@$(PRINT) OK!
 
@@ -26,46 +28,48 @@ $(TARGET): $(OBJ)
 
 run:
 	@$(PRINT) [ run ]
-	@./$(TARGET)
+	@cd $(BIN); ./$(TARGET)
 	@$(PRINT) [ exit ]
 
-%.o: %.cpp
+$(BIN)/%.o: %.cpp
 	@$(PRINT) -n ">>> Compiling $@..."
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
 	@$(PRINT) OK!
 
-main.o: Global.h Function.h Agent.h Virus.h Landscape.h Monitor.h Administrator.h
-Administrator.o: Global.h Function.h Administrator.h Agent.h Virus.h Landscape.h Monitor.h
-Monitor.o: Monitor.h Global.h
-TagInterface.o: TagInterface.h Global.h
-Agent.o: Agent.h Function.h Monitor.h Global.h TagInterface.h
-Virus.o: Virus.h Function.h TagInterface.h
-Landscape.o: Landscape.h
-Function.o: Function.h
-
-build: clean tags $(TARGET)
+build: clean tags $(BIN)/$(TARGET)
 
 clean:
 	@$(PRINT) '>>> Cleaning...'
-	@$(RM) *.o
+	@$(RM) $(OBJ)
+	@$(PRINT) '>>> Completed Cleaning !'
+
 
 tags:
 	@$(CTAGS) $(wildcard src/*) $(wildcard include/*)
 
-all: $(TARGET) run plot
+all: $(BIN)/$(TARGET) run plot
 
 pack:
 	@$(PRINT) '>>> Packing...'
 	@$(MKDIR) $(NOW)
 	@$(MKDIR) $(NOW)/txt
 	@$(MKDIR) $(NOW)/src
-	@$(COPY) *.txt $(NOW)/txt
+	@$(COPY) $(BIN)/*.txt $(NOW)/txt
 	@$(COPY) include/Global.h src/main.cpp $(NOW)/src
-	@$(COPY) *.png *.plt RESULT.html result.css main.out $(NOW)
+	@cd $(BIN); $(COPY) *.png *.plt RESULT.html result.css main.out ../$(NOW)
 	@tree $(NOW)
 
 plot :
 	@$(PRINT) [ start plot ]
-	@gnuplot auto.plt
-	@gnuplot quick.plt
+	@cd $(BIN); gnuplot auto.plt
+	#@gnuplot quick.plt
 	@$(PRINT) [ end plot ]
+
+$(BIN)/main.o: Global.h Function.h Agent.h Virus.h Landscape.h Monitor.h Administrator.h
+$(BIN)/Administrator.o: Global.h Function.h Administrator.h Agent.h Virus.h Landscape.h Monitor.h
+$(BIN)/Monitor.o: Monitor.h Global.h
+$(BIN)/TagInterface.o: TagInterface.h Global.h
+$(BIN)/Agent.o: Agent.h Function.h Monitor.h Global.h TagInterface.h
+$(BIN)/Virus.o: Virus.h Function.h TagInterface.h
+$(BIN)/Landscape.o: Landscape.h
+$(BIN)/Function.o: Function.h

@@ -52,7 +52,7 @@ typedef int tag_t;                                                   /* タグ�
 //#define COUPLE_TAG                                                   /* カップルタグで子供を作る */
 
 /* 期間 */
-const int TERM                        = 200000                   ;   /* 期間 */
+const int TERM                        = 200                   ;   /* 期間 */
 const int OUTPUT_INTERVAL             = 1                     ;      /* 出力する間隔 */
 const int MINI_SIZE_TERM              = 200;
 
