@@ -13,6 +13,9 @@
 
 #include "Monitor.h"
 #include "Global.h"
+#include "Agent.h"
+#include "Virus.h"
+
 #include <fstream>
 #include <iostream>
 
@@ -728,6 +731,16 @@ void Benchmark :: printElapsedTime() {
  * Description:  
  *--------------------------------------------------------------------------------------
  */
+
+FileGenerator& FileGenerator :: Instance() {
+    static FileGenerator coredata;
+    return coredata;                                                 /* インスタンスを返す */
+}
+
+void FileGenerator :: setAdministrator( Administrator &admin ) {
+    admin_ = &admin;                                                 /* 管理者を登録 */
+}
+
 void FileGenerator :: generatePlotScript() {
     std::ofstream ofs(GPLOT_FILENAME);
 #ifdef OUTPUT_POPULATION
@@ -1329,4 +1342,107 @@ void FileGenerator :: generateResultHtml( int t ) {
     OFS_IMG_MINI( "ContactRatio.png", "ContactRatio_mini.png", "ContactRatio_last.png" );
     OFS( "ratio: 何らかのウイルスを感染させた接触回数 / 総接触回数" );
     OFS( "</code></html></body>" );
+}
+
+/*--------------------------------------------------------------------------------------
+ *      Method:  FileGenerator :: outputFile_HasVirus
+ * Description:  ファイルに出力する
+ *               ウイルスの数によって、列を調整できる
+ *----------------------------------------------------------------------------------- */
+void FileGenerator :: outputFile_HasVirus( const char *fname ) {
+    if( admin_->getTerm() % OUTPUT_INTERVAL != 0 ) return;
+    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
+    ofs << admin_->getTerm() << SEPARATOR;                                   /* ファイルに出力 */
+    FOR( j, NUM_V ) {
+        ofs << admin_->numHasVirus( admin_->virus_[j] ) << SEPARATOR;                /* ウイルス j の保持者 */
+    }
+    int num_has_all = admin_->numHasAllVirus();
+    ofs << num_has_all << SEPARATOR;                                 /* 全ウイルス保持者 */
+    ofs << (double)num_has_all/admin_->agent_.size() << SEPARATOR;
+    ofs << (double)admin_->numHasVirus(admin_->virus_[0])/admin_->agent_.size() << std::endl;
+}
+
+/*--------------------------------------------------------------------------------------
+ *      Method:  FileGenerator :: outputFile_HasImmunity
+ * Description:  ファイルに出力する
+ *               ウイルスの数によって、列を調整できる
+ *----------------------------------------------------------------------------------- */
+void FileGenerator :: outputFile_HasImmunity( const char *fname ) {
+    if( admin_->getTerm() % OUTPUT_INTERVAL != 0 ) return;
+    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
+    ofs << admin_->getTerm() << SEPARATOR;                                   /* ファイルに出力 */
+    FOR( k, NUM_V ) {
+        ofs << admin_->numHasImmunity( admin_->virus_[k] ) << SEPARATOR;             /* ウイルスに対する免疫獲得者数 */
+    }
+    int num_has_all = admin_->numHasAllImmunity();
+    ofs << num_has_all << SEPARATOR;
+    ofs << (double)num_has_all/admin_->agent_.size() << SEPARATOR;
+    ofs << (double)admin_->numHasImmunity(admin_->virus_[0])/admin_->agent_.size() << std::endl;
+}
+/*--------------------------------------------------------------------------------------
+ *      Method:  FileGenerator :: outputFile_Population
+ * Description:  人口推移を出力する
+ *----------------------------------------------------------------------------------- */
+void FileGenerator :: outputFile_Population( const char *fname ) {
+    if( admin_->getTerm() % OUTPUT_INTERVAL != 0 ) return;
+    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
+    ofs << admin_->getTerm() << SEPARATOR;                                   /* 期間 */
+    ofs << admin_->agent_.size() << SEPARATOR;                               /* 人口 */
+    ofs << std::endl;
+}
+
+/*--------------------------------------------------------------------------------------
+ *      Method:  FileGenerator :: outputFile_InfectionContactRatio
+ * Description:  ファイルに出力する
+ *               ウイルスの数によって、列を調整できる
+ *----------------------------------------------------------------------------------- */
+void FileGenerator :: outputFile_InfectionContactRatio( const char *fname ) {
+    if( admin_->getTerm() % OUTPUT_INTERVAL != 0 ) return;
+    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
+    double ratio = 0;
+    int sum = 0;                                                     /* 何らかのウイルスに感染した接触回数 */
+
+    ofs << admin_->getTerm() << SEPARATOR;                                   /* 期間 */
+    ofs << Monitor::Instance().getContactNum() << SEPARATOR;         /* 総接触数 */
+    FOR( j, NUM_V ) {                                                /* その内感染した回数 */
+        sum += Monitor::Instance().getInfectionContactNum(&admin_->virus_[j]);
+        ofs << Monitor::Instance().getInfectionContactNum(&admin_->virus_[j]) << SEPARATOR;
+    }
+
+    if( sum > 0 ) ratio
+        = (double)sum / (double) Monitor::Instance().getContactNum(); 
+    ofs << ratio << std::endl;
+}
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  FileGenerator :: outputFile_LastLog( const char * )
+ * Description:  最終、初期状態を出力
+ *--------------------------------------------------------------------------------------
+ */
+void FileGenerator :: outputFile_LastLog( const char *fname ) {
+    static std::ofstream ofs(fname);
+    ofs << "TERM:" << admin_->getTerm() << std::endl;
+    ofs << "MAX_AGE:" << MAX_AGE << std::endl;
+    ofs << "BIRTH_RATE:" << BIRTH_RATE << std::endl;
+    ofs << "WIDTH:" << WIDTH << std::endl;
+    ofs << "NUM_A:" << admin_->agent_.size() << std::endl;
+    ofs << "INIT_NUM_A:" << INIT_NUM_A << std::endl;
+    ofs << "NUM_V:" << NUM_V << std::endl;
+    ofs << "INFECTION_RATE:" << INFECTION_RATE << std::endl;
+    ofs << "INIT_INFECTED_RATIO:" << INIT_INFECTED_RATIO << std::endl;
+    ofs << "TAG_LEN_A:" << TAG_LEN_A << std::endl;
+    ofs << "TAG_LEN_V:" << TAG_LEN_V << std::endl;
+    FOR(i,NUM_V) { ofs<<"["<<admin_->virus_[i].getLen()<<"]:";
+        FOR(j, admin_->virus_[i].getLen()) { ofs<<int(admin_->virus_[i].tagAt(j)); } ofs<<std::endl; }
+    ofs << ">>> Agent Last Status" << std::endl;
+    ITERATOR(Agent *) it_a = admin_->agent_.begin();
+    while(it_a!=admin_->agent_.end()) {
+        FOR(j, (*it_a)->getLen()) {
+            ofs<<(*it_a)->tagAt(j);                                  /* エージェントのタグ */
+        }
+        ofs<<" "<<(*it_a)->numHoldingVirus();                        /* エージェントの保持ウイルス数 */
+        ofs<<std::endl;
+        it_a++;
+    }
 }

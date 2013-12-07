@@ -11,6 +11,9 @@
  * =====================================================================================
  */
 
+#ifndef ___ADMINISTRATOR
+#define ___ADMINISTRATOR
+
 #include "Global.h"
 
 #include <vector>
@@ -29,17 +32,17 @@ class Monitor;
  */
 class Administrator {
     private:
-        VECTOR(Agent *) &agent_;                                     /* エージェントの集合 */
 //        VECTOR(Agent *) new_child_;                                  /* 新しく生まれるエージェント */
-
-        Virus *virus_;                                               /* ウイルスの集合 */
-        Landscape *landscape_;                                       /* 土地 */
 
         int term_;                                                   /* 現在の期間を記録 */
 
         ITERATOR(Agent *) deleteAgent( ITERATOR(Agent *) &it );      /* 配列から指定のエージェントを削除 */
 
     public:
+        VECTOR(Agent *) &agent_;                                     /* エージェントの集合 */
+        Virus *virus_;                                               /* ウイルスの集合 */
+        Landscape *landscape_;                                       /* 土地 */
+
         Administrator( VECTOR(Agent *) & , Virus *, Landscape * );   /* コンストラクタ */
 
         int getNumOfAgent() const;
@@ -62,10 +65,12 @@ class Administrator {
         int numHasAllImmunity() const;                                     /* 全ウイルスの免疫獲得者数 */
 
         void printInitInfo() const;                                        /* 初期状態の情報を端末に出力 */
-        void outputFile_HasVirus( const char * );                    /* ファイルに出力 */
-        void outputFile_HasImmunity( const char * );                 /* ファイルに出力 */
-        void outputFile_InfectionContactRatio( const char * );       /* ファイルに出力 */
-        void outputFile_LastLog( const char * );                     /* ログを出力 */
-        void outputFile_Population( const char * );                  /* 人口推移を出力 */
+
+//        void outputFile_HasVirus( const char * );                    /* ファイルに出力 */
+//        void outputFile_HasImmunity( const char * );                 /* ファイルに出力 */
+//        void outputFile_InfectionContactRatio( const char * );       /* ファイルに出力 */
+//        void outputFile_LastLog( const char * );                     /* ログを出力 */
+//        void outputFile_Population( const char * );                  /* 人口推移を出力 */
 };
 
+#endif

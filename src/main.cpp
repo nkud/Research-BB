@@ -44,7 +44,8 @@ int main()
     Administrator admin( agent, virus, &landscape );                 /* 管理者に登録 */
 
     Monitor &monitor = Monitor::Instance();                          /* モニター */
-    FileGenerator fg;
+    FileGenerator &fg = FileGenerator::Instance();
+    fg.setAdministrator( admin );
 
     // 初期感染
     FOR( i, NUM_V ) {
@@ -85,10 +86,10 @@ int main()
         admin.responseAgent();                                       /* 免疫応答（タグフリップ） */
 
 
-        admin.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ; /* 出力：感染者 */
-        admin.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ; /* 出力：免疫獲得者 */
-        admin.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ; /* 出力：接触回数 */
-        admin.outputFile_Population            ( "A_population.txt"       ) ; /* 出力：人口 */
+        fg.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ; /* 出力：感染者 */
+        fg.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ; /* 出力：免疫獲得者 */
+        fg.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ; /* 出力：接触回数 */
+        fg.outputFile_Population            ( "A_population.txt"       ) ; /* 出力：人口 */
 
         /* 途中経過 */
 //        LOG( monitor.getContactNum() );
@@ -97,7 +98,7 @@ int main()
         if( zero_count >= 10 ) break;                                /* 強制的に終了する */
     }
     
-    admin.outputFile_LastLog( "Log.txt" );                           /* プログラムの初期設定など出力 */
+    fg.outputFile_LastLog( "Log.txt" );                           /* プログラムの初期設定など出力 */
     admin.printInitInfo();                                           /* 初期状態を表示 */
 
 #ifdef __unix__
