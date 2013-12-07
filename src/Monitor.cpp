@@ -27,11 +27,11 @@
 #define OFS(str)                do { ofs<<"<p>"<<str<<"</p>"<<std::endl; }while(0);
 #define OFS_LINE(str)           do { ofs<< str << std::endl; }while(0);
 #define OFS_VAL(str,val)        do { ofs<<"[ "<<str<<" ]: "<<val<<"<br />"<<std::endl; }while(0);
-#define OFS_IMG(img)            do { ofs<<"<br /><img src="<<#img<<" /><br />"<<std::endl; }while(0);
+#define OFS_IMG(img)            do { ofs<<"<br /><img src=img/"<<#img<<" /><br />"<<std::endl; }while(0);
 #define OFS_IMG_MINI(img,mini,last)  do { ofs<<"<table class=\"graph\"><tr> \
-                                <td><img src="<<#img<<" /></td></tr><tr> \
-                                <td><img src="<<#mini<<" /></td></tr><t> \
-                                <td><img src="<<#last<<" /></td></tr> \
+                                <td><img src=img/"<<img<<" /></td></tr><tr> \
+                                <td><img src=img/"<<mini<<" /></td></tr><t> \
+                                <td><img src=img/"<<last<<" /></td></tr> \
                                 </table><br />"<<std::endl; }while(0);
 #define OFS_OUTPUT(str)         do { ofs<<"set output "<<#str<< std::endl; }while(0);
 #define OFS_TD(str,val)         do { ofs<<"<tr><td>"<<str<<"</td>"<<"<td>"<<val<<"</td></tr>"<<std::endl; }while(0);

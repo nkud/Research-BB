@@ -41,7 +41,6 @@ build: clean tags $(BIN)/$(TARGET)
 clean:
 	@$(PRINT) '>>> Cleaning...'
 	@$(RM) $(OBJ)
-	@$(PRINT) '>>> Completed Cleaning !'
 
 
 tags:
@@ -54,14 +53,22 @@ pack:
 	@$(MKDIR) $(NOW)
 	@$(MKDIR) $(NOW)/txt
 	@$(MKDIR) $(NOW)/src
-	@$(COPY) $(BIN)/*.txt $(NOW)/txt
+	@$(MKDIR) $(NOW)/img
+	@$(MKDIR) $(NOW)/script
+	@$(COPY) $(BIN)/txt/*.txt $(NOW)/txt
+	@$(COPY) $(BIN)/script/*.plt $(NOW)/script
+	@$(COPY) $(BIN)/img/*.png $(NOW)/img
 	@$(COPY) include/Global.h src/main.cpp $(NOW)/src
-	@cd $(BIN); $(COPY) *.png *.plt RESULT.html result.css main.out ../$(NOW)
+	@cd $(BIN); $(COPY) RESULT.html result.css main.out ../$(NOW)
 	@tree $(NOW)
 
 plot :
 	@$(PRINT) [ start plot ]
 	@cd $(BIN); gnuplot auto.plt
+	@cd $(BIN); mkdir -p txt;  mv *.txt txt
+	@cd $(BIN); mkdir -p img;  mv *.png img
+	@cd $(BIN); mkdir -p obj;  mv *.o obj
+	@cd $(BIN); mkdir -p script;  mv *.plt script
 	#@gnuplot quick.plt
 	@$(PRINT) [ end plot ]
 
