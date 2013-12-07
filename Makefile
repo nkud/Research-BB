@@ -1,7 +1,7 @@
 CC       = g++
 PRINT    = /bin/echo
 RM       = rm -rfv
-MKDIR	 = mkdir
+MKDIR	 = mkdir -v
 COPY	 = cp
 
 CTAGS    = $(shell which ctags)
@@ -18,7 +18,7 @@ VPATH    = src include
 CPPFLAGS = -I include
 
 $(TARGET): $(OBJ)
-	@$(PRINT) -ne 'Cretating $(TARGET)...\t'
+	@$(PRINT) -n 'Cretating $(TARGET)...'
 	@$(CC) $(OBJ) -o $@
 	@$(PRINT) OK!
 
@@ -30,7 +30,7 @@ run:
 	@$(PRINT) [ exit ]
 
 %.o: %.cpp
-	@$(PRINT) -n "Compiling $@..."
+	@$(PRINT) -n ">>> Compiling $@..."
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
 	@$(PRINT) OK!
 
@@ -43,9 +43,10 @@ Virus.o: Virus.h Function.h TagInterface.h
 Landscape.o: Landscape.h
 Function.o: Function.h
 
-build: clean $(TARGET)
+build: clean tags $(TARGET)
 
 clean:
+	@$(PRINT) '>>> Cleaning...'
 	@$(RM) *.o
 
 tags:
@@ -54,10 +55,14 @@ tags:
 all: $(TARGET) run plot
 
 pack:
+	@$(PRINT) '>>> Packing...'
 	@$(MKDIR) $(NOW)
-	@$(COPY) *.txt *.png *.plt RESULT.html result.css include/Global.h src/main.cpp main.out $(NOW)
-
-rebuild: tags build run plot
+	@$(MKDIR) $(NOW)/txt
+	@$(MKDIR) $(NOW)/src
+	@$(COPY) *.txt $(NOW)/txt
+	@$(COPY) include/Global.h src/main.cpp $(NOW)/src
+	@$(COPY) *.png *.plt RESULT.html result.css main.out $(NOW)
+	@tree $(NOW)
 
 plot :
 	@$(PRINT) [ start plot ]
