@@ -113,7 +113,6 @@ int main()
 
     ff.generateResultHtml(admin.getTerm());                          /* 結果表示用HTMLファイル出力 */
     ff.generatePlotScriptForPng();                                   /* gnuplot用ファイル出力 */
-//    monitor.generatePlotScript();                                    /* gnuplot用ファイル出力 */
 
     // 確認用 -----------------------------------------------------------------
     // メモ

@@ -47,7 +47,6 @@ class FileFactory {
         static FileFactory& Instance();                              /* インスタンスを返す */
         void setAdministrator( Administrator &admin );
 
-        void generatePlotScript();                                   /* プロット用のスクリプトを生成 */
         void generatePlotScriptForPng();                             /* プロット用のスクリプトを生成 */
         void generateResultHtml(int last_term);                      /* 結果表示用のHTMLスクリプトを生成 */
 

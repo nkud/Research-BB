@@ -68,7 +68,6 @@ plot :
 	@cd $(BIN); mkdir -p txt;  mv *.txt txt
 	@cd $(BIN); mkdir -p img;  mv *.png img
 	@cd $(BIN); mkdir -p script;  mv *.plt script
-	#@gnuplot quick.plt
 	@$(PRINT) [ end plot ]
 
 $(BIN)/main.o: Global.h Function.h Agent.h Virus.h Landscape.h Monitor.h Administrator.h
