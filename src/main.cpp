@@ -31,10 +31,10 @@ int main()
 #ifdef __unix__
     Benchmark::Instance().startTimer();                              /* ベンチマーク計測開始 */
 #endif
-    srand( (unsigned int)time(NULL)/2 );                             /* 乱数初期化  */
+    srand( (unsigned int)time(NULL)/2 );                             /* 乱数初期化 */
 
     /* 初期化・初期設定 */
-    VECTOR(Agent *) agent;                                           /* エージェントの集合  */
+    VECTOR(Agent *) agent;                                           /* エージェントの配列 */
     FOR( i, INIT_NUM_A ) {                                           /* 初期エージェントの数だけ */
         agent.push_back( new Agent );                                /* エージェントを初期化 */
     }
@@ -44,8 +44,8 @@ int main()
     Administrator admin( agent, virus, &landscape );                 /* 管理者に登録 */
 
     Monitor &monitor = Monitor::Instance();                          /* モニター */
-    FileFactory &fg = FileFactory::Instance();                   /* 出力ファイルを管理 */
-    fg.setAdministrator( admin );                                    /* 管理者を登録 */
+    FileFactory &ff = FileFactory::Instance();                       /* 出力ファイルを管理 */
+    ff.setAdministrator( admin );                                    /* 管理者を登録 */
 
     /* エージェントへの初期感染 */
     FOR( i, NUM_V ) {
@@ -61,7 +61,6 @@ int main()
     {
         cout << "===================================" << endl;
         LOG( i );
-        LOG( admin.getNumOfAgent() );
 
         admin.incrementTerm();                                       /* 期間を進める */
 
@@ -86,19 +85,19 @@ int main()
         admin.responseAgent();                                       /* 免疫応答（タグフリップ） */
 
 
-        fg.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ; /* 出力：感染者 */
-        fg.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ; /* 出力：免疫獲得者 */
-        fg.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ; /* 出力：接触回数 */
-        fg.outputFile_Population            ( "A_population.txt"       ) ; /* 出力：人口 */
+        /* 経過出力 */
+        ff.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ; /* 出力：感染者 */
+        ff.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ; /* 出力：免疫獲得者 */
+        ff.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ; /* 出力：接触回数 */
+        ff.outputFile_Population            ( "A_population.txt"       ) ; /* 出力：人口 */
+        LOG( monitor.getContactNum() );
 
-        /* 途中経過 */
-//        LOG( monitor.getContactNum() );
-//        if( admin.getNumOfAgent() >= MAX_NUM_A ) break;              /* 最大エージェントを越えると終了 */
+        /* 強制終了 */
         if( monitor.getContactNum()==0 ) zero_count++;               /* １０回以上接触感染がなければ */
         if( zero_count >= 10 ) break;                                /* 強制的に終了する */
     }
     
-    fg.outputFile_LastLog( "Log.txt" );                              /* プログラムの初期設定など出力 */
+    ff.outputFile_LastLog( "Log.txt" );                              /* プログラムの初期設定など出力 */
     admin.printInitInfo();                                           /* 初期状態を表示 */
 
 #ifdef __unix__
@@ -106,8 +105,8 @@ int main()
     Benchmark::Instance().printTime();                               /* 計測時間表示 */
 #endif
 
-    fg.generateResultHtml(admin.getTerm());                          /* 結果表示用HTMLファイル出力 */
-    fg.generatePlotScriptForPng();                                   /* gnuplot用ファイル出力 */
+    ff.generateResultHtml(admin.getTerm());                          /* 結果表示用HTMLファイル出力 */
+    ff.generatePlotScriptForPng();                                   /* gnuplot用ファイル出力 */
 //    monitor.generatePlotScript();                                    /* gnuplot用ファイル出力 */
 
     // 確認用 -----------------------------------------------------------------

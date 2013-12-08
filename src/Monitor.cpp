@@ -1290,7 +1290,7 @@ void FileFactory :: generateResultHtml( int t ) {
     OFS_TD( "土地の幅</font>", WIDTH );
     OFS_TD( "最大実行期間</font>", TERM );
 #ifdef __unix__
-    OFS_TD( "実行期間</font>", Benchmark::Instance().getTime() );
+    OFS_TD( "計算時間</font>", Benchmark::Instance().getTime() );
 #endif
     OFS_LINE( "</table>" );
 
