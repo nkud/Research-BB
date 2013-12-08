@@ -41,10 +41,6 @@ int main()
     VECTOR(Virus *) virus;
     virus.push_back( new Virus() );
     virus.push_back( new FixedVirus( 15, INFECTION_RATE, 5 ) );
-//    Virus virus[ NUM_V ] = {
-//        *( new FixedVirus( 15, INFECTION_RATE, 0) ),
-//        *( new FixedVirus( 15, INFECTION_RATE, 5) )
-//    };                                            /* ウイルス生成 */
     Landscape landscape;                                             /* ランドスケープ初期化 */
 
     Administrator admin( agent, virus, &landscape );                 /* 管理者に登録 */
