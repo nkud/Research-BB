@@ -38,7 +38,10 @@ int main()
     FOR( i, INIT_NUM_A ) {                                           /* 初期エージェントの数だけ */
         agent.push_back( new Agent );                                /* エージェントを初期化 */
     }
-    Virus virus[ NUM_V ];                                            /* ウイルス生成 */
+    Virus virus[ NUM_V ] = {
+        *( new FixedVirus( 15, INFECTION_RATE, 0) ),
+        *( new FixedVirus( 15, INFECTION_RATE, 5) )
+    };                                            /* ウイルス生成 */
     Landscape landscape;                                             /* ランドスケープ初期化 */
 
     Administrator admin( agent, virus, &landscape );                 /* 管理者に登録 */

@@ -78,3 +78,27 @@ int Virus :: searchStartPoint( const __TagInterface &tag ) const {
         = min_ham_distance_point( tag.getTag(), getTag(), tag.getLen(), getLen() );
     return sp;                                                       /* 取り付く位置を返す */
 }
+
+
+/*--------------------------------------------------------------------------------------
+ *      Method:  FixedVirus :: FixedVirus
+ * Description:  
+ *----------------------------------------------------------------------------------- */
+FixedVirus :: FixedVirus( int l, double r, int fsp ):
+    Virus( l, r ),                                                   /* タグ長、感染確率を指定 */
+    fixed_start_point_( fsp )                                        /* 取り付く位置を指定（最左が０） */
+{
+    assert( l+fsp <= TAG_LEN_A );                                               /* 取り付く位置がはみ出てたらエラー */
+    FOR( i, l ) {
+        tag_[i] = rand_binary();                                     /* タグをランダムに初期化 */
+    }
+}
+
+/*--------------------------------------------------------------------------------------
+ *      Method:  FixedVirus :: searchStartPoint( const __TagInterface & )
+ * Description:  
+ *----------------------------------------------------------------------------------- */
+int FixedVirus :: searchStartPoint( const __TagInterface &tag ) const {
+    LOG(fixed_start_point_);
+    return fixed_start_point_;                                                       /* 取り付く位置を返す */
+}
