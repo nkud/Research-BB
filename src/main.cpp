@@ -39,8 +39,9 @@ int main()
         agent.push_back( new Agent );                                /* エージェントを初期化 */
     }
     VECTOR(Virus *) virus;
-    virus.push_back( new Virus() );
-    virus.push_back( new FixedVirus( 15, INFECTION_RATE, 5 ) );
+    FOR( i, NUM_V ) {
+        virus.push_back( new Virus() );
+    }
     Landscape landscape;                                             /* ランドスケープ初期化 */
 
     Administrator admin( agent, virus, &landscape );                 /* 管理者に登録 */
