@@ -38,14 +38,6 @@ class Monitor {
         int num_contact_;                                            /* 接触回数 */
         std::map<__TagInterface *, int> num_infection_contact_;      /* 感染させた接触回数 */
 
-//        int last_term_;
-//
-//        void scriptForPopulationPng(std::ofstream &ofs);             /* 画像を出力するスクリプト */
-//        void scriptForHasVirusPng(std::ofstream &ofs);
-//        void scriptForHasImmunityPng(std::ofstream &ofs);
-//        void scriptForSIRPng(std::ofstream &ofs);
-//        void scriptForContactPng(std::ofstream &ofs);
-
     public:
         static Monitor& Instance();                                  /* インスタンスを返す */
 
@@ -58,47 +50,7 @@ class Monitor {
         void countUpInfectionContact( __TagInterface * );            /* 感染のために接触してあるウイルスに感染した回数 */
 
         void resetAll();                                             /* 値をすべてリセット */
-
-//        void generatePlotScript();                                   /* プロット用のスクリプトを生成 */
-//        void generatePlotScriptForPng();                             /* プロット用のスクリプトを生成 */
-//        void generateResultHtml(int t);                              /* 結果表示用のHTMLスクリプトを生成 */
 };
-
-/*
- * =====================================================================================
- *        Class:  FileFactory
- *  Description:  ファイル出力系関数
- * =====================================================================================
- */
-//class FileFactory {
-//    private:
-//        FileFactory( ) {}                                            /* コンストラクタ */
-//
-//        Administrator *admin_;                                       /* 管理者を登録 */
-//
-//        int last_term_;
-//
-//        void scriptForPopulationPng(std::ofstream &ofs);             /* 画像を出力するスクリプト */
-//        void scriptForHasVirusPng(std::ofstream &ofs);
-//        void scriptForHasImmunityPng(std::ofstream &ofs);
-//        void scriptForSIRPng(std::ofstream &ofs);
-//        void scriptForContactPng(std::ofstream &ofs);
-//    public:
-//        static FileFactory& Instance();                            /* インスタンスを返す */
-//        void setAdministrator( Administrator &admin );
-//
-//        void generatePlotScript();                                   /* プロット用のスクリプトを生成 */
-//        void generatePlotScriptForPng();                             /* プロット用のスクリプトを生成 */
-//        void generateResultHtml(int t);                              /* 結果表示用のHTMLスクリプトを生成 */
-//
-//        void outputFile_HasVirus( const char * );                    /* ファイルに出力 */
-//        void outputFile_HasImmunity( const char * );                 /* ファイルに出力 */
-//        void outputFile_InfectionContactRatio( const char * );       /* ファイルに出力 */
-//        void outputFile_LastLog( const char * );                     /* ログを出力 */
-//        void outputFile_Population( const char * );                  /* 人口推移を出力 */
-//
-//
-//};
 
 #ifdef __unix__
 /*
