@@ -60,7 +60,7 @@ const int MINI_SIZE_TERM              = 200;
 const int WIDTH                       = 20                    ;      /* ランドスケープの幅 */
 
 /* ウイルス */                                                          /* ウイルスの設定 -------------------- */
-const int TAG_LEN_V                   = 10                    ;      /* ウイルスのタグのデフォルトの長さ */
+const int TAG_LEN_V                   = 16                    ;      /* ウイルスのタグのデフォルトの長さ */
 const int NUM_V                       = 2                      ;     /* ウイルスの種類 */
 const double INFECTION_RATE           = 1.0                  ;       /* デフォルトの感染率 */
 

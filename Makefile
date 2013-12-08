@@ -76,6 +76,6 @@ $(BIN)/Administrator.o: Global.h Function.h Administrator.h Agent.h Virus.h Land
 $(BIN)/Monitor.o: Monitor.h Global.h
 $(BIN)/TagInterface.o: TagInterface.h Global.h
 $(BIN)/Agent.o: Agent.h Function.h Monitor.h Global.h TagInterface.h
-$(BIN)/Virus.o: Virus.h Function.h TagInterface.h
+$(BIN)/Virus.o: Global.h Virus.h Function.h TagInterface.h
 $(BIN)/Landscape.o: Landscape.h
 $(BIN)/Function.o: Function.h

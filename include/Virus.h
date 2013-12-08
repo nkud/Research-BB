@@ -14,7 +14,6 @@
 #ifndef ___VIRUS
 #define ___VIRUS
 
-#include "Global.h"
 #include "TagInterface.h"
 
 /*
