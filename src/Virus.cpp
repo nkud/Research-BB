@@ -33,6 +33,16 @@ Virus :: Virus() :
     }
 }
 
+Virus :: Virus( __SearchPattern *sp ) :
+    __TagInterface( TAG_LEN_V ),                                     /* タグの長さは初期設定 */
+    search_pattern_( sp ),
+    rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
+{
+    FOR( i, TAG_LEN_V ) {
+        tag_[i] = rand_binary();                                     /* タグをランダムに初期化 */
+    }
+}
+
 /*--------------------------------------------------------------------------------------
  *      Method:  Virus :: *
  * Description:  セッタ、ゲッタ関連
@@ -65,7 +75,6 @@ Virus :: Virus( const char *str ) :
     rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
 {}
 
-
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Virus :: searchStartPoint( __TagInterface & )
@@ -73,32 +82,38 @@ Virus :: Virus( const char *str ) :
  *--------------------------------------------------------------------------------------
  */
 int Virus :: searchStartPoint( const __TagInterface &tag ) const {
+    return search_pattern_->searchStartPoint( *this, tag );
+}
+
+/*--------------------------------------------------------------------------------------
+ *      Method:  Normal :: searchStartPoint( const __TagInterface &, const __TagInterface & )
+ * Description:  
+ *----------------------------------------------------------------------------------- */
+int Normal :: searchStartPoint( const __TagInterface &myself, const __TagInterface &tag ) const {
     int sp = -1;                                                     /* 取り付く位置 */
     sp                                                               /* 取り付く位置を計算する */
-        = min_ham_distance_point( tag.getTag(), getTag(), tag.getLen(), getLen() );
+        = min_ham_distance_point( tag.getTag(), myself.getTag(), tag.getLen(), myself.getLen() );
     return sp;                                                       /* 取り付く位置を返す */
+}
+/*--------------------------------------------------------------------------------------
+ *      Method:  Fixed :: searchStartPoint( const __TagInterface &, const __TagInterface & )
+ * Description:  
+ *----------------------------------------------------------------------------------- */
+int Fixed :: searchStartPoint( const __TagInterface &myself, const __TagInterface &tag ) const {
+    return sp_;                                                       /* 取り付く位置を返す */
 }
 
 
 /*--------------------------------------------------------------------------------------
- *      Method:  FixedVirus :: FixedVirus
+ *      Method:  Virus :: Virus
  * Description:  
  *----------------------------------------------------------------------------------- */
-FixedVirus :: FixedVirus( int l, double r, int fsp ):
-    Virus( l, r ),                                                   /* タグ長、感染確率を指定 */
-    fixed_start_point_( fsp )                                        /* 取り付く位置を指定（最左が０） */
+Virus :: Virus( int l, __SearchPattern *sp ):
+    __TagInterface( l ),                                             /* 長さを指定 */
+    search_pattern_( sp ),                                           /* 戦略指定 */
+    rate_( INFECTION_RATE )                                          /* 感染確率を指定 */
 {
-    assert( l+fsp <= TAG_LEN_A );                                               /* 取り付く位置がはみ出てたらエラー */
     FOR( i, l ) {
         tag_[i] = rand_binary();                                     /* タグをランダムに初期化 */
     }
-}
-
-/*--------------------------------------------------------------------------------------
- *      Method:  FixedVirus :: searchStartPoint( const __TagInterface & )
- * Description:  
- *----------------------------------------------------------------------------------- */
-int FixedVirus :: searchStartPoint( const __TagInterface &tag ) const {
-    LOG(fixed_start_point_);
-    return fixed_start_point_;                                                       /* 取り付く位置を返す */
 }

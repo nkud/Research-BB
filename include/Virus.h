@@ -15,6 +15,9 @@
 #define ___VIRUS
 
 #include "TagInterface.h"
+#include "Function.h"
+
+class __SearchPattern;
 
 /*
  * =====================================================================================
@@ -25,11 +28,16 @@
 class Virus : public __TagInterface                                  /* ウイルスのクラス*/
 {
         double rate_;                                                /* 感染確率 */
+        __SearchPattern *search_pattern_;
 
     public:
         Virus( const char * );                                       /* コンストラクタ: タグ */
         Virus( int, double );                                        /* コンストラクタ: タグ長, 感染率 */
         Virus();                                                     /* コンストラクタ: default */
+
+        /* 戦略指定コンストラクタ */
+        Virus( __SearchPattern * );                                  /* コンストラクタ: 戦略 */
+        Virus( int, __SearchPattern * );                             /* コンストラクタ: タグ長, 戦略 */
 
         double getRate() const;                                      /* 感染確率を返す */
         void setRate( const double r );                              /* 感染確率を設定 */
@@ -37,19 +45,27 @@ class Virus : public __TagInterface                                  /* ウイ�
         int searchStartPoint( const __TagInterface & ) const;                    /* タグに取り付く位置を返す */
 };
 
-/*
- * =====================================================================================
- *        Class:  Virus
- *  Description:  ウイルス
- * =====================================================================================
- */
-class FixedVirus : public Virus                                  /* ウイルスのクラス*/
-{
-    private:
-        int fixed_start_point_;
+/* =====================================================================================
+ *        Class:  __SearchPattern
+ *  Description:  タグに取り付く戦略のクラス
+ *                ストラテジーパターン
+ * ================================================================================== */
+class __SearchPattern {
     public:
-        FixedVirus( int len, double rate, int fsp);                  /* コンストラクタ: タグ長, 感染率 */
-        virtual int searchStartPoint( const __TagInterface & ) const;                    /* タグに取り付く位置を返す */
+        virtual int searchStartPoint( const __TagInterface &, const __TagInterface & ) const = 0;
+};
+
+class Fixed : public __SearchPattern {
+    private:
+    public:
+        int sp_;
+        Fixed( int n ) : sp_( n ) { }
+        virtual int searchStartPoint( const __TagInterface &, const __TagInterface & ) const;
+};
+
+class Normal : public __SearchPattern {
+    public:
+        virtual int searchStartPoint( const __TagInterface &myself, const __TagInterface &tag ) const;
 };
 
 #endif
