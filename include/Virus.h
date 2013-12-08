@@ -35,7 +35,7 @@ class Virus : public __TagInterface                                  /* ウイ�
         double getRate() const;                                      /* 感染確率を返す */
         void setRate( const double r );                              /* 感染確率を設定 */
 
-        int searchStartPoint( __TagInterface & );                    /* タグに取り付く位置を返す */
+        int searchStartPoint( const __TagInterface & ) const;                    /* タグに取り付く位置を返す */
 };
 
 #endif

@@ -106,7 +106,7 @@ tag_t __TagInterface :: tagAt( const int n ) const {
  * Description:  タグを表示する
  *--------------------------------------------------------------------------------------
  */
-void __TagInterface :: printTag() {
+void __TagInterface :: printTag() const {
     std::cout << "[ " <<this<< " ]" << ": ";                         /* 自身のポインタを表示する */
     FOR( i, len_ ) {
         std::cout << tag_[i];                                        /* タグを表示する */

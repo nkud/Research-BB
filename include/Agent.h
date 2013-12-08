@@ -101,7 +101,7 @@ class Agent : public __TagInterface
         void response();                                             /* 免疫応答する（タグフリップ）  */
 
         bool hasVirus( __TagInterface &v )    const  ;               /* v に感染しているか */
-        bool hasImmunity( __TagInterface &v ) const  ;               /* v の免疫獲得済みか  */
+        bool hasImmunity( const Virus &v ) const  ;                  /* v の免疫獲得済みか  */
         int numHoldingVirus()                const  ;                /* 現在保持しているウイルスの数 */
 };
 

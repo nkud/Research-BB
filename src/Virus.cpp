@@ -3,7 +3,7 @@
  *
  *       Filename:  Virus.cpp
  *
- *    Description:  
+ *    Description:  ウイルスのクラス
  *
  *         Author:  Naoki ueda
  *   Organization:  OPU, 3G
@@ -24,8 +24,8 @@
  *--------------------------------------------------------------------------------------
  */
 Virus :: Virus() :
-    __TagInterface( TAG_LEN_V ),
-    rate_( INFECTION_RATE )
+    __TagInterface( TAG_LEN_V ),                                     /* タグの長さは初期設定 */
+    rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
 {
     FOR( i, TAG_LEN_V ) {
         tag_[i] = rand_binary();                                     /* タグをランダムに初期化 */
@@ -45,8 +45,8 @@ void Virus :: setRate( const double r ) { rate_ = r; }
  *               タグはランダム
  *----------------------------------------------------------------------------------- */
 Virus :: Virus( int l, double r ):
-    __TagInterface( l ),
-    rate_( r )
+    __TagInterface( l ),                                             /* 長さを指定 */
+    rate_( r )                                                       /* 感染確率を指定 */
 {
     FOR( i, l ) {
         tag_[i] = rand_binary();                                     /* タグをランダムに初期化 */
@@ -60,18 +60,20 @@ Virus :: Virus( int l, double r ):
  *--------------------------------------------------------------------------------------
  */
 Virus :: Virus( const char *str ) :
-    __TagInterface( str )
+    __TagInterface( str ),                                           /* タグを直接指定 */
+    rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
 {}
 
 
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Virus :: searchStartPoint( __TagInterface & )
- * Description:  
+ * Description:  タグに対して、ハミング距離が最小となる位置に取り付く
  *--------------------------------------------------------------------------------------
  */
-int Virus :: searchStartPoint( __TagInterface &tag ) {
-    int sp = -1;
-    sp = min_ham_distance_point( tag.getTag(), getTag(), tag.getLen(), getLen() );
-    return sp;
+int Virus :: searchStartPoint( const __TagInterface &tag ) const {
+    int sp = -1;                                                     /* 取り付く位置 */
+    sp                                                               /* 取り付く位置を計算する */
+        = min_ham_distance_point( tag.getTag(), getTag(), tag.getLen(), getLen() );
+    return sp;                                                       /* 取り付く位置を返す */
 }

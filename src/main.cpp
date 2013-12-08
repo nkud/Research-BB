@@ -98,7 +98,7 @@ int main()
         if( zero_count >= 10 ) break;                                /* 強制的に終了する */
     }
     
-    fg.outputFile_LastLog( "Log.txt" );                           /* プログラムの初期設定など出力 */
+    fg.outputFile_LastLog( "Log.txt" );                              /* プログラムの初期設定など出力 */
     admin.printInitInfo();                                           /* 初期状態を表示 */
 
 #ifdef __unix__
@@ -106,8 +106,8 @@ int main()
     Benchmark::Instance().printTime();                               /* 計測時間表示 */
 #endif
 
-    fg.generateResultHtml(admin.getTerm());                     /* 結果表示用HTMLファイル出力 */
-    fg.generatePlotScriptForPng();                              /* gnuplot用ファイル出力 */
+    fg.generateResultHtml(admin.getTerm());                          /* 結果表示用HTMLファイル出力 */
+    fg.generatePlotScriptForPng();                                   /* gnuplot用ファイル出力 */
 //    monitor.generatePlotScript();                                    /* gnuplot用ファイル出力 */
 
     // 確認用 -----------------------------------------------------------------

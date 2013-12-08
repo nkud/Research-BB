@@ -168,7 +168,8 @@ bool Agent :: infection( Virus &v )
         return false;                                                /* 感染せずに終了 */
     }
     VirusData *vdata                                                 /* 新しいウイルスデータを作成して */
-        = new VirusData( v, min_ham_distance_point( tag_, v.getTag(), len_, v.getLen() ) );
+//        = new VirusData( v, min_ham_distance_point( tag_, v.getTag(), len_, v.getLen() ) );
+        = new VirusData( v, v.searchStartPoint( *this ) );
     pushVirusData( vdata );                                          /* 保持ウイルスリストに追加する */
 
     Monitor::Instance().countUpInfectionContact(vdata->v_);          /* 感染のために接触した回数を増やす */
@@ -196,16 +197,17 @@ void Agent :: response()
 
 /* 
  *--------------------------------------------------------------------------------------
- *      Method:  Agent :: hasImmunity( __TagInterface & )
+ *      Method:  Agent :: hasImmunity( Virus & )
  * Description:  免疫を獲得しているかどうか
  *--------------------------------------------------------------------------------------
  */
-bool Agent :: hasImmunity( __TagInterface &v ) const                 /* true -> 免疫獲得済み  */
+bool Agent :: hasImmunity( const Virus &v ) const                 /* true -> 免疫獲得済み  */
 {
-    if( min_ham_distance_point( tag_, v.getTag(), len_, v.getLen() ) < 0 )                   /* スタートポイントが -1 以下なら */
-        return true;                                                 /* 免疫獲得済み  */
+//    if( min_ham_distance_point( tag_, v.getTag(), len_, v.getLen() ) < 0 )                   /* スタートポイントが -1 以下なら */
+    if( v.searchStartPoint( *this ) < 0 )                            /* スタートポイントが -1 以下なら */
+        return true;                                                 /* 免疫獲得済み */
     else                                                             /* 0 以上なら */
-        return false;                                                /* 未獲得  */
+        return false;                                                /* 未獲得 */
 }
 
 /*--------------------------------------------------------------------------------------

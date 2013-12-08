@@ -32,8 +32,6 @@ class Monitor;
  */
 class Administrator {
     private:
-//        VECTOR(Agent *) new_child_;                                  /* 新しく生まれるエージェント */
-
         int term_;                                                   /* 現在の期間を記録 */
 
         ITERATOR(Agent *) deleteAgent( ITERATOR(Agent *) &it );      /* 配列から指定のエージェントを削除 */
@@ -61,7 +59,7 @@ class Administrator {
         /* カウント */
         int numHasVirus( __TagInterface & ) const;                         /* v に感染している人の数 */
         int numHasAllVirus() const;                                        /* 全ウイルスに感染している人の数 */
-        int numHasImmunity( __TagInterface & ) const;                      /* v の免疫獲得者数 */
+        int numHasImmunity( Virus &v ) const;                      /* v の免疫獲得者数 */
         int numHasAllImmunity() const;                                     /* 全ウイルスの免疫獲得者数 */
 
         void printInitInfo() const;                                        /* 初期状態の情報を端末に出力 */

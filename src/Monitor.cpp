@@ -1352,7 +1352,7 @@ void FileGenerator :: generateResultHtml( int t ) {
 void FileGenerator :: outputFile_HasVirus( const char *fname ) {
     if( admin_->getTerm() % OUTPUT_INTERVAL != 0 ) return;
     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
-    ofs << admin_->getTerm() << SEPARATOR;                                   /* ファイルに出力 */
+    ofs << admin_->getTerm() << SEPARATOR;                           /* ファイルに出力 */
     FOR( j, NUM_V ) {
         ofs << admin_->numHasVirus( admin_->virus_[j] ) << SEPARATOR;                /* ウイルス j の保持者 */
     }
@@ -1370,14 +1370,14 @@ void FileGenerator :: outputFile_HasVirus( const char *fname ) {
 void FileGenerator :: outputFile_HasImmunity( const char *fname ) {
     if( admin_->getTerm() % OUTPUT_INTERVAL != 0 ) return;
     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
-    ofs << admin_->getTerm() << SEPARATOR;                                   /* ファイルに出力 */
+    ofs << admin_->getTerm() << SEPARATOR;                           /* ファイルに出力 */
     FOR( k, NUM_V ) {
         ofs << admin_->numHasImmunity( admin_->virus_[k] ) << SEPARATOR;             /* ウイルスに対する免疫獲得者数 */
     }
     int num_has_all = admin_->numHasAllImmunity();
     ofs << num_has_all << SEPARATOR;
     ofs << (double)num_has_all/admin_->agent_.size() << SEPARATOR;
-    ofs << (double)admin_->numHasImmunity(admin_->virus_[0])/admin_->agent_.size() << std::endl;
+    ofs << (double)admin_->numHasImmunity( admin_->virus_[0] )/admin_->agent_.size() << std::endl;
 }
 /*--------------------------------------------------------------------------------------
  *      Method:  FileGenerator :: outputFile_Population

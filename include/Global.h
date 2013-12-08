@@ -52,7 +52,7 @@ typedef int tag_t;                                                   /* タグ�
 //#define COUPLE_TAG                                                   /* カップルタグで子供を作る */
 
 /* 期間 */
-const int TERM                        = 200                   ;   /* 期間 */
+const int TERM                        = 100000                   ;   /* 期間 */
 const int OUTPUT_INTERVAL             = 1                     ;      /* 出力する間隔 */
 const int MINI_SIZE_TERM              = 200;
 
@@ -60,7 +60,7 @@ const int MINI_SIZE_TERM              = 200;
 const int WIDTH                       = 20                    ;      /* ランドスケープの幅 */
 
 /* ウイルス */                                                          /* ウイルスの設定 -------------------- */
-const int TAG_LEN_V                   = 15                    ;      /* ウイルスのタグのデフォルトの長さ */
+const int TAG_LEN_V                   = 10                    ;      /* ウイルスのタグのデフォルトの長さ */
 const int NUM_V                       = 2                      ;     /* ウイルスの種類 */
 const double INFECTION_RATE           = 1.0                  ;       /* デフォルトの感染率 */
 

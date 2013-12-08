@@ -189,7 +189,7 @@ int Administrator :: numHasVirus( __TagInterface &v ) const {
  * Description:  現在の免疫獲得者数数を返す
  *--------------------------------------------------------------------------------------
  */
-int Administrator :: numHasImmunity( __TagInterface &v ) const {
+int Administrator :: numHasImmunity( Virus &v ) const {
     int ret = 0;
     ITERATOR(Agent *) it_a = agent_.begin();
     while( it_a != agent_.end() ) {                                  /* エージェント全員に対して */
@@ -361,6 +361,7 @@ void Administrator :: infectAgent() {
  */
 int Administrator :: numHasAllVirus() const {
     int ret = 0;
+
     ITERATOR(Agent *) it_a = agent_.begin();
     while( it_a != agent_.end() ) {                                  /* エージェント全員に対して */
         if( (*it_a)->numHoldingVirus() == NUM_V ) {                  /* 全ウイルスを保持していれば */
@@ -379,17 +380,18 @@ int Administrator :: numHasAllVirus() const {
 int Administrator :: numHasAllImmunity() const {
     int ret = 0;
     int flag = 1;
-    ITERATOR(Agent *) it_a = agent_.begin();
-    while( it_a != agent_.end() ) {
-        FOR( j, NUM_V ) {
+
+    ITERATOR(Agent *) it_a = agent_.begin();                         /* エージェントの先頭から */
+    while( it_a != agent_.end() ) {                                  /* 末尾まで */
+        FOR( j, NUM_V ) {                                            /* すべてのウイルスに関して調べる */
             if( ! (*it_a)->hasImmunity( virus_[ j ] ) ) {            /* もし免疫を持っていなければ */
-                flag = 0;                                            /* フラッグを下ろす */
+                flag = 0;                                            /* フラッグを下ろして */
                 break;                                               /* ループを抜ける */
             }
         }
-        if( flag == 1 ) ret++;                                       /* 免疫を持って入れば数える */
+        if( flag == 1 ) ret++;                                       /* すべての免疫を持って入れば数える */
         flag = 1;                                                    /* フラッグを戻す */
-        it_a++;
+        it_a++;                                                      /* 次のエージェントへ */
     }
     return ret;
 }

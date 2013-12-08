@@ -42,7 +42,7 @@ class __TagInterface
 
         void changeTagLenTo( int n );                                /* タグの長さを変える */
         
-        void printTag();                                             /* タグを表示 */
+        void printTag() const;                                             /* タグを表示 */
 };
 
 #endif
