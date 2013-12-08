@@ -38,10 +38,10 @@ class Administrator {
 
     public:
         VECTOR(Agent *) &agent_;                                     /* エージェントの集合 */
-        Virus *virus_;                                               /* ウイルスの集合 */
+        VECTOR(Virus *) &virus_;                                     /* ウイルスの集合 */
         Landscape *landscape_;                                       /* 土地 */
 
-        Administrator( VECTOR(Agent *) & , Virus *, Landscape * );   /* コンストラクタ */
+        Administrator( VECTOR(Agent *) & , VECTOR(Virus *) &, Landscape * );   /* コンストラクタ */
 
         int getNumOfAgent() const;
         void incrementTerm();                                        /* 期間を 1 進める */

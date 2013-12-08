@@ -146,7 +146,7 @@ int Administrator :: getTerm() const {
  * Description:  コンストラクタ
  *--------------------------------------------------------------------------------------
  */
-Administrator :: Administrator( VECTOR(Agent *) &a, Virus *v, Landscape *l ) :
+Administrator :: Administrator( VECTOR(Agent *) &a, VECTOR(Virus *) &v, Landscape *l ) :
     term_( 0 ),
     agent_( a ),
     virus_( v ),
@@ -384,7 +384,7 @@ int Administrator :: numHasAllImmunity() const {
     ITERATOR(Agent *) it_a = agent_.begin();                         /* エージェントの先頭から */
     while( it_a != agent_.end() ) {                                  /* 末尾まで */
         FOR( j, NUM_V ) {                                            /* すべてのウイルスに関して調べる */
-            if( ! (*it_a)->hasImmunity( virus_[ j ] ) ) {            /* もし免疫を持っていなければ */
+            if( ! (*it_a)->hasImmunity( *virus_[ j ] ) ) {            /* もし免疫を持っていなければ */
                 flag = 0;                                            /* フラッグを下ろして */
                 break;                                               /* ループを抜ける */
             }
@@ -528,7 +528,7 @@ void Administrator :: printInitInfo() const {
     std::cout << "\nNUM_V:\t\t" << NUM_V << std::endl;
 
     std::cout << "VIRUS:" << std::endl;                              /* ウイルス情報 */
-    FOR(i,NUM_V) { std::cout<<"\trate_"<<i<<":\t"<<virus_[i].getRate();
-        std::cout<<"\tlen_"<<i<<":\t"<<virus_[i].getLen()<<std::endl; }
-    FOR( i, NUM_V ) virus_[ i ].printTag();                          /* 全ウイルスのタグを表示 */
+    FOR(i,NUM_V) { std::cout<<"\trate_"<<i<<":\t"<<(*virus_[i]).getRate();
+        std::cout<<"\tlen_"<<i<<":\t"<<(*virus_[i]).getLen()<<std::endl; }
+    FOR( i, NUM_V ) (*virus_[ i ]).printTag();                          /* 全ウイルスのタグを表示 */
 }
