@@ -15,7 +15,6 @@
 #define ___VIRUS
 
 #include "TagInterface.h"
-#include "Function.h"
 
 class __SearchPattern;
 
@@ -57,8 +56,8 @@ class __SearchPattern {
 
 class Fixed : public __SearchPattern {
     private:
-    public:
         int sp_;
+    public:
         Fixed( int n ) : sp_( n ) { }
         virtual int searchStartPoint( const __TagInterface &, const __TagInterface & ) const;
 };

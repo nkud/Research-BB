@@ -25,6 +25,7 @@ using namespace std;
 #include "Landscape.h"
 #include "Monitor.h"
 #include "Administrator.h"
+#include "FileFactory.h"
 
 int main()
 {
@@ -34,16 +35,16 @@ int main()
     srand( (unsigned int)time(NULL)/2 );                             /* 乱数初期化 */
 
     /* 初期化・初期設定 */
+    //      エージェント
     VECTOR(Agent *) agent;                                           /* エージェントの配列 */
     FOR( i, INIT_NUM_A ) {                                           /* 初期エージェントの数だけ */
         agent.push_back( new Agent );                                /* エージェントを初期化 */
     }
+    //      ウイルス
     VECTOR(Virus *) virus;
-    virus.push_back( new Virus( 20, new Fixed(0) ) );
-    virus.push_back( new Virus( 5, new Fixed(10) ) );
-//    FOR( i, NUM_V ) {
-//        virus.push_back( new Virus() );
-//    }
+    virus.push_back( new Virus( 15, new Fixed(0) ) );
+    virus.push_back( new Virus( 10, new Fixed(10) ) );
+    //      土地
     Landscape landscape;                                             /* ランドスケープ初期化 */
 
     Administrator admin( agent, virus, &landscape );                 /* 管理者に登録 */

@@ -4,6 +4,33 @@
 #include "Administrator.h"
 #include "Agent.h"
 #include "Virus.h"
+#include "Global.h"
+#include "Monitor.h"
+
+#define GPLOT_FILENAME          "quick.plt"
+#define AUTO_GPLOT_FILENAME     "auto.plt"
+#define FNAME_RESULT_HTML       "RESULT.html"
+
+#define IMG_SIZE(w, h)          #w << "," << #h
+
+#define EVERY_LAST(t)           " every ::"<< t-MINI_SIZE_TERM<<"::"<<t<<" "
+
+#define OFS(str)                do { ofs<<"<p>"<<str<<"</p>"<<std::endl; }while(0);
+#define OFS_LINE(str)           do { ofs<< str << std::endl; }while(0);
+#define OFS_VAL(str,val)        do { ofs<<"[ "<<str<<" ]: "<<val<<"<br />"<<std::endl; }while(0);
+#define OFS_IMG(img)            do { ofs<<"<br /><img src=img/"<<#img<<" /><br />"<<std::endl; }while(0);
+#define OFS_IMG_MINI(img,mini,last)  do { ofs<<"<table class=\"graph\"><tr> \
+                                <td><img src=img/"<<img<<" /></td></tr><tr> \
+                                <td><img src=img/"<<mini<<" /></td></tr><t> \
+                                <td><img src=img/"<<last<<" /></td></tr> \
+                                </table><br />"<<std::endl; }while(0);
+#define OFS_OUTPUT(str)         do { ofs<<"set output "<<#str<< std::endl; }while(0);
+#define OFS_TD(str,val)         do { ofs<<"<tr><td>"<<str<<"</td>"<<"<td>"<<val<<"</td></tr>"<<std::endl; }while(0);
+
+#define HAS_VIRUS_OUTPUT        "\"A_hasVirus.txt\""
+#define HAS_IMMUNITY_OUTPUT     "\"A_hasImmunity.txt\""
+#define CONTACT_OUTPUT          "\"A_infectionContact.txt\""
+#define POPULATION_OUTPUT       "\"A_population.txt\""
 
 /*
  *--------------------------------------------------------------------------------------

@@ -14,7 +14,7 @@ OBJ      = $(addprefix bin/, $(SRC:.cpp=.o))
 LIB      = $(SRC:.cpp=.h)
 
 TARGET   = main.out
-SRC      = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp Monitor.cpp Administrator.cpp Landscape.cpp
+SRC      = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp Monitor.cpp Administrator.cpp Landscape.cpp FileFactory.cpp
 
 VPATH    = src include
 CPPFLAGS = -I include
@@ -79,3 +79,4 @@ $(BIN)/Agent.o: Agent.h Function.h Monitor.h Global.h TagInterface.h
 $(BIN)/Virus.o: Global.h Virus.h Function.h TagInterface.h
 $(BIN)/Landscape.o: Landscape.h
 $(BIN)/Function.o: Function.h
+$(BIN)/FileFactory.o: Administrator.h Agent.h Virus.h Global.h
