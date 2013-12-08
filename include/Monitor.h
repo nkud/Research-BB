@@ -66,13 +66,13 @@ class Monitor {
 
 /*
  * =====================================================================================
- *        Class:  FileGenerator
+ *        Class:  FileFactory
  *  Description:  ファイル出力系関数
  * =====================================================================================
  */
-class FileGenerator {
+class FileFactory {
     private:
-        FileGenerator( ) {}          /* コンストラクタ */
+        FileFactory( ) {}          /* コンストラクタ */
 
         Administrator *admin_;                                       /* 管理者を登録 */
 
@@ -84,7 +84,7 @@ class FileGenerator {
         void scriptForSIRPng(std::ofstream &ofs);
         void scriptForContactPng(std::ofstream &ofs);
     public:
-        static FileGenerator& Instance();                            /* インスタンスを返す */
+        static FileFactory& Instance();                            /* インスタンスを返す */
         void setAdministrator( Administrator &admin );
 
         void generatePlotScript();                                   /* プロット用のスクリプトを生成 */

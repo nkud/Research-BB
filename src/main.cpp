@@ -44,7 +44,7 @@ int main()
     Administrator admin( agent, virus, &landscape );                 /* 管理者に登録 */
 
     Monitor &monitor = Monitor::Instance();                          /* モニター */
-    FileGenerator &fg = FileGenerator::Instance();                   /* 出力ファイルを管理 */
+    FileFactory &fg = FileFactory::Instance();                   /* 出力ファイルを管理 */
     fg.setAdministrator( admin );                                    /* 管理者を登録 */
 
     /* エージェントへの初期感染 */

@@ -727,21 +727,21 @@ void Benchmark :: printElapsedTime() {
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  FileGenerator :: *
+ *      Method:  FileFactory :: *
  * Description:  
  *--------------------------------------------------------------------------------------
  */
 
-FileGenerator& FileGenerator :: Instance() {
-    static FileGenerator coredata;
+FileFactory& FileFactory :: Instance() {
+    static FileFactory coredata;
     return coredata;                                                 /* インスタンスを返す */
 }
 
-void FileGenerator :: setAdministrator( Administrator &admin ) {
+void FileFactory :: setAdministrator( Administrator &admin ) {
     admin_ = &admin;                                                 /* 管理者を登録 */
 }
 
-void FileGenerator :: generatePlotScript() {
+void FileFactory :: generatePlotScript() {
     std::ofstream ofs(GPLOT_FILENAME);
 #ifdef OUTPUT_POPULATION
     ofs << "set title \"Population\" font \"helvetica, 24\"" << std::endl
@@ -849,11 +849,11 @@ void FileGenerator :: generatePlotScript() {
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  FileGenerator :: generatePlotScriptForPng()
+ *      Method:  FileFactory :: generatePlotScriptForPng()
  * Description:  png出力用の自動化スクリプトを生成
  *--------------------------------------------------------------------------------------
  */
-void FileGenerator :: generatePlotScriptForPng() {
+void FileFactory :: generatePlotScriptForPng() {
     std::ofstream ofs(AUTO_GPLOT_FILENAME);
     ofs << "set terminal png size "<< IMG_SIZE(1000, 200) << std::endl;
     // population
@@ -875,7 +875,7 @@ void FileGenerator :: generatePlotScriptForPng() {
  *  Description:  画像を出力するスクリプト
  * =====================================================================================
  */
-void FileGenerator :: scriptForPopulationPng(std::ofstream &ofs) {
+void FileFactory :: scriptForPopulationPng(std::ofstream &ofs) {
     OFS_LINE ( "set yl \"Agent\"" );
     OFS_LINE ( "set xl \"Term\"" );
     ofs << "set output \"Population.png\"" << std::endl;
@@ -897,7 +897,7 @@ void FileGenerator :: scriptForPopulationPng(std::ofstream &ofs) {
     ofs << "plot " << POPULATION_OUTPUT << EVERY_LAST(last_term_) << " w l"
         << " title " << "\"population\"" << std::endl;
 }
-void FileGenerator :: scriptForHasVirusPng(std::ofstream &ofs) {
+void FileFactory :: scriptForHasVirusPng(std::ofstream &ofs) {
     ofs << "set output \"HasVirus.png\"" << std::endl;
     OFS_LINE ( "set yl \"Agent\"" );
     OFS_LINE ( "set xl \"Term\"" );
@@ -949,7 +949,7 @@ void FileGenerator :: scriptForHasVirusPng(std::ofstream &ofs) {
         << " using 1:" << NUM_V+2 << " w l"
         << " title " << "\"has_all_virus\"" << std::endl;
 }
-void FileGenerator :: scriptForHasImmunityPng(std::ofstream &ofs) {
+void FileFactory :: scriptForHasImmunityPng(std::ofstream &ofs) {
     OFS_OUTPUT( "HasImmunity.png" );
     OFS_LINE ( "set yl \"Agent\"" );
     OFS_LINE ( "set xl \"Term\"" );
@@ -1001,7 +1001,7 @@ void FileGenerator :: scriptForHasImmunityPng(std::ofstream &ofs) {
         << " using 1:" << NUM_V+2 << " w l"
         << " title " << "\"has_all_immunity\"" << std::endl;
 }
-void FileGenerator :: scriptForSIRPng(std::ofstream &ofs) {
+void FileFactory :: scriptForSIRPng(std::ofstream &ofs) {
     ofs << "set output \"SIR.png\"" << std::endl;
     OFS_LINE ( "set yl \"Agent\"" );
     OFS_LINE ( "set xl \"Term\"" );
@@ -1155,7 +1155,7 @@ void FileGenerator :: scriptForSIRPng(std::ofstream &ofs) {
         << " title " << "\"R_0/POPULATION\"" << std::endl;
     OFS_LINE( "set autoscale y" );
 }
-void FileGenerator :: scriptForContactPng(std::ofstream &ofs) {
+void FileFactory :: scriptForContactPng(std::ofstream &ofs) {
     ofs << "set output \"Contact.png\"" << std::endl;
     OFS_LINE ( "set yl \"Agent\"" );
     OFS_LINE ( "set xl \"Term\"" );
@@ -1222,11 +1222,11 @@ void FileGenerator :: scriptForContactPng(std::ofstream &ofs) {
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  FileGenerator :: generateResultHtml()
+ *      Method:  FileFactory :: generateResultHtml()
  * Description:  結果をまとめて表示させるHTMLファイルを出力する
  *--------------------------------------------------------------------------------------
  */
-void FileGenerator :: generateResultHtml( int t ) {
+void FileFactory :: generateResultHtml( int t ) {
     if( t < MINI_SIZE_TERM ) last_term_ = MINI_SIZE_TERM;
     else last_term_ = t;
     std::ofstream ofs( FNAME_RESULT_HTML );
@@ -1345,11 +1345,11 @@ void FileGenerator :: generateResultHtml( int t ) {
 }
 
 /*--------------------------------------------------------------------------------------
- *      Method:  FileGenerator :: outputFile_HasVirus
+ *      Method:  FileFactory :: outputFile_HasVirus
  * Description:  ファイルに出力する
  *               ウイルスの数によって、列を調整できる
  *----------------------------------------------------------------------------------- */
-void FileGenerator :: outputFile_HasVirus( const char *fname ) {
+void FileFactory :: outputFile_HasVirus( const char *fname ) {
     if( admin_->getTerm() % OUTPUT_INTERVAL != 0 ) return;
     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
     ofs << admin_->getTerm() << SEPARATOR;                           /* ファイルに出力 */
@@ -1363,11 +1363,11 @@ void FileGenerator :: outputFile_HasVirus( const char *fname ) {
 }
 
 /*--------------------------------------------------------------------------------------
- *      Method:  FileGenerator :: outputFile_HasImmunity
+ *      Method:  FileFactory :: outputFile_HasImmunity
  * Description:  ファイルに出力する
  *               ウイルスの数によって、列を調整できる
  *----------------------------------------------------------------------------------- */
-void FileGenerator :: outputFile_HasImmunity( const char *fname ) {
+void FileFactory :: outputFile_HasImmunity( const char *fname ) {
     if( admin_->getTerm() % OUTPUT_INTERVAL != 0 ) return;
     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
     ofs << admin_->getTerm() << SEPARATOR;                           /* ファイルに出力 */
@@ -1380,10 +1380,10 @@ void FileGenerator :: outputFile_HasImmunity( const char *fname ) {
     ofs << (double)admin_->numHasImmunity( admin_->virus_[0] )/admin_->agent_.size() << std::endl;
 }
 /*--------------------------------------------------------------------------------------
- *      Method:  FileGenerator :: outputFile_Population
+ *      Method:  FileFactory :: outputFile_Population
  * Description:  人口推移を出力する
  *----------------------------------------------------------------------------------- */
-void FileGenerator :: outputFile_Population( const char *fname ) {
+void FileFactory :: outputFile_Population( const char *fname ) {
     if( admin_->getTerm() % OUTPUT_INTERVAL != 0 ) return;
     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
     ofs << admin_->getTerm() << SEPARATOR;                                   /* 期間 */
@@ -1392,11 +1392,11 @@ void FileGenerator :: outputFile_Population( const char *fname ) {
 }
 
 /*--------------------------------------------------------------------------------------
- *      Method:  FileGenerator :: outputFile_InfectionContactRatio
+ *      Method:  FileFactory :: outputFile_InfectionContactRatio
  * Description:  ファイルに出力する
  *               ウイルスの数によって、列を調整できる
  *----------------------------------------------------------------------------------- */
-void FileGenerator :: outputFile_InfectionContactRatio( const char *fname ) {
+void FileFactory :: outputFile_InfectionContactRatio( const char *fname ) {
     if( admin_->getTerm() % OUTPUT_INTERVAL != 0 ) return;
     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
     double ratio = 0;
@@ -1416,11 +1416,11 @@ void FileGenerator :: outputFile_InfectionContactRatio( const char *fname ) {
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  FileGenerator :: outputFile_LastLog( const char * )
+ *      Method:  FileFactory :: outputFile_LastLog( const char * )
  * Description:  最終、初期状態を出力
  *--------------------------------------------------------------------------------------
  */
-void FileGenerator :: outputFile_LastLog( const char *fname ) {
+void FileFactory :: outputFile_LastLog( const char *fname ) {
     static std::ofstream ofs(fname);
     ofs << "TERM:" << admin_->getTerm() << std::endl;
     ofs << "MAX_AGE:" << MAX_AGE << std::endl;
