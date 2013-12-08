@@ -42,7 +42,7 @@ int main()
     }
     //      ウイルス
     VECTOR(Virus *) virus;
-    virus.push_back( new Virus( 15, new Fixed(0) ) );
+    virus.push_back( new Virus( 15, new Normal ) );
     virus.push_back( new Virus( 10, new Fixed(10) ) );
     //      土地
     Landscape landscape;                                             /* ランドスケープ初期化 */

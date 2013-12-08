@@ -85,6 +85,17 @@ int Virus :: searchStartPoint( const __TagInterface &tag ) const {
     return search_pattern_->searchStartPoint( *this, tag );
 }
 
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Virus :: getSearchType() const
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+__SEARCH__TYPE__ Virus :: getSearchType() const {
+    return search_pattern_->getSearchType();
+}
+
 /*--------------------------------------------------------------------------------------
  *      Method:  Normal :: searchStartPoint( const __TagInterface &, const __TagInterface & )
  * Description:  
@@ -95,6 +106,17 @@ int Normal :: searchStartPoint( const __TagInterface &myself, const __TagInterfa
         = min_ham_distance_point( tag.getTag(), myself.getTag(), tag.getLen(), myself.getLen() );
     return sp;                                                       /* 取り付く位置を返す */
 }
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Normal :: getSearchType()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+__SEARCH__TYPE__ Normal :: getSearchType() const {
+    return __NORMAL__;
+}
+
 /*--------------------------------------------------------------------------------------
  *      Method:  Fixed :: searchStartPoint( const __TagInterface &, const __TagInterface & )
  * Description:  
@@ -116,4 +138,14 @@ Virus :: Virus( int l, __SearchPattern *sp ):
     FOR( i, l ) {
         tag_[i] = rand_binary();                                     /* タグをランダムに初期化 */
     }
+}
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Normal :: getSearchType()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+__SEARCH__TYPE__ Fixed :: getSearchType() const {
+    return __FIXED__;
 }

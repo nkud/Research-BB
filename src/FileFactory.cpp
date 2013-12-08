@@ -17,8 +17,8 @@
 
 #define OFS(str)                do { ofs<<"<p>"<<str<<"</p>"<<std::endl; }while(0);
 #define OFS_LINE(str)           do { ofs<< str << std::endl; }while(0);
-#define OFS_VAL(str,val)        do { ofs<<"[ "<<str<<" ]: "<<val<<"<br />"<<std::endl; }while(0);
-#define OFS_IMG(img)            do { ofs<<"<br /><img src=img/"<<#img<<" /><br />"<<std::endl; }while(0);
+//#define OFS_VAL(str,val)        do { ofs<<"[ "<<str<<" ]: "<<val<<"<br />"<<std::endl; }while(0);
+//#define OFS_IMG(img)            do { ofs<<"<br /><img src=img/"<<#img<<" /><br />"<<std::endl; }while(0);
 #define OFS_IMG_MINI(img,mini,last)  do { ofs<<"<table class=\"graph\"><tr> \
                                 <td><img src=img/"<<img<<" /></td></tr><tr> \
                                 <td><img src=img/"<<mini<<" /></td></tr><t> \
@@ -48,111 +48,111 @@ void FileFactory :: setAdministrator( Administrator &admin ) {
     admin_ = &admin;                                                 /* 管理者を登録 */
 }
 
-void FileFactory :: generatePlotScript() {
-    std::ofstream ofs(GPLOT_FILENAME);
-#ifdef OUTPUT_POPULATION
-    ofs << "set title \"Population\" font \"helvetica, 24\"" << std::endl
-        << "plot " << POPULATION_OUTPUT << " w l"
-        << " title " << "\"population\"" << std::endl;
-    ofs << "set output" << std::endl
-        << "pause -1" << std::endl;
-#endif
-#ifdef OUTPUT_HAS_VIRUS
-    ofs << "set title \"ウイルス保持者\" font \"helvetica, 24\"" << std::endl
-        << "plot " << HAS_VIRUS_OUTPUT << " w l"
-        << " title " << "\"ウイルス" << 0 << "保持\"" << std::endl;
-    FOR( i, NUM_V-1 ) {
-        ofs << "replot " << HAS_VIRUS_OUTPUT
-            << " using 1:" << i+3 << " w l"
-            << " title " << "\"ウイルス" << i+1 << "保持\"" << std::endl;
-    }
-    ofs << "replot " << HAS_VIRUS_OUTPUT
-        << " using 1:" << NUM_V+2 << " w l"
-        << " title " << "\"全ウイルス保持\"" << std::endl;
-    ofs << "set output" << std::endl
-        << "pause -1" << std::endl;
-#endif
-#ifdef OUTPUT_HAS_IMMUNITY
-    // hasImmunity
-    ofs << "set title \"hasImmunity\" font \"helvetica, 24\"" << std::endl
-        << "plot "<< HAS_IMMUNITY_OUTPUT << " w l"
-        << " title \"has_immunity_0\"" << std::endl;
-    FOR( i, NUM_V-1 ) {
-        ofs << "replot " << HAS_IMMUNITY_OUTPUT
-            << " using 1:" << i+3 << " w l"
-            << " title " << "\"has_immunity_" << i+1 << "\"" << std::endl;
-    }
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT
-        << " using 1:" << NUM_V+2 << " w l"
-        << " title " << "\"has_all_immunity\"" << std::endl;
-    ofs << "set output" << std::endl
-        << "pause -1" << std::endl;
-#endif
-#ifdef OUTPUT_SIR
-    // SIR
-    ofs << "set title \"SIR\" font \"helvetica, 24\"" << std::endl;
-    ofs << "plot " << HAS_VIRUS_OUTPUT
-        << " using 1:" << NUM_V+2 << " w l"
-        << " title " << "\"I\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT
-        << " using 1:" << NUM_V+2 << " w l"
-        << " title " << "\"R\"" << std::endl;
-    ofs << "set output" << std::endl
-        << "pause -1" << std::endl;
-
-    // SIR_0
-    ofs << "set title \"SIR_0\" font \"helvetica, 24\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT << " w l"
-        << " title " << "\"R\"" << std::endl;
-    ofs << "plot " << HAS_VIRUS_OUTPUT << " w l"
-        << " title " << "\"I\"" << std::endl;
-    ofs << "set output" << std::endl
-        << "pause -1" << std::endl;
-    // SIR_RATIO
-    ofs << "set title \"SIR_RATIO\" font \"helvetica, 24\"" << std::endl;
-    OFS_LINE( "set yrange[0:1]" );
-    ofs << "plot " << HAS_VIRUS_OUTPUT
-        << " using 1:" << NUM_V+3 << " w l"
-        << " title " << "\"I/POPULATION\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT
-        << " using 1:" << NUM_V+3 << " w l"
-        << " title " << "\"R/POPULATION\"" << std::endl;
-    OFS_LINE ( "set autoscale y" );
-    ofs << "set output" << std::endl
-        << "pause -1" << std::endl;
-    // SIR_0_RATIO
-    ofs << "set title \"SIR_0_RATIO\" font \"helvetica, 24\"" << std::endl;
-    OFS_LINE( "set yrange[0:1]" );
-    ofs << "plot " << HAS_VIRUS_OUTPUT
-        << " using 1:" << NUM_V+4 << " w l"
-        << " title " << "\"I/POPULATION\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT
-        << " using 1:" << NUM_V+4 << " w l"
-        << " title " << "\"R/POPULATION\"" << std::endl;
-    OFS_LINE ( "set autoscale y" );
-    ofs << "set output" << std::endl
-        << "pause -1" << std::endl;
-#endif
-#ifdef OUTPUT_CONTACT
-    // contact
-    ofs << "set title \"infectioncontact\" font \"helvetica, 24\"" << std::endl
-        << "plot "<< CONTACT_OUTPUT << " w l"
-        << " title \"contact\"" << std::endl;
-    FOR( i, NUM_V ) {
-        ofs << "replot " << CONTACT_OUTPUT
-            << " using 1:" << i+3 << " w l"
-            << " title " << "\"infection_contact_" << i+1 << "\"" << std::endl;
-    }
-    ofs << "set output" << std::endl
-        << "pause -1" << std::endl;
-
-    ofs << "set title \"infectioncontactratio\" font \"helvetica, 24\"" << std::endl
-        << "plot " << CONTACT_OUTPUT << " using 1:" << NUM_V+3 << " w l"
-        << " title \"ratio\"" << std::endl;
-    ofs << "set output" << std::endl
-        << "pause -1" << std::endl;
-#endif
-}
+//void FileFactory :: generatePlotScript() {                           /* プロット用のスクリプト */
+//    std::ofstream ofs(GPLOT_FILENAME);
+//#ifdef OUTPUT_POPULATION
+//    ofs << "set title \"Population\" font \"helvetica, 24\"" << std::endl
+//        << "plot " << POPULATION_OUTPUT << " w l"
+//        << " title " << "\"population\"" << std::endl;
+//    ofs << "set output" << std::endl
+//        << "pause -1" << std::endl;
+//#endif
+//#ifdef OUTPUT_HAS_VIRUS
+//    ofs << "set title \"ウイルス保持者\" font \"helvetica, 24\"" << std::endl
+//        << "plot " << HAS_VIRUS_OUTPUT << " w l"
+//        << " title " << "\"ウイルス" << 0 << "保持\"" << std::endl;
+//    FOR( i, NUM_V-1 ) {
+//        ofs << "replot " << HAS_VIRUS_OUTPUT
+//            << " using 1:" << i+3 << " w l"
+//            << " title " << "\"ウイルス" << i+1 << "保持\"" << std::endl;
+//    }
+//    ofs << "replot " << HAS_VIRUS_OUTPUT
+//        << " using 1:" << NUM_V+2 << " w l"
+//        << " title " << "\"全ウイルス保持\"" << std::endl;
+//    ofs << "set output" << std::endl
+//        << "pause -1" << std::endl;
+//#endif
+//#ifdef OUTPUT_HAS_IMMUNITY
+//    // hasImmunity
+//    ofs << "set title \"hasImmunity\" font \"helvetica, 24\"" << std::endl
+//        << "plot "<< HAS_IMMUNITY_OUTPUT << " w l"
+//        << " title \"has_immunity_0\"" << std::endl;
+//    FOR( i, NUM_V-1 ) {
+//        ofs << "replot " << HAS_IMMUNITY_OUTPUT
+//            << " using 1:" << i+3 << " w l"
+//            << " title " << "\"has_immunity_" << i+1 << "\"" << std::endl;
+//    }
+//    ofs << "replot " << HAS_IMMUNITY_OUTPUT
+//        << " using 1:" << NUM_V+2 << " w l"
+//        << " title " << "\"has_all_immunity\"" << std::endl;
+//    ofs << "set output" << std::endl
+//        << "pause -1" << std::endl;
+//#endif
+//#ifdef OUTPUT_SIR
+//    // SIR
+//    ofs << "set title \"SIR\" font \"helvetica, 24\"" << std::endl;
+//    ofs << "plot " << HAS_VIRUS_OUTPUT
+//        << " using 1:" << NUM_V+2 << " w l"
+//        << " title " << "\"I\"" << std::endl;
+//    ofs << "replot " << HAS_IMMUNITY_OUTPUT
+//        << " using 1:" << NUM_V+2 << " w l"
+//        << " title " << "\"R\"" << std::endl;
+//    ofs << "set output" << std::endl
+//        << "pause -1" << std::endl;
+//
+//    // SIR_0
+//    ofs << "set title \"SIR_0\" font \"helvetica, 24\"" << std::endl;
+//    ofs << "replot " << HAS_IMMUNITY_OUTPUT << " w l"
+//        << " title " << "\"R\"" << std::endl;
+//    ofs << "plot " << HAS_VIRUS_OUTPUT << " w l"
+//        << " title " << "\"I\"" << std::endl;
+//    ofs << "set output" << std::endl
+//        << "pause -1" << std::endl;
+//    // SIR_RATIO
+//    ofs << "set title \"SIR_RATIO\" font \"helvetica, 24\"" << std::endl;
+//    OFS_LINE( "set yrange[0:1]" );
+//    ofs << "plot " << HAS_VIRUS_OUTPUT
+//        << " using 1:" << NUM_V+3 << " w l"
+//        << " title " << "\"I/POPULATION\"" << std::endl;
+//    ofs << "replot " << HAS_IMMUNITY_OUTPUT
+//        << " using 1:" << NUM_V+3 << " w l"
+//        << " title " << "\"R/POPULATION\"" << std::endl;
+//    OFS_LINE ( "set autoscale y" );
+//    ofs << "set output" << std::endl
+//        << "pause -1" << std::endl;
+//    // SIR_0_RATIO
+//    ofs << "set title \"SIR_0_RATIO\" font \"helvetica, 24\"" << std::endl;
+//    OFS_LINE( "set yrange[0:1]" );
+//    ofs << "plot " << HAS_VIRUS_OUTPUT
+//        << " using 1:" << NUM_V+4 << " w l"
+//        << " title " << "\"I/POPULATION\"" << std::endl;
+//    ofs << "replot " << HAS_IMMUNITY_OUTPUT
+//        << " using 1:" << NUM_V+4 << " w l"
+//        << " title " << "\"R/POPULATION\"" << std::endl;
+//    OFS_LINE ( "set autoscale y" );
+//    ofs << "set output" << std::endl
+//        << "pause -1" << std::endl;
+//#endif
+//#ifdef OUTPUT_CONTACT
+//    // contact
+//    ofs << "set title \"infectioncontact\" font \"helvetica, 24\"" << std::endl
+//        << "plot "<< CONTACT_OUTPUT << " w l"
+//        << " title \"contact\"" << std::endl;
+//    FOR( i, NUM_V ) {
+//        ofs << "replot " << CONTACT_OUTPUT
+//            << " using 1:" << i+3 << " w l"
+//            << " title " << "\"infection_contact_" << i+1 << "\"" << std::endl;
+//    }
+//    ofs << "set output" << std::endl
+//        << "pause -1" << std::endl;
+//
+//    ofs << "set title \"infectioncontactratio\" font \"helvetica, 24\"" << std::endl
+//        << "plot " << CONTACT_OUTPUT << " using 1:" << NUM_V+3 << " w l"
+//        << " title \"ratio\"" << std::endl;
+//    ofs << "set output" << std::endl
+//        << "pause -1" << std::endl;
+//#endif
+//}
 
 /*
  *--------------------------------------------------------------------------------------
@@ -541,7 +541,7 @@ void FileFactory :: generateResultHtml( int t ) {
     OFS( "<h1><font color=black># 計算結果 "<<__DATE__<<", "<<__TIME__<<"</font></h1>" );
     OFS( "<h2>設定</h2>" );
     // table
-    OFS_LINE( "<table>" ); /* テーブル */
+    OFS_LINE( "<table>" );                                           /* テーブル */
 #ifdef RANDOM_LOCATE                                                 /* 移動方法 */
     OFS_TD( "[ 移動 ]", "土地にランダムに再配置される" );
 #else
@@ -566,22 +566,43 @@ void FileFactory :: generateResultHtml( int t ) {
 
     OFS_LINE( "<br />" );
 
-    OFS_LINE( "<table>" ); /* テーブル */
-    OFS_LINE( "<tr>" );
-    OFS_LINE( "<th width=240px></th><th width=200px>タグ長</th><th width=200px>数</th>" );
+    OFS_LINE( "<table class=\"center\"><tr>" );                      /* テーブル */
+    OFS_LINE( "<th width=200px></th><th width=100px align=center>タグ長</th><th width=100px>数</th><th width=300px>取り付く位置<br />(左から012...)</th>" );
     OFS_LINE( "</tr>" );
 
-    OFS_LINE( "<tr>" );
-    OFS_LINE( "<td><font color=blue>ウイルス</td><td>"<<TAG_LEN_V<<"</td><td>"<<NUM_V<<"</td>" );
-    OFS_LINE( "</tr>" );
-    OFS_LINE( "<tr>" );
-    OFS_LINE( "<td><font color=red>エージェント</td><td>"<<TAG_LEN_A<<"</td><td>"<<INIT_NUM_A<<"</td>" );
-    OFS_LINE( "</tr>" );
-    OFS_LINE( "</table>" );
+    FOR( i, admin_->virus_.size() ) {
+        switch( (*admin_->virus_[i]).getSearchType() ) {
+            case __NORMAL__:
+                OFS_LINE( "<tr>" );
+                OFS_LINE( "<td><font color=blue>通常ウイルス</td><td>"<<(*admin_->virus_[i]).getLen()
+                        <<"</td><td>"<<1<<"</td>" );
+                OFS_LINE( "</tr>" );
+                OFS_LINE( "<tr>" );
+                break;
+            case __FIXED__:
+                OFS_LINE( "<tr>" );
+                OFS_LINE( "<td><font color=blue>固定ウイルス</td><td>"<<(*admin_->virus_[i]).getLen()
+                        <<"</td><td>"<<1
+                        <<"</td><td>"<<(*admin_->virus_[i]).searchStartPoint(0) );
+                OFS_LINE( "</tr>" );
+                OFS_LINE( "<tr>" );
+                break;
+            default:
+                OFS_LINE( "<tr>" );
+                OFS_LINE( "<td><font color=blue>---</td><td>---</td><td>---</td><td>" );
+                OFS_LINE( "</tr>" );
+                OFS_LINE( "<tr>" );
+                break;
+        }
+    }
+
+    OFS_LINE( "<td><font color=red>エージェント</td><td>"<<TAG_LEN_A
+            <<"</td><td>"<<INIT_NUM_A<<"</td>" );
+    OFS_LINE( "</tr></table>" );
 
     OFS_LINE( "<br />" );
 
-    OFS_LINE( "<table>" ); /* テーブル */
+    OFS_LINE( "<table>" );                                           /* テーブル */
     OFS_TD( "<font color=blue>ウイルスの感染確率</font>", INFECTION_RATE );
     OFS_TD( "<font color=blue>１期間で感染させるウイルスの最大数</font>", MAX_V_AGENT_INFECT_ONT_TIME );
     OFS_TD( "<font color=red>初期感染確率</font>", INIT_INFECTED_RATIO );
@@ -693,8 +714,8 @@ void FileFactory :: outputFile_HasImmunity( const char *fname ) {
 void FileFactory :: outputFile_Population( const char *fname ) {
     if( admin_->getTerm() % OUTPUT_INTERVAL != 0 ) return;
     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
-    ofs << admin_->getTerm() << SEPARATOR;                                   /* 期間 */
-    ofs << admin_->agent_.size() << SEPARATOR;                               /* 人口 */
+    ofs << admin_->getTerm() << SEPARATOR;                           /* 期間 */
+    ofs << admin_->agent_.size() << SEPARATOR;                       /* 人口 */
     ofs << std::endl;
 }
 
@@ -709,7 +730,7 @@ void FileFactory :: outputFile_InfectionContactRatio( const char *fname ) {
     double ratio = 0;
     int sum = 0;                                                     /* 何らかのウイルスに感染した接触回数 */
 
-    ofs << admin_->getTerm() << SEPARATOR;                                   /* 期間 */
+    ofs << admin_->getTerm() << SEPARATOR;                           /* 期間 */
     ofs << Monitor::Instance().getContactNum() << SEPARATOR;         /* 総接触数 */
     FOR( j, NUM_V ) {                                                /* その内感染した回数 */
         sum += Monitor::Instance().getInfectionContactNum(admin_->virus_[j]);

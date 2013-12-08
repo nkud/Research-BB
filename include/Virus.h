@@ -18,6 +18,11 @@
 
 class __SearchPattern;
 
+enum __SEARCH__TYPE__{
+    __NORMAL__,
+    __FIXED__
+};
+
 /*
  * =====================================================================================
  *        Class:  Virus
@@ -41,7 +46,8 @@ class Virus : public __TagInterface                                  /* ウイ�
         double getRate() const;                                      /* 感染確率を返す */
         void setRate( const double r );                              /* 感染確率を設定 */
 
-        int searchStartPoint( const __TagInterface & ) const;                    /* タグに取り付く位置を返す */
+        int searchStartPoint( const __TagInterface & ) const;        /* タグに取り付く位置を返す */
+        __SEARCH__TYPE__ getSearchType() const;
 };
 
 /* =====================================================================================
@@ -52,6 +58,7 @@ class Virus : public __TagInterface                                  /* ウイ�
 class __SearchPattern {
     public:
         virtual int searchStartPoint( const __TagInterface &, const __TagInterface & ) const = 0;
+        virtual __SEARCH__TYPE__ getSearchType() const = 0;
 };
 
 class Fixed : public __SearchPattern {
@@ -60,11 +67,13 @@ class Fixed : public __SearchPattern {
     public:
         Fixed( int n ) : sp_( n ) { }
         virtual int searchStartPoint( const __TagInterface &, const __TagInterface & ) const;
+        virtual __SEARCH__TYPE__ getSearchType() const;
 };
 
 class Normal : public __SearchPattern {
     public:
         virtual int searchStartPoint( const __TagInterface &myself, const __TagInterface &tag ) const;
+        virtual __SEARCH__TYPE__ getSearchType() const;
 };
 
 #endif
