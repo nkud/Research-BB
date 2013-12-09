@@ -100,7 +100,7 @@ class Agent : public __TagInterface
 
         int aging();                                                 /* 年をとる */
         int getAge() const;
-        void setLife( __LABEL__ l );
+        void setLife( __LABEL__ life );
         bool isAlive() const;
         bool isDead() const;
 
@@ -111,9 +111,9 @@ class Agent : public __TagInterface
         bool infection( Virus &v );                                  /* 感染プロセス  */
         void response();                                             /* 免疫応答する（タグフリップ）  */
 
-        bool hasVirus( __TagInterface &v )    const  ;               /* v に感染しているか */
-        bool hasImmunity( const Virus &v ) const  ;                  /* v の免疫獲得済みか  */
-        int numHoldingVirus()                const  ;                /* 現在保持しているウイルスの数 */
+        bool hasVirus( __TagInterface &v ) const;                    /* v に感染しているか */
+        bool hasImmunity( const Virus &v ) const;                    /* v の免疫獲得済みか  */
+        int numHoldingVirus() const;                                 /* 現在保持しているウイルスの数 */
 };
 
 void die( Agent &a );                                                /* 死亡処理 */

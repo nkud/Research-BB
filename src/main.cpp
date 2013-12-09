@@ -47,7 +47,7 @@ int main()
     VECTOR(Virus *) virus;
 //    virus.push_back( new Virus( 10, new Normal ) );                /* 通常ウイルスを追加 */
 //    virus.push_back( new Virus( 20, new Normal ) );                /* 通常ウイルスを追加 */
-    virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
+    virus.push_back( new Virus( 22, new Fixed(0) ) );                /* 固定ウイルスを追加 */
     virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */
     /* 土地 */
     Landscape landscape;                                             /* ランドスケープ初期化 */
@@ -109,6 +109,7 @@ int main()
         ff.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ; /* 出力：免疫獲得者 */
         ff.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ; /* 出力：接触回数 */
         ff.outputFile_Population            ( "A_population.txt"       ) ; /* 出力：人口 */
+        ff.outputFile_AveGotNewImmunityPeriod ( "A_aveGotNewImmunityPeriod.txt"       ) ; /* 出力：人口 */
         LOG( monitor.getContactNum() );
 
         /* 強制終了 */

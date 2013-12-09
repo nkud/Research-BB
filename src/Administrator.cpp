@@ -41,6 +41,14 @@ int Administrator :: calcAveGotNewImmunityPeriod() {
     return (double)sum/agent_.size();
 }
 
+void Administrator :: resetGotNewImmunityPeriod() {
+    ITERATOR(Agent *) it_a = agent_.begin();
+    while( it_a != agent_.end() ){
+        (**it_a).count_get_new_immunity_ = 0;
+        it_a++;
+    }
+}
+
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: deleteAgent()

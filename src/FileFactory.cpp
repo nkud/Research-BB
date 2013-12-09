@@ -172,6 +172,16 @@ void FileFactory :: outputFile_LastLog( const char *fname ) const {
  */
 void FileFactory :: outputFile_AveGotNewImmunityPeriod( const char *fname ) {
     // XXX:
+    static std::ofstream ofs(fname);
+    static int i = 0;
+    if( Monitor::Instance().getTerm() % 5 == 0 ) {                  /* ５０期間ごとに */
+        ofs << i << SEPARATOR
+            << admin_->calcAveGotNewImmunityPeriod() << SEPARATOR
+            << Monitor::Instance().getTerm() << SEPARATOR
+            << std::endl;
+        admin_->resetGotNewImmunityPeriod();
+        i++;
+    }
 }
 
 /*-----------------------------------------------------------------------------
