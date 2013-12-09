@@ -57,8 +57,10 @@ void FileFactory :: setAdministrator( Administrator &admin ) {
 void FileFactory :: generatePlotScriptForPng() {
     std::ofstream ofs(AUTO_GPLOT_FILENAME);
     ofs << "set terminal png size "<< IMG_SIZE(1000, 200) << std::endl;
+#if defined(AGING_AGENT) || defined(MATING_AGENT)
     // population
     scriptForPopulationPng(ofs);
+#endif
     // hasVirus
     scriptForHasVirusPng(ofs);
     // hasImmunity
