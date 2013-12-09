@@ -58,7 +58,8 @@ class Virus : public __TagInterface                                  /* ウイ�
 class __SearchPattern {
     public:
         virtual int searchStartPoint( const __TagInterface &, const __TagInterface & ) const = 0;
-        virtual __SEARCH__TYPE__ getSearchType() const = 0;
+                                                                     /* 取り付く位置を返す */
+        virtual __SEARCH__TYPE__ getSearchType() const = 0;          /* 戦略の種類を返す */
 };
 
 class Fixed : public __SearchPattern {
@@ -67,13 +68,15 @@ class Fixed : public __SearchPattern {
     public:
         Fixed( int n ) : sp_( n ) { }
         virtual int searchStartPoint( const __TagInterface &, const __TagInterface & ) const;
-        virtual __SEARCH__TYPE__ getSearchType() const;
+                                                                     /* 取り付く位置を返す */
+        virtual __SEARCH__TYPE__ getSearchType() const;              /* 戦略の種類を返す */
 };
 
 class Normal : public __SearchPattern {
     public:
         virtual int searchStartPoint( const __TagInterface &myself, const __TagInterface &tag ) const;
-        virtual __SEARCH__TYPE__ getSearchType() const;
+                                                                     /* 取り付く位置を返す */
+        virtual __SEARCH__TYPE__ getSearchType() const;              /* 戦略の種類を返す */
 };
 
 #endif

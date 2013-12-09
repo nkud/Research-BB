@@ -244,6 +244,7 @@ int Agent :: numHoldingVirus() const {
 void die( Agent &a ) {
     a.setLife( __DEATH__ );                                          /* 死亡する */
 }
+
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  childbirth( Agent &, Agent & )

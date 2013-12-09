@@ -34,37 +34,49 @@ int main()
 #endif
     srand( (unsigned int)time(NULL)/2 );                             /* 乱数初期化 */
 
-    /* 初期化・初期設定 */
-    //      エージェント
+
+    /*-----------------------------------------------------------------------------
+     *  初期化
+     *-----------------------------------------------------------------------------*/
+    /* エージェント */
     VECTOR(Agent *) agent;                                           /* エージェントの配列 */
     FOR( i, INIT_NUM_A ) {                                           /* 初期エージェントの数だけ */
         agent.push_back( new Agent );                                /* エージェントを初期化 */
     }
-    //      ウイルス
+    /* ウイルス */
     VECTOR(Virus *) virus;
-    virus.push_back( new Virus( 16, new Normal ) );
-    virus.push_back( new Virus( 16, new Normal ) );
-//    virus.push_back( new Virus( 25, new Fixed(0) ) );
-//    virus.push_back( new Virus( 10, new Fixed(20) ) );
-    //      土地
+//    virus.push_back( new Virus( 10, new Normal ) );                /* 通常ウイルスを追加 */
+//    virus.push_back( new Virus( 20, new Normal ) );                /* 通常ウイルスを追加 */
+    virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
+    virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */
+    /* 土地 */
     Landscape landscape;                                             /* ランドスケープ初期化 */
 
+    /* 管理者 */
     Administrator admin( agent, virus, &landscape );                 /* 管理者に登録 */
 
+    /* モニター・ファイル生成クラス */
     Monitor &monitor = Monitor::Instance();                          /* モニター */
     FileFactory &ff = FileFactory::Instance();                       /* 出力ファイルを管理 */
     ff.setAdministrator( admin );                                    /* 管理者を登録 */
 
+
+    /*-----------------------------------------------------------------------------
+     *  エージェントへの初期動作
+     *-----------------------------------------------------------------------------*/
     /* エージェントへの初期感染 */
     FOR( i, NUM_V ) {
         admin.initInfectAgentInRatio( *virus[i], INIT_INFECTED_RATIO );            /* 初期感染させる */
     }
-
+    /* 土地にランダムに配置 */
     admin.relocateAgent();                                           /* ランダムに配置 */
 
-    int zero_count = 0;
+    int zero_count = 0;                                              /* 感染接触が起こらなかった数をカウント */
+                                                                     /* 10回になると、計算を強制終了させる */
 
-    /* 計測開始 */
+    /*-----------------------------------------------------------------------------
+     *  計算開始
+     *-----------------------------------------------------------------------------*/
     FOR( i, TERM )                                                   /* 計算開始  */
     {
         cout << "===================================" << endl;
@@ -104,6 +116,10 @@ int main()
         if( monitor.getContactNum()==0 ) zero_count++;               /* １０回以上接触感染がなければ */
         if( zero_count >= 10 ) break;                                /* 強制的に終了する */
     }
+
+    /*-----------------------------------------------------------------------------
+     *  計算終了
+     *-----------------------------------------------------------------------------*/
     
     ff.outputFile_LastLog( "Log.txt" );                              /* プログラムの初期設定など出力 */
     admin.printInitInfo();                                           /* 初期状態を表示 */

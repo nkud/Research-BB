@@ -82,7 +82,7 @@ Virus :: Virus( const char *str ) :
  *--------------------------------------------------------------------------------------
  */
 int Virus :: searchStartPoint( const __TagInterface &tag ) const {
-    return search_pattern_->searchStartPoint( *this, tag );
+    return search_pattern_->searchStartPoint( *this, tag );          /* 取り付く位置を返す */
 }
 
 
@@ -93,7 +93,7 @@ int Virus :: searchStartPoint( const __TagInterface &tag ) const {
  *--------------------------------------------------------------------------------------
  */
 __SEARCH__TYPE__ Virus :: getSearchType() const {
-    return search_pattern_->getSearchType();
+    return search_pattern_->getSearchType();                         /* 戦略の種類を返す */
 }
 
 /*--------------------------------------------------------------------------------------
@@ -114,7 +114,7 @@ int Normal :: searchStartPoint( const __TagInterface &myself, const __TagInterfa
  *--------------------------------------------------------------------------------------
  */
 __SEARCH__TYPE__ Normal :: getSearchType() const {
-    return __NORMAL__;
+    return __NORMAL__;                                               /* 通常ウイルスであることを返す */
 }
 
 /*--------------------------------------------------------------------------------------
@@ -147,5 +147,5 @@ Virus :: Virus( int l, __SearchPattern *sp ):
  *--------------------------------------------------------------------------------------
  */
 __SEARCH__TYPE__ Fixed :: getSearchType() const {
-    return __FIXED__;
+    return __FIXED__;                                                /* 固定ウイルスであることを返す */
 }

@@ -34,8 +34,8 @@
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  FileFactory :: *
- * Description:  
+ *      Method:  FileFactory :: Instance()
+ * Description:  インスタンスを返す
  *--------------------------------------------------------------------------------------
  */
 
@@ -44,6 +44,13 @@ FileFactory& FileFactory :: Instance() {
     return coredata;                                                 /* インスタンスを返す */
 }
 
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  FileFactory :: setadmi
+ * Description:  管理者を登録する
+ *--------------------------------------------------------------------------------------
+ */
 void FileFactory :: setAdministrator( Administrator &admin ) {
     admin_ = &admin;                                                 /* 管理者を登録 */
 }
@@ -56,7 +63,9 @@ void FileFactory :: setAdministrator( Administrator &admin ) {
  */
 void FileFactory :: generatePlotScriptForPng() {
     std::ofstream ofs(AUTO_GPLOT_FILENAME);
-    ofs << "set terminal png size "<< IMG_SIZE(1000, 200) << std::endl;
+
+    ofs << "set terminal png size "
+        << IMG_SIZE(1000, 200) << std::endl;                         /* 画像のサイズを設定 */
 #if defined(AGING_AGENT) || defined(MATING_AGENT)
     // population
     scriptForPopulationPng(ofs);
