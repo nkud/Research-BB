@@ -171,6 +171,7 @@ void FileFactory :: outputFile_LastLog( const char *fname ) const {
  *--------------------------------------------------------------------------------------
  */
 void FileFactory :: outputFile_AveGotNewImmunityPeriod( const char *fname ) {
+    // XXX:
 }
 
 /*-----------------------------------------------------------------------------

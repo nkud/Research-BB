@@ -66,9 +66,9 @@ class Agent : public __TagInterface
         std::vector<VirusData *> *vlist_;                            /* 保持ウイルスのリスト */
         std::vector<Virus *> *stand_by_list_;                        /* 待機ウイルスリスト */
 
-        int count_get_new_immunity_;                                 /* 新しい免疫を獲得した回数をカウント */
 
     public:
+        int count_get_new_immunity_;                                 /* 新しい免疫を獲得した回数をカウント */
         Agent();                                                     /* コンストラクタ  */
         ~Agent();
 

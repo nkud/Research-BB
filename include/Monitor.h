@@ -52,8 +52,6 @@ class Monitor {
         void setTerm( int t );                                       /* 期間を取得 */
         int getTerm() const;                                         /* 期間を返す */
 
-        int countUpAveGotNewImmunityPeriod();
-
         void resetAll();                                             /* 値をすべてリセット */
 };
 

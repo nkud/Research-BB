@@ -186,10 +186,10 @@ bool Agent :: infection( Virus &v )
  */
 void Agent :: response()
 {
-    if( hasNoVirusData() ) return;                                   /* 保持ウイルスなし、終了  */
+    if( hasNoVirusData() ) return;                                   /* 保持ウイルスなし、終了する */
 
     ITERATOR(VirusData *) it = getVirusListIteratorBegin();          /* 先頭のウイルスに対し */
-    flip_once( tag_+(*it)->sp_, (*it)->v_->getTag(), (*it)->v_->getLen() );            /* ひとつフリップ  */
+    flip_once( tag_+(*it)->sp_, (*it)->v_->getTag(), (*it)->v_->getLen() );            /* ひとつフリップする */
 
     if( hasImmunity( *((*it)->v_) ) )
     {                                                                /* 免疫獲得すれば */

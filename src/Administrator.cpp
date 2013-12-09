@@ -27,12 +27,18 @@
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Administrator :: countUpAveGotNewImmunityPeriod()
+ *      Method:  Administrator :: calcAveGotNewImmunityPeriod()
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-int Administrator :: countUpAveGotNewImmunityPeriod() {
-
+int Administrator :: calcAveGotNewImmunityPeriod() {
+    int sum = 0;
+    ITERATOR(Agent *) it_a = agent_.begin();
+    while( it_a != agent_.end() ){
+        sum += (**it_a).count_get_new_immunity_;
+        it_a++;
+    }
+    return (double)sum/agent_.size();
 }
 
 /*

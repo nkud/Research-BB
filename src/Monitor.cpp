@@ -67,17 +67,6 @@ int Monitor :: getTerm() const {
     return term_;
 }
 
-
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Monitor :: countUpAveGotNewImmunityPeriod()
- * Description:  
- *--------------------------------------------------------------------------------------
- */
-int Monitor :: countUpAveGotNewImmunityPeriod() {
-    int sum = 0;
-}
-
 #ifdef __unix__
 /*
  *--------------------------------------------------------------------------------------
