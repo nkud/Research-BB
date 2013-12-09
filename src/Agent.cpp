@@ -36,7 +36,8 @@ Agent :: Agent() :
     age_( 0 ),
     sex_( __MALE__ ),
     life_( __ALIVE__ ),
-    stand_by_list_( 0 )
+    stand_by_list_( 0 ),
+    count_get_new_immunity_( 0 )
 {
     vlist_ = new std::vector<VirusData *>;                           /* 保持ウイルスリストを初期化 */
     stand_by_list_ = new std::vector<Virus *>;                       /* 待機ウイルスリストを初期化 */
