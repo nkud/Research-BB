@@ -26,14 +26,15 @@
  *--------------------------------------------------------------------------------------
  */
 int Monitor :: getContactNum() const { return num_contact_; }        /* 接触回数を返す*/
+
 int Monitor :: getInfectionContactNum( __TagInterface *t ) {
     return num_infection_contact_[ t ];                              /* 感染接触回数を返す */
 }
+
 Monitor& Monitor :: Instance() {
     static Monitor coredata;
     return coredata;                                                 /* インスタンスを返す */
 }
-
 
 /*
  *--------------------------------------------------------------------------------------
@@ -41,9 +42,9 @@ Monitor& Monitor :: Instance() {
  * Description:  カウントをリセット
  *--------------------------------------------------------------------------------------
  */
-void Monitor :: resetAll() {
+void Monitor :: resetAll()
+{
     num_contact_ = 0;                                                /* 接触回数をリセット */
-
     num_infection_contact_.clear();                                  /* 感染接触回数をリセット */
 }
 
@@ -58,6 +59,13 @@ void Monitor :: countUpInfectionContact( __TagInterface *pv ) {
     num_infection_contact_[ pv ]++;                                  /* 指定のウイルスの感染接触回数をカウント */
 }
 void Monitor :: countUpContact() { num_contact_++; }                 /* 接触回数をカウント */
+
+void Monitor :: setTerm( int t ) {
+    term_ = t;
+}
+void Monitor :: getTerm() const {
+    return term_;
+}
 
 #ifdef __unix__
 /*

@@ -135,6 +135,7 @@ void Administrator :: matingAgant() {
  */
 void Administrator :: incrementTerm() {
     term_++;                                                         /* 期間をインクリメント */
+    Monitor::Instance().incrementTerm();
 }
 int Administrator :: getTerm() const {
     return term_;                                                    /* 現在の期間 */

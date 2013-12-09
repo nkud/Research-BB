@@ -17,8 +17,6 @@
 #include <map>
 #include <fstream>
 
-#include "Administrator.h"
-
 #ifdef __unix__
 #include <sys/time.h>
 #endif
@@ -33,10 +31,12 @@ class __TagInterface;
  */
 class Monitor {
     private:
-        Monitor() {}                                                 /* コンストラクタ */
+        Monitor(): term_(0), num_contact_(0) { }                     /* コンストラクタ */
 
         int num_contact_;                                            /* 接触回数 */
         std::map<__TagInterface *, int> num_infection_contact_;      /* 感染させた接触回数 */
+
+        int term_;
 
     public:
         static Monitor& Instance();                                  /* インスタンスを返す */
@@ -48,6 +48,9 @@ class Monitor {
         /* カウント */
         void countUpContact();                                       /* 接触しした回数 */
         void countUpInfectionContact( __TagInterface * );            /* 感染のために接触してあるウイルスに感染した回数 */
+
+        void setTerm();                                              /* 期間を取得 */
+        void getTerm();                                              /* 期間を返す */
 
         void resetAll();                                             /* 値をすべてリセット */
 };
