@@ -191,8 +191,10 @@ void Agent :: response()
     ITERATOR(VirusData *) it = getVirusListIteratorBegin();          /* 先頭のウイルスに対し */
     flip_once( tag_+(*it)->sp_, (*it)->v_->getTag(), (*it)->v_->getLen() );            /* ひとつフリップ  */
 
-    if( hasImmunity( *((*it)->v_) ) ) {                              /* 免疫獲得すれば */
-        eraseVirusData( it );                                        /* 保持ウイルスから v(先頭) を削除 */
+    if( hasImmunity( *((*it)->v_) ) )
+    {                                                                /* 免疫獲得すれば */
+        eraseVirusData( it );                                        /* 保持ウイルスから v(先頭) を削除して */
+        count_get_new_immunity_++;                                   /* 免疫獲得した回数を１増やす */
     }
 }
 

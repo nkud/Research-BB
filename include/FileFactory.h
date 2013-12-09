@@ -55,6 +55,8 @@ class FileFactory {
         void outputFile_InfectionContactRatio( const char * ) const;       /* ファイルに出力 */
         void outputFile_Population( const char * ) const;                  /* 人口推移を出力 */
         void outputFile_LastLog( const char * ) const;                     /* ログを出力 */
+
+        void outputFile_AveGotNewImmunityPeriod( const char * ) const;
 };
 
 #endif

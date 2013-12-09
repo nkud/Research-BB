@@ -49,8 +49,10 @@ class Monitor {
         void countUpContact();                                       /* 接触しした回数 */
         void countUpInfectionContact( __TagInterface * );            /* 感染のために接触してあるウイルスに感染した回数 */
 
-        void setTerm();                                              /* 期間を取得 */
-        void getTerm();                                              /* 期間を返す */
+        void setTerm( int t );                                       /* 期間を取得 */
+        int getTerm() const;                                         /* 期間を返す */
+
+        int countUpAveGotNewImmunityPeriod();
 
         void resetAll();                                             /* 値をすべてリセット */
 };

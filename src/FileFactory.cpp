@@ -164,6 +164,14 @@ void FileFactory :: outputFile_LastLog( const char *fname ) const {
     }
 }
 
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  FileFactory :: outputFile_AveGotNewImmunityPeriod( const char * ) const
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+void FileFactory :: outputFile_AveGotNewImmunityPeriod( const char *fname ) {
+}
 
 /*-----------------------------------------------------------------------------
  *

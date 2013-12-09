@@ -24,6 +24,17 @@
 #include <fstream>
 #include <iostream>
 
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Administrator :: countUpAveGotNewImmunityPeriod()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+int Administrator :: countUpAveGotNewImmunityPeriod() {
+
+}
+
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: deleteAgent()
@@ -135,7 +146,7 @@ void Administrator :: matingAgant() {
  */
 void Administrator :: incrementTerm() {
     term_++;                                                         /* 期間をインクリメント */
-    Monitor::Instance().incrementTerm();
+    Monitor::Instance().setTerm( term_ );                            /* モニターと期間を同期 */
 }
 int Administrator :: getTerm() const {
     return term_;                                                    /* 現在の期間 */
