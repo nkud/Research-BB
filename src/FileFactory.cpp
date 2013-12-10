@@ -608,9 +608,29 @@ void FileFactory :: generateResultHtml( int t ) {
     else last_term_ = t;
 
     std::ofstream ofs( FNAME_RESULT_HTML );
+
+
+    /*-----------------------------------------------------------------------------
+     *  目次
+     *-----------------------------------------------------------------------------*/
     OFS( "<html><link rel=\"stylesheet\" href=\"result.css\"><body><font color=gray><code>" );
     OFS( "<h1><font color=black># 計算結果 "<<__DATE__<<", "<<__TIME__<<"</font></h1>" );
-    OFS( "<h2>設定</h2>" );
+    OFS( "<ul>" );
+    OFS( "<li><a href=#config>設定</a></li>" );
+    OFS( "<li><a href=#population>人口</a></li>" );
+    OFS( "<li><a href=#infection>感染者</a></li>" );
+    OFS( "<li><a href=#immunity>免疫獲得者</a></li>" );
+    OFS( "<li><a href=#sir>SIR</a></li>" );
+    OFS( "<li><a href=#sir_0>SIR about virus_0</a></li>" );
+    OFS( "<li><a href=#period>周期</a></li>" );
+    OFS( "<li><a href=#contact>接触回数</a></li>" );
+    OFS( "</ul>" );
+
+
+    /*-----------------------------------------------------------------------------
+     *  設定
+     *-----------------------------------------------------------------------------*/
+    OFS( "<h2 id=config>設定</h2>" );
     // table
     OFS_LINE( "<table>" );                                           /* テーブル */
 #ifdef RANDOM_LOCATE                                                 /* 移動方法 */
@@ -694,44 +714,60 @@ void FileFactory :: generateResultHtml( int t ) {
     OFS_LINE( "</table>" );
 
 #if defined(AGING_AGENT) || defined( MATING_AGENT)
-    // 人口
-    OFS( "<h2>人口</h2>" );
+
+    /*-----------------------------------------------------------------------------
+     *  人口
+     *-----------------------------------------------------------------------------*/
+    OFS( "<h2 id=population>人口</h2>" );
     OFS_IMG_MINI( "Population.png", "Population_mini.png", "Population_last.png" );
     OFS( "</br>" );
     OFS( "population: エージェントの総人口" );
 #endif
-    // 感染者
-    OFS( "<h2>感染者</h2>" );
+
+    /*-----------------------------------------------------------------------------
+     *  感染者
+     *-----------------------------------------------------------------------------*/
+    OFS( "<h2 id=infection>感染者</h2>" );
     OFS_IMG_MINI( "HasVirus.png", "HasVirus_mini.png", "HasVirus_last.png" );
     FOR( i, NUM_V ) {
         ofs << "<p>has_virus_" << i << ": "
             << "ウイルス " << i << " に感染しているエージェント数</p>" << std::endl;
     }
     ofs << "<p>has_all_virus" << "すべてのウイルスに感染しているエージェント数</p>" << std::endl;
-    // 免疫獲得者
-    OFS( "<h2>免疫獲得者</h2>" );
+
+    /*-----------------------------------------------------------------------------
+     *  免疫獲得者
+     *-----------------------------------------------------------------------------*/
+    OFS( "<h2 id=immunity>免疫獲得者</h2>" );
     OFS_IMG_MINI( "HasImmunity.png", "HasImmunity_mini.png", "HasImmunity_last.png" );
     FOR( i, NUM_V ) {
         ofs << "<p>has_virus_" << i << ": "
             << "ウイルス " << i << " への免疫を獲得しているエージェント数</p>" << std::endl;
     }
     ofs << "<p>has_all_virus" << "すべてのウイルスへの免疫を獲得しているエージェント数</p>" << std::endl;
-    // SIR
-    OFS( "<h2>SIR</h2>" );
+
+    /*-----------------------------------------------------------------------------
+     *  SIR
+     *-----------------------------------------------------------------------------*/
+    OFS( "<h2 id=sir>SIR</h2>" );
     OFS_IMG_MINI( "SIR.png", "SIR_mini.png", "SIR_last.png" );
     OFS( "I: すべてのウイルスに感染しているエージェント数" );
     OFS( "R: すべてのウイルスに対して免疫を獲得しているエージェント数" );
     OFS_IMG_MINI( "SIR_RATIO.png", "SIR_RATIO_mini.png", "SIR_RATIO_last.png" );
     OFS( "I/POPULATION: すべてのウイルスに感染しているエージェント数 / その時点での総エージェント数" );
     OFS( "R/POPULATION: すべてのウイルスに対して免疫を獲得しているエージェント数 / その時点での総エージェント数" );
+    OFS( "<h2 id=sir_0>SIR about virus_0</h2>" );
     OFS_IMG_MINI( "SIR_0.png", "SIR_0_mini.png", "SIR_0_last.png" );
     OFS( "I: ウイルス 0 に感染しているエージェント数" );
     OFS( "R: ウイルス 0 に対して免疫を獲得しているエージェント数" );
     OFS_IMG_MINI( "SIR_0_RATIO.png", "SIR_0_RATIO_mini.png", "SIR_0_RATIO_last.png" );
     OFS( "I/POPULATION: ウイルス 0 に感染しているエージェント数 / その時点での総エージェント数" );
     OFS( "R/POPULATION: ウイルス 0 に対して免疫を獲得しているエージェント数 / その時点での総エージェント数" );
-    // 平均新免疫獲得回数
-    OFS( "<h2>周期[ "<<PERIOD<<" ]</h2>" );
+
+    /*-----------------------------------------------------------------------------
+     *  周期
+     *-----------------------------------------------------------------------------*/
+    OFS( "<h2 id=period>周期[ "<<PERIOD<<" ]</h2>" );
     ofs <<"<table class=\"graph\"><tr><td><img src=img/"
         << "AveGotNewImmunityPeriod.png" <<" /></td></tr><tr><td><img src=img/"
         << "GotNewEachImmunityPeriod.png" <<" /></td></tr>"
@@ -741,8 +777,11 @@ void FileFactory :: generateResultHtml( int t ) {
         ofs << "<p>GotNewEachImmunityPeriod" << i << ": 先頭のエージェントが"
             << "ウイルス " << i << " への免疫を獲得した回数</p>" << std::endl;
     }
-    // 接触回数
-    OFS( "<h2>接触回数</h2>" );
+
+    /*-----------------------------------------------------------------------------
+     *  接触回数
+     *-----------------------------------------------------------------------------*/
+    OFS( "<h2 id=contact>接触回数</h2>" );
     OFS_IMG_MINI( "Contact.png", "Contact_mini.png", "Contact_last.png" );
     OFS( "contact: 総接触回数" );
     FOR( i, NUM_V ) {
