@@ -42,6 +42,7 @@ class FileFactory {
         void scriptForHasImmunityPng(std::ofstream &ofs) const;
         void scriptForSIRPng(std::ofstream &ofs) const;
         void scriptForContactPng(std::ofstream &ofs) const;
+        void scriptForAveGotNewImmunityPeriod( std::ofstream &ofs ) const;
 
     public:
         static FileFactory& Instance();                              /* インスタンスを返す */

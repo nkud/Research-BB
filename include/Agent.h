@@ -19,6 +19,9 @@
 #include "Virus.h"
 #include <vector>
 
+struct VirusData;
+class Agent;
+
 enum __LABEL__                                                       /* ラベル */
 {
     __ALIVE__,                                                       /* 生存 */
@@ -27,9 +30,6 @@ enum __LABEL__                                                       /* ラベ�
     __MALE__,                                                        /* 男性 */
     __FEMALE__                                                       /* 女性 */
 };
-
-struct VirusData;
-class Agent;
 
 /*
  * =====================================================================================

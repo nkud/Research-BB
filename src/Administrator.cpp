@@ -31,7 +31,7 @@
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-int Administrator :: calcAveGotNewImmunityPeriod() {
+double Administrator :: calcAveGotNewImmunityPeriod() {
     int sum = 0;
     ITERATOR(Agent *) it_a = agent_.begin();
     while( it_a != agent_.end() ){

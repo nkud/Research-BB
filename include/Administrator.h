@@ -65,7 +65,7 @@ class Administrator {
 
         void printInitInfo() const;                                  /* 初期状態の情報を端末に出力 */
 
-        int calcAveGotNewImmunityPeriod();
+        double calcAveGotNewImmunityPeriod();
         void resetGotNewImmunityPeriod();
 };
 

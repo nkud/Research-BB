@@ -31,6 +31,7 @@
 #define HAS_IMMUNITY_OUTPUT     "\"A_hasImmunity.txt\""
 #define CONTACT_OUTPUT          "\"A_infectionContact.txt\""
 #define POPULATION_OUTPUT       "\"A_population.txt\""
+#define AVE_GOT_NEW_IMMUNITY_OUTPUT     "\"A_aveGotNewImmunityPeriod.txt\""
 
 /*
  *--------------------------------------------------------------------------------------
@@ -174,7 +175,7 @@ void FileFactory :: outputFile_AveGotNewImmunityPeriod( const char *fname ) {
     // XXX:
     static std::ofstream ofs(fname);
     static int i = 0;
-    if( Monitor::Instance().getTerm() % 5 == 0 ) {                  /* ５０期間ごとに */
+    if( Monitor::Instance().getTerm() % 1000 == 0 ) {                  /* ５期間ごとに */
         ofs << i << SEPARATOR
             << admin_->calcAveGotNewImmunityPeriod() << SEPARATOR
             << Monitor::Instance().getTerm() << SEPARATOR
@@ -213,6 +214,8 @@ void FileFactory :: generatePlotScriptForPng() const {
     scriptForSIRPng(ofs);
     // contact
     scriptForContactPng(ofs);
+
+    scriptForAveGotNewImmunityPeriod(ofs);
     ofs << "set output" << std::endl;
 }
 
@@ -222,6 +225,14 @@ void FileFactory :: generatePlotScriptForPng() const {
  *  Description:  画像を出力するスクリプト
  * =====================================================================================
  */
+void FileFactory :: scriptForAveGotNewImmunityPeriod( std::ofstream &ofs ) const {
+    OFS_LINE ( "set yl \"Count\"" );
+    OFS_LINE ( "set xl \"Period\"" );
+    OFS_LINE ( "set output \"AveGotNewImmunityPeriod.png\"" );
+    OFS_LINE ( "set title \"AveGotNewImmunityPeriod\"" );
+    OFS_LINE ( "plot " << AVE_GOT_NEW_IMMUNITY_OUTPUT
+            << " w l" << " title " << "\"AveGotNewImmunityPeriod\"" );
+}
 void FileFactory :: scriptForPopulationPng(std::ofstream &ofs) const {
     OFS_LINE ( "set yl \"Agent\"" );
     OFS_LINE ( "set xl \"Term\"" );
