@@ -37,7 +37,10 @@ class FileFactory {
 
         int last_term_;                                              /* 実際に計算を行った期間 */
 
-        void scriptForPopulationPng(std::ofstream &ofs) const;             /* 画像を出力するスクリプト */
+        /*-----------------------------------------------------------------------------
+         *  計算結果確認用スクリプト用関数セット
+         *-----------------------------------------------------------------------------*/
+        void scriptForPopulationPng(std::ofstream &ofs) const;       /* 画像を出力するスクリプト */
         void scriptForHasVirusPng(std::ofstream &ofs) const;
         void scriptForHasImmunityPng(std::ofstream &ofs) const;
         void scriptForSIRPng(std::ofstream &ofs) const;
@@ -48,16 +51,21 @@ class FileFactory {
         static FileFactory& Instance();                              /* インスタンスを返す */
         void setAdministrator( Administrator &admin ); 
 
-        void generatePlotScriptForPng() const;                             /* プロット用のスクリプトを生成 */
+        /*-----------------------------------------------------------------------------
+         *  計算結果出力
+         *-----------------------------------------------------------------------------*/
+        void outputFile_HasVirus( const char * ) const;              /* ファイルに出力 */
+        void outputFile_HasImmunity( const char * ) const;           /* ファイルに出力 */
+        void outputFile_InfectionContactRatio( const char * ) const; /* ファイルに出力 */
+        void outputFile_Population( const char * ) const;            /* 人口推移を出力 */
+        void outputFile_LastLog( const char * ) const;               /* ログを出力 */
+
+        void outputFile_AveGotNewImmunityPeriod( const char * );     /* XXX: 不要 */
+        /*-----------------------------------------------------------------------------
+         *  計算結果確認用スクリプト出力
+         *-----------------------------------------------------------------------------*/
+        void generatePlotScriptForPng() const;                       /* プロット用のスクリプトを生成 */
         void generateResultHtml(int last_term);                      /* 結果表示用のHTMLスクリプトを生成 */
-
-        void outputFile_HasVirus( const char * ) const;                    /* ファイルに出力 */
-        void outputFile_HasImmunity( const char * ) const;                 /* ファイルに出力 */
-        void outputFile_InfectionContactRatio( const char * ) const;       /* ファイルに出力 */
-        void outputFile_Population( const char * ) const;                  /* 人口推移を出力 */
-        void outputFile_LastLog( const char * ) const;                     /* ログを出力 */
-
-        void outputFile_AveGotNewImmunityPeriod( const char * );
 };
 
 #endif

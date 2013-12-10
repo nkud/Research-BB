@@ -37,12 +37,20 @@ class Administrator {
         ITERATOR(Agent *) deleteAgent( ITERATOR(Agent *) &it );      /* 配列から指定のエージェントを削除 */
 
     public:
+
+        /*-----------------------------------------------------------------------------
+         *  配列
+         *-----------------------------------------------------------------------------*/
+        // XXX: 露出してる
         VECTOR(Agent *) &agent_;                                     /* エージェントの集合 */
         VECTOR(Virus *) &virus_;                                     /* ウイルスの集合 */
         Landscape *landscape_;                                       /* 土地 */
 
         Administrator( VECTOR(Agent *) & , VECTOR(Virus *) &, Landscape * );   /* コンストラクタ */
 
+        /*-----------------------------------------------------------------------------
+         *  エージェント操作
+         *-----------------------------------------------------------------------------*/
         void initInfectAgentInRatio( Virus &, double );              /* 初期感染させる */
         void responseAgent();                                        /* 免疫応答させる */
         void relocateAgent();                                        /* 再配置する */
@@ -57,7 +65,10 @@ class Administrator {
         void incrementTerm();                                        /* 期間を 1 進める */
         int getTerm() const;                                         /* 進んだ期間 */
 
-        /* カウント */
+
+        /*-----------------------------------------------------------------------------
+         *  カウント
+         *-----------------------------------------------------------------------------*/
         int numHasVirus( __TagInterface & ) const;                   /* v に感染している人の数 */
         int numHasAllVirus() const;                                  /* 全ウイルスに感染している人の数 */
         int numHasImmunity( Virus &v ) const;                        /* v の免疫獲得者数 */
