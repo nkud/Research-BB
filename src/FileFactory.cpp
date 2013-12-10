@@ -7,7 +7,6 @@
 #include "Global.h"
 #include "Monitor.h"
 
-#define GPLOT_FILENAME          "quick.plt"
 #define AUTO_GPLOT_FILENAME     "auto.plt"
 #define FNAME_RESULT_HTML       "RESULT.html"
 
@@ -32,6 +31,8 @@
 #define CONTACT_OUTPUT          "\"A_infectionContact.txt\""
 #define POPULATION_OUTPUT       "\"A_population.txt\""
 #define AVE_GOT_NEW_IMMUNITY_OUTPUT     "\"A_aveGotNewImmunityPeriod.txt\""
+
+#define PERIOD                  100                                  /* 調査する区間 */
 
 /*
  *--------------------------------------------------------------------------------------
@@ -175,12 +176,17 @@ void FileFactory :: outputFile_AveGotNewImmunityPeriod( const char *fname ) {
     // XXX:
     static std::ofstream ofs(fname);
     static int i = 0;
-    if( Monitor::Instance().getTerm() % 1000 == 0 ) {                  /* ５期間ごとに */
-        ofs << i << SEPARATOR
-            << admin_->calcAveGotNewImmunityPeriod() << SEPARATOR
-            << Monitor::Instance().getTerm() << SEPARATOR
+    if( Monitor::Instance().getTerm() % PERIOD == 0 ) {                 /* ５期間ごとに */
+        ofs << i << SEPARATOR                                        /* i 周期目 */
+            << admin_->calcAveGotNewImmunityPeriod() << SEPARATOR;
+        FOR( j, NUM_V ) {
+            ofs << admin_->getGotNewImmunityPeriod( *(admin_->agent_[0]), *(admin_->virus_[j]) ) << SEPARATOR;
+        }
+        ofs << Monitor::Instance().getTerm() << SEPARATOR
             << std::endl;
+
         admin_->resetGotNewImmunityPeriod();
+        admin_->agent_[0]->count_get_new_immunity_virus_.clear();
         i++;
     }
 }
@@ -229,9 +235,22 @@ void FileFactory :: scriptForAveGotNewImmunityPeriod( std::ofstream &ofs ) const
     OFS_LINE ( "set yl \"Count\"" );
     OFS_LINE ( "set xl \"Period\"" );
     OFS_LINE ( "set output \"AveGotNewImmunityPeriod.png\"" );
-    OFS_LINE ( "set title \"AveGotNewImmunityPeriod\"" );
+    OFS_LINE ( "set title \"AveGotNewImmunityPeriod_" << PERIOD << "\"" );
     OFS_LINE ( "plot " << AVE_GOT_NEW_IMMUNITY_OUTPUT
             << " w l" << " title " << "\"AveGotNewImmunityPeriod\"" );
+
+    OFS_LINE ( "set yl \"Count\"" );
+    OFS_LINE ( "set xl \"Period\"" );
+    OFS_LINE ( "set output \"GotNewEachImmunityPeriod.png\"" );
+    OFS_LINE ( "set title \"GotNewEachImmunityPeriod_" << PERIOD << "\"" );
+    OFS_LINE ( "plot " << AVE_GOT_NEW_IMMUNITY_OUTPUT
+            << " using 1:3 w l" << " title " << "\"virus_0\"" );
+    FOR( i, NUM_V-1  ) {
+        ofs << "set output \"GotNewEachImmunityPeriod.png\"" << std::endl;
+        ofs << "replot " << AVE_GOT_NEW_IMMUNITY_OUTPUT
+            << " using 1:" << i+4 << " w l"
+            << " title " << "\"virus_" << i+1 << std::endl;
+    }
 }
 void FileFactory :: scriptForPopulationPng(std::ofstream &ofs) const {
     OFS_LINE ( "set yl \"Agent\"" );
@@ -711,6 +730,17 @@ void FileFactory :: generateResultHtml( int t ) {
     OFS_IMG_MINI( "SIR_0_RATIO.png", "SIR_0_RATIO_mini.png", "SIR_0_RATIO_last.png" );
     OFS( "I/POPULATION: ウイルス 0 に感染しているエージェント数 / その時点での総エージェント数" );
     OFS( "R/POPULATION: ウイルス 0 に対して免疫を獲得しているエージェント数 / その時点での総エージェント数" );
+    // 平均新免疫獲得回数
+    OFS( "<h2>周期[ "<<PERIOD<<" ]</h2>" );
+    ofs <<"<table class=\"graph\"><tr><td><img src=img/"
+        << "AveGotNewImmunityPeriod.png" <<" /></td></tr><tr><td><img src=img/"
+        << "GotNewEachImmunityPeriod.png" <<" /></td></tr>"
+        << "</table><br />"<<std::endl;
+    ofs << "<p>AveGotNewImmunityPeriod: " << "何らかのウイルスへの免疫を獲得した回数の平均</p>" << std::endl;
+    FOR( i, NUM_V ) {
+        ofs << "<p>GotNewEachImmunityPeriod" << i << ": 先頭のエージェントが"
+            << "ウイルス " << i << " への免疫を獲得した回数</p>" << std::endl;
+    }
     // 接触回数
     OFS( "<h2>接触回数</h2>" );
     OFS_IMG_MINI( "Contact.png", "Contact_mini.png", "Contact_last.png" );

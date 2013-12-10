@@ -17,7 +17,9 @@
 #include "Global.h"
 #include "TagInterface.h"
 #include "Virus.h"
+
 #include <vector>
+#include <map>
 
 struct VirusData;
 class Agent;
@@ -69,6 +71,8 @@ class Agent : public __TagInterface
 
     public:
         int count_get_new_immunity_;                                 /* 新しい免疫を獲得した回数をカウント */
+        std::map< __TagInterface *, int > count_get_new_immunity_virus_;
+
         Agent();                                                     /* コンストラクタ  */
         ~Agent();
 

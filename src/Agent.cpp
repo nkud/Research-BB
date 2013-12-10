@@ -56,6 +56,7 @@ Agent :: Agent() :
     (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
 }
 
+/* デストラクタ */
 Agent :: ~Agent() {
     delete vlist_;
     delete stand_by_list_;
@@ -193,8 +194,11 @@ void Agent :: response()
 
     if( hasImmunity( *((*it)->v_) ) )
     {                                                                /* 免疫獲得すれば */
-        eraseVirusData( it );                                        /* 保持ウイルスから v(先頭) を削除して */
+        // XXX: 要検討
+        count_get_new_immunity_virus_[ (*it)->v_ ]++;                /* そのウイルスの免疫獲得した回数を１増やす */
         count_get_new_immunity_++;                                   /* 免疫獲得した回数を１増やす */
+
+        eraseVirusData( it );                                        /* 保持ウイルスから v(先頭) を削除して */
     }
 }
 

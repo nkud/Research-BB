@@ -41,6 +41,10 @@ double Administrator :: calcAveGotNewImmunityPeriod() {
     return (double)sum/agent_.size();
 }
 
+int Administrator :: getGotNewImmunityPeriod( Agent &a, __TagInterface &v ) {
+    return a.count_get_new_immunity_virus_[ &v ];
+}
+
 void Administrator :: resetGotNewImmunityPeriod() {
     ITERATOR(Agent *) it_a = agent_.begin();
     while( it_a != agent_.end() ){
