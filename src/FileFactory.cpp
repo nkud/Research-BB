@@ -45,7 +45,7 @@
 #define OFS_OUTPUT(str)         do { ofs<<"set output "<<#str<< std::endl; }while(0);
 #define OFS_TD(str,val)         do { ofs<<"<tr><td>"<<str<<"</td>"<<"<td>"<<val<<"</td></tr>"<<std::endl; }while(0);
 
-#define QUO(str)      "\"" << str << "\""
+#define QUO(str)                "\"" << str << "\""
 
 #define OFSS(str)               ofs << #str << std::endl;
 #define OFS_AXIS_LABEL(x, y)    OFSS( set xl #x ) OFSS( set yl #y )
@@ -56,7 +56,7 @@
 /*-----------------------------------------------------------------------------
  *  スタイル
  *-----------------------------------------------------------------------------*/
-#define LINE_STYLE                      " with line "
+#define LINE_STYLE                      " with l "
 #define FONT_STYLE                      " font \"helvetica, 20\" "
 #define TITLE(str)                      " title \"" << #str << "\" "
 #define USING(x,y)                      " using " << x << ":" << y << " "
@@ -70,7 +70,7 @@
 #define POPULATION_OUTPUT               QUO( POPULATION_FNAME )
 #define AVE_GOT_NEW_IMMUNITY_OUTPUT     QUO( AVE_GOT_NEW_IMMUNITY_FNAME )
 
-#define PERIOD                  100                                  /* 調査する区間 */
+#define PERIOD                          100                          /* 調査する区間 */
 
 /*
  *--------------------------------------------------------------------------------------
@@ -310,7 +310,7 @@ void FileFactory :: scriptForHasVirusPng(std::ofstream &ofs) const {
 
     ofs << "set title \"HasVirus\"" << std::endl
         << "plot " << HAS_VIRUS_OUTPUT << LINE_STYLE
-        << " title " << "\"has_virus_" << 0 << std::endl;
+        << " title " << "\"has_virus_0\"" << std::endl;
     FOR( i, NUM_V-1 ) {
         ofs << "set output \"HasVirus.png\"" << std::endl;
         ofs << "replot " << HAS_VIRUS_OUTPUT
