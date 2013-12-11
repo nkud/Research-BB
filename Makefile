@@ -63,12 +63,12 @@ pack:
 	@tree $(NOW)
 
 plot :
-	@$(PRINT) [ start plot ]
-	@cd $(BIN); gnuplot auto.plt
+	@$(PRINT) '>>> Plotting...'
+	@-cd $(BIN); python peak_search.py
+	@-cd $(BIN); gnuplot auto.plt
 	@cd $(BIN); mkdir -p txt;  mv *.txt txt
 	@cd $(BIN); mkdir -p img;  mv *.png img
 	@cd $(BIN); mkdir -p script;  mv *.plt script
-	@$(PRINT) [ end plot ]
 
 $(BIN)/main.o: Global.h Function.h Agent.h Virus.h Landscape.h Monitor.h Administrator.h
 $(BIN)/Administrator.o: Global.h Function.h Administrator.h Agent.h Virus.h Landscape.h Monitor.h

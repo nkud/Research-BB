@@ -75,7 +75,7 @@ const int MAX_VIRUS_AGENT_HAVE        = NUM_V                 ;      /* 最大�
 const int MAX_V_AGENT_INFECT_ONT_TIME = 1                 ;          /* １期間で感染させるウイルスの最大数 */
 
 /* エージェント */                                                          
-const int TAG_LEN_A                   = 30                    ;      /* エージェントのタグ長 */
+const int TAG_LEN_A                   = 20                    ;      /* エージェントのタグ長 */
 const int INIT_NUM_A                  = 100                  ;       /* 初期エージェントの数 */
 const double INIT_INFECTED_RATIO      = 0.5                   ;      /* 初期感染率 */
 

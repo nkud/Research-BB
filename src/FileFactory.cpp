@@ -12,6 +12,7 @@
  */
 
 #include <fstream>
+#include <string>
 
 #include "FileFactory.h"
 #include "Administrator.h"
@@ -42,7 +43,7 @@
                                 <td><img src=img/"<<last<<" /></td></tr> \
                                 </table><br />"<<std::endl; }while(0);
 
-#define OFS_OUTPUT(str)         do { ofs<<"set output "<<#str<< std::endl; }while(0);
+#define OFS_OUTPUT(str)         OFSS( set output #str )
 #define OFS_TD(str,val)         do { ofs<<"<tr><td>"<<str<<"</td>"<<"<td>"<<val<<"</td></tr>"<<std::endl; }while(0);
 
 #define QUO(str)                "\"" << str << "\""
@@ -360,6 +361,13 @@ void FileFactory :: scriptForHasVirusPng(std::ofstream &ofs) const {
         << " title " << "\"has_all_virus\"" << std::endl;
 }
 
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  FileFactory :: scriptForHasImmunityPng
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
 void FileFactory :: scriptForHasImmunityPng(std::ofstream &ofs) const {
     OFS_PNG( HasImmunity.png, Term, Agent );
 
@@ -372,7 +380,7 @@ void FileFactory :: scriptForHasImmunityPng(std::ofstream &ofs) const {
             << " using 1:" << i+3 << LINE_STYLE
             << " title " << "\"has_immunity_" << i+1 << "\"" << std::endl;
     }
-    OFS_OUTPUT( "HasImmunity.png" );
+    OFS_OUTPUT( HasImmunity.png );
     ofs << "replot " << HAS_IMMUNITY_OUTPUT
         << " using 1:" << NUM_V+2 << LINE_STYLE
         << TITLE( has_all_immunity ) << std::endl;
@@ -386,7 +394,7 @@ void FileFactory :: scriptForHasImmunityPng(std::ofstream &ofs) const {
     ofs << "plot "<< HAS_IMMUNITY_OUTPUT << " every ::0::"<<MINI_SIZE_TERM<< LINE_STYLE
         << " title \"has_immunity_0\"" << std::endl;
     FOR( i, NUM_V-1 ) {
-        ofs << "set output \"HasImmunity_mini.png\"" << std::endl;
+        OFS_OUTPUT( HasImmunity_mini.png );
         ofs << "replot " << HAS_IMMUNITY_OUTPUT << " every ::0::"<<MINI_SIZE_TERM
             << " using 1:" << i+3 << " w l"
             << " title " << "\"has_immunity_" << i+1 << "\"" << std::endl;
@@ -397,25 +405,39 @@ void FileFactory :: scriptForHasImmunityPng(std::ofstream &ofs) const {
         << TITLE( has_all_immunity ) << std::endl;
 
     /*-----------------------------------------------------------------------------
-     *  End Term
+     *  End Term XXX:
      *-----------------------------------------------------------------------------*/
-    OFS_OUTPUT( "HasImmunity_last.png" );
-    OFS_LINE ( "set yl \"Agent\"" );
-    OFS_LINE ( "set xl \"Term\"" );
-    ofs << "set title \"hasImmunity\"" << std::endl
-        << "plot "<< HAS_IMMUNITY_OUTPUT << EVERY_LAST(last_term_) <<" w l"
-        << " title \"has_immunity_0\"" << std::endl;
+//    std::ifstream ifs_peak( "peak_log.txt" );
+//    assert( ifs_peak != NULL );
+//    std::string ave_interval;
+//    ifs_peak >> ave_interval;
+//    LOG( ave_interval );
+//
+    OFS_PNG( HasImmunity_last.png, Term, Agent );
+
+    OFSS( set title "HasImmunity" );
+    ofs << "plot "<< HAS_IMMUNITY_OUTPUT << EVERY_LAST(last_term_) << LINE_STYLE
+        << TITLE( has_immunity_0 ) << std::endl;
     FOR( i, NUM_V-1 ) {
-        ofs << "set output \"HasImmunity_last.png\"" << std::endl;
+        OFS_OUTPUT( HasImmunity_last.png );
         ofs << "replot " << HAS_IMMUNITY_OUTPUT << EVERY_LAST(last_term_)
-            << " using 1:" << i+3 << " w l"
+            << USING( 1, i+3 ) << LINE_STYLE
             << " title " << "\"has_immunity_" << i+1 << "\"" << std::endl;
     }
-    ofs << "set output \"HasImmunity_last.png\"" << std::endl;
+    OFS_OUTPUT( HasImmunity_last.png );
     ofs << "replot " << HAS_IMMUNITY_OUTPUT << EVERY_LAST(last_term_)
-        << " using 1:" << NUM_V+2 << " w l"
-        << " title " << "\"has_all_immunity\"" << std::endl;
+        << " using 1:" << NUM_V+2 << LINE_STYLE
+        << TITLE( has_all_immunity ) << std::endl;
+    OFSS( set output "HasImmunity_last.png" );
+    OFSS( replot "peak.txt" w p title "peak" );
 }
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  FileFactory :: scriptForSIRPng
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
 void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
     ofs << "set output \"SIR.png\"" << std::endl;
     OFS_LINE ( "set yl \"Agent\"" );
