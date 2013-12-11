@@ -1,3 +1,16 @@
+/*
+ * =====================================================================================
+ *
+ *       Filename:  FileFactory.cpp
+ *
+ *    Description:  
+ *
+*         Author: Naoki Ueda
+ *   Organization:  OPU, 3G
+ *
+ * =====================================================================================
+ */
+
 #include <fstream>
 
 #include "FileFactory.h"
@@ -10,6 +23,9 @@
 #define AUTO_GPLOT_FILENAME     "auto.plt"
 #define FNAME_RESULT_HTML       "RESULT.html"
 
+/*-----------------------------------------------------------------------------
+ *  マクロ
+ *-----------------------------------------------------------------------------*/
 #define IMG_SIZE(w, h)          #w << "," << #h
 
 #define EVERY_BEGIN             " every ::0::"<< MINI_SIZE_TERM
@@ -469,17 +485,15 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
     OFS_LINE ( "set yl \"Agent\"" );
     OFS_LINE ( "set xl \"Term\"" );
     ofs << "set title \"SIR_0\"" << std::endl;
-    ofs << "plot " << HAS_VIRUS_OUTPUT << " every ::0::"<<MINI_SIZE_TERM<<" w l"
+    ofs << "plot " << HAS_VIRUS_OUTPUT << " every ::0::"<<MINI_SIZE_TERM << LINE_STYLE
         << " title " << "\"I_0\"" << std::endl;
     ofs << "set output \"SIR_0_mini.png\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT << " every ::0::"<<MINI_SIZE_TERM<< " w l"
+    ofs << "replot " << HAS_IMMUNITY_OUTPUT << " every ::0::"<<MINI_SIZE_TERM << LINE_STYLE
         << " title " << "\"R_0\"" << std::endl;
     // SIR_RATIO
-    ofs << "set output \"SIR_RATIO_mini.png\"" << std::endl;
-    OFS_LINE ( "set yl" );
-    OFS_LINE ( "set xl \"Term\"" );
-    OFS_LINE( "set yrange[0:1]" );
-    ofs << "set title \"SIR_RATIO\"" << std::endl;
+    OFS_PNG( SIR_RATIO_mini.png, Term, );
+    OFSS( set yrange[0:1] );
+    OFSS( set title "SIR_RATIO" );
     ofs << "plot " << HAS_VIRUS_OUTPUT << " every ::0::"<< MINI_SIZE_TERM
         << " using 1:" << NUM_V+3 << LINE_STYLE
         << " title " << "\"I/POPULATION\"" << std::endl;
@@ -488,42 +502,44 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
         << " using 1:" << NUM_V+3 << LINE_STYLE
         << " title " << "\"R/POPULATION\"" << std::endl;
     OFS_LINE( "set autoscale y" );
-    // SIR_0_RATIO
-    ofs << "set output \"SIR_0_RATIO_mini.png\"" << std::endl;
-    OFS_LINE ( "set yl" );
-    OFS_LINE ( "set xl \"Term\"" );
-    OFS_LINE( "set yrange[0:1]" );
+
+    /*-----------------------------------------------------------------------------
+     *  SIR_0_RATIO
+     *-----------------------------------------------------------------------------*/
+    OFS_PNG( SIR_0_RATIO_mini.png, Term, );
+    OFSS( set yrange[0:1] );
     ofs << "set title \"SIR_0_RATIO\"" << std::endl;
     ofs << "plot " << HAS_VIRUS_OUTPUT << " every ::0::" << MINI_SIZE_TERM
-        << " using 1:" << NUM_V+4 << " w l"
+        << " using 1:" << NUM_V+4 << LINE_STYLE
         << " title " << "\"I_0/POPULATION\"" << std::endl;
     ofs << "set output \"SIR_0_RATIO_mini.png\"" << std::endl;
     ofs << "replot " << HAS_IMMUNITY_OUTPUT << " every ::0::"<<MINI_SIZE_TERM
-        << " using 1:" << NUM_V+4 << " w l"
+        << " using 1:" << NUM_V+4 << LINE_STYLE
         << " title " << "\"R_0/POPULATION\"" << std::endl;
-    OFS_LINE( "set autoscale y" );
-    // Mini Last
+    OFSS( set autoscale y );
+
+    /*-----------------------------------------------------------------------------
+     *  Begin Term
+     *-----------------------------------------------------------------------------*/
     ofs << "set output \"SIR_last.png\"" << std::endl;
     OFS_LINE ( "set yl \"Agent\"" );
     OFS_LINE ( "set xl \"Term\"" );
     ofs << "set title \"SIR\"" << std::endl;
     ofs << "plot " << HAS_VIRUS_OUTPUT << EVERY_LAST(last_term_)
-        << " using 1:" << NUM_V+2 << " w l"
+        << " using 1:" << NUM_V+2 << LINE_STYLE
         << " title " << "\"I\"" << std::endl;
     ofs << "set output \"SIR_last.png\"" << std::endl;
     ofs << "replot " << HAS_IMMUNITY_OUTPUT << EVERY_LAST(last_term_)
-        << " using 1:" << NUM_V+2 << " w l"
+        << " using 1:" << NUM_V+2 << LINE_STYLE
         << " title " << "\"R\"" << std::endl;
 
     // SIR_0
-    ofs << "set output \"SIR_0_last.png\"" << std::endl;
-    OFS_LINE ( "set yl \"Agent\"" );
-    OFS_LINE ( "set xl \"Term\"" );
+    OFS_PNG( SIR_0_last.png, Term, Agent );
     ofs << "set title \"SIR_0\"" << std::endl;
-    ofs << "plot " << HAS_VIRUS_OUTPUT << EVERY_LAST(last_term_) <<" w l"
+    ofs << "plot " << HAS_VIRUS_OUTPUT << EVERY_LAST(last_term_) << LINE_STYLE
         << " title " << "\"I_0\"" << std::endl;
     ofs << "set output \"SIR_0_last.png\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT << EVERY_LAST(last_term_) << " w l"
+    ofs << "replot " << HAS_IMMUNITY_OUTPUT << EVERY_LAST(last_term_) << LINE_STYLE
         << " title " << "\"R_0\"" << std::endl;
     // SIR_RATIO
     ofs << "set output \"SIR_RATIO_last.png\"" << std::endl;
