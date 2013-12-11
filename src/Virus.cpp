@@ -33,9 +33,9 @@ Virus :: Virus() :
     }
 }
 
-Virus :: Virus( __SearchPattern *sp ) :
+Virus :: Virus( __SearchStrategy *sp ) :
     __TagInterface( TAG_LEN_V ),                                     /* タグの長さは初期設定 */
-    search_pattern_( sp ),
+    search_strategy_( sp ),
     rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
 {
     FOR( i, TAG_LEN_V ) {
@@ -82,7 +82,7 @@ Virus :: Virus( const char *str ) :
  *--------------------------------------------------------------------------------------
  */
 int Virus :: searchStartPoint( const __TagInterface &tag ) const {
-    return search_pattern_->searchStartPoint( *this, tag );          /* 取り付く位置を返す */
+    return search_strategy_->searchStartPoint( *this, tag );          /* 取り付く位置を返す */
 }
 
 
@@ -93,7 +93,7 @@ int Virus :: searchStartPoint( const __TagInterface &tag ) const {
  *--------------------------------------------------------------------------------------
  */
 __SEARCH__TYPE__ Virus :: getSearchType() const {
-    return search_pattern_->getSearchType();                         /* 戦略の種類を返す */
+    return search_strategy_->getSearchType();                         /* 戦略の種類を返す */
 }
 
 /*--------------------------------------------------------------------------------------
@@ -130,9 +130,9 @@ int Fixed :: searchStartPoint( const __TagInterface &myself, const __TagInterfac
  *      Method:  Virus :: Virus
  * Description:  
  *----------------------------------------------------------------------------------- */
-Virus :: Virus( int l, __SearchPattern *sp ):
+Virus :: Virus( int l, __SearchStrategy *sp ):
     __TagInterface( l ),                                             /* 長さを指定 */
-    search_pattern_( sp ),                                           /* 戦略指定 */
+    search_strategy_( sp ),                                           /* 戦略指定 */
     rate_( INFECTION_RATE )                                          /* 感染確率を指定 */
 {
     FOR( i, l ) {

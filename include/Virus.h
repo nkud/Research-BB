@@ -16,7 +16,7 @@
 
 #include "TagInterface.h"
 
-class __SearchPattern;
+class __SearchStrategy;
 
 enum __SEARCH__TYPE__{                                               /* 取り付く位置の戦略 */
     __NORMAL__,                                                      /* 通常方式 */
@@ -31,9 +31,6 @@ enum __SEARCH__TYPE__{                                               /* 取り�
  */
 class Virus : public __TagInterface                                  /* ウイルスのクラス*/
 {
-        double rate_;                                                /* 感染確率 */
-        const __SearchPattern *search_pattern_;                            /* 取り付く位置の決め方の戦略を格納 */
-
     public:
 
         /*-----------------------------------------------------------------------------
@@ -43,8 +40,8 @@ class Virus : public __TagInterface                                  /* ウイ�
         Virus( int, double );                                        /* コンストラクタ: タグ長, 感染率 */
         Virus();                                                     /* コンストラクタ: default */
 
-        Virus( __SearchPattern * );                                  /* コンストラクタ: 戦略 */
-        Virus( int, __SearchPattern * );                             /* コンストラクタ: タグ長, 戦略 */
+        Virus( __SearchStrategy * );                                  /* コンストラクタ: 戦略 */
+        Virus( int, __SearchStrategy * );                             /* コンストラクタ: タグ長, 戦略 */
         /*-----------------------------------------------------------------------------
          *  パラメータ操作
          *-----------------------------------------------------------------------------*/
@@ -53,13 +50,17 @@ class Virus : public __TagInterface                                  /* ウイ�
 
         int searchStartPoint( const __TagInterface & ) const;        /* タグに取り付く位置を返す */
         __SEARCH__TYPE__ getSearchType() const;
+
+    private:
+        double rate_;                                                /* 感染確率 */
+        const __SearchStrategy *search_strategy_;                            /* 取り付く位置の決め方の戦略を格納 */
 };
 
 /* =====================================================================================
- *        Class:  __SearchPattern
+ *        Class:  __SearchStrategy
  *  Description:  タグに取り付く戦略のインターフェイス
  * ================================================================================== */
-class __SearchPattern {                                              /* インターフェイス */
+class __SearchStrategy {                                              /* インターフェイス */
     public:
         virtual int searchStartPoint( const __TagInterface &, const __TagInterface & ) const = 0;
                                                                      /* 取り付く位置を返す */
@@ -73,7 +74,7 @@ class __SearchPattern {                                              /* イン�
  *  Description:  タグに取り付く戦略の実装
  * =====================================================================================
  */
-class Normal : public __SearchPattern {                              /* 通常方式 */
+class Normal : public __SearchStrategy {                              /* 通常方式 */
     // 最小ハミング距離の位置に取り付く
     public:
         virtual int searchStartPoint( const __TagInterface &myself, const __TagInterface &tag ) const;
@@ -81,7 +82,7 @@ class Normal : public __SearchPattern {                              /* 通常�
         virtual __SEARCH__TYPE__ getSearchType() const;              /* 戦略の種類を返す: __NORMAL__*/
 };
 
-class Fixed : public __SearchPattern {                               /* 固定方式 */
+class Fixed : public __SearchStrategy {                               /* 固定方式 */
     // 初期設定で指定された位置に取り付く
     private:
         int sp_;                                                     /* 取り付く位置 */

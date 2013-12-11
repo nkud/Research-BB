@@ -39,10 +39,11 @@ typedef int tag_t;                                                   /* タグ�
  *  ファイル名
  *
  *-----------------------------------------------------------------------------*/
-#define HAS_VIRUS_FNAME     A_hasVirus.txt                           /* 感染者の出力ファイル */
-#define HAS_IMMUNITY_FNAME  A_hasImmunity.txt                        /* 免疫獲得者の出力ファイル */
-#define CONTACT_FNAME       A_infectionContact.txt                   /* 接触回数の出力ファイル */
-#define POPULATION_FNAME    A_population.txt                         /* 人口の出力ファイル */
+#define HAS_VIRUS_FNAME     "A_hasVirus.txt"                         /* 感染者の出力ファイル */
+#define HAS_IMMUNITY_FNAME  "A_hasImmunity.txt"                      /* 免疫獲得者の出力ファイル */
+#define CONTACT_FNAME       "A_infectionContact.txt"                 /* 接触回数の出力ファイル */
+#define POPULATION_FNAME    "A_population.txt"                       /* 人口の出力ファイル */
+#define AVE_GOT_NEW_IMMUNITY_FNAME    "A_aveGotNewImmunityPeriod.txt"                       /* 人口の出力ファイル */
 
 /*-----------------------------------------------------------------------------
  *
@@ -58,7 +59,7 @@ typedef int tag_t;                                                   /* タグ�
 //#define COUPLE_TAG                                                   /* カップルタグで子供を作る */
 
 /* 期間 */
-const int TERM                        = 10000                   ;   /* 期間 */
+const int TERM                        = 1000                   ;   /* 期間 */
 const int OUTPUT_INTERVAL             = 1                     ;      /* 出力する間隔 */
 const int MINI_SIZE_TERM              = 200;
 

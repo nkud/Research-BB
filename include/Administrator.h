@@ -31,22 +31,19 @@ class Monitor;
  * =====================================================================================
  */
 class Administrator {
-    private:
-        int term_;                                                   /* 現在の期間を記録 */
-
-        ITERATOR(Agent *) deleteAgent( ITERATOR(Agent *) &it );      /* 配列から指定のエージェントを削除 */
-
     public:
+        /*-----------------------------------------------------------------------------
+         *  コンストラクタ
+         *-----------------------------------------------------------------------------*/
+        Administrator( VECTOR(Agent *) & , VECTOR(Virus *) &, Landscape * );   /* コンストラクタ */
 
         /*-----------------------------------------------------------------------------
          *  配列
+         *  XXX: 露出している
          *-----------------------------------------------------------------------------*/
-        // XXX: 露出してる
         VECTOR(Agent *) &agent_;                                     /* エージェントの集合 */
         VECTOR(Virus *) &virus_;                                     /* ウイルスの集合 */
         Landscape *landscape_;                                       /* 土地 */
-
-        Administrator( VECTOR(Agent *) & , VECTOR(Virus *) &, Landscape * );   /* コンストラクタ */
 
         /*-----------------------------------------------------------------------------
          *  エージェント操作
@@ -76,9 +73,17 @@ class Administrator {
 
         void printInitInfo() const;                                  /* 初期状態の情報を端末に出力 */
 
+        /*-----------------------------------------------------------------------------
+         *  その他
+         *-----------------------------------------------------------------------------*/
         double calcAveGotNewImmunityPeriod();
         int getGotNewImmunityPeriod( Agent &, __TagInterface & );
         void resetGotNewImmunityPeriod();
+
+    private:
+        int term_;                                                   /* 現在の期間を記録 */
+
+        ITERATOR(Agent *) deleteAgent( ITERATOR(Agent *) &it );      /* 配列から指定のエージェントを削除 */
 };
 
 #endif

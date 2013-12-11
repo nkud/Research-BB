@@ -46,7 +46,7 @@ int ham_distance(const int * const a, const int * const b, const int n) {
  *                最小ハミング距離が n（ >0 ）-> return sp（タグの位置）
  * =====================================================================================
  */
-int min_ham_distance_point(int *a, int *v, int an, int vn)           /* XXX: a > b だけ想定している */
+int min_ham_distance_point( const int * const a, const int * const v, const int an, const int vn)           /* XXX: a > b だけ想定している */
 {
     int minh = an;                                                   /* 最小値 */
     int sp = 0;                                                      /* タグを比べる位置 */

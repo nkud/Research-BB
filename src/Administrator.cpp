@@ -62,6 +62,8 @@ void Administrator :: resetGotNewImmunityPeriod() {
 ITERATOR(Agent *) Administrator :: deleteAgent( ITERATOR(Agent *) &it )
 {
     landscape_->removeAgent( (*it)->getX(), (*it)->getY(), **it );   /* 土地から削除 */
+
+    assert( (*it) != 0 );                                            /* メモリが無ければエラー */
     delete (*it);                                                    /* メモリ領域を削除 */
     agent_.erase( it );                                              /* エージェントの配列から削除 */
 
@@ -101,8 +103,8 @@ void Administrator :: matingAgant() {
 
     VECTOR(Agent *) new_child_;                                      /* 新しく生まれるエージェント */
 
-    ITERATOR(Agent *) it_myself = agent_.begin();                    /* エージェント配列の先頭 */
-    while( it_myself != agent_.end() ) {                             /* 末尾まで実行 */
+    ITERATOR(Agent *) it_myself = agent_.begin();                    /* エージェント配列の先頭から */
+    while( it_myself != agent_.end() ) {                             /* 末尾まで */
         ax = (*it_myself)->getX();                                   /* 着目エージェントの位置 */
         ay = (*it_myself)->getY();
 
@@ -182,6 +184,10 @@ Administrator :: Administrator( VECTOR(Agent *) &a, VECTOR(Virus *) &v, Landscap
     virus_( v ),
     landscape_( l )
 {
+    assert( &a != 0 );                                               /* NULLならエラー */
+    assert( &v != 0 );                                               /* NULLならエラー */
+    assert( l != 0 );                                                /* NULLならエラー */
+
     agent_.reserve( MAX_NUM_A );                                     /* 最大エージェント数まで領域確保 */
 }
 
@@ -441,109 +447,6 @@ void Administrator :: initInfectAgentInRatio( Virus &v, double r ) {
     }
     infected_from = ( infected_to + 1 ) % agent_.size();             /* 次の感染は、感染した次のエージェントから始まる */
 }
-
-///*--------------------------------------------------------------------------------------
-// *      Method:  Administrator :: outputFile_HasVirus
-// * Description:  ファイルに出力する
-// *               ウイルスの数によって、列を調整できる
-// *----------------------------------------------------------------------------------- */
-//void Administrator :: outputFile_HasVirus( const char *fname ) {
-//    if( getTerm() % OUTPUT_INTERVAL != 0 ) return;
-//    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
-//    ofs << getTerm() << SEPARATOR;                                   /* ファイルに出力 */
-//    FOR( j, NUM_V ) {
-//        ofs << numHasVirus( virus_[j] ) << SEPARATOR;                /* ウイルス j の保持者 */
-//    }
-//    int num_has_all = numHasAllVirus();
-//    ofs << num_has_all << SEPARATOR;                                 /* 全ウイルス保持者 */
-//    ofs << (double)num_has_all/agent_.size() << SEPARATOR;
-//    ofs << (double)numHasVirus(virus_[0])/agent_.size() << std::endl;
-//}
-//
-///*--------------------------------------------------------------------------------------
-// *      Method:  Administrator :: outputFile_HasImmunity
-// * Description:  ファイルに出力する
-// *               ウイルスの数によって、列を調整できる
-// *----------------------------------------------------------------------------------- */
-//void Administrator :: outputFile_HasImmunity( const char *fname ) {
-//    if( getTerm() % OUTPUT_INTERVAL != 0 ) return;
-//    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
-//    ofs << getTerm() << SEPARATOR;                                   /* ファイルに出力 */
-//    FOR( k, NUM_V ) {
-//        ofs << numHasImmunity( virus_[k] ) << SEPARATOR;             /* ウイルスに対する免疫獲得者数 */
-//    }
-//    int num_has_all = numHasAllImmunity();
-//    ofs << num_has_all << SEPARATOR;
-//    ofs << (double)num_has_all/agent_.size() << SEPARATOR;
-//    ofs << (double)numHasImmunity(virus_[0])/agent_.size() << std::endl;
-//}
-///*--------------------------------------------------------------------------------------
-// *      Method:  Administrator :: outputFile_Population
-// * Description:  人口推移を出力する
-// *----------------------------------------------------------------------------------- */
-//void Administrator :: outputFile_Population( const char *fname ) {
-//    if( getTerm() % OUTPUT_INTERVAL != 0 ) return;
-//    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
-//    ofs << getTerm() << SEPARATOR;                                   /* 期間 */
-//    ofs << agent_.size() << SEPARATOR;                               /* 人口 */
-//    ofs << std::endl;
-//}
-//
-///*--------------------------------------------------------------------------------------
-// *      Method:  Administrator :: outputFile_InfectionContactRatio
-// * Description:  ファイルに出力する
-// *               ウイルスの数によって、列を調整できる
-// *----------------------------------------------------------------------------------- */
-//void Administrator :: outputFile_InfectionContactRatio( const char *fname ) {
-//    if( getTerm() % OUTPUT_INTERVAL != 0 ) return;
-//    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
-//    double ratio = 0;
-//    int sum = 0;                                                     /* 何らかのウイルスに感染した接触回数 */
-//
-//    ofs << getTerm() << SEPARATOR;                                   /* 期間 */
-//    ofs << Monitor::Instance().getContactNum() << SEPARATOR;         /* 総接触数 */
-//    FOR( j, NUM_V ) {                                                /* その内感染した回数 */
-//        sum += Monitor::Instance().getInfectionContactNum(&virus_[j]);
-//        ofs << Monitor::Instance().getInfectionContactNum(&virus_[j]) << SEPARATOR;
-//    }
-//
-//    if( sum > 0 ) ratio
-//        = (double)sum / (double) Monitor::Instance().getContactNum(); 
-//    ofs << ratio << std::endl;
-//}
-//
-///*
-// *--------------------------------------------------------------------------------------
-// *      Method:  Administrator :: outputFile_LastLog( const char * )
-// * Description:  最終、初期状態を出力
-// *--------------------------------------------------------------------------------------
-// */
-//void Administrator :: outputFile_LastLog( const char *fname ) {
-//    static std::ofstream ofs(fname);
-//    ofs << "TERM:" << getTerm() << std::endl;
-//    ofs << "MAX_AGE:" << MAX_AGE << std::endl;
-//    ofs << "BIRTH_RATE:" << BIRTH_RATE << std::endl;
-//    ofs << "WIDTH:" << WIDTH << std::endl;
-//    ofs << "NUM_A:" << agent_.size() << std::endl;
-//    ofs << "INIT_NUM_A:" << INIT_NUM_A << std::endl;
-//    ofs << "NUM_V:" << NUM_V << std::endl;
-//    ofs << "INFECTION_RATE:" << INFECTION_RATE << std::endl;
-//    ofs << "INIT_INFECTED_RATIO:" << INIT_INFECTED_RATIO << std::endl;
-//    ofs << "TAG_LEN_A:" << TAG_LEN_A << std::endl;
-//    ofs << "TAG_LEN_V:" << TAG_LEN_V << std::endl;
-//    FOR(i,NUM_V) { ofs<<"["<<virus_[i].getLen()<<"]:";
-//        FOR(j, virus_[i].getLen()) { ofs<<int(virus_[i].tagAt(j)); } ofs<<std::endl; }
-//    ofs << ">>> Agent Last Status" << std::endl;
-//    ITERATOR(Agent *) it_a = agent_.begin();
-//    while(it_a!=agent_.end()) {
-//        FOR(j, (*it_a)->getLen()) {
-//            ofs<<(*it_a)->tagAt(j);                                  /* エージェントのタグ */
-//        }
-//        ofs<<" "<<(*it_a)->numHoldingVirus();                        /* エージェントの保持ウイルス数 */
-//        ofs<<std::endl;
-//        it_a++;
-//    }
-//}
 
 /*
  *--------------------------------------------------------------------------------------
