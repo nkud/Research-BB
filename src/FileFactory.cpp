@@ -507,160 +507,204 @@ void FileFactory :: scriptForHasImmunityPng(std::ofstream &ofs) const {
  *--------------------------------------------------------------------------------------
  */
 void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
-    OFS_OUTPUT( SIR.png )
-    OFS_LINE ( "set yl \"Agent\"" );
-    OFS_LINE ( "set xl \"Term\"" );
-    ofs << "set title \"SIR\"" << std::endl;
-    ofs << "plot " << HAS_VIRUS_OUTPUT
-        << " using 1:" << NUM_V+2 << LINE_STYLE
-        << " title " << "\"I\"" << std::endl;
-    ofs << "set output \"SIR.png\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT
-        << " using 1:" << NUM_V+2 << LINE_STYLE
-        << " title " << "\"R\"" << std::endl;
+
+    // SIR
+    OFS_TITLE( SIR, Term, Agent );
+
+    OFS_PLOT( "SIR.png" )
+        << HAS_VIRUS_OUTPUT
+        << " using 1:" << NUM_V+2
+        << LINE_STYLE
+        << TITLE( I )
+        << ENDL;
+    OFS_REPLOT( "SIR.png" )
+        << HAS_IMMUNITY_OUTPUT
+        << " using 1:" << NUM_V+2
+        << LINE_STYLE
+        << " title " << "\"R\""
+        << std::endl;
 
     // SIR_0
-    OFS_OUTPUT( SIR_0.png )
-    OFS_LINE ( "set yl \"Agent\"" );
-    OFS_LINE ( "set xl \"Term\"" );
-    ofs << "set title \"SIR_0\"" << std::endl;
-    ofs << "plot " << HAS_VIRUS_OUTPUT << LINE_STYLE
+    OFS_TITLE( SIR_0, Term, Agent );
+
+    OFS_PLOT( "SIR_0.png" )
+        << HAS_VIRUS_OUTPUT
+        << LINE_STYLE
         << " title " << "\"I_0\"" << std::endl;
-    ofs << "set output \"SIR_0.png\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT << LINE_STYLE
-        << " title " << "\"R_0\"" << std::endl;
+    OFS_REPLOT( "SIR_0.png" )
+        << HAS_IMMUNITY_OUTPUT
+        << LINE_STYLE
+        << TITLE( R_0 )
+        << ENDL;
     // SIR_RATIO
-    OFS_OUTPUT( SIR_RATIO.png )
-    OFS_LINE ( "set yl \"Agent\"" );
-    OFS_LINE ( "set yl" );
-    OFS_LINE ( "set xl \"Term\"" );
-    OFS_LINE( "set yrange[0:1]" );
-    ofs << "set title \"SIR_RATIO\"" << std::endl;
-    ofs << "plot " << HAS_VIRUS_OUTPUT
-        << " using 1:" << NUM_V+3 << LINE_STYLE
-        << " title " << "\"I/POPULATION\"" << std::endl;
+    OFS_TITLE( SIR_RATIO, Term, Ratio );
+    OFSS( set yrange[0:1] );
+
+    OFS_PLOT( "SIR_RATIO.png" )
+        << HAS_VIRUS_OUTPUT
+        << " using 1:" << NUM_V+3
+        << LINE_STYLE
+        << " title " << "\"I/POPULATION\""
+        << ENDL;
     ofs << "set output \"SIR_RATIO.png\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT
+    OFS_REPLOT( "SIR_RATIO.png" )
+        << HAS_IMMUNITY_OUTPUT
         << " using 1:" << NUM_V+3 << LINE_STYLE
-        << " title " << "\"R/POPULATION\"" << std::endl;
+        << " title " << "\"R/POPULATION\""
+        << ENDL;
     OFS_LINE( "set autoscale y" );
+
     // SIR_0_RATIO
-    ofs << "set output \"SIR_0_RATIO.png\"" << std::endl;
-    OFS_LINE ( "set yl" );
-    OFS_LINE ( "set xl \"Term\"" );
-    OFS_LINE( "set yrange[0:1]" );
-    ofs << "set title \"SIR_0_RATIO\"" << std::endl;
-    ofs << "plot " << HAS_VIRUS_OUTPUT
+    OFS_TITLE( SIR_0_RATIO, Term, Ratio );
+    OFSS( set yrange[0:1] );
+
+    OFS_PLOT( "SIR_0_RATIO.png" )
+        << HAS_VIRUS_OUTPUT
         << " using 1:" << NUM_V+4 << LINE_STYLE
-        << " title " << "\"I_0/POPULATION\"" << std::endl;
-    ofs << "set output \"SIR_0_RATIO.png\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT
+        << " title " << "\"I_0/POPULATION\""
+        << ENDL;
+    OFS_REPLOT( "SIR_0_RATIO.png" )
+        << HAS_IMMUNITY_OUTPUT
         << " using 1:" << NUM_V+4 << LINE_STYLE
-        << " title " << "\"R_0/POPULATION\"" << std::endl;
+        << " title " << "\"R_0/POPULATION\""
+        << std::endl;
     OFS_LINE( "set autoscale y" );
 
     /*-----------------------------------------------------------------------------
      *  Begin Term
      *-----------------------------------------------------------------------------*/
+    // SIR_mini
     ofs << "set output \"SIR_mini.png\"" << std::endl;
-    OFS_LINE ( "set yl \"Agent\"" );
-    OFS_LINE ( "set xl \"Term\"" );
-    ofs << "set title \"SIR\"" << std::endl;
-    ofs << "plot " << HAS_VIRUS_OUTPUT << " every ::0::"<<MINI_SIZE_TERM
-        << " using 1:" << NUM_V+2 << " w l"
-        << " title " << "\"I\"" << std::endl;
-    ofs << "set output \"SIR_mini.png\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT
-        << " using 1:" << NUM_V+2 << " w l"
-        << " title " << "\"R\"" << std::endl;
 
-    // SIR_0
-//    ofs << "set output \"SIR_0_mini.png\"" << std::endl;
-    OFS_LINE ( "set yl \"Agent\"" );
-    OFS_LINE ( "set xl \"Term\"" );
-    ofs << "set title \"SIR_0\"" << std::endl;
-    OFS_OUTPUT( SIR_0_mini.png );
-    ofs << PLOT(0, MINI_SIZE_TERM) << HAS_VIRUS_OUTPUT << LINE_STYLE << TITLE( I_0 ) << std::endl;
-    OFS_OUTPUT( SIR_0_mini.png );
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT << LINE_STYLE << TITLE( R_0 ) << std::endl;
-    // SIR_RATIO
-    OFS_PNG( SIR_RATIO_mini.png, Term, );
+    OFS_TITLE( SIR, Term, Agent );
+
+    OFS_PLOT_PERIOD( "SIR_mini.png", 0, MINI_SIZE_TERM )
+        << HAS_VIRUS_OUTPUT
+        << " using 1:" << NUM_V+2
+        << LINE_STYLE
+        << " title " << "\"I\""
+        << ENDL;
+    OFS_REPLOT( "SIR_mini.png" )
+        << HAS_IMMUNITY_OUTPUT
+        << " using 1:" << NUM_V+2
+        << LINE_STYLE
+        << " title " << "\"R\""
+        << ENDL;
+
+    // SIR_0_mini
+    OFS_TITLE( SIR_0, Term, Agent );
+
+    OFS_PLOT_PERIOD( "SIR_0_mini.png", 0, MINI_SIZE_TERM)
+        << HAS_VIRUS_OUTPUT
+        << LINE_STYLE
+        << TITLE( I_0 )
+        << ENDL;
+    OFS_REPLOT( "SIR_0_mini.png" )
+        << HAS_IMMUNITY_OUTPUT
+        << LINE_STYLE
+        << TITLE( R_0 )
+        << ENDL;
+
+    // SIR_RATIO_mini
+    OFS_TITLE( SIR_RATIO, Term, Ratio );
     OFSS( set yrange[0:1] );
-    OFSS( set title "SIR_RATIO" );
-    ofs << "plot " << HAS_VIRUS_OUTPUT << " every ::0::"<< MINI_SIZE_TERM
+
+    OFS_PLOT_PERIOD( "SIR_RATIO_mini.png", 0, MINI_SIZE_TERM )
+        << HAS_VIRUS_OUTPUT
         << " using 1:" << NUM_V+3 << LINE_STYLE
-        << " title " << "\"I/POPULATION\"" << std::endl;
-    ofs << "set output \"SIR_RATIO_mini.png\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT
+        << " title " << "\"I/POPULATION\""
+        << ENDL;
+    OFS_REPLOT( "SIR_RATIO_mini.png" )
+        << HAS_IMMUNITY_OUTPUT
         << " using 1:" << NUM_V+3 << LINE_STYLE
-        << " title " << "\"R/POPULATION\"" << std::endl;
+        << " title " << "\"R/POPULATION\""
+        << std::endl;
     OFS_LINE( "set autoscale y" );
 
-    /*-----------------------------------------------------------------------------
-     *  SIR_0_RATIO
-     *-----------------------------------------------------------------------------*/
-    OFS_PNG( SIR_0_RATIO_mini.png, Term, );
+    // SIR_0_RATIO_mini
+    OFS_TITLE( SIR_0_RATIO, Term, Ratio );
     OFSS( set yrange[0:1] );
-    ofs << "set title \"SIR_0_RATIO\"" << std::endl;
-    ofs << "plot " << HAS_VIRUS_OUTPUT << " every ::0::" << MINI_SIZE_TERM
+
+    OFS_PLOT_PERIOD( "SIR_0_RATIO_mini.png", 0, MINI_SIZE_TERM )
+        << HAS_VIRUS_OUTPUT
         << " using 1:" << NUM_V+4 << LINE_STYLE
-        << " title " << "\"I_0/POPULATION\"" << std::endl;
-    ofs << "set output \"SIR_0_RATIO_mini.png\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT << " every ::0::"<<MINI_SIZE_TERM
-        << " using 1:" << NUM_V+4 << LINE_STYLE
-        << " title " << "\"R_0/POPULATION\"" << std::endl;
+        << " title " << "\"I_0/POPULATION\""
+        << ENDL;
+    OFS_REPLOT( "SIR_0_RATIO_mini.png" )
+        << HAS_IMMUNITY_OUTPUT
+        << " using 1:" << NUM_V+4
+        << LINE_STYLE
+        << " title " << "\"R_0/POPULATION\""
+        << std::endl;
     OFSS( set autoscale y );
 
     /*-----------------------------------------------------------------------------
      *  End Term
      *-----------------------------------------------------------------------------*/
+    // SIR_last
     ofs << "set output \"SIR_last.png\"" << std::endl;
-    OFS_LINE ( "set yl \"Agent\"" );
-    OFS_LINE ( "set xl \"Term\"" );
-    ofs << "set title \"SIR\"" << std::endl;
-    ofs << "plot " << HAS_VIRUS_OUTPUT << EVERY_LAST(last_term_)
-        << " using 1:" << NUM_V+2 << LINE_STYLE
-        << " title " << "\"I\"" << std::endl;
-    ofs << "set output \"SIR_last.png\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT
-        << " using 1:" << NUM_V+2 << LINE_STYLE
-        << " title " << "\"R\"" << std::endl;
 
-    // SIR_0
-    ofs << "set title \"SIR_0\"" << std::endl;
-    OFS_LINE ( "set yl \"Agent\"" );
-    OFS_LINE ( "set xl \"Term\"" );
-    OFS_AXIS_LABEL( Term, Agent );
-    OFS_PLOT_PERIOD( "SIR_0_last.png", last_term_-MINI_SIZE_TERM, last_term_) << HAS_VIRUS_OUTPUT << LINE_STYLE << TITLE( I_0 ) << std::endl;
-    OFS_REPLOT( "SIR_0_last.png" ) << HAS_IMMUNITY_OUTPUT << LINE_STYLE << TITLE( R_0 ) << std::endl;
-    // SIR_RATIO
-    ofs << "set output \"SIR_RATIO_last.png\"" << std::endl;
-    OFS_LINE ( "set yl" );
-    OFS_LINE ( "set xl \"Term\"" );
-    OFS_LINE( "set yrange[0:1]" );
-    ofs << "set title \"SIR_RATIO\"" << std::endl;
-    ofs << "plot " << HAS_VIRUS_OUTPUT << EVERY_LAST(last_term_)
-        << " using 1:" << NUM_V+3 << " w l"
-        << " title " << "\"I/POPULATION\"" << std::endl;
-    ofs << "set output \"SIR_RATIO_last.png\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT
+    OFS_TITLE( SIR, Term, Agent );
+
+    OFS_PLOT_PERIOD( "SIR_last.png", last_term_-MINI_SIZE_TERM, last_term_ )
+        << HAS_VIRUS_OUTPUT
+        << " using 1:" << NUM_V+2
+        << LINE_STYLE
+        << " title " << "\"I\""
+        << ENDL;
+    OFS_REPLOT( "SIR_last.png" )
+        << HAS_IMMUNITY_OUTPUT
+        << " using 1:" << NUM_V+2
+        << LINE_STYLE
+        << " title " << "\"R\""
+        << ENDL;
+
+    // SIR_0_last
+    OFS_TITLE( SIR_0, Term, Agent );
+
+    OFS_PLOT_PERIOD( "SIR_0_last.png", last_term_-MINI_SIZE_TERM, last_term_)
+        << HAS_VIRUS_OUTPUT
+        << LINE_STYLE
+        << TITLE( I_0 )
+        << ENDL;
+    OFS_REPLOT( "SIR_0_last.png" )
+        << HAS_IMMUNITY_OUTPUT
+        << LINE_STYLE
+        << TITLE( R_0 )
+        << ENDL;
+
+    // SIR_RATIO_last
+    OFS_TITLE( SIR_RATIO, Term, Ratio );
+    OFSS( set yrange[0:1] );
+
+    OFS_PLOT_PERIOD( "SIR_RATIO_last.png", last_term_-MINI_SIZE_TERM, last_term_ )
+        << HAS_VIRUS_OUTPUT
         << " using 1:" << NUM_V+3 << LINE_STYLE
-        << " title " << "\"R/POPULATION\"" << std::endl;
+        << " title " << "\"I/POPULATION\""
+        << ENDL;
+    OFS_REPLOT( "SIR_RATIO_last.png" )
+        << HAS_IMMUNITY_OUTPUT
+        << " using 1:" << NUM_V+3 << LINE_STYLE
+        << " title " << "\"R/POPULATION\""
+        << std::endl;
     OFS_LINE( "set autoscale y" );
-    // SIR_0_RATIO
-    ofs << "set output \"SIR_0_RATIO_last.png\"" << std::endl;
-    OFS_LINE ( "set yl" );
-    OFS_LINE ( "set xl \"Term\"" );
-    OFS_LINE( "set yrange[0:1]" );
-    ofs << "set title \"SIR_0_RATIO\"" << std::endl;
-    ofs << "plot " << HAS_VIRUS_OUTPUT << EVERY_LAST(last_term_)
-        << " using 1:" << NUM_V+4 << " w l"
-        << " title " << "\"I_0/POPULATION\"" << std::endl;
-    ofs << "set output \"SIR_0_RATIO_last.png\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT
+
+    // SIR_0_RATIO_last
+    OFS_TITLE( SIR_0_RATIO, Term, Ratio );
+    OFSS( set yrange[0:1] );
+
+    OFS_PLOT_PERIOD( "SIR_0_RATIO_last.png", last_term_-MINI_SIZE_TERM, last_term_ )
+        << HAS_VIRUS_OUTPUT
         << " using 1:" << NUM_V+4 << LINE_STYLE
-        << " title " << "\"R_0/POPULATION\"" << std::endl;
-    OFS_LINE( "set autoscale y" );
+        << " title " << "\"I_0/POPULATION\""
+        << ENDL;
+    OFS_REPLOT( "SIR_0_RATIO_last.png" )
+        << HAS_IMMUNITY_OUTPUT << " every ::0::"<<MINI_SIZE_TERM
+        << " using 1:" << NUM_V+4 << LINE_STYLE
+        << " title " << "\"R_0/POPULATION\""
+        << std::endl;
+    OFSS( set autoscale y );
+
 }
 
 /*
