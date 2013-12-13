@@ -53,7 +53,7 @@
 
 #define OFS_AXIS_LABEL(x, y)            OFSS( set xl #x ) OFSS( set yl #y )
 
-#define OFS_TITLE(t, x, y)          OFSS( set title #t ) OFSS( set xl #x ) OFSS( set yl #y )
+#define OFS_TITLE(t, x, y)              OFSS( set title #t ) OFSS( set xl #x ) OFSS( set yl #y )
 
 #define OFS_PNG(img, x, y)              OFSS(set output #img) \
                                         OFSS(set xl #x) \
@@ -72,8 +72,6 @@
 #define TITLE(str)                      " title \"" << #str << "\" "
 #define TITLE_N(str, n)                 " title \"" << #str << n << "\" "
 #define USING(x,y)                      " using " << x << ":" << y << " "
-#define PLOT(b, e)                      "plot [" << b << ":" << e << "] "
-#define REPLOT(b, e)                    "replot [" << b << ":" << e << "] "
 
 /*-----------------------------------------------------------------------------
  *  出力ファイル名
@@ -87,7 +85,7 @@
 #define PEAK_PREFIX                     "PEAK_"
 
 #define PERIOD                          100                          /* 調査する区間 */
-#define CHECK_INTERVAL                  5
+#define CHECK_INTERVAL                  6
 
 /*
  *--------------------------------------------------------------------------------------
@@ -317,7 +315,9 @@ void FileFactory :: outputFile_LastLog( const char *fname ) const {
  * Description:  png出力用の自動化スクリプトを生成
  *--------------------------------------------------------------------------------------
  */
-void FileFactory :: generatePlotScriptForPng() const {
+void FileFactory :: generatePlotScriptForPng() const
+{
+
     std::ofstream ofs(AUTO_GPLOT_FILENAME);
 
     ofs << "set terminal png size "
@@ -365,8 +365,6 @@ void FileFactory :: scriptForPopulationPng(std::ofstream &ofs) const {
 }
 void FileFactory :: scriptForHasVirusPng(std::ofstream &ofs) const {
 
-    double ave_period = outputFile_peakSearch( HAS_VIRUS_FNAME );    /* ピークサーチする */
-
     OFS_TITLE( HasVirus, Term, Agent );
     OFS_PLOT( "HasVirus.png" )
         << HAS_VIRUS_OUTPUT << LINE_STYLE << TITLE( has_virus_0 ) << std::endl;
@@ -397,7 +395,11 @@ void FileFactory :: scriptForHasVirusPng(std::ofstream &ofs) const {
     /*-----------------------------------------------------------------------------
      *  End Term
      *-----------------------------------------------------------------------------*/
+    double ave_p = outputFile_peakSearch( HAS_VIRUS_FNAME );    /* ピークサーチする */
     OFS_TITLE( HasVirus, Term, Agent );
+    ofs << "set title \"HasVirus ( period: " << ave_p << " [term] )\"" /* 周期を表示 */
+        << ENDL;
+
 
     OFS_PLOT_PERIOD( "HasVirus_last.png", last_term_-MINI_SIZE_TERM, last_term_ )
         << HAS_VIRUS_OUTPUT << LINE_STYLE << TITLE( has_virus_0 ) << std::endl;
@@ -411,7 +413,15 @@ void FileFactory :: scriptForHasVirusPng(std::ofstream &ofs) const {
             << HAS_VIRUS_OUTPUT
             << " using 1:" << NUM_V+2 << LINE_STYLE
             << TITLE( has_all_virus ) << std::endl;
-    OFSS( set output "HasVirus_last.png"; replot "PEAK_A_hasVirus.txt" w p title "peak" );
+
+    /*-----------------------------------------------------------------------------
+     *  Peak
+     *-----------------------------------------------------------------------------*/
+    OFS_REPLOT( "HasVirus_last.png" )
+        << QUO( "PEAK_A_hasVirus.txt" )                           /* ピーク */
+        << " w p ps 1 "
+        << TITLE( peak )
+        << ENDL;
 }
 
 /*
@@ -470,7 +480,11 @@ void FileFactory :: scriptForHasImmunityPng(std::ofstream &ofs) const {
     /*-----------------------------------------------------------------------------
      *  End Term XXX:
      *-----------------------------------------------------------------------------*/
-    outputFile_peakSearch( HAS_IMMUNITY_FNAME );
+    double ave_p = outputFile_peakSearch( HAS_IMMUNITY_FNAME );
+
+    OFS_TITLE( hasImmunity, Term, Agent );
+    ofs << "set title \"HasImmunity ( period: " << ave_p << " [term] )\""
+        << ENDL;
 
     OFS_PLOT_PERIOD( "HasImmunity_last.png", last_term_-MINI_SIZE_TERM, last_term_)
         << HAS_IMMUNITY_OUTPUT
@@ -496,8 +510,11 @@ void FileFactory :: scriptForHasImmunityPng(std::ofstream &ofs) const {
     /*-----------------------------------------------------------------------------
      *  Peak
      *-----------------------------------------------------------------------------*/
-    OFSS( set output "HasImmunity_last.png" );
-    OFSS( replot "PEAK_A_hasImmunity.txt" w p title "peak" );
+    OFS_REPLOT( "HasImmunity_last.png" )
+        << QUO( "PEAK_A_hasImmunity.txt" )                           /* ピーク */
+        << " w p ps 1 "
+        << TITLE( peak )
+        << ENDL;
 }
 
 /*
@@ -823,7 +840,7 @@ void FileFactory :: generateResultHtml( int t ) {
     OFS( "<li><a href=#immunity>免疫獲得者</a></li>" );
     OFS( "<li><a href=#sir>SIR</a></li>" );
     OFS( "<li><a href=#sir_0>SIR about virus_0</a></li>" );
-    OFS( "<li><a href=#period>周期</a></li>" );
+//    OFS( "<li><a href=#period>周期</a></li>" );
     OFS( "<li><a href=#contact>接触回数</a></li>" );
     OFS( "</ul>" );
 
@@ -965,20 +982,20 @@ void FileFactory :: generateResultHtml( int t ) {
     OFS( "I/POPULATION: ウイルス 0 に感染しているエージェント数 / その時点での総エージェント数" );
     OFS( "R/POPULATION: ウイルス 0 に対して免疫を獲得しているエージェント数 / その時点での総エージェント数" );
 
-    /*-----------------------------------------------------------------------------
-     *  周期
-     *-----------------------------------------------------------------------------*/
-    OFS( "<h2 id=period>周期[ "<<PERIOD<<" ]</h2>" );
-    ofs <<"<table class=\"graph\"><tr><td><img src=img/"
-        << "AveGotNewImmunityPeriod.png" <<" /></td></tr><tr><td><img src=img/"
-        << "GotNewEachImmunityPeriod.png" <<" /></td></tr>"
-        << "</table><br />"<<std::endl;
-    ofs << "<p>AveGotNewImmunityPeriod: " << "何らかのウイルスへの免疫を獲得した回数の平均</p>" << std::endl;
-    FOR( i, NUM_V ) {
-        ofs << "<p>GotNewEachImmunityPeriod" << i << ": 先頭のエージェントが"
-            << "ウイルス " << i << " への免疫を獲得した回数</p>" << std::endl;
-    }
-
+//    /*-----------------------------------------------------------------------------
+//     *  周期
+//     *-----------------------------------------------------------------------------*/
+//    OFS( "<h2 id=period>周期[ "<<PERIOD<<" ]</h2>" );
+//    ofs <<"<table class=\"graph\"><tr><td><img src=img/"
+//        << "AveGotNewImmunityPeriod.png" <<" /></td></tr><tr><td><img src=img/"
+//        << "GotNewEachImmunityPeriod.png" <<" /></td></tr>"
+//        << "</table><br />"<<std::endl;
+//    ofs << "<p>AveGotNewImmunityPeriod: " << "何らかのウイルスへの免疫を獲得した回数の平均</p>" << std::endl;
+//    FOR( i, NUM_V ) {
+//        ofs << "<p>GotNewEachImmunityPeriod" << i << ": 先頭のエージェントが"
+//            << "ウイルス " << i << " への免疫を獲得した回数</p>" << std::endl;
+//    }
+//
     /*-----------------------------------------------------------------------------
      *  接触回数
      *-----------------------------------------------------------------------------*/
