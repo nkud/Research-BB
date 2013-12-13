@@ -43,7 +43,6 @@ typedef int tag_t;                                                   /* タグ�
 #define HAS_IMMUNITY_FNAME              "A_hasImmunity.txt"          /* 免疫獲得者の出力ファイル */
 #define CONTACT_FNAME                   "A_infectionContact.txt"     /* 接触回数の出力ファイル */
 #define POPULATION_FNAME                "A_population.txt"           /* 人口の出力ファイル */
-#define AVE_GOT_NEW_IMMUNITY_FNAME      "A_aveGotNewImmunityPeriod.txt"                       /* 人口の出力ファイル */
 
 /*-----------------------------------------------------------------------------
  *

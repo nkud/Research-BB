@@ -112,7 +112,6 @@ int main()
         ff.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ; /* 出力：免疫獲得者 */
         ff.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ; /* 出力：接触回数 */
         ff.outputFile_Population            ( "A_population.txt"       ) ; /* 出力：人口 */
-        ff.outputFile_AveGotNewImmunityPeriod ( "A_aveGotNewImmunityPeriod.txt"       ) ; /* 出力：人口 */
         LOG( monitor.getContactNum() );
 
         /* 強制終了 */
