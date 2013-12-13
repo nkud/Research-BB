@@ -714,71 +714,87 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
  *--------------------------------------------------------------------------------------
  */
 void FileFactory :: scriptForContactPng(std::ofstream &ofs) const {
-    ofs << "set output \"Contact.png\"" << std::endl;
-    OFS_LINE ( "set yl \"Agent\"" );
-    OFS_LINE ( "set xl \"Term\"" );
-    ofs << "set title \"InfectionContact\"" << std::endl
-        << "plot "<< CONTACT_OUTPUT << LINE_STYLE
-        << " title \"contact\"" << std::endl;
+
+    OFS_TITLE( InfectionContact, Term, Agent );
+
+    OFS_PLOT( "Contact.png" )
+        << CONTACT_OUTPUT << LINE_STYLE
+        << " title \"contact\""
+        << std::endl;
     FOR( i, NUM_V ) {
-        ofs << "set output \"Contact.png\"" << std::endl;
-        ofs << "replot " << CONTACT_OUTPUT
+        OFS_REPLOT( "Contact.png" )
+            << CONTACT_OUTPUT
             << " using 1:" << i+3 << LINE_STYLE
-            << " title " << "\"infect_contact_" << i+1 << "\"" << std::endl;
+            << " title " << "\"infect_contact_" << i+1 << "\""
+            << ENDL;
     }
-    ofs << "set output \"ContactRatio.png\"" << std::endl;
-    OFS_LINE ( "set yl" );
-    OFS_LINE ( "set xl \"Term\"" );
+
+    OFS_TITLE( InfectionContactRatio, Term, Ratio );
     OFS_LINE( "set yrange[0:1]" );
-    ofs << "set title \"InfectionContactRatio\"" << std::endl
-        << "plot " << CONTACT_OUTPUT << " using 1:" << NUM_V+3 << LINE_STYLE
-        << " title \"ratio\"" << std::endl;
+
+    OFS_PLOT( "ContactRatio.png" )
+        << CONTACT_OUTPUT << " using 1:" << NUM_V+3
+        << LINE_STYLE
+        << " title \"ratio\""
+        << ENDL;
     OFS_LINE( "set autoscale y" );
 
     /*-----------------------------------------------------------------------------
      *  Begin Term
      *-----------------------------------------------------------------------------*/
-    OFS_PNG( Contact_mini.png, Term, Agent );
-    ofs << "set title \"InfectionContact\"" << std::endl
-        << "plot "<< CONTACT_OUTPUT << " every ::0::"<<MINI_SIZE_TERM << LINE_STYLE
-        << " title \"contact\"" << std::endl;
+    OFS_TITLE( InfectionContact, Term, Agent );
+    OFS_PLOT_PERIOD( "Contact_mini.png", 0, MINI_SIZE_TERM )
+        << CONTACT_OUTPUT
+        << LINE_STYLE
+        << " title \"contact\""
+        << std::endl;
     FOR( i, NUM_V ) {
-        ofs << "set output \"Contact_mini.png\"" << std::endl;
-        ofs << "replot " << CONTACT_OUTPUT
-            << " using 1:" << i+3 << LINE_STYLE
-            << " title " << "\"infect_contact_" << i+1 << "\"" << std::endl;
+        OFS_REPLOT( "Contact_mini.png" )
+            << CONTACT_OUTPUT
+            << " using 1:" << i+3
+            << LINE_STYLE
+            << " title " << "\"infect_contact_" << i+1 << "\""
+            << ENDL;
     }
-    ofs << "set output \"ContactRatio_mini.png\"" << std::endl;
-    OFS_LINE ( "set yl" );
-    OFS_LINE ( "set xl \"Term\"" );
+
+    OFS_TITLE( InfectionContactRatio, Term, Ratio );
     OFS_LINE( "set yrange[0:1]" );
-    ofs << "set title \"InfectionContactRatio\"" << std::endl
-        << "plot " << CONTACT_OUTPUT << " every ::0::"<<MINI_SIZE_TERM<<" using 1:" << NUM_V+3 << " w l"
-        << " title \"ratio\"" << std::endl;
+
+    OFS_PLOT_PERIOD( "ContactRatio_mini.png", 0, MINI_SIZE_TERM )
+        << CONTACT_OUTPUT
+        <<" using 1:" << NUM_V+3
+        << LINE_STYLE
+        << " title \"ratio\""
+        << ENDL;
     OFS_LINE( "set autoscale y" );
 
     /*-----------------------------------------------------------------------------
      *  End Term
      *-----------------------------------------------------------------------------*/
-    ofs << "set output \"Contact_last.png\"" << std::endl;
-    OFS_LINE ( "set yl \"Agent\"" );
-    OFS_LINE ( "set xl \"Term\"" );
-    ofs << "set title \"InfectionContact\"" << std::endl
-        << "plot "<< CONTACT_OUTPUT << EVERY_LAST(last_term_) <<" w l"
-        << " title \"contact\"" << std::endl;
+    OFS_TITLE( InfectionContact, Term, Agent );
+    OFS_PLOT_PERIOD( "Contact_last.png", last_term_-MINI_SIZE_TERM, last_term_ )
+        << CONTACT_OUTPUT
+        << LINE_STYLE
+        << " title \"contact\""
+        << std::endl;
     FOR( i, NUM_V ) {
-        ofs << "set output \"Contact_last.png\"" << std::endl;
-        ofs << "replot " << CONTACT_OUTPUT
-            << " using 1:" << i+3 << " w l"
-            << " title " << "\"infect_contact_" << i+1 << "\"" << std::endl;
+        OFS_REPLOT( "Contact_last.png" )
+            << CONTACT_OUTPUT
+            << " using 1:" << i+3
+            << LINE_STYLE
+            << " title " << "\"infect_contact_" << i+1 << "\""
+            << ENDL;
     }
-    ofs << "set output \"ContactRatio_last.png\"" << std::endl;
-    OFS_LINE ( "set yl" );
-    OFS_LINE ( "set xl \"Term\"" );
+
+    OFS_TITLE( InfectionContactRatio, Term, Ratio );
     OFS_LINE( "set yrange[0:1]" );
-    ofs << "set title \"InfectionContactRatio\"" << std::endl
-        << "plot " << CONTACT_OUTPUT << EVERY_LAST(last_term_) << " using 1:" << NUM_V+3 << " w l"
-        << " title \"ratio\"" << std::endl;
+
+    OFS_PLOT_PERIOD( "ContactRatio_last.png", last_term_-MINI_SIZE_TERM, last_term_ )
+        << CONTACT_OUTPUT
+        <<" using 1:" << NUM_V+3
+        << LINE_STYLE
+        << " title \"ratio\""
+        << ENDL;
     OFS_LINE( "set autoscale y" );
 }
 
