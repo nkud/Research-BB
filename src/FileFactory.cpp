@@ -34,6 +34,8 @@
 #define EVERY_LAST(t)                   " every ::"<< t-MINI_SIZE_TERM<<"::"<<t<<" "
 
 #define OFS(str)                        do { ofs<< str; }while(0);
+#define OFSS(str)                       ofs << #str << std::endl;
+
 #define OFS_P(str)                      do { ofs<<"<p>"<<str<<"</p>"<<std::endl; }while(0);
 #define OFS_LINE(str)                   do { ofs<< str << std::endl; }while(0);
 //#define OFS_VAL(str,val)                do { ofs<<"[ "<<str<<" ]: "<<val<<"<br />"<<std::endl; }while(0);
@@ -45,18 +47,22 @@
                                         </table><br />"<<std::endl; }while(0);
 
 #define OFS_OUTPUT(str)                 OFSS( set output #str )
-#define OFS_TITLE(str)                 OFSS( set title #str )
 #define OFS_TD(str,val)                 do { ofs<<"<tr><td>"<<str<<"</td>"<<"<td>"<<val<<"</td></tr>"<<std::endl; }while(0);
 
 #define QUO(str)                        "\"" << str << "\""
 
-#define OFSS(str)                       ofs << #str << std::endl;
 #define OFS_AXIS_LABEL(x, y)            OFSS( set xl #x ) OFSS( set yl #y )
+
+#define OFS_TITLE(t, x, y)          OFSS( set title #t ) OFSS( set xl #x ) OFSS( set yl #y )
+
 #define OFS_PNG(img, x, y)              OFSS(set output #img) \
                                         OFSS(set xl #x) \
                                         OFSS(set yl #y)
-#define OFS_PLOT(png, b, e)             ofs << "set output " << #png << ";plot [" << b << ":" << e << "] "
-#define OFS_REPLOT
+#define OFS_PLOT_PERIOD(png, b, e)             ofs << "set output " << #png << ";plot [" << b << ":" << e << "] "
+#define OFS_PLOT(png)                   ofs << "set output " << #png << ";plot "
+#define OFS_REPLOT(png)                 ofs << "set output " << #png << ";replot "
+
+#define ENDL                            std::endl
 
 /*-----------------------------------------------------------------------------
  *  スタイル
@@ -64,6 +70,7 @@
 #define LINE_STYLE                      " with l "
 #define FONT_STYLE                      " font \"helvetica, 20\" "
 #define TITLE(str)                      " title \"" << #str << "\" "
+#define TITLE_N(str, n)                 " title \"" << #str << n << "\" "
 #define USING(x,y)                      " using " << x << ":" << y << " "
 #define PLOT(b, e)                      "plot [" << b << ":" << e << "] "
 #define REPLOT(b, e)                    "replot [" << b << ":" << e << "] "
@@ -338,83 +345,73 @@ void FileFactory :: generatePlotScriptForPng() const {
  * =====================================================================================
  */
 void FileFactory :: scriptForPopulationPng(std::ofstream &ofs) const {
-    OFS_PNG( Population.png, Term, Agent );
-    ofs << "set title \"Population\"" << std::endl;
-    ofs << "plot " << POPULATION_OUTPUT << LINE_STYLE << TITLE( population ) << std::endl;
+    OFS_TITLE( Population, Term, Agent );
+    OFS_PLOT( "Population.png" )
+        << POPULATION_OUTPUT << LINE_STYLE << TITLE( population ) << std::endl;
 
     /*-----------------------------------------------------------------------------
      *  Begin Term
      *-----------------------------------------------------------------------------*/
-    OFS_PNG( Population_mini.png, Term, Agent );
-    OFSS( set title "Population" );
-    ofs << "plot " << POPULATION_OUTPUT << EVERY_BEGIN << LINE_STYLE
-        << TITLE( population ) << std::endl;
+    OFS_TITLE( Population, Term, Agent );
+    OFS_PLOT_PERIOD( "Population_mini.png", 0, MINI_SIZE_TERM )
+        << POPULATION_OUTPUT << LINE_STYLE << TITLE( population ) << std::endl;
 
     /*-----------------------------------------------------------------------------
      *  End Term
      *-----------------------------------------------------------------------------*/
-    OFS_PNG( Population_last.png, Term, Agent );
-    OFSS( set title "Population" );
-    ofs << "plot " << POPULATION_OUTPUT << EVERY_LAST(last_term_) << LINE_STYLE
-        << TITLE( population ) << std::endl;
+    OFS_TITLE( Population, Term, Agent );
+    OFS_PLOT_PERIOD( "Population_last.png", last_term_-MINI_SIZE_TERM, last_term_ )
+        << POPULATION_OUTPUT << LINE_STYLE << TITLE( population ) << std::endl;
 }
 void FileFactory :: scriptForHasVirusPng(std::ofstream &ofs) const {
 
     double ave_period = outputFile_peakSearch( HAS_VIRUS_FNAME );    /* ピークサーチする */
 
-    OFS_PNG( HasVirus.png, Term, Agent );
-    OFS_TITLE( HasVirus );
-    ofs << "plot " << HAS_VIRUS_OUTPUT << LINE_STYLE
-        << TITLE( has_virus_0 ) << std::endl;
+    OFS_TITLE( HasVirus, Term, Agent );
+    OFS_PLOT( "HasVirus.png" )
+        << HAS_VIRUS_OUTPUT << LINE_STYLE << TITLE( has_virus_0 ) << std::endl;
     FOR( i, NUM_V-1 ) {
-        OFS_OUTPUT( HasVirus.png );
-        ofs << "replot " << HAS_VIRUS_OUTPUT
-            << USING(1, i+3) << LINE_STYLE
-            << " title " << "\"has_virus_" << i+1 << std::endl;
+        OFS_REPLOT( "HasVirus.png" )
+            << HAS_VIRUS_OUTPUT << USING(1, i+3) << LINE_STYLE
+            << TITLE_N( has_virus_, i+1 ) << std::endl;
     }
 
-    OFS_OUTPUT( HasVirus.png );
-    ofs << "replot " << HAS_VIRUS_OUTPUT
-        << " using 1:" << NUM_V+2 << LINE_STYLE
-        << TITLE( has_all_virus ) << std::endl;
+    OFS_REPLOT( "HasVirus.png" )
+        << HAS_VIRUS_OUTPUT << " using 1:" << NUM_V+2 << LINE_STYLE << TITLE( has_all_virus ) << std::endl;
     /*-----------------------------------------------------------------------------
      *  Begin Term
      *-----------------------------------------------------------------------------*/
-    OFS_PNG( HasVirus_mini.png, Term, Agent );
-    OFS_TITLE( HasVirus );
-    ofs << PLOT(0, MINI_SIZE_TERM) << HAS_VIRUS_OUTPUT << LINE_STYLE
-        << TITLE( has_virus_0 ) << std::endl;
+    OFS_TITLE( HasVirus, Term, Agent );
+
+    OFS_PLOT_PERIOD( "HasVirus_mini.png", 0, MINI_SIZE_TERM)
+        << HAS_VIRUS_OUTPUT << LINE_STYLE << TITLE( has_virus_0 ) << std::endl;
     FOR( i, NUM_V-1 ) {
-        OFS_OUTPUT( HasVirus_mini.png );
-        ofs << "replot " << HAS_VIRUS_OUTPUT
-            << USING( 1, i+3 ) << LINE_STYLE
-            << " title " << "\"has_virus_" << i+1 << std::endl;
+        OFS_REPLOT( "HasVirus_mini.png" )
+            << HAS_VIRUS_OUTPUT << USING( 1, i+3 ) << LINE_STYLE
+            << TITLE_N( has_virus_, i+1 ) << std::endl;
     }
-    OFS_OUTPUT( HasVirus_mini.png );
-    ofs << "replot " << HAS_VIRUS_OUTPUT
-        << USING( 1, NUM_V+2 ) << LINE_STYLE
+    OFS_REPLOT( "HasVirus_mini.png" )
+        << HAS_VIRUS_OUTPUT << USING( 1, NUM_V+2 ) << LINE_STYLE
         << TITLE( has_all_virus ) << std::endl;
 
     /*-----------------------------------------------------------------------------
      *  End Term
      *-----------------------------------------------------------------------------*/
-    OFS_PNG( HasVirus_last.png, Term, Agent );
-    OFS_TITLE( HasVirus );
+    OFS_TITLE( HasVirus, Term, Agent );
 
-    ofs << PLOT( last_term_-MINI_SIZE_TERM, last_term_ ) << HAS_VIRUS_OUTPUT << LINE_STYLE
-        << TITLE( has_virus_0 ) << std::endl;
+    OFS_PLOT_PERIOD( "HasVirus_last.png", last_term_-MINI_SIZE_TERM, last_term_ )
+        << HAS_VIRUS_OUTPUT << LINE_STYLE << TITLE( has_virus_0 ) << std::endl;
     FOR( i, NUM_V-1 ) {
         OFS_OUTPUT( HasVirus_last.png );
-        ofs << "replot " << HAS_VIRUS_OUTPUT
-            << " using 1:" << i+3 << LINE_STYLE
-            << " title " << "\"has_virus_" << i+1 << std::endl;
+        OFS_REPLOT( "HasVirus_last.png" )
+            << HAS_VIRUS_OUTPUT << USING( 1, i+3 ) << LINE_STYLE
+            << TITLE_N( has_virus_, i+1 ) << std::endl;
     }
-    OFS_OUTPUT( HasVirus_last.png );
-    ofs << "replot " << HAS_VIRUS_OUTPUT
-        << " using 1:" << NUM_V+2 << LINE_STYLE
-        << TITLE( has_all_virus ) << std::endl;
-    OFS_OUTPUT( HasVirus_last.png );
-    OFSS( replot "PEAK_A_hasVirus.txt" w p title "peak" );
+    OFS_REPLOT( "HasVirus_last.png" )
+            << HAS_VIRUS_OUTPUT
+            << " using 1:" << NUM_V+2 << LINE_STYLE
+            << TITLE( has_all_virus ) << std::endl;
+    OFSS( set output "HasVirus_last.png"; replot "PEAK_A_hasVirus.txt" w p title "peak" );
 }
 
 /*
@@ -424,60 +421,81 @@ void FileFactory :: scriptForHasVirusPng(std::ofstream &ofs) const {
  *--------------------------------------------------------------------------------------
  */
 void FileFactory :: scriptForHasImmunityPng(std::ofstream &ofs) const {
-    OFS_PNG( HasImmunity.png, Term, Agent );
 
-    ofs << "set title \"hasImmunity\"" << std::endl
-        << "plot "<< HAS_IMMUNITY_OUTPUT << LINE_STYLE
-        << " title \"has_immunity_0\"" << std::endl;
+    OFS_TITLE( hasImmunity, Term, Agent );
+
+    OFS_PLOT( "HasImmunity.png" )
+        << HAS_IMMUNITY_OUTPUT
+        << LINE_STYLE
+        << TITLE( has_immunity_0 )
+        << ENDL;
     FOR( i, NUM_V-1 ) {
-        ofs << "set output \"HasImmunity.png\"" << std::endl;
-        ofs << "replot " << HAS_IMMUNITY_OUTPUT
-            << " using 1:" << i+3 << LINE_STYLE
-            << " title " << "\"has_immunity_" << i+1 << "\"" << std::endl;
+        OFS_REPLOT( "HasImmunity.png" )
+            << HAS_IMMUNITY_OUTPUT
+            << USING( 1, i+3 )
+            << LINE_STYLE
+            << TITLE_N( has_immunity_, i+1 )
+            << ENDL;
     }
-    OFS_OUTPUT( HasImmunity.png );
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT
-        << " using 1:" << NUM_V+2 << LINE_STYLE
-        << TITLE( has_all_immunity ) << std::endl;
+    OFS_REPLOT( "HasImmunity.png" )
+        << HAS_IMMUNITY_OUTPUT
+        << USING( 1, NUM_V+2 )
+        << LINE_STYLE
+        << TITLE( has_all_immunity )
+        << ENDL;
 
     /*-----------------------------------------------------------------------------
      *  Begin Term
      *-----------------------------------------------------------------------------*/
-    OFS_PNG( HasImmunity_mini.png, Term, Agent );
-
-    OFSS( set title "hasImmunity" );
-    ofs << PLOT( 0, MINI_SIZE_TERM ) << HAS_IMMUNITY_OUTPUT << LINE_STYLE
-        << " title \"has_immunity_0\"" << std::endl;
+    OFS_PLOT_PERIOD( "HasImmunity_mini.png", 0, MINI_SIZE_TERM )
+        << HAS_IMMUNITY_OUTPUT
+        << LINE_STYLE
+        << TITLE( has_immunity_0 )
+        << ENDL;
     FOR( i, NUM_V-1 ) {
-        OFS_OUTPUT( HasImmunity_mini.png );
-        ofs << "replot " << HAS_IMMUNITY_OUTPUT
-            << " using 1:" << i+3 << " w l"
-            << " title " << "\"has_immunity_" << i+1 << "\"" << std::endl;
+        OFS_REPLOT( "HasImmunity_mini.png" )
+            << HAS_IMMUNITY_OUTPUT
+            << USING( 1, i+3 )
+            << LINE_STYLE
+            << TITLE_N( has_immunity_, i+1 )
+            << ENDL;
     }
-    ofs << "set output \"HasImmunity_mini.png\"" << std::endl;
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT
-        << " using 1:" << NUM_V+2 << LINE_STYLE
-        << TITLE( has_all_immunity ) << std::endl;
+    OFS_REPLOT( "HasImmunity_mini.png" )
+        << HAS_IMMUNITY_OUTPUT
+        << USING( 1, NUM_V+2 )
+        << LINE_STYLE
+        << TITLE( has_all_immunity )
+        << ENDL;
 
     /*-----------------------------------------------------------------------------
      *  End Term XXX:
      *-----------------------------------------------------------------------------*/
     outputFile_peakSearch( HAS_IMMUNITY_FNAME );
-    OFS_PNG( HasImmunity_last.png, Term, Agent );
 
-    OFSS( set title "HasImmunity" );
-    ofs << "plot "<< HAS_IMMUNITY_OUTPUT << EVERY_LAST(last_term_) << LINE_STYLE
-        << TITLE( has_immunity_0 ) << std::endl;
+    OFS_PLOT_PERIOD( "HasImmunity_last.png", last_term_-MINI_SIZE_TERM, last_term_)
+        << HAS_IMMUNITY_OUTPUT
+        << LINE_STYLE
+        << TITLE( has_immunity_0 )
+        << ENDL;
+
     FOR( i, NUM_V-1 ) {
-        OFS_OUTPUT( HasImmunity_last.png );
-        ofs << "replot " << HAS_IMMUNITY_OUTPUT << EVERY_LAST(last_term_)
-            << USING( 1, i+3 ) << LINE_STYLE
-            << " title " << "\"has_immunity_" << i+1 << "\"" << std::endl;
+        OFS_REPLOT( "HasImmunity_last.png" )
+            << HAS_IMMUNITY_OUTPUT
+            << USING( 1, i+3 )
+            << LINE_STYLE
+            << TITLE_N( has_immunity_, i+1 )
+            << ENDL;
     }
-    OFS_OUTPUT( HasImmunity_last.png );
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT << EVERY_LAST(last_term_)
-        << " using 1:" << NUM_V+2 << LINE_STYLE
-        << TITLE( has_all_immunity ) << std::endl;
+    OFS_REPLOT( "HasImmunity_last.png" )
+        << HAS_IMMUNITY_OUTPUT
+        << USING( 1, NUM_V+2 )
+        << LINE_STYLE
+        << TITLE( has_all_immunity )
+        << ENDL;
+
+    /*-----------------------------------------------------------------------------
+     *  Peak
+     *-----------------------------------------------------------------------------*/
     OFSS( set output "HasImmunity_last.png" );
     OFSS( replot "PEAK_A_hasImmunity.txt" w p title "peak" );
 }
@@ -610,9 +628,11 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
 
     // SIR_0
     ofs << "set title \"SIR_0\"" << std::endl;
-    OFS_PLOT( "SIR_0_last.png", last_term_-MINI_SIZE_TERM, last_term_) << HAS_VIRUS_OUTPUT << LINE_STYLE << TITLE( I_0 ) << std::endl;
-    OFS_OUTPUT( SIR_0_last.png );
-    ofs << "replot " << HAS_IMMUNITY_OUTPUT << LINE_STYLE << TITLE( R_0 ) << std::endl;
+    OFS_LINE ( "set yl \"Agent\"" );
+    OFS_LINE ( "set xl \"Term\"" );
+    OFS_AXIS_LABEL( Term, Agent );
+    OFS_PLOT_PERIOD( "SIR_0_last.png", last_term_-MINI_SIZE_TERM, last_term_) << HAS_VIRUS_OUTPUT << LINE_STYLE << TITLE( I_0 ) << std::endl;
+    OFS_REPLOT( "SIR_0_last.png" ) << HAS_IMMUNITY_OUTPUT << LINE_STYLE << TITLE( R_0 ) << std::endl;
     // SIR_RATIO
     ofs << "set output \"SIR_RATIO_last.png\"" << std::endl;
     OFS_LINE ( "set yl" );
