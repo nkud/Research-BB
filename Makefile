@@ -42,11 +42,18 @@ clean:
 	@$(PRINT) '>>> Cleaning...'
 	@$(RM) $(OBJ)
 
-
 tags:
 	@$(CTAGS) $(wildcard src/*) $(wildcard include/*)
 
 all: $(BIN)/$(TARGET) run plot
+
+plot :
+	@$(PRINT) '>>> Plotting...'
+	@-cd $(BIN); python peak_search.py
+	@-cd $(BIN); gnuplot auto.plt
+	@cd $(BIN); mkdir -p txt;  mv *.txt txt
+	@cd $(BIN); mkdir -p img;  mv *.png img
+	@cd $(BIN); mkdir -p script;  mv *.plt script
 
 pack:
 	@$(PRINT) '>>> Packing...'
@@ -61,14 +68,6 @@ pack:
 	@$(COPY) include/Global.h src/main.cpp $(NOW)/src
 	@cd $(BIN); $(COPY) RESULT.html result.css main.out ../$(NOW)
 	@tree $(NOW)
-
-plot :
-	@$(PRINT) '>>> Plotting...'
-	@-cd $(BIN); python peak_search.py
-	@-cd $(BIN); gnuplot auto.plt
-	@cd $(BIN); mkdir -p txt;  mv *.txt txt
-	@cd $(BIN); mkdir -p img;  mv *.png img
-	@cd $(BIN); mkdir -p script;  mv *.plt script
 
 $(BIN)/main.o: Global.h Function.h Agent.h Virus.h Landscape.h Monitor.h Administrator.h
 $(BIN)/Administrator.o: Global.h Function.h Administrator.h Agent.h Virus.h Landscape.h Monitor.h

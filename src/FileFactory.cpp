@@ -5,7 +5,7 @@
  *
  *    Description:  
  *
-*         Author: Naoki Ueda
+ *         Author: Naoki Ueda
  *   Organization:  OPU, 3G
  *
  * =====================================================================================
@@ -27,32 +27,32 @@
 /*-----------------------------------------------------------------------------
  *  マクロ
  *-----------------------------------------------------------------------------*/
-#define IMG_SIZE(w, h)          #w << "," << #h
+#define IMG_SIZE(w, h)                  #w << "," << #h
 
-#define EVERY_BEGIN             " every ::0::"<< MINI_SIZE_TERM
-#define EVERY_LAST(t)           " every ::"<< t-MINI_SIZE_TERM<<"::"<<t<<" "
+#define EVERY_BEGIN                     " every ::0::"<< MINI_SIZE_TERM
+#define EVERY_LAST(t)                   " every ::"<< t-MINI_SIZE_TERM<<"::"<<t<<" "
 
-#define OFS(str)                do { ofs<< str; }while(0);
-#define OFS_P(str)                do { ofs<<"<p>"<<str<<"</p>"<<std::endl; }while(0);
-#define OFS_LINE(str)           do { ofs<< str << std::endl; }while(0);
-//#define OFS_VAL(str,val)        do { ofs<<"[ "<<str<<" ]: "<<val<<"<br />"<<std::endl; }while(0);
-//#define OFS_IMG(img)            do { ofs<<"<br /><img src=img/"<<#img<<" /><br />"<<std::endl; }while(0);
+#define OFS(str)                        do { ofs<< str; }while(0);
+#define OFS_P(str)                      do { ofs<<"<p>"<<str<<"</p>"<<std::endl; }while(0);
+#define OFS_LINE(str)                   do { ofs<< str << std::endl; }while(0);
+//#define OFS_VAL(str,val)                do { ofs<<"[ "<<str<<" ]: "<<val<<"<br />"<<std::endl; }while(0);
+//#define OFS_IMG(img)                    do { ofs<<"<br /><img src=img/"<<#img<<" /><br />"<<std::endl; }while(0);
 #define OFS_IMG_MINI(img,mini,last)  do { ofs<<"<table class=\"graph\"><tr> \
-                                <td><img src=img/"<<img<<" /></td></tr><tr> \
-                                <td><img src=img/"<<mini<<" /></td></tr><t> \
-                                <td><img src=img/"<<last<<" /></td></tr> \
-                                </table><br />"<<std::endl; }while(0);
+                                        <td><img src=img/"<<img<<" /></td></tr><tr> \
+                                        <td><img src=img/"<<mini<<" /></td></tr><t> \
+                                        <td><img src=img/"<<last<<" /></td></tr> \
+                                        </table><br />"<<std::endl; }while(0);
 
-#define OFS_OUTPUT(str)         OFSS( set output #str )
-#define OFS_TD(str,val)         do { ofs<<"<tr><td>"<<str<<"</td>"<<"<td>"<<val<<"</td></tr>"<<std::endl; }while(0);
+#define OFS_OUTPUT(str)                 OFSS( set output #str )
+#define OFS_TD(str,val)                 do { ofs<<"<tr><td>"<<str<<"</td>"<<"<td>"<<val<<"</td></tr>"<<std::endl; }while(0);
 
-#define QUO(str)                "\"" << str << "\""
+#define QUO(str)                        "\"" << str << "\""
 
-#define OFSS(str)               ofs << #str << std::endl;
-#define OFS_AXIS_LABEL(x, y)    OFSS( set xl #x ) OFSS( set yl #y )
-#define OFS_PNG(img, x, y)      OFSS(set output #img) \
-                                OFSS(set xl #x) \
-                                OFSS(set yl #y)
+#define OFSS(str)                       ofs << #str << std::endl;
+#define OFS_AXIS_LABEL(x, y)            OFSS( set xl #x ) OFSS( set yl #y )
+#define OFS_PNG(img, x, y)              OFSS(set output #img) \
+                                        OFSS(set xl #x) \
+                                        OFSS(set yl #y)
 
 /*-----------------------------------------------------------------------------
  *  スタイル
@@ -72,6 +72,17 @@
 #define AVE_GOT_NEW_IMMUNITY_OUTPUT     QUO( AVE_GOT_NEW_IMMUNITY_FNAME )
 
 #define PERIOD                          100                          /* 調査する区間 */
+
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  FileFactory :: outputFile_peakSearch()
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+void FileFactory :: outputFile_peakSearch() {
+
+}
 
 /*
  *--------------------------------------------------------------------------------------
@@ -214,7 +225,7 @@ void FileFactory :: outputFile_AveGotNewImmunityPeriod( const char *fname ) {
     // XXX:
     static std::ofstream ofs(fname);
     static int i = 0;
-    if( Monitor::Instance().getTerm() % PERIOD == 0 ) {                 /* ５期間ごとに */
+    if( Monitor::Instance().getTerm() % PERIOD == 0 ) {              /* ５期間ごとに */
         ofs << i << SEPARATOR                                        /* i 周期目 */
             << admin_->calcAveGotNewImmunityPeriod() << SEPARATOR;
         FOR( j, NUM_V ) {

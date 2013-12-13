@@ -52,7 +52,7 @@ int main()
     /* ウイルス */
     VECTOR(Virus *) virus;
     virus.push_back( new Virus( 20, new Normal ) );                  /* 通常ウイルスを追加 */
-    virus.push_back( new Virus( 10, new Normal ) );                  /* 通常ウイルスを追加 */
+    virus.push_back( new Virus( 15, new Normal ) );                  /* 通常ウイルスを追加 */
 //    virus.push_back( new Virus( 15, new Fixed(0) ) );                /* 固定ウイルスを追加 */
 //    virus.push_back( new Virus( 15, new Fixed(5) ) );               /* 固定ウイルスを追加 */
     /* 土地 */
@@ -98,17 +98,14 @@ int main()
 #ifdef MATING_AGENT
         admin.matingAgant();                                         /* 交配、出産する */
 #endif
-
 #ifdef RANDOM_LOCATE
         admin.relocateAgent();                                       /* 移動する */
 #else
         admin.moveAgent();                                           /* 移動する */
 #endif
-
         admin.contactAgent();                                        /* 近隣に接触する */
         admin.infectAgent();                                         /* 待機ウイルスを感染させる */
         admin.responseAgent();                                       /* 免疫応答（タグフリップ） */
-
 
         /* 経過出力 */
         ff.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ; /* 出力：感染者 */

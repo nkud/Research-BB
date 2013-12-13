@@ -30,7 +30,34 @@ class Administrator;
  * =====================================================================================
  */
 class FileFactory {
+    public:
+        /*-----------------------------------------------------------------------------
+         *  初期化
+         *-----------------------------------------------------------------------------*/
+        static FileFactory& Instance();                              /* インスタンスを返す */
+        void setAdministrator( Administrator &admin ); 
+
+        /*-----------------------------------------------------------------------------
+         *  計算結果出力
+         *-----------------------------------------------------------------------------*/
+        void outputFile_HasVirus( const char * ) const;              /* ファイルに出力 */
+        void outputFile_HasImmunity( const char * ) const;           /* ファイルに出力 */
+        void outputFile_InfectionContactRatio( const char * ) const; /* ファイルに出力 */
+        void outputFile_Population( const char * ) const;            /* 人口推移を出力 */
+        void outputFile_LastLog( const char * ) const;               /* ログを出力 */
+
+        void outputFile_AveGotNewImmunityPeriod( const char * );     /* XXX: 不要 */
+        void outputFile_peakSearch();
+        /*-----------------------------------------------------------------------------
+         *  計算結果確認用スクリプト出力
+         *-----------------------------------------------------------------------------*/
+        void generatePlotScriptForPng() const;                       /* プロット用のスクリプトを生成 */
+        void generateResultHtml(int last_term);                      /* 結果表示用のHTMLスクリプトを生成 */
+
     private:
+        /*-----------------------------------------------------------------------------
+         *  コンストラクタ
+         *-----------------------------------------------------------------------------*/
         FileFactory( ) {}                                            /* コンストラクタ */
 
         Administrator *admin_;                                       /* 管理者を登録 */
@@ -46,26 +73,6 @@ class FileFactory {
         void scriptForSIRPng(std::ofstream &ofs) const;
         void scriptForContactPng(std::ofstream &ofs) const;
         void scriptForAveGotNewImmunityPeriod( std::ofstream &ofs ) const;
-
-    public:
-        static FileFactory& Instance();                              /* インスタンスを返す */
-        void setAdministrator( Administrator &admin ); 
-
-        /*-----------------------------------------------------------------------------
-         *  計算結果出力
-         *-----------------------------------------------------------------------------*/
-        void outputFile_HasVirus( const char * ) const;              /* ファイルに出力 */
-        void outputFile_HasImmunity( const char * ) const;           /* ファイルに出力 */
-        void outputFile_InfectionContactRatio( const char * ) const; /* ファイルに出力 */
-        void outputFile_Population( const char * ) const;            /* 人口推移を出力 */
-        void outputFile_LastLog( const char * ) const;               /* ログを出力 */
-
-        void outputFile_AveGotNewImmunityPeriod( const char * );     /* XXX: 不要 */
-        /*-----------------------------------------------------------------------------
-         *  計算結果確認用スクリプト出力
-         *-----------------------------------------------------------------------------*/
-        void generatePlotScriptForPng() const;                       /* プロット用のスクリプトを生成 */
-        void generateResultHtml(int last_term);                      /* 結果表示用のHTMLスクリプトを生成 */
 };
 
 #endif
