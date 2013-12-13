@@ -40,14 +40,14 @@ class FileFactory {
         /*-----------------------------------------------------------------------------
          *  計算結果出力
          *-----------------------------------------------------------------------------*/
-        void outputFile_HasVirus( const char * ) const;              /* ファイルに出力 */
+        void outputFile_HasVirus( const char * ) const;              /* ウイルス保持者出力 */
         void outputFile_HasImmunity( const char * ) const;           /* ファイルに出力 */
         void outputFile_InfectionContactRatio( const char * ) const; /* ファイルに出力 */
         void outputFile_Population( const char * ) const;            /* 人口推移を出力 */
         void outputFile_LastLog( const char * ) const;               /* ログを出力 */
 
         void outputFile_AveGotNewImmunityPeriod( const char * );     /* XXX: 不要 */
-        void outputFile_peakSearch();
+        void outputFile_peakSearch( const char * ) const;            /* 出力: ピークサーチ */
         /*-----------------------------------------------------------------------------
          *  計算結果確認用スクリプト出力
          *-----------------------------------------------------------------------------*/

@@ -73,15 +73,23 @@
 
 #define PERIOD                          100                          /* 調査する区間 */
 
-
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  FileFactory :: outputFile_peakSearch()
- * Description:  
+ * Description:  ピークサーチする
  *--------------------------------------------------------------------------------------
  */
-void FileFactory :: outputFile_peakSearch() {
-
+void FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
+    int t, v;
+    int i = 0;
+    std::string line;
+    int array[INIT_NUM_A][2];
+    std::ifstream ifs( origin_fname, std::ios::in );                 /* ウイルス保持者出力を読込専用で開く */
+    std::ofstream ofs( "PEAK_A_hasVirus.txt" );                      /* 出力先ファイル */
+    while( getline( ifs, line ) ) {
+        sscanf( line.data(), "%d %d", &t, &v );
+        ofs << t << " " << v << std::endl;                           /* 出力 */
+    }
 }
 
 /*
@@ -318,6 +326,9 @@ void FileFactory :: scriptForPopulationPng(std::ofstream &ofs) const {
         << TITLE( population ) << std::endl;
 }
 void FileFactory :: scriptForHasVirusPng(std::ofstream &ofs) const {
+
+    outputFile_peakSearch( HAS_VIRUS_FNAME );                                         /* ピークサーチする */
+
     OFS_PNG( HasVirus.png, Term, Agent );
 
     ofs << "set title \"HasVirus\"" << std::endl
