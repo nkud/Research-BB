@@ -30,9 +30,6 @@
  *-----------------------------------------------------------------------------*/
 #define IMG_SIZE(w, h)                  #w << "," << #h
 
-#define EVERY_BEGIN                     " every ::0::"<< MINI_SIZE_TERM
-#define EVERY_LAST(t)                   " every ::"<< t-MINI_SIZE_TERM<<"::"<<t<<" "
-
 #define OFS(str)                        do { ofs<< str; }while(0);
 #define OFSS(str)                       ofs << #str << std::endl;
 
@@ -46,18 +43,12 @@
                                         <td><img src=img/"<<last<<" /></td></tr> \
                                         </table><br />"<<std::endl; }while(0);
 
-#define OFS_OUTPUT(str)                 OFSS( set output #str )
 #define OFS_TD(str,val)                 do { ofs<<"<tr><td>"<<str<<"</td>"<<"<td>"<<val<<"</td></tr>"<<std::endl; }while(0);
 
 #define QUO(str)                        "\"" << str << "\""
 
-#define OFS_AXIS_LABEL(x, y)            OFSS( set xl #x ) OFSS( set yl #y )
-
 #define OFS_TITLE(t, x, y)              OFSS( set title #t ) OFSS( set xl #x ) OFSS( set yl #y )
 
-#define OFS_PNG(img, x, y)              OFSS(set output #img) \
-                                        OFSS(set xl #x) \
-                                        OFSS(set yl #y)
 #define OFS_PLOT_PERIOD(png, b, e)             ofs << "set output " << #png << ";plot [" << b << ":" << e << "] "
 #define OFS_PLOT(png)                   ofs << "set output " << #png << ";plot "
 #define OFS_REPLOT(png)                 ofs << "set output " << #png << ";replot "
@@ -85,7 +76,7 @@
 #define PEAK_PREFIX                     "PEAK_"
 
 #define PERIOD                          100                          /* 調査する区間 */
-#define CHECK_INTERVAL                  6
+#define CHECK_INTERVAL                  4
 
 /*
  *--------------------------------------------------------------------------------------
@@ -131,7 +122,7 @@ double average_period( const char *origin_fname ) {
             pre = t;
         }
     }
-    return double( sum / n );
+    return (double)sum/n;
 }
 
 // XXX: need check
@@ -162,7 +153,7 @@ double FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
             count = 1;                                               /* カウントを１に戻す */
         }
         if( count == CHECK_INTERVAL ) {
-            if( i > TERM - MINI_SIZE_TERM                            /* 最後の期間だけ */
+            if( i > TERM - MINI_SIZE_TERM - CHECK_INTERVAL           /* 最後の期間だけ */
                     and mt+1 != TERM ) {                             /* 最後は入れず */ 
                 ofs << mt+1 << SEPARATOR << data[mt] << std::endl;
             }
@@ -404,7 +395,6 @@ void FileFactory :: scriptForHasVirusPng(std::ofstream &ofs) const {
     OFS_PLOT_PERIOD( "HasVirus_last.png", last_term_-MINI_SIZE_TERM, last_term_ )
         << HAS_VIRUS_OUTPUT << LINE_STYLE << TITLE( has_virus_0 ) << std::endl;
     FOR( i, NUM_V-1 ) {
-        OFS_OUTPUT( HasVirus_last.png );
         OFS_REPLOT( "HasVirus_last.png" )
             << HAS_VIRUS_OUTPUT << USING( 1, i+3 ) << LINE_STYLE
             << TITLE_N( has_virus_, i+1 ) << std::endl;
@@ -483,7 +473,7 @@ void FileFactory :: scriptForHasImmunityPng(std::ofstream &ofs) const {
     double ave_p = outputFile_peakSearch( HAS_IMMUNITY_FNAME );
 
     OFS_TITLE( hasImmunity, Term, Agent );
-    ofs << "set title \"HasImmunity ( period: " << ave_p << " [term] )\""
+    ofs << "set title \"HasImmunity ( period: " << (double)ave_p << " [term] )\""
         << ENDL;
 
     OFS_PLOT_PERIOD( "HasImmunity_last.png", last_term_-MINI_SIZE_TERM, last_term_)
