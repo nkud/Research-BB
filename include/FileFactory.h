@@ -47,7 +47,7 @@ class FileFactory {
         void outputFile_LastLog( const char * ) const;               /* ログを出力 */
 
         void outputFile_AveGotNewImmunityPeriod( const char * );     /* XXX: 不要 */
-        void outputFile_peakSearch( const char * ) const;            /* 出力: ピークサーチ */
+        double outputFile_peakSearch( const char * ) const;            /* 出力: ピークサーチ */
         /*-----------------------------------------------------------------------------
          *  計算結果確認用スクリプト出力
          *-----------------------------------------------------------------------------*/
@@ -74,5 +74,12 @@ class FileFactory {
         void scriptForContactPng(std::ofstream &ofs) const;
         void scriptForAveGotNewImmunityPeriod( std::ofstream &ofs ) const;
 };
+
+
+/*-----------------------------------------------------------------------------
+ *  関数群
+ *-----------------------------------------------------------------------------*/
+int max_term_in_interval( const int data[], int cursor, int len );   /* 与えられた期間の最大時刻を探索する */
+double average_period( const char *fname );                              /* ファイルの平均周期を求める */
 
 #endif

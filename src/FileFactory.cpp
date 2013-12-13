@@ -13,6 +13,7 @@
 
 #include <fstream>
 #include <string>
+#include <cstring>
 
 #include "FileFactory.h"
 #include "Administrator.h"
@@ -71,7 +72,10 @@
 #define POPULATION_OUTPUT               QUO( POPULATION_FNAME )
 #define AVE_GOT_NEW_IMMUNITY_OUTPUT     QUO( AVE_GOT_NEW_IMMUNITY_FNAME )
 
+#define PEAK_PREFIX                     "PEAK_"
+
 #define PERIOD                          100                          /* 調査する区間 */
+#define CHECK_INTERVAL                  3
 
 /*
  *--------------------------------------------------------------------------------------
@@ -79,17 +83,84 @@
  * Description:  ピークサーチする
  *--------------------------------------------------------------------------------------
  */
-void FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
-    int t, v;
-    int i = 0;
-    std::string line;
-    int array[INIT_NUM_A][2];
-    std::ifstream ifs( origin_fname, std::ios::in );                 /* ウイルス保持者出力を読込専用で開く */
-    std::ofstream ofs( "PEAK_A_hasVirus.txt" );                      /* 出力先ファイル */
-    while( getline( ifs, line ) ) {
-        sscanf( line.data(), "%d %d", &t, &v );
-        ofs << t << " " << v << std::endl;                           /* 出力 */
+int max_term_in_interval( const int data[], int cursor, int len ) {
+    /*-----------------------------------------------------------------------------
+     *  与えられた期間の最大値を検索する
+     *-----------------------------------------------------------------------------*/
+    int mv = 0;
+    int mt = 0;
+    FOR( i, len ) {                                                  /* 検索範囲だけ */
+        if( cursor+i >= TERM ) continue;                                 /* 添字が０未満ならスキップ */
+        if( data[cursor+i] > mv ) {                                  /* 現最大値より大きければ */
+            mv = data[cursor+i];                                     /* 最大値を更新し */
+            mt = i;                                                  /* 期間を記録する */
+        }
     }
+    return cursor + mt;
+}
+
+double average_period( const char *origin_fname ) {
+    /*-----------------------------------------------------------------------------
+     *  そのファイルの平均周期を求める
+     *-----------------------------------------------------------------------------*/
+    std::ifstream ifs( origin_fname, std::ios::in );
+    std::string line;
+    int t, v;
+    int n = 0;
+    int pre = 0;
+    int sum = 0;
+
+    while( getline( ifs, line ) )
+    {
+        sscanf( line.data(), "%d %d", &t, &v );
+        n++;
+        if( pre == 0 ) {
+            pre = t;
+        } else {
+            sum += t - pre;
+            pre = t;
+        }
+    }
+    return double( sum / n );
+}
+
+double FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
+    std::string line;
+    std::ifstream ifs( origin_fname, std::ios::in );                 /* ウイルス保持者出力を読込専用で開く */
+    char prefix[256] = PEAK_PREFIX;
+    char *fname = strcat(prefix, origin_fname);                      /* 元のファイル名に接頭辞を付ける */
+    std::ofstream ofs( fname );                                      /* 出力先ファイル */
+
+    int t, v;
+    int term = 0;
+    int data[TERM];
+    while( getline( ifs, line ) ) {                                  /* １行ずつ読み取って */
+        sscanf( line.data(), "%d %d", &t, &v );                      /* 期間を読み込む */
+        data[ term++ ] = v;
+    }
+
+    int mt = 0;                                                      /* その期間での最大時刻 */
+    int count = 1;                                                   /* カウンタ */
+    int temp;
+    FOR( i, TERM ) {
+        temp = max_term_in_interval( data, i, CHECK_INTERVAL );      /* その期間での最大時刻と */
+        if( data[temp] == data[mt] ) {                               /* 一時最大時刻が同じなら */
+            count++;                                                 /* カウントを増やす */
+        } else {                                                     /* 違ったら */
+            mt = temp;                                               /* 最大時刻を更新して */
+            count = 1;                                               /* カウントを１に戻す */
+        }
+        if( count == CHECK_INTERVAL ) {
+            if( i > TERM - MINI_SIZE_TERM                            /* 最後の期間だけ */
+                    and mt+1 != TERM ) {                             /* 最後は入れず */ 
+                ofs << mt+1 << SEPARATOR << data[mt] << std::endl;
+            }
+            mt = i + CHECK_INTERVAL - 1;
+            count = 1;                                               /* カウントを１に戻す */
+        }
+    }
+
+    return average_period( fname );                                  /* 平均周期を返す */
 }
 
 /*
@@ -327,7 +398,7 @@ void FileFactory :: scriptForPopulationPng(std::ofstream &ofs) const {
 }
 void FileFactory :: scriptForHasVirusPng(std::ofstream &ofs) const {
 
-    outputFile_peakSearch( HAS_VIRUS_FNAME );                                         /* ピークサーチする */
+    LOG( outputFile_peakSearch( HAS_VIRUS_FNAME ) );                 /* ピークサーチする */
 
     OFS_PNG( HasVirus.png, Term, Agent );
 
@@ -381,6 +452,8 @@ void FileFactory :: scriptForHasVirusPng(std::ofstream &ofs) const {
     ofs << "replot " << HAS_VIRUS_OUTPUT << EVERY_LAST(last_term_)
         << " using 1:" << NUM_V+2 << LINE_STYLE
         << " title " << "\"has_all_virus\"" << std::endl;
+    OFSS( set output "HasVirus_last.png" );
+    OFSS( replot "PEAK_A_hasVirus.txt" w p title "peak" );
 }
 
 
