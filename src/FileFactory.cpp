@@ -686,7 +686,8 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
 
     OFS_PLOT_PERIOD( "SIR_RATIO_last.png", last_term_-MINI_SIZE_TERM, last_term_ )
         << HAS_VIRUS_OUTPUT
-        << " using 1:" << NUM_V+3 << LINE_STYLE
+        << " using 1:" << NUM_V+3
+        << LINE_STYLE
         << " title " << "\"I/POPULATION\""
         << ENDL;
     OFS_REPLOT( "SIR_RATIO_last.png" )
@@ -702,12 +703,14 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
 
     OFS_PLOT_PERIOD( "SIR_0_RATIO_last.png", last_term_-MINI_SIZE_TERM, last_term_ )
         << HAS_VIRUS_OUTPUT
-        << " using 1:" << NUM_V+4 << LINE_STYLE
+        << " using 1:" << NUM_V+4
+        << LINE_STYLE
         << " title " << "\"I_0/POPULATION\""
         << ENDL;
     OFS_REPLOT( "SIR_0_RATIO_last.png" )
-        << HAS_IMMUNITY_OUTPUT << " every ::0::"<<MINI_SIZE_TERM
-        << " using 1:" << NUM_V+4 << LINE_STYLE
+        << HAS_IMMUNITY_OUTPUT 
+        << " using 1:" << NUM_V+4
+        << LINE_STYLE
         << " title " << "\"R_0/POPULATION\""
         << std::endl;
     OFSS( set autoscale y );
