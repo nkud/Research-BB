@@ -91,7 +91,7 @@ int max_term_in_interval( const int data[], int cursor, int len ) {
     int mv = 0;
     int mt = 0;
     FOR( i, len ) {                                                  /* 検索範囲だけ */
-        if( cursor+i >= TERM ) continue;                                 /* 添字が０未満ならスキップ */
+        if( cursor+i >= TERM ) continue;                             /* 添字が０未満ならスキップ */
         if( data[cursor+i] > mv ) {                                  /* 現最大値より大きければ */
             mv = data[cursor+i];                                     /* 最大値を更新し */
             mt = i;                                                  /* 期間を記録する */
@@ -124,7 +124,7 @@ double average_period( const char *origin_fname ) {
     }
     return (double)sum/n;
 }
-
+//
 // XXX: need check
 double FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
     std::string line;
@@ -136,10 +136,14 @@ double FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
     int t, v;
     int term = 0;
     int data[TERM];
+    int vmax = 0, vmin = INIT_NUM_A;
     while( getline( ifs, line ) ) {                                  /* １行ずつ読み取って */
         sscanf( line.data(), "%d %d", &t, &v );                      /* 期間を読み込む */
         data[ term++ ] = v;
+        if( vmax < v ) vmax = v;                                     /* 最大値 */
+        if( vmin > v ) vmin = v;                                     /* 最小値 */
     }
+    averate_amplitude_ = vmax - vmin;                                    /* 平均振幅＝最大値−最小値 */
 
     int mt = 0;                                                      /* その期間での最大時刻 */
     int count = 1;                                                   /* カウンタ */
@@ -388,7 +392,9 @@ void FileFactory :: scriptForHasVirusPng(std::ofstream &ofs) const {
      *-----------------------------------------------------------------------------*/
     double ave_p = outputFile_peakSearch( HAS_VIRUS_FNAME );    /* ピークサーチする */
     OFS_TITLE( HasVirus, Term, Agent );
-    ofs << "set title \"HasVirus ( period: " << ave_p << " [term] )\"" /* 周期を表示 */
+    ofs << "set title \"HasVirus ( "
+        << ave_p << " [term cycle], "
+        << averate_amplitude_ << " [ amplitude ])\"" /* 周期を表示 */
         << ENDL;
 
 
@@ -473,7 +479,9 @@ void FileFactory :: scriptForHasImmunityPng(std::ofstream &ofs) const {
     double ave_p = outputFile_peakSearch( HAS_IMMUNITY_FNAME );
 
     OFS_TITLE( hasImmunity, Term, Agent );
-    ofs << "set title \"HasImmunity ( period: " << (double)ave_p << " [term] )\""
+    ofs << "set title \"HasImmunity ( "
+        << ave_p << " [term cycle], "
+        << averate_amplitude_ << " [ amplitude ])\"" /* 周期を表示 */
         << ENDL;
 
     OFS_PLOT_PERIOD( "HasImmunity_last.png", last_term_-MINI_SIZE_TERM, last_term_)

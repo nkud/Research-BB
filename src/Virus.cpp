@@ -41,6 +41,7 @@ Virus :: Virus( __SearchStrategy *sp ) :
     FOR( i, TAG_LEN_V ) {
         tag_[i] = rand_binary();                                     /* タグをランダムに初期化 */
     }
+    sp->check( TAG_LEN_V );
 }
 
 /*--------------------------------------------------------------------------------------
@@ -138,6 +139,7 @@ Virus :: Virus( int l, __SearchStrategy *sp ):
     FOR( i, l ) {
         tag_[i] = rand_binary();                                     /* タグをランダムに初期化 */
     }
+    sp->check( l );
 }
 
 /*
@@ -148,4 +150,12 @@ Virus :: Virus( int l, __SearchStrategy *sp ):
  */
 __SEARCH__TYPE__ Fixed :: getSearchType() const {
     return __FIXED__;                                                /* 固定ウイルスであることを返す */
+}
+
+void Normal :: check ( int vlen ) const {
+    return;
+}
+
+void Fixed :: check( int vlen ) const {
+    assert( vlen+sp_ <= TAG_LEN_A );
 }

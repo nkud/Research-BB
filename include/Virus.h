@@ -67,6 +67,7 @@ class __SearchStrategy {                                             /* イン�
         virtual int searchStartPoint( const __TagInterface &, const __TagInterface & ) const = 0;
                                                                      /* 取り付く位置を返す */
         virtual __SEARCH__TYPE__ getSearchType() const = 0;          /* 戦略の種類を返す */
+        virtual void check( int vlen ) const = 0;
 };
 
 
@@ -82,6 +83,7 @@ class Normal : public __SearchStrategy {                             /* 通常�
         virtual int searchStartPoint( const __TagInterface &myself, const __TagInterface &tag ) const;
                                                                      /* 取り付く位置を返す */
         virtual __SEARCH__TYPE__ getSearchType() const;              /* 戦略の種類を返す: __NORMAL__*/
+        virtual void check( int vlen ) const;                        /* ウイルスの長さでエラーチェック*/
 };
 
 class Fixed : public __SearchStrategy {                              /* 固定方式 */
@@ -91,6 +93,7 @@ class Fixed : public __SearchStrategy {                              /* 固定�
         virtual int searchStartPoint( const __TagInterface &, const __TagInterface & ) const;
                                                                      /* 取り付く位置を返す */
         virtual __SEARCH__TYPE__ getSearchType() const;              /* 戦略の種類を返す: __FIXED__ */
+        virtual void check( int vlen ) const;
     private:
         int sp_;                                                     /* 取り付く位置 */
 };
