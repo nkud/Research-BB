@@ -78,6 +78,8 @@
 #define PERIOD                          100                          /* 調査する区間 */
 #define CHECK_INTERVAL                  4
 
+int averate_amplitude_;                                              /* 平均振幅 */
+
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  FileFactory :: outputFile_peakSearch()
@@ -140,8 +142,10 @@ double FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
     while( getline( ifs, line ) ) {                                  /* １行ずつ読み取って */
         sscanf( line.data(), "%d %d", &t, &v );                      /* 期間を読み込む */
         data[ term++ ] = v;
-        if( vmax < v ) vmax = v;                                     /* 最大値 */
-        if( vmin > v ) vmin = v;                                     /* 最小値 */
+        if( t > TERM-MINI_SIZE_TERM ) {                              /* 最後の期間の */
+            if( vmax < v ) vmax = v;                                 /* 最大値 */
+            if( vmin > v ) vmin = v;                                 /* 最小値 */
+        }
     }
     averate_amplitude_ = vmax - vmin;                                    /* 平均振幅＝最大値−最小値 */
 
@@ -393,8 +397,8 @@ void FileFactory :: scriptForHasVirusPng(std::ofstream &ofs) const {
     double ave_p = outputFile_peakSearch( HAS_VIRUS_FNAME );    /* ピークサーチする */
     OFS_TITLE( HasVirus, Term, Agent );
     ofs << "set title \"HasVirus ( "
-        << ave_p << " [term cycle], "
-        << averate_amplitude_ << " [ amplitude ])\"" /* 周期を表示 */
+        << ave_p << " [term cycle] / "
+        << averate_amplitude_ << " [amplitude])\"" /* 周期を表示 */
         << ENDL;
 
 
@@ -480,8 +484,8 @@ void FileFactory :: scriptForHasImmunityPng(std::ofstream &ofs) const {
 
     OFS_TITLE( hasImmunity, Term, Agent );
     ofs << "set title \"HasImmunity ( "
-        << ave_p << " [term cycle], "
-        << averate_amplitude_ << " [ amplitude ])\"" /* 周期を表示 */
+        << ave_p << " [term cycle] / "
+        << averate_amplitude_ << " [amplitude])\"" /* 周期を表示 */
         << ENDL;
 
     OFS_PLOT_PERIOD( "HasImmunity_last.png", last_term_-MINI_SIZE_TERM, last_term_)

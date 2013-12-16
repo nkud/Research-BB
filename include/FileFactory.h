@@ -79,6 +79,5 @@ class FileFactory {
  *-----------------------------------------------------------------------------*/
 int max_term_in_interval( const int data[], int cursor, int len );   /* 与えられた期間の最大時刻を探索する */
 double average_period( const char *fname );                          /* ファイルの平均周期を求める */
-int averate_amplitude_;                                              /* 平均振幅 */
 
 #endif
