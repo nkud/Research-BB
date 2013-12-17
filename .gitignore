@@ -4,9 +4,6 @@
 tags
 
 *.dat
-*.csv
-*.txt
-*.png
 
 core
 log
@@ -14,5 +11,7 @@ log
 auto.plt
 quick.plt
 RESULT.html
+
+bin/
 
 __*
