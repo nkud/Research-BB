@@ -5,6 +5,7 @@ MKDIR	 = mkdir -vp
 COPY	 = cp
 
 BIN		 = bin
+MASTER	 = master
 
 CTAGS    = $(shell which ctags)
 
@@ -57,17 +58,18 @@ plot :
 
 pack:
 	@$(PRINT) '>>> Packing...'
-	@$(MKDIR) $(NOW)
-	@$(MKDIR) $(NOW)/txt
-	@$(MKDIR) $(NOW)/src
-	@$(MKDIR) $(NOW)/img
-	@$(MKDIR) $(NOW)/script
-	@$(COPY) $(BIN)/txt/*.txt $(NOW)/txt
-	@$(COPY) $(BIN)/script/*.plt $(NOW)/script
-	@$(COPY) $(BIN)/img/*.png $(NOW)/img
-	@$(COPY) include/Global.h src/main.cpp $(NOW)/src
-	@cd $(BIN); $(COPY) note.html RESULT.html result.css ../$(NOW)
-	@tree $(NOW)
+	@$(MKDIR) $(MASTER)
+	@cd $(MASTER); $(MKDIR) $(NOW)
+	@cd $(MASTER); $(MKDIR) $(NOW)/txt
+	@cd $(MASTER); $(MKDIR) $(NOW)/src
+	@cd $(MASTER); $(MKDIR) $(NOW)/img
+	@cd $(MASTER); $(MKDIR) $(NOW)/script
+	@$(COPY) $(BIN)/txt/*.txt $(MASTER)/$(NOW)/txt
+	@$(COPY) $(BIN)/script/*.plt $(MASTER)/$(NOW)/script
+	@$(COPY) $(BIN)/img/*.png $(MASTER)/$(NOW)/img
+	@$(COPY) include/Global.h src/main.cpp $(MASTER)/$(NOW)/src
+	@cd $(BIN); $(COPY) note.html RESULT.html result.css ../$(MASTER)/$(NOW)
+	@tree $(MASTER)/$(NOW)
 
 $(BIN)/main.o: Global.h Function.h Agent.h Virus.h Landscape.h Monitor.h Administrator.h FileFactory.h
 $(BIN)/Administrator.o: Global.h Function.h Administrator.h Agent.h Virus.h Landscape.h Monitor.h
