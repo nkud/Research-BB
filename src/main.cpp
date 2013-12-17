@@ -50,10 +50,10 @@ int main()
     }
     /* ウイルス */
     VECTOR(Virus *) virus;
-    virus.push_back( new Virus( 10, new Normal ) );                  /* 通常ウイルスを追加 */
-    virus.push_back( new Virus( 20, new Normal ) );                  /* 通常ウイルスを追加 */
-//    virus.push_back( new Virus( 15, new Fixed(0) ) );                /* 固定ウイルスを追加 */
-//    virus.push_back( new Virus( 20, new Fixed(0) ) );               /* 固定ウイルスを追加 */
+//    virus.push_back( new Virus( 12, new Normal ) );                  /* 通常ウイルスを追加 */
+//    virus.push_back( new Virus( 8, new Normal ) );                  /* 通常ウイルスを追加 */
+    virus.push_back( new Virus( 5, new Fixed(0) ) );                /* 固定ウイルスを追加 */
+    virus.push_back( new Virus( 10, new Fixed(0) ) );               /* 固定ウイルスを追加 */
     /* 土地 */
     Landscape landscape;                                             /* ランドスケープ初期化 */
 
