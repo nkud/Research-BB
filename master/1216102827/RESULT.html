@@ -1,0 +1,44 @@
+<html><link rel="stylesheet" href="result.css"><body><font color=gray><code><h1><font color=black># 計算結果 Dec 16 2013, 10:24:44</font></h1><ul><li><a href=#config>設定</a></li><li><a href=#population>人口</a></li><li><a href=#infection>感染者</a></li><li><a href=#immunity>免疫獲得者</a></li><li><a href=#sir>SIR</a></li><li><a href=#sir_0>SIR about virus_0</a></li><li><a href=#contact>接触回数</a></li></ul><h2 id=config>設定</h2><table>
+<tr><td>[ 移動 ]</td><td>土地にランダムに再配置される</td></tr>
+<tr><td>[ 老化 ]</td><td>しない</td></tr>
+<tr><td>[ 交配 ]</td><td>しない</td></tr>
+</table>
+<br />
+<table class="center"><tr>
+<th width=200px></th><th width=100px align=center>タグ長</th><th width=100px>数</th><th width=300px>取り付く位置<br />(左から012...)</th>
+</tr>
+<tr>
+<td><font color=blue>固定ウイルス</td><td>8</td><td>1</td><td>0
+</tr>
+<tr>
+<tr>
+<td><font color=blue>固定ウイルス</td><td>8</td><td>1</td><td>0
+</tr>
+<tr>
+<td><font color=red>エージェント</td><td>20</td><td>100</td>
+</tr></table>
+<br />
+<table>
+<tr><td><font color=blue>ウイルスの感染確率</font></td><td>1</td></tr>
+<tr><td><font color=blue>１期間で感染させるウイルスの最大数</font></td><td>1</td></tr>
+<tr><td><font color=red>初期感染確率</font></td><td>0.5</td></tr>
+<tr><td>土地の幅</font></td><td>20</td></tr>
+<tr><td>最大実行期間</font></td><td>100000</td></tr>
+</table>
+<h2 id=infection>感染者</h2><table class="graph"><tr>                                         <td><img src=img/HasVirus.png /></td></tr><tr>                                         <td><img src=img/HasVirus_mini.png /></td></tr><t>                                         <td><img src=img/HasVirus_last.png /></td></tr>                                         </table><br />
+<p>has_virus_0: ウイルス 0 に感染しているエージェント数</p>
+<p>has_virus_1: ウイルス 1 に感染しているエージェント数</p>
+<p>has_all_virusすべてのウイルスに感染しているエージェント数</p>
+<h2 id=immunity>免疫獲得者</h2><table class="graph"><tr>                                         <td><img src=img/HasImmunity.png /></td></tr><tr>                                         <td><img src=img/HasImmunity_mini.png /></td></tr><t>                                         <td><img src=img/HasImmunity_last.png /></td></tr>                                         </table><br />
+<p>has_virus_0: ウイルス 0 への免疫を獲得しているエージェント数</p>
+<p>has_virus_1: ウイルス 1 への免疫を獲得しているエージェント数</p>
+<p>has_all_virusすべてのウイルスへの免疫を獲得しているエージェント数</p>
+<h2 id=sir>SIR</h2><table class="graph"><tr>                                         <td><img src=img/SIR.png /></td></tr><tr>                                         <td><img src=img/SIR_mini.png /></td></tr><t>                                         <td><img src=img/SIR_last.png /></td></tr>                                         </table><br />
+I: すべてのウイルスに感染しているエージェント数R: すべてのウイルスに対して免疫を獲得しているエージェント数<table class="graph"><tr>                                         <td><img src=img/SIR_RATIO.png /></td></tr><tr>                                         <td><img src=img/SIR_RATIO_mini.png /></td></tr><t>                                         <td><img src=img/SIR_RATIO_last.png /></td></tr>                                         </table><br />
+I/POPULATION: すべてのウイルスに感染しているエージェント数 / その時点での総エージェント数R/POPULATION: すべてのウイルスに対して免疫を獲得しているエージェント数 / その時点での総エージェント数<h2 id=sir_0>SIR about virus_0</h2><table class="graph"><tr>                                         <td><img src=img/SIR_0.png /></td></tr><tr>                                         <td><img src=img/SIR_0_mini.png /></td></tr><t>                                         <td><img src=img/SIR_0_last.png /></td></tr>                                         </table><br />
+I: ウイルス 0 に感染しているエージェント数R: ウイルス 0 に対して免疫を獲得しているエージェント数<table class="graph"><tr>                                         <td><img src=img/SIR_0_RATIO.png /></td></tr><tr>                                         <td><img src=img/SIR_0_RATIO_mini.png /></td></tr><t>                                         <td><img src=img/SIR_0_RATIO_last.png /></td></tr>                                         </table><br />
+I/POPULATION: ウイルス 0 に感染しているエージェント数 / その時点での総エージェント数R/POPULATION: ウイルス 0 に対して免疫を獲得しているエージェント数 / その時点での総エージェント数<h2 id=contact>接触回数</h2><table class="graph"><tr>                                         <td><img src=img/Contact.png /></td></tr><tr>                                         <td><img src=img/Contact_mini.png /></td></tr><t>                                         <td><img src=img/Contact_last.png /></td></tr>                                         </table><br />
+contact: 総接触回数<p>infection_contact_0: ウイルス 0 を感染させた接触回数</p>
+<p>infection_contact_1: ウイルス 1 を感染させた接触回数</p>
+<table class="graph"><tr>                                         <td><img src=img/ContactRatio.png /></td></tr><tr>                                         <td><img src=img/ContactRatio_mini.png /></td></tr><t>                                         <td><img src=img/ContactRatio_last.png /></td></tr>                                         </table><br />
+ratio: 何らかのウイルスを感染させた接触回数 / 総接触回数</code></html></body>

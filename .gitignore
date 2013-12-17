@@ -8,10 +8,6 @@ tags
 core
 log
 
-auto.plt
-quick.plt
-RESULT.html
-
 bin/
 
 __*
