@@ -557,7 +557,7 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
         << ENDL;
     // SIR_RATIO
     OFS_TITLE( SIR_RATIO, Term, Ratio );
-    OFSS( set yrange[0:1] );
+    OFSS( set yrange[0:1]; );
 
     OFS_PLOT( "SIR_RATIO.png" )
         << HAS_VIRUS_OUTPUT
@@ -575,7 +575,7 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
 
     // SIR_0_RATIO
     OFS_TITLE( SIR_0_RATIO, Term, Ratio );
-    OFSS( set yrange[0:1] );
+    OFSS( set yrange[0:1]; );
 
     OFS_PLOT( "SIR_0_RATIO.png" )
         << HAS_VIRUS_OUTPUT
@@ -626,7 +626,7 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
 
     // SIR_RATIO_mini
     OFS_TITLE( SIR_RATIO, Term, Ratio );
-    OFSS( set yrange[0:1] );
+    OFSS( set yrange[0:1]; );
 
     OFS_PLOT_PERIOD( "SIR_RATIO_mini.png", 0, MINI_SIZE_TERM )
         << HAS_VIRUS_OUTPUT
@@ -642,7 +642,7 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
 
     // SIR_0_RATIO_mini
     OFS_TITLE( SIR_0_RATIO, Term, Ratio );
-    OFSS( set yrange[0:1] );
+    OFSS( set yrange[0:1]; );
 
     OFS_PLOT_PERIOD( "SIR_0_RATIO_mini.png", 0, MINI_SIZE_TERM )
         << HAS_VIRUS_OUTPUT
@@ -832,7 +832,6 @@ void FileFactory :: generateResultHtml( int t ) {
 
     std::ofstream ofs( FNAME_RESULT_HTML );
 
-
     /*-----------------------------------------------------------------------------
      *  目次
      *-----------------------------------------------------------------------------*/
@@ -849,13 +848,15 @@ void FileFactory :: generateResultHtml( int t ) {
     OFS( "<li><a href=#contact>接触回数</a></li>" );
     OFS( "</ul>" );
 
-
     /*-----------------------------------------------------------------------------
      *  設定
      *-----------------------------------------------------------------------------*/
-    OFS( "<h2 id=config>設定</h2>" );
+    OFSS(<h2 id=config>設定</h2>);
+
+    OFSS(<div id="config">);
+    OFSS(<div id="left">);
     // table
-    OFS_LINE( "<table>" );                                           /* テーブル */
+    OFSS( <table> );
 #ifdef RANDOM_LOCATE                                                 /* 移動方法 */
     OFS_TD( "[ 移動 ]", "土地にランダムに再配置される" );
 #else
@@ -884,14 +885,13 @@ void FileFactory :: generateResultHtml( int t ) {
     OFS_LINE( "<th width=200px></th><th width=100px align=center>タグ長</th><th width=100px>数</th><th width=300px>取り付く位置<br />(左から012...)</th>" );
     OFS_LINE( "</tr>" );
 
-    FOR( i, admin_->virus_.size() ) {
+    FOR( i, admin_->virus_.size() ) {                                /* ウイルスの種類を表示 */
         switch( (*admin_->virus_[i]).getSearchType() ) {
             case __NORMAL__:
                 OFS_LINE( "<tr>" );
                 OFS_LINE( "<td><font color=blue>通常ウイルス</td><td>"<<(*admin_->virus_[i]).getLen()
                         <<"</td><td>"<<1<<"</td>" );
                 OFS_LINE( "</tr>" );
-                OFS_LINE( "<tr>" );
                 break;
             case __FIXED__:
                 OFS_LINE( "<tr>" );
@@ -899,18 +899,16 @@ void FileFactory :: generateResultHtml( int t ) {
                         <<"</td><td>"<<1
                         <<"</td><td>"<<(*admin_->virus_[i]).searchStartPoint(0) );
                 OFS_LINE( "</tr>" );
-                OFS_LINE( "<tr>" );
                 break;
             default:
                 OFS_LINE( "<tr>" );
                 OFS_LINE( "<td><font color=blue>---</td><td>---</td><td>---</td><td>" );
                 OFS_LINE( "</tr>" );
-                OFS_LINE( "<tr>" );
                 break;
         }
     }
 
-    OFS_LINE( "<td><font color=red>エージェント</td><td>"<<TAG_LEN_A
+    OFS_LINE( "<tr><td><font color=red>エージェント</td><td>"<<TAG_LEN_A
             <<"</td><td>"<<INIT_NUM_A<<"</td>" );
     OFS_LINE( "</tr></table>" );
 
@@ -934,10 +932,16 @@ void FileFactory :: generateResultHtml( int t ) {
 #ifdef __unix__
     OFS_TD( "計算時間</font>", Benchmark::Instance().getTime() );
 #endif
-    OFS_LINE( "</table>" );
+    OFSS( </table> );
+
+    OFSS( </div> );
+
+    OFSS( <div id="right"> );                                         /* 注釈 */
+    OFSS( <iframe src="note.html">注釈</iframe> );
+    OFSS( </div> );
+    OFSS( </div> );
 
 #if defined(AGING_AGENT) || defined( MATING_AGENT)
-
     /*-----------------------------------------------------------------------------
      *  人口
      *-----------------------------------------------------------------------------*/

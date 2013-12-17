@@ -66,10 +66,10 @@ pack:
 	@$(COPY) $(BIN)/script/*.plt $(NOW)/script
 	@$(COPY) $(BIN)/img/*.png $(NOW)/img
 	@$(COPY) include/Global.h src/main.cpp $(NOW)/src
-	@cd $(BIN); $(COPY) RESULT.html result.css main.out ../$(NOW)
+	@cd $(BIN); $(COPY) note.html RESULT.html result.css main.out ../$(NOW)
 	@tree $(NOW)
 
-$(BIN)/main.o: Global.h Function.h Agent.h Virus.h Landscape.h Monitor.h Administrator.h
+$(BIN)/main.o: Global.h Function.h Agent.h Virus.h Landscape.h Monitor.h Administrator.h FileFactory.h
 $(BIN)/Administrator.o: Global.h Function.h Administrator.h Agent.h Virus.h Landscape.h Monitor.h
 $(BIN)/Monitor.o: Monitor.h Global.h
 $(BIN)/TagInterface.o: TagInterface.h Global.h
@@ -78,3 +78,10 @@ $(BIN)/Virus.o: Global.h Virus.h Function.h TagInterface.h
 $(BIN)/Landscape.o: Landscape.h
 $(BIN)/Function.o: Function.h
 $(BIN)/FileFactory.o: Administrator.h Agent.h Virus.h Global.h
+
+Administrator.h: Global.h
+Agent.h: Global.h TagInterface.h Virus.h
+Virus.h: TagInterface.h
+Landscape.h: Global.h
+TagInterface.h: Global.h
+Function.h: Global.h

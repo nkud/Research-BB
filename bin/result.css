@@ -1,4 +1,4 @@
-table {
+table, iframe {
     width: 400px;
     border: 0.1em #eee solid;
 }
@@ -17,9 +17,24 @@ h2,h3 {
     background: #ccc;
     color: white;
     padding: 0.5em;
+    clear: both;
 }
 p {
     margin: 0 5em;
     font-size: 1.0em;
 }
 
+#config {
+    width: auto;
+}
+
+#left {
+    float: left;
+    width: 400px;
+}
+
+#right {
+    float: left;
+    width: auto;
+    margin-left: 1em;
+}
