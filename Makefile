@@ -66,7 +66,7 @@ pack:
 	@$(COPY) $(BIN)/script/*.plt $(NOW)/script
 	@$(COPY) $(BIN)/img/*.png $(NOW)/img
 	@$(COPY) include/Global.h src/main.cpp $(NOW)/src
-	@cd $(BIN); $(COPY) note.html RESULT.html result.css main.out ../$(NOW)
+	@cd $(BIN); $(COPY) note.html RESULT.html result.css ../$(NOW)
 	@tree $(NOW)
 
 $(BIN)/main.o: Global.h Function.h Agent.h Virus.h Landscape.h Monitor.h Administrator.h FileFactory.h

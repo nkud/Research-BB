@@ -28,7 +28,7 @@
 /*-----------------------------------------------------------------------------
  *  マクロ
  *-----------------------------------------------------------------------------*/
-#define IMG_SIZE(w, h)                  #w << "," << #h
+#define IMG_SIZE                        "1200,200"
 
 #define OFS(str)                        do { ofs<< str; }while(0);
 #define OFSS(str)                       ofs << #str << std::endl;
@@ -47,7 +47,7 @@
 
 #define QUO(str)                        "\"" << str << "\""
 
-#define OFS_TITLE(t, x, y)              OFSS( set title #t ) OFSS( set xl #x ) OFSS( set yl #y )
+#define OFS_TITLE(t, x, y)              OFSS( set title #t ) OFSS( set xl #x ) OFSS( set yl #y ) OFSS( set key box below right )
 
 #define OFS_PLOT_PERIOD(png, b, e)             ofs << "set output " << #png << ";plot [" << b << ":" << e << "] "
 #define OFS_PLOT(png)                   ofs << "set output " << #png << ";plot "
@@ -58,11 +58,15 @@
 /*-----------------------------------------------------------------------------
  *  スタイル
  *-----------------------------------------------------------------------------*/
-#define LINE_STYLE                      " with l "
+#define LINE_STYLE                      " with l lw 2 "
+//#define LINE_STYLE_2                    " with p pt 7 ps 2 "
+#define LINE_STYLE_2                    " with i lt 0 lw 2 "
 #define FONT_STYLE                      " font \"helvetica, 20\" "
 #define TITLE(str)                      " title \"" << #str << "\" "
 #define TITLE_N(str, n)                 " title \"" << #str << n << "\" "
 #define USING(x,y)                      " using " << x << ":" << y << " "
+
+#define PLOT_STYLE                      OFSS( set style line 1 lw 2 );
 
 /*-----------------------------------------------------------------------------
  *  出力ファイル名
@@ -102,7 +106,7 @@ int max_term_in_interval( const int data[], int cursor, int len ) {
     return cursor + mt;
 }
 
-double average_period( const char *origin_fname ) {
+double average_cycle( const char *origin_fname ) {
     /*-----------------------------------------------------------------------------
      *  そのファイルの平均周期を求める
      *-----------------------------------------------------------------------------*/
@@ -160,9 +164,9 @@ double FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
             mt = temp;                                               /* 最大時刻を更新して */
             count = 1;                                               /* カウントを１に戻す */
         }
-        if( count == CHECK_INTERVAL ) {
-            if( i > TERM - MINI_SIZE_TERM - CHECK_INTERVAL           /* 最後の期間だけ */
-                    and mt+1 != TERM ) {                             /* 最後は入れず */ 
+        if( count == CHECK_INTERVAL and data[mt] != 0 ) {
+//            if( i > TERM - MINI_SIZE_TERM - CHECK_INTERVAL )       /* 最後の期間だけ */
+            if( mt+1 != TERM ) {                                     /* 最後はいれず */
                 ofs << mt+1 << SEPARATOR << data[mt] << std::endl;
             }
             mt = i + CHECK_INTERVAL - 1;
@@ -170,7 +174,7 @@ double FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
         }
     }
 
-    return average_period( fname );                                  /* 平均周期を返す */
+    return average_cycle( fname );                                  /* 平均周期を返す */
 }
 
 /*
@@ -318,9 +322,10 @@ void FileFactory :: generatePlotScriptForPng() const
 {
 
     std::ofstream ofs(AUTO_GPLOT_FILENAME);
+    PLOT_STYLE;
 
     ofs << "set terminal png size "
-        << IMG_SIZE(1000, 200) << std::endl;                         /* 画像のサイズを設定 */
+        << IMG_SIZE << std::endl;                         /* 画像のサイズを設定 */
 #if defined(AGING_AGENT) || defined(MATING_AGENT)
     // population
     scriptForPopulationPng(ofs);
@@ -346,80 +351,121 @@ void FileFactory :: generatePlotScriptForPng() const
 void FileFactory :: scriptForPopulationPng(std::ofstream &ofs) const {
     OFS_TITLE( Population, Term, Agent );
     OFS_PLOT( "Population.png" )
-        << POPULATION_OUTPUT << LINE_STYLE << TITLE( population ) << std::endl;
+        << POPULATION_OUTPUT
+        << LINE_STYLE
+        << TITLE( population )
+        << ENDL;
 
     /*-----------------------------------------------------------------------------
      *  Begin Term
      *-----------------------------------------------------------------------------*/
     OFS_TITLE( Population, Term, Agent );
     OFS_PLOT_PERIOD( "Population_mini.png", 0, MINI_SIZE_TERM )
-        << POPULATION_OUTPUT << LINE_STYLE << TITLE( population ) << std::endl;
+        << POPULATION_OUTPUT
+        << LINE_STYLE
+        << TITLE( population )
+        << ENDL;
 
     /*-----------------------------------------------------------------------------
      *  End Term
      *-----------------------------------------------------------------------------*/
     OFS_TITLE( Population, Term, Agent );
     OFS_PLOT_PERIOD( "Population_last.png", last_term_-MINI_SIZE_TERM, last_term_ )
-        << POPULATION_OUTPUT << LINE_STYLE << TITLE( population ) << std::endl;
+        << POPULATION_OUTPUT
+        << LINE_STYLE
+        << TITLE( population )
+        << ENDL;
 }
 void FileFactory :: scriptForHasVirusPng(std::ofstream &ofs) const {
 
     OFS_TITLE( HasVirus, Term, Agent );
+
     OFS_PLOT( "HasVirus.png" )
-        << HAS_VIRUS_OUTPUT << LINE_STYLE << TITLE( has_virus_0 ) << std::endl;
+        << HAS_VIRUS_OUTPUT
+        << LINE_STYLE
+        << TITLE( has_virus_0 )
+        << ENDL;
+
     FOR( i, NUM_V-1 ) {
         OFS_REPLOT( "HasVirus.png" )
-            << HAS_VIRUS_OUTPUT << USING(1, i+3) << LINE_STYLE
-            << TITLE_N( has_virus_, i+1 ) << std::endl;
+            << HAS_VIRUS_OUTPUT
+            << USING(1, i+3)
+            << LINE_STYLE
+            << TITLE_N( has_virus_, i+1 )
+            << ENDL;
     }
 
     OFS_REPLOT( "HasVirus.png" )
-        << HAS_VIRUS_OUTPUT << " using 1:" << NUM_V+2 << LINE_STYLE << TITLE( has_all_virus ) << std::endl;
+        << HAS_VIRUS_OUTPUT
+        << USING( 1, NUM_V+2 )
+        << LINE_STYLE
+        << TITLE( has_all_virus )
+        << ENDL;
     /*-----------------------------------------------------------------------------
      *  Begin Term
      *-----------------------------------------------------------------------------*/
     OFS_TITLE( HasVirus, Term, Agent );
 
     OFS_PLOT_PERIOD( "HasVirus_mini.png", 0, MINI_SIZE_TERM)
-        << HAS_VIRUS_OUTPUT << LINE_STYLE << TITLE( has_virus_0 ) << std::endl;
+        << HAS_VIRUS_OUTPUT
+        << LINE_STYLE
+        << TITLE( has_virus_0 )
+        << ENDL;
+
     FOR( i, NUM_V-1 ) {
         OFS_REPLOT( "HasVirus_mini.png" )
-            << HAS_VIRUS_OUTPUT << USING( 1, i+3 ) << LINE_STYLE
-            << TITLE_N( has_virus_, i+1 ) << std::endl;
+            << HAS_VIRUS_OUTPUT
+            << USING( 1, i+3 )
+            << LINE_STYLE
+            << TITLE_N( has_virus_, i+1 )
+            << ENDL;
     }
+
     OFS_REPLOT( "HasVirus_mini.png" )
-        << HAS_VIRUS_OUTPUT << USING( 1, NUM_V+2 ) << LINE_STYLE
-        << TITLE( has_all_virus ) << std::endl;
+        << HAS_VIRUS_OUTPUT
+        << USING( 1, NUM_V+2 )
+        << LINE_STYLE
+        << TITLE( has_all_virus )
+        << ENDL;
 
     /*-----------------------------------------------------------------------------
      *  End Term
      *-----------------------------------------------------------------------------*/
-    double ave_p = outputFile_peakSearch( HAS_VIRUS_FNAME );    /* ピークサーチする */
+    double ave_p = outputFile_peakSearch( HAS_VIRUS_FNAME );         /* ピークサーチする */
     OFS_TITLE( HasVirus, Term, Agent );
+
     ofs << "set title \"HasVirus ( "
         << ave_p << " [term cycle] / "
-        << averate_amplitude_ << " [amplitude])\"" /* 周期を表示 */
+        << averate_amplitude_ << " [amplitude])\""                   /* 周期を表示 */
         << ENDL;
 
 
     OFS_PLOT_PERIOD( "HasVirus_last.png", last_term_-MINI_SIZE_TERM, last_term_ )
-        << HAS_VIRUS_OUTPUT << LINE_STYLE << TITLE( has_virus_0 ) << std::endl;
+        << HAS_VIRUS_OUTPUT
+        << LINE_STYLE
+        << TITLE( has_virus_0 )
+        << ENDL;
     FOR( i, NUM_V-1 ) {
         OFS_REPLOT( "HasVirus_last.png" )
-            << HAS_VIRUS_OUTPUT << USING( 1, i+3 ) << LINE_STYLE
-            << TITLE_N( has_virus_, i+1 ) << std::endl;
+            << HAS_VIRUS_OUTPUT
+            << USING( 1, i+3 )
+            << LINE_STYLE
+            << TITLE_N( has_virus_, i+1 )
+            << ENDL;
     }
     OFS_REPLOT( "HasVirus_last.png" )
             << HAS_VIRUS_OUTPUT
-            << " using 1:" << NUM_V+2 << LINE_STYLE
-            << TITLE( has_all_virus ) << std::endl;
+            << " using 1:" << NUM_V+2
+            << LINE_STYLE
+            << TITLE( has_all_virus )
+            << ENDL;
 
     /*-----------------------------------------------------------------------------
      *  Peak
      *-----------------------------------------------------------------------------*/
     OFS_REPLOT( "HasVirus_last.png" )
-        << QUO( "PEAK_A_hasVirus.txt" )                           /* ピーク */
-        << " w p ps 1 "
+        << QUO( "PEAK_A_hasVirus.txt" )                              /* ピーク */
+        << LINE_STYLE_2
         << TITLE( peak )
         << ENDL;
 }
@@ -462,6 +508,7 @@ void FileFactory :: scriptForHasImmunityPng(std::ofstream &ofs) const {
         << LINE_STYLE
         << TITLE( has_immunity_0 )
         << ENDL;
+
     FOR( i, NUM_V-1 ) {
         OFS_REPLOT( "HasImmunity_mini.png" )
             << HAS_IMMUNITY_OUTPUT
@@ -514,7 +561,7 @@ void FileFactory :: scriptForHasImmunityPng(std::ofstream &ofs) const {
      *-----------------------------------------------------------------------------*/
     OFS_REPLOT( "HasImmunity_last.png" )
         << QUO( "PEAK_A_hasImmunity.txt" )                           /* ピーク */
-        << " w p ps 1 "
+        << LINE_STYLE_2
         << TITLE( peak )
         << ENDL;
 }
