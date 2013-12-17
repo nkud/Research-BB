@@ -9,7 +9,7 @@ MASTER	 = master
 
 CTAGS    = $(shell which ctags)
 
-NOW		 = $(shell date +"%m%d%I%M%S")
+NOW		 = $(shell date +"%m%d%H%M%S")
 
 OBJ      = $(addprefix bin/, $(SRC:.cpp=.o))
 LIB      = $(SRC:.cpp=.h)
