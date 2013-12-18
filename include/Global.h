@@ -19,16 +19,16 @@
  *  初期設定
  *
  *-----------------------------------------------------------------------------*/
-#ifdef __unix__
-    #define ___BENCHMARK
-#endif
-
-//#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
-
-#define RANDOM_LOCATE                                                /* ランダムに再配置する */
 //#define AGING_AGENT
 //#define MATING_AGENT
 //#define COUPLE_TAG                                                   /* カップルタグで子供を作る */
+#if defined(__unix__) || defined(__APPLE__)
+//    #define ___BENCHMARK
+#endif
+
+//#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
+//
+#define RANDOM_LOCATE                                                /* ランダムに再配置する */
 
 /* 期間 */
 const int TERM                        = 10000                   ;   /* 期間 */

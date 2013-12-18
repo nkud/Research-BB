@@ -46,7 +46,7 @@ class FileFactory {
         void outputFile_LastLog( const char * ) const;               /* ログを出力 */
 
         void outputFile_AveGotNewImmunityPeriod( const char * );     /* XXX: 不要 */
-        double outputFile_peakSearch( const char * ) const;                /* 出力: ピークサーチ */
+        double outputFile_peakSearch( const char * ) const;          /* 出力: ピークサーチ */
         /*-----------------------------------------------------------------------------
          *  計算結果確認用スクリプト出力
          *-----------------------------------------------------------------------------*/

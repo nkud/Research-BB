@@ -17,10 +17,6 @@
 #include <map>
 #include <fstream>
 
-#ifdef __unix__
-#include <sys/time.h>
-#endif
-
 class __TagInterface;
 
 /*
@@ -30,14 +26,6 @@ class __TagInterface;
  * =====================================================================================
  */
 class Monitor {
-    private:
-        Monitor(): term_(0), num_contact_(0) { }                     /* コンストラクタ */
-
-        int num_contact_;                                            /* 接触回数 */
-        std::map<__TagInterface *, int> num_infection_contact_;      /* 感染させた接触回数 */
-
-        int term_;
-
     public:
         /*-----------------------------------------------------------------------------
          *  ゲッタ
@@ -60,33 +48,14 @@ class Monitor {
          *-----------------------------------------------------------------------------*/
         void setTerm( int t );                                       /* 期間を取得 */
         int getTerm() const;                                         /* 期間を返す */
-};
 
-#ifdef __unix__
-/*
- * =====================================================================================
- *        Class:  Benchmark
- *  Description:  ベンチマーク
- *                シングルトンパターン
- * =====================================================================================
- */
-class Benchmark {
     private:
-        Benchmark() {}
+        Monitor(): term_(0), num_contact_(0) { }                     /* コンストラクタ */
 
-        struct timeval tv_;                                          /* 計測開始時間 */
-        double start_;                                               /* 計測終了時間 */
-        double end_;
-    public:
-        static Benchmark& Instance();                                /* インスタンスを返す */
+        int num_contact_;                                            /* 接触回数 */
+        std::map<__TagInterface *, int> num_infection_contact_;      /* 感染させた接触回数 */
 
-        void startTimer();                                           /* 計測開始する */
-        void stopTimer();                                            /* 計測終了する */
-
-        double getTime() const;                                      /* 計測時間を返す */
-        void printTime() const;                                      /* 計測時間を表示 */
-        void printElapsedTime();                                     /* 計測時間を表示 */
+        int term_;
 };
-#endif
 
 #endif

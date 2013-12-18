@@ -27,6 +27,9 @@ using namespace std;
 #include "Administrator.h"
 #include "FileFactory.h"
 
+#ifdef ___BENCHMARK
+    #include "Benchmark.h"
+#endif
 
 /*-----------------------------------------------------------------------------
  *
@@ -35,7 +38,7 @@ using namespace std;
  *-----------------------------------------------------------------------------*/
 int main()
 {
-#ifdef __unix__
+#ifdef ___BENCHMARK
     Benchmark::Instance().startTimer();                              /* ベンチマーク計測開始 */
 #endif
     srand( (unsigned int)time(NULL)/2 );                             /* 乱数初期化 */
@@ -50,10 +53,10 @@ int main()
     }
     /* ウイルス */
     VECTOR(Virus *) virus;
-    virus.push_back( new Virus( 16, new Normal ) );                 /* 通常ウイルスを追加 */
-    virus.push_back( new Virus( 16, new Normal ) );                  /* 通常ウイルスを追加 */
-//    virus.push_back( new Virus( 5, new Fixed(0) ) );                /* 固定ウイルスを追加 */
-//    virus.push_back( new Virus( 20, new Fixed(0) ) );               /* 固定ウイルスを追加 */
+//    virus.push_back( new Virus( 16, new Normal ) );                 /* 通常ウイルスを追加 */
+//    virus.push_back( new Virus( 12, new Normal ) );                  /* 通常ウイルスを追加 */
+    virus.push_back( new Virus( 14, new Fixed(0) ) );                /* 固定ウイルスを追加 */
+    virus.push_back( new Virus( 10, new Fixed(10) ) );               /* 固定ウイルスを追加 */
     /* 土地 */
     Landscape landscape;                                             /* ランドスケープ初期化 */
 
@@ -125,7 +128,7 @@ int main()
     ff.outputFile_LastLog( "Log.txt" );                              /* プログラムの初期設定など出力 */
     admin.printInitInfo();                                           /* 初期状態を表示 */
 
-#ifdef __unix__
+#ifdef ___BENCHMARK
     Benchmark::Instance().stopTimer();                               /* ベンチマークの計測終了 */
     Benchmark::Instance().printTime();                               /* 計測時間表示 */
 #endif

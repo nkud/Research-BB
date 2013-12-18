@@ -15,7 +15,7 @@ OBJ      = $(addprefix bin/, $(SRC:.cpp=.o))
 LIB      = $(SRC:.cpp=.h)
 
 TARGET   = main.out
-SRC      = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp Monitor.cpp Administrator.cpp Landscape.cpp FileFactory.cpp
+SRC      = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp Monitor.cpp Administrator.cpp Landscape.cpp FileFactory.cpp Benchmark.cpp
 
 VPATH    = src include
 CPPFLAGS = -I include
@@ -50,7 +50,6 @@ all: $(BIN)/$(TARGET) run plot
 
 plot :
 	@$(PRINT) '>>> Plotting...'
-	@-cd $(BIN); python peak_search.py
 	@-cd $(BIN); gnuplot auto.plt
 	@cd $(BIN); mkdir -p txt;  mv *.txt txt
 	@cd $(BIN); mkdir -p img;  mv *.png img
@@ -80,6 +79,7 @@ $(BIN)/Virus.o: Global.h Virus.h Function.h TagInterface.h
 $(BIN)/Landscape.o: Landscape.h
 $(BIN)/Function.o: Function.h
 $(BIN)/FileFactory.o: Administrator.h Agent.h Virus.h Global.h
+$(BIN)/Benchmark.o: Benchmark.h
 
 Administrator.h: Global.h
 Agent.h: Global.h TagInterface.h Virus.h
@@ -87,3 +87,4 @@ Virus.h: TagInterface.h
 Landscape.h: Global.h
 TagInterface.h: Global.h
 Function.h: Global.h
+Benchmark: Benchmark.h

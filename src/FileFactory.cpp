@@ -59,8 +59,8 @@
  *  スタイル
  *-----------------------------------------------------------------------------*/
 #define LINE_STYLE                      " with l lw 2 "
-//#define LINE_STYLE_2                    " with p pt 7 ps 2 "
 #define LINE_STYLE_2                    " with i lt 0 lw 2 "
+//#define LINE_STYLE_2                    " with p ps 2 "
 #define FONT_STYLE                      " font \"helvetica, 20\" "
 #define TITLE(str)                      " title \"" << #str << "\" "
 #define TITLE_N(str, n)                 " title \"" << #str << n << "\" "
@@ -151,7 +151,7 @@ double FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
             if( vmin > v ) vmin = v;                                 /* 最小値 */
         }
     }
-    averate_amplitude_ = vmax - vmin;                                    /* 平均振幅＝最大値−最小値 */
+    averate_amplitude_ = vmax - vmin;                                /* 平均振幅＝最大値−最小値 */
 
     int mt = 0;                                                      /* その期間での最大時刻 */
     int count = 1;                                                   /* カウンタ */
