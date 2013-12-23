@@ -1,0 +1,6 @@
+body {
+}
+table {
+    font-style: monospace, serif;
+    border: double 0.2em #ccc;
+}
