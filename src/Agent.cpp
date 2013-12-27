@@ -52,8 +52,8 @@ Agent :: Agent() :
 
     age_ = rand_interval_int( 0, MAX_AGE );                          /* 寿命をランダムに設定 */
 
-    (*vlist_).reserve( NUM_V );                                      /* 領域確保 */
-    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
+//    (*vlist_).reserve( NUM_V );                                      /* 領域確保 */
+//    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
 }
 
 /* デストラクタ */

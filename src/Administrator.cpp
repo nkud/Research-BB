@@ -400,7 +400,7 @@ int Administrator :: numHasAllVirus() const {
 
     ITERATOR(Agent *) it_a = agent_.begin();
     while( it_a != agent_.end() ) {                                  /* エージェント全員に対して */
-        if( (*it_a)->numHoldingVirus() == NUM_V ) {                  /* 全ウイルスを保持していれば */
+        if( (*it_a)->numHoldingVirus() == virus_.size() ) {                  /* 全ウイルスを保持していれば */
             ret++;                                                   /* 数える */
         }
         it_a++;
@@ -419,7 +419,7 @@ int Administrator :: numHasAllImmunity() const {
 
     ITERATOR(Agent *) it_a = agent_.begin();                         /* エージェントの先頭から */
     while( it_a != agent_.end() ) {                                  /* 末尾まで */
-        FOR( j, NUM_V ) {                                            /* すべてのウイルスに関して調べる */
+        FOR( j, virus_.size() ) {                                            /* すべてのウイルスに関して調べる */
             if( ! (*it_a)->hasImmunity( *virus_[ j ] ) ) {            /* もし免疫を持っていなければ */
                 flag = 0;                                            /* フラッグを下ろして */
                 break;                                               /* ループを抜ける */
@@ -458,10 +458,10 @@ void Administrator :: printInitInfo() const {
     std::cout << "WIDTH:" << WIDTH << std::endl;                     /* 幅 */
     std::cout << "\nNUM_A:\t\t" << agent_.size() << std::endl;
     std::cout << "TAG_LEN_A:\t" << TAG_LEN_A << std::endl;
-    std::cout << "\nNUM_V:\t\t" << NUM_V << std::endl;
+    std::cout << "\nNUM_V:\t\t" << virus_.size() << std::endl;
 
     std::cout << "VIRUS:" << std::endl;                              /* ウイルス情報 */
-    FOR(i,NUM_V) { std::cout<<"\trate_"<<i<<":\t"<<(*virus_[i]).getRate();
+    FOR(i,virus_.size()) { std::cout<<"\trate_"<<i<<":\t"<<(*virus_[i]).getRate();
         std::cout<<"\tlen_"<<i<<":\t"<<(*virus_[i]).getLen()<<std::endl; }
-    FOR( i, NUM_V ) (*virus_[ i ]).printTag();                          /* 全ウイルスのタグを表示 */
+    FOR( i, virus_.size() ) (*virus_[ i ]).printTag();                          /* 全ウイルスのタグを表示 */
 }
