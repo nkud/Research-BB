@@ -23,7 +23,7 @@
 //#define MATING_AGENT
 //#define COUPLE_TAG                                                   /* カップルタグで子供を作る */
 #if defined(__unix__) || defined(__APPLE__)
-//    #define ___BENCHMARK
+    #define ___BENCHMARK
 #endif
 
 //#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */

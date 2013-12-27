@@ -21,6 +21,7 @@
 #include "Virus.h"
 #include "Global.h"
 #include "Monitor.h"
+#include "Benchmark.h"
 
 #define AUTO_GPLOT_FILENAME     "auto.plt"
 #define FNAME_RESULT_HTML       "RESULT.html"
@@ -976,8 +977,8 @@ void FileFactory :: generateResultHtml( int t ) {
 #endif
     OFS_TD( "土地の幅</font>", WIDTH );
     OFS_TD( "最大実行期間</font>", TERM );
-#ifdef __unix__
-    OFS_TD( "計算時間</font>", Benchmark::Instance().getTime() );
+#ifdef ___BENCHMARK
+    OFS_TD( "計算時間( sec )</font>", Benchmark::Instance().getTime() );
 #endif
     OFSS( </table> );
 

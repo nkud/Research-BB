@@ -16,9 +16,6 @@
  * =====================================================================================
  */
 
-#ifndef ___BENCHMARK
-#define ___BENCHMARK
-
 #include <sys/time.h>
 
 /*
@@ -46,5 +43,3 @@ class Benchmark {
         double start_;                                               /* 計測終了時間 */
         double end_;
 };
-
-#endif
