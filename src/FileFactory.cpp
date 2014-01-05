@@ -36,7 +36,7 @@
 
 #define OFS_P(str)                      do { ofs<<"<p>"<<str<<"</p>"<<std::endl; }while(0);
 #define OFS_LINE(str)                   do { ofs<< str << std::endl; }while(0);
-#define OFS_IMG_MINI(img,mini,last)  do { ofs<<"<table class=\"graph\"><tr> \
+#define OFS_IMG_MINI(img,mini,last)     do { ofs<<"<table class=\"graph\"><tr> \
                                         <td><img src=img/"<<img<<" /></td></tr><tr> \
                                         <td><img src=img/"<<mini<<" /></td></tr><t> \
                                         <td><img src=img/"<<last<<" /></td></tr> \
@@ -46,7 +46,7 @@
 
 #define QUO(str)                        "\"" << str << "\""
 
-#define OFS_TITLE(t, x, y)              OFSS( set title #t ) OFSS( set xl #x ) OFSS( set yl #y ) OFSS( set key box below right )
+#define OFS_TITLE(t, x, y)              OFSS( set title #t ) OFSS( set xl #x ) OFSS( set yl #y ) OFSS( set key box below left )
 
 #define OFS_PLOT_PERIOD(png, b, e)             ofs << "set output " << #png << ";plot [" << b << ":" << e << "] "
 #define OFS_PLOT(png)                   ofs << "set output " << #png << ";plot "
