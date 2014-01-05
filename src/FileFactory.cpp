@@ -59,7 +59,7 @@
  *-----------------------------------------------------------------------------*/
 #define LINE_STYLE                      " with l lw 2 "
 // #define LINE_STYLE_2                    " with i lt 0 lw 2 "
-#define LINE_STYLE_2                    " with p ps 2 "
+#define LINE_STYLE_2                    " with p ps 2 pt 4 "
 #define FONT_STYLE                      " font \"helvetica, 20\" "
 #define TITLE(str)                      " title \"" << #str << "\" "
 #define TITLE_N(str, n)                 " title \"" << #str << n << "\" "
