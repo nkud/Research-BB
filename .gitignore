@@ -8,6 +8,6 @@ core
 log
 
 bin/
-master/*
+master/
 
 __*
