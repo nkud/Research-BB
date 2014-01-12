@@ -22,6 +22,7 @@
 //#define AGING_AGENT
 //#define MATING_AGENT
 //#define COUPLE_TAG                                                   /* カップルタグで子供を作る */
+
 #if defined(__unix__) || defined(__APPLE__)
     #define ___BENCHMARK
 #endif
@@ -31,7 +32,7 @@
 #define RANDOM_LOCATE                                                /* ランダムに再配置する */
 
 /* 期間 */
-const int TERM                        = 10000                   ;   /* 期間 */
+const int TERM                        = 10000                   ;    /* 期間 */
 const int OUTPUT_INTERVAL             = 1                     ;      /* 出力する間隔 */
 const int MINI_SIZE_TERM              = 200;
 
@@ -43,18 +44,18 @@ const int TAG_LEN_V                   = 16                    ;      /* ウイ�
 // const int NUM_V                       = 1                      ;     /* ウイルスの種類 */
 const double INFECTION_RATE           = 1.0                  ;       /* デフォルトの感染率 */
 
-const int MAX_VIRUS_AGENT_HAVE        = 1                 ;      /* 最大保持ウイルス */
+const int MAX_VIRUS_AGENT_HAVE        = 1                 ;          /* 最大保持ウイルス */
 const int MAX_V_AGENT_INFECT_ONT_TIME = 1                 ;          /* １期間で感染させるウイルスの最大数 */
 
 /* エージェント */                                                          
 const int TAG_LEN_A                   = 20                    ;      /* エージェントのタグ長 */
-const int INIT_NUM_A                  = 1000                  ;       /* 初期エージェントの数 */
+const int INIT_NUM_A                  = 1000                  ;      /* 初期エージェントの数 */
 const double INIT_INFECTED_RATIO      = 0.3                   ;      /* 初期感染率 */
 
 const int MAX_NUM_A                   = 30000                 ;      /* 最大エージェント数 */
 
 /* 移動 config */                                                    /* 移動専用の設定 -------------------- */
-const int MOVE_DISTANCE               = 2                     ;      /* エージェントの移動距離 */
+const int MOVE_DISTANCE               = 10                     ;     /* エージェントの移動距離 */
 
 /* 寿命 config */                                                   /* 老化専用の設定 -------------------- */
 const int MAX_AGE                     = 80                    ;      /* 寿命 */
