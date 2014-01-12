@@ -75,8 +75,8 @@ void Landscape :: registAgent( const int x, const int y, Agent &a ) {
     agent_map_[ x ][ y ].push_back( &a );                            /* エージェントを登録 */
 }
 void Landscape :: removeAgent( const int x, const int y, Agent &a ) {
-    ITERATOR(Agent *) it_a = getLandscapeIteratorBeginAt( x, y );    /* 指定の場所の配列の先頭から */
-    while( it_a != getLandscapeIteratorEndAt( x, y ) ) {             /* 末尾まで */
+    ITERATOR(Agent *) it_a = getAgentIteratorBeginAt( x, y );    /* 指定の場所の配列の先頭から */
+    while( it_a != getAgentIteratorEndAt( x, y ) ) {             /* 末尾まで */
         if( *it_a == &a ) {                                          /* エージェントを探して */
             agent_map_[x][y].erase( it_a );                          /* 削除する */
             return;                                                  /* 終了 */
@@ -94,5 +94,5 @@ void Landscape :: removeAgent( const int x, const int y, Agent &a ) {
  *               指定の場所のエージェント配列の先頭・末尾へのイテレータを返す
  *--------------------------------------------------------------------------------------
  */
-ITERATOR(Agent *) Landscape :: getLandscapeIteratorBeginAt(int x, int y) { return agent_map_[x][y].begin(); }
-ITERATOR(Agent *) Landscape :: getLandscapeIteratorEndAt(int x, int y) { return agent_map_[x][y].end(); }
+ITERATOR(Agent *) Landscape :: getAgentIteratorBeginAt(int x, int y) { return agent_map_[x][y].begin(); }
+ITERATOR(Agent *) Landscape :: getAgentIteratorEndAt(int x, int y) { return agent_map_[x][y].end(); }

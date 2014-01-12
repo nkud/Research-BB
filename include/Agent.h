@@ -75,7 +75,7 @@ class Agent : public __TagInterface
         std::map< __TagInterface *, int > count_get_new_immunity_virus_;
 
         /*-----------------------------------------------------------------------------
-         *  保持ウイルス操作するセット
+         *  保持ウイルス操作セット
          *-----------------------------------------------------------------------------*/
         VirusData *getVirusDataAt( int ) const;                      /* 指定の保持ウイルスを返す */
         int getVirusListSize() const;                                /* 保持ウイルスのリストを返す */
@@ -115,8 +115,8 @@ class Agent : public __TagInterface
         int aging();                                                 /* 年をとる */
         int getAge() const;
         void setLife( __LABEL__ life );
-        bool isAlive() const;
-        bool isDead() const;
+//        bool isAlive() const;
+//        bool isDead() const;
 
         bool hasAlreadyGiveBirth();                                  /* 出産済みかどうか */
         void setGiveBirth();                                         /* 出産後にする */

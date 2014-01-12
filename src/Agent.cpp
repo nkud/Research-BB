@@ -134,8 +134,8 @@ __LABEL__ Agent :: getSex() const { return sex_; }
 int Agent :: getAge() const { return age_; }
 
 void Agent :: setLife( __LABEL__ l ) { life_ = l; }
-bool Agent :: isAlive() const { if( life_ == __ALIVE__ ) return true; else return false; }
-bool Agent :: isDead() const { if( life_ == __DEATH__ ) return false; else return true; }
+//bool Agent :: isAlive() const { if( life_ == __ALIVE__ ) return true; else return false; }
+//bool Agent :: isDead() const { if( life_ == __DEATH__ ) return false; else return true; }
 
 /*
  *--------------------------------------------------------------------------------------

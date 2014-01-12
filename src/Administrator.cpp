@@ -124,8 +124,8 @@ void Administrator :: matingAgant() {
                 ty = ay + j;
                 landscape_->putBackOnMap( tx, ty );                              /* 土地からはみ出てたら土地の上に戻す */
 
-                ITERATOR(Agent *) it_partner= landscape_->getLandscapeIteratorBeginAt( tx, ty );
-                while( it_partner!= landscape_->getLandscapeIteratorEndAt( tx, ty ) )
+                ITERATOR(Agent *) it_partner= landscape_->getAgentIteratorBeginAt( tx, ty );
+                while( it_partner!= landscape_->getAgentIteratorEndAt( tx, ty ) )
                 {                                                    /* 自分の近隣にいる人から */
                     if( agent_.size()+new_child_.size() >= MAX_NUM_A ) { /* 最大エージェントをこえそうなら */
                         break;                                       /* 終了 */
@@ -327,8 +327,8 @@ void Administrator :: contactAgent() {
                 ty = ay + j;
                 landscape_->putBackOnMap( tx, ty );
 
-                ITERATOR(Agent *) it = landscape_->getLandscapeIteratorBeginAt( tx, ty );
-                while( it != landscape_->getLandscapeIteratorEndAt( tx, ty ) )
+                ITERATOR(Agent *) it = landscape_->getAgentIteratorBeginAt( tx, ty );
+                while( it != landscape_->getAgentIteratorEndAt( tx, ty ) )
                 {                                                    /* その位置にいる人全員に */
                     VirusData *tvdata =                              /* ランダムに保持ウイルスから選んで */
                         (*it_myself)->getVirusDataAt( rand_array((*it_myself)->getVirusListSize()) );

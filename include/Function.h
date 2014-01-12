@@ -16,14 +16,20 @@
 
 #include "Global.h"
 
-// tag set
+/*-----------------------------------------------------------------------------
+ *  タグ操作セット
+ *-----------------------------------------------------------------------------*/
 int flip_once( tag_t * const, const tag_t * const, const int );      /* 一回だけフリップ */
 
-// hamming set
+/*-----------------------------------------------------------------------------
+ *  ハミング距離関係関数セット
+ *-----------------------------------------------------------------------------*/
 int ham_distance( const int * const, const int * const, const int ); /* ハミング距離を計算 */
 int min_ham_distance_point( const int * const, const int * const, const int, const int );                /* ハミング距離が最小になる位置を返す */
 
-// randomize set
+/*-----------------------------------------------------------------------------
+ *  乱数用関数セット
+ *-----------------------------------------------------------------------------*/
 int rand_interval_int( const int, const int );                       /* 整数の幅の乱数を返す */
 double rand_interval_double( const double, const double );           /* 浮動小数点の幅の乱数を返す */
 int rand_array( const int );                                         /* ０から整数までの乱数を返す */

@@ -20,6 +20,13 @@
 
 class Agent;
 
+
+/*
+ * =====================================================================================
+ *        Class:  Landscape
+ *  Description:  エージェントを配置する土地
+ * =====================================================================================
+ */
 class Landscape {
     public:
 
@@ -36,8 +43,8 @@ class Landscape {
         void clearAgentMap();                                        /* マップを初期化 */
         void registAgent( int x, int y, Agent & );                   /* エージェントを登録 */
         void removeAgent( int x, int y, Agent & );                   /* エージェントを削除 */
-        ITERATOR(Agent *) getLandscapeIteratorBeginAt( int, int );   /* 指定の場所にいるエージェントの配列の先頭 */
-        ITERATOR(Agent *) getLandscapeIteratorEndAt( int, int );     /* 指定の場所にいるエージェントの配列の末尾 */
+        ITERATOR(Agent *) getAgentIteratorBeginAt( int, int );   /* 指定の場所にいるエージェントの配列の先頭 */
+        ITERATOR(Agent *) getAgentIteratorEndAt( int, int );     /* 指定の場所にいるエージェントの配列の末尾 */
 
     private:
         VECTOR(Agent *) agent_map_[WIDTH][WIDTH];                    /* エージェントの番号を登録する配列 */
