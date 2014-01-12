@@ -12,6 +12,7 @@
  */
 
 #include "Landscape.h"
+#include "Agent.h"
 
 #include <cassert>
  
@@ -34,6 +35,25 @@ void Landscape :: putBackOnMap( int &x, int &y) {
     while( y < 0 ) y += WIDTH;
     x %= WIDTH;
     y %= WIDTH;
+}
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Landscape :: putAgentOnMap( Agent & )
+ * Description:  土地からはみでたエージェントの位置を土地の上に戻す
+ *               壁の役割
+ *--------------------------------------------------------------------------------------
+ */
+void Landscape :: putAgentOnMap( Agent &a ) {
+    int x = a.getX();                                                /* 座標を取得する */
+    int y = a.getY();
+
+    while( x < 0 ) x += WIDTH;
+    while( y < 0 ) y += WIDTH;
+    x %= WIDTH;
+    y %= WIDTH;
+
+    a.setX( x );                                                     /* 座標を設定しなおす */
+    a.setY( y );
 }
 
 /*
@@ -75,8 +95,8 @@ void Landscape :: registAgent( const int x, const int y, Agent &a ) {
     agent_map_[ x ][ y ].push_back( &a );                            /* エージェントを登録 */
 }
 void Landscape :: removeAgent( const int x, const int y, Agent &a ) {
-    ITERATOR(Agent *) it_a = getAgentIteratorBeginAt( x, y );    /* 指定の場所の配列の先頭から */
-    while( it_a != getAgentIteratorEndAt( x, y ) ) {             /* 末尾まで */
+    ITERATOR(Agent *) it_a = getAgentIteratorBeginAt( x, y );        /* 指定の場所の配列の先頭から */
+    while( it_a != getAgentIteratorEndAt( x, y ) ) {                 /* 末尾まで */
         if( *it_a == &a ) {                                          /* エージェントを探して */
             agent_map_[x][y].erase( it_a );                          /* 削除する */
             return;                                                  /* 終了 */

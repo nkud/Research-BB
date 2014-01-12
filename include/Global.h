@@ -28,7 +28,7 @@
 
 //#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-//#define RANDOM_LOCATE                                                /* ランダムに再配置する */
+#define RANDOM_LOCATE                                                /* ランダムに再配置する */
 
 /* 期間 */
 const int TERM                        = 10000                   ;   /* 期間 */
@@ -54,7 +54,7 @@ const double INIT_INFECTED_RATIO      = 0.3                   ;      /* 初期�
 const int MAX_NUM_A                   = 30000                 ;      /* 最大エージェント数 */
 
 /* 移動 config */                                                    /* 移動専用の設定 -------------------- */
-const int MOVE_DISTANCE               = 5                     ;      /* エージェントの移動距離 */
+const int MOVE_DISTANCE               = 2                     ;      /* エージェントの移動距離 */
 
 /* 寿命 config */                                                   /* 老化専用の設定 -------------------- */
 const int MAX_AGE                     = 80                    ;      /* 寿命 */

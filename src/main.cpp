@@ -47,9 +47,12 @@ int main()
      *  初期化
      *-----------------------------------------------------------------------------*/
     /* エージェント */
+    Relocate *relocate = new Relocate;
+    RandomWalk *rwalk = new RandomWalk;
     VECTOR(Agent *) agent;                                           /* エージェントの配列 */
     FOR( i, INIT_NUM_A ) {                                           /* 初期エージェントの数だけ */
-        agent.push_back( new Agent );                                /* エージェントを初期化 */
+        agent.push_back( new Agent( relocate ) );
+//        agent.push_back( new Agent( rwalk ) );
     }
     /* ウイルス */
     VECTOR(Virus *) virus;
@@ -100,11 +103,8 @@ int main()
 #ifdef MATING_AGENT
         admin.matingAgant();                                         /* 交配、出産する */
 #endif
-#ifdef RANDOM_LOCATE
-        admin.relocateAgent();                                       /* 移動する */
-#else
+
         admin.moveAgent();                                           /* 移動する */
-#endif
         admin.contactAgent();                                        /* 近隣に接触する */
         admin.infectAgent();                                         /* 待機ウイルスを感染させる */
         admin.responseAgent();                                       /* 免疫応答（タグフリップ） */
@@ -114,7 +114,10 @@ int main()
         ff.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ; /* 出力：免疫獲得者 */
         ff.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ; /* 出力：接触回数 */
         ff.outputFile_Population            ( "A_population.txt"       ) ; /* 出力：人口 */
+
+        /* 確認用ログ */
         LOG( monitor.getContactNum() );
+        LOG( agent[0]->getX() );
 
         /* 強制終了 */
         if( monitor.getContactNum()==0 ) zero_count++;               /* １０回以上接触感染がなければ */
@@ -138,9 +141,11 @@ int main()
 
     // 確認用 -----------------------------------------------------------------
     // メモ
-    // 計測時間出力
     LOG(sizeof(Agent));
     LOG(sizeof(Virus));
     LOG(sizeof(admin));
+    LOG(sizeof(Monitor));
+    LOG(sizeof(Relocate));
+
     return 0;
 }

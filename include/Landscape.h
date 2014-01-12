@@ -39,9 +39,10 @@ class Landscape {
          *  関数
          *-----------------------------------------------------------------------------*/
         void putBackOnMap( int &, int & );                           /* マップ上に配置しなおす */
+        void putAgentOnMap( Agent &a );                              /* エージェントをマップ上に配置しなおす */
         bool isOnMap( int , int ) const;                             /* マップの上にあるか */
         void clearAgentMap();                                        /* マップを初期化 */
-        void registAgent( int x, int y, Agent & );                   /* エージェントを登録 */
+        void registAgent( const int x, const int y, Agent & );                   /* エージェントを登録 */
         void removeAgent( int x, int y, Agent & );                   /* エージェントを削除 */
         ITERATOR(Agent *) getAgentIteratorBeginAt( int, int );   /* 指定の場所にいるエージェントの配列の先頭 */
         ITERATOR(Agent *) getAgentIteratorEndAt( int, int );     /* 指定の場所にいるエージェントの配列の末尾 */

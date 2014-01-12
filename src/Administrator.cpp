@@ -261,13 +261,18 @@ void Administrator :: responseAgent() {
 void Administrator :: relocateAgent() {
     landscape_->clearAgentMap();                                     /* エージェントの位置をリセット */
     int tx, ty;                                                      /* 移動させる場所 */
-    ITERATOR(Agent *) it_a = agent_.begin();
-    while( it_a != agent_.end() ) {
+
+    ITERATOR(Agent *) it_a = agent_.begin();                         /* エージェントの先頭から */
+    while( it_a != agent_.end() ) {                                  /* 末尾まで */
         tx = rand_interval_int( 0, WIDTH-1 );                        /* ランダムに設定 */
         ty = rand_interval_int( 0, WIDTH-1 );
         (*it_a)->setX( tx );                                         /* 配置 */
         (*it_a)->setY( ty );
-        landscape_->registAgent( tx, ty, **it_a );                   /* エージェントを登録 */
+
+        assert( 0 <= tx and tx <= WIDTH-1 );                         /* 土地の外ならエラー */
+        assert( 0 <= ty and ty <= WIDTH-1 );
+
+        landscape_->registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a );                   /* エージェントを登録 */
         it_a++;
     }
 }
@@ -279,19 +284,12 @@ void Administrator :: relocateAgent() {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: moveAgent() {
-    landscape_->clearAgentMap();                                     /* エージェントの位置をリセット */
-    ITERATOR(Agent *) it_a = agent_.begin();
-    while( it_a != agent_.end() ) {                                  /* エージェントの数だけ */
-        int tx = rand_interval_int( -MOVE_DISTANCE, MOVE_DISTANCE ); /* 相対的に x を動かす量*/
-        int ty = rand_interval_int( -MOVE_DISTANCE, MOVE_DISTANCE ); /* 相対的に y を動かす量 */
-        int xx = tx + (*it_a)->getX();                               /* x 座標を設定 */
-        int yy = ty + (*it_a)->getY();                               /* y 座標を設定 */
-        if( ! landscape_->isOnMap( xx, yy ) ) {                      /* もし移動先が土地の上になっていなければ */
-            landscape_->putBackOnMap( xx, yy );                      /* 土地の上に戻す */
-        }
-        (*it_a)->setX( xx );                                         /* 移動を実行 */
-        (*it_a)->setY( yy );
-        landscape_->registAgent( xx, yy, **it_a );                   /* エージェントを土地に登録 */
+    landscape_->clearAgentMap();                                     /* エージェントの位置をリセットして */
+    ITERATOR(Agent *) it_a = agent_.begin();                         /* エージェントの先頭から */
+    while( it_a != agent_.end() ) {                                  /* 末尾まで */
+        (*it_a)->move();                                             /* 移動させる */
+        landscape_->putAgentOnMap( **it_a );                         /* 土地からはみ出てたら戻す */
+        landscape_->registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a );                   /* エージェントを登録 */
         it_a++;
     }
 }

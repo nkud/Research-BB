@@ -21,6 +21,24 @@
 #include <cstring>
 #include <iostream>
 
+void Agent :: move() {
+    moving_strategy_->move( x_, y_ );
+}
+/*-----------------------------------------------------------------------------
+ *  再配置
+ *-----------------------------------------------------------------------------*/
+void Relocate :: move( int &x, int &y ) {
+    x = rand_interval_int( 0, WIDTH-1 );
+    y = rand_interval_int( 0, WIDTH-1 );
+}
+/*-----------------------------------------------------------------------------
+ *  距離による移動
+ *-----------------------------------------------------------------------------*/
+void RandomWalk :: move( int &x, int &y ) {
+    x += rand_interval_int( -MOVE_DISTANCE, MOVE_DISTANCE );
+    y += rand_interval_int( -MOVE_DISTANCE, MOVE_DISTANCE );
+}
+
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Agent :: Agent() / ~Agent()
@@ -38,6 +56,33 @@ Agent :: Agent() :
     life_( __ALIVE__ ),
     stand_by_list_( 0 ),
     count_get_new_immunity_( 0 )
+{
+    vlist_ = new std::vector<VirusData *>;                           /* 保持ウイルスリストを初期化 */
+    stand_by_list_ = new std::vector<Virus *>;                       /* 待機ウイルスリストを初期化 */
+
+    if( rand_binary() == 0 ) { sex_ = __MALE__;                      /* 性別をランダムに初期化 */
+    } else { sex_ = __FEMALE__; }
+
+    FOR( i, TAG_LEN_A )
+    {
+        tag_[i] = rand_binary();                                     /* タグをランダムに初期化  */
+    }
+
+    age_ = rand_interval_int( 0, MAX_AGE );                          /* 寿命をランダムに設定 */
+
+//    (*vlist_).reserve( NUM_V );                                      /* 領域確保 */
+//    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
+}
+Agent :: Agent( __MovingStrategy *ms ) :
+    __TagInterface( TAG_LEN_A ),
+    x_( 0 ),
+    y_( 0 ),
+    age_( 0 ),
+    sex_( __MALE__ ),
+    life_( __ALIVE__ ),
+    stand_by_list_( 0 ),
+    count_get_new_immunity_( 0 ),
+    moving_strategy_( ms )
 {
     vlist_ = new std::vector<VirusData *>;                           /* 保持ウイルスリストを初期化 */
     stand_by_list_ = new std::vector<Virus *>;                       /* 待機ウイルスリストを初期化 */
