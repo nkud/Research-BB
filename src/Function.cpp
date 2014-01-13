@@ -74,14 +74,17 @@ int min_ham_distance_point( const int * const a, const int * const v, const int 
  *  RANDOMIZE SET
  *-----------------------------------------------------------------------------*/
 int rand_interval_int(const int min, const int max) {
+    assert( min <= max );
     return min + (int)( rand() * (max - min + 1.0) / (1.0 + RAND_MAX) );
 }
 
 double rand_interval_double(const double min, const double max) {
+    assert( min <= max );
     return min + (double)( rand() * (max - min) / (1.0 + RAND_MAX) ); /* XXX: これでいいか？ */
 }
 
 int rand_array( const int n ) {
+    assert( n > 0 );
     return rand() % n;
 }
 

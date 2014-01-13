@@ -41,23 +41,23 @@ int main()
 #ifdef ___BENCHMARK
     Benchmark::Instance().startTimer();                              /* ベンチマーク計測開始 */
 #endif
-    srand( (unsigned int)time(NULL)/2 );                             /* 乱数初期化 */
+    srand( (unsigned int)time(NULL)*time(NULL) );                             /* 乱数初期化 */
 
     /*-----------------------------------------------------------------------------
      *  初期化
      *-----------------------------------------------------------------------------*/
     /* エージェント */
     Relocate *relocate = new Relocate;
-    RandomWalk *random_walk = new RandomWalk( MOVE_DISTANCE );
+    RandomWalk *random_walk = new RandomWalk( 5 );
     VECTOR(Agent *) agent;                                           /* エージェントの配列 */
     FOR( i, INIT_NUM_A ) {                                           /* 初期エージェントの数だけ */
-//        agent.push_back( new Agent( relocate ) );                  /* 再配置 */
-        agent.push_back( new Agent( random_walk ) );                 /* ランダムウォーク */
+//        agent.push_back( new Agent( relocate, 20, 100 ) );            /* 再配置 */
+        agent.push_back( new Agent( random_walk, 20, 20 ) );                 /* ランダムウォーク */
     }
     /* ウイルス */
     VECTOR(Virus *) virus;
-    virus.push_back( new Virus( 12, new Normal ) );                 /* 通常ウイルスを追加 */
-    virus.push_back( new Virus( 12, new Normal ) );                  /* 通常ウイルスを追加 */
+    virus.push_back( new Virus( 16, new Normal ) );                 /* 通常ウイルスを追加 */
+    virus.push_back( new Virus( 16, new Normal ) );                  /* 通常ウイルスを追加 */
 //    virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
 //    virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */
     /* 土地 */
@@ -118,6 +118,9 @@ int main()
         /* 確認用ログ */
         LOG( monitor.getContactNum() );
         LOG( agent[0]->getX() );
+        LOG( agent[0]->getLen() );
+        LOG( agent[1]->getLen() );
+        LOG( agent[2]->getLen() );
 
         /* 強制終了 */
         if( monitor.getContactNum()==0 ) zero_count++;               /* １０回以上接触感染がなければ */
