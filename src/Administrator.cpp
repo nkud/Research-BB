@@ -122,7 +122,7 @@ void Administrator :: matingAgant() {
 #endif
                 tx = ax + i;
                 ty = ay + j;
-                landscape_->putBackOnMap( tx, ty );                              /* 土地からはみ出てたら土地の上に戻す */
+                landscape_->putBackOnMap( tx, ty );                  /* 土地からはみ出てたら土地の上に戻す */
 
                 ITERATOR(Agent *) it_partner= landscape_->getAgentIteratorBeginAt( tx, ty );
                 while( it_partner!= landscape_->getAgentIteratorEndAt( tx, ty ) )
@@ -130,10 +130,13 @@ void Administrator :: matingAgant() {
                     if( agent_.size()+new_child_.size() >= MAX_NUM_A ) { /* 最大エージェントをこえそうなら */
                         break;                                       /* 終了 */
                     }
-                    if( isOppositeSex( *(*it_myself), **it_partner) &&      /* 異性かつ */
-                            !(*it_partner)->hasAlreadyGiveBirth()) { /* 未出産ならば */
-                        if( BIRTH_RATE > rand_interval_double(0, 1) ) {
-                            new_child_.push_back( childbirth( *(*it_myself), **it_partner) ); /* 新しい子供を誕生させる */
+                    if( isOppositeSex( *(*it_myself), **it_partner) and      /* 異性かつ */
+                            !(*it_myself)->hasAlreadyGiveBirth() and /* 未出産ならば */
+                            !(*it_partner)->hasAlreadyGiveBirth())
+                    {
+                        if( BIRTH_RATE > rand_interval_double(0, 1) ) /* 出産確率で */
+                        {
+                            new_child_.push_back( (**it_myself).childBirthWith(**it_partner) ); /* 新しい子供を誕生させる */
                         }
                         (*it_partner)->setGiveBirth();               /* パートナーと自分を */
                         (*it_myself)->setGiveBirth();                /* 出産済にする */

@@ -52,6 +52,7 @@ class Agent : public __TagInterface
         Agent();                                                     /* コンストラクタ  */
         Agent( __MovingStrategy *ms );                               /* コンストラクタ  */
         Agent( __MovingStrategy *ms, int minl, int maxl );
+        Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int maxl );
         ~Agent();
 
         int count_get_new_immunity_;                                 /* 新しい免疫を獲得した回数をカウント */
@@ -98,6 +99,7 @@ class Agent : public __TagInterface
          *  動作セット
          *-----------------------------------------------------------------------------*/
         void move();                                                 /* 移動する */
+        __MovingStrategy* getMovingStrategy() const;
         int aging();                                                 /* 年をとる */
 
         int getAge() const;                                          /* 年齢を取得する */
@@ -108,6 +110,7 @@ class Agent : public __TagInterface
          *  交配・出産関連セット
          *-----------------------------------------------------------------------------*/
         Agent* childBirthWith( const Agent &partner ) const;         /* パートナーとの子を作成して返す */
+        __ChildBirthStrategy* getChildBirthStrategy() const;
         bool hasAlreadyGiveBirth();                                  /* 出産済みかどうか */
         void setGiveBirth();                                         /* 出産後にする */
         void resetGiveBirth();                                       /* 出産したかをリセット */
@@ -117,6 +120,7 @@ class Agent : public __TagInterface
 
         int x_, y_;                                                  /* 位置 */
         int age_;                                                    /* 寿命 */
+
         __LABEL__ sex_;                                              /* 性別 */
         __LABEL__ life_;                                             /* 生死 */
 

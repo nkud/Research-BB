@@ -44,12 +44,14 @@ void RandomWalk :: move( int &x, int &y ) {
 Agent* CoupleTag :: childbirth( const Agent &a, const Agent &b ) const {
     assert( isOppositeSex( a, b ) );                                 /* 同性ならエラー */
 
-    Agent *child = new Agent;                                        /* 子供を作成 */
+    Agent *child = new Agent(
+            a.getMovingStrategy(),
+            a.getChildBirthStrategy(),
+            a.getLen(),
+            b.getLen()
+            );                                                       /* 子供を作成 */
 
     child->resetParam();                                             /* パラメータをリセット */
-
-#ifdef COUPLE_TAG
-    child->changeTagLenTo( TAG_LEN_A );                              /* タグの長さを設定 */
 
     tag_t *couple_tag = new tag_t[ a.getLen() + b.getLen() ];        /* 両親を元にした */
     tag_t *p = couple_tag;                                           /* カップルタグを作成 */
@@ -64,7 +66,38 @@ Agent* CoupleTag :: childbirth( const Agent &a, const Agent &b ) const {
             couple_tag+rand_interval_int(0,a.getLen()) , TAG_LEN_A   /* 子供のタグを作成 */
             );
     delete[] couple_tag;                                             /* カップルタグを削除 */
-#endif
+
+    if( a.getSex() == __FEMALE__ ) {                                 /* 母親の居場所に */
+        int tx = a.getX();
+        int ty = a.getY();
+        child->setX( tx );                                           /* 子供を配置 */
+        child->setY( ty );
+    } else {
+        int tx = b.getX();
+        int ty = b.getY();
+        child->setX( tx );
+        child->setY( ty );
+    }
+
+    return child;                                                    /* 子供を返す */
+}
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  InheritanceLen :: childbirth
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+Agent* InheritanceLen :: childbirth( const Agent &a, const Agent &b ) const {
+    assert( isOppositeSex( a, b ) );                                 /* 同性ならエラー */
+
+    Agent *child = new Agent(
+            a.getMovingStrategy(),
+            a.getChildBirthStrategy(),
+            a.getLen(),
+            b.getLen()
+            );                                                       /* 子供を作成 */
+
+    child->resetParam();                                             /* パラメータをリセット */
 
     if( a.getSex() == __FEMALE__ ) {                                 /* 母親の居場所に */
         int tx = a.getX();

@@ -36,7 +36,12 @@ int rand_array( const int );                                         /* ０か�
 int rand_binary();                                                   /* ０か１の乱数を返す */
 int rand_sign();                                                     /* ー１か１の乱数を返す */
 
+/*-----------------------------------------------------------------------------
+ *  テンプレートセット
+ *-----------------------------------------------------------------------------*/
 template < typename T >
-T random_select( T a, T b ) { if(rand_binary()) return a; else return b; }
+void swap( T &a, T &b ) { T t = a; a = b; b = t; }
+template < typename T >
+T random_select( const T a, const T b ) { if(rand_binary() == 0) return a; else return b; }
 
 #endif

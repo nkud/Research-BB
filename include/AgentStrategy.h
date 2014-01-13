@@ -20,37 +20,6 @@ class Agent;
 
 /*
  * =====================================================================================
- *        Class:  __AgingStrategy
- *  Description:  老化戦略インターフェイス
- * =====================================================================================
- */
-class __AgingStrategy {
-    void aging();
-    void setRandom();
-};
-
-
-/*
- * =====================================================================================
- *        Class:  __ChildBirthStrategy
- *  Description:  子孫戦略インターフェイス
- * =====================================================================================
- */
-class __ChildBirthStrategy {
-    public:
-        virtual Agent* childbirth( const Agent &a, const Agent &b ) const = 0;         /* 親から子を作成 */
-};
-
-/*-----------------------------------------------------------------------------
- *  カップルタグ
- *-----------------------------------------------------------------------------*/
-class CoupleTag : public __ChildBirthStrategy {
-    public:
-        virtual Agent* childbirth( const Agent &a, const Agent &b ) const;         /* 親から子を作成 */
-};
-
-/*
- * =====================================================================================
  *        Class:  __MovingStrategy
  *  Description:  移動戦略インターフェイス
  * =====================================================================================
@@ -58,6 +27,8 @@ class CoupleTag : public __ChildBirthStrategy {
 class __MovingStrategy {                                             /* 移動戦略インターフェイス */
     public:
         virtual void move( int &x, int &y ) = 0;
+
+        virtual const __MovingStrategy* getStrategy() const { return this; }
 };
 /*-----------------------------------------------------------------------------
  *  再配置
@@ -74,8 +45,49 @@ class RandomWalk : public __MovingStrategy {                         /* ラン�
         RandomWalk( int dis ) : distance_( dis ) {}                  /* 距離を設定する */
         virtual void move( int &x, int &y );
     private:
-        int distance_;
+        const int distance_;
 };
+
+/*
+ * =====================================================================================
+ *        Class:  __ChildBirthStrategy
+ *  Description:  子孫戦略インターフェイス
+ * =====================================================================================
+ */
+class __ChildBirthStrategy {
+    public:
+        virtual Agent* childbirth( const Agent &a, const Agent &b ) const = 0;         /* 親から子を作成 */
+
+        virtual const __ChildBirthStrategy* getStrategy() const { return this; }
+};
+
+/*-----------------------------------------------------------------------------
+ *  カップルタグ
+ *-----------------------------------------------------------------------------*/
+class CoupleTag : public __ChildBirthStrategy {
+    public:
+        virtual Agent* childbirth( const Agent &a, const Agent &b ) const;         /* 親から子を作成 */
+};
+/*-----------------------------------------------------------------------------
+ *  タグ長遺伝
+ *-----------------------------------------------------------------------------*/
+class InheritanceLen : public __ChildBirthStrategy {
+    public:
+        virtual Agent* childbirth( const Agent &a, const Agent &b ) const;         /* 親から子を作成 */
+};
+
+/*
+ * =====================================================================================
+ *        Class:  __AgingStrategy
+ *  Description:  老化戦略インターフェイス
+ * =====================================================================================
+ */
+class __AgingStrategy {
+    public:
+    void aging();
+    void setRandom();
+};
+
 
 
 #endif

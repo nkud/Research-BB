@@ -1,4 +1,17 @@
+/*
+ * =====================================================================================
+ *
+ *       Filename:  Function.cpp
+ *
+ *    Description:  
+ *
+ *         Author:  Naoki Ueda
+ *   Organization:  OPU, 3G
+ *
+ * =====================================================================================
+ */
 #include "Function.h"
+
 #include <cstdlib>
 #include <algorithm>
 
@@ -74,13 +87,17 @@ int min_ham_distance_point( const int * const a, const int * const v, const int 
  *  RANDOMIZE SET
  *-----------------------------------------------------------------------------*/
 int rand_interval_int(const int min, const int max) {
-    assert( min <= max );
-    return min + (int)( rand() * (max - min + 1.0) / (1.0 + RAND_MAX) );
+    int minn = min;
+    int maxx = max;
+    if( minn > maxx ) swap(minn, maxx);
+    return minn + (int)( rand() * (maxx - minn + 1.0) / (1.0 + RAND_MAX) );
 }
 
 double rand_interval_double(const double min, const double max) {
-    assert( min <= max );
-    return min + (double)( rand() * (max - min) / (1.0 + RAND_MAX) ); /* XXX: これでいいか？ */
+    int minn = min;
+    int maxx = max;
+    if( minn > maxx ) swap(minn, maxx);
+    return minn + (double)( rand() * (maxx - minn) / (1.0 + RAND_MAX) ); /* XXX: これでいいか？ */
 }
 
 int rand_array( const int n ) {
@@ -99,4 +116,3 @@ int rand_sign() {
     ret = rand()%2 ? 1 : -1; 
     return ret;
 }
-
