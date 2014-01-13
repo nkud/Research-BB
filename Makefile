@@ -51,9 +51,7 @@ all: $(BIN)/$(TARGET) run plot
 plot :
 	@$(PRINT) '>>> Plotting...'
 	@-cd $(BIN); gnuplot auto.plt
-	@cd $(BIN); mkdir -p txt;  mv *.txt txt
-	@cd $(BIN); mkdir -p img;  mv *.png img
-	@cd $(BIN); mkdir -p script;  mv *.plt script
+	@cd $(BIN); mkdir -p assets;  mv *.txt *.png *.plt assets
 
 pack:
 	@$(PRINT) '>>> Packing...'
