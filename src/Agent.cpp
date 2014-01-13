@@ -220,6 +220,8 @@ void Agent :: clearStandByVirus() { (*stand_by_list_).clear(); }
 /* パラメータ */
 __LABEL__ Agent :: getSex() const { return sex_; }
 int Agent :: getAge() const { return age_; }
+bool Agent :: hasAbilityToChildbirth() const
+{ if(BIRTH_AGE_FROM<=age_ and age_<=BIRTH_AGE_TO) return true; else return false; }
 
 void Agent :: setLife( __LABEL__ l ) { life_ = l; }
 //bool Agent :: isAlive() const { if( life_ == __ALIVE__ ) return true; else return false; }

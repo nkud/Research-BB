@@ -137,6 +137,8 @@ void Administrator :: matingAgant() {
                         break;                                       /* 終了 */
                     }
                     if( isOppositeSex( *(*it_myself), **it_partner) and      /* 異性かつ */
+                            (*it_myself)->hasAbilityToChildbirth() and
+                            (*it_partner)->hasAbilityToChildbirth() and
                             !(*it_myself)->hasAlreadyGiveBirth() and /* 未出産ならば */
                             !(*it_partner)->hasAlreadyGiveBirth())
                     {
@@ -160,7 +162,7 @@ NEXT_AGENT:                                                        /* => 出産�
         (*it_a)->resetGiveBirth();                                   /* 未出産に戻す */
         it_a++;                                                      /* 次のエージェント */
     }
-    std::cout<<"[new child]: "<<new_child_.size()<<std::endl;
+    LOG( new_child_.size() );
     ITERATOR( Agent * ) it_child = new_child_.begin();               /* 新しく誕生したエージェントを */
     while( it_child != new_child_.end() ) {
         agent_.push_back( *it_child );                               /* エージェント配列に一斉に加える */

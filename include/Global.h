@@ -21,23 +21,22 @@
  *-----------------------------------------------------------------------------*/
 #define AGING_AGENT
 #define MATING_AGENT
-#define COUPLE_TAG                                                   /* カップルタグで子供を作る */
 
 #if defined(__unix__) || defined(__APPLE__)
     #define ___BENCHMARK
 #endif
 
-//#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
+#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
 #define RANDOM_LOCATE                                                /* ランダムに再配置する */
 
 /* 期間 */
-const int TERM                        = 1000                   ;    /* 期間 */
+const int TERM                        = 1000                   ;     /* 期間 */
 const int OUTPUT_INTERVAL             = 1                     ;      /* 出力する間隔 */
 const int MINI_SIZE_TERM              = 200;
 
 /* 土地 */
-const int WIDTH                       = 80                    ;      /* ランドスケープの幅 */
+const int WIDTH                       = 60                    ;      /* ランドスケープの幅 */
 
 /* ウイルス */                                                          
 const int TAG_LEN_V                   = 16                    ;      /* ウイルスのタグのデフォルトの長さ */
@@ -52,16 +51,18 @@ const int TAG_LEN_A                   = 20                    ;      /* エー�
 const int INIT_NUM_A                  = 1000                  ;      /* 初期エージェントの数 */
 const double INIT_INFECTED_RATIO      = 0.3                   ;      /* 初期感染率 */
 
-const int MAX_NUM_A                   = 2000                 ;      /* 最大エージェント数 */
+const int MAX_NUM_A                   = 6000                 ;       /* 最大エージェント数 */
 
 /* 移動 config */                                                    /* 移動専用の設定 -------------------- */
 const int MOVE_DISTANCE               = 10                     ;     /* エージェントの移動距離 */
 
 /* 寿命 config */                                                   /* 老化専用の設定 -------------------- */
-const int MAX_AGE                     = 40                    ;      /* 寿命 */
+const int MAX_AGE                     = 100                    ;     /* 寿命 */
 
 /* 出産 config */                                                  /* 交配出産専用の設定 ---------------- */
-const double BIRTH_RATE               = 0.120                   ;     /* 出産確率 */
+const double BIRTH_RATE               = 0.400                   ;    /* 出産確率 */
+const int BIRTH_AGE_FROM              = 20;
+const int BIRTH_AGE_TO                = 40;
 
 
 /*-----------------------------------------------------------------------------
