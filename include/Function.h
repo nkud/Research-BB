@@ -36,4 +36,7 @@ int rand_array( const int );                                         /* ０か�
 int rand_binary();                                                   /* ０か１の乱数を返す */
 int rand_sign();                                                     /* ー１か１の乱数を返す */
 
+template < typename T >
+T random_select( T a, T b ) { if(rand_binary()) return a; else return b; }
+
 #endif

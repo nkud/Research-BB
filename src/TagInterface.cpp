@@ -13,10 +13,25 @@
 
 #include "TagInterface.h"
 #include "Global.h"
+#include "Function.h"
 
 #include <cstring>
 #include <cassert>
 
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  __TagInterface :: setTagRandom()
+ * Description:  タグをランダムに初期化する
+ *--------------------------------------------------------------------------------------
+ */
+void __TagInterface :: setTagRandom() {
+    assert( len_ > 0 );
+    FOR( i, len_ )
+    {
+        tag_[i] = rand_binary();                                     /* タグをランダムに初期化  */
+    }
+}
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  __TagInterface :: __TagInterface( int )
