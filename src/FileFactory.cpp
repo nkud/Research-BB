@@ -114,9 +114,9 @@ double average_cycle( const char *origin_fname ) {
     int pre = 0;
     int sum = 0;
 
-    while( getline( ifs, line ) )
+    while( std::getline( ifs, line ) )
     {
-        sscanf( line.data(), "%d %d", &t, &v );
+        std::sscanf( line.data(), "%d %d", &t, &v );
         n++;
         if( pre == 0 ) {
             pre = t;
@@ -139,9 +139,10 @@ double FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
     int t, v;
     int term = 0;
     int data[TERM];
-    int vmax = 0, vmin = INIT_NUM_A;
-    while( getline( ifs, line ) ) {                                  /* １行ずつ読み取って */
-        sscanf( line.data(), "%d %d", &t, &v );                      /* 期間を読み込む */
+    int vmax = 0;
+    int vmin = INIT_NUM_A;
+    while( std::getline( ifs, line ) ) {                             /* １行ずつ読み取って */
+        std::sscanf( line.data(), "%d %d", &t, &v );                 /* 期間を読み込む */
         data[ term++ ] = v;
         if( t > TERM-MINI_SIZE_TERM ) {                              /* 最後の期間の */
             if( vmax < v ) vmax = v;                                 /* 最大値 */
