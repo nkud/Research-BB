@@ -35,9 +35,9 @@
 #define OFS_P(str)                      do { ofs<<"<p>"<<str<<"</p>"<<std::endl; }while(0);
 #define OFS_LINE(str)                   do { ofs<< str << std::endl; }while(0);
 #define OFS_IMG_MINI(img,mini,last)     do { ofs<<"<table class=\"graph\"><tr> \
-                                        <td><img src=img/"<<img<<" /></td></tr><tr> \
-                                        <td><img src=img/"<<mini<<" /></td></tr><t> \
-                                        <td><img src=img/"<<last<<" /></td></tr> \
+                                        <td><img src=assets/"<<img<<" /></td></tr><tr> \
+                                        <td><img src=assets/"<<mini<<" /></td></tr><t> \
+                                        <td><img src=assets/"<<last<<" /></td></tr> \
                                         </table><br />"<<std::endl; }while(0);
 
 #define OFS_TD(str,val)                 do { ofs<<"<tr><td>"<<str<<"</td>"<<"<td>"<<val<<"</td></tr>"<<std::endl; }while(0);
