@@ -16,12 +16,14 @@
 
 #include "TagInterface.h"
 #include "Virus.h"
+#include "AgentStrategy.h"
 
 #include <vector>
 #include <map>
 
 struct VirusData;
 class __MovingStrategy;
+class __ChildBirthStrategy;
 
 /*-----------------------------------------------------------------------------
  *  ラベル
@@ -102,7 +104,10 @@ class Agent : public __TagInterface
         void setLife( __LABEL__ life );                              /* 生死を設定する */
 //        bool isAlive() const;
 //        bool isDead() const;
-
+        /*-----------------------------------------------------------------------------
+         *  交配・出産関連セット
+         *-----------------------------------------------------------------------------*/
+        Agent* childBirthWith( const Agent &partner ) const;         /* パートナーとの子を作成して返す */
         bool hasAlreadyGiveBirth();                                  /* 出産済みかどうか */
         void setGiveBirth();                                         /* 出産後にする */
         void resetGiveBirth();                                       /* 出産したかをリセット */
@@ -123,36 +128,9 @@ class Agent : public __TagInterface
         /*-----------------------------------------------------------------------------
          *  戦略
          *-----------------------------------------------------------------------------*/
-        __MovingStrategy *moving_strategy_;                          /* 移動戦略 */ /* XXX:const */
+        __MovingStrategy *moving_strategy_;                          /* 移動戦略 */
+        __ChildBirthStrategy *childbirth_strategy_;                  /* 子孫戦略 */
 };
-/*
- * =====================================================================================
- *        Class:  __MovingStrategy
- *  Description:  移動戦略インターフェイス
- * =====================================================================================
- */
-class __MovingStrategy {                                             /* 移動戦略インターフェイス */
-    public:
-        virtual void move( int &x, int &y ) = 0;
-};
-/*-----------------------------------------------------------------------------
- *  再配置
- *-----------------------------------------------------------------------------*/
-class Relocate : public __MovingStrategy {                           /* 再配置による移動戦略 */
-    public:
-        virtual void move( int &x, int &y );
-};
-/*-----------------------------------------------------------------------------
- *  ランダムウォーク
- *-----------------------------------------------------------------------------*/
-class RandomWalk : public __MovingStrategy {                         /* ランダムウォークによる移動戦略 */
-    public:
-        RandomWalk( int dis ) : distance_( dis ) {}                  /* 距離を設定する */
-        virtual void move( int &x, int &y );
-    private:
-        int distance_;
-};
-
 /*
  * =====================================================================================
  *        Class:  VirusList, VirusData

@@ -11,6 +11,7 @@
  * =====================================================================================
  */
 #include "Agent.h"
+#include "AgentStrategy.h"
 #include "Function.h"
 #include "Monitor.h"
 #include "Global.h"
@@ -30,28 +31,15 @@
 void Agent :: move() {
     moving_strategy_->move( x_, y_ );                                /* 戦略を使用して移動する */
 }
-
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Relocate :: move( int &, int & )
- * Description:  再配置による戦略
+ *      Method:  Agent :: childBirthWith
+ * Description:  指定された戦略を使用して移動する
  *--------------------------------------------------------------------------------------
  */
-void Relocate :: move( int &x, int &y ) {
-    x = rand_interval_int( 0, WIDTH-1 );
-    y = rand_interval_int( 0, WIDTH-1 );
+Agent* Agent :: childBirthWith( const Agent &partner ) const {
+    return childbirth_strategy_->childbirth( *this, partner );      /* 戦略を使用して移動する */
 }
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  RandomWalk :: move( int &, int & )
- * Description:  ランダムウォークによる戦略
- *--------------------------------------------------------------------------------------
- */
-void RandomWalk :: move( int &x, int &y ) {
-    x += rand_interval_int( -distance_, distance_ );
-    y += rand_interval_int( -distance_, distance_ );
-}
-
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Agent :: Agent() / ~Agent()
@@ -114,7 +102,8 @@ Agent :: Agent( __MovingStrategy *ms, int minl, int maxl ) :
     life_( __ALIVE__ ),
     stand_by_list_( 0 ),
     count_get_new_immunity_( 0 ),
-    moving_strategy_( ms )
+    moving_strategy_( ms ),
+    childbirth_strategy_( new CoupleTag )
 {
     vlist_ = new std::vector<VirusData *>;                           /* 保持ウイルスリストを初期化 */
     stand_by_list_ = new std::vector<Virus *>;                       /* 待機ウイルスリストを初期化 */
