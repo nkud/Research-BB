@@ -48,11 +48,11 @@ int main()
      *-----------------------------------------------------------------------------*/
     /* エージェント */
     Relocate *relocate = new Relocate;
-    RandomWalk *rwalk = new RandomWalk( MOVE_DISTANCE );
+    RandomWalk *random_walk = new RandomWalk( MOVE_DISTANCE );
     VECTOR(Agent *) agent;                                           /* エージェントの配列 */
     FOR( i, INIT_NUM_A ) {                                           /* 初期エージェントの数だけ */
-//        agent.push_back( new Agent( relocate ) );
-        agent.push_back( new Agent( rwalk ) );
+//        agent.push_back( new Agent( relocate ) );                  /* 再配置 */
+        agent.push_back( new Agent( random_walk ) );                 /* ランダムウォーク */
     }
     /* ウイルス */
     VECTOR(Virus *) virus;

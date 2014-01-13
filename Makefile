@@ -82,7 +82,7 @@ $(BIN)/FileFactory.o: Administrator.h Agent.h Virus.h Global.h
 $(BIN)/Benchmark.o: Benchmark.h
 
 Administrator.h: Global.h
-Agent.h: Global.h TagInterface.h Virus.h
+Agent.h: TagInterface.h Virus.h
 Virus.h: TagInterface.h
 Landscape.h: Global.h
 TagInterface.h: Global.h

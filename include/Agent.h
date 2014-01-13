@@ -14,7 +14,6 @@
 #ifndef ___AGENT
 #define ___AGENT
 
-#include "Global.h"
 #include "TagInterface.h"
 #include "Virus.h"
 
@@ -22,9 +21,7 @@
 #include <map>
 
 struct VirusData;
-class Agent;
 class __MovingStrategy;
-
 
 /*-----------------------------------------------------------------------------
  *  ラベル
@@ -52,6 +49,7 @@ class Agent : public __TagInterface
          *-----------------------------------------------------------------------------*/
         Agent();                                                     /* コンストラクタ  */
         Agent( __MovingStrategy *ms );                               /* コンストラクタ  */
+        Agent( __MovingStrategy *ms, int minl, int maxl );
         ~Agent();
 
         int count_get_new_immunity_;                                 /* 新しい免疫を獲得した回数をカウント */
