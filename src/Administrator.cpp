@@ -113,8 +113,14 @@ void Administrator :: matingAgant() {
             continue;                                                /* スキップ */
         }
 
-        REP( i, -1, 1 ) {                                            /* 自分の近隣から異性を探す */
-            REP( j, -1, 1 ) {
+        REP( i, -1, 1 )
+        {                                            /* 自分の近隣から異性を探す */
+            REP( j, -1, 1 )
+            {
+                if( (*it_myself)->hasAlreadyGiveBirth() ) {          /* 既に出産済なら */
+                    goto NEXT_AGENT;                                 /* スキップ */
+                }
+
 #ifdef NO_DIAGONAL
                 if( i*j != 0 ) {
                     continue;                                        /* 斜めは入れない */
@@ -145,8 +151,10 @@ void Administrator :: matingAgant() {
                 }
             }
         }
+NEXT_AGENT:                                                        /* => 出産終了 */
         it_myself++;
     }
+
     ITERATOR(Agent *) it_a = agent_.begin();                         /* エージェントの先頭 */
     while( it_a != agent_.end() ) {                                  /* エージェント全員に対して */
         (*it_a)->resetGiveBirth();                                   /* 未出産に戻す */

@@ -37,7 +37,7 @@ const int OUTPUT_INTERVAL             = 1                     ;      /* 出力�
 const int MINI_SIZE_TERM              = 200;
 
 /* 土地 */
-const int WIDTH                       = 200                    ;      /* ランドスケープの幅 */
+const int WIDTH                       = 80                    ;      /* ランドスケープの幅 */
 
 /* ウイルス */                                                          
 const int TAG_LEN_V                   = 16                    ;      /* ウイルスのタグのデフォルトの長さ */
@@ -49,10 +49,10 @@ const int MAX_V_AGENT_INFECT_ONT_TIME = 1                 ;          /* １期�
 
 /* エージェント */                                                          
 const int TAG_LEN_A                   = 20                    ;      /* エージェントのタグ長 */
-const int INIT_NUM_A                  = 10000                  ;      /* 初期エージェントの数 */
+const int INIT_NUM_A                  = 1000                  ;      /* 初期エージェントの数 */
 const double INIT_INFECTED_RATIO      = 0.3                   ;      /* 初期感染率 */
 
-const int MAX_NUM_A                   = 20000                 ;      /* 最大エージェント数 */
+const int MAX_NUM_A                   = 2000                 ;      /* 最大エージェント数 */
 
 /* 移動 config */                                                    /* 移動専用の設定 -------------------- */
 const int MOVE_DISTANCE               = 10                     ;     /* エージェントの移動距離 */
@@ -61,7 +61,7 @@ const int MOVE_DISTANCE               = 10                     ;     /* エー�
 const int MAX_AGE                     = 40                    ;      /* 寿命 */
 
 /* 出産 config */                                                  /* 交配出産専用の設定 ---------------- */
-const double BIRTH_RATE               = 0.080                   ;     /* 出産確率 */
+const double BIRTH_RATE               = 0.120                   ;     /* 出産確率 */
 
 
 /*-----------------------------------------------------------------------------

@@ -77,7 +77,7 @@ $(BIN)/TagInterface.o: TagInterface.h Global.h
 $(BIN)/Agent.o: AgentStrategy.h Agent.h Function.h Monitor.h Global.h TagInterface.h
 $(BIN)/AgentStrategy.o: AgentStrategy.h Agent.h
 $(BIN)/Virus.o: Global.h Virus.h Function.h TagInterface.h
-$(BIN)/Landscape.o: Landscape.h
+$(BIN)/Landscape.o: Global.h Landscape.h
 $(BIN)/Function.o: Function.h
 $(BIN)/FileFactory.o: Administrator.h Agent.h Virus.h Global.h
 $(BIN)/Benchmark.o: Benchmark.h
