@@ -29,8 +29,6 @@
 /*-----------------------------------------------------------------------------
  *  マクロ
  *-----------------------------------------------------------------------------*/
-#define IMG_SIZE                        "1200,200"
-
 #define OFS(str)                        do { ofs<< str; }while(0);
 #define OFSS(str)                       ofs << #str << std::endl;
 
@@ -163,7 +161,7 @@ double FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
             mt = temp;                                               /* 最大時刻を更新して */
             count = 1;                                               /* カウントを１に戻す */
         }
-        if( count == CHECK_INTERVAL and data[mt] != 0 ) {
+        if( count == CHECK_INTERVAL && data[mt] != 0 ) {
 //            if( i > TERM - MINI_SIZE_TERM - CHECK_INTERVAL )       /* 最後の期間だけ */
             if( mt+1 != TERM ) {                                     /* 最後はいれず */
                 ofs << mt+1 << SEPARATOR << data[mt] << std::endl;

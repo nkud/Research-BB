@@ -136,10 +136,10 @@ void Administrator :: matingAgant() {
                     if( agent_.size()+new_child_.size() >= MAX_NUM_A ) { /* 最大エージェントをこえそうなら */
                         break;                                       /* 終了 */
                     }
-                    if( isOppositeSex( *(*it_myself), **it_partner) and      /* 異性かつ */
-                            (*it_myself)->hasAbilityToChildbirth() and
-                            (*it_partner)->hasAbilityToChildbirth() and
-                            !(*it_myself)->hasAlreadyGiveBirth() and /* 未出産ならば */
+                    if( isOppositeSex( *(*it_myself), **it_partner) &&      /* 異性かつ */
+                            (*it_myself)->hasAbilityToChildbirth() &&
+                            (*it_partner)->hasAbilityToChildbirth() &&
+                            !(*it_myself)->hasAlreadyGiveBirth() && /* 未出産ならば */
                             !(*it_partner)->hasAlreadyGiveBirth())
                     {
                         if( BIRTH_RATE > rand_interval_double(0, 1) ) /* 出産確率で */
@@ -282,8 +282,8 @@ void Administrator :: relocateAgent() {
         (*it_a)->setX( tx );                                         /* 配置 */
         (*it_a)->setY( ty );
 
-        assert( 0 <= tx and tx <= WIDTH-1 );                         /* 土地の外ならエラー */
-        assert( 0 <= ty and ty <= WIDTH-1 );
+        assert( 0 <= tx && tx <= WIDTH-1 );                         /* 土地の外ならエラー */
+        assert( 0 <= ty && ty <= WIDTH-1 );
 
         landscape_->registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a );                   /* エージェントを登録 */
         it_a++;

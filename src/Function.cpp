@@ -94,8 +94,8 @@ int rand_interval_int(const int min, const int max) {
 }
 
 double rand_interval_double(const double min, const double max) {
-    int minn = min;
-    int maxx = max;
+    double minn = min;
+    double maxx = max;
     if( minn > maxx ) swap(minn, maxx);
     return minn + (double)( rand() * (maxx - minn) / (1.0 + RAND_MAX) ); /* XXX: これでいいか？ */
 }

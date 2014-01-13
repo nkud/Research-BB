@@ -54,12 +54,12 @@ int main()
     VECTOR(Agent *) agent;                                           /* エージェントの配列 */
     FOR( i, INIT_NUM_A ) {                                           /* 初期エージェントの数だけ */
 //        agent.push_back( new Agent( relocate, 20, 100 ) );            /* 再配置 */
-        agent.push_back( new Agent( random_walk, inh_len, 20, 40 ) );                 /* ランダムウォーク */
+        agent.push_back( new Agent( relocate, 30, 30 ) );                 /* ランダムウォーク */
     }
     /* ウイルス */
     VECTOR(Virus *) virus;
     virus.push_back( new Virus( 20, new Normal ) );                 /* 通常ウイルスを追加 */
-//    virus.push_back( new Virus( 20, new Normal ) );                  /* 通常ウイルスを追加 */
+    virus.push_back( new Virus( 20, new Normal ) );                  /* 通常ウイルスを追加 */
 //    virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
 //    virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */
     /* 土地 */

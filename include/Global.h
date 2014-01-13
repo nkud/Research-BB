@@ -19,8 +19,8 @@
  *  初期設定
  *
  *-----------------------------------------------------------------------------*/
-#define AGING_AGENT
-#define MATING_AGENT
+//#define AGING_AGENT
+//#define MATING_AGENT
 
 #if defined(__unix__) || defined(__APPLE__)
     #define ___BENCHMARK
@@ -31,7 +31,7 @@
 #define RANDOM_LOCATE                                                /* ランダムに再配置する */
 
 /* 期間 */
-const int TERM                        = 1000                   ;     /* 期間 */
+const int TERM                        = 10000                   ;     /* 期間 */
 const int OUTPUT_INTERVAL             = 1                     ;      /* 出力する間隔 */
 const int MINI_SIZE_TERM              = 200;
 
@@ -47,7 +47,7 @@ const int MAX_VIRUS_AGENT_HAVE        = 1                 ;          /* 最大�
 const int MAX_V_AGENT_INFECT_ONT_TIME = 1                 ;          /* １期間で感染させるウイルスの最大数 */
 
 /* エージェント */                                                          
-const int TAG_LEN_A                   = 20                    ;      /* エージェントのタグ長 */
+const int TAG_LEN_A                   = 30                    ;      /* エージェントのタグ長 */
 const int INIT_NUM_A                  = 1000                  ;      /* 初期エージェントの数 */
 const double INIT_INFECTED_RATIO      = 0.3                   ;      /* 初期感染率 */
 
@@ -63,6 +63,8 @@ const int MAX_AGE                     = 100                    ;     /* 寿命 *
 const double BIRTH_RATE               = 0.400                   ;    /* 出産確率 */
 const int BIRTH_AGE_FROM              = 20;
 const int BIRTH_AGE_TO                = 40;
+
+#define IMG_SIZE                      "800,200"
 
 
 /*-----------------------------------------------------------------------------
