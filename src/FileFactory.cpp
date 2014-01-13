@@ -888,7 +888,7 @@ void FileFactory :: generateResultHtml( int t ) {
     OFS( "<li><a href=#immunity>免疫獲得者</a></li>" );
     OFS( "<li><a href=#sir>SIR</a></li>" );
     OFS( "<li><a href=#sir_0>SIR about virus_0</a></li>" );
-//    OFS( "<li><a href=#period>周期</a></li>" );
+    //    OFS( "<li><a href=#period>周期</a></li>" );
     OFS( "<li><a href=#contact>接触回数</a></li>" );
     OFS( "</ul>" );
 

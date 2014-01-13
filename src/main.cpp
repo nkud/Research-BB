@@ -18,6 +18,10 @@
 #include <ctime>
 using namespace std;
 
+#if defined(__unix__) || defined(__APPLE__)
+    #define ___BENCHMARK
+#endif
+
 #include "Global.h"
 #include "Function.h"
 #include "Agent.h"
@@ -28,7 +32,7 @@ using namespace std;
 #include "FileFactory.h"
 
 #ifdef ___BENCHMARK
-    #include "Benchmark.h"
+#include "Benchmark.h"
 #endif
 
 /*-----------------------------------------------------------------------------

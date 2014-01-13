@@ -22,10 +22,6 @@
 //#define AGING_AGENT
 //#define MATING_AGENT
 
-#if defined(__unix__) || defined(__APPLE__)
-    #define ___BENCHMARK
-#endif
-
 #define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
 #define RANDOM_LOCATE                                                /* ランダムに再配置する */
