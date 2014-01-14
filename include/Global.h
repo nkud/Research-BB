@@ -19,8 +19,8 @@
  *  初期設定
  *
  *-----------------------------------------------------------------------------*/
-//#define AGING_AGENT
-//#define MATING_AGENT
+#define AGING_AGENT
+#define MATING_AGENT
 
 #define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
@@ -56,11 +56,11 @@ const int MOVE_DISTANCE               = 10                     ;     /* エー�
 const int MAX_AGE                     = 100                    ;     /* 寿命 */
 
 /* 出産 config */                                                  /* 交配出産専用の設定 ---------------- */
-const double BIRTH_RATE               = 0.400                   ;    /* 出産確率 */
+const double BIRTH_RATE               = 0.750                   ;    /* 出産確率 */
 const int BIRTH_AGE_FROM              = 20;
 const int BIRTH_AGE_TO                = 40;
 
-#define IMG_SIZE                      "800,200"
+#define IMG_SIZE                      "1000,200"
 
 
 /*-----------------------------------------------------------------------------
