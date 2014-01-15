@@ -48,17 +48,17 @@ int main()
      *-----------------------------------------------------------------------------*/
     /* エージェント */
     Relocate *relocate = new Relocate;
-    RandomWalk *random_walk = new RandomWalk( 1 );
-    CoupleTag *couple_tag = new CoupleTag;
+//    RandomWalk *random_walk = new RandomWalk( 1 );
+//    CoupleTag *couple_tag = new CoupleTag;
     InheritanceLen *inh_len = new InheritanceLen;
     VECTOR(Agent *) agent;                                           /* エージェントの配列 */
     FOR( i, INIT_NUM_A ) {                                           /* 初期エージェントの数だけ */
-//        agent.push_back( new Agent( relocate, 20, 100 ) );            /* 再配置 */
-        agent.push_back( new Agent( relocate, 30, 50 ) );                 /* ランダムウォーク */
+        agent.push_back( new Agent( relocate, 30, 30 ) );                 /* ランダムウォーク */
     }
     /* ウイルス */
     VECTOR(Virus *) virus;
     virus.push_back( new Virus( 20, new Normal ) );                 /* 通常ウイルスを追加 */
+    virus.push_back( new Virus( 20, new Normal ) );                  /* 通常ウイルスを追加 */
     virus.push_back( new Virus( 20, new Normal ) );                  /* 通常ウイルスを追加 */
 //    virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
 //    virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */

@@ -23,14 +23,14 @@
  *  初期設定
  *
  *-----------------------------------------------------------------------------*/
-#define AGING_AGENT
-#define MATING_AGENT
+//#define AGING_AGENT
+//#define MATING_AGENT
 
 #define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
 #define RANDOM_LOCATE                                                /* ランダムに再配置する */
 
-const int TERM                        = 10000 ;                      /* 期間 */
+const int TERM                        = 1000  ;                      /* 期間 */
 const int OUTPUT_INTERVAL             = 1     ;                      /* 出力する間隔 */
 const int MINI_SIZE_TERM              = 200   ; 
 
@@ -38,7 +38,7 @@ const int WIDTH                       = 60    ;                      /* ラン�
 
 const double INFECTION_RATE           = 1.0   ;                      /* デフォルトの感染率 */
 
-const int MAX_VIRUS_AGENT_HAVE        = 1     ;                      /* 最大保持ウイルス */
+const int MAX_VIRUS_AGENT_HAVE        = 2     ;                      /* 最大保持ウイルス */
 const int MAX_V_AGENT_INFECT_ONT_TIME = 1     ;                      /* １期間で感染させるウイルスの最大数 */
 
 const int TAG_LEN_A                   = 30    ;                      /* エージェントのタグ長 */

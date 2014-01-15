@@ -220,7 +220,6 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
      *  計算 前 情報
      *-----------------------------------------------------------------------------*/
     /* 設定 */
-    OFSD( MATING_AGENT );
     /* 期間 */
     OFSV( OUTPUT_INTERVAL );                                         /* 出力期間 */
     OFSV( MINI_SIZE_TERM );                                          /* 拡大期間 */
@@ -1008,7 +1007,7 @@ void FileFactory :: generateResultHtml( int t ) {
         }
     }
 
-    OFS_LINE( "<tr><td><font color=red>エージェント</td><td>"<<TAG_LEN_A
+    OFS_LINE( "<tr><td><font color=red>エージェント</td><td>"<<(*admin_->agent_[0]).getLen()
             <<"</td><td>"<<INIT_NUM_A<<"</td>" );
     OFS_LINE( "</tr></table>" );
 
@@ -1016,6 +1015,7 @@ void FileFactory :: generateResultHtml( int t ) {
 
     OFS_LINE( "<table>" );                                           /* テーブル */
     OFS_TD( "<font color=blue>ウイルスの感染確率</font>", INFECTION_RATE );
+    OFS_TD( "<font color=blue>最大保持ウイルス数</font>", MAX_VIRUS_AGENT_HAVE );
     OFS_TD( "<font color=blue>１期間で感染させるウイルスの最大数</font>", MAX_V_AGENT_INFECT_ONT_TIME );
     OFS_TD( "<font color=red>初期感染確率</font>", INIT_INFECTED_RATIO );
 #if defined(AGING_AGENT) || defined( MATING_AGENT)
