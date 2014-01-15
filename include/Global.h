@@ -23,18 +23,16 @@
  *  初期設定
  *
  *-----------------------------------------------------------------------------*/
-#define AGING_AGENT
-#define MATING_AGENT
+//#define AGING_AGENT
+//#define MATING_AGENT
 
-#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
+//#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-#define RANDOM_LOCATE                                                /* ランダムに再配置する */
-
-const int TERM                        = 1000  ;                      /* 期間 */
+const int TERM                        = 100000 ;                      /* 期間 */
 const int OUTPUT_INTERVAL             = 1     ;                      /* 出力する間隔 */
 const int MINI_SIZE_TERM              = 200   ; 
 
-const int WIDTH                       = 60    ;                      /* ランドスケープの幅 */
+const int WIDTH                       = 30    ;                      /* ランドスケープの幅 */
 
 const double INFECTION_RATE           = 1.0   ;                      /* デフォルトの感染率 */
 
@@ -43,16 +41,18 @@ const int MAX_V_AGENT_INFECT_ONT_TIME = 1     ;                      /* １期�
 
 const int TAG_LEN_A                   = 30    ;                      /* エージェントのタグ長 */
 const int TAG_LEN_V                   = 20    ;                      /* エージェントのタグ長 */
-const int INIT_NUM_A                  = 1000  ;                      /* 初期エージェントの数 */
+
+const int INIT_NUM_A                  = 100  ;                       /* 初期エージェントの数 */
+
 const double INIT_INFECTED_RATIO      = 0.3   ;                      /* 初期感染率 */
 
-const int MAX_NUM_A                   = 10000  ;                      /* 最大エージェント数 */
+const int MAX_NUM_A                   = 10000  ;                     /* 最大エージェント数 */
 
-const int MOVE_DISTANCE               = 10    ;                      /* エージェントの移動距離 */
+const int MOVE_DISTANCE               = 10     ;                     /* エージェントの移動距離 */
 
-const int MAX_AGE                     = 100;                      /* 寿命 */
+const int MAX_AGE                     = 100;                         /* 寿命 */
 
-const double BIRTH_RATE               = 0.3 ;                      /* 出生率 */
+const double BIRTH_RATE               = 0.3 ;                        /* 出生率 */
 const int BIRTH_AGE_FROM              = MAX_AGE * 0.2    ; 
 const int BIRTH_AGE_TO                = MAX_AGE * 0.6    ; 
 

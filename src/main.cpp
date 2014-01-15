@@ -48,17 +48,17 @@ int main()
      *-----------------------------------------------------------------------------*/
     /* エージェント */
     Relocate *relocate = new Relocate;
-    RandomWalk *random_walk = new RandomWalk( 1 );
+    RandomWalk *random_walk = new RandomWalk( 4 );
 //    CoupleTag *couple_tag = new CoupleTag;
     InheritanceLen *inh_len = new InheritanceLen;
     VECTOR(Agent *) agent;                                           /* エージェントの配列 */
     FOR( i, INIT_NUM_A ) {                                           /* 初期エージェントの数だけ */
-        agent.push_back( new Agent( random_walk, 30, 30 ) );                 /* ランダムウォーク */
+        agent.push_back( new Agent( relocate, 20, 20 ) );                 /* ランダムウォーク */
     }
     /* ウイルス */
     VECTOR(Virus *) virus;
-    virus.push_back( new Virus( 20, new Normal ) );                 /* 通常ウイルスを追加 */
-    virus.push_back( new Virus( 20, new Normal ) );                  /* 通常ウイルスを追加 */
+    virus.push_back( new Virus( "11110011001110101", new Normal ) );                 /* 通常ウイルスを追加 */
+    virus.push_back( new Virus( "10011101010101000", new Normal ) );                 /* 通常ウイルスを追加 */
 //    virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
 //    virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */
     /* 土地 */
@@ -118,8 +118,6 @@ int main()
         /* 確認用ログ */
         LOG( monitor.getContactNum() );
         LOG( agent.size() );
-        LOG( agent[0]->getX() );
-        LOG( agent[0]->getLen() );
 
         /* 強制終了 */
         if( monitor.getContactNum()==0 ) zero_count++;               /* １０回以上接触感染がなければ */
