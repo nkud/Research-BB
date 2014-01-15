@@ -18,10 +18,6 @@
 #include <ctime>
 using namespace std;
 
-#if defined(__unix__) || defined(__APPLE__)
-    #define ___BENCHMARK
-#endif
-
 #include "Global.h"
 #include "Function.h"
 #include "Agent.h"
@@ -131,18 +127,19 @@ int main()
         if( zero_count >= 20 ) break;                                /* 強制的に終了する */
         if( agent.size() == MAX_NUM_A ) break;
     }
+#ifdef ___BENCHMARK
+    Benchmark::Instance().stopTimer();                               /* ベンチマークの計測終了 */
+    Benchmark::Instance().printTime();                               /* 計測時間表示 */
+#endif
+
 
     /*-----------------------------------------------------------------------------
      *  計算終了
      *-----------------------------------------------------------------------------*/
     
     ff.outputFile_LastLog( "Log.txt" );                              /* プログラムの初期設定など出力 */
+    ff.outputFile_Info( "INFO.txt" );                              /* プログラムの初期設定など出力 */
     admin.printInitInfo();                                           /* 初期状態を表示 */
-
-#ifdef ___BENCHMARK
-    Benchmark::Instance().stopTimer();                               /* ベンチマークの計測終了 */
-    Benchmark::Instance().printTime();                               /* 計測時間表示 */
-#endif
 
     ff.generateResultHtml(admin.getTerm());                          /* 結果表示用HTMLファイル出力 */
     ff.generatePlotScriptForPng();                                   /* gnuplot用ファイル出力 */

@@ -32,13 +32,17 @@
 #define OFS(str)                        do { ofs<< str; }while(0);
 #define OFSS(str)                       ofs << #str << std::endl;
 
+#define OFSV(str)                       do { ofs << #str << " " << str << std::endl; }while(0);
+#define OFSD(str)                       do { ofs << #str << " " << str << std::endl; }while(0);
+#define OFSVP(str,val)                  do { ofs << #str << " " << val << std::endl; }while(0);
+
 #define OFS_P(str)                      do { ofs<<"<p>"<<str<<"</p>"<<std::endl; }while(0);
 #define OFS_LINE(str)                   do { ofs<< str << std::endl; }while(0);
 #define OFS_IMG_MINI(img,mini,last)     do { ofs<<"<table class=\"graph\"><tr> \
-                                        <td><img src=assets/"<<img<<" /></td></tr><tr> \
-                                        <td><img src=assets/"<<mini<<" /></td></tr><t> \
-                                        <td><img src=assets/"<<last<<" /></td></tr> \
-                                        </table><br />"<<std::endl; }while(0);
+    <td><img src=assets/"<<img<<" /></td></tr><tr> \
+    <td><img src=assets/"<<mini<<" /></td></tr><t> \
+    <td><img src=assets/"<<last<<" /></td></tr> \
+    </table><br />"<<std::endl; }while(0);
 
 #define OFS_TD(str,val)                 do { ofs<<"<tr><td>"<<str<<"</td>"<<"<td>"<<val<<"</td></tr>"<<std::endl; }while(0);
 
@@ -80,6 +84,29 @@
 #define CHECK_INTERVAL                  4
 
 int averate_amplitude_;                                              /* 平均振幅 */
+
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  FileFactory :: Instance()
+ * Description:  インスタンスを返す
+ *--------------------------------------------------------------------------------------
+ */
+
+FileFactory& FileFactory :: Instance() {
+    static FileFactory coredata;
+    return coredata;                                                 /* インスタンスを返す */
+}
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  FileFactory :: setadmi
+ * Description:  管理者を登録する
+ *--------------------------------------------------------------------------------------
+ */
+void FileFactory :: setAdministrator( Administrator &admin ) {
+    admin_ = &admin;                                                 /* 管理者を登録 */
+}
 
 /*
  *--------------------------------------------------------------------------------------
@@ -163,9 +190,9 @@ double FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
             count = 1;                                               /* カウントを１に戻す */
         }
         if( count == CHECK_INTERVAL && data[mt] != 0 ) {
-//            if( i > TERM - MINI_SIZE_TERM - CHECK_INTERVAL )       /* 最後の期間だけ */
+            //            if( i > TERM - MINI_SIZE_TERM - CHECK_INTERVAL )       /* 最後の期間だけ */
             if( mt+1 != TERM ) {                                     /* 最後はいれず */
-                ofs << mt+1 << SEPARATOR << data[mt] << std::endl;
+                ofs << mt+1 << SEPARATOR << data[mt] << ENDL;
             }
             mt = i + CHECK_INTERVAL - 1;
             count = 1;                                               /* カウントを１に戻す */
@@ -174,34 +201,61 @@ double FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
 
     return average_cycle( fname );                                  /* 平均周期を返す */
 }
-
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  FileFactory :: Instance()
- * Description:  インスタンスを返す
- *--------------------------------------------------------------------------------------
- */
-
-FileFactory& FileFactory :: Instance() {
-    static FileFactory coredata;
-    return coredata;                                                 /* インスタンスを返す */
-}
-
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  FileFactory :: setadmi
- * Description:  管理者を登録する
- *--------------------------------------------------------------------------------------
- */
-void FileFactory :: setAdministrator( Administrator &admin ) {
-    admin_ = &admin;                                                 /* 管理者を登録 */
-}
-
 /*-----------------------------------------------------------------------------
  *
  *  計算結果出力
  *
  *-----------------------------------------------------------------------------*/
+
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  FileFactory :: outputFile_Info
+ * Description:  パラメータ情報を出力する
+ *--------------------------------------------------------------------------------------
+ */
+void FileFactory :: outputFile_Info( const char *fname ) const {
+    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
+    /*-----------------------------------------------------------------------------
+     *  計算 前 情報
+     *-----------------------------------------------------------------------------*/
+    /* 設定 */
+    OFSD( MATING_AGENT );
+    /* 期間 */
+    OFSV( OUTPUT_INTERVAL );                                         /* 出力期間 */
+    OFSV( MINI_SIZE_TERM );                                          /* 拡大期間 */
+    OFSV( WIDTH );                                                   /* 土地の幅 */
+    /* エージェント */
+    OFSV( INIT_NUM_A );                                              /* 初期エージェント数 */
+    OFSV( MAX_NUM_A );                                               /* 最大エージェント数 */
+    OFSV( MAX_VIRUS_AGENT_HAVE );                                    /* 最大保持ウイルス数 */
+    OFSV( MAX_V_AGENT_INFECT_ONT_TIME );                             /* １期間最大感染ウイルス数 */
+    OFSV( MAX_AGE );                                                 /* 寿命 */
+    OFSV( BIRTH_RATE );                                              /* 出生率 */
+    OFSV( BIRTH_AGE_FROM );                                          /* 出産適齢期 */
+    OFSV( BIRTH_AGE_TO );
+    OFSV( MOVE_DISTANCE );                                           /* 移動距離 */
+    OFSV( INFECTION_RATE );                                          /* 感染率 */
+    OFSV( INIT_INFECTED_RATIO );                                     /* 初期感染数 */
+    /* ウイルス */
+    OFSVP( NUM_V, admin_->virus_.size() );                           /* ウイルスの種類 */
+
+    ITERATOR(Virus *) it_v = admin_->virus_.begin();
+    while(it_v!=admin_->virus_.end()) {                              /* 各ウイルスの */
+        OFSVP( V_LEN, (*it_v)->getLen() );                           /* タグ長 */
+        it_v++;
+    }
+    /* ファイル名 */
+    /*-----------------------------------------------------------------------------
+     *  計算 後 情報
+     *-----------------------------------------------------------------------------*/
+    OFSVP( TERM, admin_->getTerm() );                                /* 計測器館 */
+    OFSVP( NUM_A, admin_->agent_.size() );                           /* 最終エージェント数 */
+
+#ifdef ___BENCHMARK
+    OFSVP( TIME, Benchmark::Instance().getTime() );                  /* 計測時間 */
+#endif
+}
 
 /*--------------------------------------------------------------------------------------
  *      Method:  FileFactory :: outputFile_HasVirus
@@ -218,7 +272,7 @@ void FileFactory :: outputFile_HasVirus( const char *fname ) const {
     int num_has_all = admin_->numHasAllVirus();
     ofs << num_has_all << SEPARATOR;                                 /* 全ウイルス保持者 */
     ofs << (double)num_has_all/admin_->agent_.size() << SEPARATOR;
-    ofs << (double)admin_->numHasVirus( *(admin_->virus_[0]))/admin_->agent_.size() << std::endl;
+    ofs << (double)admin_->numHasVirus( *(admin_->virus_[0]))/admin_->agent_.size() << ENDL;
 }
 
 /*--------------------------------------------------------------------------------------
@@ -236,7 +290,7 @@ void FileFactory :: outputFile_HasImmunity( const char *fname ) const {
     int num_has_all = admin_->numHasAllImmunity();
     ofs << num_has_all << SEPARATOR;
     ofs << (double)num_has_all/admin_->agent_.size() << SEPARATOR;
-    ofs << (double)admin_->numHasImmunity( *(admin_->virus_[0]) )/admin_->agent_.size() << std::endl;
+    ofs << (double)admin_->numHasImmunity( *(admin_->virus_[0]) )/admin_->agent_.size() << ENDL;
 }
 /*--------------------------------------------------------------------------------------
  *      Method:  FileFactory :: outputFile_Population
@@ -247,7 +301,7 @@ void FileFactory :: outputFile_Population( const char *fname ) const {
     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
     ofs << admin_->getTerm() << SEPARATOR;                           /* 期間 */
     ofs << admin_->agent_.size() << SEPARATOR;                       /* 人口 */
-    ofs << std::endl;
+    ofs << ENDL;
 }
 /*--------------------------------------------------------------------------------------
  *      Method:  FileFactory :: outputFile_InfectionContactRatio
@@ -269,7 +323,7 @@ void FileFactory :: outputFile_InfectionContactRatio( const char *fname ) const 
 
     if( sum > 0 ) ratio
         = (double)sum / (double) Monitor::Instance().getContactNum(); 
-    ofs << ratio << std::endl;
+    ofs << ratio << ENDL;
 }
 
 /*
@@ -280,28 +334,29 @@ void FileFactory :: outputFile_InfectionContactRatio( const char *fname ) const 
  */
 void FileFactory :: outputFile_LastLog( const char *fname ) const {
     static std::ofstream ofs(fname);
-    ofs << "TERM:" << admin_->getTerm() << std::endl;
-    ofs << "MAX_AGE:" << MAX_AGE << std::endl;
-    ofs << "BIRTH_RATE:" << BIRTH_RATE << std::endl;
-    ofs << "WIDTH:" << WIDTH << std::endl;
-    ofs << "NUM_A:" << admin_->agent_.size() << std::endl;
-    ofs << "INIT_NUM_A:" << INIT_NUM_A << std::endl;
-    ofs << "NUM_V:" << admin_->virus_.size() << std::endl;
-    ofs << "INFECTION_RATE:" << INFECTION_RATE << std::endl;
-    ofs << "INIT_INFECTED_RATIO:" << INIT_INFECTED_RATIO << std::endl;
-    ofs << "TAG_LEN_A:" << TAG_LEN_A << std::endl;
-    ofs << "TAG_LEN_V:" << TAG_LEN_V << std::endl;
+    ofs << "TERM:" << admin_->getTerm() << ENDL;
+    ofs << "MAX_AGE:" << MAX_AGE << ENDL;
+    ofs << "BIRTH_RATE:" << BIRTH_RATE << ENDL;
+    ofs << "WIDTH:" << WIDTH << ENDL;
+    ofs << "NUM_A:" << admin_->agent_.size() << ENDL;
+    ofs << "INIT_NUM_A:" << INIT_NUM_A << ENDL;
+    ofs << "NUM_V:" << admin_->virus_.size() << ENDL;
+    ofs << "INFECTION_RATE:" << INFECTION_RATE << ENDL;
+    ofs << "INIT_INFECTED_RATIO:" << INIT_INFECTED_RATIO << ENDL;
+    ofs << "TAG_LEN_A:" << TAG_LEN_A << ENDL;
+    ofs << "TAG_LEN_V:" << TAG_LEN_V << ENDL;
     FOR(i,admin_->virus_.size()) { ofs<<"["<<(*admin_->virus_[i]).getLen()<<"]:";
-        FOR(j, (*admin_->virus_[i]).getLen()) { ofs<<int((*admin_->virus_[i]).tagAt(j)); } ofs<<std::endl; }
-    ofs << ">>> Agent Last Status" << std::endl;
-    ITERATOR(Agent *) it_a = admin_->agent_.begin();
-    while(it_a!=admin_->agent_.end()) {
-        FOR(j, (*it_a)->getLen()) {
-            ofs<<(*it_a)->tagAt(j);                                  /* エージェントのタグ */
+        FOR(j, (*admin_->virus_[i]).getLen()) { ofs<<int((*admin_->virus_[i]).tagAt(j)); } ofs<<ENDL;
+        ofs << ">>> Agent Last Status" << ENDL;
+        ITERATOR(Agent *) it_a = admin_->agent_.begin();
+        while(it_a!=admin_->agent_.end()) {
+            FOR(j, (*it_a)->getLen()) {
+                ofs<<(*it_a)->tagAt(j);                                  /* エージェントのタグ */
+            }
+            ofs<<" "<<(*it_a)->numHoldingVirus();                        /* エージェントの保持ウイルス数 */
+            ofs<<ENDL;
+            it_a++;
         }
-        ofs<<" "<<(*it_a)->numHoldingVirus();                        /* エージェントの保持ウイルス数 */
-        ofs<<std::endl;
-        it_a++;
     }
 }
 
@@ -323,7 +378,7 @@ void FileFactory :: generatePlotScriptForPng() const
     PLOT_STYLE;
 
     ofs << "set terminal png size "
-        << IMG_SIZE << std::endl;                         /* 画像のサイズを設定 */
+        << IMG_SIZE << ENDL;
 #if defined(AGING_AGENT) || defined(MATING_AGENT)
     // population
     scriptForPopulationPng(ofs);
@@ -337,7 +392,7 @@ void FileFactory :: generatePlotScriptForPng() const
     // contact
     scriptForContactPng(ofs);
 
-    ofs << "set output" << std::endl;
+    ofs << "set output" << ENDL;
 }
 
 /* 
@@ -452,11 +507,11 @@ void FileFactory :: scriptForHasVirusPng(std::ofstream &ofs) const {
             << ENDL;
     }
     OFS_REPLOT( "HasVirus_last.png" )
-            << HAS_VIRUS_OUTPUT
-            << " using 1:" << admin_->virus_.size()+2
-            << LINE_STYLE
-            << TITLE( has_all_virus )
-            << ENDL;
+        << HAS_VIRUS_OUTPUT
+        << " using 1:" << admin_->virus_.size()+2
+        << LINE_STYLE
+        << TITLE( has_all_virus )
+        << ENDL;
 
     /*-----------------------------------------------------------------------------
      *  Peak
@@ -586,7 +641,7 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
         << " using 1:" << admin_->virus_.size()+2
         << LINE_STYLE
         << " title " << "\"R\""
-        << std::endl;
+        << ENDL;
 
     // SIR_0
     OFS_TITLE( SIR_0, Term, Agent );
@@ -594,7 +649,7 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
     OFS_PLOT( "SIR_0.png" )
         << HAS_VIRUS_OUTPUT
         << LINE_STYLE
-        << " title " << "\"I_0\"" << std::endl;
+        << " title " << "\"I_0\"" << ENDL;
     OFS_REPLOT( "SIR_0.png" )
         << HAS_IMMUNITY_OUTPUT
         << LINE_STYLE
@@ -610,7 +665,7 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
         << LINE_STYLE
         << " title " << "\"I/POPULATION\""
         << ENDL;
-    ofs << "set output \"SIR_RATIO.png\"" << std::endl;
+    ofs << "set output \"SIR_RATIO.png\"" << ENDL;
     OFS_REPLOT( "SIR_RATIO.png" )
         << HAS_IMMUNITY_OUTPUT
         << " using 1:" << admin_->virus_.size()+3 << LINE_STYLE
@@ -631,14 +686,14 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
         << HAS_IMMUNITY_OUTPUT
         << " using 1:" << admin_->virus_.size()+4 << LINE_STYLE
         << " title " << "\"R_0/POPULATION\""
-        << std::endl;
+        << ENDL;
     OFS_LINE( "set autoscale y" );
 
     /*-----------------------------------------------------------------------------
      *  Begin Term
      *-----------------------------------------------------------------------------*/
     // SIR_mini
-    ofs << "set output \"SIR_mini.png\"" << std::endl;
+    ofs << "set output \"SIR_mini.png\"" << ENDL;
 
     OFS_TITLE( SIR, Term, Agent );
 
@@ -682,7 +737,7 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
         << HAS_IMMUNITY_OUTPUT
         << " using 1:" << admin_->virus_.size()+3 << LINE_STYLE
         << " title " << "\"R/POPULATION\""
-        << std::endl;
+        << ENDL;
     OFS_LINE( "set autoscale y" );
 
     // SIR_0_RATIO_mini
@@ -699,14 +754,14 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
         << " using 1:" << admin_->virus_.size()+4
         << LINE_STYLE
         << " title " << "\"R_0/POPULATION\""
-        << std::endl;
+        << ENDL;
     OFSS( set autoscale y );
 
     /*-----------------------------------------------------------------------------
      *  End Term
      *-----------------------------------------------------------------------------*/
     // SIR_last
-    ofs << "set output \"SIR_last.png\"" << std::endl;
+    ofs << "set output \"SIR_last.png\"" << ENDL;
 
     OFS_TITLE( SIR, Term, Agent );
 
@@ -751,7 +806,7 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
         << HAS_IMMUNITY_OUTPUT
         << " using 1:" << admin_->virus_.size()+3 << LINE_STYLE
         << " title " << "\"R/POPULATION\""
-        << std::endl;
+        << ENDL;
     OFS_LINE( "set autoscale y" );
 
     // SIR_0_RATIO_last
@@ -769,7 +824,7 @@ void FileFactory :: scriptForSIRPng(std::ofstream &ofs) const {
         << " using 1:" << admin_->virus_.size()+4
         << LINE_STYLE
         << " title " << "\"R_0/POPULATION\""
-        << std::endl;
+        << ENDL;
     OFSS( set autoscale y );
 
 }
@@ -787,7 +842,7 @@ void FileFactory :: scriptForContactPng(std::ofstream &ofs) const {
     OFS_PLOT( "Contact.png" )
         << CONTACT_OUTPUT << LINE_STYLE
         << " title \"contact\""
-        << std::endl;
+        << ENDL;
     FOR( i, admin_->virus_.size() ) {
         OFS_REPLOT( "Contact.png" )
             << CONTACT_OUTPUT
@@ -814,7 +869,7 @@ void FileFactory :: scriptForContactPng(std::ofstream &ofs) const {
         << CONTACT_OUTPUT
         << LINE_STYLE
         << " title \"contact\""
-        << std::endl;
+        << ENDL;
     FOR( i, admin_->virus_.size() ) {
         OFS_REPLOT( "Contact_mini.png" )
             << CONTACT_OUTPUT
@@ -843,7 +898,7 @@ void FileFactory :: scriptForContactPng(std::ofstream &ofs) const {
         << CONTACT_OUTPUT
         << LINE_STYLE
         << " title \"contact\""
-        << std::endl;
+        << ENDL;
     FOR( i, admin_->virus_.size() ) {
         OFS_REPLOT( "Contact_last.png" )
             << CONTACT_OUTPUT
@@ -1003,9 +1058,9 @@ void FileFactory :: generateResultHtml( int t ) {
     OFS_IMG_MINI( "HasVirus.png", "HasVirus_mini.png", "HasVirus_last.png" );
     FOR( i, admin_->virus_.size() ) {
         ofs << "<p>has_virus_" << i << ": "
-            << "ウイルス " << i << " に感染しているエージェント数</p>" << std::endl;
+            << "ウイルス " << i << " に感染しているエージェント数</p>" << ENDL;
     }
-    ofs << "<p>has_all_virus" << "すべてのウイルスに感染しているエージェント数</p>" << std::endl;
+    ofs << "<p>has_all_virus" << "すべてのウイルスに感染しているエージェント数</p>" << ENDL;
 
     /*-----------------------------------------------------------------------------
      *  免疫獲得者
@@ -1014,9 +1069,9 @@ void FileFactory :: generateResultHtml( int t ) {
     OFS_IMG_MINI( "HasImmunity.png", "HasImmunity_mini.png", "HasImmunity_last.png" );
     FOR( i, admin_->virus_.size() ) {
         ofs << "<p>has_virus_" << i << ": "
-            << "ウイルス " << i << " への免疫を獲得しているエージェント数</p>" << std::endl;
+            << "ウイルス " << i << " への免疫を獲得しているエージェント数</p>" << ENDL;
     }
-    ofs << "<p>has_all_virus" << "すべてのウイルスへの免疫を獲得しているエージェント数</p>" << std::endl;
+    ofs << "<p>has_all_virus" << "すべてのウイルスへの免疫を獲得しているエージェント数</p>" << ENDL;
 
     /*-----------------------------------------------------------------------------
      *  SIR
@@ -1036,20 +1091,20 @@ void FileFactory :: generateResultHtml( int t ) {
     OFS( "I/POPULATION: ウイルス 0 に感染しているエージェント数 / その時点での総エージェント数" );
     OFS( "R/POPULATION: ウイルス 0 に対して免疫を獲得しているエージェント数 / その時点での総エージェント数" );
 
-//    /*-----------------------------------------------------------------------------
-//     *  周期
-//     *-----------------------------------------------------------------------------*/
-//    OFS( "<h2 id=period>周期[ "<<PERIOD<<" ]</h2>" );
-//    ofs <<"<table class=\"graph\"><tr><td><img src=img/"
-//        << "AveGotNewImmunityPeriod.png" <<" /></td></tr><tr><td><img src=img/"
-//        << "GotNewEachImmunityPeriod.png" <<" /></td></tr>"
-//        << "</table><br />"<<std::endl;
-//    ofs << "<p>AveGotNewImmunityPeriod: " << "何らかのウイルスへの免疫を獲得した回数の平均</p>" << std::endl;
-//    FOR( i, admin_->virus_.size() ) {
-//        ofs << "<p>GotNewEachImmunityPeriod" << i << ": 先頭のエージェントが"
-//            << "ウイルス " << i << " への免疫を獲得した回数</p>" << std::endl;
-//    }
-//
+    //    /*-----------------------------------------------------------------------------
+    //     *  周期
+    //     *-----------------------------------------------------------------------------*/
+    //    OFS( "<h2 id=period>周期[ "<<PERIOD<<" ]</h2>" );
+    //    ofs <<"<table class=\"graph\"><tr><td><img src=img/"
+    //        << "AveGotNewImmunityPeriod.png" <<" /></td></tr><tr><td><img src=img/"
+    //        << "GotNewEachImmunityPeriod.png" <<" /></td></tr>"
+    //        << "</table><br />"<<ENDL;
+    //    ofs << "<p>AveGotNewImmunityPeriod: " << "何らかのウイルスへの免疫を獲得した回数の平均</p>" << ENDL;
+    //    FOR( i, admin_->virus_.size() ) {
+    //        ofs << "<p>GotNewEachImmunityPeriod" << i << ": 先頭のエージェントが"
+    //            << "ウイルス " << i << " への免疫を獲得した回数</p>" << ENDL;
+    //    }
+    //
     /*-----------------------------------------------------------------------------
      *  接触回数
      *-----------------------------------------------------------------------------*/
@@ -1058,7 +1113,7 @@ void FileFactory :: generateResultHtml( int t ) {
     OFS( "contact: 総接触回数" );
     FOR( i, admin_->virus_.size() ) {
         ofs << "<p>infection_contact_" << i << ": "
-            << "ウイルス " << i << " を感染させた接触回数</p>" << std::endl;
+            << "ウイルス " << i << " を感染させた接触回数</p>" << ENDL;
     }
     OFS_IMG_MINI( "ContactRatio.png", "ContactRatio_mini.png", "ContactRatio_last.png" );
     OFS( "ratio: 何らかのウイルスを感染させた接触回数 / 総接触回数" );

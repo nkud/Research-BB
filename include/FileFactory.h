@@ -45,7 +45,8 @@ class FileFactory {
         void outputFile_Population( const char * ) const;            /* 人口推移を出力 */
         void outputFile_LastLog( const char * ) const;               /* ログを出力 */
 
-        void outputFile_AveGotNewImmunityPeriod( const char * );     /* XXX: 不要 */
+        void outputFile_Info( const char * ) const;                  /* パラメータ情報を出力 */
+
         double outputFile_peakSearch( const char * ) const;          /* 出力: ピークサーチ */
         /*-----------------------------------------------------------------------------
          *  計算結果確認用スクリプト出力
