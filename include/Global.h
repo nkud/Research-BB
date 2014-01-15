@@ -23,8 +23,8 @@
  *  初期設定
  *
  *-----------------------------------------------------------------------------*/
-//#define AGING_AGENT
-//#define MATING_AGENT
+#define AGING_AGENT
+#define MATING_AGENT
 
 #define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
@@ -46,18 +46,17 @@ const int TAG_LEN_V                   = 20    ;                      /* エー�
 const int INIT_NUM_A                  = 1000  ;                      /* 初期エージェントの数 */
 const double INIT_INFECTED_RATIO      = 0.3   ;                      /* 初期感染率 */
 
-const int MAX_NUM_A                   = 6000  ;                      /* 最大エージェント数 */
+const int MAX_NUM_A                   = 10000  ;                      /* 最大エージェント数 */
 
 const int MOVE_DISTANCE               = 10    ;                      /* エージェントの移動距離 */
 
-const int MAX_AGE                     = 100   ;                      /* 寿命 */
+const int MAX_AGE                     = 100;                      /* 寿命 */
 
-const double BIRTH_RATE               = 0.750 ;                      /* 出産確率 */
-const int BIRTH_AGE_FROM              = 20    ; 
-const int BIRTH_AGE_TO                = 40    ; 
+const double BIRTH_RATE               = 0.3 ;                      /* 出生率 */
+const int BIRTH_AGE_FROM              = MAX_AGE * 0.2    ; 
+const int BIRTH_AGE_TO                = MAX_AGE * 0.6    ; 
 
 #define IMG_SIZE                      "1000,200"
-
 
 /*-----------------------------------------------------------------------------
  *
