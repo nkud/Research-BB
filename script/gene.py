@@ -87,6 +87,10 @@ f = open('auto.plt', 'w')
 
 scriptForInitSetting(f)
 
-scriptForHasVirusPng(f, info_data)
-scriptForHasImmunityPng(f, info_data)
-scriptForSIR(f, info_data)
+def main():
+    scriptForHasVirusPng(f, info_data)
+    scriptForHasImmunityPng(f, info_data)
+    scriptForSIR(f, info_data)
+
+if __name__ == "__main__":
+    main()
