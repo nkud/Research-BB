@@ -5,13 +5,8 @@
  *
  *    Description:  
  *
- *        Version:  1.0
- *        Created:  12/08/2013 20:12:46
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  YOUR NAME (), 
- *   Organization:  
+ *         Author:  Naoki Ueda
+ *   Organization:  OPU, 3G
  *
  * =====================================================================================
  */

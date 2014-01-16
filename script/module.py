@@ -61,38 +61,41 @@ def scriptForInitSetting(f):
 def scriptForHasVirusPng(f, data):
     """ create script for img about 'hasVirus' """
     of = OutputFactory(f, "A_hasVirus.txt", "HasVirus", "Term", "Agent", "HasVirus", data)
+    v_num = int(data['NUM_V'])
     of.init()
     of.plot("has_virus_0")
-    for i in range(int(data['NUM_V'])-1):
-        of.replot('has_virus_'+str(i+1),i+3)
+    for i in range(v_num-1):
+        of.replot('has_virus_'+str(i+1), i+3)
     of.init_begin()
     of.plot_begin('has_virus_0')
-    for i in range(int(data['NUM_V'])-1):
+    for i in range(v_num-1):
         of.replot_begin('has_virus_'+str(i+1), i+3)
     of.init_end()
     of.plot_end('has_virus_0')
-    for i in range(int(data['NUM_V'])-1):
+    for i in range(v_num-1):
         of.replot_end('has_virus_'+str(i+1), i+3)
 
 def scriptForHasImmunityPng(f, data):
     """ create script for img about 'hasImmunity' """
     of = OutputFactory(f, "A_hasImmunity.txt", "HasImmunity", "Term", "Agent", "HasImmunity", data)
+    v_num = int(data['NUM_V'])
     of.init()
     of.plot("has_immunity_0")
-    for i in range(int(data['NUM_V'])-1):
+    for i in range(v_num-1):
         of.replot('has_immunity_'+str(i+1),i+3)
     of.init_begin()
     of.plot_begin('has_immunity_0')
-    for i in range(int(data['NUM_V'])-1):
+    for i in range(v_num-1):
         of.replot_begin('has_immunity_'+str(i+1), i+3)
     of.init_end()
     of.plot_end('has_immunity_0')
-    for i in range(int(data['NUM_V'])-1):
+    for i in range(v_num-1):
         of.replot_end('has_immunity_'+str(i+1), i+3)
 
 def scriptForSIR(f,data):
     ofi = OutputFactory(f, "A_hasVirus.txt", "SIR", "Term", "Agent", "SIR", data)
     ofr = OutputFactory(f, "A_hasImmunity.txt", "SIR", "Term", "Agent", "SIR", data)
+    v_num = int(data['NUM_V'])
     ofi.init()
     ofi.plot('I')
-    ofr.replot('R', int(data['NUM_V']+2))
+    ofr.replot('R', v_num+2)
