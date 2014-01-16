@@ -32,7 +32,7 @@ const int TERM                        = 10000 ;                      /* 期間 *
 const int OUTPUT_INTERVAL             = 1     ;                      /* 出力する間隔 */
 const int MINI_SIZE_TERM              = 200   ; 
 
-const int WIDTH                       = 30    ;                      /* ランドスケープの幅 */
+const int WIDTH                       = 60    ;                      /* ランドスケープの幅 */
 
 const double INFECTION_RATE           = 1.0   ;                      /* デフォルトの感染率 */
 
@@ -42,9 +42,9 @@ const int MAX_V_AGENT_INFECT_ONT_TIME = 1     ;                      /* １期�
 const int TAG_LEN_A                   = 30    ;                      /* エージェントのタグ長 */
 const int TAG_LEN_V                   = 20    ;                      /* エージェントのタグ長 */
 
-const int INIT_NUM_A                  = 100  ;                       /* 初期エージェントの数 */
+const int INIT_NUM_A                  = 1000  ;                       /* 初期エージェントの数 */
 
-const double INIT_INFECTED_RATIO      = 0.3   ;                      /* 初期感染率 */
+const double INIT_INFECTED_RATIO      = 0.1   ;                      /* 初期感染率 */
 
 const int MAX_NUM_A                   = 10000  ;                     /* 最大エージェント数 */
 
