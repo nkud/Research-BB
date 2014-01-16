@@ -216,6 +216,12 @@ double FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
  */
 void FileFactory :: outputFile_Info( const char *fname ) const {
     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
+
+    int t = admin_->getTerm();                                       /* 計算後実行期間 */
+    int last_term;
+    if( t < MINI_SIZE_TERM ) last_term = MINI_SIZE_TERM;
+    else last_term = t;
+
     /*-----------------------------------------------------------------------------
      *  計算 前 情報
      *-----------------------------------------------------------------------------*/
@@ -250,6 +256,7 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
      *-----------------------------------------------------------------------------*/
     OFSVP( TERM, admin_->getTerm() );                                /* 計測器館 */
     OFSVP( NUM_A, admin_->agent_.size() );                           /* 最終エージェント数 */
+    OFSVP( LAST_TERM, last_term );
 
 #ifdef ___BENCHMARK
     OFSVP( TIME, Benchmark::Instance().getTime() );                  /* 計測時間 */

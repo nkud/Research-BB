@@ -1,13 +1,21 @@
+# 一時ファイル
 *.o
 *.swp
 *.out
-tags
+.DS_Store
+
+# スクリプト
+*.pyc
+*.plt
 
 
 core
 log
+tags
 
+# フォルダ
 bin/
 master/
 
+# __から始まるファイルを無視
 __*
