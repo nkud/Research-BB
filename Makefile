@@ -57,13 +57,12 @@ pack:
 	@$(PRINT) '>>> Packing...'
 	@$(MKDIR) $(MASTER)
 	@cd $(MASTER); $(MKDIR) $(NOW)
-	@cd $(MASTER); $(MKDIR) $(NOW)/txt
+	@cd $(MASTER); $(MKDIR) $(NOW)/assets
 	@cd $(MASTER); $(MKDIR) $(NOW)/src
-	@cd $(MASTER); $(MKDIR) $(NOW)/img
 	@cd $(MASTER); $(MKDIR) $(NOW)/script
-	@$(COPY) $(BIN)/txt/*.txt $(MASTER)/$(NOW)/txt
-	@$(COPY) $(BIN)/script/*.plt $(MASTER)/$(NOW)/script
-	@$(COPY) $(BIN)/img/*.png $(MASTER)/$(NOW)/img
+	@$(COPY) $(BIN)/assets/*.txt $(MASTER)/$(NOW)/assets
+	@$(COPY) $(BIN)/assets/*.plt $(MASTER)/$(NOW)/script
+	@$(COPY) $(BIN)/assets/*.png $(MASTER)/$(NOW)/assets
 	@$(COPY) include/Global.h src/main.cpp $(MASTER)/$(NOW)/src
 	@cd $(BIN); $(COPY) note.html RESULT.html result.css ../$(MASTER)/$(NOW)
 	@tree $(MASTER)/$(NOW)
