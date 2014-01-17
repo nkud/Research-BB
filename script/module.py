@@ -1,6 +1,8 @@
 #! /usr/bin/python
 " Functions module "
 
+LINE_STYLE = 'with lw 2'
+
 def outputLine(fname, line):
     """ write line to file """
     fname.write(line+'\n')
@@ -32,19 +34,19 @@ class OutputFactory(object):
     def output_end(self):
         outputLine(self.f, 'set output "'+self.imgname+'_end.png"')
 
-    def plot(self, title):
-        outputLine(self.f, 'set output "'+self.imgname+'.png";plot "'+self.fname+'" title "'+title+'"')
-    def plot_begin(self, title):
-        outputLine(self.f, 'set output "'+self.imgname+'_begin.png";plot [0:'+str(int(self.mini_term))+'] "'+self.fname+'" title "'+title+'"')
-    def plot_end(self, title):
-        outputLine(self.f, 'set output "'+self.imgname+'_end.png";plot ['+str(int(self.last_term-self.mini_term))+':'+str(int(self.last_term))+'] "'+self.fname+'" title "'+title+'"')
+    def plot(self, title, using=2):
+        outputLine(self.f, 'set output "'+self.imgname+'.png";plot "'+self.fname+'" using 1:'+str(using)+' '+LINE_STYLE+' title "'+title+'"')
+    def plot_begin(self, title, using=2):
+        outputLine(self.f, 'set output "'+self.imgname+'_begin.png";plot [0:'+str(int(self.mini_term))+'] "'+self.fname+'" using 1:'+str(using)+' '+LINE_STYLE+' title "'+title+'"')
+    def plot_end(self, title, using=2):
+        outputLine(self.f, 'set output "'+self.imgname+'_end.png";plot ['+str(int(self.last_term-self.mini_term))+':'+str(int(self.last_term))+'] "'+self.fname+'" using 1:'+str(using)+' '+LINE_STYLE+' title "'+title+'"')
 
     def replot(self, title, using):
-        outputLine(self.f, 'set output "'+self.imgname+'.png";replot "'+self.fname+'" using 1:'+str(using)+' title "'+title+'"')
+        outputLine(self.f, 'set output "'+self.imgname+'.png";replot "'+self.fname+'" using 1:'+str(using)+' '+LINE_STYLE+' title "'+title+'"')
     def replot_begin(self, title, using):
-        outputLine(self.f, 'set output "'+self.imgname+'_begin.png";replot "'+self.fname+'" using 1:'+str(using)+' title "'+title+'"')
+        outputLine(self.f, 'set output "'+self.imgname+'_begin.png";replot "'+self.fname+'" using 1:'+str(using)+' '+LINE_STYLE+' title "'+title+'"')
     def replot_end(self, title, using):
-        outputLine(self.f, 'set output "'+self.imgname+'_end.png";replot "'+self.fname+'" using 1:'+str(using)+' title "'+title+'"')
+        outputLine(self.f, 'set output "'+self.imgname+'_end.png";replot "'+self.fname+'" using 1:'+str(using)+' '+LINE_STYLE+' title "'+title+'"')
 
 def initPng(title, xl, yl):
     outputLine(f, 'set title "'+title+'"')
@@ -97,5 +99,33 @@ def scriptForSIR(f,data):
     ofr = OutputFactory(f, "A_hasImmunity.txt", "SIR", "Term", "Agent", "SIR", data)
     v_num = int(data['NUM_V'])
     ofi.init()
-    ofi.plot('I')
+    ofi.plot('I', v_num+2)
     ofr.replot('R', v_num+2)
+    ofi.init_begin()
+    ofi.plot_begin('I', v_num+2)
+    ofr.replot_begin('R', v_num+2)
+    ofi.init_end()
+    ofi.plot_end('I', v_num+2)
+    ofr.replot_end('R', v_num+2)
+
+def scriptForEachSIR(f,data, vn):
+    ofi = OutputFactory(f, "A_hasVirus.txt", "SIR_"+str(vn), "Term", "Agent", "SIR_"+str(vn), data)
+    ofr = OutputFactory(f, "A_hasImmunity.txt", "SIR_"+str(vn), "Term", "Agent", "SIR_"+str(vn), data)
+    v_num = int(data['NUM_V'])
+    ofi.init()
+    ofi.plot('I', vn+2)
+    ofr.replot('R', vn+2)
+    ofi.init_begin()
+    ofi.plot_begin('I', vn+2)
+    ofr.replot_begin('R', vn+2)
+    ofi.init_end()
+    ofi.plot_end('I', vn+2)
+    ofr.replot_end('R', vn+2)
+
+def scriptForContact(f,data):
+    of = OutputFactory(f, "A_infectionContact.txt", "Contact", "Term", "", "Contact", data)
+    v_num = int(data['NUM_V'])
+    of.init()
+    of.plot('contact')
+    for i in range(v_num):
+        of.replot('infection_contact_'+str(i+1),i+3)

@@ -10,10 +10,14 @@ for line in open('bin/assets/INFO.txt', 'r'):
 
 def main():
     f = open('auto.plt', 'w')
+    v_num = int(info_data['NUM_V'])
     scriptForInitSetting(f)
     scriptForHasVirusPng(f, info_data)
     scriptForHasImmunityPng(f, info_data)
     scriptForSIR(f, info_data)
+    for i in range(v_num):
+        scriptForEachSIR(f, info_data, i)
+    scriptForContact(f, info_data)
 
 if __name__ == "__main__":
     print '>>> INFO...'

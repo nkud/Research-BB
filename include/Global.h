@@ -32,11 +32,11 @@ const int TERM                        = 1000 ;                      /* 期間 */
 const int OUTPUT_INTERVAL             = 1     ;                      /* 出力する間隔 */
 const int MINI_SIZE_TERM              = 200   ; 
 
-const int WIDTH                       = 40    ;                      /* ランドスケープの幅 */
+const int WIDTH                       = 60    ;                      /* ランドスケープの幅 */
 
 const double INFECTION_RATE           = 1.0   ;                      /* デフォルトの感染率 */
 
-const int MAX_VIRUS_AGENT_HAVE        = 5     ;                      /* 最大保持ウイルス */
+const int MAX_VIRUS_AGENT_HAVE        = 2     ;                      /* 最大保持ウイルス */
 const int MAX_V_AGENT_INFECT_ONT_TIME = 1     ;                      /* １期間で感染させるウイルスの最大数 */
 
 const int TAG_LEN_A                   = 30    ;                      /* エージェントのタグ長 */
