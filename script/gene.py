@@ -2,9 +2,7 @@
 
 import os
 
-from plot_module import *
-from html_module import *
-from function import *
+from package import *
 
 info_data = {}
 

@@ -28,6 +28,12 @@ def generateResultHTML(f):
 # SIR
     outputLine(f, '<h2 id=hasvirus>SIR</h2>')
     setImage(f, 'SIR.png', 'SIR_begin.png', 'SIR_end.png')
+# SIR
+    outputLine(f, '<h2 id=hasvirus>SIR_0</h2>')
+    setImage(f, 'SIR_0.png', 'SIR_0_begin.png', 'SIR_0_end.png')
+# SIR
+    outputLine(f, '<h2 id=hasvirus>SIR_1</h2>')
+    setImage(f, 'SIR_1.png', 'SIR_1_begin.png', 'SIR_1_end.png')
 # Contact
     outputLine(f, '<h2 id=hasvirus>SIR</h2>')
     setImage(f, 'Contact.png')
