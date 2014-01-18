@@ -17,8 +17,8 @@ def main():
     fhtml = open('index.html', 'w')
     generatePngPlot(fplot, info_data)
     generateResultHTML(fhtml)
+
     os.system('gnuplot auto.plt')
-    os.system('mv *.png img')
 
 if __name__ == "__main__":
     print '>>> INFO...'

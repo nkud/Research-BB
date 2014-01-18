@@ -2,13 +2,13 @@
 
 from function import *
 
-PNG_DIR = 'img'
+PNG_DIR = ''
 
 def setImage(f, *imgname):
     outputLine(f, '<!-- IMAGE -->')
     outputLine(f, '<table class="graph">')
     for name in imgname:
-        outputLine(f, '\t<tr><td><img src="'+PNG_DIR+'/'+name+'"/></td></tr>')
+        outputLine(f, '\t<tr><td><img src="'+PNG_DIR+name+'"/></td></tr>')
     outputLine(f, '<tr></table>')
 
 ### generate HTMl
