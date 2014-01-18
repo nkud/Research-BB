@@ -21,4 +21,4 @@ master/
 __*
 
 # 例外
-__init__.py
+!__init__.py
