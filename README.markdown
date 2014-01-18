@@ -1,7 +1,6 @@
-# ImmuneSystem program.
-## 1vs1, 1vsN
+# Agent Based Epidemic Model
 
-## モデルの説明
+## Rule
 
 
 * エージェント、ウイルス、土地を用意する。
