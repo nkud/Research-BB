@@ -3,14 +3,13 @@
 
 from function import *
 
-LINE_STYLE = 'with lw 2'
+LINE_STYLE = 'w l lw 2'
 
 ### generateHTML
 def generatePngPlot(f, d):
     " generate plot script for gnuplot "
     v_num = int(d['NUM_V'])
     scriptForInitSetting(f)
-    scriptForPopulation(f, d)
     scriptForHasVirusPng(f, d)
     scriptForHasImmunityPng(f, d)
     scriptForSIR(f, d)
