@@ -90,9 +90,6 @@ const int BIRTH_AGE_TO                = MAX_AGE * 0.6    ;
 
 #define SEPARATOR           " "                                      /* 出力データを分割する文字 */
 
-template < typename T >                                              /* デバッグ用 */
-void log(T str) { int static i=0;std::cout<<i++<<":\t"<<str<<std::endl; }
-
 typedef int tag_t;                                                   /* タグの型（通常 int ） */
 
 #endif
