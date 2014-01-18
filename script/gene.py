@@ -1,23 +1,28 @@
 #! /usr/bin/python
 
-from module import *
+from plot_module import *
 
 info_data = {}
 
+# Read data file
 for line in open('bin/assets/INFO.txt', 'r'):
     item = line[:-1].split(' ')
     info_data[item[0]] = float(item[1])
 
+def generatePngPlot(f, d):
+    " generate plot script for gnuplot "
+    v_num = int(d['NUM_V'])
+    scriptForInitSetting(f)
+    scriptForHasVirusPng(f, d)
+    scriptForHasImmunityPng(f, d)
+    scriptForSIR(f, d)
+    for i in range(v_num):
+        scriptForEachSIR(f, d, i)
+    scriptForContact(f, d)
+
 def main():
     f = open('auto.plt', 'w')
-    v_num = int(info_data['NUM_V'])
-    scriptForInitSetting(f)
-    scriptForHasVirusPng(f, info_data)
-    scriptForHasImmunityPng(f, info_data)
-    scriptForSIR(f, info_data)
-    for i in range(v_num):
-        scriptForEachSIR(f, info_data, i)
-    scriptForContact(f, info_data)
+    generatePngPlot(f, info_data)
 
 if __name__ == "__main__":
     print '>>> INFO...'
