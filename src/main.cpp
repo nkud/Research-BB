@@ -143,8 +143,8 @@ int main()
     ff.outputFile_Info( "INFO.txt" );                              /* プログラムの初期設定など出力 */
     admin.printInitInfo();                                           /* 初期状態を表示 */
 
-    ff.generateResultHtml(admin.getTerm());                          /* 結果表示用HTMLファイル出力 */
-    ff.generatePlotScriptForPng();                                   /* gnuplot用ファイル出力 */
+//    ff.generateResultHtml(admin.getTerm());                          /* 結果表示用HTMLファイル出力 */
+//    ff.generatePlotScriptForPng();                                   /* gnuplot用ファイル出力 */
 
     // 確認用 -----------------------------------------------------------------
     // メモ

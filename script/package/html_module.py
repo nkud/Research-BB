@@ -12,13 +12,14 @@ def setImage(f, *imgname):
     outputLine(f, '<tr></table>')
 
 ### generate HTMl
-def generateResultHTML(f):
+def generateResultHTML(f, d):
     outputLine(f, '<html><link rel="stylesheet" href="result.css"><body><font color=gray><code>')
     outputLine(f, '<h1><font color=black># RESULT </font></h1>')
 
 # Population
-    outputLine(f, '<h2 id=population>population</h2>')
-    setImage(f, 'Population.png')
+    if d['AGING_AGENT'] == 1:
+        outputLine(f, '<h2 id=population>population</h2>')
+        setImage(f, 'Population.png')
 # HasVirus
     outputLine(f, '<h2 id=hasvirus>hasVirus</h2>')
     setImage(f, 'HasVirus.png', 'HasVirus_begin.png', 'HasVirus_end.png')

@@ -39,15 +39,13 @@ class FileFactory {
         void outputFile_InfectionContactRatio( const char * ) const; /* ファイルに出力 */
         void outputFile_Population( const char * ) const;            /* 人口推移を出力 */
         void outputFile_LastLog( const char * ) const;               /* ログを出力 */
-
         void outputFile_Info( const char * ) const;                  /* パラメータ情報を出力 */
-
         double outputFile_peakSearch( const char * ) const;          /* 出力: ピークサーチ */
         /*-----------------------------------------------------------------------------
          *  計算結果確認用スクリプト出力
          *-----------------------------------------------------------------------------*/
-        void generatePlotScriptForPng() const;                       /* プロット用のスクリプトを生成 */
-        void generateResultHtml(int last_term);                      /* 結果表示用のHTMLスクリプトを生成 */
+//        void generatePlotScriptForPng() const;                       /* プロット用のスクリプトを生成 */
+//        void generateResultHtml(int last_term);                      /* 結果表示用のHTMLスクリプトを生成 */
 
     private:
         /*-----------------------------------------------------------------------------
@@ -62,18 +60,18 @@ class FileFactory {
         /*-----------------------------------------------------------------------------
          *  計算結果確認用スクリプト用関数セット
          *-----------------------------------------------------------------------------*/
-        void scriptForPopulationPng(std::ofstream &ofs) const;       /* 画像を出力するスクリプト */
-        void scriptForHasVirusPng(std::ofstream &ofs) const;
-        void scriptForHasImmunityPng(std::ofstream &ofs) const;
-        void scriptForSIRPng(std::ofstream &ofs) const;
-        void scriptForContactPng(std::ofstream &ofs) const;
+//        void scriptForPopulationPng(std::ofstream &ofs) const;       /* 画像を出力するスクリプト */
+//        void scriptForHasVirusPng(std::ofstream &ofs) const;
+//        void scriptForHasImmunityPng(std::ofstream &ofs) const;
+//        void scriptForSIRPng(std::ofstream &ofs) const;
+//        void scriptForContactPng(std::ofstream &ofs) const;
 };
 
 
 /*-----------------------------------------------------------------------------
  *  関数群
  *-----------------------------------------------------------------------------*/
-int max_term_in_interval( const int data[], int cursor, int len );   /* 与えられた期間の最大時刻を探索する */
-double average_period( const char *fname );                          /* ファイルの平均周期を求める */
+static int max_term_in_interval( const int data[], int cursor, int len );   /* 与えられた期間の最大時刻を探索する */
+static double average_period( const char *fname );                   /* ファイルの平均周期を求める */
 
 #endif

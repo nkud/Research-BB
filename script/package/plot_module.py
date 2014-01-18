@@ -16,6 +16,7 @@ def generatePngPlot(f, d):
     " generate plot script for gnuplot "
     v_num = int(d['NUM_V'])
     scriptForInitSetting(f)
+    scriptForPopulation(f, d)
     scriptForHasVirusPng(f, d)
     scriptForHasImmunityPng(f, d)
     scriptForSIR(f, d)
@@ -85,28 +86,36 @@ def scriptForHasVirusPng(f, data):
     of.plot_begin('has_virus_0')
     for i in range(v_num-1):
         of.replot_begin('has_virus_'+str(i+1), i+3)
+    of.replot('has_virus_all', v_num+2)
 
     of.init_end()
     of.plot_end('has_virus_0')
     for i in range(v_num-1):
         of.replot_end('has_virus_'+str(i+1), i+3)
+    of.replot('has_virus_all', v_num+2)
 
 def scriptForHasImmunityPng(f, data):
     """ create script for img about 'hasImmunity' """
     of = OutputFactory(f, data, "A_hasImmunity.txt", "HasImmunity", "Term", "Agent", "HasImmunity")
     v_num = int(data['NUM_V'])
+
     of.init()
     of.plot("has_immunity_0")
     for i in range(v_num-1):
         of.replot('has_immunity_'+str(i+1),i+3)
+    of.replot('has_immunity_all', v_num+2)
+
     of.init_begin()
     of.plot_begin('has_immunity_0')
     for i in range(v_num-1):
         of.replot_begin('has_immunity_'+str(i+1), i+3)
+    of.replot('has_immunity_all', v_num+2)
+
     of.init_end()
     of.plot_end('has_immunity_0')
     for i in range(v_num-1):
         of.replot_end('has_immunity_'+str(i+1), i+3)
+    of.replot('has_immunity_all', v_num+2)
 
 def scriptForSIR(f,data):
     ofi = OutputFactory(f, data, "A_hasVirus.txt", "SIR", "Term", "Agent", "SIR")
@@ -137,7 +146,7 @@ def scriptForEachSIR(f,data, vn):
     ofr.replot_end('R', vn+2)
 
 def scriptForContact(f,data):
-    of = OutputFactory(f, data, "A_infectionContact.txt", "Contact", "Term", "", "Contact")
+    of = OutputFactory(f, data, "A_infectionContact.txt", "Contact", "Term", "Count", "Contact")
     v_num = int(data['NUM_V'])
     of.init()
     of.plot('contact')

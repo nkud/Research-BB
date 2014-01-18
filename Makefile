@@ -42,16 +42,22 @@ build: clean tags $(BIN)/$(TARGET)
 clean:
 	@$(PRINT) '>>> Cleaning...'
 	@$(RM) $(OBJ)
+	@$(RM) $(BIN)/assets
+	@$(RM) $(BIN)/obj
+	@$(RM) $(BIN)/*.txt
+	@$(RM) $(BIN)/*.out
+	@$(RM) $(BIN)/*.html
 
 tags:
 	@$(CTAGS) $(wildcard src/*) $(wildcard include/*)
 
-all: $(BIN)/$(TARGET) run plot
+all: $(BIN)/$(TARGET) run gene
 
-plot :
-	@$(PRINT) '>>> Plotting...'
+gene :
+	@$(PRINT) '>>> Generate...'
+	@cd $(BIN); python ../script/gene.py
 	@-cd $(BIN); gnuplot auto.plt
-	@cd $(BIN); mkdir -p assets;  mv *.txt *.png *.plt assets
+	@cd $(BIN); mkdir -p obj;  mv *.o obj
 
 pack:
 	@$(PRINT) '>>> Packing...'
@@ -74,7 +80,7 @@ $(BIN)/TagInterface.o: TagInterface.h Global.h
 $(BIN)/Agent.o: AgentStrategy.h Agent.h Function.h Monitor.h Global.h TagInterface.h
 $(BIN)/AgentStrategy.o: AgentStrategy.h Agent.h
 $(BIN)/Virus.o: Global.h Virus.h Function.h TagInterface.h
-$(BIN)/Landscape.o: Global.h Landscape.h
+$(BIN)/Landscape.o: Global.h Landscape.h Function.h
 $(BIN)/Function.o: Function.h
 $(BIN)/FileFactory.o: Administrator.h Agent.h Virus.h Global.h
 $(BIN)/Benchmark.o: Benchmark.h
