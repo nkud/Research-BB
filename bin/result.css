@@ -15,8 +15,8 @@ table, iframe {
     margin-top: 3em;
 }
 h2,h3 {
-    background: #000;
-    color: white;
+    background: #ccc;
+    color: black;
     padding: 0.5em;
     clear: both;
 }
