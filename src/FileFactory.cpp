@@ -32,8 +32,9 @@
 //#define OFS(str)                        do { ofs<< str; }while(0);
 //#define OFSS(str)                       ofs << #str << std::endl;
 //
-#define OFSV(str)                       do { ofs << #str << " " << str << std::endl; }while(0);
-#define OFSVP(str,val)                  do { ofs << #str << " " << val << std::endl; }while(0);
+#define OFSV(str)                         do { ofs << #str << " " << str << std::endl; }while(0);
+#define OFSVP(str,val)                    do { ofs << #str << " " << val << std::endl; }while(0);
+#define OFSVV(str1,str2)                  do { ofs << #str1 << " " << #str2 << std::endl; }while(0);
 
 //#define OFS_P(str)                      do { ofs<<"<p>"<<str<<"</p>"<<std::endl; }while(0);
 //#define OFS_LINE(str)                   do { ofs<< str << std::endl; }while(0);
@@ -154,6 +155,10 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
         it_v++;
     }
     /* ファイル名 */
+//    OFSVV( HAS_VIRUS_FNAME, A_hasVirus.txt )                         /* ファイル名 */
+//    OFSVV( HAS_IMMUNITY_FNAME, A_hasImmunity.txt )
+//    OFSVV( CONTACT_FNAME, A_infectionContact.txt )
+//    OFSVV( POPULATION_FNAME, A_population.txt )
     /*-----------------------------------------------------------------------------
      *  計算 後 情報
      *-----------------------------------------------------------------------------*/

@@ -57,10 +57,10 @@ int main()
     }
     /* ウイルス */
     VECTOR(Virus *) virus;
-    virus.push_back( new Virus( 12, new Normal ) );                 /* 通常ウイルスを追加 */
-    virus.push_back( new Virus( 12, new Normal ) );                 /* 通常ウイルスを追加 */
-//    virus.push_back( new Virus( "10101010101", new Normal ) );                 /* 通常ウイルスを追加 */
-//    virus.push_back( new Virus( "10111111111", new Normal ) );                 /* 通常ウイルスを追加 */
+//    virus.push_back( new Virus( 12, new Normal ) );                 /* 通常ウイルスを追加 */
+//    virus.push_back( new Virus( 12, new Normal ) );                 /* 通常ウイルスを追加 */
+    virus.push_back( new Virus( "000000011111", new Fixed(0) ) );                 /* 通常ウイルスを追加 */
+    virus.push_back( new Virus( "111111111111", new Fixed(8) ) );                 /* 通常ウイルスを追加 */
 //                               1234567890123456789
 //    virus.push_back( new Virus( "0101010101010101", new Normal ) );                 /* 通常ウイルスを追加 */
 //    virus.push_back( new Virus( "1011111111111111", new Normal ) );                 /* 通常ウイルスを追加 */

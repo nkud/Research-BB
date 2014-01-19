@@ -16,6 +16,11 @@ def generateResultHTML(f, d):
     outputLine(f, '<html><link rel="stylesheet" href="result.css"><body><font color=gray><code>')
     outputLine(f, '<h1><font color=black># RESULT </font></h1>')
 
+    outputLine(f, '<table>')
+    for i in d.keys():
+        outputLine(f, '<tr><td>'+i+'</td><td>'+str(d[i])+'</td></tr>')
+    outputLine(f, '</table>')
+
 # Population
     if d['AGING_AGENT'] == 1:
         outputLine(f, '<h2 id=population>population</h2>')

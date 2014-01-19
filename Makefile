@@ -43,7 +43,6 @@ clean:
 	@$(PRINT) '>>> Cleaning...'
 	@$(RM) $(OBJ)
 	@$(RM) $(BIN)/assets
-	@$(RM) $(BIN)/obj
 	@$(RM) $(BIN)/*.txt
 	@$(RM) $(BIN)/*.out
 	@$(RM) $(BIN)/*.html
@@ -57,20 +56,19 @@ gene :
 	@$(PRINT) '>>> Generate...'
 	@cd $(BIN); python ../script/gene.py
 	@-cd $(BIN); gnuplot auto.plt
-	@cd $(BIN); mkdir -p obj;  mv *.o obj
 
 pack:
 	@$(PRINT) '>>> Packing...'
 	@$(MKDIR) $(MASTER)
 	@cd $(MASTER); $(MKDIR) $(NOW)
-	@cd $(MASTER); $(MKDIR) $(NOW)/assets
 	@cd $(MASTER); $(MKDIR) $(NOW)/src
+	@cd $(MASTER); $(MKDIR) $(NOW)/assets
 	@cd $(MASTER); $(MKDIR) $(NOW)/script
-	@$(COPY) $(BIN)/assets/*.txt $(MASTER)/$(NOW)/assets
-	@$(COPY) $(BIN)/assets/*.plt $(MASTER)/$(NOW)/script
-	@$(COPY) $(BIN)/assets/*.png $(MASTER)/$(NOW)/assets
+	@$(COPY) $(BIN)/*.txt $(MASTER)/$(NOW)/assets
+	@$(COPY) $(BIN)/*.plt $(MASTER)/$(NOW)/script
+	@$(COPY) $(BIN)/*.png $(MASTER)/$(NOW)
 	@$(COPY) include/Global.h src/main.cpp $(MASTER)/$(NOW)/src
-	@cd $(BIN); $(COPY) note.html RESULT.html result.css ../$(MASTER)/$(NOW)
+	@cd $(BIN); $(COPY) index.html result.css ../$(MASTER)/$(NOW)
 	@tree $(MASTER)/$(NOW)
 
 $(BIN)/main.o: Global.h Function.h Agent.h Virus.h Landscape.h Monitor.h Administrator.h FileFactory.h
