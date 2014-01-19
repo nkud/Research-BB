@@ -44,7 +44,7 @@ const int TAG_LEN_V                   = 20    ;                      /* エー�
 
 const int INIT_NUM_A                  = 1000  ;                       /* 初期エージェントの数 */
 
-const double INIT_INFECTED_RATIO      = 0.2   ;                      /* 初期感染率 */
+const double INIT_INFECTED_RATIO      = 0.1   ;                      /* 初期感染率 */
 
 const int MAX_NUM_A                   = 10000  ;                     /* 最大エージェント数 */
 

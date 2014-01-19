@@ -16,7 +16,6 @@ def main():
     fhtml = open('index.html', 'w')
     generatePngPlot(fplot, info_data)
     generateResultHTML(fhtml, info_data)
-    os.system('gnuplot auto.plt')
 
 if __name__ == "__main__":
     main()
