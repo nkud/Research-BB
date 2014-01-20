@@ -48,19 +48,19 @@ int main()
      *-----------------------------------------------------------------------------*/
     /* エージェント */
     Relocate *relocate = new Relocate;
-//    RandomWalk *random_walk = new RandomWalk( 1 );
+    RandomWalk *random_walk = new RandomWalk( 1 );
 //    CoupleTag *couple_tag = new CoupleTag;
     InheritanceLen *inh_len = new InheritanceLen;
     VECTOR(Agent *) agent;                                           /* エージェントの配列 */
     FOR( i, INIT_NUM_A ) {                                           /* 初期エージェントの数だけ */
-        agent.push_back( new Agent( relocate, 20 ) );                /* ランダムウォーク */
+        agent.push_back( new Agent( relocate, 30 ) );                /* ランダムウォーク */
     }
     /* ウイルス */
     VECTOR(Virus *) virus;
-//    virus.push_back( new Virus( 12, new Normal ) );                 /* 通常ウイルスを追加 */
-//    virus.push_back( new Virus( 12, new Normal ) );                 /* 通常ウイルスを追加 */
-    virus.push_back( new Virus( "000000000000", new Normal ) );      /* 通常ウイルスを追加 */
-    virus.push_back( new Virus( "000011111111", new Normal ) );      /* 通常ウイルスを追加 */
+    virus.push_back( new Virus( 18, new Normal ) );                 /* 通常ウイルスを追加 */
+    virus.push_back( new Virus( 18, new Normal ) );                 /* 通常ウイルスを追加 */
+//    virus.push_back( new Virus( "000000000000", new Normal ) );      /* 通常ウイルスを追加 */
+//    virus.push_back( new Virus( "111111111111", new Normal ) );      /* 通常ウイルスを追加 */
 //                               1234567890123456789
 //    virus.push_back( new Virus( "0101010101010101", new Normal ) );                 /* 通常ウイルスを追加 */
 //    virus.push_back( new Virus( "1011111111111111", new Normal ) );                 /* 通常ウイルスを追加 */

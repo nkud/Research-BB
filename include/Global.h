@@ -36,15 +36,15 @@ const int WIDTH                       = 60    ;                      /* ラン�
 
 const double INFECTION_RATE           = 1.0   ;                      /* デフォルトの感染率 */
 
-const int MAX_VIRUS_AGENT_HAVE        = 2     ;                      /* 最大保持ウイルス */
+const int MAX_VIRUS_AGENT_HAVE        = 6     ;                      /* 最大保持ウイルス */
 const int MAX_V_AGENT_INFECT_ONT_TIME = 1     ;                      /* １期間で感染させるウイルスの最大数 */
+
+const int INIT_NUM_A                  = 1000  ;                      /* 初期エージェントの数 */
+
+const double INIT_INFECTED_RATIO      = 0.1   ;                      /* 初期感染率 */
 
 const int TAG_LEN_A                   = 30    ;                      /* エージェントのタグ長 */
 const int TAG_LEN_V                   = 20    ;                      /* エージェントのタグ長 */
-
-const int INIT_NUM_A                  = 1000  ;                       /* 初期エージェントの数 */
-
-const double INIT_INFECTED_RATIO      = 0.1   ;                      /* 初期感染率 */
 
 const int MAX_NUM_A                   = 10000  ;                     /* 最大エージェント数 */
 
