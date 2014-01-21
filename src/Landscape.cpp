@@ -13,6 +13,7 @@
 
 #include "Landscape.h"
 #include "Agent.h"
+#include "Function.h"
 
 #include <cassert>
  

@@ -42,29 +42,33 @@ build: clean tags $(BIN)/$(TARGET)
 clean:
 	@$(PRINT) '>>> Cleaning...'
 	@$(RM) $(OBJ)
+	@$(RM) $(BIN)/assets
+	@$(RM) $(BIN)/*.txt
+	@$(RM) $(BIN)/*.out
+	@$(RM) $(BIN)/*.html
 
 tags:
 	@$(CTAGS) $(wildcard src/*) $(wildcard include/*)
 
-all: $(BIN)/$(TARGET) run plot
+all: $(BIN)/$(TARGET) run gene
 
-plot :
-	@$(PRINT) '>>> Plotting...'
+gene :
+	@$(PRINT) '>>> Generate...'
+	@cd $(BIN); python ../script/gene.py
 	@-cd $(BIN); gnuplot auto.plt
-	@cd $(BIN); mkdir -p assets;  mv *.txt *.png *.plt assets
 
 pack:
 	@$(PRINT) '>>> Packing...'
 	@$(MKDIR) $(MASTER)
 	@cd $(MASTER); $(MKDIR) $(NOW)
-	@cd $(MASTER); $(MKDIR) $(NOW)/assets
 	@cd $(MASTER); $(MKDIR) $(NOW)/src
+	@cd $(MASTER); $(MKDIR) $(NOW)/assets
 	@cd $(MASTER); $(MKDIR) $(NOW)/script
-	@$(COPY) $(BIN)/assets/*.txt $(MASTER)/$(NOW)/assets
-	@$(COPY) $(BIN)/assets/*.plt $(MASTER)/$(NOW)/script
-	@$(COPY) $(BIN)/assets/*.png $(MASTER)/$(NOW)/assets
+	@$(COPY) $(BIN)/*.txt $(MASTER)/$(NOW)/assets
+	@$(COPY) $(BIN)/*.plt $(MASTER)/$(NOW)/script
+	@$(COPY) $(BIN)/*.png $(MASTER)/$(NOW)
 	@$(COPY) include/Global.h src/main.cpp $(MASTER)/$(NOW)/src
-	@cd $(BIN); $(COPY) note.html RESULT.html result.css ../$(MASTER)/$(NOW)
+	@cd $(BIN); $(COPY) index.html result.css ../$(MASTER)/$(NOW)
 	@tree $(MASTER)/$(NOW)
 
 $(BIN)/main.o: Global.h Function.h Agent.h Virus.h Landscape.h Monitor.h Administrator.h FileFactory.h
@@ -74,14 +78,14 @@ $(BIN)/TagInterface.o: TagInterface.h Global.h
 $(BIN)/Agent.o: AgentStrategy.h Agent.h Function.h Monitor.h Global.h TagInterface.h
 $(BIN)/AgentStrategy.o: AgentStrategy.h Agent.h
 $(BIN)/Virus.o: Global.h Virus.h Function.h TagInterface.h
-$(BIN)/Landscape.o: Global.h Landscape.h
+$(BIN)/Landscape.o: Global.h Landscape.h Function.h
 $(BIN)/Function.o: Function.h
 $(BIN)/FileFactory.o: Administrator.h Agent.h Virus.h Global.h
 $(BIN)/Benchmark.o: Benchmark.h
 
 Administrator.h: Global.h
 Agent.h: TagInterface.h Virus.h AgentStrategy.h
-AgentStrategy.h: Agent.h
+AgentStrategy.h:
 Virus.h: TagInterface.h
 Landscape.h: Global.h
 TagInterface.h: Global.h

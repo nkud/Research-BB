@@ -14,8 +14,6 @@
 #ifndef ___AGENT_STRATEGY
 #define ___AGENT_STRATEGY
 
-#include "Agent.h"
-
 class Agent;
 
 /*

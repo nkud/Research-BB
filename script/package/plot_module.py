@@ -8,8 +8,8 @@ LINE_STYLE = 'w l lw 2'
 def scriptForInitSetting(f):
     """ create script for initialization """
     outputLine(f, 'set style line 1 lw 2')
-    outputLine(f, 'set terminal png size 800,300')
-    outputLine(f, 'set key box below left')
+    outputLine(f, 'set terminal png size 1000,250')
+    outputLine(f, 'set key box below right')
 
 ### generateHTML
 def generatePngPlot(f, d):
@@ -22,6 +22,8 @@ def generatePngPlot(f, d):
     for i in range(v_num):
         scriptForEachSIR(f, d, i)
     scriptForContact(f, d)
+    if int(d['AGING_AGENT']) == 1:
+        scriptForPopulation(f, d)
 
 def initPng(f, title, xl, yl):
     outputLine(f, '\nset title "'+title+'";set xl "'+xl+'";set yl "'+yl+'";')
@@ -38,9 +40,9 @@ class OutputFactory(object):
         self.xl = xl
         self.yl = yl
         self.imgname = imgname
-        self.mini_term = info['MINI_SIZE_TERM']
-        self.last_term = info['LAST_TERM']
-        self.v_num = info['NUM_V']
+        self.mini_term = int(info['MINI_SIZE_TERM'])
+        self.last_term = int(info['LAST_TERM'])
+        self.v_num = int(info['NUM_V'])
 
     def init(self):
         initPng(self.f, self.title, self.xl, self.yl)
@@ -85,28 +87,36 @@ def scriptForHasVirusPng(f, data):
     of.plot_begin('has_virus_0')
     for i in range(v_num-1):
         of.replot_begin('has_virus_'+str(i+1), i+3)
+    of.replot_begin('has_virus_all', v_num+2)
 
     of.init_end()
     of.plot_end('has_virus_0')
     for i in range(v_num-1):
         of.replot_end('has_virus_'+str(i+1), i+3)
+    of.replot_end('has_virus_all', v_num+2)
 
 def scriptForHasImmunityPng(f, data):
     """ create script for img about 'hasImmunity' """
     of = OutputFactory(f, data, "A_hasImmunity.txt", "HasImmunity", "Term", "Agent", "HasImmunity")
     v_num = int(data['NUM_V'])
+
     of.init()
     of.plot("has_immunity_0")
     for i in range(v_num-1):
         of.replot('has_immunity_'+str(i+1),i+3)
+    of.replot('has_immunity_all', v_num+2)
+
     of.init_begin()
     of.plot_begin('has_immunity_0')
     for i in range(v_num-1):
         of.replot_begin('has_immunity_'+str(i+1), i+3)
+    of.replot_begin('has_immunity_all', v_num+2)
+
     of.init_end()
     of.plot_end('has_immunity_0')
     for i in range(v_num-1):
         of.replot_end('has_immunity_'+str(i+1), i+3)
+    of.replot_end('has_immunity_all', v_num+2)
 
 def scriptForSIR(f,data):
     ofi = OutputFactory(f, data, "A_hasVirus.txt", "SIR", "Term", "Agent", "SIR")
@@ -137,12 +147,12 @@ def scriptForEachSIR(f,data, vn):
     ofr.replot_end('R', vn+2)
 
 def scriptForContact(f,data):
-    of = OutputFactory(f, data, "A_infectionContact.txt", "Contact", "Term", "", "Contact")
+    of = OutputFactory(f, data, "A_infectionContact.txt", "Contact", "Term", "Count", "Contact")
     v_num = int(data['NUM_V'])
     of.init()
     of.plot('contact')
     for i in range(v_num):
-        of.replot('infection_contact_'+str(i+1),i+3)
+        of.replot('infection_contact_'+str(i),i+3)
 
 def scriptForPopulation(f, data):
     of = OutputFactory(f, data, "A_population.txt", "Population", "Term", "Agent", "Population")
