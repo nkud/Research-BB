@@ -31,12 +31,10 @@ p {
 
 #left {
     float: left;
-    width: 400px;
 }
 
 #right {
     float: left;
-    width: auto;
-    border: dotted 1px black;
-    margin-left: 1em;
+    width: 200px;
+    margin: 1em;
 }

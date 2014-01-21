@@ -9,20 +9,21 @@ def scriptForInitSetting(f):
     """ create script for initialization """
     outputLine(f, 'set style line 1 lw 2')
     outputLine(f, 'set terminal png size 1000,250')
-    outputLine(f, 'set key box below left')
+    outputLine(f, 'set key box below right')
 
 ### generateHTML
 def generatePngPlot(f, d):
     " generate plot script for gnuplot "
     v_num = int(d['NUM_V'])
     scriptForInitSetting(f)
-    scriptForPopulation(f, d)
     scriptForHasVirusPng(f, d)
     scriptForHasImmunityPng(f, d)
     scriptForSIR(f, d)
     for i in range(v_num):
         scriptForEachSIR(f, d, i)
     scriptForContact(f, d)
+    if int(d['AGING_AGENT']) == 1:
+        scriptForPopulation(f, d)
 
 def initPng(f, title, xl, yl):
     outputLine(f, '\nset title "'+title+'";set xl "'+xl+'";set yl "'+yl+'";')
@@ -39,9 +40,9 @@ class OutputFactory(object):
         self.xl = xl
         self.yl = yl
         self.imgname = imgname
-        self.mini_term = info['MINI_SIZE_TERM']
-        self.last_term = info['LAST_TERM']
-        self.v_num = info['NUM_V']
+        self.mini_term = int(info['MINI_SIZE_TERM'])
+        self.last_term = int(info['LAST_TERM'])
+        self.v_num = int(info['NUM_V'])
 
     def init(self):
         initPng(self.f, self.title, self.xl, self.yl)
@@ -151,7 +152,7 @@ def scriptForContact(f,data):
     of.init()
     of.plot('contact')
     for i in range(v_num):
-        of.replot('infection_contact_'+str(i+1),i+3)
+        of.replot('infection_contact_'+str(i),i+3)
 
 def scriptForPopulation(f, data):
     of = OutputFactory(f, data, "A_population.txt", "Population", "Term", "Agent", "Population")

@@ -29,9 +29,9 @@
 /*-----------------------------------------------------------------------------
  *  マクロ
  *-----------------------------------------------------------------------------*/
-#define OFSV(str)                         do { ofs << #str << " " << str << std::endl; }while(0);
-#define OFSVP(str,val)                    do { ofs << #str << " " << val << std::endl; }while(0);
-#define OFSVV(str1,str2)                  do { ofs << #str1 << " " << #str2 << std::endl; }while(0);
+#define OFSV(str)                         do { ofs << #str << "," << str << std::endl; }while(0);
+#define OFSVP(str,val)                    do { ofs << #str << "," << val << std::endl; }while(0);
+#define OFSVV(str1,str2)                  do { ofs << #str1 << "," << #str2 << std::endl; }while(0);
 
 #define ENDL                            std::endl
 
@@ -114,15 +114,19 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
     OFSVP( NUM_V, admin_->virus_.size() );                           /* ウイルスの種類 */
 
     ITERATOR(Virus *) it_v = admin_->virus_.begin();
-    while(it_v!=admin_->virus_.end()) {                              /* 各ウイルスの */
+    while(it_v != admin_->virus_.end()) {                            /* 各ウイルスの */
         OFSVP( V_LEN, (*it_v)->getLen() );                           /* タグ長 */
+        ofs << "V_TAG[ "<<*it_v<<" ],";                              /* タグ */
+        FOR(j, (*it_v)->getLen()) {
+            ofs<<int((*it_v)->tagAt(j));
+        } ofs<<ENDL;
         it_v++;
     }
     /* ファイル名 */
-//    OFSVV( HAS_VIRUS_FNAME, A_hasVirus.txt )                         /* ファイル名 */
-//    OFSVV( HAS_IMMUNITY_FNAME, A_hasImmunity.txt )
-//    OFSVV( CONTACT_FNAME, A_infectionContact.txt )
-//    OFSVV( POPULATION_FNAME, A_population.txt )
+    OFSVV( FNAME_HAS_VIRUS, A_hasVirus.txt )                         /* ファイル名 */
+    OFSVV( FNAME_HAS_IMMUNITY, A_hasImmunity.txt )
+    OFSVV( FNAME_CONTACT, A_infectionContact.txt )
+    OFSVV( FNAME_POPULATION, A_population.txt )
     /*-----------------------------------------------------------------------------
      *  計算 後 情報
      *-----------------------------------------------------------------------------*/
@@ -239,16 +243,16 @@ void FileFactory :: outputFile_LastLog( const char *fname ) const {
     ofs << "TAG_LEN_V:" << TAG_LEN_V << ENDL;
     FOR(i,admin_->virus_.size()) { ofs<<"["<<(*admin_->virus_[i]).getLen()<<"]:";
         FOR(j, (*admin_->virus_[i]).getLen()) { ofs<<int((*admin_->virus_[i]).tagAt(j)); } ofs<<ENDL;
-        ofs << ">>> Agent Last Status" << ENDL;
-        ITERATOR(Agent *) it_a = admin_->agent_.begin();
-        while(it_a!=admin_->agent_.end()) {
-            FOR(j, (*it_a)->getLen()) {
-                ofs<<(*it_a)->tagAt(j);                                  /* エージェントのタグ */
-            }
-            ofs<<" "<<(*it_a)->numHoldingVirus();                        /* エージェントの保持ウイルス数 */
-            ofs<<ENDL;
-            it_a++;
+    }
+    ofs << ">>> Agent Last Status" << ENDL;
+    ITERATOR(Agent *) it_a = admin_->agent_.begin();
+    while(it_a!=admin_->agent_.end()) {
+        FOR(j, (*it_a)->getLen()) {
+            ofs<<(*it_a)->tagAt(j);                                  /* エージェントのタグ */
         }
+        ofs<<" "<<(*it_a)->numHoldingVirus();                        /* エージェントの保持ウイルス数 */
+        ofs<<ENDL;
+        it_a++;
     }
 }
 /*
