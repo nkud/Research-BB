@@ -55,10 +55,6 @@ class Agent : public __TagInterface
         Agent( __MovingStrategy *ms, int minl, int maxl );
         Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int maxl );
         ~Agent();
-
-        int count_get_new_immunity_;                                 /* 新しい免疫を獲得した回数をカウント */
-        std::map< __TagInterface *, int > count_get_new_immunity_virus_;
-
         /*-----------------------------------------------------------------------------
          *  保持ウイルス操作セット
          *-----------------------------------------------------------------------------*/

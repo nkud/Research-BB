@@ -85,7 +85,7 @@ $(BIN)/Benchmark.o: Benchmark.h
 
 Administrator.h: Global.h
 Agent.h: TagInterface.h Virus.h AgentStrategy.h
-AgentStrategy.h: Agent.h
+AgentStrategy.h:
 Virus.h: TagInterface.h
 Landscape.h: Global.h
 TagInterface.h: Global.h

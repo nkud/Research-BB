@@ -24,35 +24,6 @@
 #include <fstream>
 #include <iostream>
 
-
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Administrator :: calcAveGotNewImmunityPeriod()
- * Description:  
- *--------------------------------------------------------------------------------------
- */
-double Administrator :: calcAveGotNewImmunityPeriod() {
-    int sum = 0;
-    ITERATOR(Agent *) it_a = agent_.begin();
-    while( it_a != agent_.end() ){
-        sum += (**it_a).count_get_new_immunity_;
-        it_a++;
-    }
-    return (double)sum/agent_.size();
-}
-
-int Administrator :: getGotNewImmunityPeriod( Agent &a, __TagInterface &v ) {
-    return a.count_get_new_immunity_virus_[ &v ];
-}
-
-void Administrator :: resetGotNewImmunityPeriod() {
-    ITERATOR(Agent *) it_a = agent_.begin();
-    while( it_a != agent_.end() ){
-        (**it_a).count_get_new_immunity_ = 0;
-        it_a++;
-    }
-}
-
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: deleteAgent()

@@ -57,8 +57,7 @@ Agent :: Agent() :
     age_( 0 ),
     sex_( __MALE__ ),
     life_( __ALIVE__ ),
-    stand_by_list_( 0 ),
-    count_get_new_immunity_( 0 )
+    stand_by_list_( 0 )
 {
     vlist_ = new std::vector<VirusData *>;                           /* 保持ウイルスリストを初期化 */
     stand_by_list_ = new std::vector<Virus *>;                       /* 待機ウイルスリストを初期化 */
@@ -80,7 +79,6 @@ Agent :: Agent( __MovingStrategy *ms ) :
     sex_( __MALE__ ),
     life_( __ALIVE__ ),
     stand_by_list_( 0 ),
-    count_get_new_immunity_( 0 ),
     moving_strategy_( ms )
 {
     vlist_ = new std::vector<VirusData *>;                           /* 保持ウイルスリストを初期化 */
@@ -103,7 +101,6 @@ Agent :: Agent( __MovingStrategy *ms, int len ) :
     sex_( __MALE__ ),
     life_( __ALIVE__ ),
     stand_by_list_( 0 ),
-    count_get_new_immunity_( 0 ),
     moving_strategy_( ms ),
     childbirth_strategy_( new CoupleTag )
 {
@@ -127,7 +124,6 @@ Agent :: Agent( __MovingStrategy *ms, int minl, int maxl ) :
     sex_( __MALE__ ),
     life_( __ALIVE__ ),
     stand_by_list_( 0 ),
-    count_get_new_immunity_( 0 ),
     moving_strategy_( ms ),
     childbirth_strategy_( new CoupleTag )
 {
@@ -151,7 +147,6 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int m
     sex_( __MALE__ ),
     life_( __ALIVE__ ),
     stand_by_list_( 0 ),
-    count_get_new_immunity_( 0 ),
     moving_strategy_( ms ),
     childbirth_strategy_( cbs )
 {
@@ -309,9 +304,6 @@ void Agent :: response()
     if( hasImmunity( *((*it)->v_) ) )
     {                                                                /* 免疫獲得すれば */
         // XXX: 要検討
-        count_get_new_immunity_virus_[ (*it)->v_ ]++;                /* そのウイルスの免疫獲得した回数を１増やす */
-        count_get_new_immunity_++;                                   /* 免疫獲得した回数を１増やす */
-
         eraseVirusData( it );                                        /* 保持ウイルスから v(先頭) を削除して */
     }
 }

@@ -73,13 +73,6 @@ class Administrator {
 
         void printInitInfo() const;                                  /* 初期状態の情報を端末に出力 */
 
-        /*-----------------------------------------------------------------------------
-         *  その他
-         *-----------------------------------------------------------------------------*/
-        double calcAveGotNewImmunityPeriod();
-        int getGotNewImmunityPeriod( Agent &, __TagInterface & );
-        void resetGotNewImmunityPeriod();
-
     private:
         int term_;                                                   /* 現在の期間を記録 */
 
