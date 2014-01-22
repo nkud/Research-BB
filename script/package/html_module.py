@@ -8,12 +8,19 @@ def setImage(f, *imgnames):
     outputLine(f, '<!-- IMAGE -->')
     outputLine(f, '<table class="graph">')
     for name in imgnames:
-        outputLine(f, '\t<tr><td><img src="%s"/></td></tr>' % PNG_DIR+name)
+        outputLine(f, '    <tr><td><img src="%s"/></td></tr>' % (PNG_DIR+name))
     outputLine(f, '<tr></table>')
 
 ### generate HTMl
 def generateResultHTML(f, d):
-    outputLine(f, '<html><link rel="stylesheet" href="result.css"><body><font color=gray><code>')
+    """
+    Args:
+    Yields:
+    """
+    print '( generating HTML... )'
+    outputLine(f,
+            '<html><link rel="stylesheet" href="result.css">'
+            '<body><font color=gray><code>')
     outputLine(f, '<h1><font color=black># RESULT </font></h1>')
 
     outputLine(f, '<div id=left>')
@@ -24,7 +31,7 @@ def generateResultHTML(f, d):
     outputLine(f, '</div>')
 
     outputLine(f, '<div id=right>')
-    if int(d['AGING_AGENT']) is 1:
+    if int(d['AGING_AGENT']) == 1:
         outputLine(f, '<li><a href=#population>Population</a></li>')
     outputLine(f, '<li><a href=#hasvirus>hasVirus</a></li>')
     outputLine(f, '<li><a href=#hasimmunity>hasImmunity</a></li>')
@@ -35,7 +42,7 @@ def generateResultHTML(f, d):
 
 
 # Population
-    if int(d['AGING_AGENT']) is 1:
+    if int(d['AGING_AGENT']) == 1:
         outputLine(f, '<h2 id=population>Population</h2>')
         setImage(f, 'Population.png')
 # HasVirus

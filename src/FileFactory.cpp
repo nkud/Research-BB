@@ -99,6 +99,7 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
     OFSV( MINI_SIZE_TERM );                                          /* 拡大期間 */
     OFSV( WIDTH );                                                   /* 土地の幅 */
     /* エージェント */
+    OFSVP( A_LEN, (admin_->agent_)[0]->getLen() );                   /* エージェントのタグ長 */
     OFSV( INIT_NUM_A );                                              /* 初期エージェント数 */
     OFSV( MAX_NUM_A );                                               /* 最大エージェント数 */
     OFSV( MAX_VIRUS_AGENT_HAVE );                                    /* 最大保持ウイルス数 */

@@ -20,6 +20,7 @@ def scriptForInitSetting(f):
 def generatePngPlot(f, d):
     """ generate plot script for gnuplot
     """
+    print '( generating Plot Script... )'
     v_num = int(d['NUM_V'])
     scriptForInitSetting(f)
     scriptForHasVirusPng(f, d)
@@ -28,7 +29,7 @@ def generatePngPlot(f, d):
     for i in range(v_num):
         scriptForEachSIR(f, d, i)
     scriptForContact(f, d)
-    if int(d['AGING_AGENT']) is 1:
+    if int(d['AGING_AGENT']) == 1:
         scriptForPopulation(f, d)
 
 def initPng(f, title, xl, yl):
