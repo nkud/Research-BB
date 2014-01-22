@@ -53,7 +53,7 @@ int main()
     InheritanceLen *inh_len = new InheritanceLen;
     VECTOR(Agent *) agent;                                           /* エージェントの配列 */
     FOR( i, INIT_NUM_A ) {                                           /* 初期エージェントの数だけ */
-        agent.push_back( new Agent( random_walk, 20 ) );                /* ランダムウォーク */
+        agent.push_back( new Agent( relocate, 20 ) );                /* ランダムウォーク */
     }
     /* ウイルス */
     VECTOR(Virus *) virus;

@@ -46,6 +46,7 @@ clean:
 	@$(RM) $(BIN)/*.txt
 	@$(RM) $(BIN)/*.out
 	@$(RM) $(BIN)/*.html
+	@$(RM) $(BIN)/*.png
 
 tags:
 	@$(CTAGS) $(wildcard src/*) $(wildcard include/*)
