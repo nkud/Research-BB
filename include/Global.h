@@ -53,8 +53,8 @@ const int MOVE_DISTANCE               = 10     ;                     /* エー�
 const int MAX_AGE                     = 100;                         /* 寿命 */
 
 const double BIRTH_RATE               = 0.5;                        /* 出生率 */
-const int BIRTH_AGE_FROM              = MAX_AGE * 0.2;
-const int BIRTH_AGE_TO                = MAX_AGE * 0.4;
+const int BIRTH_AGE_FROM              = int(MAX_AGE * 0.2);
+const int BIRTH_AGE_TO                = int(MAX_AGE * 0.4);
 
 #define IMG_SIZE                      "1000,200"
 
