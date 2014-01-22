@@ -24,7 +24,7 @@ def generateResultHTML(f, d):
     outputLine(f, '</div>')
 
     outputLine(f, '<div id=right>')
-    if int(d['AGING_AGENT']) == 1:
+    if int(d['AGING_AGENT']) is 1:
         outputLine(f, '<li><a href=#population>Population</a></li>')
     outputLine(f, '<li><a href=#hasvirus>hasVirus</a></li>')
     outputLine(f, '<li><a href=#hasimmunity>hasImmunity</a></li>')
@@ -35,7 +35,7 @@ def generateResultHTML(f, d):
 
 
 # Population
-    if int(d['AGING_AGENT']) == 1:
+    if int(d['AGING_AGENT']) is 1:
         outputLine(f, '<h2 id=population>Population</h2>')
         setImage(f, 'Population.png')
 # HasVirus

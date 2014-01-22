@@ -28,7 +28,7 @@ def generatePngPlot(f, d):
     for i in range(v_num):
         scriptForEachSIR(f, d, i)
     scriptForContact(f, d)
-    if int(d['AGING_AGENT']) == 1:
+    if int(d['AGING_AGENT']) is 1:
         scriptForPopulation(f, d)
 
 def initPng(f, title, xl, yl):
@@ -37,9 +37,19 @@ def outputPng(f, imgname):
     outputLine(f, 'set output "%s.png";' % imgname)
 
 class OutputFactory(object):
-    " class for output factory "
+    """ output factory
+
+    Attributes:
+        f: file object
+        info: info dictionary
+        fname: output file name
+        title: png title
+        xl: x axis title
+        yl: y axis title
+        imgname: png image file name
+    """
     def __init__(self, f, info, fname, title, xl, yl, imgname):
-        " initial setting "
+        """ initial setting """
         self.f = f
         self.info = info
         self.fname = fname
