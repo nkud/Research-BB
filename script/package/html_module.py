@@ -4,11 +4,11 @@ from function import *
 
 PNG_DIR = ''
 
-def setImage(f, *imgname):
+def setImage(f, *imgnames):
     outputLine(f, '<!-- IMAGE -->')
     outputLine(f, '<table class="graph">')
-    for name in imgname:
-        outputLine(f, '\t<tr><td><img src="'+PNG_DIR+name+'"/></td></tr>')
+    for name in imgnames:
+        outputLine(f, '\t<tr><td><img src="%s"/></td></tr>' % PNG_DIR+name)
     outputLine(f, '<tr></table>')
 
 ### generate HTMl

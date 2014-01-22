@@ -6,14 +6,20 @@ from function import *
 LINE_STYLE = 'w l lw 2'
 
 def scriptForInitSetting(f):
-    """ create script for initialization """
+    """ create script for initialization
+    Args:
+        file
+    Yields:
+        initial setting for plot.
+    """
     outputLine(f, 'set style line 1 lw 2')
     outputLine(f, 'set terminal png size 1000,250')
     outputLine(f, 'set key box below right')
 
 ### generateHTML
 def generatePngPlot(f, d):
-    " generate plot script for gnuplot "
+    """ generate plot script for gnuplot
+    """
     v_num = int(d['NUM_V'])
     scriptForInitSetting(f)
     scriptForHasVirusPng(f, d)
@@ -26,13 +32,14 @@ def generatePngPlot(f, d):
         scriptForPopulation(f, d)
 
 def initPng(f, title, xl, yl):
-    outputLine(f, '\nset title "'+title+'";set xl "'+xl+'";set yl "'+yl+'";')
+    outputLine(f, 'set title "%s";set xl "%s";set yl "%s";' % (title, xl, yl))
 def outputPng(f, imgname):
-    outputLine(f, 'set output "'+imgname+'.png";')
+    outputLine(f, 'set output "%s.png";' % imgname)
 
 class OutputFactory(object):
     " class for output factory "
     def __init__(self, f, info, fname, title, xl, yl, imgname):
+        " initial setting "
         self.f = f
         self.info = info
         self.fname = fname
@@ -59,18 +66,23 @@ class OutputFactory(object):
         outputPng(self.f, self.imgname+'_end')
 
     def plot(self, title, using=2):
-        outputLine(self.f, 'set output "'+self.imgname+'.png";plot "'+self.fname+'" using 1:'+str(using)+' '+LINE_STYLE+' title "'+title+'";')
+        outputLine(self.f, 'set output "%s.png";plot "%s" using 1:%s %s title "%s";'
+                % (self.imgname, self.fname, str(using), LINE_STYLE, title))
     def plot_begin(self, title, using=2):
-        outputLine(self.f, 'set output "'+self.imgname+'_begin.png";plot [0:'+str(int(self.mini_term))+'] "'+self.fname+'" using 1:'+str(using)+' '+LINE_STYLE+' title "'+title+'";')
+        outputLine(self.f, 'set output "%s_begin.png";plot [0:%s] "%s" using 1:%s %s title "%s";'
+                % (self.imgname, str(self.mini_term), self.fname, str(using), LINE_STYLE, title))
     def plot_end(self, title, using=2):
-        outputLine(self.f, 'set output "'+self.imgname+'_end.png";plot ['+str(int(self.last_term-self.mini_term))+':'+str(int(self.last_term))+'] "'+self.fname+'" using 1:'+str(using)+' '+LINE_STYLE+' title "'+title+'";')
-
+        outputLine(self.f, 'set output "%s_end.png";plot [%s:%s] "%s" using 1:%s %s title "%s";'
+                % (self.imgname, str(self.last_term-self.mini_term), str(self.last_term), self.fname, str(using), LINE_STYLE, title))
     def replot(self, title, using):
-        outputLine(self.f, 'set output "'+self.imgname+'.png";replot "'+self.fname+'" using 1:'+str(using)+' '+LINE_STYLE+' title "'+title+'";')
+        outputLine(self.f, 'set output "%s.png";replot "%s" using 1:%s %s title "%s";'
+                % (self.imgname, self.fname, str(using), LINE_STYLE, title))
     def replot_begin(self, title, using):
-        outputLine(self.f, 'set output "'+self.imgname+'_begin.png";replot "'+self.fname+'" using 1:'+str(using)+' '+LINE_STYLE+' title "'+title+'";')
+        outputLine(self.f, 'set output "%s_begin.png";replot "%s" using 1:%s %s title "%s";'
+                % (self.imgname, self.fname, str(using), LINE_STYLE, title))
     def replot_end(self, title, using):
-        outputLine(self.f, 'set output "'+self.imgname+'_end.png";replot "'+self.fname+'" using 1:'+str(using)+' '+LINE_STYLE+' title "'+title+'";')
+        outputLine(self.f, 'set output "%s_end.png";replot "%s" using 1:%s %s title "%s";'
+                % (self.imgname, self.fname, str(using), LINE_STYLE, title))
 
 def scriptForHasVirusPng(f, data):
     """ create script for img about 'hasVirus' """
