@@ -29,8 +29,8 @@
 /*-----------------------------------------------------------------------------
  *  マクロ
  *-----------------------------------------------------------------------------*/
-#define OFSV(str)                         do { ofs << #str << "," << str << std::endl; }while(0);
-#define OFSVP(str,val)                    do { ofs << #str << "," << val << std::endl; }while(0);
+#define OFSV(str)                         do { ofs << #str << "," << (str) << std::endl; }while(0);
+#define OFSVP(str,val)                    do { ofs << #str << "," << (val) << std::endl; }while(0);
 #define OFSVV(str1,str2)                  do { ofs << #str1 << "," << #str2 << std::endl; }while(0);
 
 #define ENDL                            std::endl
@@ -100,19 +100,19 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
     OFSV( WIDTH );                                                   /* 土地の幅 */
     /* エージェント */
     OFSVP( A_LEN, (admin_->agent_)[0]->getLen() );                   /* エージェントのタグ長 */
-    OFSV( INIT_NUM_A );                                              /* 初期エージェント数 */
-    OFSV( MAX_NUM_A );                                               /* 最大エージェント数 */
-    OFSV( MAX_VIRUS_AGENT_HAVE );                                    /* 最大保持ウイルス数 */
-    OFSV( MAX_V_AGENT_INFECT_ONT_TIME );                             /* １期間最大感染ウイルス数 */
-    OFSV( MAX_AGE );                                                 /* 寿命 */
-    OFSV( BIRTH_RATE );                                              /* 出生率 */
-    OFSV( BIRTH_AGE_FROM );                                          /* 出産適齢期 */
-    OFSV( BIRTH_AGE_TO );
-    OFSV( MOVE_DISTANCE );                                           /* 移動距離 */
+    OFSV( A_INIT_NUM );                                              /* 初期エージェント数 */
+    OFSV( A_MAX_NUM );                                               /* 最大エージェント数 */
+    OFSV( A_MAX_V_CAN_HAVE );                                    /* 最大保持ウイルス数 */
+    OFSV( A_MAX_V_INFECTED_ONE_TERM );                             /* １期間最大感染ウイルス数 */
+    OFSV( A_MAX_AGE );                                                 /* 寿命 */
+    OFSV( A_BIRTH_RATE );                                              /* 出生率 */
+    OFSV( A_BIRTH_AGE_FROM );                                          /* 出産適齢期 */
+    OFSV( A_BIRTH_AGE_TO );
+    OFSV( A_MOVE_DISTANCE );                                           /* 移動距離 */
     OFSV( INFECTION_RATE );                                          /* 感染率 */
-    OFSV( INIT_INFECTED_RATIO );                                     /* 初期感染数 */
+    OFSV( A_INIT_INFECTED_RATE );                                     /* 初期感染数 */
     /* ウイルス */
-    OFSVP( NUM_V, admin_->virus_.size() );                           /* ウイルスの種類 */
+    OFSVP( V_NUM, admin_->virus_.size() );                           /* ウイルスの種類 */
 
     ITERATOR(Virus *) it_v = admin_->virus_.begin();
     while(it_v != admin_->virus_.end()) {                            /* 各ウイルスの */
@@ -130,11 +130,13 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
     OFSVV( FNAME_HAS_IMMUNITY, A_hasImmunity.txt )
     OFSVV( FNAME_CONTACT, A_infectionContact.txt )
     OFSVV( FNAME_POPULATION, A_population.txt )
+    /* その他情報 */
+    OFSVP( L_POPULATION_DENSITY[%], (double)A_INIT_NUM / ( WIDTH*WIDTH ) * 100 );
     /*-----------------------------------------------------------------------------
      *  計算 後 情報
      *-----------------------------------------------------------------------------*/
     OFSVP( TERM, admin_->getTerm() );                                /* 計測器館 */
-    OFSVP( NUM_A, admin_->agent_.size() );                           /* 最終エージェント数 */
+    OFSVP( A_NUM, admin_->agent_.size() );                           /* 最終エージェント数 */
     OFSVP( LAST_TERM, last_term );                                   /* 実行期間 */
 #ifdef AGING_AGENT
     OFSVP( AGING_AGENT, 1 );
@@ -234,14 +236,14 @@ void FileFactory :: outputFile_InfectionContactRatio( const char *fname ) const 
 void FileFactory :: outputFile_LastLog( const char *fname ) const {
     static std::ofstream ofs(fname);
     ofs << "TERM:" << admin_->getTerm() << ENDL;
-    ofs << "MAX_AGE:" << MAX_AGE << ENDL;
-    ofs << "BIRTH_RATE:" << BIRTH_RATE << ENDL;
+    ofs << "MAX_AGE:" << A_MAX_AGE << ENDL;
+    ofs << "BIRTH_RATE:" << A_BIRTH_RATE << ENDL;
     ofs << "WIDTH:" << WIDTH << ENDL;
     ofs << "NUM_A:" << admin_->agent_.size() << ENDL;
-    ofs << "INIT_NUM_A:" << INIT_NUM_A << ENDL;
+    ofs << "A_INIT_NUM:" << A_INIT_NUM << ENDL;
     ofs << "NUM_V:" << admin_->virus_.size() << ENDL;
     ofs << "INFECTION_RATE:" << INFECTION_RATE << ENDL;
-    ofs << "INIT_INFECTED_RATIO:" << INIT_INFECTED_RATIO << ENDL;
+    ofs << "INIT_INFECTED_RATIO:" << A_INIT_INFECTED_RATE << ENDL;
     ofs << "TAG_LEN_A:" << A_DEFAULT_LEN << ENDL;
     ofs << "TAG_LEN_V:" << V_DEFAULT_LEN << ENDL;
     FOR(i,admin_->virus_.size()) { ofs<<"["<<(*admin_->virus_[i]).getLen()<<"]:";
@@ -317,7 +319,7 @@ double FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
     int term = 0;
     int data[TERM];
     int vmax = 0;
-    int vmin = INIT_NUM_A;
+    int vmin = A_INIT_NUM;
     while( std::getline( ifs, line ) ) {                             /* １行ずつ読み取って */
         std::sscanf( line.data(), "%d %d", &t, &v );                 /* 期間を読み込む */
         data[ term++ ] = v;

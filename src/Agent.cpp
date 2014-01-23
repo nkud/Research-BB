@@ -66,7 +66,7 @@ Agent :: Agent() :
 
     sex_ = random_select( __MALE__, __FEMALE__ );                    /* 性別をランダムに初期化 */
 
-    age_ = rand_interval_int( 0, MAX_AGE );                          /* 寿命をランダムに設定 */
+    age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
 
 //    (*vlist_).reserve( NUM_V );                                      /* 領域確保 */
 //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
@@ -88,7 +88,7 @@ Agent :: Agent( __MovingStrategy *ms ) :
 
     sex_ = random_select( __MALE__, __FEMALE__ );                    /* 性別をランダムに初期化 */
 
-    age_ = rand_interval_int( 0, MAX_AGE );                          /* 寿命をランダムに設定 */
+    age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
 
 //    (*vlist_).reserve( NUM_V );                                      /* 領域確保 */
 //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
@@ -111,7 +111,7 @@ Agent :: Agent( __MovingStrategy *ms, int len ) :
 
     sex_ = random_select( __MALE__, __FEMALE__ );                    /* 性別をランダムに初期化 */
 
-    age_ = rand_interval_int( 0, MAX_AGE );                          /* 寿命をランダムに設定 */
+    age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
 
 //    (*vlist_).reserve( NUM_V );                                      /* 領域確保 */
 //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
@@ -134,7 +134,7 @@ Agent :: Agent( __MovingStrategy *ms, int minl, int maxl ) :
 
     sex_ = random_select( __MALE__, __FEMALE__ );                    /* 性別をランダムに初期化 */
 
-    age_ = rand_interval_int( 0, MAX_AGE );                          /* 寿命をランダムに設定 */
+    age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
 
 //    (*vlist_).reserve( NUM_V );                                      /* 領域確保 */
 //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
@@ -157,7 +157,7 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int m
 
     sex_ = random_select( __MALE__, __FEMALE__ );                    /* 性別をランダムに初期化 */
 
-    age_ = rand_interval_int( 0, MAX_AGE );                          /* 寿命をランダムに設定 */
+    age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
 
 //    (*vlist_).reserve( NUM_V );                                      /* 領域確保 */
 //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
@@ -240,7 +240,7 @@ void Agent :: clearStandByVirus() { (*stand_by_list_).clear(); }
 __LABEL__ Agent :: getSex() const { return sex_; }
 int Agent :: getAge() const { return age_; }
 bool Agent :: hasAbilityToChildbirth() const
-{ if(BIRTH_AGE_FROM<=age_ && age_<=BIRTH_AGE_TO) return true; else return false; }
+{ if(A_BIRTH_AGE_FROM<=age_ && age_<=A_BIRTH_AGE_TO) return true; else return false; }
 
 void Agent :: setLife( __LABEL__ l ) { life_ = l; }
 //bool Agent :: isAlive() const { if( life_ == __ALIVE__ ) return true; else return false; }
@@ -265,7 +265,7 @@ int Agent :: aging() {
  */
 bool Agent :: infection( Virus &v )
 {
-    if( getVirusListSize() >= MAX_VIRUS_AGENT_HAVE ) {               /* 最大値を越えてたら */
+    if( getVirusListSize() >= A_MAX_V_CAN_HAVE ) {               /* 最大値を越えてたら */
         return false;                                                /* 感染せずに終了 */
     }
     ITERATOR(VirusData *) it_vd = getVirusListIteratorBegin();       /* 保持ウイルスリストを取得 */

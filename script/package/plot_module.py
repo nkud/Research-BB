@@ -21,7 +21,7 @@ def generatePngPlot(f, d):
     """ generate plot script for gnuplot
     """
     print '( generating Plot Script... )'
-    v_num = int(d['NUM_V'])
+    v_num = int(d['V_NUM'])
     scriptForInitSetting(f)
     scriptForHasVirusPng(f, d)
     scriptForHasImmunityPng(f, d)
@@ -60,7 +60,7 @@ class OutputFactory(object):
         self.imgname = imgname
         self.mini_term = int(info['MINI_SIZE_TERM'])
         self.last_term = int(info['LAST_TERM'])
-        self.v_num = int(info['NUM_V'])
+        self.v_num = int(info['V_NUM'])
 
     def init(self):
         initPng(self.f, self.title, self.xl, self.yl)
@@ -98,7 +98,7 @@ class OutputFactory(object):
 def scriptForHasVirusPng(f, data):
     """ create script for img about 'hasVirus' """
     of = OutputFactory(f, data, "A_hasVirus.txt", "HasVirus", "Term", "Agent", "HasVirus")
-    v_num = int(data['NUM_V'])
+    v_num = int(data['V_NUM'])
 
     of.init()
     of.plot("has_virus_0")
@@ -121,7 +121,7 @@ def scriptForHasVirusPng(f, data):
 def scriptForHasImmunityPng(f, data):
     """ create script for img about 'hasImmunity' """
     of = OutputFactory(f, data, "A_hasImmunity.txt", "HasImmunity", "Term", "Agent", "HasImmunity")
-    v_num = int(data['NUM_V'])
+    v_num = int(data['V_NUM'])
 
     of.init()
     of.plot("has_immunity_0")
@@ -144,7 +144,7 @@ def scriptForHasImmunityPng(f, data):
 def scriptForSIR(f,data):
     ofi = OutputFactory(f, data, "A_hasVirus.txt", "SIR", "Term", "Agent", "SIR")
     ofr = OutputFactory(f, data, "A_hasImmunity.txt", "SIR", "Term", "Agent", "SIR")
-    v_num = int(data['NUM_V'])
+    v_num = int(data['V_NUM'])
     ofi.init()
     ofi.plot('I', v_num+2)
     ofr.replot('R', v_num+2)
@@ -158,7 +158,7 @@ def scriptForSIR(f,data):
 def scriptForEachSIR(f,data, vn):
     ofi = OutputFactory(f, data, "A_hasVirus.txt", "SIR_"+str(vn), "Term", "Agent", "SIR_"+str(vn))
     ofr = OutputFactory(f, data, "A_hasImmunity.txt", "SIR_"+str(vn), "Term", "Agent", "SIR_"+str(vn))
-    v_num = int(data['NUM_V'])
+    v_num = int(data['V_NUM'])
     ofi.init()
     ofi.plot('I', vn+2)
     ofr.replot('R', vn+2)
@@ -171,7 +171,7 @@ def scriptForEachSIR(f,data, vn):
 
 def scriptForContact(f,data):
     of = OutputFactory(f, data, "A_infectionContact.txt", "Contact", "Term", "Count", "Contact")
-    v_num = int(data['NUM_V'])
+    v_num = int(data['V_NUM'])
     of.init()
     of.plot('contact')
     for i in range(v_num):

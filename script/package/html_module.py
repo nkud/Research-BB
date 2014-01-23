@@ -55,7 +55,7 @@ def generateResultHTML(f, d):
     outputLine(f, '<h2 id=sir>SIR about all</h2>')
     setImage(f, 'SIR.png', 'SIR_begin.png', 'SIR_end.png')
 # EACH_SIR
-    for i in range(int(d['NUM_V'])):
+    for i in range(int(d['V_NUM'])):
         outputLine(f, '<h2 id=eachsir>SIR about virus_'+str(i)+'</h2>')
         setImage(f, 'SIR_'+str(i)+'.png', 'SIR_'+str(i)+'_begin.png', 'SIR_'+str(i)+'_end.png')
 # Contact

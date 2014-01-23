@@ -3,7 +3,7 @@
  *
  *       Filename:  Global.h
  *
- *    Description:  
+ *    Description:
  *
  *         Author:  Naoki Ueda
  *   Organization:  OPU, 3G
@@ -32,29 +32,29 @@ const int TERM                        = 5000               ; /* 期間 */
 const int OUTPUT_INTERVAL             = 1                  ; /* 出力する間隔 */
 const int MINI_SIZE_TERM              = 300                ; 
 
-const int WIDTH                       = 10                 ; /* ランドスケープの幅 */
+const int WIDTH                       = 30                 ; /* ランドスケープの幅 */
 
 const double INFECTION_RATE           = 1.0                ; /* デフォルトの感染率 */
 
-const int MAX_VIRUS_AGENT_HAVE        = 1                  ; /* 最大保持ウイルス */
-const int MAX_V_AGENT_INFECT_ONT_TIME = 1                  ; /* １期間で感染させるウイルスの最大数 */
+const int A_MAX_V_CAN_HAVE        = 1                  ; /* 最大保持ウイルス */
+const int A_MAX_V_INFECTED_ONE_TERM = 1                  ; /* １期間で感染させるウイルスの最大数 */
 
-const int INIT_NUM_A                  = 100                ; /* 初期エージェントの数 */
+const int A_INIT_NUM                  = 100                ; /* 初期エージェントの数 */
 
-const double INIT_INFECTED_RATIO      = 0.1                ; /* 初期感染率 */
+const double A_INIT_INFECTED_RATE      = 0.1                ; /* 初期感染率 */
 
 const int A_DEFAULT_LEN               = 30                 ; /* エージェントのタグ長 */
 const int V_DEFAULT_LEN               = 20                 ; /* エージェントのタグ長 */
 
-const int MAX_NUM_A                   = INIT_NUM_A * 5     ; /* 最大エージェント数 */
+const int A_MAX_NUM                   = A_INIT_NUM * 5     ; /* 最大エージェント数 */
 
-const int MOVE_DISTANCE               = 10                 ; /* エージェントの移動距離 */
+const int A_MOVE_DISTANCE               = 10                 ; /* エージェントの移動距離 */
 
-const int MAX_AGE                     = 100                ; /* 寿命 */
+const int A_MAX_AGE                     = 100                ; /* 寿命 */
 
-const double BIRTH_RATE               = 0.5                ; /* 出生率 */
-const int BIRTH_AGE_FROM              = int(MAX_AGE * 0.2) ; 
-const int BIRTH_AGE_TO                = int(MAX_AGE * 0.4) ; 
+const double A_BIRTH_RATE               = 0.5                ; /* 出生率 */
+const int A_BIRTH_AGE_FROM              = int(A_MAX_AGE * 0.2) ;
+const int A_BIRTH_AGE_TO                = int(A_MAX_AGE * 0.4) ;
 
 #define IMG_SIZE                      "1000,200"
 

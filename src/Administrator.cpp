@@ -55,7 +55,7 @@ void Administrator :: agingAgent()
 
         (*it)->aging();                                              /* 老化させる */
 
-        if( (*it)->getAge() > MAX_AGE ) {                            /* もし寿命をこえたら */
+        if( (*it)->getAge() > A_MAX_AGE ) {                            /* もし寿命をこえたら */
             deleteAgent( it );                                       /* 生存配列から削除される */
         } else {
             it++;                                                    /* 次のエージェントへ */
@@ -104,7 +104,7 @@ void Administrator :: matingAgant() {
                 ITERATOR(Agent *) it_partner= landscape_->getAgentIteratorBeginAt( tx, ty );
                 while( it_partner!= landscape_->getAgentIteratorEndAt( tx, ty ) )
                 {                                                    /* 自分の近隣にいる人から */
-                    if( agent_.size()+new_child_.size() >= MAX_NUM_A ) { /* 最大エージェントをこえそうなら */
+                    if( agent_.size()+new_child_.size() >= A_MAX_NUM ) { /* 最大エージェントをこえそうなら */
                         break;                                       /* 終了 */
                     }
                     if( isOppositeSex( *(*it_myself), **it_partner) &&      /* 異性かつ */
@@ -113,7 +113,7 @@ void Administrator :: matingAgant() {
                             !(*it_myself)->hasAlreadyGiveBirth() && /* 未出産ならば */
                             !(*it_partner)->hasAlreadyGiveBirth())
                     {
-                        if( BIRTH_RATE > rand_interval_double(0, 1) ) /* 出産確率で */
+                        if( A_BIRTH_RATE > rand_interval_double(0, 1) ) /* 出産確率で */
                         {
                             new_child_.push_back( (**it_myself).childBirthWith(**it_partner) ); /* 新しい子供を誕生させる */
                         }
@@ -172,7 +172,7 @@ Administrator :: Administrator( VECTOR(Agent *) &a, VECTOR(Virus *) &v, Landscap
     assert( &v != 0 );                                               /* NULLならエラー */
     assert( l != 0 );                                                /* NULLならエラー */
 
-    agent_.reserve( MAX_NUM_A );                                     /* 最大エージェント数まで領域確保 */
+    agent_.reserve( A_MAX_NUM );                                     /* 最大エージェント数まで領域確保 */
 }
 
 /*
@@ -351,7 +351,7 @@ void Administrator :: infectAgent() {
             infection_count = 0;
 
             while( ! (*it_myself)->hasNoStandByVirus() ) {           /* 待機ウイルスがなくなるまで */
-                if( infection_count >= MAX_V_AGENT_INFECT_ONT_TIME ) { /* もし最大同時感染数を越えそうなら */
+                if( infection_count >= A_MAX_V_INFECTED_ONE_TERM ) { /* もし最大同時感染数を越えそうなら */
                     break;                                           /* 次のエージェントへ */
                 }
 

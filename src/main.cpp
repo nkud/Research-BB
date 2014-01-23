@@ -52,7 +52,7 @@ int main()
 //    CoupleTag *couple_tag = new CoupleTag;
     InheritanceLen *inh_len = new InheritanceLen;
     VECTOR(Agent *) agent;                                           /* エージェントの配列 */
-    FOR( i, INIT_NUM_A ) {                                           /* 初期エージェントの数だけ */
+    FOR( i, A_INIT_NUM ) {                                           /* 初期エージェントの数だけ */
         agent.push_back( new Agent( random_walk, 100 ) );                /* ランダムウォーク */
     }
     /* ウイルス */
@@ -80,7 +80,7 @@ int main()
      *-----------------------------------------------------------------------------*/
     /* エージェントへの初期感染 */
     FOR( i, virus.size() ) {
-        admin.initInfectAgentInRatio( *virus[i], INIT_INFECTED_RATIO );            /* 初期感染させる */
+        admin.initInfectAgentInRatio( *virus[i], A_INIT_INFECTED_RATE );            /* 初期感染させる */
     }
     /* 土地にランダムに配置 */
     admin.relocateAgent();                                           /* ランダムに配置 */
@@ -125,7 +125,7 @@ int main()
         /* 強制終了 */
         if( monitor.getContactNum()==0 ) zero_count++;               /* １０回以上接触感染がなければ */
         if( zero_count >= 20 ) break;                                /* 強制的に終了する */
-        if( agent.size() == MAX_NUM_A ) break;
+        if( agent.size() == A_MAX_NUM ) break;
     }
 #ifdef ___BENCHMARK
     Benchmark::Instance().stopTimer();                               /* ベンチマークの計測終了 */
