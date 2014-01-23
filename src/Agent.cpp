@@ -51,7 +51,7 @@ __ChildBirthStrategy* Agent :: getChildBirthStrategy() const { return childbirth
  *--------------------------------------------------------------------------------------
  */
 Agent :: Agent() :
-    __TagInterface( TAG_LEN_A ),
+    __TagInterface( A_DEFAULT_LEN ),
     x_( 0 ),
     y_( 0 ),
     age_( 0 ),
@@ -72,7 +72,7 @@ Agent :: Agent() :
 //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
 }
 Agent :: Agent( __MovingStrategy *ms ) :
-    __TagInterface( TAG_LEN_A ),
+    __TagInterface( A_DEFAULT_LEN ),
     x_( 0 ),
     y_( 0 ),
     age_( 0 ),
@@ -373,7 +373,7 @@ Agent* childbirth( const Agent &a, const Agent &b ) {
     child->resetParam();                                             /* パラメータをリセット */
 
 #ifdef COUPLE_TAG
-    child->changeTagLenTo( TAG_LEN_A );                              /* タグの長さを設定 */
+    child->changeTagLenTo( A_DEFAULT_LEN );                              /* タグの長さを設定 */
 
     tag_t *couple_tag = new tag_t[ a.getLen() + b.getLen() ];        /* 両親を元にした */
     tag_t *p = couple_tag;                                           /* カップルタグを作成 */
@@ -385,7 +385,7 @@ Agent* childbirth( const Agent &a, const Agent &b ) {
         *(p++) = b.tagAt( i );
     }
     child->setTag(                                                   /* カップルタグを元に */
-            couple_tag+rand_interval_int(0,a.getLen()) , TAG_LEN_A   /* 子供のタグを作成 */
+            couple_tag+rand_interval_int(0,a.getLen()) , A_DEFAULT_LEN   /* 子供のタグを作成 */
             );
     delete[] couple_tag;                                             /* カップルタグを削除 */
 #endif

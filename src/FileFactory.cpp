@@ -116,7 +116,9 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
 
     ITERATOR(Virus *) it_v = admin_->virus_.begin();
     while(it_v != admin_->virus_.end()) {                            /* 各ウイルスの */
-        OFSVP( V_LEN, (*it_v)->getLen() );                           /* タグ長 */
+        ofs << "V_LEN[ "<<*it_v<<" ],";                              /* タグ長 */
+        ofs << (*it_v)->getLen() << ENDL;
+
         ofs << "V_TAG[ "<<*it_v<<" ],";                              /* タグ */
         FOR(j, (*it_v)->getLen()) {
             ofs<<int((*it_v)->tagAt(j));
@@ -240,8 +242,8 @@ void FileFactory :: outputFile_LastLog( const char *fname ) const {
     ofs << "NUM_V:" << admin_->virus_.size() << ENDL;
     ofs << "INFECTION_RATE:" << INFECTION_RATE << ENDL;
     ofs << "INIT_INFECTED_RATIO:" << INIT_INFECTED_RATIO << ENDL;
-    ofs << "TAG_LEN_A:" << TAG_LEN_A << ENDL;
-    ofs << "TAG_LEN_V:" << TAG_LEN_V << ENDL;
+    ofs << "TAG_LEN_A:" << A_DEFAULT_LEN << ENDL;
+    ofs << "TAG_LEN_V:" << V_DEFAULT_LEN << ENDL;
     FOR(i,admin_->virus_.size()) { ofs<<"["<<(*admin_->virus_[i]).getLen()<<"]:";
         FOR(j, (*admin_->virus_[i]).getLen()) { ofs<<int((*admin_->virus_[i]).tagAt(j)); } ofs<<ENDL;
     }

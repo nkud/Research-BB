@@ -439,7 +439,7 @@ void Administrator :: initInfectAgentInRatio( Virus &v, double r ) {
 void Administrator :: printInitInfo() const {
     std::cout << "WIDTH:" << WIDTH << std::endl;                     /* 幅 */
     std::cout << "\nNUM_A:\t\t" << agent_.size() << std::endl;
-    std::cout << "TAG_LEN_A:\t" << TAG_LEN_A << std::endl;
+    std::cout << "TAG_LEN_A:\t" << A_DEFAULT_LEN << std::endl;
     std::cout << "\nNUM_V:\t\t" << virus_.size() << std::endl;
 
     std::cout << "VIRUS:" << std::endl;                              /* ウイルス情報 */

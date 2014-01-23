@@ -25,23 +25,23 @@
  *--------------------------------------------------------------------------------------
  */
 Virus :: Virus() :
-    __TagInterface( TAG_LEN_V ),                                     /* タグの長さは初期設定 */
+    __TagInterface( V_DEFAULT_LEN ),                                     /* タグの長さは初期設定 */
     rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
 {
-    FOR( i, TAG_LEN_V ) {
+    FOR( i, V_DEFAULT_LEN ) {
         tag_[i] = rand_binary();                                     /* タグをランダムに初期化 */
     }
 }
 
 Virus :: Virus( __SearchStrategy *sp ) :
-    __TagInterface( TAG_LEN_V ),                                     /* タグの長さは初期設定 */
+    __TagInterface( V_DEFAULT_LEN ),                                     /* タグの長さは初期設定 */
     search_strategy_( sp ),
     rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
 {
-    FOR( i, TAG_LEN_V ) {
+    FOR( i, V_DEFAULT_LEN ) {
         tag_[i] = rand_binary();                                     /* タグをランダムに初期化 */
     }
-    sp->check( TAG_LEN_V );
+    sp->check( V_DEFAULT_LEN );
 }
 
 /*--------------------------------------------------------------------------------------
@@ -169,5 +169,5 @@ void Normal :: check ( int vlen ) const {
 }
 
 void Fixed :: check( int vlen ) const {
-    assert( vlen+sp_ <= TAG_LEN_A );
+    assert( vlen+sp_ <= A_DEFAULT_LEN );
 }

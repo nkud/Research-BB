@@ -26,35 +26,35 @@
 //#define AGING_AGENT
 //#define MATING_AGENT
 
-//#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
+#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-const int TERM                        = 5000 ;                       /* 期間 */
-const int OUTPUT_INTERVAL             = 1     ;                      /* 出力する間隔 */
-const int MINI_SIZE_TERM              = 200   ;
+const int TERM                        = 5000               ; /* 期間 */
+const int OUTPUT_INTERVAL             = 1                  ; /* 出力する間隔 */
+const int MINI_SIZE_TERM              = 300                ; 
 
-const int WIDTH                       = 60    ;                      /* ランドスケープの幅 */
+const int WIDTH                       = 10                 ; /* ランドスケープの幅 */
 
-const double INFECTION_RATE           = 1.0   ;                      /* デフォルトの感染率 */
+const double INFECTION_RATE           = 1.0                ; /* デフォルトの感染率 */
 
-const int MAX_VIRUS_AGENT_HAVE        = 2     ;                      /* 最大保持ウイルス */
-const int MAX_V_AGENT_INFECT_ONT_TIME = 1     ;                      /* １期間で感染させるウイルスの最大数 */
+const int MAX_VIRUS_AGENT_HAVE        = 1                  ; /* 最大保持ウイルス */
+const int MAX_V_AGENT_INFECT_ONT_TIME = 1                  ; /* １期間で感染させるウイルスの最大数 */
 
-const int INIT_NUM_A                  = 1000  ;                      /* 初期エージェントの数 */
+const int INIT_NUM_A                  = 100                ; /* 初期エージェントの数 */
 
-const double INIT_INFECTED_RATIO      = 0.1   ;                      /* 初期感染率 */
+const double INIT_INFECTED_RATIO      = 0.1                ; /* 初期感染率 */
 
-const int TAG_LEN_A                   = 30    ;                      /* エージェントのタグ長 */
-const int TAG_LEN_V                   = 20    ;                      /* エージェントのタグ長 */
+const int A_DEFAULT_LEN               = 30                 ; /* エージェントのタグ長 */
+const int V_DEFAULT_LEN               = 20                 ; /* エージェントのタグ長 */
 
-const int MAX_NUM_A                   = 10000  ;                     /* 最大エージェント数 */
+const int MAX_NUM_A                   = INIT_NUM_A * 5     ; /* 最大エージェント数 */
 
-const int MOVE_DISTANCE               = 10     ;                     /* エージェントの移動距離 */
+const int MOVE_DISTANCE               = 10                 ; /* エージェントの移動距離 */
 
-const int MAX_AGE                     = 100;                         /* 寿命 */
+const int MAX_AGE                     = 100                ; /* 寿命 */
 
-const double BIRTH_RATE               = 0.5;                        /* 出生率 */
-const int BIRTH_AGE_FROM              = int(MAX_AGE * 0.2);
-const int BIRTH_AGE_TO                = int(MAX_AGE * 0.4);
+const double BIRTH_RATE               = 0.5                ; /* 出生率 */
+const int BIRTH_AGE_FROM              = int(MAX_AGE * 0.2) ; 
+const int BIRTH_AGE_TO                = int(MAX_AGE * 0.4) ; 
 
 #define IMG_SIZE                      "1000,200"
 
@@ -80,7 +80,7 @@ const int BIRTH_AGE_TO                = int(MAX_AGE * 0.4);
 #include <iostream>
 #include <cassert>
 
-#define FOR(i, m)           for(int (i)=0; (i)<(m); (i)++)           /* i: 0 ~ (m-1) */
+#define FOR(i, m)           for(unsigned int (i)=0; (i)<(m); (i)++)           /* i: 0 ~ (m-1) */
 #define REP(i, min, max)    for(int (i)=(min); (i)<=(max); (i)++)
 #define LOG(x)              do { std::cout<<"["<<#x"]: "<<x<<std::endl; }while(0);
 
