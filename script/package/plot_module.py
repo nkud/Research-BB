@@ -1,20 +1,24 @@
 #! /usr/bin/python
-" Functions module "
+# coding=utf-8
 
 from function import *
 
 LINE_STYLE = 'w l lw 2'
 
 def scriptForInitSetting(f):
-    """ create script for initialization
+    """ 初期化設定
     Args:
         file
     Yields:
         initial setting for plot.
     """
     outputLine(f, 'set style line 1 lw 2')
-    outputLine(f, 'set terminal png size 1000,250')
-    outputLine(f, 'set key box below right')
+    outputLine(f, 'set terminal png size 1000,180')
+    outputLine(f, 'set key below right')
+    #outputLine(f, 'set key box lt 0 lw 1 ')
+    outputLine(f, 'set key textcolor lt 0')
+    outputLine(f, 'set xl textcolor lt 0')
+    outputLine(f, 'set yl textcolor lt 0')
 
 ### generateHTML
 def generatePngPlot(f, d):
@@ -77,11 +81,13 @@ class OutputFactory(object):
         outputPng(self.f, self.imgname+'_end')
 
     def plot(self, title, using=2):
-        outputLine(self.f, 'set output "%s.png";plot "%s" using 1:%s %s title "%s";'
-                % (self.imgname, self.fname, str(using), LINE_STYLE, title))
+        outputLine(self.f,
+            'set output "%s.png";plot "%s" using 1:%s %s title "%s";' %
+            (self.imgname, self.fname, str(using), LINE_STYLE, title))
     def plot_begin(self, title, using=2):
-        outputLine(self.f, 'set output "%s_begin.png";plot [0:%s] "%s" using 1:%s %s title "%s";'
-                % (self.imgname, str(self.mini_term), self.fname, str(using), LINE_STYLE, title))
+        outputLine(self.f,
+            'set output "%s_begin.png";plot [0:%s] "%s" using 1:%s %s title "%s";' %
+            (self.imgname, str(self.mini_term), self.fname, str(using), LINE_STYLE, title))
     def plot_end(self, title, using=2):
         outputLine(self.f, 'set output "%s_end.png";plot [%s:%s] "%s" using 1:%s %s title "%s";'
                 % (self.imgname, str(self.last_term-self.mini_term), str(self.last_term), self.fname, str(using), LINE_STYLE, title))
@@ -156,8 +162,10 @@ def scriptForSIR(f,data):
     ofr.replot_end('R', v_num+2)
 
 def scriptForEachSIR(f,data, vn):
-    ofi = OutputFactory(f, data, "A_hasVirus.txt", "SIR_"+str(vn), "Term", "Agent", "SIR_"+str(vn))
-    ofr = OutputFactory(f, data, "A_hasImmunity.txt", "SIR_"+str(vn), "Term", "Agent", "SIR_"+str(vn))
+    ofi = OutputFactory(f, data,
+            "A_hasVirus.txt", "SIR_"+str(vn), "Term", "Agent", "SIR_"+str(vn))
+    ofr = OutputFactory(f, data,
+            "A_hasImmunity.txt", "SIR_"+str(vn), "Term", "Agent", "SIR_"+str(vn))
     v_num = int(data['V_NUM'])
     ofi.init()
     ofi.plot('I', vn+2)
@@ -170,12 +178,32 @@ def scriptForEachSIR(f,data, vn):
     ofr.replot_end('R', vn+2)
 
 def scriptForContact(f,data):
-    of = OutputFactory(f, data, "A_infectionContact.txt", "Contact", "Term", "Count", "Contact")
+    """ script for contact """
     v_num = int(data['V_NUM'])
+
+    of = OutputFactory(f, data,
+            "A_infectionContact.txt", "Contact", "Term", "Count", "Contact")
     of.init()
-    of.plot('contact')
-    for i in range(v_num):
-        of.replot('infection_contact_'+str(i),i+3)
+    of.plot('infection_contact_0', 3)
+    for i in range(v_num-1):
+        of.replot('infection_contact_'+str(i+1), i+4)
+    of.replot('contact', 2)
+
+    of = OutputFactory(f, data,
+            "A_infectionContact.txt", "InfectionContact", "Term", "Count",
+            "InfectionContact")
+    of.init()
+    of.plot('infection_contact_0', 3 )
+    for i in range(v_num-1):
+        of.replot('infection_contact_'+str(i+1), i+4)
+    of.init_begin()
+    of.plot_begin('infection_contact_0', 3 )
+    for i in range(v_num-1):
+        of.replot_begin('infection_contact_'+str(i+1), i+4)
+    of.init_end()
+    of.plot_end('infection_contact_0', 3 )
+    for i in range(v_num-1):
+        of.replot_end('infection_contact_'+str(i+1), i+4)
 
 def scriptForPopulation(f, data):
     of = OutputFactory(f, data, "A_population.txt", "Population", "Term", "Agent", "Population")
