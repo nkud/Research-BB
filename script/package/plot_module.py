@@ -21,10 +21,13 @@ def scriptForInitSetting(f):
     outputLine(f, 'set yl textcolor lt 0')
 
 ### generateHTML
-def generatePngPlot(f, d):
-    """ generate plot script for gnuplot
+def generatePngPlot(fname, d):
+    """ generate a plot script for gnuplot
+    Args:
+        file name, data
     """
     print '( generating Plot Script... )'
+    f = open(fname, 'w')
     v_num = int(d['V_NUM'])
     scriptForInitSetting(f)
     scriptForHasVirusPng(f, d)

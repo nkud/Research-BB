@@ -13,12 +13,15 @@ def setImage(f, *imgnames):
     outputLine(f, '<tr></table>')
 
 ### generate HTMl
-def generateResultHTML(f, d):
-    """
+def generateResultHTML(fname, d):
+    """ generate a HTML file
     Args:
+        file name, data
     Yields:
+        結果表示用のHTMLファイルを出力する。
     """
     print '( generating HTML... )'
+    f = open(fname, 'w')
     outputLine(f,
             '<html><link rel="stylesheet" href="result.css">'
             '<body><font color=gray><code>')
