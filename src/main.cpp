@@ -54,15 +54,15 @@ int main()
     VECTOR(Agent *) agent;                                           /* エージェントの配列 */
     FOR( i, A_INIT_NUM ) {                                           /* 初期エージェントの数だけ */
         agent.push_back(
-                new Agent( relocate, "11111111111111111111" ) );                /* ランダムウォーク */
+                new Agent( relocate, 30 ) );                         /* ランダムウォーク */
     }
     /* ウイルス */
     VECTOR(Virus *) virus;
-//    virus.push_back( new Virus( 10, new Normal ) );                 /* 通常ウイルスを追加 */
-//    virus.push_back( new Virus( 10, new Normal ) );                 /* 通常ウイルスを追加 */
+//                               1234567890123456789
     virus.push_back( new Virus( "000000000000", new Normal ) );      /* 通常ウイルスを追加 */
     virus.push_back( new Virus( "111111111111", new Normal ) );      /* 通常ウイルスを追加 */
-//                               1234567890123456789
+//    virus.push_back( new Virus( 8, new Normal ) );                  /* 通常ウイルスを追加 */
+//    virus.push_back( new Virus( 8, new Normal ) );                  /* 通常ウイルスを追加 */
 //    virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
 //    virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */
     /* 土地 */
@@ -139,6 +139,7 @@ int main()
      *-----------------------------------------------------------------------------*/
     
     ff.outputFile_Info( "INFO.txt" );                                /* プログラムの初期設定など出力 */
+    ff.outputFile_LastLog( "Log.txt");
     admin.printInitInfo();                                           /* 初期状態を表示 */
 
 //    ff.generateResultHtml(admin.getTerm());                          /* 結果表示用HTMLファイル出力 */
