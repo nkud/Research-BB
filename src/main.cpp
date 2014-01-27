@@ -53,14 +53,15 @@ int main()
     InheritanceLen *inh_len = new InheritanceLen;
     VECTOR(Agent *) agent;                                           /* エージェントの配列 */
     FOR( i, A_INIT_NUM ) {                                           /* 初期エージェントの数だけ */
-        agent.push_back( new Agent( relocate, 100 ) );                /* ランダムウォーク */
+        agent.push_back(
+                new Agent( relocate, "11111111111111111111" ) );                /* ランダムウォーク */
     }
     /* ウイルス */
     VECTOR(Virus *) virus;
-    virus.push_back( new Virus( 60, new Normal ) );                 /* 通常ウイルスを追加 */
-    virus.push_back( new Virus( 60, new Normal ) );                 /* 通常ウイルスを追加 */
-//    virus.push_back( new Virus( "000000000000000", new Normal ) );      /* 通常ウイルスを追加 */
-//    virus.push_back( new Virus( "111111111111111", new Normal ) );      /* 通常ウイルスを追加 */
+//    virus.push_back( new Virus( 10, new Normal ) );                 /* 通常ウイルスを追加 */
+//    virus.push_back( new Virus( 10, new Normal ) );                 /* 通常ウイルスを追加 */
+    virus.push_back( new Virus( "000000000000", new Normal ) );      /* 通常ウイルスを追加 */
+    virus.push_back( new Virus( "111111111111", new Normal ) );      /* 通常ウイルスを追加 */
 //                               1234567890123456789
 //    virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
 //    virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */
@@ -137,7 +138,6 @@ int main()
      *  計算終了
      *-----------------------------------------------------------------------------*/
     
-//    ff.outputFile_LastLog( "Log.txt" );                              /* プログラムの初期設定など出力 */
     ff.outputFile_Info( "INFO.txt" );                                /* プログラムの初期設定など出力 */
     admin.printInitInfo();                                           /* 初期状態を表示 */
 

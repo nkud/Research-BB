@@ -52,6 +52,7 @@ class Agent : public __TagInterface
         Agent();                                                     /* コンストラクタ  */
         Agent( __MovingStrategy *ms );                               /* コンストラクタ  */
         Agent( __MovingStrategy *ms, int len );
+        Agent( __MovingStrategy *ms, const char *tag );
         Agent( __MovingStrategy *ms, int minl, int maxl );
         Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int maxl );
         ~Agent();
