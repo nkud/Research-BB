@@ -63,7 +63,7 @@ Agent* CoupleTag :: childbirth( const Agent &a, const Agent &b ) const {
         *(p++) = b.tagAt( i );
     }
     child->setTag(                                                   /* カップルタグを元に */
-            couple_tag+rand_interval_int(0,a.getLen()) , TAG_LEN_A   /* 子供のタグを作成 */
+            couple_tag+rand_interval_int(0,a.getLen()) , a.getLen()  /* XXX:子供のタグを作成 */
             );
     delete[] couple_tag;                                             /* カップルタグを削除 */
 

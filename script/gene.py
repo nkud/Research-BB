@@ -8,6 +8,13 @@ from package import *
 
 info_dict = {}
 
+def read_data(fname):
+    _data = {}
+    for item in csv.reader( open(fname, 'r') ):
+        _data[item[0]] = item[1]
+    return _data
+
+
 # Read data file
 for item in csv.reader( open('INFO.txt', 'r') ):
     info_dict[item[0]] = item[1]
@@ -18,10 +25,10 @@ def main():
         Generate a script for plotting.
         Generate a html for gathering images and listing up information.
     """
-    fplot = open('auto.plt', 'w')
-    fhtml = open('index.html', 'w')
-    generatePngPlot(fplot, info_dict)
-    generateResultHTML(fhtml, info_dict)
+    info_dict = {}
+    info_dict = read_data('INFO.txt')
+    generatePngPlot('auto.plt', info_dict)
+    generateResultHTML('index.html', info_dict)
 
 if __name__ == "__main__":
     main()
