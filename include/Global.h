@@ -15,7 +15,7 @@
 #define ___GLOBAL
 
 #if defined(__unix__) || defined(__APPLE__)
-    #define ___BENCHMARK
+#define ___BENCHMARK
 #endif
 
 /*-----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ const int A_BIRTH_AGE_TO            = int(A_MAX_AGE * 0.6) ;
 #include <iostream>
 #include <cassert>
 
-#define FOR(i, m)           for(unsigned int (i)=0; (i)<(m); (i)++)           /* i: 0 ~ (m-1) */
+#define FOR(i, m)           for(unsigned int (i)=0; (i)<(m); (i)++)  /* i: 0 ~ (m-1) */
 #define REP(i, min, max)    for(int (i)=(min); (i)<=(max); (i)++)
 #define LOG(x)              do { std::cout<<"["<<#x"]: "<<x<<std::endl; }while(0);
 
