@@ -23,27 +23,27 @@ class Agent;
  * =====================================================================================
  */
 class __MovingStrategy {                                             /* 移動戦略インターフェイス */
-    public:
-        virtual void move( int &x, int &y ) = 0;
+  public:
+    virtual void move( int &x, int &y ) = 0;
 
-        virtual const __MovingStrategy* getStrategy() const { return this; }
+    virtual const __MovingStrategy* getStrategy() const { return this; }
 };
 /*-----------------------------------------------------------------------------
  *  再配置
  *-----------------------------------------------------------------------------*/
 class Relocate : public __MovingStrategy {                           /* 再配置による移動戦略 */
-    public:
-        virtual void move( int &x, int &y );
+  public:
+    virtual void move( int &x, int &y );
 };
 /*-----------------------------------------------------------------------------
  *  ランダムウォーク
  *-----------------------------------------------------------------------------*/
 class RandomWalk : public __MovingStrategy {                         /* ランダムウォークによる移動戦略 */
-    public:
-        RandomWalk( int dis ) : distance_( dis ) {}                  /* 距離を設定する */
-        virtual void move( int &x, int &y );
-    private:
-        const int distance_;
+  public:
+    RandomWalk( int dis ) : distance_( dis ) {}                      /* 距離を設定する */
+    virtual void move( int &x, int &y );
+  private:
+    const int distance_;
 };
 
 /*
@@ -53,25 +53,25 @@ class RandomWalk : public __MovingStrategy {                         /* ラン�
  * =====================================================================================
  */
 class __ChildBirthStrategy {
-    public:
-        virtual Agent* childbirth( const Agent &a, const Agent &b ) const = 0;         /* 親から子を作成 */
+  public:
+    virtual Agent* childbirth( const Agent &a, const Agent &b ) const = 0;         /* 親から子を作成 */
 
-        virtual const __ChildBirthStrategy* getStrategy() const { return this; }
+    virtual const __ChildBirthStrategy* getStrategy() const { return this; }
 };
 
 /*-----------------------------------------------------------------------------
  *  カップルタグ
  *-----------------------------------------------------------------------------*/
 class CoupleTag : public __ChildBirthStrategy {
-    public:
-        virtual Agent* childbirth( const Agent &a, const Agent &b ) const;         /* 親から子を作成 */
+  public:
+    virtual Agent* childbirth( const Agent &a, const Agent &b ) const;         /* 親から子を作成 */
 };
 /*-----------------------------------------------------------------------------
  *  タグ長遺伝
  *-----------------------------------------------------------------------------*/
 class InheritanceLen : public __ChildBirthStrategy {
-    public:
-        virtual Agent* childbirth( const Agent &a, const Agent &b ) const;         /* 親から子を作成 */
+  public:
+    virtual Agent* childbirth( const Agent &a, const Agent &b ) const;         /* 親から子を作成 */
 };
 
 /*
@@ -81,11 +81,9 @@ class InheritanceLen : public __ChildBirthStrategy {
  * =====================================================================================
  */
 class __AgingStrategy {
-    public:
+  public:
     void aging();
     void setRandom();
 };
-
-
 
 #endif

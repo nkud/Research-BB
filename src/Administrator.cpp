@@ -215,9 +215,9 @@ int Administrator :: numHasImmunity( Virus &v ) const {
   while( it_a != agent_.end() ) {                                    /* エージェント全員に対して */
     if ( (*it_a)->hasImmunity( v ) ) {                               /* v の免疫を獲得していれば*/
       ret++;                                                         /* インクリメント */
-    }                                                                  
-    it_a++;                                                            
-  }                                                                      
+    }
+    it_a++;
+  }
   return ret;                                                        /* v の感染者数を返す */
 }
 
