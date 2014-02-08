@@ -40,6 +40,8 @@ class Administrator {
     Administrator( VECTOR(Agent *) & , VECTOR(Virus *) &, Landscape * );   /* コンストラクタ */
     Administrator( VECTOR(Agent *) & , VECTOR(Virus *) &, Landscape *,
         __ModelStrategy *model );                                    /* コンストラクタ */
+    void initAgent() { model_strategy_->initAgent(); }
+    void initVirus() { model_strategy_->initVirus(); }
 
     /*------------------------------------------------------------------------
      *  ゲッタ・セッタ

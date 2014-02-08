@@ -24,8 +24,8 @@ class __ModelStrategy {
      *-----------------------------------------------------------------------------*/
 //    virtual void initAgent();
     void setAdministrator(Administrator *ad) { ad_ = ad; }
-    void initAgent();
-    void initVirus();
+    virtual void initAgent();
+    virtual void initVirus();
     /*-----------------------------------------------------------------------------
      *  各フェイズ
      *-----------------------------------------------------------------------------*/

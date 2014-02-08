@@ -48,30 +48,16 @@ int main()
   /*-----------------------------------------------------------------------------
    *  初期化
    *-----------------------------------------------------------------------------*/
-  /* エージェント */
-  Relocate *relocate = new Relocate;
-  RandomWalk *random_walk = new RandomWalk( 1 );
-  //    CoupleTag *couple_tag = new CoupleTag;
-  InheritanceLen *inh_len = new InheritanceLen;
+  Default *df = new Default;                                         /* モデル戦略 */
+
   VECTOR(Agent *) agent;                                             /* エージェントの配列 */
-  FOR( i, A_INIT_NUM ) {                                             /* 初期エージェントの数だけ */
-    agent.push_back(
-        new Agent( relocate, 20 ) );                                 /* ランダムウォーク */
-  }
-  /* ウイルス */
-  VECTOR(Virus *) virus;
-  //                           1234567890123456789
-  //  virus.push_back( new Virus( "000000000000", new Normal ) );        /* 通常ウイルスを追加 */
-  //  virus.push_back( new Virus( "111111111111", new Normal ) );        /* 通常ウイルスを追加 */
-  virus.push_back( new Virus( 17, new Normal ) );                    /* 通常ウイルスを追加 */
-  virus.push_back( new Virus( 17, new Normal ) );                    /* 通常ウイルスを追加 */
-  //    virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
-  //    virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */
-  /* 土地 */
-  Landscape landscape;                                               /* ランドスケープ初期化 */
+  VECTOR(Virus *) virus;                                             /* ウイルスの配列 */
+  Landscape *landscape = new Landscape;                              /* 土地 */
 
   /* 管理者 */
-  Administrator admin( agent, virus, &landscape, new Default );    /* 管理者に登録 */
+  Administrator admin( agent, virus, landscape, df );                /* 管理者に登録 */
+  admin.initAgent();                                                 /* エージェント初期化 */
+  admin.initVirus();                                                 /* ウイルス初期化 */
 
   /* モニター・ファイル生成クラス */
   Monitor &monitor = Monitor::Instance();                            /* モニター */

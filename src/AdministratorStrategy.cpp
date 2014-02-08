@@ -38,8 +38,24 @@ void __ModelStrategy :: oneDay() {
   ad_->responseAgent();                                                /* 免疫応答（タグフリップ） */
 }
 void __ModelStrategy :: initAgent() {
+  //  Relocate *relocate = new Relocate;
+  //  RandomWalk *random_walk = new RandomWalk( 1 );
+  //    CoupleTag *couple_tag = new CoupleTag;
+  //  InheritanceLen *inh_len = new InheritanceLen;
+  Relocate *relocate = new Relocate;
+  FOR( i, A_INIT_NUM ) {                                             /* 初期エージェントの数だけ */
+    ad_->agent()->push_back(
+        new Agent( relocate, 20 ) );                                 /* ランダムウォーク */
+  }
 }
 void __ModelStrategy :: initVirus() {
+  //                           1234567890123456789
+  //  virus.push_back( new Virus( "000000000000", new Normal ) );        /* 通常ウイルスを追加 */
+  //  virus.push_back( new Virus( "111111111111", new Normal ) );        /* 通常ウイルスを追加 */
+  ad_->virus()->push_back( new Virus( 17, new Normal ) );                    /* 通常ウイルスを追加 */
+  ad_->virus()->push_back( new Virus( 17, new Normal ) );                    /* 通常ウイルスを追加 */
+  //    virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
+  //    virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */
 }
 /*-----------------------------------------------------------------------------
  *
