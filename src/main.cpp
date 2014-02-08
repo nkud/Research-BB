@@ -49,13 +49,14 @@ int main()
    *  初期化
    *-----------------------------------------------------------------------------*/
   Default *df = new Default;                                         /* モデル戦略 */
+  NonOverlappingPopulation *nlp = new NonOverlappingPopulation;      /* モデル戦略 */
 
   VECTOR(Agent *) agent;                                             /* エージェントの配列 */
   VECTOR(Virus *) virus;                                             /* ウイルスの配列 */
   Landscape *landscape = new Landscape;                              /* 土地 */
 
   /* 管理者 */
-  Administrator admin( agent, virus, landscape, df );                /* 管理者に登録 */
+  Administrator admin( agent, virus, landscape, nlp );                /* 管理者に登録 */
   admin.initAgent();                                                 /* エージェント初期化 */
   admin.initVirus();                                                 /* ウイルス初期化 */
 

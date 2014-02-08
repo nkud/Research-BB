@@ -31,10 +31,10 @@ class __ModelStrategy {
      *-----------------------------------------------------------------------------*/
     virtual void aging() = 0;
     virtual void mating() = 0;
-    virtual void migrate() = 0;
-    virtual void contact() = 0;
-    virtual void infect() = 0;
+    virtual void contact();
+    virtual void infect();
     virtual void response();
+    virtual void migrate();
     /*-----------------------------------------------------------------------------
      *  すべてプロセスを実行
      *-----------------------------------------------------------------------------*/
@@ -50,9 +50,6 @@ class Default : public __ModelStrategy {
   public:
     virtual void aging();
     virtual void mating();
-    virtual void migrate();
-    virtual void contact();
-    virtual void infect();
 };
 
 /*-----------------------------------------------------------------------------
@@ -60,11 +57,10 @@ class Default : public __ModelStrategy {
  *-----------------------------------------------------------------------------*/
 class NonOverlappingPopulation : public __ModelStrategy {
   public:
+    virtual void initAgent();
+
     virtual void aging();
     virtual void mating();
-    virtual void migrate();
-    virtual void contact();
-    virtual void infect();
     virtual void oneDay();
 };
 

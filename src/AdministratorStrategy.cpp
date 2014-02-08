@@ -57,6 +57,93 @@ void __ModelStrategy :: initVirus() {
   //    virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
   //    virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */
 }
+void __ModelStrategy :: migrate() {
+  (ad_->landscape())->clearAgentMap();                               /* エージェントの位置をリセットして */
+  ITERATOR(Agent *) it_a = ad_->getAgentIteratorBegin();             /* エージェントの先頭から */
+  while( it_a != ad_->getAgentIteratorEnd() ) {                      /* 末尾まで */
+    (*it_a)->move();                                                 /* 移動させる */
+    ad_->landscape()->putAgentOnMap( **it_a );                       /* 土地からはみ出てたら戻す */
+    ad_->landscape()->registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a );                   /* エージェントを登録 */
+    it_a++;
+  }
+}
+void __ModelStrategy :: infect() {
+  ITERATOR(Virus *) itt;
+  Virus *tv;
+  int n;
+  int infection_count;                                               /* 同時感染数をカウント。最大値を越えないように */
+
+  ITERATOR(Agent *) it_myself = ad_->getAgentIteratorBegin();
+  while( it_myself != ad_->getAgentIteratorEnd() ) {
+    if( (*it_myself)->hasNoStandByVirus() ) {                        /* 待機ウイルスが無ければ */
+      it_myself++;                                                   /* 次のエージェントに */
+      continue;                                                      /* スキップ */
+    } else {                                                         /* あれば */
+      infection_count = 0;
+
+      while( ! (*it_myself)->hasNoStandByVirus() ) {                 /* 待機ウイルスがなくなるまで */
+        if( infection_count >= A_MAX_V_INFECTED_ONE_TERM ) {         /* もし最大同時感染数を越えそうなら */
+          break;                                                     /* 次のエージェントへ */
+        }
+
+        n = rand_array( (*it_myself)->getStandByListSize() );        /* ランダムに一個の */
+        tv = (*it_myself)->getStandByVirusAt( n );                   /* ウイルスを選んで */
+        if( (*it_myself)->infection( *tv ) ) {                       /* 感染させたら */
+          infection_count++;                                         /* カウントを増やす */
+        } else {
+          itt = (*it_myself)->getStandByListIteratorBegin();         /* もし感染しなければ */
+          while(n-->0) { itt++; }                                    /* そのウイルスを */
+          (*it_myself)->eraseStandByVirus( itt );                    /* 待機ウイルスからはずして次のウイルス */
+        }
+      }
+      (*it_myself)->clearStandByVirus();                             /* 待機ウイルスをクリア */
+    }
+    it_myself++;                                                     /* 次のエージェントに */
+  }
+}
+void __ModelStrategy :: contact() {
+  int ax, ay;
+  int tx, ty;
+
+  ITERATOR(Agent *) it_myself = ad_->getAgentIteratorBegin();          /* エージェントの先頭から */
+  while( it_myself != ad_->getAgentIteratorEnd() ) {                   /* 末尾まで */
+    if( (*it_myself)->numHoldingVirus() <= 0 ) {
+      it_myself++;
+      continue;                                                      /* 健康ならスキップ */
+    }
+    ax = (*it_myself)->getX();                                       /* 感染者自身の位置 */
+    ay = (*it_myself)->getY();
+
+    REP( i, -1, 1 ) {                                                /* 自分の縦・横・自マスに感染させる（計５マス） */
+      REP( j, -1, 1 ) {
+#ifdef NO_DIAGONAL
+        if( i*j != 0 ) {
+          continue;                                                  /* 斜めは入れない */
+        }
+#endif
+        tx = ax + i;
+        ty = ay + j;
+        ad_->landscape()->putBackOnMap( tx, ty );
+
+        ITERATOR(Agent *) it = ad_->landscape()->getAgentIteratorBeginAt( tx, ty );
+        while( it != ad_->landscape()->getAgentIteratorEndAt( tx, ty ) )
+        {                                                            /* その位置にいる人全員に */
+          VirusData *tvdata =                                        /* ランダムに保持ウイルスから選んで */
+            (*it_myself)->getVirusDataAt( rand_array((*it_myself)->getVirusListSize()) );
+
+          if( tvdata->v_->getRate() > rand_interval_double(0,1) )
+          {                                                          /* ウイルス特有の感染確率で */
+            (*it)->pushStandByVirus( tvdata->v_ );                   /* 待機ウイルスにする */
+          }
+          it++;                                                      /* 着目をその位置の次にいる人 */
+
+          Monitor::Instance().countUpContact();                      /* モニタリング */
+        }
+      }
+    }
+    it_myself++;
+  }
+}
 /*-----------------------------------------------------------------------------
  *
  *  デフォルト
@@ -136,7 +223,6 @@ NEXT_AGENT:                                                          /* => 出�
   }
   new_child_.clear();                                                /* 新しく誕生したエージェントの配列をクリア */
 }
-
 void Default :: aging() {
   ITERATOR(Agent *) it = ad_->getAgentIteratorBegin();                 /* 先頭のエージェントから */
   while( it != ad_->getAgentIteratorEnd() ) {                          /* エージェントの末尾まで */
@@ -150,100 +236,21 @@ void Default :: aging() {
     }
   }
 }
-void Default :: migrate() {
-  (ad_->landscape())->clearAgentMap();                                 /* エージェントの位置をリセットして */
-  ITERATOR(Agent *) it_a = ad_->getAgentIteratorBegin();               /* エージェントの先頭から */
-  while( it_a != ad_->getAgentIteratorEnd() ) {                        /* 末尾まで */
-    (*it_a)->move();                                                 /* 移動させる */
-    ad_->landscape()->putAgentOnMap( **it_a );                         /* 土地からはみ出てたら戻す */
-    ad_->landscape()->registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a );                   /* エージェントを登録 */
-    it_a++;
-  }
-}
-void Default :: contact() {
-  int ax, ay;
-  int tx, ty;
-
-  ITERATOR(Agent *) it_myself = ad_->getAgentIteratorBegin();          /* エージェントの先頭から */
-  while( it_myself != ad_->getAgentIteratorEnd() ) {                   /* 末尾まで */
-    if( (*it_myself)->numHoldingVirus() <= 0 ) {
-      it_myself++;
-      continue;                                                      /* 健康ならスキップ */
-    }
-    ax = (*it_myself)->getX();                                       /* 感染者自身の位置 */
-    ay = (*it_myself)->getY();
-
-    REP( i, -1, 1 ) {                                                /* 自分の縦・横・自マスに感染させる（計５マス） */
-      REP( j, -1, 1 ) {
-#ifdef NO_DIAGONAL
-        if( i*j != 0 ) {
-          continue;                                                  /* 斜めは入れない */
-        }
-#endif
-        tx = ax + i;
-        ty = ay + j;
-        ad_->landscape()->putBackOnMap( tx, ty );
-
-        ITERATOR(Agent *) it = ad_->landscape()->getAgentIteratorBeginAt( tx, ty );
-        while( it != ad_->landscape()->getAgentIteratorEndAt( tx, ty ) )
-        {                                                            /* その位置にいる人全員に */
-          VirusData *tvdata =                                        /* ランダムに保持ウイルスから選んで */
-            (*it_myself)->getVirusDataAt( rand_array((*it_myself)->getVirusListSize()) );
-
-          if( tvdata->v_->getRate() > rand_interval_double(0,1) )
-          {                                                          /* ウイルス特有の感染確率で */
-            (*it)->pushStandByVirus( tvdata->v_ );                   /* 待機ウイルスにする */
-          }
-          it++;                                                      /* 着目をその位置の次にいる人 */
-
-          Monitor::Instance().countUpContact();                      /* モニタリング */
-        }
-      }
-    }
-    it_myself++;
-  }
-
-}
-void Default :: infect() {
-  ITERATOR(Virus *) itt;
-  Virus *tv;
-  int n;
-  int infection_count;                                               /* 同時感染数をカウント。最大値を越えないように */
-
-  ITERATOR(Agent *) it_myself = ad_->getAgentIteratorBegin();
-  while( it_myself != ad_->getAgentIteratorEnd() ) {
-    if( (*it_myself)->hasNoStandByVirus() ) {                        /* 待機ウイルスが無ければ */
-      it_myself++;                                                   /* 次のエージェントに */
-      continue;                                                      /* スキップ */
-    } else {                                                         /* あれば */
-      infection_count = 0;
-
-      while( ! (*it_myself)->hasNoStandByVirus() ) {                 /* 待機ウイルスがなくなるまで */
-        if( infection_count >= A_MAX_V_INFECTED_ONE_TERM ) {         /* もし最大同時感染数を越えそうなら */
-          break;                                                     /* 次のエージェントへ */
-        }
-
-        n = rand_array( (*it_myself)->getStandByListSize() );        /* ランダムに一個の */
-        tv = (*it_myself)->getStandByVirusAt( n );                   /* ウイルスを選んで */
-        if( (*it_myself)->infection( *tv ) ) {                       /* 感染させたら */
-          infection_count++;                                         /* カウントを増やす */
-        } else {
-          itt = (*it_myself)->getStandByListIteratorBegin();         /* もし感染しなければ */
-          while(n-->0) { itt++; }                                    /* そのウイルスを */
-          (*it_myself)->eraseStandByVirus( itt );                    /* 待機ウイルスからはずして次のウイルス */
-        }
-      }
-      (*it_myself)->clearStandByVirus();                             /* 待機ウイルスをクリア */
-    }
-    it_myself++;                                                     /* 次のエージェントに */
-  }
-}
 
 /*-----------------------------------------------------------------------------
  *
  *  NonOverlappingPopulation 戦略
  *
  *-----------------------------------------------------------------------------*/
+void NonOverlappingPopulation :: initAgent() {
+  //  Relocate *relocate = new Relocate;
+  //  RandomWalk *random_walk = new RandomWalk( 1 );
+  Relocate *relocate = new Relocate;
+  FOR( i, A_INIT_NUM ) {                                             /* 初期エージェントの数だけ */
+    ad_->agent()->push_back(
+        new Agent( relocate, 20 ) );                                 /* ランダムウォーク */
+  }
+}
 
 void NonOverlappingPopulation :: oneDay() {
   ad_->agingAgent();                                                   /* 老化する */
@@ -255,17 +262,29 @@ void NonOverlappingPopulation :: oneDay() {
 }
 
 void NonOverlappingPopulation :: aging() {
+  ITERATOR(Agent *) it = ad_->getAgentIteratorBegin();                 /* 先頭のエージェントから */
+  while( it != ad_->getAgentIteratorEnd() ) {                          /* エージェントの末尾まで */
+
+    (*it)->aging();                                                  /* 老化させる */
+
+    if( (*it)->getAge() > A_MAX_AGE ) {                              /* もし寿命をこえたら */
+      mating();                                                      /* 全員交配して死亡 */
+    } else {
+      it++;                                                          /* 次のエージェントへ */
+    }
+  }
 
 }
 void NonOverlappingPopulation :: mating() {
-
-}
-void NonOverlappingPopulation :: migrate() {
-
-}
-void NonOverlappingPopulation :: contact() {
-
-}
-void NonOverlappingPopulation :: infect() {
-
+  ITERATOR(Agent *) it_b = ad_->getAgentIteratorBegin();
+  ITERATOR(Agent *) it_e = ad_->getAgentIteratorEnd();
+  while( it_b < it_e ) {
+    (*it_b)->resetParam();
+    (*it_e)->resetParam();
+    it_b++;
+    it_e--;
+  }
+  if(it_b==it_e) {
+    (*it_b)->resetParam();
+  }
 }
