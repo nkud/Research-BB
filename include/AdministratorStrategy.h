@@ -24,6 +24,8 @@ class __ModelStrategy {
      *-----------------------------------------------------------------------------*/
 //    virtual void initAgent();
     void setAdministrator(Administrator *ad) { ad_ = ad; }
+    void initAgent();
+    void initVirus();
     /*-----------------------------------------------------------------------------
      *  各フェイズ
      *-----------------------------------------------------------------------------*/
@@ -32,11 +34,11 @@ class __ModelStrategy {
     virtual void migrate() = 0;
     virtual void contact() = 0;
     virtual void infect() = 0;
-    virtual void response() = 0;
+    virtual void response();
     /*-----------------------------------------------------------------------------
      *  すべてプロセスを実行
      *-----------------------------------------------------------------------------*/
-    virtual void oneDay() = 0;
+    virtual void oneDay();
   protected:                                                         /* XXX: あまりよくない */
     Administrator *ad_;
 };
@@ -51,8 +53,6 @@ class Default : public __ModelStrategy {
     virtual void migrate();
     virtual void contact();
     virtual void infect();
-    virtual void response();
-    virtual void oneDay();
 };
 
 /*-----------------------------------------------------------------------------
@@ -65,7 +65,6 @@ class NonOverlappingPopulation : public __ModelStrategy {
     virtual void migrate();
     virtual void contact();
     virtual void infect();
-    virtual void response();
     virtual void oneDay();
 };
 

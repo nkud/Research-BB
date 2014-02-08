@@ -13,6 +13,34 @@
 #include "AdministratorStrategy.h"
 #include "Monitor.h"
 #include "Function.h"
+
+/*-----------------------------------------------------------------------------
+ *  基底クラス
+ *-----------------------------------------------------------------------------*/
+void __ModelStrategy :: response() {
+  ITERATOR( Agent * ) it_a = ad_->getAgentIteratorBegin();
+  while( it_a != ad_->getAgentIteratorEnd() ) {
+    (*it_a)->response();                                             /* 免疫応答 */
+    it_a++;
+  }
+
+}
+void __ModelStrategy :: oneDay() {
+#ifdef AGING_AGENT
+  ad_->agingAgent();                                                   /* 老化する */
+#endif
+#ifdef MATING_AGENT
+  ad_->matingAgant();                                                  /* 交配、出産する */
+#endif
+  ad_->moveAgent();                                                    /* 移動する */
+  ad_->contactAgent();                                                 /* 近隣に接触する */
+  ad_->infectAgent();                                                  /* 待機ウイルスを感染させる */
+  ad_->responseAgent();                                                /* 免疫応答（タグフリップ） */
+}
+void __ModelStrategy :: initAgent() {
+}
+void __ModelStrategy :: initVirus() {
+}
 /*-----------------------------------------------------------------------------
  *
  *  デフォルト
@@ -194,26 +222,6 @@ void Default :: infect() {
     it_myself++;                                                     /* 次のエージェントに */
   }
 }
-void Default :: response() {
-  ITERATOR( Agent * ) it_a = ad_->getAgentIteratorBegin();
-  while( it_a != ad_->getAgentIteratorEnd() ) {
-    (*it_a)->response();                                             /* 免疫応答 */
-    it_a++;
-  }
-
-}
-void Default :: oneDay() {
-#ifdef AGING_AGENT
-  ad_->agingAgent();                                                   /* 老化する */
-#endif
-#ifdef MATING_AGENT
-  ad_->matingAgant();                                                  /* 交配、出産する */
-#endif
-  ad_->moveAgent();                                                    /* 移動する */
-  ad_->contactAgent();                                                 /* 近隣に接触する */
-  ad_->infectAgent();                                                  /* 待機ウイルスを感染させる */
-  ad_->responseAgent();                                                /* 免疫応答（タグフリップ） */
-}
 
 /*-----------------------------------------------------------------------------
  *
@@ -222,7 +230,6 @@ void Default :: oneDay() {
  *-----------------------------------------------------------------------------*/
 
 void NonOverlappingPopulation :: oneDay() {
-
   ad_->agingAgent();                                                   /* 老化する */
   ad_->moveAgent();                                                    /* 移動する */
 
@@ -231,3 +238,18 @@ void NonOverlappingPopulation :: oneDay() {
   ad_->responseAgent();                                                /* 免疫応答（タグフリップ） */
 }
 
+void NonOverlappingPopulation :: aging() {
+
+}
+void NonOverlappingPopulation :: mating() {
+
+}
+void NonOverlappingPopulation :: migrate() {
+
+}
+void NonOverlappingPopulation :: contact() {
+
+}
+void NonOverlappingPopulation :: infect() {
+
+}
