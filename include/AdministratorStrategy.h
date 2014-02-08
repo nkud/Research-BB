@@ -20,18 +20,25 @@ class Administrator;
 class __ModelStrategy {
   public:
     /*-----------------------------------------------------------------------------
+     *  初期化
+     *-----------------------------------------------------------------------------*/
+//    virtual void initAgent();
+    void setAdministrator(Administrator *ad) { ad_ = ad; }
+    /*-----------------------------------------------------------------------------
      *  各フェイズ
      *-----------------------------------------------------------------------------*/
-    virtual void aging(Administrator &ad) = 0;
-    virtual void mating(Administrator &ad) = 0;
-    virtual void migrate(Administrator &ad) = 0;
-    virtual void contact(Administrator &ad) = 0;
-    virtual void infect(Administrator &ad) = 0;
-    virtual void response(Administrator &ad) = 0;
+    virtual void aging() = 0;
+    virtual void mating() = 0;
+    virtual void migrate() = 0;
+    virtual void contact() = 0;
+    virtual void infect() = 0;
+    virtual void response() = 0;
     /*-----------------------------------------------------------------------------
      *  すべてプロセスを実行
      *-----------------------------------------------------------------------------*/
-    virtual void oneDay(Administrator &ad) = 0;
+    virtual void oneDay() = 0;
+  protected:                                                         /* XXX: あまりよくない */
+    Administrator *ad_;
 };
 
 /*-----------------------------------------------------------------------------
@@ -39,13 +46,13 @@ class __ModelStrategy {
  *-----------------------------------------------------------------------------*/
 class Default : public __ModelStrategy {
   public:
-    virtual void aging(Administrator &ad);
-    virtual void mating(Administrator &ad);
-    virtual void migrate(Administrator &ad);
-    virtual void contact(Administrator &ad);
-    virtual void infect(Administrator &ad);
-    virtual void response(Administrator &ad);
-    virtual void oneDay(Administrator &ad);
+    virtual void aging();
+    virtual void mating();
+    virtual void migrate();
+    virtual void contact();
+    virtual void infect();
+    virtual void response();
+    virtual void oneDay();
 };
 
 /*-----------------------------------------------------------------------------
@@ -53,13 +60,13 @@ class Default : public __ModelStrategy {
  *-----------------------------------------------------------------------------*/
 class NonOverlappingPopulation : public __ModelStrategy {
   public:
-    virtual void aging(Administrator &ad);
-    virtual void mating(Administrator &ad);
-    virtual void migrate(Administrator &ad);
-    virtual void contact(Administrator &ad);
-    virtual void infect(Administrator &ad);
-    virtual void response(Administrator &ad);
-    virtual void oneDay(Administrator &ad);
+    virtual void aging();
+    virtual void mating();
+    virtual void migrate();
+    virtual void contact();
+    virtual void infect();
+    virtual void response();
+    virtual void oneDay();
 };
 
 #endif

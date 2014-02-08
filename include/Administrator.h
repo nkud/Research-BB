@@ -57,7 +57,7 @@ class Administrator {
     /*-----------------------------------------------------------------------------
      *  エージェント操作
      *-----------------------------------------------------------------------------*/
-    void oneDay() { model_strategy_->oneDay(*this); }
+    void oneDay() { model_strategy_->oneDay(); }
 
     void initInfectAgentInRatio( Virus &, double );                  /* 初期感染させる */
     void responseAgent();                                            /* 免疫応答させる */

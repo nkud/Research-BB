@@ -13,24 +13,19 @@
 #include "AdministratorStrategy.h"
 #include "Monitor.h"
 #include "Function.h"
-
-void NonOverlappingPopulation :: oneDay( Administrator &ad ) {
-
-  ad.agingAgent();                                                   /* 老化する */
-  ad.moveAgent();                                                    /* 移動する */
-
-  ad.contactAgent();                                                 /* 近隣に接触する */
-  ad.infectAgent();                                                  /* 待機ウイルスを感染させる */
-  ad.responseAgent();                                                /* 免疫応答（タグフリップ） */
-}
-void Default :: mating(Administrator &ad) {
+/*-----------------------------------------------------------------------------
+ *
+ *  デフォルト
+ *
+ *-----------------------------------------------------------------------------*/
+void Default :: mating() {
   int ax, ay;
   int tx, ty;
 
   VECTOR(Agent *) new_child_;                                        /* 新しく生まれるエージェント */
 
-  ITERATOR(Agent *) it_myself = ad.getAgentIteratorBegin();          /* エージェント配列の先頭から */
-  while( it_myself != ad.getAgentIteratorEnd() ) {                   /* 末尾まで */
+  ITERATOR(Agent *) it_myself = ad_->getAgentIteratorBegin();          /* エージェント配列の先頭から */
+  while( it_myself != ad_->getAgentIteratorEnd() ) {                   /* 末尾まで */
     ax = (*it_myself)->getX();                                       /* 着目エージェントの位置 */
     ay = (*it_myself)->getY();
 
@@ -54,12 +49,12 @@ void Default :: mating(Administrator &ad) {
 #endif
         tx = ax + i;
         ty = ay + j;
-        ad.landscape()->putBackOnMap( tx, ty );                      /* 土地からはみ出てたら土地の上に戻す */
+        ad_->landscape()->putBackOnMap( tx, ty );                      /* 土地からはみ出てたら土地の上に戻す */
 
-        ITERATOR(Agent *) it_partner= ad.landscape()->getAgentIteratorBeginAt( tx, ty );
-        while( it_partner!= ad.landscape()->getAgentIteratorEndAt( tx, ty ) )
+        ITERATOR(Agent *) it_partner= ad_->landscape()->getAgentIteratorBeginAt( tx, ty );
+        while( it_partner!= ad_->landscape()->getAgentIteratorEndAt( tx, ty ) )
         {                                                            /* 自分の近隣にいる人から */
-          if( ad.getAgentSize()+new_child_.size() >= A_MAX_NUM ) {   /* 最大エージェントをこえそうなら */
+          if( ad_->getAgentSize()+new_child_.size() >= A_MAX_NUM ) {   /* 最大エージェントをこえそうなら */
             break;                                                   /* 終了 */
           }
           if( isOppositeSex( *(*it_myself), **it_partner) &&         /* 異性かつ */
@@ -83,50 +78,50 @@ NEXT_AGENT:                                                          /* => 出�
     it_myself++;
   }
 
-  ITERATOR(Agent *) it_a = ad.getAgentIteratorBegin();               /* エージェントの先頭 */
-  while( it_a != ad.getAgentIteratorEnd() ) {                        /* エージェント全員に対して */
+  ITERATOR(Agent *) it_a = ad_->getAgentIteratorBegin();               /* エージェントの先頭 */
+  while( it_a != ad_->getAgentIteratorEnd() ) {                        /* エージェント全員に対して */
     (*it_a)->resetGiveBirth();                                       /* 未出産に戻す */
     it_a++;                                                          /* 次のエージェント */
   }
   LOG( new_child_.size() );
   ITERATOR( Agent * ) it_child = new_child_.begin();                 /* 新しく誕生したエージェントを */
   while( it_child != new_child_.end() ) {
-    ad.agent()->push_back( *it_child );                              /* エージェント配列に一斉に加える */
-    ad.landscape()->registAgent( (*it_child)->getX(), (*it_child)->getY(), **it_child ); /* 土地に配置 */
+    ad_->agent()->push_back( *it_child );                              /* エージェント配列に一斉に加える */
+    ad_->landscape()->registAgent( (*it_child)->getX(), (*it_child)->getY(), **it_child ); /* 土地に配置 */
     it_child++;                                                      /* 次のエージェントに */
   }
   new_child_.clear();                                                /* 新しく誕生したエージェントの配列をクリア */
 }
 
-void Default :: aging(Administrator &ad) {
-  ITERATOR(Agent *) it = ad.getAgentIteratorBegin();                 /* 先頭のエージェントから */
-  while( it != ad.getAgentIteratorEnd() ) {                          /* エージェントの末尾まで */
+void Default :: aging() {
+  ITERATOR(Agent *) it = ad_->getAgentIteratorBegin();                 /* 先頭のエージェントから */
+  while( it != ad_->getAgentIteratorEnd() ) {                          /* エージェントの末尾まで */
 
     (*it)->aging();                                                  /* 老化させる */
 
     if( (*it)->getAge() > A_MAX_AGE ) {                              /* もし寿命をこえたら */
-      ad.deleteAgent( it );                                          /* 生存配列から削除される */
+      ad_->deleteAgent( it );                                          /* 生存配列から削除される */
     } else {
       it++;                                                          /* 次のエージェントへ */
     }
   }
 }
-void Default :: migrate(Administrator &ad) {
-  (ad.landscape())->clearAgentMap();                                 /* エージェントの位置をリセットして */
-  ITERATOR(Agent *) it_a = ad.getAgentIteratorBegin();               /* エージェントの先頭から */
-  while( it_a != ad.getAgentIteratorEnd() ) {                        /* 末尾まで */
+void Default :: migrate() {
+  (ad_->landscape())->clearAgentMap();                                 /* エージェントの位置をリセットして */
+  ITERATOR(Agent *) it_a = ad_->getAgentIteratorBegin();               /* エージェントの先頭から */
+  while( it_a != ad_->getAgentIteratorEnd() ) {                        /* 末尾まで */
     (*it_a)->move();                                                 /* 移動させる */
-    ad.landscape()->putAgentOnMap( **it_a );                         /* 土地からはみ出てたら戻す */
-    ad.landscape()->registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a );                   /* エージェントを登録 */
+    ad_->landscape()->putAgentOnMap( **it_a );                         /* 土地からはみ出てたら戻す */
+    ad_->landscape()->registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a );                   /* エージェントを登録 */
     it_a++;
   }
 }
-void Default :: contact(Administrator &ad) {
+void Default :: contact() {
   int ax, ay;
   int tx, ty;
 
-  ITERATOR(Agent *) it_myself = ad.getAgentIteratorBegin();          /* エージェントの先頭から */
-  while( it_myself != ad.getAgentIteratorEnd() ) {                   /* 末尾まで */
+  ITERATOR(Agent *) it_myself = ad_->getAgentIteratorBegin();          /* エージェントの先頭から */
+  while( it_myself != ad_->getAgentIteratorEnd() ) {                   /* 末尾まで */
     if( (*it_myself)->numHoldingVirus() <= 0 ) {
       it_myself++;
       continue;                                                      /* 健康ならスキップ */
@@ -143,10 +138,10 @@ void Default :: contact(Administrator &ad) {
 #endif
         tx = ax + i;
         ty = ay + j;
-        ad.landscape()->putBackOnMap( tx, ty );
+        ad_->landscape()->putBackOnMap( tx, ty );
 
-        ITERATOR(Agent *) it = ad.landscape()->getAgentIteratorBeginAt( tx, ty );
-        while( it != ad.landscape()->getAgentIteratorEndAt( tx, ty ) )
+        ITERATOR(Agent *) it = ad_->landscape()->getAgentIteratorBeginAt( tx, ty );
+        while( it != ad_->landscape()->getAgentIteratorEndAt( tx, ty ) )
         {                                                            /* その位置にいる人全員に */
           VirusData *tvdata =                                        /* ランダムに保持ウイルスから選んで */
             (*it_myself)->getVirusDataAt( rand_array((*it_myself)->getVirusListSize()) );
@@ -165,14 +160,14 @@ void Default :: contact(Administrator &ad) {
   }
 
 }
-void Default :: infect(Administrator &ad) {
+void Default :: infect() {
   ITERATOR(Virus *) itt;
   Virus *tv;
   int n;
   int infection_count;                                               /* 同時感染数をカウント。最大値を越えないように */
 
-  ITERATOR(Agent *) it_myself = ad.getAgentIteratorBegin();
-  while( it_myself != ad.getAgentIteratorEnd() ) {
+  ITERATOR(Agent *) it_myself = ad_->getAgentIteratorBegin();
+  while( it_myself != ad_->getAgentIteratorEnd() ) {
     if( (*it_myself)->hasNoStandByVirus() ) {                        /* 待機ウイルスが無ければ */
       it_myself++;                                                   /* 次のエージェントに */
       continue;                                                      /* スキップ */
@@ -199,23 +194,40 @@ void Default :: infect(Administrator &ad) {
     it_myself++;                                                     /* 次のエージェントに */
   }
 }
-void Default :: response(Administrator &ad) {
-  ITERATOR( Agent * ) it_a = ad.getAgentIteratorBegin();
-  while( it_a != ad.getAgentIteratorEnd() ) {
+void Default :: response() {
+  ITERATOR( Agent * ) it_a = ad_->getAgentIteratorBegin();
+  while( it_a != ad_->getAgentIteratorEnd() ) {
     (*it_a)->response();                                             /* 免疫応答 */
     it_a++;
   }
 
 }
-void Default :: oneDay(Administrator &ad) {
+void Default :: oneDay() {
 #ifdef AGING_AGENT
-  ad.agingAgent();                                                   /* 老化する */
+  ad_->agingAgent();                                                   /* 老化する */
 #endif
 #ifdef MATING_AGENT
-  ad.matingAgant();                                                  /* 交配、出産する */
+  ad_->matingAgant();                                                  /* 交配、出産する */
 #endif
-  ad.moveAgent();                                                    /* 移動する */
-  ad.contactAgent();                                                 /* 近隣に接触する */
-  ad.infectAgent();                                                  /* 待機ウイルスを感染させる */
-  ad.responseAgent();                                                /* 免疫応答（タグフリップ） */
+  ad_->moveAgent();                                                    /* 移動する */
+  ad_->contactAgent();                                                 /* 近隣に接触する */
+  ad_->infectAgent();                                                  /* 待機ウイルスを感染させる */
+  ad_->responseAgent();                                                /* 免疫応答（タグフリップ） */
 }
+
+/*-----------------------------------------------------------------------------
+ *
+ *  NonOverlappingPopulation 戦略
+ *
+ *-----------------------------------------------------------------------------*/
+
+void NonOverlappingPopulation :: oneDay() {
+
+  ad_->agingAgent();                                                   /* 老化する */
+  ad_->moveAgent();                                                    /* 移動する */
+
+  ad_->contactAgent();                                                 /* 近隣に接触する */
+  ad_->infectAgent();                                                  /* 待機ウイルスを感染させる */
+  ad_->responseAgent();                                                /* 免疫応答（タグフリップ） */
+}
+

@@ -41,7 +41,7 @@ Administrator :: Administrator( VECTOR(Agent *) &a, VECTOR(Virus *) &v, Landscap
   assert( l != 0 );                                                  /* NULLならエラー */
 
   model_strategy_ = new Default;
-//  model_strategy_.setAdministrator(this)
+  model_strategy_->setAdministrator(this);
 
   agent_.reserve( A_MAX_NUM );                                       /* 最大エージェント数まで領域確保 */
 }
@@ -59,7 +59,7 @@ Administrator :: Administrator( VECTOR(Agent *) &a, VECTOR(Virus *) &v, Landscap
   assert( l != 0 );                                                  /* NULLならエラー */
   assert( model != 0 );                                              /* NULLならエラー */
 
-//  model_strategy_.setAdministrator(this);
+  model_strategy_->setAdministrator(this);
 
   agent_.reserve( A_MAX_NUM );                                       /* 最大エージェント数まで領域確保 */
 }
@@ -97,7 +97,7 @@ ITERATOR(Agent *) Administrator :: deleteAgent( ITERATOR(Agent *) &it )
  */
 void Administrator :: agingAgent()
 {
-  model_strategy_->aging(*this);
+  model_strategy_->aging();
 }
 /*
  *--------------------------------------------------------------------------------------
@@ -106,7 +106,7 @@ void Administrator :: agingAgent()
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: matingAgant() {
-  model_strategy_->mating(*this);
+  model_strategy_->mating();
 }
 /*
  *--------------------------------------------------------------------------------------
@@ -201,7 +201,7 @@ void Administrator :: relocateAgent() {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: moveAgent() {
-  model_strategy_->migrate(*this);
+  model_strategy_->migrate();
 }
 /*
  *--------------------------------------------------------------------------------------
@@ -211,7 +211,7 @@ void Administrator :: moveAgent() {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: contactAgent() {
-  model_strategy_->contact(*this);
+  model_strategy_->contact();
 }
 
 /*
@@ -222,7 +222,7 @@ void Administrator :: contactAgent() {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: infectAgent() {
-  model_strategy_->infect(*this);
+  model_strategy_->infect();
 }
 
 /*
