@@ -15,11 +15,11 @@
 #define ___ADMINISTRATOR
 
 #include "Global.h"
-#include "AdministratorStrategy.h"
 
 #include <vector>
 
 class __TagInterface;
+class __ModelStrategy;
 class Agent;
 class Virus;
 class Landscape;
@@ -79,15 +79,15 @@ class Administrator {
 
     void printInitInfo() const;                                      /* 初期状態の情報を端末に出力 */
 
+    ITERATOR(Agent *) deleteAgent( ITERATOR(Agent *) &it );          /* 配列から指定のエージェントを削除 */
+
   private:
+    __ModelStrategy *model_strategy_;                                /* モデルの戦略 */
     int term_;                                                       /* 現在の期間を記録 */
 
     VECTOR(Agent *) &agent_;                                         /* エージェントの集合 */
     VECTOR(Virus *) &virus_;                                         /* ウイルスの集合 */
     Landscape *landscape_;                                           /* 土地 */
-
-    ITERATOR(Agent *) deleteAgent( ITERATOR(Agent *) &it );          /* 配列から指定のエージェントを削除 */
-    __ModelStrategy *model_strategy_;                                /* モデルの戦略 */
 };
 
 #endif
