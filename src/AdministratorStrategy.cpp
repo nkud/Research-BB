@@ -52,8 +52,8 @@ void __ModelStrategy :: initVirus() {
   //                           1234567890123456789
   //  virus.push_back( new Virus( "000000000000", new Normal ) );        /* 通常ウイルスを追加 */
   //  virus.push_back( new Virus( "111111111111", new Normal ) );        /* 通常ウイルスを追加 */
-  ad_->virus()->push_back( new Virus( 17, new Normal ) );                    /* 通常ウイルスを追加 */
-  ad_->virus()->push_back( new Virus( 17, new Normal ) );                    /* 通常ウイルスを追加 */
+  ad_->virus()->push_back( new Virus( 15, new Normal ) );                    /* 通常ウイルスを追加 */
+  ad_->virus()->push_back( new Virus( 15, new Normal ) );                    /* 通常ウイルスを追加 */
   //    virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
   //    virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */
 }
@@ -250,6 +250,11 @@ void NonOverlappingPopulation :: initAgent() {
     ad_->agent()->push_back(
         new Agent( relocate, 20 ) );                                 /* ランダムウォーク */
   }
+//  ITERATOR(Agent *) it = ad_->getAgentIteratorBegin();               /* 先頭のエージェントから */
+//  while( it != ad_->getAgentIteratorEnd() ) {                        /* エージェントの末尾まで */
+//    (*it)->setAge(0);
+//    it++;
+//  }
 }
 
 void NonOverlappingPopulation :: oneDay() {
@@ -262,22 +267,23 @@ void NonOverlappingPopulation :: oneDay() {
 }
 
 void NonOverlappingPopulation :: aging() {
-  ITERATOR(Agent *) it = ad_->getAgentIteratorBegin();                 /* 先頭のエージェントから */
-  while( it != ad_->getAgentIteratorEnd() ) {                          /* エージェントの末尾まで */
-
+  int die=0;
+  ITERATOR(Agent *) it = ad_->getAgentIteratorBegin();               /* 先頭のエージェントから */
+  while( it != ad_->getAgentIteratorEnd() ) {                        /* エージェントの末尾まで */
     (*it)->aging();                                                  /* 老化させる */
-
     if( (*it)->getAge() > A_MAX_AGE ) {                              /* もし寿命をこえたら */
-      mating();                                                      /* 全員交配して死亡 */
-    } else {
-      it++;                                                          /* 次のエージェントへ */
+      (*it)->resetParam();                                            /* 生まれ変わる */
+      die++;
     }
+    it++;                                                            /* 次のエージェントへ */
   }
-
+  LOG(die);
 }
+
 void NonOverlappingPopulation :: mating() {
   ITERATOR(Agent *) it_b = ad_->getAgentIteratorBegin();
   ITERATOR(Agent *) it_e = ad_->getAgentIteratorEnd();
+  it_e--;
   while( it_b < it_e ) {
     (*it_b)->resetParam();
     (*it_e)->resetParam();

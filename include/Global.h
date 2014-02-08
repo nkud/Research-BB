@@ -50,7 +50,7 @@ const int A_MAX_NUM                 = A_INIT_NUM * 5       ;         /* 最大�
 
 const int A_MOVE_DISTANCE           = 10                   ;         /* エージェントの移動距離 */
 
-const int A_MAX_AGE                 = 100                  ;         /* 寿命 */
+const int A_MAX_AGE                 = 10                  ;         /* 寿命 */
 
 const double A_BIRTH_RATE           = 0.5                  ;         /* 出生率 */
 const int A_BIRTH_AGE_FROM          = int(A_MAX_AGE * 0.2) ;

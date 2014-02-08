@@ -101,6 +101,8 @@ class Agent : public __TagInterface
     int aging();                                                     /* 年をとる */
 
     int getAge() const;                                              /* 年齢を取得する */
+    void setAge(int n) { age_ = n; }
+
     bool hasAbilityToChildbirth() const;                             /* 出産可能か */
     void setLife( __LABEL__ life );                                  /* 生死を設定する */
     //        bool isAlive() const;
