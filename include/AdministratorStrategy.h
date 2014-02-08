@@ -23,6 +23,7 @@ class __ModelStrategy {
      *  各フェイズ
      *-----------------------------------------------------------------------------*/
     virtual void aging(Administrator &ad) = 0;
+    virtual void mating(Administrator &ad) = 0;
     virtual void migrate(Administrator &ad) = 0;
     virtual void contact(Administrator &ad) = 0;
     virtual void infect(Administrator &ad) = 0;
@@ -30,7 +31,7 @@ class __ModelStrategy {
     /*-----------------------------------------------------------------------------
      *  すべてプロセスを実行
      *-----------------------------------------------------------------------------*/
-    virtual void start(Administrator &ad) = 0;
+    virtual void oneDay(Administrator &ad) = 0;
 };
 
 /*-----------------------------------------------------------------------------
@@ -39,11 +40,12 @@ class __ModelStrategy {
 class Default : public __ModelStrategy {
   public:
     virtual void aging(Administrator &ad);
+    virtual void mating(Administrator &ad);
     virtual void migrate(Administrator &ad);
     virtual void contact(Administrator &ad);
     virtual void infect(Administrator &ad);
     virtual void response(Administrator &ad);
-    virtual void start(Administrator &ad);
+    virtual void oneDay(Administrator &ad);
 };
 
 /*-----------------------------------------------------------------------------
@@ -52,11 +54,12 @@ class Default : public __ModelStrategy {
 class NonOverlappingPopulation : public __ModelStrategy {
   public:
     virtual void aging(Administrator &ad);
+    virtual void mating(Administrator &ad);
     virtual void migrate(Administrator &ad);
     virtual void contact(Administrator &ad);
     virtual void infect(Administrator &ad);
     virtual void response(Administrator &ad);
-    virtual void start(Administrator &ad);
+    virtual void oneDay(Administrator &ad);
 };
 
 #endif

@@ -59,17 +59,17 @@ int main()
   /* ウイルス */
   VECTOR(Virus *) virus;
   //                           1234567890123456789
-//  virus.push_back( new Virus( "000000000000", new Normal ) );        /* 通常ウイルスを追加 */
-//  virus.push_back( new Virus( "111111111111", new Normal ) );        /* 通常ウイルスを追加 */
-    virus.push_back( new Virus( 17, new Normal ) );                  /* 通常ウイルスを追加 */
-    virus.push_back( new Virus( 17, new Normal ) );                  /* 通常ウイルスを追加 */
+  //  virus.push_back( new Virus( "000000000000", new Normal ) );        /* 通常ウイルスを追加 */
+  //  virus.push_back( new Virus( "111111111111", new Normal ) );        /* 通常ウイルスを追加 */
+  virus.push_back( new Virus( 17, new Normal ) );                    /* 通常ウイルスを追加 */
+  virus.push_back( new Virus( 17, new Normal ) );                    /* 通常ウイルスを追加 */
   //    virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
   //    virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */
   /* 土地 */
   Landscape landscape;                                               /* ランドスケープ初期化 */
 
   /* 管理者 */
-  Administrator admin( agent, virus, &landscape );                   /* 管理者に登録 */
+  Administrator admin( agent, virus, &landscape, new Default );    /* 管理者に登録 */
 
   /* モニター・ファイル生成クラス */
   Monitor &monitor = Monitor::Instance();                            /* モニター */
@@ -101,25 +101,16 @@ int main()
 
     monitor.resetAll();                                              /* モニターのカウンターをリセット */
 
-    /* A */
-#ifdef AGING_AGENT
-    admin.agingAgent();                                              /* 老化する */
-#endif
-#ifdef MATING_AGENT
-    admin.matingAgant();                                             /* 交配、出産する */
-#endif
-    admin.moveAgent();                                               /* 移動する */
-    admin.contactAgent();                                            /* 近隣に接触する */
-    admin.infectAgent();                                             /* 待機ウイルスを感染させる */
-    admin.responseAgent();                                           /* 免疫応答（タグフリップ） */
+    /* エージェント、ウイルス、土地の計算 */
+    admin.oneDay();                                                  /* 一日を進める */
 
-    /* 経過出力 */
+    /*  途中経過出力 */
     ff.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ; /* 出力：感染者 */
     ff.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ; /* 出力：免疫獲得者 */
     ff.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ; /* 出力：接触回数 */
     ff.outputFile_Population            ( "A_population.txt"       ) ; /* 出力：人口 */
 
-    /* 確認用ログ */
+    /* 途中経過表示用ログ */
     LOG( monitor.getContactNum() );
     LOG( agent.size() );
 
@@ -128,6 +119,7 @@ int main()
     if( zero_count >= 20 ) break;                                    /* 強制的に終了する */
     if( agent.size() == A_MAX_NUM ) break;
   }
+
 #ifdef ___BENCHMARK
   Benchmark::Instance().stopTimer();                                 /* ベンチマークの計測終了 */
   Benchmark::Instance().printTime();                                 /* 計測時間表示 */

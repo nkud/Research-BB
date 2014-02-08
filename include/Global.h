@@ -28,9 +28,9 @@
 
 #define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-const int TERM                      = 5000                 ;         /* 期間 */
+const int TERM                      = 1000                 ;         /* 期間 */
 const int OUTPUT_INTERVAL           = 1                    ;         /* 出力する間隔 */
-const int MINI_SIZE_TERM            = 200                  ; 
+const int MINI_SIZE_TERM            = 200                  ;
 
 const int WIDTH                     = 60                   ;         /* ランドスケープの幅 */
 
@@ -53,8 +53,8 @@ const int A_MOVE_DISTANCE           = 10                   ;         /* エー�
 const int A_MAX_AGE                 = 100                  ;         /* 寿命 */
 
 const double A_BIRTH_RATE           = 0.5                  ;         /* 出生率 */
-const int A_BIRTH_AGE_FROM          = int(A_MAX_AGE * 0.2) ; 
-const int A_BIRTH_AGE_TO            = int(A_MAX_AGE * 0.6) ; 
+const int A_BIRTH_AGE_FROM          = int(A_MAX_AGE * 0.2) ;
+const int A_BIRTH_AGE_TO            = int(A_MAX_AGE * 0.6) ;
 
 /*-----------------------------------------------------------------------------
  *
@@ -65,7 +65,6 @@ const int A_BIRTH_AGE_TO            = int(A_MAX_AGE * 0.6) ;
 #define HAS_IMMUNITY_FNAME              "A_hasImmunity.txt"          /* 免疫獲得者の出力ファイル */
 #define CONTACT_FNAME                   "A_infectionContact.txt"     /* 接触回数の出力ファイル */
 #define POPULATION_FNAME                "A_population.txt"           /* 人口の出力ファイル */
-
 
 /*-----------------------------------------------------------------------------
  *
