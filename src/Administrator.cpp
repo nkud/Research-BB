@@ -24,6 +24,13 @@
 #include <fstream>
 #include <iostream>
 
+/*--------------------------------------------------------------------------------------
+ *      Method:  Administrator :: *
+ * Description:  getter
+ *----------------------------------------------------------------------------------- */
+VECTOR(Agent *) *Administrator :: agent() { return &agent_; }
+VECTOR(Virus *) *Administrator :: virus() { return &virus_; }
+Landscape *Administrator :: landscape() { return landscape_; }
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Administrator :: deleteAgent()

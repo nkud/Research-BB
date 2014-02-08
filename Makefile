@@ -15,7 +15,9 @@ OBJ      = $(addprefix bin/, $(SRC:.cpp=.o))
 LIB      = $(SRC:.cpp=.h)
 
 TARGET   = main.out
-SRC      = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp Monitor.cpp Administrator.cpp Landscape.cpp FileFactory.cpp Benchmark.cpp AgentStrategy.cpp
+SRC      = main.cpp Virus.cpp Agent.cpp Function.cpp TagInterface.cpp \
+		   Monitor.cpp Administrator.cpp Landscape.cpp FileFactory.cpp \
+		   Benchmark.cpp AgentStrategy.cpp AdministratorStrategy.cpp
 
 VPATH    = src include
 CPPFLAGS = -I include
@@ -72,11 +74,15 @@ pack:
 	@cd $(BIN); $(COPY) index.html result.css ../$(MASTER)/$(NOW)
 	@tree $(MASTER)/$(NOW)
 
-$(BIN)/main.o: Global.h Function.h Agent.h Virus.h Landscape.h Monitor.h Administrator.h FileFactory.h
-$(BIN)/Administrator.o: Global.h Function.h Administrator.h Agent.h Virus.h Landscape.h Monitor.h
+$(BIN)/main.o: Global.h Function.h Agent.h Virus.h Landscape.h Monitor.h \
+	Administrator.h FileFactory.h
+$(BIN)/Administrator.o: Global.h Function.h AdministratorStrategy.h \
+	Administrator.h Agent.h Virus.h Landscape.h Monitor.h
+$(BIN)/AdministratorStrategy.o: AdministratorStrategy.h Administrator.h
 $(BIN)/Monitor.o: Monitor.h Global.h
 $(BIN)/TagInterface.o: TagInterface.h Global.h
-$(BIN)/Agent.o: AgentStrategy.h Agent.h Function.h Monitor.h Global.h TagInterface.h
+$(BIN)/Agent.o: AgentStrategy.h Agent.h Function.h Monitor.h Global.h \
+	TagInterface.h
 $(BIN)/AgentStrategy.o: AgentStrategy.h Agent.h
 $(BIN)/Virus.o: Global.h Virus.h Function.h TagInterface.h
 $(BIN)/Landscape.o: Global.h Landscape.h Function.h
@@ -84,7 +90,8 @@ $(BIN)/Function.o: Function.h
 $(BIN)/FileFactory.o: Administrator.h Agent.h Virus.h Global.h
 $(BIN)/Benchmark.o: Benchmark.h
 
-Administrator.h: Global.h
+Administrator.h: Global.h AdministratorStrategy.h
+AdministratorStrategy.h:
 Agent.h: TagInterface.h Virus.h AgentStrategy.h
 AgentStrategy.h:
 Virus.h: TagInterface.h
