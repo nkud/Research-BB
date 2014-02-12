@@ -4,6 +4,7 @@
 *.out
 ~*.pptx
 .DS_Store
+*~
 
 # スクリプト
 *.pyc
