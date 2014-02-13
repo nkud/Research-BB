@@ -3,8 +3,8 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>卒業発表セリフ</title>
-<!-- 2014-02-13 木 09:31 -->
+<title>卒業研究発表</title>
+<!-- 2014-02-13 木 12:48 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <style type="text/css">
@@ -136,7 +136,7 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">卒業発表セリフ</h1>
+<h1 class="title">卒業研究発表</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -163,8 +163,7 @@ for the JavaScript code in this tag.
 <li><a href="#sec-20">20. 免疫獲得者</a></li>
 <li><a href="#sec-21">21. 数値計算結果の分析</a></li>
 <li><a href="#sec-22">22. 結論</a></li>
-<li><a href="#sec-23">23. 今後の研究</a></li>
-<li><a href="#sec-24">24. ご清聴ありがとうございました。</a></li>
+<li><a href="#sec-23">23. ご清聴ありがとうございました。</a></li>
 </ul>
 </div>
 </div>
@@ -183,7 +182,7 @@ for the JavaScript code in this tag.
 <h2 id="sec-2"><span class="section-number-2">2</span> 目次&#xa0;&#xa0;&#xa0;<span class="tag"><span class="5sec">5sec</span></span></h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
-<li>この発表ではこの流れで説明していきたいと思います。
+<li>この発表ではご覧の流れに沿って説明していきます。
 </li>
 </ul>
 </div>
@@ -221,7 +220,7 @@ for the JavaScript code in this tag.
 <li>Agent Based Epidemic Model とは、先ほど露口君の説明にもありました通常のABMに
 感染などのプロセスを取り入れる事により、数理伝染病学に応用したものです。
 </li>
-<li>通常のエピデミックモデルに使用される微分方程式モデルに比べて、個体レベルで起きる抗原抗体反応や
+<li>微分方程式が用いられる決定論的なエピデミックモデルに比べて、個体レベルで起きる抗原抗体反応や
 免疫の喪失現象を細かく観察することができます。
 </li>
 <li>ただし、Stochastic Modelであるため、シミュレーションを行うたびに結果が
@@ -250,8 +249,6 @@ for the JavaScript code in this tag.
 <ul class="org-ul">
 <li>電子タグとは、１と０のみの配列で、エージェントとウイルスは、同じように電子タグを持っています。
 </li>
-<li>この時、必ずエージェントの方がウイルスよりも配列が長くなっています。
-</li>
 <li>エージェントには２つの状態があり、
 </li>
 <li>ひとつは、右上のようにウイルスのタグを完全に含んでいる時で、そのウイルスに対する
@@ -277,21 +274,31 @@ for the JavaScript code in this tag.
 </li>
 <li>まずウイルスはエージェントに感染する事が決まると、自分が取り付く位置を決めます。
 </li>
+<li>&#x2014;
+</li>
 <li>エージェントの配列の左端から順に、自分の配列と比べていき、自分の配列とどれだけ違うかを
 走査していきます。
 </li>
 <li>この例では図のように、左端では２個、真ん中でも２個、右端では１個、数が違う事になります。
 </li>
+<li>&#x2014;
+</li>
 <li>この数字が違う個数の事をハミング距離というのですが、ウイルスは常に最小ハミング距離に
 取り付きます。この場合は最小ハミング距離が１になる、右端に取り付く事により、感染が完了します。
+</li>
+<li>ここまでが、感染のプロセスです。
 </li>
 <li>次にエージェントから見ると、ウイルスが自分の配列の右端に取り付く事により、１つだけ、
 数字を変えると、免疫を獲得できることになります。
 </li>
+<li>&#x2014;
+</li>
 <li>なので、エージェントは自分の右端の０を１日かけて１に変えることにより、ウイルスに対する
 免疫を獲得し、それと同時に感染者ではなくなります。
 </li>
-<li>この数字を変える操作をタグフリップといいます。
+<li>この数字を変える操作をタグフリップといい、エージェントは一日一つまでできます。
+</li>
+<li>これが免疫獲得のプロセスです。
 </li>
 <li>ではこのモデルを使用して行った数値実験の説明に移ります。
 </li>
@@ -304,7 +311,7 @@ for the JavaScript code in this tag.
 <ul class="org-ul">
 <li>初期値は表にあるように設定しました。
 </li>
-<li>実験を通して、ウイルスは２種類あります。
+<li>実験を通して、エージェントは1000個体、ウイルスは２種類用意しました。
 </li>
 </ul>
 </div>
@@ -315,7 +322,7 @@ for the JavaScript code in this tag.
 <div class="outline-text-2" id="text-10">
 <ul class="org-ul">
 <li>そして数値実験を行った結果、振動するパターンと、ウイルス同士のタグを上手く重ね合わせる
-事による２つのパターンが観察されました。
+事によって免疫獲得者が増加していく、２つのパターンが観察されました。
 </li>
 </ul>
 </div>
@@ -467,20 +474,8 @@ for the JavaScript code in this tag.
 </div>
 
 <div id="outline-container-sec-23" class="outline-2">
-<h2 id="sec-23"><span class="section-number-2">23</span> 今後の研究</h2>
+<h2 id="sec-23"><span class="section-number-2">23</span> ご清聴ありがとうございました。</h2>
 <div class="outline-text-2" id="text-23">
-<ul class="org-ul">
-<li>本研究は空間一様モデルでしたが、今後の研究では非空間一様モデルでも実験してしていきたいと思います。
-</li>
-<li>加えて本研究で用いた電子タグにより、抗体の社会的な広がりを表現したいと思います。
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-sec-24" class="outline-2">
-<h2 id="sec-24"><span class="section-number-2">24</span> ご清聴ありがとうございました。</h2>
-<div class="outline-text-2" id="text-24">
 <ul class="org-ul">
 <li>ご清聴ありがとうございました。
 </li>
@@ -489,7 +484,7 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2014-02-13 木 09:31</p>
+<p class="date">Created: 2014-02-13 木 12:48</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.2.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
