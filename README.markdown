@@ -1,7 +1,18 @@
 # Agent Based Epidemic Model
 
-Rule
-----
+## Contents
+
+### PPT
+> Power Point file
+> resource
+
+### bin
+> temp result files
+
+### src, include
+> source files, include files, script files.
+
+## Rule
 - **エージェント**、**ウイルス**、**土地**を用意する。
 - エージェントとウイルスは、それぞれ固有の「タグ」を持っている。
    - エージェントのタグの長さはすべて固定されている。
