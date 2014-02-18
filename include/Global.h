@@ -26,9 +26,9 @@
 //#define AGING_AGENT
 //#define MATING_AGENT
 
-#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
+//#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-const int TERM                      = 1000                 ;         /* 期間 */
+const int TERM                      = 5000                 ;         /* 期間 */
 const int OUTPUT_INTERVAL           = 1                    ;         /* 出力する間隔 */
 const int MINI_SIZE_TERM            = 200                  ;
 
@@ -39,7 +39,7 @@ const double INFECTION_RATE         = 1.0                  ;         /* デフ�
 const int A_MAX_V_CAN_HAVE          = 2                    ;         /* 最大保持ウイルス */
 const int A_MAX_V_INFECTED_ONE_TERM = 1                    ;         /* １期間で感染させるウイルスの最大数 */
 
-const int A_INIT_NUM                = 1000                  ;        /* 初期エージェントの数 */
+const int A_INIT_NUM                = 3000                  ;        /* 初期エージェントの数 */
 
 const double A_INIT_INFECTED_RATE   = 0.3                  ;         /* 初期感染率 */
 
