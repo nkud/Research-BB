@@ -3,14 +3,14 @@
 ## Contents
 
 ### PPT
-> Power Point file
-> resource
+Power Point file
+resource
 
 ### bin
-> temp result files
+temp result files
 
 ### src, include
-> source files, include files, script files.
+source files, include files, script files.
 
 ## Rule
 - **エージェント**、**ウイルス**、**土地**を用意する。
