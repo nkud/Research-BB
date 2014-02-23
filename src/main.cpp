@@ -56,7 +56,7 @@ int main()
   Landscape *landscape = new Landscape;                              /* 土地 */
 
   /* 管理者 */
-  Administrator admin( agent, virus, landscape, nlp );                /* 管理者に登録 */
+  Administrator admin( agent, virus, landscape );                /* 管理者に登録 */
   admin.initAgent();                                                 /* エージェント初期化 */
   admin.initVirus();                                                 /* ウイルス初期化 */
 
