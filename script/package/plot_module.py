@@ -3,7 +3,8 @@
 
 from function import *
 
-LINE_STYLE = 'w l lw 2'
+LINE_STYLE = 'w l lw 1'
+PNG_SIZE = '1000,200'
 
 def scriptForInitSetting(f):
     """ 初期化設定
@@ -13,7 +14,7 @@ def scriptForInitSetting(f):
         initial setting for plot.
     """
     outputLine(f, 'set style line 1 lw 2')
-    outputLine(f, 'set terminal png size 1000,250')
+    outputLine(f, 'set terminal png size '+PNG_SIZE)
     outputLine(f, 'set key below right')
     #outputLine(f, 'set key box lt 0 lw 1 ')
     outputLine(f, 'set key textcolor lt 0')

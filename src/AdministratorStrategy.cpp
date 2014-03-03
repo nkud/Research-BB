@@ -39,7 +39,7 @@ void __ModelStrategy :: oneDay() {
 }
 void __ModelStrategy :: initAgent() {
   //  Relocate *relocate = new Relocate;
-  //  RandomWalk *random_walk = new RandomWalk( 1 );
+  RandomWalk *random_walk = new RandomWalk( 1 );
   //    CoupleTag *couple_tag = new CoupleTag;
   //  InheritanceLen *inh_len = new InheritanceLen;
   Relocate *relocate = new Relocate;
@@ -49,7 +49,7 @@ void __ModelStrategy :: initAgent() {
   }
 }
 void __ModelStrategy :: initVirus() {
-  //                           1234567890123456789
+  //                                   1234567890123456789
   ad_->virus()->push_back( new Virus( "000000000000", new Normal ) );        /* 通常ウイルスを追加 */
   ad_->virus()->push_back( new Virus( "111111111111", new Normal ) );        /* 通常ウイルスを追加 */
 //  ad_->virus()->push_back( new Virus( 15, new Normal ) );                    /* 通常ウイルスを追加 */
@@ -243,12 +243,11 @@ void Default :: aging() {
  *
  *-----------------------------------------------------------------------------*/
 void NonOverlappingPopulation :: initAgent() {
-  //  Relocate *relocate = new Relocate;
-  //  RandomWalk *random_walk = new RandomWalk( 1 );
+  RandomWalk *random_walk = new RandomWalk( 1 );
   Relocate *relocate = new Relocate;
   FOR( i, A_INIT_NUM ) {                                             /* 初期エージェントの数だけ */
     ad_->agent()->push_back(
-        new Agent( relocate, 20 ) );                                 /* ランダムウォーク */
+        new Agent( random_walk, 20 ) );                                 /* ランダムウォーク */
   }
 //  ITERATOR(Agent *) it = ad_->getAgentIteratorBegin();               /* 先頭のエージェントから */
 //  while( it != ad_->getAgentIteratorEnd() ) {                        /* エージェントの末尾まで */
