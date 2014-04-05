@@ -29,8 +29,8 @@ class __ModelStrategy {
     /*-----------------------------------------------------------------------------
      *  各フェイズ
      *-----------------------------------------------------------------------------*/
-    virtual void aging() = 0;
-    virtual void mating() = 0;
+    virtual void aging();
+    virtual void mating();
     virtual void contact();
     virtual void infect();
     virtual void response();
@@ -48,8 +48,8 @@ class __ModelStrategy {
  *-----------------------------------------------------------------------------*/
 class Default : public __ModelStrategy {
   public:
-    virtual void aging();
-    virtual void mating();
+//    virtual void aging();
+//    virtual void mating();
 };
 
 /*-----------------------------------------------------------------------------
