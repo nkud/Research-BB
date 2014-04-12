@@ -86,4 +86,18 @@ class __AgingStrategy {
     void setRandom();
 };
 
+/* =====================================================================================
+ *        Class:  __ResponseStrategy
+ *  Description:  免疫応答戦略インターフェイス
+ * ================================================================================== */
+class __ResponseStrategy {
+  public:
+    virtual void response(Agent &self) = 0;
+};
+
+class TagFlip : public __ResponseStrategy {
+  public:
+    virtual void response(Agent &self);
+};
+
 #endif

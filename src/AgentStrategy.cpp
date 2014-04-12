@@ -113,3 +113,23 @@ Agent* InheritanceLen :: childbirth( const Agent &a, const Agent &b ) const {
 
   return child;                                                      /* 子供を返す */
 }
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  TagFlip :: response
+ * Description:  タグを１つずつフリップする
+ *--------------------------------------------------------------------------------------
+ */
+void TagFlip :: response(Agent &self)
+{
+  if( self.hasNoVirusData() ) return;                                /* 保持ウイルスなし、終了する */
+
+  ITERATOR(VirusData *) it = self.getVirusListIteratorBegin();       /* 先頭のウイルスに対し */
+  flip_once( self.getTag()+(*it)->sp_, (*it)->v_->getTag(), (*it)->v_->getLen() );            /* ひとつフリップする */
+
+  if( self.hasImmunity( *((*it)->v_) ) )
+  {                                                                  /* 免疫獲得すれば */
+    // XXX: 要検討
+    self.eraseVirusData( it );                                       /* 保持ウイルスから v(先頭) を削除して */
+  }
+}
