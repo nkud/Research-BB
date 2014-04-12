@@ -77,7 +77,7 @@ __ModelStrategy :: initVirus() {
   // XXX
   //                                   1234567890123456789
   ad_->virus()->push_back( new Virus( V_TAG_0, new Normal ) );        /* 通常ウイルスを追加 */
-//  ad_->virus()->push_back( new Virus( V_TAG_1, new Normal ) );       /* 通常ウイルスを追加 */
+  ad_->virus()->push_back( new Virus( V_TAG_1, new Normal ) );       /* 通常ウイルスを追加 */
   //  ad_->virus()->push_back( new Virus( 15, new Normal ) );          /* 通常ウイルスを追加 */
   //  ad_->virus()->push_back( new Virus( 15, new Normal ) );          /* 通常ウイルスを追加 */
   //  virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */

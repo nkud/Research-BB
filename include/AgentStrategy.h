@@ -90,14 +90,16 @@ class __AgingStrategy {
  *        Class:  __ResponseStrategy
  *  Description:  免疫応答戦略インターフェイス
  * ================================================================================== */
-class __ResponseStrategy {
+class __ImmuneSystemStrategy {
   public:
     virtual void response(Agent &self) = 0;
+    virtual bool infection(Agent &self, Virus &v ) = 0;
 };
 
-class TagFlip : public __ResponseStrategy {
+class TagFlip : public __ImmuneSystemStrategy {
   public:
     virtual void response(Agent &self);
+    virtual bool infection(Agent &self, Virus &v );
 };
 
 #endif

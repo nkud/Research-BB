@@ -135,6 +135,7 @@ class Agent : public __TagInterface
      *-----------------------------------------------------------------------------*/
     __MovingStrategy *moving_strategy_;                              /* 移動戦略 */
     __ChildBirthStrategy *childbirth_strategy_;                      /* 子孫戦略 */
+    __ImmuneSystemStrategy *immunesystem_strategy_;
 };
 /*
  * =====================================================================================

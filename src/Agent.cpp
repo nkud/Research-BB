@@ -102,7 +102,8 @@ Agent :: Agent( __MovingStrategy *ms, int len ) :
   life_( __ALIVE__ ),
   stand_by_list_( 0 ),
   moving_strategy_( ms ),
-  childbirth_strategy_( new CoupleTag )
+  childbirth_strategy_( new CoupleTag ),
+  immunesystem_strategy_( new TagFlip )
 {
   vlist_ = new std::vector<VirusData *>;                             /* 保持ウイルスリストを初期化 */
   stand_by_list_ = new std::vector<Virus *>;                         /* 待機ウイルスリストを初期化 */
@@ -286,47 +287,19 @@ int Agent :: aging() {
  */
 bool Agent :: infection( Virus &v )
 {
-  if( getVirusListSize() >= A_MAX_V_CAN_HAVE ) {                     /* 最大値を越えてたら */
-    return false;                                                    /* 感染せずに終了 */
-  }
-  ITERATOR(VirusData *) it_vd = getVirusListIteratorBegin();         /* 保持ウイルスリストを取得 */
-  while( it_vd != getVirusListIteratorEnd() ) {                      /* 既に保持しているウイルスなら */
-    if( (*it_vd)->v_ == &v ) {
-      return false;                                                  /* 感染せずに終了 */
-    }
-    it_vd++;                                                         /* 次の保持ウイルス */
-  }
-  if( hasImmunity( v ) ) {                                           /* 免疫獲得済みなら  */
-    return false;                                                    /* 感染せずに終了 */
-  }
-  VirusData *vdata                                                   /* 新しいウイルスデータを作成して */
-    //        = new VirusData( v, min_ham_distance_point( tag_, v.getTag(), len_, v.getLen() ) );
-    = new VirusData( v, v.searchStartPoint( *this ) );
-  pushVirusData( vdata );                                            /* 保持ウイルスリストに追加する */
-
-  Monitor::Instance().countUpInfectionContact(vdata->v_);            /* 感染のために接触した回数を増やす */
-  return true;                                                       /* 感染して true を返す */
+  immunesystem_strategy_->infection(*this, v);
 }
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Agent :: responce( __TagInterface & )
+ *      Method:  Agent :: response( __TagInterface & )
  * Description:  先頭のウイルスに対する免疫を獲得するまで、
  *               １期間に１つタグをフリップさせていく。
  *--------------------------------------------------------------------------------------
  */
 void Agent :: response()
 {
-  if( hasNoVirusData() ) return;                                     /* 保持ウイルスなし、終了する */
-
-  ITERATOR(VirusData *) it = getVirusListIteratorBegin();            /* 先頭のウイルスに対し */
-  flip_once( tag_+(*it)->sp_, (*it)->v_->getTag(), (*it)->v_->getLen() );            /* ひとつフリップする */
-
-  if( hasImmunity( *((*it)->v_) ) )
-  {                                                                  /* 免疫獲得すれば */
-    // XXX: 要検討
-    eraseVirusData( it );                                            /* 保持ウイルスから v(先頭) を削除して */
-  }
+  immunesystem_strategy_->response(*this);
 }
 
 /* 

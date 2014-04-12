@@ -4,7 +4,7 @@
 from function import *
 
 LINE_STYLE = 'w l lw 1'
-PNG_SIZE = '1000,200'
+PNG_SIZE = '1000,300'
 
 def scriptForInitSetting(f):
     """ 初期化設定
