@@ -79,7 +79,7 @@ __ModelStrategy :: initVirus() {
   // XXX
   //                                   1234567890123456789
   ad_->virus()->push_back( new Virus( V_TAG_0, new Normal ) );        /* 通常ウイルスを追加 */
-  ad_->virus()->push_back( new Virus( V_TAG_1, new Normal ) );        /* 通常ウイルスを追加 */
+//  ad_->virus()->push_back( new Virus( V_TAG_1, new Normal ) );       /* 通常ウイルスを追加 */
   //  ad_->virus()->push_back( new Virus( 15, new Normal ) );          /* 通常ウイルスを追加 */
   //  ad_->virus()->push_back( new Virus( 15, new Normal ) );          /* 通常ウイルスを追加 */
   //  virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
@@ -185,6 +185,19 @@ __ModelStrategy :: contact() {
 }
 void
 __ModelStrategy :: mating() {
+  // no process
+}
+void
+__ModelStrategy :: aging() {
+  // no process
+}
+/*-----------------------------------------------------------------------------
+ *
+ *  デフォルト
+ *
+ *-----------------------------------------------------------------------------*/
+void
+Default :: mating() {
   /*-----------------------------------------------------------------------------
    *  交配・出産
    *-----------------------------------------------------------------------------*/
@@ -262,7 +275,7 @@ NEXT_AGENT:                                                          /* => 出�
   new_child_.clear();                                                /* 新しく誕生したエージェントの配列をクリア */
 }
 void
-__ModelStrategy :: aging() {
+Default :: aging() {
   /*-----------------------------------------------------------------------------
    *  老化
    *-----------------------------------------------------------------------------*/
@@ -278,11 +291,6 @@ __ModelStrategy :: aging() {
     }
   }
 }
-/*-----------------------------------------------------------------------------
- *
- *  デフォルト
- *
- *-----------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------
  *
  *  NonOverlappingPopulation 戦略
@@ -302,7 +310,8 @@ void NonOverlappingPopulation :: initAgent() {
 //  }
 }
 
-void NonOverlappingPopulation :: oneDay() {
+void
+NonOverlappingPopulation :: oneDay() {
   ad_->agingAgent();                                                   /* 老化する */
   ad_->moveAgent();                                                    /* 移動する */
 
@@ -311,7 +320,8 @@ void NonOverlappingPopulation :: oneDay() {
   ad_->responseAgent();                                                /* 免疫応答（タグフリップ） */
 }
 
-void NonOverlappingPopulation :: aging() {
+void
+NonOverlappingPopulation :: aging() {
   int die=0;
   ITERATOR(Agent *) it = ad_->getAgentIteratorBegin();               /* 先頭のエージェントから */
   while( it != ad_->getAgentIteratorEnd() ) {                        /* エージェントの末尾まで */
@@ -322,10 +332,12 @@ void NonOverlappingPopulation :: aging() {
     }
     it++;                                                            /* 次のエージェントへ */
   }
+  // 死亡人数を表示
   LOG(die);
 }
 
-void NonOverlappingPopulation :: mating() {
+void
+NonOverlappingPopulation :: mating() {
   ITERATOR(Agent *) it_b = ad_->getAgentIteratorBegin();
   ITERATOR(Agent *) it_e = ad_->getAgentIteratorEnd();
   it_e--;

@@ -39,6 +39,7 @@ class __ModelStrategy {
      *  すべてプロセスを実行
      *-----------------------------------------------------------------------------*/
     virtual void oneDay();
+
   protected:                                                         /* XXX: あまりよくない */
     Administrator *ad_;
 };
@@ -48,8 +49,8 @@ class __ModelStrategy {
  *-----------------------------------------------------------------------------*/
 class Default : public __ModelStrategy {
   public:
-//    virtual void aging();
-//    virtual void mating();
+    virtual void aging();
+    virtual void mating();
 };
 
 /*-----------------------------------------------------------------------------
