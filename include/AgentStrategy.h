@@ -87,7 +87,7 @@ class __AgingStrategy {
 };
 
 /* =====================================================================================
- *        Class:  __ResponseStrategy
+ *        Class:  __ImmuneSystemStrategy
  *  Description:  免疫応答戦略インターフェイス
  * ================================================================================== */
 class __ImmuneSystemStrategy {
@@ -96,6 +96,9 @@ class __ImmuneSystemStrategy {
     virtual bool infection(Agent &self, Virus &v ) = 0;
 };
 
+/*-----------------------------------------------------------------------------
+ *  タグフリップ
+ *-----------------------------------------------------------------------------*/
 class TagFlip : public __ImmuneSystemStrategy {
   public:
     virtual void response(Agent &self);
