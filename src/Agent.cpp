@@ -287,7 +287,7 @@ int Agent :: aging() {
  */
 bool Agent :: infection( Virus &v )
 {
-  immunesystem_strategy_->infection(*this, v);
+  return immunesystem_strategy_->infection(*this, v);
 }
 
 /*
