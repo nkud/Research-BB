@@ -19,7 +19,7 @@ BIN = bin
 
 SRCS = $(shell find $(DIRS) -name '*.cpp')
 
-VPATH = $(DIRS)
+VPATH = src $(DIRS)
 
 OBJS	:= $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.cpp=.o)))
 
