@@ -1,31 +1,46 @@
-TARGET	= ABEM.out
+OUT		= ABEM.out
+TARGET	= $(BIN)/$(OUT)
 
 CC       = g++
+PRINT    = /bin/echo
+RM       = rm -rfv
+MKDIR	 = mkdir -vp
+COPY	 = cp
+CTAGS    = $(shell which ctags)
+NOW		 = $(shell date +"%y%m%d%H%M%S")
 
-SUBDIRS := TagInterface Agent AgentStrategy Virus AdministratorStrategy \
-		   Landscape Monitor FileFactory Benchmark Function \
-		   Administrator
+DIRS = Tag Agent Virus Administrator Landscape \
+	   Monitor FileFactory Benchmark Function
 
-DIRS = Tag Agent Virus Administrator Landscape Monitor FileFactory Benchmark Function
+OBJDIR	= obj
+BIN = bin
+
+SRCS = $(shell find $(DIRS) -name '*.cpp')
 
 VPATH = $(DIRS)
 
-OBJDIR	= obj
-OBJS	:= $(addprefix $(OBJDIR)/, $(SUBDIRS:=.o))
+OBJS	:= $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.cpp=.o)))
 
 INCLUDE	= -I include
 
-$(TARGET): $(OBJS) obj/main.o
-	@echo make
+
+$(TARGET): $(OBJS) $(OBJDIR)/main.o
+	@[ -d $(BIN) ] || mkdir -p $(BIN)
 	$(CC) -o $@ $^
 
 $(OBJDIR)/%.o: %.cpp
 	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
 	$(CC) -c $< -o $@ $(INCLUDE)
 
-
 all: clean $(TARGET)
 
 clean:
-	@echo -n Cleaning...
-	@rm -rvf $(OBJDIR) $(TARGET)
+	@$(PRINT) [ clean ]
+	@$(RM) -rvf $(OBJDIR) $(BIN)
+
+run:
+	@$(PRINT) [ run ]
+	@cd $(BIN); ./$(OUT)
+
+tags:
+	@$(CTAGS) $(SRCS)
