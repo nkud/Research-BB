@@ -32,10 +32,6 @@ $(OBJDIR)/%.o: %.cpp
 	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
 	$(CC) -c $< -o $@ $(INCLUDE)
 
-all: clean $(TARGET) run gene
-
-build: clean $(TARGET)
-
 clean:
 	@$(PRINT) [ clean ]
 	@$(RM) -rvf $(OBJDIR) $(BIN)
@@ -51,3 +47,6 @@ gene:
 	@$(PRINT) '>>> Generate...'
 	@cd $(BIN); python ../script/gene.py
 	@-cd $(BIN); gnuplot auto.plt
+
+all: clean $(TARGET) run gene
+build: clean $(TARGET)
