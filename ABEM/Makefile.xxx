@@ -1,0 +1,19 @@
+TARGET	= ABEM.out
+
+CC       = g++
+
+SUBDIRS := Tag Agent Virus Landscape Monitor FileFactory Benchmark Function \
+		   Administrator
+OBJS	:= $(SUBDIRS:=.o)
+
+INCLUDE	= -I../include
+
+.PHONY: makeall
+
+$(TARGET):
+	@for d in $(SUBDIRS); do \
+	  $(MAKE) -f Makefile.$$d -C $$d; \
+	done
+	$(CC) -o $@ $(OBJS)
+
+all: clean $(TARGET)
