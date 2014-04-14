@@ -9,8 +9,10 @@ COPY	 = cp
 CTAGS    = $(shell which ctags)
 NOW		 = $(shell date +"%y%m%d%H%M%S")
 
-DIRS = Tag Agent Virus Administrator Landscape \
-	   Monitor FileFactory Benchmark Function
+DIR = Tag Agent Virus Administrator Landscape \
+	  Monitor FileFactory Benchmark Function
+
+DIRS = $(addprefix src/, $(DIR))
 
 OBJDIR	= obj
 BIN = bin
