@@ -4,6 +4,7 @@
 from function import *
 
 PNG_DIR = ''
+CSS_FILE = '../template/result.css'
 
 def setImage(f, *imgnames):
     outputLine(f, '<!-- IMAGE -->')
@@ -23,7 +24,7 @@ def generateResultHTML(fname, d):
     print '( generating HTML... )'
     f = open(fname, 'w')
     outputLine(f,
-            '<html><link rel="stylesheet" href="result.css">'
+            '<html><link rel="stylesheet" href="'+CSS_FILE+'">'
             '<body><font color=gray><code>')
     outputLine(f, '<h1><font color=black># RESULT </font></h1>')
 
