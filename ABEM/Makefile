@@ -34,6 +34,9 @@ $(OBJDIR)/%.o: %.cpp include/%.h
 	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
 	$(CC) -c $< -o $@ $(INCLUDE)
 
+obj/main.o: main.cpp include/Global.h
+	$(CC) -c $< -o $@ $(INCLUDE)
+
 clean:
 	@$(PRINT) [ clean ]
 	@$(RM) -rvf $(OBJDIR) $(BIN)
