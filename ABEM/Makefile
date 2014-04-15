@@ -46,7 +46,7 @@ tags:
 	@$(CTAGS) $(SRCS)
 
 gene:
-	@$(PRINT) '>>> Generate...'
+	@$(PRINT) '[ generate ]'
 	@cd $(BIN); python ../script/gene.py
 	@-cd $(BIN); gnuplot auto.plt
 
