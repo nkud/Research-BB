@@ -30,7 +30,7 @@ $(TARGET): $(OBJS) $(OBJDIR)/main.o
 	@[ -d $(BIN) ] || mkdir -p $(BIN)
 	$(CC) -o $@ $^
 
-$(OBJDIR)/%.o: %.cpp
+$(OBJDIR)/%.o: %.cpp include/%.h
 	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
 	$(CC) -c $< -o $@ $(INCLUDE)
 
