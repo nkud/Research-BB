@@ -3,57 +3,105 @@
 
 import random
 
-print 'This is an Agent Based Model using Binary Tags. '
+from function import *
+from landscape import *
 
-A_NUM = 100
+A_NUM = 1000
 V_NUM = 1
 WIDTH = 20
 MOVE_DIST = 3
-TERM = 30
+TERM = 200
+
 
 ### Tag
 class Tag(object):
-  gene = []
+  gene = '1111'
 
 ### Agent
 class Agent( Tag ):
   def __init__(self, land):
     self.x = random.randint(0, WIDTH-1)
     self.y = random.randint(0, WIDTH-1)
+
     self.stand_by_virus = []
     self.infected_virus = []
+    if probability(10):
+      self.infected_virus.append(1)
+
     self.land = land
 
   def move(self):
     """ 移動して土地に登録する """
-    self.x += random.randint(-MOVE_DIST, MOVE_DIST) 
-    self.y += random.randint(-MOVE_DIST, MOVE_DIST) 
+    self.x += random.randint(-MOVE_DIST, MOVE_DIST)
+    self.y += random.randint(-MOVE_DIST, MOVE_DIST)
+    self.x = random.randint(0, WIDTH-1)
+    self.y = random.randint(0, WIDTH-1)
     self.x %= WIDTH
     self.y %= WIDTH
     self.land.resist_agent_to_map(self, self.x, self.y)
 
   def response(self):
     """ 免疫獲得する """
-    pass
-  def contact(self):
-    """ 接触する """
-    pass
+    if probability(20):
+      self.infected_virus = []
+
+  def contact(self, agent):
+    """ 接触する
+    Attributes:
+      agent: 接触した相手エージェント
+    """
+    if len(agent.infected_virus) > 0:
+      self.stand_by_virus.append( random.choice(agent.infected_virus) )
 
   def infection(self):
     """ 感染する """
-    pass
+    if len(self.stand_by_virus) > 0 :
+      if probability(100):
+       self.infected_virus.append( random.choice( self.stand_by_virus) )
+    self.stand_by_virus = []
 
-def agent_contact(agents, viruses, land):
+  def is_infected(self):
+    """ has virus or not """
+    if len(self.infected_virus) > 0 :
+      return True
+    else:
+      return False
+  def info(self):
+    """ 個人情報を表示 """
+    print "%d %d" % ( self.x, self. y )
+
+# Agent Management
+def agentContact(agents, viruses, land):
+  for myself in agents:
+    ax = myself.x
+    ay = myself.y
+    a_list = land.agent_map[ax][ay]
+    a_list.remove( myself )
+    if( len(a_list) > 0 ):
+      myself.contact( random.choice(a_list) )
+
+def agentMove(agents, land):
   for a in agents:
-    ax = a.x
-    ay = a.y
-    for na in land.agent_map[ax][ay]:
-      if na == a: continue
-      print ax, ay
+    a.move()
 
-def show_agent_info(agents, n):
+def agentInfection(agents):
+  for a in agents:
+    a.infection()
+
+def agentResponse(agents):
+  for a in agents:
+    a.response()
+
+def agentIsInfected(agents):
+  n = 0
+  for a in agents:
+    if a.is_infected():
+      n += 1
+  return n
+
+def showAgentInformation(agents, n):
   """ エージェントの情報を表示する """
-  print '[ Agents 0 - %d ]' % (n-1)
+  print '[ Agents 0 ~ %d ]' % (n-1)
   for i in range(n):
     print '\t%d:\t( %d, %d )' % (i, agents[i].x, agents[i].y)
 
@@ -61,24 +109,6 @@ def show_agent_info(agents, n):
 class Virus( Tag ):
   def __init__(self):
     pass
-
-### Landscape
-class Landscape(object):
-  agent_map = []
-  def __init__(self):
-    self.reset_agent_map()
-
-  def reset_agent_map(self):
-    """ エージェントのマップを初期化する """
-    self.agent_map = []
-    for h in range(WIDTH):
-      t = []
-      for w in range(WIDTH):
-        t.append([])
-      self.agent_map.append(t)
-  def resist_agent_to_map(self, a, x, y):
-    """ エージェントをマップに登録する """
-    self.agent_map[x][y].append(a)
 
 ### Main
 def main():
@@ -90,23 +120,30 @@ def main():
   virus = []
   landscape = Landscape()
 
+  f = open('output.txt', 'w')
+
   for i in range(A_NUM):
     agent.append( Agent(landscape) )
   for i in range(V_NUM):
     virus.append(Virus())
 
   for t in range(TERM):
-    print "[ %5d ]  agent( %5d ) %d" % ( t, len(agent), len(landscape.agent_map[0][0]) )
+    print "[ %5d ]  agent( %5d )  infected(%5d)" % ( t, len(agent), agentIsInfected(agent) )
 
     landscape.reset_agent_map() # 土地を初期化する
 
-    for a in agent:
-      a.move()
+    agentMove( agent, landscape )
+    agentContact( agent, virus, landscape )
+    agentInfection( agent )
+    agentResponse( agent )
 
-    agent_contact( agent, virus, landscape )
+    outputline = '%d %d\n' % (t, agentIsInfected(agent))
+    f.write(outputline)
 
-  show_agent_info(agent, 10)
+  showAgentInformation(agent, 3)
+
+  f.close()
 
 if __name__ == "__main__":
-  print 'start main()'
+  print '>>> start ABEM program'
   main()
