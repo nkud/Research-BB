@@ -1,7 +1,8 @@
 #! /usr/bin/python
 # coding=utf-8
 
-from abem import *
+from agent import *
+from config import *
 
 ### Landscape
 class Landscape(object):
