@@ -9,8 +9,6 @@ from function import *
 
 ### ImmuneSystem
 class ImmuneSystem( Tag ):
-  stand_by_virus = []
-  infected_virus = []
   def __init__(self):
     super(ImmuneSystem, self).__init__(A_TAG_LEN)
     self.stand_by_virus = []
@@ -63,8 +61,7 @@ class ImmuneSystem( Tag ):
           self.tag = self.tag[:cp+i]+v.tag[i]+self.tag[cp+i+1:]
           return 1
       del self.infected_virus[0] # フリップする必要がなければ免疫獲得
-      return 0
-    else: pass
+    return 0
 
   def hasImmunity(self, v):
     if self.tag.find(v.tag) >= 0:
@@ -88,10 +85,6 @@ class ImmuneSystem( Tag ):
 
 ### Agent
 class Agent( object ):
-  x = 0
-  y = 0
-
-  land = object
   def __init__(self, land):
     self.x = random.randint(0, WIDTH-1)
     self.y = random.randint(0, WIDTH-1)
@@ -137,25 +130,17 @@ class Agent( object ):
 
 ### PolyAgent
 class PolyAgent( object ):
-  num = 0
-  immunes = []
-  stand_by_virus = []
   def __init__(self, land):
+    self.immunes = []
     self.num = A_TAG_NUM
     for i in range(self.num):
-      im = ImmuneSystem()
-      print im,
-      self.immunes.append(im)
-    print len(self.immunes)
-    print self.immunes
-    self.stand_by_virus = []
-
+      self.immunes.append(ImmuneSystem())
     self.x = random.randint(0, WIDTH-1)
     self.y = random.randint(0, WIDTH-1)
 
     self.stand_by_virus = []
-
     self.land = land
+
   def move(self):
     """ 移動して土地に登録する """
     #self.x += random.randint(-MOVE_DIST, MOVE_DIST)
@@ -186,8 +171,10 @@ class PolyAgent( object ):
     self.stand_by_virus = []
 
   def response(self):
+    n = 0
     for im in self.immunes:
-      im.response()
+      n += im.response()
+    print n
 
   def hasImmunity(self, v):
     for im in self.immunes:
@@ -206,6 +193,12 @@ class PolyAgent( object ):
       if im.hasVirus(v):
         return True
     return False
+
+  def numHasVirus(self):
+    n = 0
+    for im in self.immunes:
+      n += len(im.infected_virus)
+    return n
 
   def info(self):
     """ 個人情報を表示 """

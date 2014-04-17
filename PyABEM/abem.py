@@ -2,6 +2,7 @@
 # coding=utf-8
 
 import random
+import os
 
 from package import *
 
@@ -18,8 +19,7 @@ def main():
   f = open('output.txt', 'w')
 
   for i in range(A_NUM):
-    a = PolyAgent(landscape)
-    agent.append( a )
+    agent.append(PolyAgent(landscape))
   for i in range(V_NUM):
     virus.append(Virus())
 
@@ -37,6 +37,9 @@ def main():
     agentInfection( agent )
     agentResponse( agent )
 
+    agent[0].numHasVirus()
+
+    print len(agent[0].immunes[0].infected_virus)
     outputline = '%d %d %d\n' % (t, agentIsInfected(agent, virus[0]), agentIsInfected(agent, virus[1]))
     f.write(outputline)
 
