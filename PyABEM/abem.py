@@ -18,7 +18,8 @@ def main():
   f = open('output.txt', 'w')
 
   for i in range(A_NUM):
-    agent.append( PolyAgent(landscape) )
+    a = PolyAgent(landscape)
+    agent.append( a )
   for i in range(V_NUM):
     virus.append(Virus())
 
@@ -40,7 +41,7 @@ def main():
     f.write(outputline)
 
   showAgentInformation(agent, 5)
-  print agent[i].immunes, agent[1].immunes
+  print agent[i].immunes == agent[1].immunes
   show_virus_info(virus)
 
   f.close()

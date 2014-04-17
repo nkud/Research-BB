@@ -144,8 +144,10 @@ class PolyAgent( object ):
     self.num = A_TAG_NUM
     for i in range(self.num):
       im = ImmuneSystem()
+      print im,
       self.immunes.append(im)
-      print len(self.immunes)
+    print len(self.immunes)
+    print self.immunes
     self.stand_by_virus = []
 
     self.x = random.randint(0, WIDTH-1)
