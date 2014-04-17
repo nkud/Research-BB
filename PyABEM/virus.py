@@ -19,7 +19,7 @@ class Virus( Tag ):
 
   def info(self):
     """ ウイルス情報を表示 """
-    print '[ %s ] %s' % ( self, self.gene )
+    print '[ %s ] %s' % ( self, self.tag )
 
 def show_virus_info(viruses):
   for v in viruses:

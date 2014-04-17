@@ -27,9 +27,11 @@ def main():
   for i in range(V_NUM):
     virus.append(Virus())
 
-  for v in virus:
-    for a in agent:
-      v.infection(a)
+  for a in agent:
+    if probability(20):
+      a.infected_virus.append(virus[0])
+
+  print len(agent[0].infected_virus)
 
   for t in range(TERM):
     print "[ %5d ]  agent( %5d )  infected(%5d)" % ( t, len(agent), agentIsInfected(agent) )
@@ -44,7 +46,7 @@ def main():
     outputline = '%d %d\n' % (t, agentIsInfected(agent))
     f.write(outputline)
 
-  showAgentInformation(agent, 3)
+  showAgentInformation(agent, 5)
   show_virus_info(virus)
 
   f.close()

@@ -6,7 +6,7 @@ from config import *
 
 ### Tag
 class Tag(object):
-  gene = ''
+  tag = ''
   def __init__(self, len):
     for i in range(len):
-      self.gene += str(rand_binary())
+      self.tag += str(rand_binary())

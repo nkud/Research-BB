@@ -19,6 +19,9 @@ class Agent( Tag ):
     self.x = random.randint(0, WIDTH-1)
     self.y = random.randint(0, WIDTH-1)
 
+    self.stand_by_virus = []
+    self.infected_virus = []
+
     self.land = land
 
   def move(self):
@@ -46,9 +49,10 @@ class Agent( Tag ):
     """ 感染する """
     if len(self.stand_by_virus) > 0 :
       v = random.choice( self.stand_by_virus ) # ランダムに選んで
-      v.cling_point = min_ham_distance(self.gene, v.gene)
-      if v.cling_point >= 0:
-        self.infected_virus.append( v )
+      if not self.hasImmunity(v):
+        v.cling_point = min_ham_distance(self.tag, v.tag)
+        if v.cling_point >=0 :
+          self.infected_virus.append( v )
     self.stand_by_virus = []
 
   def response(self):
@@ -56,16 +60,21 @@ class Agent( Tag ):
     if len(self.infected_virus) > 0:
       cp = self.infected_virus[0].cling_point
       v = self.infected_virus[0]
-      for i in range(len(v.gene)):
-        if self.gene[cp+i] is v.gene[i]:
+      for i in range(len(self.infected_virus[0].tag)):
+        if self.tag[cp+i] == self.infected_virus[0].tag[i]:
           continue
         else:
-          self.gene = self.gene[:cp+i]+v.gene[i]+self.gene[cp+i+1:]
-          print 1,
+          self.tag = self.tag[:cp+i]+self.infected_virus[0].tag[i]+self.tag[cp+i+1:]
           return 1
-      self.infected_virus.remove( v )
+      self.infected_virus = []
       return 0
     else: pass
+
+  def hasImmunity(self, v):
+    if self.tag.find(v.tag) >= 0:
+      return True
+    else:
+      return False
 
   def isInfected(self):
     """ has virus or not """
@@ -111,4 +120,4 @@ def showAgentInformation(agents, n):
   """ エージェントの情報を表示する """
   print '[ Agents 0 ~ %d ]' % (n-1)
   for i in range(n):
-    print '\t%d:\t( %d, %d ) %s' % (i, agents[i].x, agents[i].y, agents[i].gene)
+    print '\t%d:\t( %d, %d ) %s %s' % (i, agents[i].x, agents[i].y, agents[i].tag, agents[i].infected_virus)
