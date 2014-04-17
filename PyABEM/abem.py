@@ -18,15 +18,13 @@ def main():
   f = open('output.txt', 'w')
 
   for i in range(A_NUM):
-    agent.append( Agent(landscape) )
+    agent.append( PolyAgent(landscape) )
   for i in range(V_NUM):
     virus.append(Virus())
 
   for a in agent:
     if probability(100):
-      a.immune.infected_virus.append(random.choice(virus))
-
-  print len(agent[0].infected_virus)
+      a.immunes[0].infected_virus.append(random.choice(virus))
 
   for t in range(TERM):
     print "[ %5d ]  agent( %5d )  infected(%5d)" % ( t, len(agent), agentIsInfected(agent, virus[0]) )
@@ -42,6 +40,7 @@ def main():
     f.write(outputline)
 
   showAgentInformation(agent, 5)
+  print agent[i].immunes, agent[1].immunes
   show_virus_info(virus)
 
   f.close()

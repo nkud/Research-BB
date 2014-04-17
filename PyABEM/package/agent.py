@@ -32,7 +32,21 @@ class ImmuneSystem( Tag ):
         v.cling_point = min_ham_distance(self.tag, v.tag)
         if v.cling_point >=0 :
           self.infected_virus.append( v )
-      self.stand_by_virus = []
+          self.stand_by_virus = []
+        return True
+    self.stand_by_virus = []
+    return False
+
+  def infection(self, v):
+    """ 感染する """
+    if not self.hasImmunity(v) and not self.hasVirus(v) :
+      v.cling_point = min_ham_distance(self.tag, v.tag)
+      if v.cling_point >=0 :
+        self.infected_virus.append( v )
+        self.stand_by_virus = []
+        return True
+    self.stand_by_virus = []
+    return False
 
   def response(self):
     """ 免疫獲得する
@@ -124,11 +138,77 @@ class Agent( object ):
 ### PolyAgent
 class PolyAgent( object ):
   num = 0
-  tags = []
+  immunes = []
+  stand_by_virus = []
   def __init__(self, land):
-    self.num = 3
+    self.num = A_TAG_NUM
     for i in range(self.num):
-      self.tags.append( Agent(land) )
+      im = ImmuneSystem()
+      self.immunes.append(im)
+      print len(self.immunes)
+    self.stand_by_virus = []
+
+    self.x = random.randint(0, WIDTH-1)
+    self.y = random.randint(0, WIDTH-1)
+
+    self.stand_by_virus = []
+
+    self.land = land
+  def move(self):
+    """ 移動して土地に登録する """
+    #self.x += random.randint(-MOVE_DIST, MOVE_DIST)
+    #self.y += random.randint(-MOVE_DIST, MOVE_DIST)
+    self.x = random.randint(0, WIDTH-1)
+    self.y = random.randint(0, WIDTH-1)
+    self.x %= WIDTH
+    self.y %= WIDTH
+    self.land.resist_agent_to_map(self, self.x, self.y)
+
+  def contact(self, agent):
+    stv = []
+    for im in agent.immunes:
+      stv += im.infected_virus
+
+    if len(stv) > 0:
+      if probability(INFECTION_RATE):
+        self.stand_by_virus.append( random.choice(stv) )
+      else: pass
+    else: pass
+
+  def infection(self):
+    if len(self.stand_by_virus) > 0:
+      for v in self.stand_by_virus:
+        for im in self.immunes:
+          if im.infection(v) :
+            break
+    self.stand_by_virus = []
+
+  def response(self):
+    for im in self.immunes:
+      im.response()
+
+  def hasImmunity(self, v):
+    for im in self.immunes:
+      if im.hasImmunity(v):
+        return True
+    return False
+
+  def isInfected(self):
+    for im in self.immunes:
+      if im.isInfected():
+        return True
+    return False
+
+  def hasVirus(self, v):
+    for im in self.immunes:
+      if im.hasVirus(v):
+        return True
+    return False
+
+  def info(self):
+    """ 個人情報を表示 """
+    print "%d %d" % ( self.x, self. y )
+
 
 # Agent Management
 def agentContact(agents, viruses, land):
@@ -167,4 +247,4 @@ def showAgentInformation(agents, n):
   """ エージェントの情報を表示する """
   print '[ Agents 0 ~ %d ]' % (n-1)
   for i in range(n):
-    print '\t%d:\t( %d, %d ) %s %s' % (i, agents[i].x, agents[i].y, agents[i].immune.tag, agents[i].infected_virus)
+    print '\t%d:\t( %d, %d ) %s %s' % (i, agents[i].x, agents[i].y, agents[i].immunes[0].tag, agents[i].immunes[0].infected_virus)
