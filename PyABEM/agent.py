@@ -49,24 +49,27 @@ class Agent( Tag ):
     """ 感染する """
     if len(self.stand_by_virus) > 0 :
       v = random.choice( self.stand_by_virus ) # ランダムに選んで
-      if not self.hasImmunity(v):
+      if not self.hasImmunity(v) and not self.hasVirus(v) :
         v.cling_point = min_ham_distance(self.tag, v.tag)
         if v.cling_point >=0 :
           self.infected_virus.append( v )
-    self.stand_by_virus = []
+      self.stand_by_virus = []
 
   def response(self):
-    """ 免疫獲得する """
+    """ 免疫獲得する
+    フリップ : return 1
+    免疫獲得済み : return 0
+    """
     if len(self.infected_virus) > 0:
-      cp = self.infected_virus[0].cling_point
+      cp = self.infected_virus[0].cling_point # 先頭のウイルスの取りつく位置
       v = self.infected_virus[0]
-      for i in range(len(self.infected_virus[0].tag)):
-        if self.tag[cp+i] == self.infected_virus[0].tag[i]:
+      for i in range(v.len):
+        if self.tag[cp+i] == v.tag[i]:
           continue
         else:
-          self.tag = self.tag[:cp+i]+self.infected_virus[0].tag[i]+self.tag[cp+i+1:]
+          self.tag = self.tag[:cp+i]+v.tag[i]+self.tag[cp+i+1:]
           return 1
-      self.infected_virus = []
+      del self.infected_virus[0] # フリップする必要がなければ免疫獲得
       return 0
     else: pass
 
@@ -83,6 +86,11 @@ class Agent( Tag ):
     else:
       return False
 
+  def hasVirus(self, v):
+    for myv in self.infected_virus :
+      if myv == v : return True
+    return False
+
   def info(self):
     """ 個人情報を表示 """
     print "%d %d" % ( self.x, self. y )
@@ -93,6 +101,10 @@ def agentContact(agents, viruses, land):
     ax = myself.x
     ay = myself.y
     a_list = land.agent_map[ax][ay]
+    for i in [-1, 1]:
+      for j in [-1, 1]:
+        if land.isOnMap(ax+i, ay+j):
+          a_list += land.agent_map[ax+i][ay+j]
     a_list.remove( myself )
     if( len(a_list) > 0 ):
       myself.contact( random.choice(a_list) )
@@ -109,10 +121,10 @@ def agentResponse(agents):
   for a in agents:
     a.response()
 
-def agentIsInfected(agents):
+def agentIsInfected(agents, v):
   n = 0
   for a in agents:
-    if a.isInfected():
+    if a.hasVirus(v) :
       n += 1
   return n
 

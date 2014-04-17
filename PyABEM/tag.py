@@ -10,3 +10,4 @@ class Tag(object):
   def __init__(self, len):
     for i in range(len):
       self.tag += str(rand_binary())
+      self.len = len

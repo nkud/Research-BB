@@ -21,3 +21,10 @@ class Landscape(object):
   def resist_agent_to_map(self, a, x, y):
     """ エージェントをマップに登録する """
     self.agent_map[x][y].append(a)
+
+  def isOnMap(self, x, y):
+    if x < 0: return False
+    if y < 0: return False
+    if x > WIDTH-1: return False
+    if y > WIDTH-1: return False
+    return True

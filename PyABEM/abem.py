@@ -29,12 +29,12 @@ def main():
 
   for a in agent:
     if probability(20):
-      a.infected_virus.append(virus[0])
+      a.infected_virus.append(random.choice(virus))
 
   print len(agent[0].infected_virus)
 
   for t in range(TERM):
-    print "[ %5d ]  agent( %5d )  infected(%5d)" % ( t, len(agent), agentIsInfected(agent) )
+    print "[ %5d ]  agent( %5d )  infected(%5d)" % ( t, len(agent), agentIsInfected(agent, virus[0]) )
 
     landscape.reset_agent_map() # 土地を初期化する
 
@@ -43,7 +43,7 @@ def main():
     agentInfection( agent )
     agentResponse( agent )
 
-    outputline = '%d %d\n' % (t, agentIsInfected(agent))
+    outputline = '%d %d %d\n' % (t, agentIsInfected(agent, virus[0]), agentIsInfected(agent, virus[1]))
     f.write(outputline)
 
   showAgentInformation(agent, 5)
