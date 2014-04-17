@@ -3,12 +3,7 @@
 
 import random
 
-from function import *
-from landscape import *
-from virus import *
-from tag import *
-from agent import *
-from config import *
+from package import *
 
 ### Main
 def main():

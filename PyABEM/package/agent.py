@@ -26,8 +26,8 @@ class Agent( Tag ):
 
   def move(self):
     """ 移動して土地に登録する """
-    self.x += random.randint(-MOVE_DIST, MOVE_DIST)
-    self.y += random.randint(-MOVE_DIST, MOVE_DIST)
+    #self.x += random.randint(-MOVE_DIST, MOVE_DIST)
+    #self.y += random.randint(-MOVE_DIST, MOVE_DIST)
     self.x = random.randint(0, WIDTH-1)
     self.y = random.randint(0, WIDTH-1)
     self.x %= WIDTH
