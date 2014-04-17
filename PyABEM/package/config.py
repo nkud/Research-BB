@@ -7,9 +7,9 @@ A_NUM = 1000
 V_NUM = 2
 WIDTH = 40
 MOVE_DIST = 1
-TERM = 1000
+TERM = 500
 A_TAG_LEN = 30
-V_TAG_LEN = 20
+V_TAG_LEN = 25
 
 INFECTION_RATE = 100
 ################################################################################

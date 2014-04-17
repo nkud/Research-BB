@@ -8,6 +8,7 @@ from config import *
 ### Virus
 class Virus( Tag ):
   cling_point = 0
+  cling_tag = 0
   def __init__(self):
     super(Virus, self).__init__(V_TAG_LEN)
 

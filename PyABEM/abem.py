@@ -23,8 +23,8 @@ def main():
     virus.append(Virus())
 
   for a in agent:
-    if probability(20):
-      a.infected_virus.append(random.choice(virus))
+    if probability(100):
+      a.immune.infected_virus.append(random.choice(virus))
 
   print len(agent[0].infected_virus)
 
