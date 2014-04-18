@@ -159,22 +159,20 @@ class PolyAgent( object ):
     if len(stv) > 0:
       if probability(INFECTION_RATE):
         self.stand_by_virus.append( random.choice(stv) )
-      else: pass
-    else: pass
 
   def infection(self):
     if len(self.stand_by_virus) > 0:
       for v in self.stand_by_virus:
         for im in self.immunes:
           if im.infection(v) :
-            break
+            self.stand_by_virus = []
+            return True
     self.stand_by_virus = []
+    return False
 
   def response(self):
-    n = 0
     for im in self.immunes:
-      n += im.response()
-    print n
+      im.response()
 
   def hasImmunity(self, v):
     for im in self.immunes:
