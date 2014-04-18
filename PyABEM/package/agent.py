@@ -7,10 +7,12 @@ from virus import *
 from config import *
 from function import *
 
+import landscape
+
 ### ImmuneSystem
-class ImmuneSystem( Tag ):
-  def __init__(self):
-    super(ImmuneSystem, self).__init__(A_TAG_LEN)
+class ImmuneSystem( object ):
+  def __init__(self, tag):
+    self.tag = tag
     self.stand_by_virus = []
     self.infected_virus = []
 
@@ -19,8 +21,6 @@ class ImmuneSystem( Tag ):
     if len(agent.immune.infected_virus) > 0:
       if probability(INFECTION_RATE):
         self.stand_by_virus.append( random.choice(agent.immune.infected_virus) )
-      else: pass
-    else: pass
 
   def infection(self):
     """ 感染する """
@@ -59,9 +59,9 @@ class ImmuneSystem( Tag ):
           continue
         else:
           self.tag = self.tag[:cp+i]+v.tag[i]+self.tag[cp+i+1:]
-          return 1
+          return True
       del self.infected_virus[0] # フリップする必要がなければ免疫獲得
-    return 0
+    return False
 
   def hasImmunity(self, v):
     if self.tag.find(v.tag) >= 0:
@@ -84,7 +84,7 @@ class ImmuneSystem( Tag ):
 
 
 ### Agent
-class Agent( object ):
+class Agent( Tag ):
   def __init__(self, land):
     self.x = random.randint(0, WIDTH-1)
     self.y = random.randint(0, WIDTH-1)
@@ -92,7 +92,7 @@ class Agent( object ):
     self.stand_by_virus = []
     self.infected_virus = []
 
-    self.immune = ImmuneSystem()
+    self.immune = ImmuneSystem(self.tag)
 
     self.land = land
 
@@ -129,12 +129,14 @@ class Agent( object ):
     print "%d %d" % ( self.x, self. y )
 
 ### PolyAgent
-class PolyAgent( object ):
+class PolyAgent( MultiTag ):
   def __init__(self, land):
+    super(PolyAgent, self).__init__(A_TAG_LEN, A_TAG_NUM)
     self.immunes = []
     self.num = A_TAG_NUM
-    for i in range(self.num):
-      self.immunes.append(ImmuneSystem())
+    #for i in range(self.num):
+    for t in self.tags:
+      self.immunes.append(ImmuneSystem(t))
     self.x = random.randint(0, WIDTH-1)
     self.y = random.randint(0, WIDTH-1)
 
@@ -201,7 +203,6 @@ class PolyAgent( object ):
   def info(self):
     """ 個人情報を表示 """
     print "%d %d" % ( self.x, self. y )
-
 
 # Agent Management
 def agentContact(agents, viruses, land):

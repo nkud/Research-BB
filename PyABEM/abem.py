@@ -26,7 +26,7 @@ def main():
   virus[1].tag = '1111111111'
 
   for a in agent:
-    if probability(100):
+    if probability(30):
       a.immunes[0].infected_virus.append(random.choice(virus))
 
   for t in range(TERM):
@@ -46,7 +46,7 @@ def main():
     f.write(outputline)
 
   showAgentInformation(agent, 5)
-  print agent[i].immunes == agent[1].immunes
+  print agent[0].immunes == agent[1].immunes
   show_virus_info(virus)
 
   f.close()
