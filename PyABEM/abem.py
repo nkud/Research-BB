@@ -15,7 +15,7 @@ def main():
 
     # 初期設定
     for i in range(A_NUM):
-        agent.append(PolyAgent(landscape))
+        agent.append(Agent(landscape))
 
     for i in range(V_NUM):
         virus.append(Virus())
@@ -27,7 +27,7 @@ def main():
     # 初期感染
     for a in agent:
         if probability(30):
-            a.immunes[0].infected_virus.append(random.choice(virus))
+            a.immune.infected_virus.append(random.choice(virus))
 
     # 計算開始
     for t in range(TERM):
@@ -45,7 +45,6 @@ def main():
 
     # 最終状態表示
     showAgentInformation(agent, 5)
-    print agent[0].immunes == agent[1].immunes
     show_virus_info(virus)
 
     f.close()
