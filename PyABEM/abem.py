@@ -8,49 +8,48 @@ from package import *
 
 ### Main
 def main():
-  """
-  Yields:
-    Running BTABM
-  """
-  agent = []
-  virus = []
-  landscape = Landscape()
+    agent = []
+    virus = []
+    landscape = Landscape()
+    f = open('output.txt', 'w')
 
-  f = open('output.txt', 'w')
+    # 初期設定
+    for i in range(A_NUM):
+        agent.append(PolyAgent(landscape))
 
-  for i in range(A_NUM):
-    agent.append(PolyAgent(landscape))
-  for i in range(V_NUM):
-    virus.append(Virus())
-  virus[0].tag = '0000000000'
-  virus[1].tag = '1111111111'
+    for i in range(V_NUM):
+        virus.append(Virus())
+    virus[0].tag = '0000000000'
+    virus[1].tag = '1111111111'
 
-  for a in agent:
-    if probability(30):
-      a.immunes[0].infected_virus.append(random.choice(virus))
+    ff = FileFactory(f, agent, virus, landscape)
 
-  for t in range(TERM):
-    print "[ %5d ]  agent( %5d )  infected(%5d)" % ( t, len(agent), agentIsInfected(agent, virus[0]) )
+    # 初期感染
+    for a in agent:
+        if probability(30):
+            a.immunes[0].infected_virus.append(random.choice(virus))
 
-    landscape.reset_agent_map() # 土地を初期化する
+    # 計算開始
+    for t in range(TERM):
+        print "[ %5d ]  agent( %5d )  infected(%5d)" % ( t, len(agent), agentIsInfected(agent, virus[0]) )
 
-    agentMove( agent, landscape )
-    agentContact( agent, virus, landscape )
-    agentInfection( agent )
-    agentResponse( agent )
+        landscape.reset_agent_map() # 土地を初期化する
 
-    agent[0].numHasVirus()
+        agentMove( agent, landscape )
+        agentContact( agent, virus, landscape )
+        agentInfection( agent )
+        agentResponse( agent )
 
-    # print len(agent[0].immunes[0].infected_virus)
-    outputline = '%d %d %d\n' % (t, agentIsInfected(agent, virus[0]), agentIsInfected(agent, virus[1]))
-    f.write(outputline)
+        ff.output(t)
+        # print len(agent[0].immunes[0].infected_virus)
 
-  showAgentInformation(agent, 5)
-  print agent[0].immunes == agent[1].immunes
-  show_virus_info(virus)
+    # 最終状態表示
+    showAgentInformation(agent, 5)
+    print agent[0].immunes == agent[1].immunes
+    show_virus_info(virus)
 
-  f.close()
+    f.close()
 
 if __name__ == "__main__":
-  print '>>> start ABEM program'
-  main()
+    print '>>> start ABEM program'
+    main()

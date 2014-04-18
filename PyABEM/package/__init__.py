@@ -4,3 +4,4 @@ from function import *
 from virus import *
 from tag import *
 from config import *
+from filefactory import *
