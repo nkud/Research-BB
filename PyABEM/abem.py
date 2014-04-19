@@ -17,16 +17,18 @@ def main():
 
     # 初期設定
     for i in range(A_NUM):
-        agents.append(Agent(50))
+        agents.append(Agent(20))
 
     for i in range(V_NUM):
         viruses.append(Virus())
+    viruses[0].tag = '000000000000000000'
+    viruses[1].tag = '111111111111111111'
 
     ff = FileFactory(f, agents, viruses, landscape)
 
     # 初期感染
     for a in agents:
-        if probability(30):
+        if probability(50):
             a.immune.infection(random.choice(viruses))
 
     # 計算開始
@@ -43,7 +45,7 @@ def main():
         agentResponse( agents )
 
         ff.output(t)
-        if agentIsInfected(agents, viruses[0]) == 0:
+        if agentIsInfected(agents, viruses[0]) <= 0:
             break;
 
     # 最終状態表示
@@ -55,3 +57,4 @@ def main():
 if __name__ == "__main__":
     print '>>> start ABEM program'
     main()
+    os.system('gnuplot auto.plt')

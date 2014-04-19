@@ -10,7 +10,6 @@ from immunesystem import *
 
 import landscape
 
-
 ### Agent
 class Agent( Tag ):
     def __init__(self, tl = A_TAG_LEN):
@@ -33,8 +32,8 @@ class Agent( Tag ):
     def contact(self, agent):
         self.immune.contact(agent)
 
-    def infection(self):
-        self.immune.infection()
+    def infection(self, v = None):
+        self.immune.infection(v)
 
     def response(self):
         self.immune.response()
@@ -50,7 +49,10 @@ class Agent( Tag ):
 
     def info(self):
         """ 個人情報を表示 """
-        print "\t%s: %3d, %3d %s" % ( self,  self.x, self.y, self.immune.infected_virus )
+        print "\t%s: %3d, %3d " % ( self.tag,  self.x, self.y ),
+        for vl in self.immune.virus_list:
+            print vl.virus, vl.cling_point,
+        print '\n'
 
 ### PolyAgent
 class PolyAgent( MultiTag ):
@@ -80,7 +82,7 @@ class PolyAgent( MultiTag ):
     def contact(self, agent):
         stv = []
         for im in agent.immunes:
-            stv += im.infected_virus
+            stv += im.virus_list
 
         if len(stv) > 0:
             if probability(INFECTION_RATE):
@@ -121,7 +123,7 @@ class PolyAgent( MultiTag ):
     def numHasVirus(self):
         n = 0
         for im in self.immunes:
-            n += len(im.infected_virus)
+            n += len(im.virus_list)
         return n
 
     def info(self):
@@ -166,4 +168,4 @@ def showAgentInformation(agents, n):
     print '[ Agents 0 ~ %d ]' % (n-1)
     for a in agents[:n]:
         a.info()
-        #print '\t%d:\t( %d, %d ) %s %s' % (i, agents[i].x, agents[i].y, agents[i].immunes[0].tag, agents[i].immunes[0].infected_virus)
+        #print '\t%d:\t( %d, %d ) %s %s' % (i, agents[i].x, agents[i].y, agents[i].immunes[0].tag, agents[i].immunes[0].virus_list)
