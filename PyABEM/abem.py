@@ -6,46 +6,48 @@ import os
 
 from package import *
 
+FNAME = 'output.txt'
+
 ### Main
 def main():
-    agent = []
-    virus = []
+    agents = []
+    viruses = []
     landscape = Landscape()
-    f = open('output.txt', 'w')
+    f = open(FNAME, 'w')
 
     # 初期設定
     for i in range(A_NUM):
-        agent.append(Agent(landscape))
+        agents.append(Agent(landscape))
 
     for i in range(V_NUM):
-        virus.append(Virus())
-    virus[0].tag = '0000000000'
-    virus[1].tag = '1111111111'
+        viruses.append(Virus())
+    viruses[0].tag = '0000000000'
+    viruses[1].tag = '1111111111'
 
-    ff = FileFactory(f, agent, virus, landscape)
+    ff = FileFactory(f, agents, viruses, landscape)
 
     # 初期感染
-    for a in agent:
+    for a in agents:
         if probability(30):
-            a.immune.infected_virus.append(random.choice(virus))
+            a.immune.infected_virus.append(random.choice(viruses))
 
     # 計算開始
     for t in range(TERM):
-        print "[ %5d ]  agent( %5d )  infected(%5d)" % ( t, len(agent), agentIsInfected(agent, virus[0]) )
+        print "[ %5d ]  agents( %5d )  infected(%5d)" % ( t, len(agents), 
+            agentIsInfected(agents, viruses[0]) )
 
         landscape.reset_agent_map() # 土地を初期化する
 
-        agentMove( agent, landscape )
-        agentContact( agent, virus, landscape )
-        agentInfection( agent )
-        agentResponse( agent )
+        agentMove( agents, landscape )
+        agentContact( agents, viruses, landscape )
+        agentInfection( agents )
+        agentResponse( agents )
 
         ff.output(t)
-        # print len(agent[0].immunes[0].infected_virus)
 
     # 最終状態表示
-    showAgentInformation(agent, 5)
-    show_virus_info(virus)
+    showAgentInformation(agents, 5)
+    show_virus_info(viruses)
 
     f.close()
 

@@ -9,6 +9,7 @@ from landscape import *
 
 ### ImmuneSystem
 class ImmuneSystem( object ):
+  """ 免疫機構システム """
   def __init__(self, tag):
     self.tag = tag
     self.stand_by_virus = []
@@ -45,8 +46,8 @@ class ImmuneSystem( object ):
 
   def response(self):
     """ 免疫獲得する
-    フリップ : return 1
-    免疫獲得済み : return 0
+        フリップする : return 1
+        免疫獲得済み : return 0
     """
     if len(self.infected_virus) > 0:
       cp = self.infected_virus[0].cling_point # 先頭のウイルスの取りつく位置
