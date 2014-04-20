@@ -11,8 +11,10 @@ from immunesystem import *
 import landscape
 
 ### Agent
+# 通常エージェント
 class Agent( Tag ):
     def __init__(self, tl = A_TAG_LEN):
+        """ 初期化 """
         super(Agent, self).__init__(tl)
         self.x = random.randint(0, WIDTH-1)
         self.y = random.randint(0, WIDTH-1)
@@ -30,15 +32,24 @@ class Agent( Tag ):
         land.resist_agent_to_map(self, self.x, self.y)
 
     def contact(self, agent):
+        """ 接触 """
         self.immune.contact(agent)
 
     def infection(self, v = None):
+        """ 感染する
+        Attributes:
+            v: ウイルス指定
+        """
         return self.immune.infection(self.tag, v)
 
     def response(self):
         self.tag = self.immune.response(self.tag)
 
     def hasImmunity(self, v):
+        """ 免疫獲得判定
+        Attributes:
+            v: ウイルス指定
+        """
         return self.immune.hasImmunity(self.tag, v)
 
     def isInfected(self):
@@ -55,6 +66,7 @@ class Agent( Tag ):
         print '\n'
 
 ### PolyAgent
+# タグを複数持てるエージェント
 class PolyAgent( MultiTag ):
     def __init__(self):
         super(PolyAgent, self).__init__(A_TAG_LEN, A_TAG_NUM)
@@ -163,9 +175,24 @@ def agentIsInfected(agents, v):
             n += 1
     return n
 
-def showAgentInformation(agents, n):
+def show_agent_information(agents, n):
     """ エージェントの情報を表示する """
     print '[ Agents 0 ~ %d ]' % (n-1)
     for a in agents[:n]:
         a.info()
         #print '\t%d:\t( %d, %d ) %s %s' % (i, agents[i].x, agents[i].y, agents[i].immunes[0].tag, agents[i].immunes[0].virus_list)
+
+def initial_infection(agents, viruses):
+    """ エージェントに初期感染させる """
+    for a in agents:
+        if probability(INIT_INFECTION_RATE):
+            a.infection(random.choice(viruses))
+
+def mating(a, b):
+    """ 交配させる
+    タグの長さは、aとbの間からランダムな長さになる
+    """
+    if len(a.tag) > len(b.tag):
+        t = a; a = b; b = t
+    ret = type(a)(random.randint(len(a.tag), len(b.tag)))
+    return ret

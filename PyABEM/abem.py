@@ -6,10 +6,9 @@ import os
 
 from package import *
 
-FNAME = 'output.txt'
-
-### Main
 def main():
+    """ Entry point of Agent Based Model program """
+    # 変数宣言
     agents = []
     viruses = []
     landscape = Landscape()
@@ -17,17 +16,15 @@ def main():
 
     # 初期設定
     for i in range(A_NUM):
-        agents.append(Agent(100))
+        agents.append(Agent(30))
 
     for i in range(V_NUM):
-        viruses.append(Virus(50))
+        viruses.append(Virus(20))
 
     ff = FileFactory(f, agents, viruses, landscape)
 
     # 初期感染
-    for a in agents:
-        if probability(10):
-            a.infection(random.choice(viruses))
+    initial_infection(agents, viruses)
 
     # 計算開始
     for t in range(TERM):
@@ -47,7 +44,7 @@ def main():
             break;
 
     # 最終状態表示
-    showAgentInformation(agents, 5)
+    show_agent_information(agents, 5)
     show_virus_info(viruses)
 
     f.close()
