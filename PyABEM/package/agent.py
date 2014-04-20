@@ -13,9 +13,9 @@ import landscape
 ### Agent
 # 通常エージェント
 class Agent( Tag ):
-    def __init__(self, tl = A_TAG_LEN):
+    def __init__(self, tl = A_TAG_LEN, tl2 = None):
         """ 初期化 """
-        super(Agent, self).__init__(tl)
+        super(Agent, self).__init__(tl, tl2)
         self.x = random.randint(0, WIDTH-1)
         self.y = random.randint(0, WIDTH-1)
 
@@ -63,7 +63,7 @@ class Agent( Tag ):
         print "\t%s: %3d, %3d " % ( self.tag, self.x, self.y ),
         for vl in self.immune.virus_list:
             print vl.virus, vl.cling_point,
-        print '\n'
+        print ''
 
 ### PolyAgent
 # タグを複数持てるエージェント
@@ -196,3 +196,11 @@ def mating(a, b):
         t = a; a = b; b = t
     ret = type(a)(random.randint(len(a.tag), len(b.tag)))
     return ret
+
+def ave_tag_len(agents):
+    """ タグ長の平均 """
+    n = len(agents)
+    lens = 0
+    for a in agents:
+        lens += len(a.tag)
+    return float(lens)/n

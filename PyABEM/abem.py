@@ -13,13 +13,15 @@ def main():
     viruses = []
     landscape = Landscape()
     f = open(FNAME, 'w')
+    f_ave_tag_len = open('ave.txt', 'w')
 
     # 初期設定
     for i in range(A_NUM):
-        agents.append(Agent(30))
+        agents.append(Agent(20, 50))
 
     for i in range(V_NUM):
-        viruses.append(Virus(20))
+        viruses.append(Virus(10))
+    viruses[0].tag = '2222222222'
 
     ff = FileFactory(f, agents, viruses, landscape)
 
@@ -27,7 +29,7 @@ def main():
     initial_infection(agents, viruses)
 
     # 計算開始
-    for t in range(TERM):
+    for t in range( TERM ):
         print "[ %5d ]  agents( %5d )  infected(%5d)" % (
             t, len(agents), agentIsInfected(agents, viruses[0])
             )
@@ -39,9 +41,23 @@ def main():
         agentInfection( agents )
         agentResponse( agents )
 
-        ff.output(t)
-        if agentIsInfected(agents, viruses[0]) <= 0:
-            break;
+        if t % GENERATION_INTERVAL == 0:
+            f_ave_tag_len.write(
+                str(t/GENERATION_INTERVAL) +' '+ str(ave_tag_len(agents))+'\n'
+                )
+            new_agents = []
+            while(len(agents) >= 2):
+                a = agents.pop(random.randint(0, len(agents)-1))
+                b = agents.pop(random.randint(0, len(agents)-1))
+                n, m = mating( a, b ), mating(a, b)
+                new_agents.append( n )
+                new_agents.append( m )
+            agents = new_agents
+            initial_infection(agents, viruses)
+
+        ff.output(t, agents) # なぜagentsの必要か
+        #if agentIsInfected(agents, viruses[0]) <= 0:
+        #    break;
 
     # 最終状態表示
     show_agent_information(agents, 5)
@@ -52,4 +68,4 @@ def main():
 if __name__ == "__main__":
     print '>>> start ABEM program'
     main()
-    os.system('gnuplot auto.plt')
+    plot()

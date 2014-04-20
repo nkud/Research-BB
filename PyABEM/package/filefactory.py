@@ -11,11 +11,12 @@ class FileFactory(object):
         self.agents = a
         self.viruses = v
         self.landscape = l
-    def output(self, t):
+    def output(self, t, a=None):
         """ time infectedv1 infectedv2 ... """
+        if a is None: a = self.agents
         line = ''
         line += str(t)
         for v in self.viruses:
-            line += ' %d' % agentIsInfected(self.agents, v)
+            line += ' %d' % agentIsInfected(a, v)
         line += '\n'
         self.f.write(line)

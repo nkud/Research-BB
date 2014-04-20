@@ -5,7 +5,7 @@
 ### Constant Variables
 FNAME = 'output.txt'
 
-TERM = 500
+TERM = 1000
 GENERATION_INTERVAL = 100
 WIDTH = 50
 
