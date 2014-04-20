@@ -17,11 +17,10 @@ def main():
 
     # 初期設定
     for i in range(A_NUM):
-        agents.append(Agent(20, 50))
+        agents.append(Agent(30, 50))
 
     for i in range(V_NUM):
-        viruses.append(Virus(10))
-    viruses[0].tag = '2222222222'
+        viruses.append(Virus(20))
 
     ff = FileFactory(f, agents, viruses, landscape)
 
@@ -43,7 +42,7 @@ def main():
 
         if t % GENERATION_INTERVAL == 0:
             f_ave_tag_len.write(
-                str(t/GENERATION_INTERVAL) +' '+ str(ave_tag_len(agents))+'\n'
+                str(t/GENERATION_INTERVAL)+' '+str(ave_tag_len(agents))+' '+str(len(agents))+'\n'
                 )
             new_agents = []
             while(len(agents) >= 2):
@@ -53,6 +52,8 @@ def main():
                 new_agents.append( n )
                 new_agents.append( m )
             agents = new_agents
+            while( len(agents) < A_NUM ):
+                agents.append( Agent(30, 50) )
             initial_infection(agents, viruses)
 
         ff.output(t, agents) # なぜagentsの必要か

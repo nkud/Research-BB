@@ -43,7 +43,8 @@ class Agent( Tag ):
         return self.immune.infection(self.tag, v)
 
     def response(self):
-        self.tag = self.immune.response(self.tag)
+        self.tag, n = self.immune.response(self.tag)
+        return n
 
     def hasImmunity(self, v):
         """ 免疫獲得判定
@@ -165,8 +166,13 @@ def agentInfection(agents):
         a.infection()
 
 def agentResponse(agents):
-    for a in agents:
-        a.response()
+    n = len(agents)
+    li = []
+    for i in range(n):
+        if agents[i].response() > V_LETHAL_TIME:
+            li.append( i )
+    for i in range(len(li)):
+        del agents[i]
 
 def agentIsInfected(agents, v):
     n = 0

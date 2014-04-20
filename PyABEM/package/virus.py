@@ -25,6 +25,7 @@ class VirusList( object ):
         self.virus = v
         self.cling_point = cp
         self.clint_tag = 0 # XXX
+        self.time = 0
     def info(self):
         print '%s at %d' % (self.virus, self.cling_point)
 

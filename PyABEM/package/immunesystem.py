@@ -58,9 +58,10 @@ class ImmuneSystem( object ):
                     continue
                 else: # タグが異なれば
                     ret = tag[:cp+i] + v.tag[i] + tag[cp+i+1:] # 1つタグを変更
-                    return ret # 変更後のタグを返す
+                    self.virus_list[0].time += 1
+                    return ret, self.virus_list[0].time # 変更後のタグを返す
             del self.virus_list[0] # フリップする必要がなければ免疫獲得
-        return tag
+        return tag, None
 
     def hasImmunity(self, tag, v):
         if tag.find(v.tag) >= 0:

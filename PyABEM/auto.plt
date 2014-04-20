@@ -9,4 +9,10 @@ set title "HasVirus";set xl "Term";set yl "Agent";
 set output "HasVirus.png";plot "output.txt" using 1:2 w l lw 1 title "has_virus_0";
 set output "HasVirus.png";replot "output.txt" using 1:3 w l lw 1 title "has_virus_1";
 
+set title "TagLenAverage";set xl "Term";set yl "Len";
+set output "TagLenAverage.png";plot "ave.txt" using 1:2 w l lw 1 title "Len";
+
+set title "Populatioin";set xl "Term";set yl "Len";
+set output "Population.png";plot "ave.txt" using 1:3 w l lw 1 title "Population";
+
 set output
