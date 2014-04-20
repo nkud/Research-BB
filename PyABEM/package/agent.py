@@ -33,10 +33,10 @@ class Agent( Tag ):
         self.immune.contact(agent)
 
     def infection(self, v = None):
-        self.immune.infection(v)
+        return self.immune.infection(v)
 
     def response(self):
-        self.immune.response()
+        return self.immune.response()
 
     def hasImmunity(self, v):
         return self.immune.hasImmunity(v)
@@ -49,7 +49,7 @@ class Agent( Tag ):
 
     def info(self):
         """ 個人情報を表示 """
-        print "\t%s: %3d, %3d " % ( self.tag,  self.x, self.y ),
+        print "\t%s %s: %3d, %3d " % ( self.tag, self.immune.tag,  self.x, self.y ),
         for vl in self.immune.virus_list:
             print vl.virus, vl.cling_point,
         print '\n'
@@ -100,7 +100,7 @@ class PolyAgent( MultiTag ):
 
     def response(self):
         for im in self.immunes:
-            im.response()
+            return im.response()
 
     def hasImmunity(self, v):
         for im in self.immunes:
@@ -149,8 +149,11 @@ def agentMove(agents, land):
         a.move(land)
 
 def agentInfection(agents):
+    n = 0
     for a in agents:
-        a.infection()
+        if a.infection() == True:
+            n += 1
+    print '\tinfection', n
 
 def agentResponse(agents):
     for a in agents:

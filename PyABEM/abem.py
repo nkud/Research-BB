@@ -21,14 +21,13 @@ def main():
 
     for i in range(V_NUM):
         viruses.append(Virus())
-    viruses[0].tag = '000000000000000000'
-    viruses[1].tag = '111111111111111111'
+    viruses[0].tag = '000000000000000'
 
     ff = FileFactory(f, agents, viruses, landscape)
 
     # 初期感染
     for a in agents:
-        if probability(50):
+        if probability(100):
             a.immune.infection(random.choice(viruses))
 
     # 計算開始
