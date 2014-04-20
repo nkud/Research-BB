@@ -17,18 +17,17 @@ def main():
 
     # 初期設定
     for i in range(A_NUM):
-        agents.append(Agent(20))
+        agents.append(Agent(100))
 
     for i in range(V_NUM):
-        viruses.append(Virus())
-    viruses[0].tag = '000000000000000'
+        viruses.append(Virus(50))
 
     ff = FileFactory(f, agents, viruses, landscape)
 
     # 初期感染
     for a in agents:
-        if probability(100):
-            a.immune.infection(random.choice(viruses))
+        if probability(10):
+            a.infection(random.choice(viruses))
 
     # 計算開始
     for t in range(TERM):

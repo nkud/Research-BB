@@ -33,13 +33,13 @@ class Agent( Tag ):
         self.immune.contact(agent)
 
     def infection(self, v = None):
-        return self.immune.infection(v)
+        return self.immune.infection(self.tag, v)
 
     def response(self):
-        return self.immune.response()
+        self.tag = self.immune.response(self.tag)
 
     def hasImmunity(self, v):
-        return self.immune.hasImmunity(v)
+        return self.immune.hasImmunity(self.tag, v)
 
     def isInfected(self):
         return self.immune.isInfected()
@@ -49,7 +49,7 @@ class Agent( Tag ):
 
     def info(self):
         """ 個人情報を表示 """
-        print "\t%s %s: %3d, %3d " % ( self.tag, self.immune.tag,  self.x, self.y ),
+        print "\t%s: %3d, %3d " % ( self.tag, self.x, self.y ),
         for vl in self.immune.virus_list:
             print vl.virus, vl.cling_point,
         print '\n'
@@ -149,11 +149,8 @@ def agentMove(agents, land):
         a.move(land)
 
 def agentInfection(agents):
-    n = 0
     for a in agents:
-        if a.infection() == True:
-            n += 1
-    print '\tinfection', n
+        a.infection()
 
 def agentResponse(agents):
     for a in agents:

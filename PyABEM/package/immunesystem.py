@@ -11,7 +11,6 @@ from landscape import *
 class ImmuneSystem( object ):
     """ 免疫機構システム """
     def __init__(self, tag):
-        self.tag = tag
         self.stand_by_virus = []
         self.virus_list = []
 
@@ -23,13 +22,13 @@ class ImmuneSystem( object ):
                     (random.choice(agent.immune.virus_list)).virus
                     )
 
-    def infection(self, v=None):
+    def infection(self, tag, v=None):
         """ 感染する """
         if v is None:
             if len(self.stand_by_virus) > 0:
                 v = random.choice( self.stand_by_virus ) # ランダムに選んで
-                if not self.hasImmunity(v) and not self.hasVirus(v):
-                    cp = min_ham_distance(self.tag, v.tag)
+                if not self.hasImmunity(tag, v) and not self.hasVirus(v):
+                    cp = min_ham_distance(tag, v.tag)
                     if cp >=0:
                         self.virus_list.append( VirusList(v, cp) )
                         self.stand_by_virus = []
@@ -37,8 +36,8 @@ class ImmuneSystem( object ):
             self.stand_by_virus = []
             return False
         else:
-            if not self.hasImmunity(v) and not self.hasVirus(v):
-                cp = min_ham_distance(self.tag, v.tag)
+            if not self.hasImmunity(tag, v) and not self.hasVirus(v):
+                cp = min_ham_distance(tag, v.tag)
                 if cp >=0:
                     self.virus_list.append( VirusList(v, cp) )
                     self.stand_by_virus = []
@@ -46,7 +45,7 @@ class ImmuneSystem( object ):
             self.stand_by_virus = []
             return False
 
-    def response(self):
+    def response(self, tag):
         """ 免疫獲得する
             フリップする : return 1
             免疫獲得済み : return 0
@@ -55,16 +54,16 @@ class ImmuneSystem( object ):
             cp = self.virus_list[0].cling_point # 先頭のウイルスの取りつく位置
             v = self.virus_list[0].virus
             for i in range(v.length):
-                if self.tag[cp+i] == v.tag[i]:
+                if tag[cp+i] == v.tag[i]:
                     continue
-                else:
-                    self.tag = self.tag[:cp+i]+v.tag[i]+self.tag[cp+i+1:]
-                    return True
+                else: # タグが異なれば
+                    ret = tag[:cp+i] + v.tag[i] + tag[cp+i+1:] # 1つタグを変更
+                    return ret # 変更後のタグを返す
             del self.virus_list[0] # フリップする必要がなければ免疫獲得
-        return False
+        return tag
 
-    def hasImmunity(self, v):
-        if self.tag.find(v.tag) >= 0:
+    def hasImmunity(self, tag, v):
+        if tag.find(v.tag) >= 0:
             return True
         else:
             return False
