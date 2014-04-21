@@ -175,6 +175,7 @@ def agentResponse(agents):
         del agents[i]
 
 def agentIsInfected(agents, v):
+    """ ウイルス v に感染しているエージェント数を返す """
     n = 0
     for a in agents:
         if a.hasVirus(v):
@@ -182,21 +183,21 @@ def agentIsInfected(agents, v):
     return n
 
 def show_agent_information(agents, n):
-    """ エージェントの情報を表示する """
+    """ 0-n エージェントの情報を表示する """
     print '[ Agents 0 ~ %d ]' % (n-1)
     for a in agents[:n]:
         a.info()
-        #print '\t%d:\t( %d, %d ) %s %s' % (i, agents[i].x, agents[i].y, agents[i].immunes[0].tag, agents[i].immunes[0].virus_list)
 
-def initial_infection(agents, viruses):
+def initial_infection(agents, viruses, rate = INIT_INFECTION_RATE):
     """ エージェントに初期感染させる """
     for a in agents:
-        if probability(INIT_INFECTION_RATE):
+        if probability(rate):
             a.infection(random.choice(viruses))
 
 def mating(a, b):
     """ 交配させる
-    タグの長さは、aとbの間からランダムな長さになる
+    @desctiption:
+        タグ長は、aとbの間からランダムな長さになる
     """
     if len(a.tag) > len(b.tag):
         t = a; a = b; b = t
@@ -210,3 +211,15 @@ def ave_tag_len(agents):
     for a in agents:
         lens += len(a.tag)
     return float(lens)/n
+
+def die(agents, n = None):
+    if n == None:
+        a = agents.pop(random.randint(0, len(agents)-1))
+        return a
+    else:
+        a = agents.pop(n)
+        return a
+
+def complement_agent(agents, num = A_NUM, lenf = A_TAG_LEN_FROM, lent = A_TAG_LEN_TO):
+    while( len(agents) < num ):
+        agents.append( Agent(lenf, lent) )

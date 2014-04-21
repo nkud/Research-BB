@@ -17,10 +17,10 @@ def main():
 
     # 初期設定
     for i in range(A_NUM):
-        agents.append(Agent(30, 50))
+        agents.append(Agent(A_TAG_LEN_FROM, A_TAG_LEN_TO))
 
     for i in range(V_NUM):
-        viruses.append(Virus(20))
+        viruses.append(Virus())
 
     ff = FileFactory(f, agents, viruses, landscape)
 
@@ -40,20 +40,20 @@ def main():
         agentInfection( agents )
         agentResponse( agents )
 
+        # 世代交代            
         if t % GENERATION_INTERVAL == 0:
             f_ave_tag_len.write(
                 str(t/GENERATION_INTERVAL)+' '+str(ave_tag_len(agents))+' '+str(len(agents))+'\n'
                 )
-            new_agents = []
+            _new_child_agent = []
             while(len(agents) >= 2):
-                a = agents.pop(random.randint(0, len(agents)-1))
-                b = agents.pop(random.randint(0, len(agents)-1))
-                n, m = mating( a, b ), mating(a, b)
-                new_agents.append( n )
-                new_agents.append( m )
-            agents = new_agents
-            while( len(agents) < A_NUM ):
-                agents.append( Agent(30, 50) )
+                a = die(agents)
+                b = die(agents)
+                n, m = mating(a, b), mating(a, b)
+                _new_child_agent.append( n )
+                _new_child_agent.append( m )
+            agents = _new_child_agent
+            complement_agent(agents)
             initial_infection(agents, viruses)
 
         ff.output(t, agents) # なぜagentsの必要か
