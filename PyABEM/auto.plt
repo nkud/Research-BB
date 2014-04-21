@@ -1,5 +1,5 @@
 set style line 1 lw 2
-set terminal png size 2000,500
+set terminal png size 2000,1000
 set key below right
 set key textcolor lt 0
 set xl textcolor lt 0

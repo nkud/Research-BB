@@ -18,6 +18,7 @@ class Tag(object):
       self.tag += str(rand_binary())
     self.length = length
 
+### MultiTag
 class MultiTag(object):
   def __init__(self, length, num):
     self.tags = []

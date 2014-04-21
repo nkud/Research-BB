@@ -43,6 +43,9 @@ class Agent( Tag ):
         return self.immune.infection(self.tag, v)
 
     def response(self):
+        """ 免疫応答 
+        感染期間を返す
+        """
         self.tag, n = self.immune.response(self.tag)
         return n
 
@@ -141,7 +144,7 @@ class PolyAgent( MultiTag ):
 
     def info(self):
         """ 個人情報を表示 """
-        print "%d %d" % ( self.x, self. y )
+        print "%d %d\n" % ( self.x, self. y )
 
 # Agent Management
 def agentContact(agents, viruses, land):
@@ -166,13 +169,18 @@ def agentInfection(agents):
         a.infection()
 
 def agentResponse(agents):
-    n = len(agents)
-    li = []
-    for i in range(n):
-        if agents[i].response() > V_LETHAL_TIME:
-            li.append( i )
-    for i in range(len(li)):
-        del agents[i]
+    #_dies = []
+    n = 0
+    for i in range( len(agents) ):
+        _t = agents[i].response()
+        if _t > V_LETHAL_TIME:
+            agents[i] = None
+    while None in agents:
+        agents.remove(None)
+    #        _dies.append( i )
+    #for i in _dies:
+    #    print i,
+    #    del agents[i]
 
 def agentIsInfected(agents, v):
     """ ウイルス v に感染しているエージェント数を返す """
@@ -202,6 +210,7 @@ def mating(a, b):
     if len(a.tag) > len(b.tag):
         t = a; a = b; b = t
     ret = type(a)(random.randint(len(a.tag), len(b.tag)))
+    #ret = type(a)((len(a.tag)+len(b.tag))/2)
     return ret
 
 def ave_tag_len(agents):
@@ -220,6 +229,8 @@ def die(agents, n = None):
         a = agents.pop(n)
         return a
 
-def complement_agent(agents, num = A_NUM, lenf = A_TAG_LEN_FROM, lent = A_TAG_LEN_TO):
+def complement_agent(
+    agents, num = A_NUM, lenf = A_TAG_LEN_FROM, lent = A_TAG_LEN_TO
+    ):
     while( len(agents) < num ):
         agents.append( Agent(lenf, lent) )
