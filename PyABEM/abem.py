@@ -55,7 +55,7 @@ def main():
                     b = random.choice( agents )
                     _child = mating( a, b )
                     _new_child_agent.append( _child )
-                #while(len(agents) >= 2):
+                # while(len(agents) >= 2):
                 #    a = die(agents)
                 #    b = die(agents)
                 #    n, m = mating(a, b), mating(a, b)
@@ -67,7 +67,7 @@ def main():
         if len(agents) <= 0:
             break;
         ff.output(t, agents) # なぜagentsの必要か
-        #if agentIsInfected(agents, viruses[0]) <= 0:
+        # if agentIsInfected(agents, viruses[0]) <= 0:
         #    break;
 
     # 最終状態表示
