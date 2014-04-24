@@ -84,4 +84,8 @@ def main():
 if __name__ == "__main__":
     print '>>> start ABEM program'
     main()
+    pf = PlotFactory('auto.plt')
+    pf.generatePlotScript()
+    hf = HtmlFactory('index.html')
+    hf.generate()
     plot()

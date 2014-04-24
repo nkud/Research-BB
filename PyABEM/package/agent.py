@@ -152,13 +152,14 @@ def agentContact(agents, viruses, land):
         ax = myself.x
         ay = myself.y
         a_list = land.agent_map[ax][ay]
+        a_list.remove( myself )
         for i in [-1, 1]:
             for j in [-1, 1]:
                 if land.isOnMap(ax+i, ay+j):
                     a_list += land.agent_map[ax+i][ay+j]
-        a_list.remove( myself )
-        if( len(a_list) > 0 ):
-            myself.contact( random.choice(a_list) )
+        myself.contact( a_list )
+        # if( len(a_list) > 0 ):
+        #     myself.contact( random.choice(a_list) )
 
 def agentMove(agents, land):
     for a in agents:

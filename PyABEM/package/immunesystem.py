@@ -14,12 +14,16 @@ class ImmuneSystem( object ):
         self.stand_by_virus = []
         self.virus_list = []
 
-    def contact(self, agent):
+    def contact(self, agents):
         """ 接触する """
-        if len(agent.immune.virus_list) > 0:
+        _vlist = []
+        for a in agents:
+            for vl in a.immune.virus_list:
+                _vlist.append( vl )
+        if len( _vlist ) > 0:
             if probability(INFECTION_RATE):
                 self.stand_by_virus.append(
-                    (random.choice(agent.immune.virus_list)).virus
+                    (random.choice( _vlist )).virus
                     )
 
     def infection(self, tag, v=None):
