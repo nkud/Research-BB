@@ -6,12 +6,13 @@ import os
 LINE_STYLE = 'set style line 1 lw 2'
 PNG_SIZE = '600, 300'
 
-
 # Functions
 def initPng(f, title, xl, yl):
     outputLine(f, 'set title "%s";set xl "%s";set yl "%s";' % (title, xl, yl))
 def outputPng(f, imgname):
     outputLine(f, 'set output "%s.png";' % imgname)
+def outputTerminal(f):
+		outputLine(f, 'set terminal png size '+PNG_SIZE)
 def outputLine(f, line):
     """ write line to file """
     f.write(line+'\n')
@@ -25,7 +26,7 @@ def scriptForInitSetting(f):
         initial setting for plot.
     """
     outputLine(f, 'set style line 1 lw 2')
-    outputLine(f, 'set terminal png size '+PNG_SIZE)
+    # outputLine(f, 'set terminal png size '+PNG_SIZE)
     outputLine(f, 'set key below right')
     #outputLine(f, 'set key box lt 0 lw 1 ')
     outputLine(f, 'set key textcolor lt 0')
@@ -50,9 +51,10 @@ class PlotFactory(object):
 	def generatePlotScript(self):
 		scriptForInitSetting(self.file)
 		initPng(self.file, 'AverageTagLen', 'Term', 'AveTagLen')
-		outputPng(self.file, 'AverageTagLen')
 		plot_script(self.file, 'ave.txt', 'Len')
-
+		outputPng(self.file, 'AverageTagLen')
+		outputTerminal(self.file)
+		outputLine(self.file, 'replot')
 		outputLine(self.file, 'set output')
 
 	def info(self):

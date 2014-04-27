@@ -12,9 +12,9 @@ def main():
     agents = []
     viruses = []
     landscape = Landscape()
-    f = open(FNAME, 'w')
-    f_ave_tag_len = open('ave.txt', 'w')
-    f_info = open('info.txt', 'w')
+    # f = open(FNAME_HASVIRUS, 'w')
+    # f_ave_tag_len = open(FNAME_TAGLEN, 'w')
+    # f_info = open(FNAME_INFO, 'w')
 
     # 初期設定
     for i in range(A_NUM):
@@ -23,7 +23,7 @@ def main():
     for i in range(V_NUM):
         viruses.append(Virus())
 
-    ff = FileFactory(f, agents, viruses, landscape)
+    file_factory = FileFactory(agents, viruses, landscape)
 
     # 初期感染
     initial_infection(agents, viruses)
@@ -36,6 +36,7 @@ def main():
 
         landscape.reset_agent_map() # 土地を初期化する
 
+        # Agent の行動　（　移動　→　接触　→　感染　→　免疫応答　）
         agentMove( agents, landscape )
         agentContact( agents, viruses, landscape )
         agentInfection( agents )
@@ -46,27 +47,18 @@ def main():
             if len(agents) <= 0:
                 pass
             else:
-                f_ave_tag_len.write(
-                    str(t/GENERATION_INTERVAL)+' '+str(ave_tag_len(agents))+' '+str(len(agents))+'\n'
-                    )
+                file_factory.outputTagLen(t, agents) # Agent　の平均タグ長を出力
                 _new_child_agent = []
                 while( len(_new_child_agent) < A_NUM ):
                     a = random.choice( agents )
                     b = random.choice( agents )
                     _child = mating( a, b )
                     _new_child_agent.append( _child )
-                # while(len(agents) >= 2):
-                #    a = die(agents)
-                #    b = die(agents)
-                #    n, m = mating(a, b), mating(a, b)
-                #    _new_child_agent.append( n )
-                #    _new_child_agent.append( m )
                 agents = _new_child_agent
-                # complement_agent(agents)
                 initial_infection(agents, viruses)
         if len(agents) <= 0:
             break;
-        ff.output(t, agents) # なぜagentsの必要か
+        file_factory.outputHasVirus(t, agents, viruses) # なぜagentsの必要か
         # if agentIsInfected(agents, viruses[0]) <= 0:
         #    break;
 
@@ -74,18 +66,17 @@ def main():
     show_agent_information(agents, 5)
     show_virus_info(viruses)
 
-    for a in agents:
-        f_info.write('%d %s %d %d\n' % (len(a.tag), a.tag, a.x, a.y))
+    # Agent の最終状態を出力
+    file_factory.outputInfo(agents)
 
-    f.close()
-    f_ave_tag_len.close()
-    f_info.close()
+    # close files pointer
+    file_factory.close()
 
 if __name__ == "__main__":
     print '>>> start ABEM program'
     main()
-    pf = PlotFactory('auto.plt')
+    pf = PlotFactory(BINDIR+'auto.plt')
     pf.generatePlotScript()
-    hf = HtmlFactory('index.html')
+    hf = HtmlFactory(BINDIR+'index.html')
     hf.generate()
     plot()
