@@ -209,8 +209,11 @@ def mating(a, b):
         タグ長は、aとbの間からランダムな長さになる
     """
     if len(a.tag) > len(b.tag):
-        t = a; a = b; b = t
-    ret = type(a)(random.randint(len(a.tag), len(b.tag)))
+        a, b = b, a
+    # ret = type(a)(random.randint(len(a.tag), len(b.tag)))
+    diff_len = float( len(b.tag) - len(a.tag) )
+    length = len(a.tag) + int( random.normalvariate( diff_len/2, VARIATE ))
+    ret = type(a)( length )
     #ret = type(a)((len(a.tag)+len(b.tag))/2)
     return ret
 

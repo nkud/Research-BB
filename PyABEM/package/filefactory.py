@@ -10,7 +10,7 @@ from landscape import *
 
 class FileFactory(object):
     def __init__(self, a, v, l):
-        os.makedirs(BIN)
+        # os.makedirs(BIN)
         self.f_has_virus = open(FNAME_HASVIRUS, 'w')
         self.f_ave_tag_len = open(FNAME_TAGLEN, 'w')
         self.f_info = open(FNAME_INFO, 'w')
