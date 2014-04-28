@@ -4,7 +4,7 @@
 import random
 
 def probability(p):
-    if random.randint(0, 100) < p:
+    if random.uniform(0, 100) < p:
         return True
     else:
         return False
@@ -47,3 +47,11 @@ def flip_once(a, b):
             print a
             return 1
     return 0
+
+def round_off(n):
+    if n-int(n) < 0.5:
+        return int(n)
+    else:
+        return int(n)+1
+    # ret = int(n) + rand_binary()
+    # return ret

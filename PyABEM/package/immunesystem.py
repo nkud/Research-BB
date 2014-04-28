@@ -58,16 +58,17 @@ class ImmuneSystem( object ):
             cp = self.virus_list[0].cling_point # 先頭のウイルスの取りつく位置
             v = self.virus_list[0].virus
             if len(tag) < len(v.tag):
-                return tag, V_LETHAL_TIME+1
+                self.virus_list[0].time = V_LETHAL_TIME + 1
+                return tag
             for i in range(v.length):
                 if tag[cp+i] == v.tag[i]:
                     continue
                 else: # タグが異なれば
                     ret = tag[:cp+i] + v.tag[i] + tag[cp+i+1:] # 1つタグを変更
-                    self.virus_list[0].time += 1
-                    return ret, self.virus_list[0].time # 変更後のタグを返す
+                    # self.virus_list[0].time += 1
+                    return ret # 変更後のタグを返す
             del self.virus_list[0] # フリップする必要がなければ免疫獲得
-        return tag, None
+        return tag
 
     def hasImmunity(self, tag, v):
         if tag.find(v.tag) >= 0:

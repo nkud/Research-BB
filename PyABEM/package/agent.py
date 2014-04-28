@@ -46,8 +46,7 @@ class Agent( Tag ):
         """ 免疫応答 
         感染期間を返す
         """
-        self.tag, n = self.immune.response(self.tag)
-        return n
+        self.tag = self.immune.response(self.tag)
 
     def hasImmunity(self, v):
         """ 免疫獲得判定
@@ -170,14 +169,24 @@ def agentInfection(agents):
         a.infection()
 
 def agentResponse(agents):
+    """ 免疫応答させる """
     #_dies = []
-    n = 0
+    # n = 0
     for i in range( len(agents) ):
-        _t = agents[i].response()
-        if _t > V_LETHAL_TIME:
-            agents[i] = None
+        # _t = agents[i].response()
+        agents[i].response()
+        for vl in agents[i].immune.virus_list:
+            if vl.time > V_LETHAL_TIME:
+                # print vl.time
+                agents[i] = None
+                break
+        # if _t > V_LETHAL_TIME:
+            # agents[i] = None
     while None in agents:
         agents.remove(None)
+    for a in agents:
+        for vl in a.immune.virus_list:
+            vl.time += 1
     #        _dies.append( i )
     #for i in _dies:
     #    print i,
@@ -207,12 +216,23 @@ def mating(a, b):
     """ 交配させる
     @desctiption:
         タグ長は、aとbの間からランダムな長さになる
+        a < b
     """
+    # 突然変異
+    # if probability(MUTATION_RATE):
+    #     ret = type(a)( random.randint(A_TAG_MIN_LEN, A_TAG_MAX_LEN))
+    #     return ret
+    # 通常出産
     if len(a.tag) > len(b.tag):
         a, b = b, a
     # ret = type(a)(random.randint(len(a.tag), len(b.tag)))
-    diff_len = float( len(b.tag) - len(a.tag) )
-    length = len(a.tag) + int( random.normalvariate( diff_len/2, VARIATE ))
+    # diff_len = float( len(b.tag) - len(a.tag) )
+    mu = float(len(b.tag) + len(a.tag)) / 2
+    variate = float(len(b.tag) - len(a.tag)) / VARIATE_ALPHA
+    if probability(MUTATION_RATE):
+        variate += MUTATION_LEN
+    # if variate == 0: variate = MIN_VARIATE
+    length = round_off( random.gauss( mu, variate ))
     ret = type(a)( length )
     #ret = type(a)((len(a.tag)+len(b.tag))/2)
     return ret
