@@ -230,7 +230,7 @@ def mating(a, b):
     mu = float(len(b.tag) + len(a.tag)) / 2
     variate = float(len(b.tag) - len(a.tag)) / VARIATE_ALPHA
     if probability(MUTATION_RATE):
-        variate += MUTATION_LEN
+        variate += MUTATION_VARIATE
     # if variate == 0: variate = MIN_VARIATE
     length = round_off( random.gauss( mu, variate ))
     ret = type(a)( length )

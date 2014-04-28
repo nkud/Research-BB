@@ -8,12 +8,15 @@ from agent import *
 from virus import *
 from landscape import *
 
+CONFIG_PATH = 'package/config.py'
+
 class FileFactory(object):
     def __init__(self, a, v, l):
         # os.makedirs(BIN)
         self.f_has_virus = open(FNAME_HASVIRUS, 'w')
         self.f_ave_tag_len = open(FNAME_TAGLEN, 'w')
         self.f_info = open(FNAME_INFO, 'w')
+        self.f_config = open(FNAME_CONFIG, 'w')
 
     def outputHasVirus(self, t, agents, viruses):
         """ time infectedv1 infectedv2 ... """
@@ -31,8 +34,13 @@ class FileFactory(object):
     def outputInfo(self, agents):
         for a in agents:
             self.f_info.write('%d %s %d %d\n' % (len(a.tag), a.tag, a.x, a.y))
+        fconfig = open(CONFIG_PATH, 'r')
+        for line in fconfig:
+            if line[0] == '#' or line == '\n': continue
+            self.f_config.write(line)
 
     def close(self):        
         self.f_has_virus.close()
         self.f_ave_tag_len.close()
         self.f_info.close()
+        self.f_config.close()
