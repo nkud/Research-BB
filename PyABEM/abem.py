@@ -45,7 +45,7 @@ def main():
 
         agents += agent_mating(agents, landscape)
 
-        # 世代交代            
+        # 世代交代
         if t % GENERATION_INTERVAL == 0:
             if len(agents) <= 0:
                 pass

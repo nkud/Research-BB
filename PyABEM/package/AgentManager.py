@@ -10,24 +10,16 @@ from immunesystem import *
 # Agent Management
 def agentContact(agents, viruses, land):
     for myself in agents:
-        # ax = myself.x
-        # ay = myself.y
-        # a_list = list(land.agent_map[ax][ay])
-        # a_list.remove( myself )
-        # for i in [-1, 0, 1]:
-        #     for j in [-1, 0, 1]:
-        #         if land.isOnMap(ax+i, ay+j):
-        #             a_list += list(land.agent_map[ax+i][ay+j])
         myself.contact( neighbors(myself, land) )
-        # if( len(a_list) > 0 ):
-        #     myself.contact( random.choice(a_list) )
 
-def agentMove(agents, land):
+def agentMove(agents, landscape):
     for a in agents:
-        a.move(land)
+        a.move( landscape )
 
 def agent_aging(agents, landscape):
-    for i in range( len(agents) ):
+    """ 老化させる """
+    n = len(agents)
+    for i in range( n ):
         if agents[i].aging() > A_MAX_AGE:
             landscape.remove_agent_from_map(agents[i])
             agents[i] = None
@@ -35,6 +27,7 @@ def agent_aging(agents, landscape):
         agents.remove(None)  
 
 def agentInfection(agents):
+    """ 感染させる """
     for a in agents:
         a.infection()
 
@@ -91,7 +84,7 @@ def agent_mating(agents, landscape):
             np = len(p)
             for j in range(np):
                 if p[j].birth_time > BIRTH_INTERVAL and p[j].is_birth == False and p[j].age > CHILD_BEARING_AGE and probability(BIRTH_RATE):
-                    _new_child.append( mating(agents[i], p[j]) )                 
+                    _new_child.append( mating( agents[i], p[j] ) )
                     agents[i].is_birth = True
                     agents[i].birth_time = 0
                     agents[j].is_birth = True

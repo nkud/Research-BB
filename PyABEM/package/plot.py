@@ -4,7 +4,7 @@
 import os
 
 LINE_STYLE = 'set style line 1 lw 2'
-PNG_SIZE = '600, 300'
+PNG_SIZE = '1200, 500'
 
 CSS_FILE = ''
 
@@ -36,7 +36,7 @@ def scriptForInitSetting(f):
     outputLine(f, 'set yl textcolor lt 0')
 
 def plot():
-	os.system('gnuplot auto.plt')
+	os.system('cd bin;gnuplot auto.plt')
 
 def setImage(f, *imgnames):
     outputLine(f, '<!-- IMAGE -->')
