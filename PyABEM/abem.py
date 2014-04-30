@@ -12,9 +12,6 @@ def main():
     agents = []
     viruses = []
     landscape = Landscape()
-    # f = open(FNAME_HASVIRUS, 'w')
-    # f_ave_tag_len = open(FNAME_TAGLEN, 'w')
-    # f_info = open(FNAME_INFO, 'w')
 
     # 初期設定
     for i in range(A_NUM):
@@ -28,6 +25,9 @@ def main():
     # 初期感染
     initial_infection(agents, viruses)
 
+    for a in agents:
+        a.age = random.randint(0, A_MAX_AGE)
+
     # 計算開始
     for t in range( TERM ):
         print "[ %5d ]  agents( %5d )  infected(%5d) %s" % (
@@ -40,7 +40,10 @@ def main():
         agentMove( agents, landscape )
         agentContact( agents, viruses, landscape )
         agentInfection( agents )
-        agentResponse( agents )
+        agentResponse( agents, landscape )
+        agent_aging( agents, landscape )
+
+        agents += agent_mating(agents, landscape)
 
         # 世代交代            
         if t % GENERATION_INTERVAL == 0:
@@ -48,19 +51,21 @@ def main():
                 pass
             else:
                 file_factory.outputTagLen(t, agents) # Agent　の平均タグ長を出力
-                _new_child_agent = []
-                while( len(_new_child_agent) < A_NUM ):
-                    a = random.choice( agents )
-                    b = random.choice( agents )
-                    _child = mating( a, b )
-                    _new_child_agent.append( _child )
-                agents = _new_child_agent
+
+                # _new_child_agent = agent_mating(agents, landscape)
+
+                # agents += _new_child_agent;
+                # viruses = []
+                # for i in range(V_NUM):
+                #     viruses.append(Virus())
                 initial_infection(agents, viruses)
+
+
+
         if len(agents) <= 0:
             break;
         file_factory.outputHasVirus(t, agents, viruses) # なぜagentsの必要か
-        # if agentIsInfected(agents, viruses[0]) <= 0:
-        #    break;
+        file_factory.outputPopulation(t, agents)
 
     # 最終状態表示
     show_agent_information(agents, 5)

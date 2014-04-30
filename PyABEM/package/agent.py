@@ -8,7 +8,19 @@ from config import *
 from function import *
 from immunesystem import *
 
-import landscape
+def random_migrate():
+    x = random.randint(0, WIDTH-1)
+    y = random.randint(0, WIDTH-1)
+    return x, y
+
+def random_walk(x, y, dist):
+    difx = random.randint(-dist, dist)
+    dify = random.randint(-dist, dist)
+    tox = x + difx
+    toy = y + dify
+    x %= WIDTH
+    y %= WIDTH
+    return x, y
 
 ### Agent
 # 通常エージェント
@@ -16,19 +28,19 @@ class Agent( Tag ):
     def __init__(self, tl = A_TAG_LEN, tl2 = None):
         """ 初期化 """
         super(Agent, self).__init__(tl, tl2)
-        self.x = random.randint(0, WIDTH-1)
-        self.y = random.randint(0, WIDTH-1)
+        self.x, self.y = random_migrate()
 
         self.immune = ImmuneSystem(self.tag)
 
+        self.birth_time = 0
+        self.is_birth = False
+        self.age = 0
+
     def move(self, land):
         """ 移動して土地に登録する """
-        #self.x += random.randint(-MOVE_DIST, MOVE_DIST)
-        #self.y += random.randint(-MOVE_DIST, MOVE_DIST)
-        self.x = random.randint(0, WIDTH-1)
-        self.y = random.randint(0, WIDTH-1)
-        self.x %= WIDTH
-        self.y %= WIDTH
+        # self.x, self.y = random_migrate()
+        self.x, self.y = random_walk(self.x, self.y, MOVE_DIST)
+
         land.resist_agent_to_map(self, self.x, self.y)
 
     def contact(self, agent):
@@ -61,6 +73,10 @@ class Agent( Tag ):
     def hasVirus(self, v):
         return self.immune.hasVirus(v)
 
+    def aging(self):
+        self.age += 1
+        return self.age
+
     def info(self):
         """ 個人情報を表示 """
         print "\t%s: %3d, %3d " % ( self.tag, self.x, self.y ),
@@ -86,8 +102,6 @@ class PolyAgent( MultiTag ):
 
     def move(self, land):
         """ 移動して土地に登録する """
-        #self.x += random.randint(-MOVE_DIST, MOVE_DIST)
-        #self.y += random.randint(-MOVE_DIST, MOVE_DIST)
         self.x = random.randint(0, WIDTH-1)
         self.y = random.randint(0, WIDTH-1)
         self.x %= WIDTH
@@ -144,117 +158,3 @@ class PolyAgent( MultiTag ):
     def info(self):
         """ 個人情報を表示 """
         print "%d %d\n" % ( self.x, self. y )
-
-# Agent Management
-def agentContact(agents, viruses, land):
-    for myself in agents:
-        ax = myself.x
-        ay = myself.y
-        a_list = land.agent_map[ax][ay]
-        a_list.remove( myself )
-        for i in [-1, 1]:
-            for j in [-1, 1]:
-                if land.isOnMap(ax+i, ay+j):
-                    a_list += land.agent_map[ax+i][ay+j]
-        myself.contact( a_list )
-        # if( len(a_list) > 0 ):
-        #     myself.contact( random.choice(a_list) )
-
-def agentMove(agents, land):
-    for a in agents:
-        a.move(land)
-
-def agentInfection(agents):
-    for a in agents:
-        a.infection()
-
-def agentResponse(agents):
-    """ 免疫応答させる """
-    #_dies = []
-    # n = 0
-    for i in range( len(agents) ):
-        # _t = agents[i].response()
-        agents[i].response()
-        for vl in agents[i].immune.virus_list:
-            if vl.time > V_LETHAL_TIME:
-                # print vl.time
-                agents[i] = None
-                break
-        # if _t > V_LETHAL_TIME:
-            # agents[i] = None
-    while None in agents:
-        agents.remove(None)
-    for a in agents:
-        for vl in a.immune.virus_list:
-            vl.time += 1
-    #        _dies.append( i )
-    #for i in _dies:
-    #    print i,
-    #    del agents[i]
-
-def agentIsInfected(agents, v):
-    """ ウイルス v に感染しているエージェント数を返す """
-    n = 0
-    for a in agents:
-        if a.hasVirus(v):
-            n += 1
-    return n
-
-def show_agent_information(agents, n):
-    """ 0-n エージェントの情報を表示する """
-    print '[ Agents 0 ~ %d ]' % (n-1)
-    for a in agents[:n]:
-        a.info()
-
-def initial_infection(agents, viruses, rate = INIT_INFECTION_RATE):
-    """ エージェントに初期感染させる """
-    for a in agents:
-        if probability(rate):
-            a.infection(random.choice(viruses))
-
-def mating(a, b):
-    """ 交配させる
-    @desctiption:
-        タグ長は、aとbの間からランダムな長さになる
-        a < b
-    """
-    # 突然変異
-    # if probability(MUTATION_RATE):
-    #     ret = type(a)( random.randint(A_TAG_MIN_LEN, A_TAG_MAX_LEN))
-    #     return ret
-    # 通常出産
-    if len(a.tag) > len(b.tag):
-        a, b = b, a
-    # ret = type(a)(random.randint(len(a.tag), len(b.tag)))
-    # diff_len = float( len(b.tag) - len(a.tag) )
-    mu = float(len(b.tag) + len(a.tag)) / 2
-    variate = float(len(b.tag) - len(a.tag)) / VARIATE_ALPHA
-    if probability(MUTATION_RATE):
-        variate += MUTATION_VARIATE
-    # if variate == 0: variate = MIN_VARIATE
-    length = round_off( random.gauss( mu, variate ))
-    ret = type(a)( length )
-    #ret = type(a)((len(a.tag)+len(b.tag))/2)
-    return ret
-
-def ave_tag_len(agents):
-    """ タグ長の平均 """
-    n = len(agents)
-    lens = 0
-    for a in agents:
-        lens += len(a.tag)
-    return float(lens)/n
-
-def die(agents, n = None):
-    if n == None:
-        a = agents.pop(random.randint(0, len(agents)-1))
-        return a
-    else:
-        a = agents.pop(n)
-        return a
-
-def complement_agent(
-    agents, num = A_NUM, lenf = A_TAG_LEN_FROM, lent = A_TAG_LEN_TO
-    ):
-    while( len(agents) < num ):
-        agents.append( Agent(lenf, lent) )

@@ -6,6 +6,8 @@ import os
 LINE_STYLE = 'set style line 1 lw 2'
 PNG_SIZE = '600, 300'
 
+CSS_FILE = ''
+
 # Functions
 def initPng(f, title, xl, yl):
     outputLine(f, 'set title "%s";set xl "%s";set yl "%s";' % (title, xl, yl))
@@ -57,10 +59,16 @@ class PlotFactory(object):
 		outputLine(self.file, 'replot')
 		outputLine(self.file, 'set output')
 
+		initPng(self.file, 'Population', 'Term', 'Agent')
+		plot_script(self.file, 'population.txt', 'Agent')
+		outputPng(self.file, 'Population')
+		outputTerminal(self.file)
+		outputLine(self.file, 'replot')
+		outputLine(self.file, 'set output')
+
 	def info(self):
 		print 'have started generating PLOT SCRIPT.'
 
-CSS_FILE = ''
 class HtmlFactory(object):
 	def __init__(self, filename):
 		self.file = open(filename, 'w')

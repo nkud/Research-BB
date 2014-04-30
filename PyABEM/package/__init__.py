@@ -6,3 +6,4 @@ from tag import *
 from config import *
 from filefactory import *
 from plot import *
+from AgentManager import *

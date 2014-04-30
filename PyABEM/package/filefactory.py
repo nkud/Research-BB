@@ -5,6 +5,7 @@ import os
 import shutil
 
 from agent import *
+from AgentManager import *
 from virus import *
 from landscape import *
 
@@ -17,6 +18,7 @@ class FileFactory(object):
         self.f_ave_tag_len = open(FNAME_TAGLEN, 'w')
         self.f_info = open(FNAME_INFO, 'w')
         self.f_config = open(FNAME_CONFIG, 'w')
+        self.f_population = open(FNAME_POPULATION, 'w')
 
     def outputHasVirus(self, t, agents, viruses):
         """ time infectedv1 infectedv2 ... """
@@ -39,8 +41,14 @@ class FileFactory(object):
             if line[0] == '#' or line == '\n': continue
             self.f_config.write(line)
 
+    def outputPopulation(self, t, agents):
+        self.f_population.write(
+            str(t)+' '+str( len(agents) )+'\n'
+            )
+
     def close(self):        
         self.f_has_virus.close()
         self.f_ave_tag_len.close()
         self.f_info.close()
         self.f_config.close()
+        self.f_population.close()
