@@ -4,7 +4,7 @@
 import os
 
 LINE_STYLE = 'set style line 1 lw 2'
-PNG_SIZE = '1200, 500'
+PNG_SIZE = '1200, 400'
 
 CSS_FILE = ''
 
@@ -14,12 +14,12 @@ def initPng(f, title, xl, yl):
 def outputPng(f, imgname):
     outputLine(f, 'set output "%s.png";' % imgname)
 def outputTerminal(f):
-		outputLine(f, 'set terminal png size '+PNG_SIZE)
+        outputLine(f, 'set terminal png size '+PNG_SIZE)
 def outputLine(f, line):
     """ write line to file """
     f.write(line+'\n')
 def plot_script(f, text='notitle', title='notitle', using='1:2'):
-	outputLine(f, 'plot "'+text+'" using '+using+' w l title "'+title+'"')
+    outputLine(f, 'plot "'+text+'" using '+using+' w l title "'+title+'"')
 def scriptForInitSetting(f):
     """ 初期化設定
     Args:
@@ -36,7 +36,7 @@ def scriptForInitSetting(f):
     outputLine(f, 'set yl textcolor lt 0')
 
 def plot():
-	os.system('cd bin;gnuplot auto.plt')
+    os.system('cd bin;gnuplot auto.plt')
 
 def setImage(f, *imgnames):
     outputLine(f, '<!-- IMAGE -->')
@@ -47,39 +47,39 @@ def setImage(f, *imgnames):
 
 ### PlotFacroty
 class PlotFactory(object):
-	def __init__(self, filename):
-		self.file = open(filename, 'w')
+    def __init__(self, filename):
+        self.file = open(filename, 'w')
 
-	def generatePlotScript(self):
-		scriptForInitSetting(self.file)
-		initPng(self.file, 'AverageTagLen', 'Term', 'AveTagLen')
-		plot_script(self.file, 'ave.txt', 'Len')
-		outputPng(self.file, 'AverageTagLen')
-		outputTerminal(self.file)
-		outputLine(self.file, 'replot')
-		outputLine(self.file, 'set output')
+    def generatePlotScript(self):
+        scriptForInitSetting(self.file)
+        initPng(self.file, 'AverageTagLen', 'Term', 'AveTagLen')
+        plot_script(self.file, 'ave.txt', 'Len')
+        outputPng(self.file, 'AverageTagLen')
+        outputTerminal(self.file)
+        outputLine(self.file, 'replot')
+        outputLine(self.file, 'set output')
 
-		initPng(self.file, 'Population', 'Term', 'Agent')
-		plot_script(self.file, 'population.txt', 'Agent')
-		outputPng(self.file, 'Population')
-		outputTerminal(self.file)
-		outputLine(self.file, 'replot')
-		outputLine(self.file, 'set output')
+        initPng(self.file, 'Population', 'Term', 'Agent')
+        plot_script(self.file, 'population.txt', 'Agent')
+        outputPng(self.file, 'Population')
+        outputTerminal(self.file)
+        outputLine(self.file, 'replot')
+        outputLine(self.file, 'set output')
 
-	def info(self):
-		print 'have started generating PLOT SCRIPT.'
+    def info(self):
+        print 'have started generating PLOT SCRIPT.'
 
 class HtmlFactory(object):
-	def __init__(self, filename):
-		self.file = open(filename, 'w')
+    def __init__(self, filename):
+        self.file = open(filename, 'w')
 
-	def generate(self):
-	    outputLine(self.file,
-	            '<html><link rel="stylesheet" href="'+CSS_FILE+'">'
-	            '<body><font color=gray><code>')
-	    outputLine(self.file, '<h1><font color=black># RESULT </font></h1>')
+    def generate(self):
+        outputLine(self.file,
+                '<html><link rel="stylesheet" href="'+CSS_FILE+'">'
+                '<body><font color=gray><code>')
+        outputLine(self.file, '<h1><font color=black># RESULT </font></h1>')
 
-	    # AverageTagLen
-	    outputLine(self.file, '<h2>AverageTagLen</h2>')
-	    setImage(self.file, 'AverageTagLen.png')
-	    outputLine(self.file, '</code></body></html>')
+        # AverageTagLen
+        outputLine(self.file, '<h2>AverageTagLen</h2>')
+        setImage(self.file, 'AverageTagLen.png')
+        outputLine(self.file, '</code></body></html>')

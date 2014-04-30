@@ -31,7 +31,7 @@ class FileFactory(object):
         self.f_has_virus.write(line)
     def outputTagLen(self, t, agents):
         self.f_ave_tag_len.write(
-            str(t/GENERATION_INTERVAL)+' '+str(ave_tag_len(agents))+' '+str(len(agents))+'\n'
+            str(t)+' '+str(ave_tag_len(agents))+' '+str(len(agents))+'\n'
             )
     def outputInfo(self, agents):
         for a in agents:

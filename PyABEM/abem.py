@@ -32,7 +32,8 @@ def main():
     for t in range( TERM ):
         print "[ %5d ]  agents( %5d )  infected(%5d) %s" % (
             t, len(agents), agentIsInfected(agents, viruses[0]), str(ave_tag_len(agents))
-            )
+            ),
+        print agents[0].birth_time
 
         landscape.reset_agent_map() # 土地を初期化する
 
@@ -45,12 +46,14 @@ def main():
 
         agents += agent_mating(agents, landscape)
 
+        file_factory.outputTagLen(t, agents) # Agent　の平均タグ長を出力
+
         # 世代交代
         if t % GENERATION_INTERVAL == 0:
             if len(agents) <= 0:
                 pass
             else:
-                file_factory.outputTagLen(t, agents) # Agent　の平均タグ長を出力
+                #file_factory.outputTagLen(t/GENERATION_INTERVAL, agents) # Agent　の平均タグ長を出力
 
                 # _new_child_agent = agent_mating(agents, landscape)
 

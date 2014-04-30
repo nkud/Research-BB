@@ -42,6 +42,7 @@ def neighbors(myself, landscape):
             if landscape.isOnMap(ax+i, ay+j):
                 _neighbors += list(landscape.agent_map[ax+i][ay+j])
     _neighbors.remove(myself)
+    random.shuffle(_neighbors)
     return _neighbors
 
 def agentResponse(agents, landscape):
@@ -77,24 +78,19 @@ def agent_mating(agents, landscape):
     random.shuffle(agents)
     n = len(agents)
     for i in range(n):
-        if agents[i].is_birth:
-            continue
-        else:
+        if agents[i].is_birth == False and agents[i].birth_time < BIRTH_MAX_TIME:
             p = neighbors(agents[i], landscape)
             np = len(p)
             for j in range(np):
-                if p[j].birth_time > BIRTH_INTERVAL and p[j].is_birth == False and p[j].age > CHILD_BEARING_AGE and probability(BIRTH_RATE):
+                if p[j].birth_time < BIRTH_MAX_TIME and p[j].is_birth == False and p[j].age > CHILD_BEARING_AGE and probability(BIRTH_RATE):
                     _new_child.append( mating( agents[i], p[j] ) )
                     agents[i].is_birth = True
-                    agents[i].birth_time = 0
-                    agents[j].is_birth = True
-                    agents[j].birth_time = 0
+                    agents[i].birth_time += 1
+                    p[j].is_birth = True
+                    p[j].birth_time += 1
                     break
-                else:
-                    continue
     for i in range(n):
         agents[i].is_birth = False
-        agents[i].birth_time += 1
     return _new_child
 
 def agentIsInfected(agents, v):
@@ -145,6 +141,8 @@ def mating(a, b):
 def ave_tag_len(agents):
     """ タグ長の平均 """
     n = len(agents)
+    if n == 0:
+        return False
     lens = 0
     for a in agents:
         lens += len(a.tag)
