@@ -89,3 +89,16 @@ class ImmuneSystem( object ):
                 return True
         return False
 
+    def isIncubate(self):
+        """ 潜伏期間かどうか """
+        for iv in self.virus_list:
+            if iv.time >= iv.virus.incubate_period and iv.time < iv.virus.onset_period:
+                return True
+        return False
+
+    def isOnset(self):
+        """ 発症している """
+        for iv in self.virus_list:
+            if iv.time >= iv.virus.onset_period:
+                return True
+        return False

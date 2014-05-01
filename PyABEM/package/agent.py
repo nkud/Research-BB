@@ -39,7 +39,8 @@ class Agent( Tag ):
     def move(self, land):
         """ 移動して土地に登録する """
         # self.x, self.y = random_migrate()
-        self.x, self.y = random_walk(self.x, self.y, MOVE_DIST)
+        if self.immune.isOnset() == False:
+            self.x, self.y = random_walk(self.x, self.y, MOVE_DIST)
 
         land.resist_agent_to_map(self, self.x, self.y)
 

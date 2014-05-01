@@ -9,10 +9,15 @@ from config import *
 class Virus( Tag ):
     def __init__(self, tl = V_TAG_LEN):
         super(Virus, self).__init__(tl)
+
+        self.incubate_period = 2
+        self.onset_period = 5
+
     def infection(self, agent):
         """ エージェントに感染させる """
         if probability(10):
             agent.virus_list.append(self)
+
     def info(self):
         """ ウイルス情報を表示 """
         print '[ %s ] %s' % ( self, self.tag )
@@ -23,6 +28,7 @@ class VirusList( object ):
         self.virus = v
         self.cling_point = cp
         self.time = 0
+
     def info(self):
         print '%s at %d' % (self.virus, self.cling_point)
 

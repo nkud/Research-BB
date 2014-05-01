@@ -69,8 +69,17 @@ def agentResponse(agents, landscape):
 def list_of_bearing_age_agents(agents):
     _bearing_age_agents = []
     for a in agents:
-        # if a.birth_time
-        pass
+        if a.age > CHILD_BEARING_AGE:
+            _bearing_age_agents.append( a )
+
+def is_able_to_birth(agent):
+    """ 出産可能かどうか """
+    if agent.birth_time < BIRTH_MAX_TIME:
+        if agent.is_birth == False:
+            if agent.age > CHILD_BEARING_AGE:
+                return True
+    return False
+
 
 def agent_mating(agents, landscape):
     """ エージェント集団に出産させる """
@@ -81,13 +90,14 @@ def agent_mating(agents, landscape):
         if agents[i].is_birth == False and agents[i].birth_time < BIRTH_MAX_TIME:
             p = neighbors(agents[i], landscape)
             np = len(p)
-            for j in range(np):
-                if p[j].birth_time < BIRTH_MAX_TIME and p[j].is_birth == False and p[j].age > CHILD_BEARING_AGE and probability(BIRTH_RATE):
-                    _new_child.append( mating( agents[i], p[j] ) )
+            for ip in range(np):
+                if probability(BIRTH_RATE) and is_able_to_birth( p[ip] ):
+                    _new_child.append( mating( agents[i], p[ip] ) )
+                    # 出産済みにして、出産回数を増やす
                     agents[i].is_birth = True
                     agents[i].birth_time += 1
-                    p[j].is_birth = True
-                    p[j].birth_time += 1
+                    p[ip].is_birth = True
+                    p[ip].birth_time += 1
                     break
     for i in range(n):
         agents[i].is_birth = False
@@ -148,16 +158,9 @@ def ave_tag_len(agents):
         lens += len(a.tag)
     return float(lens)/n
 
-def die(agents, n = None):
-    if n == None:
-        a = agents.pop(random.randint(0, len(agents)-1))
-        return a
-    else:
-        a = agents.pop(n)
-        return a
-
 def complement_agent(
     agents, num = A_NUM, lenf = A_TAG_LEN_FROM, lent = A_TAG_LEN_TO
     ):
+    """ エージェントを補う """
     while( len(agents) < num ):
         agents.append( Agent(lenf, lent) )
