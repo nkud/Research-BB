@@ -69,6 +69,8 @@ def main():
             break;
         file_factory.outputHasVirus(t, agents, viruses) # なぜagentsの必要か
         file_factory.outputPopulation(t, agents)
+        file_factory.outputIsIncubate(t, agents)
+        file_factory.outputIsOnset(t, agents)
 
     # 最終状態表示
     show_agent_information(agents, 5)
@@ -88,3 +90,4 @@ if __name__ == "__main__":
     hf = HtmlFactory(BINDIR+'index.html')
     hf.generate()
     plot()
+    beep()

@@ -2,6 +2,7 @@
 # coding=utf-8
 
 import random
+import os
 
 def probability(p):
     if random.uniform(0, 100) < p:
@@ -55,3 +56,6 @@ def round_off(n):
         return int(n)+1
     # ret = int(n) + rand_binary()
     # return ret
+
+def beep():
+    os.system('echo ')

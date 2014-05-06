@@ -94,6 +94,7 @@ def agent_mating(agents, landscape):
                 if probability(BIRTH_RATE) and is_able_to_birth( p[ip] ):
                     _new_child.append( mating( agents[i], p[ip] ) )
                     # 出産済みにして、出産回数を増やす
+
                     agents[i].is_birth = True
                     agents[i].birth_time += 1
                     p[ip].is_birth = True
@@ -103,11 +104,35 @@ def agent_mating(agents, landscape):
         agents[i].is_birth = False
     return _new_child
 
+# 計測
 def agentIsInfected(agents, v):
     """ ウイルス v に感染しているエージェント数を返す """
     n = 0
     for a in agents:
         if a.hasVirus(v):
+            n += 1
+    return n
+
+def numHasVirus(agents):
+    n = 0
+    for a in agents:
+        if len(a.immune.virus_list) > 0:
+            n += 1
+    return n
+
+def numIsIncubate(agents):
+    """ 潜伏期間のエージェント数を返す """
+    n = 0
+    for a in agents:
+        if a.immune.isIncubate():
+            n += 1
+    return n
+
+def numIsOnset(agents):
+    """ 発症しているエージェント数を返す """
+    n = 0
+    for a in agents:
+        if a.immune.isOnset():
             n += 1
     return n
 
