@@ -45,12 +45,15 @@ def neighbors(myself, landscape):
     random.shuffle(_neighbors)
     return _neighbors
 
-def agentResponse(agents, landscape):
+def agentResponse(agents):
     """ 免疫応答させる """
+    for a in agents:
+        a.response()
+
+def agentDie(agents, landscape):
     for i in range( len(agents) ):
-        agents[i].response()                                # all agents response
         for vl in agents[i].immune.virus_list:              # any virus agent has
-            if vl.time > V_LETHAL_TIME:                     # 致死期間感染すると
+            if vl.time > V_LETHAL_TIME or len(agents[i].tag)<len(vl.virus.tag):# 致死期間感染すると
                 landscape.remove_agent_from_map(agents[i])  # マップから削除して
                 agents[i] = None                            # 空にする
                 break                                       # next agent
@@ -65,6 +68,11 @@ def agentResponse(agents, landscape):
     #for i in _dies:
     #    print i,
     #    del agents[i]
+
+def agentImmuneDepression(agents):
+    for i in range( len(agents) ):
+        if agents[i].immune.isOnset() and probability(IMMUNE_DEPRESSION_RATE):
+            agents[i].tag = agents[i].tag[:-1]
 
 def list_of_bearing_age_agents(agents):
     _bearing_age_agents = []

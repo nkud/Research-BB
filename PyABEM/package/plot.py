@@ -2,6 +2,7 @@
 # coding=utf-8
 
 import os
+from subprocess import check_call, call
 
 LINE_STYLE = 'set style line 1 lw 2'
 PNG_SIZE = '1200,300'
@@ -42,7 +43,8 @@ def scriptForInitSetting(f):
     outputLine(f, 'set yl textcolor lt 0')
 
 def plot():
-    os.system('cd bin;gnuplot auto.plt')
+    # os.system('cd bin;gnuplot auto.plt')
+    call(['gnuplot', 'auto.plt'])
 
 def setImage(f, *imgnames):
     outputLine(f, '<!-- IMAGE -->')

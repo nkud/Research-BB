@@ -31,9 +31,9 @@ def main():
     # 計算開始
     for t in range( TERM ):
         print "[ %5d ]  agents( %5d )  infected(%5d) %s" % (
-            t, len(agents), agentIsInfected(agents, viruses[0]), str(ave_tag_len(agents))
+            t, len(agents), agentIsInfected(agents, viruses[0]), str('-')
             ),
-        print agents[0].birth_time, agents[0].immune.isIncubate(), agents[0].immune.isOnset()
+        print agents[0].birth_time
 
         landscape.reset_agent_map() # 土地を初期化する
 
@@ -41,9 +41,9 @@ def main():
         agentMove( agents, landscape )
         agentContact( agents, viruses, landscape )
         agentInfection( agents )
-        agentResponse( agents, landscape )
-
-
+        agentResponse( agents )
+        agentImmuneDepression( agents )
+        agentDie( agents, landscape )
         agent_aging( agents, landscape )
         agents += agent_mating(agents, landscape)
         file_factory.outputTagLen(t, agents) # Agent　の平均タグ長を出力
@@ -89,5 +89,6 @@ if __name__ == "__main__":
     pf.generatePlotScript()
     hf = HtmlFactory(BINDIR+'index.html')
     hf.generate()
-    plot()
+    # plot()
+
     beep()

@@ -57,7 +57,7 @@ class ImmuneSystem( object ):
         if len(self.virus_list) > 0:
             cp = self.virus_list[0].cling_point # 先頭のウイルスの取りつく位置
             v = self.virus_list[0].virus
-            if len(tag) < len(v.tag):
+            if len(tag) < len(v.tag) or len(tag)-cp < len(v.tag):
                 self.virus_list[0].time = V_LETHAL_TIME + 1
                 return tag
             for i in range(v.length):
