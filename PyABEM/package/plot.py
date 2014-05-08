@@ -74,6 +74,7 @@ class PlotFactory(object):
 
     def generatePlotScript(self):
         scriptForInitSetting(self.file)
+        
         initPng(self.file, 'AverageTagLen', 'Term', 'AveTagLen')
         plot_script(self.file, 'ave.txt', 'Len')
         outputPng(self.file, 'AverageTagLen')
@@ -84,7 +85,6 @@ class PlotFactory(object):
         initPng(self.file, 'Population', 'Term', 'Agent')
         plot_script(self.file, 'population.txt', 'Agent')
         outputPng(self.file, 'Population')
-        outputTerminal(self.file)
         outputEnd(self.file)
 
         initPng(self.file, 'HasVirus', 'Term', 'Agent')
