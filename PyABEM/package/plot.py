@@ -85,8 +85,7 @@ class PlotFactory(object):
         plot_script(self.file, 'population.txt', 'Agent')
         outputPng(self.file, 'Population')
         outputTerminal(self.file)
-        outputLine(self.file, 'replot')
-        outputLine(self.file, 'set output')
+        outputEnd(self.file)
 
         initPng(self.file, 'HasVirus', 'Term', 'Agent')
         plot_script(self.file, 'has_virus.txt', 'hasVirus')
