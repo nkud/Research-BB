@@ -4,7 +4,7 @@
 from function import *
 
 LINE_STYLE = 'w l lw 1'
-PNG_SIZE = '1000,300'
+PNG_SIZE = '1200,300'
 
 def scriptForInitSetting(f):
     """ 初期化設定
@@ -14,7 +14,7 @@ def scriptForInitSetting(f):
         initial setting for plot.
     """
     outputLine(f, 'set style line 1 lw 2')
-    outputLine(f, 'set terminal png size '+PNG_SIZE)
+    outputLine(f, 'set terminal svg size '+PNG_SIZE)
     outputLine(f, 'set key below right')
     #outputLine(f, 'set key box lt 0 lw 1 ')
     outputLine(f, 'set key textcolor lt 0')
@@ -43,7 +43,7 @@ def generatePngPlot(fname, d):
 def initPng(f, title, xl, yl):
     outputLine(f, 'set title "%s";set xl "%s";set yl "%s";' % (title, xl, yl))
 def outputPng(f, imgname):
-    outputLine(f, 'set output "%s.png";' % imgname)
+    outputLine(f, 'set output "%s.svg";' % imgname)
 
 class OutputFactory(object):
     """ output factory
@@ -52,10 +52,10 @@ class OutputFactory(object):
         f: file object
         info: info dictionary
         fname: output file name
-        title: png title
+        title: svg title
         xl: x axis title
         yl: y axis title
-        imgname: png image file name
+        imgname: svg image file name
     """
     def __init__(self, f, info, fname, title, xl, yl, imgname):
         """ initial setting """
@@ -86,23 +86,23 @@ class OutputFactory(object):
 
     def plot(self, title, using=2):
         outputLine(self.f,
-            'set output "%s.png";plot "%s" using 1:%s %s title "%s";' %
+            'set output "%s.svg";plot "%s" using 1:%s %s title "%s";' %
             (self.imgname, self.fname, str(using), LINE_STYLE, title))
     def plot_begin(self, title, using=2):
         outputLine(self.f,
-            'set output "%s_begin.png";plot [0:%s] "%s" using 1:%s %s title "%s";' %
+            'set output "%s_begin.svg";plot [0:%s] "%s" using 1:%s %s title "%s";' %
             (self.imgname, str(self.mini_term), self.fname, str(using), LINE_STYLE, title))
     def plot_end(self, title, using=2):
-        outputLine(self.f, 'set output "%s_end.png";plot [%s:%s] "%s" using 1:%s %s title "%s";'
+        outputLine(self.f, 'set output "%s_end.svg";plot [%s:%s] "%s" using 1:%s %s title "%s";'
                 % (self.imgname, str(self.last_term-self.mini_term), str(self.last_term), self.fname, str(using), LINE_STYLE, title))
     def replot(self, title, using):
-        outputLine(self.f, 'set output "%s.png";replot "%s" using 1:%s %s title "%s";'
+        outputLine(self.f, 'set output "%s.svg";replot "%s" using 1:%s %s title "%s";'
                 % (self.imgname, self.fname, str(using), LINE_STYLE, title))
     def replot_begin(self, title, using):
-        outputLine(self.f, 'set output "%s_begin.png";replot "%s" using 1:%s %s title "%s";'
+        outputLine(self.f, 'set output "%s_begin.svg";replot "%s" using 1:%s %s title "%s";'
                 % (self.imgname, self.fname, str(using), LINE_STYLE, title))
     def replot_end(self, title, using):
-        outputLine(self.f, 'set output "%s_end.png";replot "%s" using 1:%s %s title "%s";'
+        outputLine(self.f, 'set output "%s_end.svg";replot "%s" using 1:%s %s title "%s";'
                 % (self.imgname, self.fname, str(using), LINE_STYLE, title))
 
 def scriptForHasVirusPng(f, data):

@@ -49,36 +49,36 @@ def generateResultHTML(fname, d):
 # Population
     if int(d['AGING_AGENT']) == 1:
         outputLine(f, '<h2 id=population>Population</h2>')
-        setImage(f, 'Population.png')
+        setImage(f, 'Population.svg')
 # HasVirus
     outputLine(f, '<h2 id=hasvirus>hasVirus</h2>')
-    setImage(f, 'HasVirus.png',
-            'HasVirus_begin.png',
-            'HasVirus_end.png')
+    setImage(f, 'HasVirus.svg',
+            'HasVirus_begin.svg',
+            'HasVirus_end.svg')
 # HasImmunity
     outputLine(f, '<h2 id=hasimmunity>hasImmunity</h2>')
     setImage(f,
-            'HasImmunity.png',
-            'HasImmunity_begin.png',
-            'HasImmunity_end.png')
+            'HasImmunity.svg',
+            'HasImmunity_begin.svg',
+            'HasImmunity_end.svg')
 # SIR
     outputLine(f, '<h2 id=sir>SIR about all</h2>')
     setImage(f,
-            'SIR.png',
-            'SIR_begin.png',
-            'SIR_end.png')
+            'SIR.svg',
+            'SIR_begin.svg',
+            'SIR_end.svg')
 # EACH_SIR
     for i in range(int(d['V_NUM'])):
         outputLine(f, '<h2 id=eachsir>SIR about virus_'+str(i)+'</h2>')
-        setImage(f, 'SIR_'+str(i)+'.png',
-                'SIR_'+str(i)+'_begin.png',
-                'SIR_'+str(i)+'_end.png')
+        setImage(f, 'SIR_'+str(i)+'.svg',
+                'SIR_'+str(i)+'_begin.svg',
+                'SIR_'+str(i)+'_end.svg')
 # Contact
     outputLine(f, '<h2 id=contact>Contact</h2>')
     setImage(f,
-            'Contact.png',
-            'InfectionContact.png',
-            'InfectionContact_begin.png',
-            'InfectionContact_end.png')
+            'Contact.svg',
+            'InfectionContact.svg',
+            'InfectionContact_begin.svg',
+            'InfectionContact_end.svg')
 
     outputLine(f, '</code></body></html>' )

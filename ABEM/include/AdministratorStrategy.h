@@ -15,37 +15,38 @@ class Administrator;
 /* =====================================================================================
  *        Class:  __ModelStrategy
  *  Description:  数理モデルの戦略
- *  TODO: why do i need have to set pure virtual??
+ *  TODO: why need setting pure virtual??
  * ================================================================================== */
 class __ModelStrategy {
   public:
     /*-----------------------------------------------------------------------------
      *  初期化
      *-----------------------------------------------------------------------------*/
-//    virtual void initAgent();
     void setAdministrator(Administrator *ad) { ad_ = ad; }
     virtual void initAgent();
     virtual void initVirus();
     /*-----------------------------------------------------------------------------
      *  各フェイズ
      *-----------------------------------------------------------------------------*/
-    virtual void aging();
-    virtual void mating();
+    virtual void migrate();
+
     virtual void contact();
     virtual void infect();
     virtual void response();
-    virtual void migrate();
+
+    virtual void aging();
+    virtual void mating();
     /*-----------------------------------------------------------------------------
      *  すべてプロセスを実行
      *-----------------------------------------------------------------------------*/
-    virtual void oneDay();
+//    virtual void oneDay();
 
   protected:                                                         /* XXX: あまりよくない */
     Administrator *ad_;
 };
 
 /*-----------------------------------------------------------------------------
- *  デフォルトの戦略
+ *  デフォルト 戦略
  *-----------------------------------------------------------------------------*/
 class Default : public __ModelStrategy {
   public:
@@ -62,7 +63,15 @@ class NonOverlappingPopulation : public __ModelStrategy {
 
     virtual void aging();
     virtual void mating();
-    virtual void oneDay();
+//    virtual void oneDay();
+};
+
+
+/*-----------------------------------------------------------------------------
+ *  OverlappingPopulation 戦略
+ *-----------------------------------------------------------------------------*/
+class OverlappingPopulation : public __ModelStrategy {
+    public:
 };
 
 #endif

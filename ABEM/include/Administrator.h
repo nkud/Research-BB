@@ -59,7 +59,7 @@ class Administrator {
     /*-----------------------------------------------------------------------------
      *  エージェント操作
      *-----------------------------------------------------------------------------*/
-    void oneDay() { model_strategy_->oneDay(); }
+    // void oneDay() { model_strategy_->oneDay(); }
 
     void initInfectAgentInRatio( Virus &, double );                  /* 初期感染させる */
     void responseAgent();                                            /* 免疫応答させる */
@@ -67,11 +67,11 @@ class Administrator {
     void moveAgent();                                                /* 移動させる */
     void contactAgent();                                             /* 近隣に接触して感染させる */
     void infectAgent();                                              /* 待機ウイルスを感染させる */
-
-    ITERATOR(Agent *) deleteAgent( ITERATOR(Agent *) &it );          /* 配列から指定のエージェントを削除 */
-
     void agingAgent();                                               /* 老化 */
     void matingAgant();                                              /* 交配、出産 */
+
+
+    ITERATOR(Agent *) deleteAgent( ITERATOR(Agent *) &it );          /* 配列から指定のエージェントを削除 */
 
     int getNumOfAgent() const;                                       /* エージェントの人数を返す */
     void incrementTerm();                                            /* 期間を 1 進める */

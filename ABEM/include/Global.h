@@ -41,11 +41,11 @@ const int A_MAX_V_INFECTED_ONE_TERM = 1                    ;         /* １期�
 
 const int A_INIT_NUM                = 1000                  ;        /* 初期エージェントの数 */
 
-const double A_INIT_INFECTED_RATE   = 0.3                  ;         /* 初期感染率 */
+const double A_INIT_INFECTED_RATE   = 3                  ;         /* 初期感染率 */
 
-const int A_DEFAULT_LEN             = 100                   ;         /* エージェントのタグ長 */
-const int V_DEFAULT_LEN             = 12                   ;         /* エージェントのタグ長 */
-#define A_TAG_LEN 100                                                 /* > 0 */
+const int A_DEFAULT_LEN             = 20                   ;         /* エージェントのタグ長 */
+const int V_DEFAULT_LEN             = 18                   ;         /* エージェントのタグ長 */
+#define A_TAG_LEN 20                                                 /* > 0 */
 
 #define V_TAG_0 "000000000000"
 #define V_TAG_1 "111111111111"

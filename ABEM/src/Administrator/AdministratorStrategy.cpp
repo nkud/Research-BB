@@ -21,27 +21,27 @@
  *  基底クラス
  *
  *-----------------------------------------------------------------------------*/
-void __ModelStrategy :: oneDay() {
-  /*-----------------------------------------------------------------------------
-   *  エージェントの一日の行動
-   *    1. 老化
-   *    2. 交配・出産
-   *    3. 移動
-   *    4. 近隣に接触
-   *    5. 感染
-   *    6. 免疫応答
-   *-----------------------------------------------------------------------------*/
-#ifdef AGING_AGENT
-  ad_->agingAgent();                                                 /* 老化する */
-#endif
-#ifdef MATING_AGENT
-  ad_->matingAgant();                                                /* 交配、出産する */
-#endif
-  ad_->moveAgent();                                                  /* 移動する */
-  ad_->contactAgent();                                               /* 近隣に接触する */
-  ad_->infectAgent();                                                /* 待機ウイルスを感染させる */
-  ad_->responseAgent();                                              /* 免疫応答（タグフリップ） */
-}
+//void __ModelStrategy :: oneDay() {
+//  /*-----------------------------------------------------------------------------
+//   *  エージェントの一日の行動
+//   *    1. 老化
+//   *    2. 交配・出産
+//   *    3. 移動
+//   *    4. 近隣に接触
+//   *    5. 感染
+//   *    6. 免疫応答
+//   *-----------------------------------------------------------------------------*/
+//#ifdef AGING_AGENT
+//  ad_->agingAgent();                                                 /* 老化する */
+//#endif
+//#ifdef MATING_AGENT
+//  ad_->matingAgant();                                                /* 交配、出産する */
+//#endif
+//  ad_->moveAgent();                                                  /* 移動する */
+//  ad_->contactAgent();                                               /* 近隣に接触する */
+//  ad_->infectAgent();                                                /* 待機ウイルスを感染させる */
+//  ad_->responseAgent();                                              /* 免疫応答（タグフリップ） */
+//}
 void
 __ModelStrategy :: response() {
   /*-----------------------------------------------------------------------------
@@ -142,8 +142,8 @@ __ModelStrategy :: contact() {
   int ax, ay;
   int tx, ty;
 
-  ITERATOR(Agent *) it_myself = ad_->getAgentIteratorBegin();          /* エージェントの先頭から */
-  while( it_myself != ad_->getAgentIteratorEnd() ) {                   /* 末尾まで */
+  ITERATOR(Agent *) it_myself = ad_->getAgentIteratorBegin();        /* エージェントの先頭から */
+  while( it_myself != ad_->getAgentIteratorEnd() ) {                 /* 末尾まで */
     if( (*it_myself)->numHoldingVirus() <= 0 ) {
       it_myself++;
       continue;                                                      /* 健康ならスキップ */
@@ -308,15 +308,15 @@ void NonOverlappingPopulation :: initAgent() {
 //  }
 }
 
-void
-NonOverlappingPopulation :: oneDay() {
-  ad_->agingAgent();                                                   /* 老化する */
-  ad_->moveAgent();                                                    /* 移動する */
-
-  ad_->contactAgent();                                                 /* 近隣に接触する */
-  ad_->infectAgent();                                                  /* 待機ウイルスを感染させる */
-  ad_->responseAgent();                                                /* 免疫応答（タグフリップ） */
-}
+//void
+//NonOverlappingPopulation :: oneDay() {
+//  ad_->agingAgent();                                                   /* 老化する */
+//  ad_->moveAgent();                                                    /* 移動する */
+//
+//  ad_->contactAgent();                                                 /* 近隣に接触する */
+//  ad_->infectAgent();                                                  /* 待機ウイルスを感染させる */
+//  ad_->responseAgent();                                                /* 免疫応答（タグフリップ） */
+//}
 
 void
 NonOverlappingPopulation :: aging() {

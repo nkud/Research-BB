@@ -48,15 +48,15 @@ int main()
   /*-----------------------------------------------------------------------------
    *  初期化
    *-----------------------------------------------------------------------------*/
-  Default *df = new Default;                                         /* モデル戦略 */
-  NonOverlappingPopulation *nlp = new NonOverlappingPopulation;      /* モデル戦略 */
+//  Default *df = new Default;                                         /* モデル戦略 */
+//  NonOverlappingPopulation *nlp = new NonOverlappingPopulation;      /* モデル戦略 */
 
   VECTOR(Agent *) agent;                                             /* エージェントの配列 */
   VECTOR(Virus *) virus;                                             /* ウイルスの配列 */
   Landscape *landscape = new Landscape;                              /* 土地 */
 
   /* 管理者 */
-  Administrator admin( agent, virus, landscape );                /* 管理者に登録 */
+  Administrator admin( agent, virus, landscape );                    /* 管理者に登録 */
   admin.initAgent();                                                 /* エージェント初期化 */
   admin.initVirus();                                                 /* ウイルス初期化 */
 
@@ -91,7 +91,17 @@ int main()
     monitor.resetAll();                                              /* モニターのカウンターをリセット */
 
     /* エージェント、ウイルス、土地の計算 */
-    admin.oneDay();                                                  /* 一日を進める */
+//    admin.oneDay();                                                  /* 一日を進める */
+#ifdef AGING_AGENT
+    admin.agingAgent();                                                 /* 老化する */
+#endif
+#ifdef MATING_AGENT
+    admin.matingAgant();                                                /* 交配、出産する */
+#endif
+    admin.moveAgent();                                                  /* 移動する */
+    admin.contactAgent();                                               /* 近隣に接触する */
+    admin.infectAgent();                                                /* 待機ウイルスを感染させる */
+    admin.responseAgent();                                              /* 免疫応答（タグフリップ） */
 
     /*  途中経過出力 */
     ff.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ; /* 出力：感染者 */
