@@ -16,7 +16,8 @@ OBJS = $(addprefix $(OBJDIR), $(TARGET))
 all: $(OBJS)
 
 $(OBJDIR)%.o: %.cpp
-	$(CC) -c $< -o $@ $(CPPFLAGS)
+	@$(PRINT) Compiling $(notdir $@)...
+	@$(CC) -c $< -o $@ $(CPPFLAGS)
 
 $(OBJDIR)Virus.o: Global.h Virus.h Function.h
 $(OBJDIR)VirusStrategy.o: VirusStrategy.h

@@ -22,7 +22,8 @@ OBJS = $(addprefix $(OBJDIR), $(TARGET))
 all: $(OBJS)
 
 $(OBJDIR)%.o: %.cpp
-	$(CC) -c $< -o $@ $(CPPFLAGS)
+	@$(PRINT) Compiling $(notdir $@)...
+	@$(CC) -c $< -o $@ $(CPPFLAGS)
 
 $(OBJDIR)Agent.o: Global.h Agent.h AgentStrategy.h Function.h Monitor.h TagInterface.h
 $(OBJDIR)AgentStrategy.o: AgentStrategy.h Agent.h Function.h

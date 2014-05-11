@@ -3,9 +3,12 @@ PRINT    = /bin/echo
 MKDIR	 = mkdir -vp
 MAKE 	 = make -k
 
-OBJDIR = obj
-SRCDIR = src
-BINDIR = bin
+OBJDIR	 = obj
+SRCDIR	 = src
+BINDIR	 = bin
+
+MASTER	 = master
+NOW		 = $(shell date +"%y%m%d%H%M%S")
 
 VPATH = obj
 
@@ -24,7 +27,9 @@ TARGET := ABEM.out
 # ターゲットを作成する
 $(BINDIR)/$(TARGET): $(LIBSPATH)
 	@[ -d $(BINDIR) ] || $(MKDIR) $(BINDIR)
-	$(CC) -o $@ $(OBJS)
+	@$(PRINT) -n 'Generating $(notdir $@)...'
+	@$(CC) -o $@ $(OBJS)
+	@$(PRINT) 'Done.'
 
 # コンパイルする
 $(LIBSPATH):
@@ -41,6 +46,18 @@ gene:
 	@$(PRINT) '[ generate ]'
 	@cd $(BINDIR); python ../script/gene.py
 	@-cd $(BINDIR); gnuplot auto.plt
+
+# 結果をパッケージングする
+pack:
+	@$(PRINT) [ package ]
+	@[ -d $(MASTER) ] || $(MKDIR) $(MASTER)
+	@cd $(MASTER); $(MKDIR) $(NOW)/src
+	@cd $(MASTER); $(MKDIR) $(NOW)/assets
+	@cd $(MASTER); $(MKDIR) $(NOW)/script
+	@-$(COPY) $(BIN)/*.txt $(MASTER)/$(NOW)/assets
+	@-$(COPY) $(BIN)/*.plt $(MASTER)/$(NOW)/script
+	@-cd $(BIN); $(COPY) index.html result.css ../$(MASTER)/$(NOW)
+	@tree $(MASTER)/$(NOW)
 
 # 削除する
 clean:
