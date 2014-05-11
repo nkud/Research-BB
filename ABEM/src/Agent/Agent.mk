@@ -5,8 +5,14 @@ MKDIR	 = mkdir -vp
 OBJDIR = ../../obj/
 INCLUDE = ../../include
 
-VPATH = AgentStrategy $(INCLUDE)
-TARGET	 = Agent.o AgentStrategy.o
+vpath %.h $(INCLUDE)
+vpath %.cpp ImmuneSystem
+vpath %.cpp AgentStrategy
+vpath %.cpp AgentStrategy/MovingStrategy
+vpath %.cpp AgentStrategy/ChildBirthStrategy
+vpath %.cpp AgentStrategy/AgingStrategy
+
+TARGET	 = Agent.o AgentStrategy.o MovingStrategy.o ChildBirthStrategy.o ImmuneSystem.o
 
 CPPFLAGS = -I ../../include
 

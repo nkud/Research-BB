@@ -1,36 +1,34 @@
 CC       = g++
 PRINT    = /bin/echo
 MKDIR	 = mkdir -vp
-MAKE = make
+MAKE 	 = make -k
 
 OBJDIR = obj
-SRCDIR = src/
-BINDIR = bin/
+SRCDIR = src
+BINDIR = bin
 
 VPATH = obj
 
-TARGET	 = 
-
 CPPFLAGS = -I include
 
-LIBS := Agent Virus Landscape Administrator TagInterface Function \
-		Monitor FileFactory Main Benchmark
-TARGET := ABEM.out
+LIBS := $(shell ls $(SRCDIR))
 
-LIBSPATH := $(addprefix $(SRCDIR), $(LIBS))
+LIBSPATH := $(addprefix $(SRCDIR)/, $(LIBS))
 OBJS     = $(addprefix $(OBJDIR)/, $(shell ls obj))
 
-.PHONY: all run gene $(BINDIR)$(TARGET) $(LIBSPATH)
+TARGET := ABEM.out
+
+.PHONY: all run gene $(BINDIR)/$(TARGET) $(LIBSPATH)
 
 
-$(BINDIR)$(TARGET): $(LIBSPATH)
-	@[ -d $(BINDIR) ] || mkdir -p $(BINDIR)
+# ターゲットを作成する
+$(BINDIR)/$(TARGET): $(LIBSPATH)
+	@[ -d $(BINDIR) ] || $(MKDIR) $(BINDIR)
 	$(CC) -o $@ $(OBJS)
 
-# ライブラリをコンパイルする
-# ライブラリ名.mk を使用する
+# コンパイルする
 $(LIBSPATH):
-	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
+	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
 	@$(MAKE) -C $@ -f $(notdir $@).mk
 
 # 実行する
