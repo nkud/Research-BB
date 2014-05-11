@@ -2,13 +2,14 @@ CC       = g++
 PRINT    = /bin/echo
 MKDIR	 = mkdir -vp
 MAKE 	 = make -k
+COPY	 = cp
 
 OBJDIR	 = obj
 SRCDIR	 = src
 BINDIR	 = bin
 
 MASTER	 = master
-NOW		 = $(shell date +"%y%m%d%H%M%S")
+NOW		 = $(shell date +"%y_%m%d_%H%M%S")
 
 VPATH = obj
 
@@ -54,9 +55,9 @@ pack:
 	@cd $(MASTER); $(MKDIR) $(NOW)/src
 	@cd $(MASTER); $(MKDIR) $(NOW)/assets
 	@cd $(MASTER); $(MKDIR) $(NOW)/script
-	@-$(COPY) $(BIN)/*.txt $(MASTER)/$(NOW)/assets
-	@-$(COPY) $(BIN)/*.plt $(MASTER)/$(NOW)/script
-	@-cd $(BIN); $(COPY) index.html result.css ../$(MASTER)/$(NOW)
+	@-$(COPY) $(BINDIR)/*.txt $(MASTER)/$(NOW)/assets
+	@-$(COPY) $(BINDIR)/*.plt $(MASTER)/$(NOW)/script
+	@-$(COPY) $(BINDIR)/index.html template/result.css $(MASTER)/$(NOW)
 	@tree $(MASTER)/$(NOW)
 
 # 削除する
@@ -70,5 +71,5 @@ check:
 	@$(PRINT) there is no test.
 
 # コンパイル -> 実行 -> 結果出力
-all: $(BINDIR)$(TARGET) run gene
+all: $(BINDIR)/$(TARGET) run gene
 
