@@ -142,23 +142,23 @@ void TagFlip :: response(Agent &self)
  */
 bool TagFlip :: infection(Agent &self, Virus &v)
 {
-  if( self.getVirusListSize() >= A_MAX_V_CAN_HAVE ) {                     /* 最大値を越えてたら */
+  if( self.getVirusListSize() >= A_MAX_V_CAN_HAVE ) {                /* 最大値を越えてたら */
     return false;                                                    /* 感染せずに終了 */
   }
-  ITERATOR(VirusData *) it_vd = self.getVirusListIteratorBegin();         /* 保持ウイルスリストを取得 */
-  while( it_vd != self.getVirusListIteratorEnd() ) {                      /* 既に保持しているウイルスなら */
+  ITERATOR(VirusData *) it_vd = self.getVirusListIteratorBegin();    /* 保持ウイルスリストを取得 */
+  while( it_vd != self.getVirusListIteratorEnd() ) {                 /* 既に保持しているウイルスなら */
     if( (*it_vd)->v_ == &v ) {
       return false;                                                  /* 感染せずに終了 */
     }
     it_vd++;                                                         /* 次の保持ウイルス */
   }
-  if( self.hasImmunity( v ) ) {                                           /* 免疫獲得済みなら  */
+  if( self.hasImmunity( v ) ) {                                      /* 免疫獲得済みなら  */
     return false;                                                    /* 感染せずに終了 */
   }
   VirusData *vdata                                                   /* 新しいウイルスデータを作成して */
     //        = new VirusData( v, min_ham_distance_point( tag_, v.getTag(), len_, v.getLen() ) );
     = new VirusData( v, v.searchStartPoint( self ) );
-  self.pushVirusData( vdata );                                            /* 保持ウイルスリストに追加する */
+  self.pushVirusData( vdata );                                       /* 保持ウイルスリストに追加する */
 
 //  Monitor::Instance().countUpInfectionContact(vdata->v_);            /* 感染のために接触した回数を増やす */
   return true;                                                       /* 感染して true を返す */

@@ -21,9 +21,11 @@
 #include <vector>
 #include <map>
 
+
 struct VirusData;
 class __MovingStrategy;
 class __ChildBirthStrategy;
+
 
 /*-----------------------------------------------------------------------------
  *  ラベル
