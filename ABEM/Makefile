@@ -1,57 +1,32 @@
-OUT		= ABEM.out
-TARGET	= $(BIN)/$(OUT)
-
 CC       = g++
 PRINT    = /bin/echo
-RM       = rm -rfv
 MKDIR	 = mkdir -vp
-COPY	 = cp
-CTAGS    = $(shell which ctags)
-NOW		 = $(shell date +"%y%m%d%H%M%S")
+MAKE = make
 
-DIR = Tag Agent Virus Administrator Landscape \
-	  Monitor FileFactory Benchmark Function
+OBJDIR = obj/
+SRCDIR = src/
+BINDIR = bin/
 
-DIRS = $(addprefix src/, $(DIR))
+VPATH = obj
 
-OBJDIR	= obj
-BIN = bin
+TARGET	 = 
 
-SRCS = $(shell find $(DIRS) -name '*.cpp')
+CPPFLAGS = -I include
 
-VPATH = src $(DIRS)
+LIBS := Agent Virus Landscape Administrator TagInterface Function \
+		Monitor FileFactory Main Benchmark
+TARGET := ABEM.out
 
-OBJS	:= $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.cpp=.o)))
+LIBSPATH := $(addprefix $(SRCDIR), $(LIBS))
+OBJS     := $(addprefix $(OBJDIR), $(shell ls obj))
 
-INCLUDE	= -I include
 
+.PHONY: all $(TARGET) $(LIBSPATH)
 
-$(TARGET): $(OBJS) $(OBJDIR)/main.o
-	@[ -d $(BIN) ] || mkdir -p $(BIN)
-	$(CC) -o $@ $^
+all: $(TARGET)
 
-$(OBJDIR)/%.o: %.cpp include/%.h
-	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
-	$(CC) -c $< -o $@ $(INCLUDE)
+$(TARGET): $(LIBSPATH)
+	$(CC) -o $@ $(OBJS)
 
-obj/main.o: main.cpp include/Global.h
-	$(CC) -c $< -o $@ $(INCLUDE)
-
-clean:
-	@$(PRINT) [ clean ]
-	@$(RM) -rvf $(OBJDIR) $(BIN)
-
-run:
-	@$(PRINT) [ run ]
-	@cd $(BIN); ./$(OUT)
-
-tags:
-	@$(CTAGS) $(SRCS)
-
-gene:
-	@$(PRINT) '[ generate ]'
-	@cd $(BIN); python ../script/gene.py
-	@-cd $(BIN); gnuplot auto.plt
-
-all: clean $(TARGET) run gene
-build: clean $(TARGET)
+$(LIBSPATH):
+	@$(MAKE) -C $@

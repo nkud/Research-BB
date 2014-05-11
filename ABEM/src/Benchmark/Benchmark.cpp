@@ -46,5 +46,3 @@ void Benchmark :: printElapsedTime() {
     double now = tv_.tv_sec + tv_.tv_usec * 1e-6;
     std::cout << "[ elapsed time ]: " << now - start_ << " sec" << std::endl;
 }
-
-
