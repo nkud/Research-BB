@@ -3,18 +3,19 @@ PRINT    = /bin/echo
 MKDIR	 = mkdir -vp
 
 OBJDIR = ../../obj
-INCLUDE = ../../include
+LIBDIR = ../../include
 
-vpath %.h $(INCLUDE)
-vpath %.h $(INCLUDE)/AdministratorStrategy
-vpath %.cpp AdministratorStrategy
+INCLUDE := $(shell find $(LIBDIR) -type d)
+CPPFLAGS     = $(addprefix -I, $(INCLUDE))
+
+SRCDIR := $(shell find . -type d)
+
+VPATH = $(INCLUDE) $(SRCDIR)
 
 TARGET	 = Administrator.o AdministratorStrategy.o NonOverlappingStrategy.o
 
-CPPFLAGS = -I ../../include
-
-
 OBJS = $(addprefix $(OBJDIR)/, $(TARGET))
+
 
 all: $(OBJS)
 

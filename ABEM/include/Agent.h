@@ -117,7 +117,9 @@ class Agent
     bool hasAlreadyGiveBirth();                                      /* 出産済みかどうか */
     void setGiveBirth();                                             /* 出産後にする */
     void resetGiveBirth();                                           /* 出産したかをリセット */
-
+    /*-----------------------------------------------------------------------------
+     *  タグ操作セット
+     *-----------------------------------------------------------------------------*/
     int getLen() const { return tag_->getLen(); }
     tag_t tagAt(int n) const { return tag_->tagAt(n); }
     Tag* getTag() const { return tag_; }
@@ -137,14 +139,13 @@ class Agent
     /*-----------------------------------------------------------------------------
      *  配列
      *-----------------------------------------------------------------------------*/
-    std::vector<VirusData *> *vlist_;                                /* 保持ウイルスのリスト */
-    std::vector<Virus *> *stand_by_list_;                            /* 待機ウイルスリスト */
+//    std::vector<VirusData *> *vlist_;                                /* 保持ウイルスのリスト */
+//    std::vector<Virus *> *stand_by_list_;                            /* 待機ウイルスリスト */
     /*-----------------------------------------------------------------------------
      *  戦略
      *-----------------------------------------------------------------------------*/
     __MovingStrategy *moving_strategy_;                              /* 移動戦略 */
     __ChildBirthStrategy *childbirth_strategy_;                      /* 子孫戦略 */
-    __ImmuneSystemStrategy *immunesystem_strategy_;
 };
 /*
  * =====================================================================================

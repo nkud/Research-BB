@@ -14,7 +14,25 @@
 #include "AgentStrategy.h"
 #include "Function.h"
 
-
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  ImmuneSystem :: ImmuneSystem
+ * Description:  コンストラクタ
+ *--------------------------------------------------------------------------------------
+ */
+ImmuneSystem :: ImmuneSystem() {
+    vlist_ = new std::vector<VirusData *>;
+    stand_by_list_ = new std::vector<Virus *>;
+    immunesystem_strategy_ = new TagFlip();
+}
+ImmuneSystem :: ~ImmuneSystem() {
+    delete vlist_;
+    delete stand_by_list_;
+    delete immunesystem_strategy_;
+}
+/*-----------------------------------------------------------------------------
+ *  ウイルスセット操作
+ *-----------------------------------------------------------------------------*/
 /*
  * 保持ウイルスセット
  */
@@ -36,6 +54,46 @@ std::vector<Virus *>::iterator ImmuneSystem :: getStandByListIteratorBegin() { r
 std::vector<Virus *>::iterator ImmuneSystem :: getStandByListIteratorEnd() { return (*stand_by_list_).end(); }
 void ImmuneSystem :: eraseStandByVirus( std::vector<Virus *>::iterator it ) { (*stand_by_list_).erase( it ); }
 void ImmuneSystem :: clearStandByVirus() { (*stand_by_list_).clear(); }
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  ImmuneSystem :: hasVirus( Virus & )
+ * Description:  
+ *--------------------------------------------------------------------------------------
+ */
+bool ImmuneSystem :: hasVirus( Virus &v ) const {
+  C_ITERATOR(VirusData *) it_vd = (*vlist_).begin();                 /* ウイルスリストの先頭から */
+  while( it_vd != (*vlist_).end() ) {                                /* 末尾まで */
+    if( (*it_vd)->v_ == &v ) {                                       /* 感染済みであれば */
+      return true;                                                   /* true を返す */
+    }
+    it_vd++;
+  }
+  return false;                                                      /* 未感染なので false を返す */
+}
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  ImmuneSystem :: infection( Tag & )
+ * Description:  感染したら、true を返す
+ *--------------------------------------------------------------------------------------
+ */
+bool ImmuneSystem :: infection( Agent &self, Virus &v )
+{
+  return immunesystem_strategy_->infection(self, v);
+}
+
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  ImmuneSystem :: response( Tag & )
+ * Description:  先頭のウイルスに対する免疫を獲得するまで、
+ *               １期間に１つタグをフリップさせていく。
+ *--------------------------------------------------------------------------------------
+ */
+void ImmuneSystem :: response( Agent &self )
+{
+  immunesystem_strategy_->response(self);
+}
 
 /*
  *--------------------------------------------------------------------------------------

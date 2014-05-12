@@ -34,12 +34,9 @@
 //  y_( 0 ),
 //  age_( 0 ),
 //  sex_( __MALE__ ),
-//  life_( __ALIVE__ ),
-//  stand_by_list_( 0 )
+//  life_( __ALIVE__ )
 //{
 //  tag_ = new Tag(A_DEFAULT_LEN);
-//  vlist_ = new std::vector<VirusData *>;                             /* 保持ウイルスリストを初期化 */
-//  stand_by_list_ = new std::vector<Virus *>;                         /* 待機ウイルスリストを初期化 */
 //
 //  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
 //
@@ -47,8 +44,6 @@
 //
 //  age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
 //
-//  //    (*vlist_).reserve( NUM_V );                                      /* 領域確保 */
-//  //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
 //}
 //Agent :: Agent( __MovingStrategy *ms ) :
 //  x_( 0 ),
@@ -56,12 +51,9 @@
 //  age_( 0 ),
 //  sex_( __MALE__ ),
 //  life_( __ALIVE__ ),
-//  stand_by_list_( 0 ),
 //  moving_strategy_( ms )
 //{
 //  tag_ = new Tag(A_DEFAULT_LEN);
-//  vlist_ = new std::vector<VirusData *>;                             /* 保持ウイルスリストを初期化 */
-//  stand_by_list_ = new std::vector<Virus *>;                         /* 待機ウイルスリストを初期化 */
 //
 //  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
 //
@@ -69,8 +61,6 @@
 //
 //  age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
 //
-//  //    (*vlist_).reserve( NUM_V );                                      /* 領域確保 */
-//  //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
 //}
 Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int len ) :
   x_( 0 ),
@@ -78,15 +68,10 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int len ) :
   age_( 0 ),
   sex_( __MALE__ ),
   life_( __ALIVE__ ),
-  stand_by_list_( 0 ),
   moving_strategy_( ms ),
-  childbirth_strategy_( cbs ),
-  immunesystem_strategy_( new TagFlip )
+  childbirth_strategy_( cbs )
 {
   tag_ = new Tag(len);
-  vlist_ = new std::vector<VirusData *>;                             /* 保持ウイルスリストを初期化 */
-
-  stand_by_list_ = new std::vector<Virus *>;                         /* 待機ウイルスリストを初期化 */
 
   tag_->setTagRandom();                                              /* タグをランダムに初期化 */
 
@@ -94,8 +79,8 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int len ) :
 
   age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
 
-  //    (*vlist_).reserve( NUM_V );                                      /* 領域確保 */
-  //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
+  immune_system_ = new ImmuneSystem();
+
 }
 //Agent :: Agent( __MovingStrategy *ms, const char *tag ) :
 //  x_( 0 ),
@@ -103,20 +88,15 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int len ) :
 //  age_( 0 ),
 //  sex_( __MALE__ ),
 //  life_( __ALIVE__ ),
-//  stand_by_list_( 0 ),
 //  moving_strategy_( ms ),
 //  childbirth_strategy_( new CoupleTag )
 //{
 //  tag_ = new Tag(tag);
-//  vlist_ = new std::vector<VirusData *>;                             /* 保持ウイルスリストを初期化 */
-//  stand_by_list_ = new std::vector<Virus *>;                         /* 待機ウイルスリストを初期化 */
 //
 //  sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
 //
 //  age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
 //
-//  //    (*vlist_).reserve( NUM_V );                                      /* 領域確保 */
-//  //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
 //}
 //Agent :: Agent( __MovingStrategy *ms, int minl, int maxl ) :
 //  x_( 0 ),
@@ -124,13 +104,10 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int len ) :
 //  age_( 0 ),
 //  sex_( __MALE__ ),
 //  life_( __ALIVE__ ),
-//  stand_by_list_( 0 ),
 //  moving_strategy_( ms ),
 //  childbirth_strategy_( new CoupleTag )
 //{
 //  tag_ = new Tag( rand_interval_int(minl, maxl) );                   /* ランダム長にタグを設定 */
-//  vlist_ = new std::vector<VirusData *>;                             /* 保持ウイルスリストを初期化 */
-//  stand_by_list_ = new std::vector<Virus *>;                         /* 待機ウイルスリストを初期化 */
 //
 //  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
 //
@@ -138,8 +115,6 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int len ) :
 //
 //  age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
 //
-//  //    (*vlist_).reserve( NUM_V );                                      /* 領域確保 */
-//  //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
 //}
 Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int maxl ) :
   x_( 0 ),
@@ -147,13 +122,10 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int m
   age_( 0 ),
   sex_( __MALE__ ),
   life_( __ALIVE__ ),
-  stand_by_list_( 0 ),
   moving_strategy_( ms ),
   childbirth_strategy_( cbs )
 {
   tag_ = new Tag( rand_interval_int(minl, maxl) );                   /* ランダム長にタグを設定 */
-  vlist_ = new std::vector<VirusData *>;                             /* 保持ウイルスリストを初期化 */
-  stand_by_list_ = new std::vector<Virus *>;                         /* 待機ウイルスリストを初期化 */
 
   tag_->setTagRandom();                                              /* タグをランダムに初期化 */
 
@@ -161,14 +133,11 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int m
 
   age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
 
-  //    (*vlist_).reserve( NUM_V );                                      /* 領域確保 */
-  //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
+  immune_system_ = new ImmuneSystem();                               /*  */
 }
 
 /* デストラクタ */
 Agent :: ~Agent() {
-  delete vlist_;
-  delete stand_by_list_;
   delete tag_;
 }
 
@@ -184,8 +153,7 @@ void Agent :: resetParam() {
   if( rand_binary() == 0 ) { sex_ = __MALE__;                        /* 性別をランダムに初期化 */
   } else { sex_ = __FEMALE__; }
   life_ = __ALIVE__;                                                 /* 生存 */
-  (*vlist_).clear();                                                 /* 保持ウイルスリストクリア */
-  (*stand_by_list_).clear();                                         /* 待機ウイルスリストクリア */
+  // immunesystem reset XXX
 }
 
 /*
@@ -221,24 +189,25 @@ int Agent :: getY() const { return y_; }                             /* エー�
 /*
  * 保持ウイルスセット
  */
-VirusData *Agent :: getVirusDataAt( int n ) const { return (*vlist_).at( n ); }
-void Agent :: pushVirusData( VirusData *vd ) { (*vlist_).push_back( vd ); }
-void Agent :: eraseVirusData( std::vector<VirusData *>::iterator it ) { delete (*it); (*vlist_).erase( it ); }
-int Agent :: getVirusListSize() const { return (*vlist_).size(); }
-std::vector<VirusData *>::iterator Agent :: getVirusListIteratorBegin() { return (*vlist_).begin(); }
-std::vector<VirusData *>::iterator Agent :: getVirusListIteratorEnd() { return (*vlist_).end(); }
-bool Agent :: hasNoVirusData() const { if( (*vlist_).empty() ) return true; else return false; }
+VirusData *Agent :: getVirusDataAt( int n ) const { return immune_system_->getVirusDataAt(n); }
+void Agent :: pushVirusData( VirusData *vd ) { immune_system_->pushVirusData(vd); }
+void Agent :: eraseVirusData( std::vector<VirusData *>::iterator it ) { immune_system_->eraseVirusData(it); }
+int Agent :: getVirusListSize() const { return immune_system_->getVirusListSize(); }
+std::vector<VirusData *>::iterator Agent :: getVirusListIteratorBegin() { return immune_system_->getVirusListIteratorBegin(); }
+std::vector<VirusData *>::iterator Agent :: getVirusListIteratorEnd() { return immune_system_->getVirusListIteratorEnd(); }
+bool Agent :: hasNoVirusData() const { return immune_system_->hasNoVirusData(); }
 /*
  * 待機ウイルスセット
  */
-void Agent :: pushStandByVirus( Virus *v ) { (*stand_by_list_).push_back( v ); }
-bool Agent :: hasNoStandByVirus() const { return (*stand_by_list_).empty(); }
-int Agent :: getStandByListSize() const { return (*stand_by_list_).size(); }
-Virus *Agent :: getStandByVirusAt( int n ) const { return (*stand_by_list_).at(n); }
-std::vector<Virus *>::iterator Agent :: getStandByListIteratorBegin() { return (*stand_by_list_).begin(); }
-std::vector<Virus *>::iterator Agent :: getStandByListIteratorEnd() { return (*stand_by_list_).end(); }
-void Agent :: eraseStandByVirus( std::vector<Virus *>::iterator it ) { (*stand_by_list_).erase( it ); }
-void Agent :: clearStandByVirus() { (*stand_by_list_).clear(); }
+void Agent :: pushStandByVirus( Virus *v ) { immune_system_->pushStandByVirus(v); }
+bool Agent :: hasNoStandByVirus() const { return immune_system_->hasNoStandByVirus(); }
+int Agent :: getStandByListSize() const { return immune_system_->getStandByListSize(); }
+Virus *Agent :: getStandByVirusAt( int n ) const { return immune_system_->getStandByVirusAt(n); }
+std::vector<Virus *>::iterator Agent :: getStandByListIteratorBegin() { return immune_system_->getStandByListIteratorBegin(); }
+std::vector<Virus *>::iterator Agent :: getStandByListIteratorEnd() { return immune_system_->getStandByListIteratorEnd(); }
+void Agent :: eraseStandByVirus( std::vector<Virus *>::iterator it ) { immune_system_->eraseStandByVirus(it); }
+void Agent :: clearStandByVirus() { immune_system_->clearStandByVirus(); }
+
 /* パラメータ */
 __LABEL__ Agent :: getSex() const { return sex_; }
 int Agent :: getAge() const { return age_; }
@@ -268,7 +237,7 @@ int Agent :: aging() {
  */
 bool Agent :: infection( Virus &v )
 {
-  return immunesystem_strategy_->infection(*this, v);
+  return immune_system_->infection( *this, v );
 }
 
 /*
@@ -280,7 +249,7 @@ bool Agent :: infection( Virus &v )
  */
 void Agent :: response()
 {
-  immunesystem_strategy_->response(*this);
+  immune_system_->response( *this );
 }
 
 /* 
@@ -303,14 +272,7 @@ bool Agent :: hasImmunity( const Virus &v ) const                    /* true -> 
  *               リストを走査することで確かめる
  *----------------------------------------------------------------------------------- */
 bool Agent :: hasVirus( Virus &v ) const {
-  C_ITERATOR(VirusData *) it_vd = (*vlist_).begin();                 /* ウイルスリストの先頭から */
-  while( it_vd != (*vlist_).end() ) {                                /* 末尾まで */
-    if( (*it_vd)->v_ == &v ) {                                       /* 感染済みであれば */
-      return true;                                                   /* true を返す */
-    }
-    it_vd++;
-  }
-  return false;                                                      /* 未感染なので false を返す */
+    return immune_system_->hasVirus( v );
 }
 
 /*
