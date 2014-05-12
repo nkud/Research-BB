@@ -17,7 +17,7 @@
 class Agent;
 
 #include "AgentStrategy/MovingStrategy.h"
-#include "AgentStrategy/ChildBirthStrategy.h"
+#include "AgentStrategy/ChildBirthStrategy/ChildBirthStrategy.h"
 #include "AgentStrategy/AgingStrategy.h"
 #include "AgentStrategy/ImmuneSystemStrategy.h"
 

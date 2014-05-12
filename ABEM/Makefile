@@ -9,11 +9,9 @@ SRCDIR	 = src
 BINDIR	 = bin
 
 MASTER	 = master
-NOW		 = $(shell date +"%y_%m%d_%H%M%S")
+NOW		 = $(shell date +result-%y-%m%d-%H%M%S)
 
-VPATH = obj
-
-CPPFLAGS = -I include
+VPATH = obj include
 
 LIBS := $(shell ls $(SRCDIR))
 

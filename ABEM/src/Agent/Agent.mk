@@ -3,7 +3,10 @@ PRINT    = /bin/echo
 MKDIR	 = mkdir -vp
 
 OBJDIR = ../../obj/
-INCLUDE = ../../include
+LIBDIR = ../../include
+
+INCLUDE := $(shell find $(LIBDIR) -type d)
+CPPFLAGS     = $(addprefix -I, $(INCLUDE))
 
 vpath %.h $(INCLUDE)
 vpath %.cpp ImmuneSystem
@@ -12,12 +15,11 @@ vpath %.cpp AgentStrategy/MovingStrategy
 vpath %.cpp AgentStrategy/ChildBirthStrategy
 vpath %.cpp AgentStrategy/AgingStrategy
 
-TARGET	 = Agent.o AgentStrategy.o MovingStrategy.o ChildBirthStrategy.o ImmuneSystem.o
-
-CPPFLAGS = -I ../../include
-
+TARGET	 = Agent.o MovingStrategy.o ImmuneSystem.o \
+		   CoupleTag.o Inheritance.o
 
 OBJS = $(addprefix $(OBJDIR), $(TARGET))
+
 
 all: $(OBJS)
 
