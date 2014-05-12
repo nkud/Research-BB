@@ -27,5 +27,5 @@ $(OBJDIR)%.o: %.cpp
 	@$(PRINT) Compiling $(notdir $@)...
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
 
-$(OBJDIR)Agent.o: Global.h Agent.h AgentStrategy.h Function.h Monitor.h TagInterface.h
+$(OBJDIR)Agent.o: Global.h Agent.h AgentStrategy.h Function.h Monitor.h Tag.h
 $(OBJDIR)AgentStrategy.o: AgentStrategy.h Agent.h Function.h

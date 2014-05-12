@@ -15,7 +15,7 @@
 #include "Function.h"
 #include "Monitor.h"
 #include "Global.h"
-#include "TagInterface.h"
+#include "Tag.h"
 
 #include <vector>
 #include <cassert>
@@ -30,7 +30,7 @@
  *--------------------------------------------------------------------------------------
  */
 Agent :: Agent() :
-  __TagInterface( A_DEFAULT_LEN ),
+  Tag( A_DEFAULT_LEN ),
   x_( 0 ),
   y_( 0 ),
   age_( 0 ),
@@ -51,7 +51,7 @@ Agent :: Agent() :
   //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
 }
 Agent :: Agent( __MovingStrategy *ms ) :
-  __TagInterface( A_DEFAULT_LEN ),
+  Tag( A_DEFAULT_LEN ),
   x_( 0 ),
   y_( 0 ),
   age_( 0 ),
@@ -73,7 +73,7 @@ Agent :: Agent( __MovingStrategy *ms ) :
   //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
 }
 Agent :: Agent( __MovingStrategy *ms, int len ) :
-  __TagInterface( len ),                                             /* タグ長を指定 */
+  Tag( len ),                                             /* タグ長を指定 */
   x_( 0 ),
   y_( 0 ),
   age_( 0 ),
@@ -97,7 +97,7 @@ Agent :: Agent( __MovingStrategy *ms, int len ) :
   //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
 }
 Agent :: Agent( __MovingStrategy *ms, const char *tag ) :
-  __TagInterface( tag ),                                             /* タグ長を指定 */
+  Tag( tag ),                                             /* タグ長を指定 */
   x_( 0 ),
   y_( 0 ),
   age_( 0 ),
@@ -118,7 +118,7 @@ Agent :: Agent( __MovingStrategy *ms, const char *tag ) :
   //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
 }
 Agent :: Agent( __MovingStrategy *ms, int minl, int maxl ) :
-  __TagInterface( rand_interval_int(minl,maxl) ),                    /* ランダムにタグの長さを設定 */
+  Tag( rand_interval_int(minl,maxl) ),                    /* ランダムにタグの長さを設定 */
   x_( 0 ),
   y_( 0 ),
   age_( 0 ),
@@ -141,7 +141,7 @@ Agent :: Agent( __MovingStrategy *ms, int minl, int maxl ) :
   //    (*stand_by_list_).reserve( NUM_V );                              /* 領域確保 */
 }
 Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int maxl ) :
-  __TagInterface( rand_interval_int(minl,maxl) ),                    /* ランダムにタグの長さを設定 */
+  Tag( rand_interval_int(minl,maxl) ),                    /* ランダムにタグの長さを設定 */
   x_( 0 ),
   y_( 0 ),
   age_( 0 ),
@@ -260,7 +260,7 @@ int Agent :: aging() {
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Agent :: infection( __TagInterface & )
+ *      Method:  Agent :: infection( Tag & )
  * Description:  感染したら、true を返す
  *--------------------------------------------------------------------------------------
  */
@@ -271,7 +271,7 @@ bool Agent :: infection( Virus &v )
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Agent :: response( __TagInterface & )
+ *      Method:  Agent :: response( Tag & )
  * Description:  先頭のウイルスに対する免疫を獲得するまで、
  *               １期間に１つタグをフリップさせていく。
  *--------------------------------------------------------------------------------------
@@ -296,11 +296,11 @@ bool Agent :: hasImmunity( const Virus &v ) const                    /* true -> 
 }
 
 /*--------------------------------------------------------------------------------------
- *      Method:  Agent :: hasVirus( __TagInterface & )
+ *      Method:  Agent :: hasVirus( Tag & )
  * Description:  特定のウイルスを保持しているかどうか
  *               リストを走査することで確かめる
  *----------------------------------------------------------------------------------- */
-bool Agent :: hasVirus( __TagInterface &v ) const {
+bool Agent :: hasVirus( Tag &v ) const {
   C_ITERATOR(VirusData *) it_vd = (*vlist_).begin();                 /* ウイルスリストの先頭から */
   while( it_vd != (*vlist_).end() ) {                                /* 末尾まで */
     if( (*it_vd)->v_ == &v ) {                                       /* 感染済みであれば */

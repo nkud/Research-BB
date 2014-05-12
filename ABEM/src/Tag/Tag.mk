@@ -5,7 +5,7 @@ MKDIR	 = mkdir -vp
 OBJDIR = ../../obj/
 
 VPATH = 
-TARGET	 = TagInterface.o
+TARGET	 = Tag.o
 
 CPPFLAGS = -I ../../include
 

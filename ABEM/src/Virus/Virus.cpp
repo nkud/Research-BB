@@ -25,7 +25,7 @@
  *--------------------------------------------------------------------------------------
  */
 Virus :: Virus() :
-    __TagInterface( V_DEFAULT_LEN ),                                     /* タグの長さは初期設定 */
+    Tag( V_DEFAULT_LEN ),                                     /* タグの長さは初期設定 */
     rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
 {
     FOR( i, V_DEFAULT_LEN ) {
@@ -34,7 +34,7 @@ Virus :: Virus() :
 }
 
 Virus :: Virus( __SearchStrategy *sp ) :
-    __TagInterface( V_DEFAULT_LEN ),                                     /* タグの長さは初期設定 */
+    Tag( V_DEFAULT_LEN ),                                     /* タグの長さは初期設定 */
     search_strategy_( sp ),
     rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
 {
@@ -57,7 +57,7 @@ void Virus :: setRate( const double r ) { rate_ = r; }
  *               タグはランダム
  *----------------------------------------------------------------------------------- */
 Virus :: Virus( int l, double r ):
-    __TagInterface( l ),                                             /* 長さを指定 */
+    Tag( l ),                                             /* 長さを指定 */
     rate_( r )                                                       /* 感染確率を指定 */
 {
     FOR( i, l ) {
@@ -72,17 +72,17 @@ Virus :: Virus( int l, double r ):
  *--------------------------------------------------------------------------------------
  */
 Virus :: Virus( const char *str ) :
-    __TagInterface( str ),                                           /* タグを直接指定 */
+    Tag( str ),                                           /* タグを直接指定 */
     rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
 {}
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Virus :: searchStartPoint( __TagInterface & )
+ *      Method:  Virus :: searchStartPoint( Tag & )
  * Description:  タグに対して、ハミング距離が最小となる位置に取り付く
  *--------------------------------------------------------------------------------------
  */
-int Virus :: searchStartPoint( const __TagInterface &tag ) const {
+int Virus :: searchStartPoint( const Tag &tag ) const {
     return search_strategy_->searchStartPoint( *this, tag );          /* 取り付く位置を返す */
 }
 
@@ -98,10 +98,10 @@ __SEARCH__TYPE__ Virus :: getSearchType() const {
 }
 
 /*--------------------------------------------------------------------------------------
- *      Method:  Normal :: searchStartPoint( const __TagInterface &, const __TagInterface & )
+ *      Method:  Normal :: searchStartPoint( const Tag &, const Tag & )
  * Description:  
  *----------------------------------------------------------------------------------- */
-int Normal :: searchStartPoint( const __TagInterface &myself, const __TagInterface &tag ) const {
+int Normal :: searchStartPoint( const Tag &myself, const Tag &tag ) const {
     int sp = -1;                                                     /* 取り付く位置 */
     sp                                                               /* 取り付く位置を計算する */
         = min_ham_distance_point( tag.getTag(), myself.getTag(), tag.getLen(), myself.getLen() );
@@ -119,10 +119,10 @@ __SEARCH__TYPE__ Normal :: getSearchType() const {
 }
 
 /*--------------------------------------------------------------------------------------
- *      Method:  Fixed :: searchStartPoint( const __TagInterface &, const __TagInterface & )
+ *      Method:  Fixed :: searchStartPoint( const Tag &, const Tag & )
  * Description:  
  *----------------------------------------------------------------------------------- */
-int Fixed :: searchStartPoint( const __TagInterface &myself, const __TagInterface &tag ) const {
+int Fixed :: searchStartPoint( const Tag &myself, const Tag &tag ) const {
     return sp_;                                                       /* 取り付く位置を返す */
 }
 
@@ -132,7 +132,7 @@ int Fixed :: searchStartPoint( const __TagInterface &myself, const __TagInterfac
  * Description:  
  *----------------------------------------------------------------------------------- */
 Virus :: Virus( int l, __SearchStrategy *sp ):
-    __TagInterface( l ),                                             /* 長さを指定 */
+    Tag( l ),                                             /* 長さを指定 */
     search_strategy_( sp ),                                           /* 戦略指定 */
     rate_( INFECTION_RATE )                                          /* 感染確率を指定 */
 {
@@ -149,7 +149,7 @@ Virus :: Virus( int l, __SearchStrategy *sp ):
  *--------------------------------------------------------------------------------------
  */
 Virus :: Virus( const char *str, __SearchStrategy *sp ) :
-    __TagInterface( str ),                                           /* タグを直接指定 */
+    Tag( str ),                                           /* タグを直接指定 */
     search_strategy_( sp ),                                           /* 戦略指定 */
     rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
 { }

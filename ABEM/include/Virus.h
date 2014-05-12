@@ -14,7 +14,7 @@
 #ifndef ___VIRUS
 #define ___VIRUS
 
-#include "TagInterface.h"
+#include "Tag.h"
 
 class __SearchStrategy;
 
@@ -36,7 +36,7 @@ enum __CLING_POS__ {                                                 /* 取り�
  *  Description:  ウイルス
  * =====================================================================================
  */
-class Virus : public __TagInterface                                  /* ウイルスのクラス*/
+class Virus : public Tag                                  /* ウイルスのクラス*/
 {
     public:
         /*-----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ class Virus : public __TagInterface                                  /* ウイ�
         double getRate() const;                                      /* 感染確率を返す */
         void setRate( const double r );                              /* 感染確率を設定 */
 
-        int searchStartPoint( const __TagInterface & ) const;        /* タグに取り付く位置を返す */
+        int searchStartPoint( const Tag & ) const;        /* タグに取り付く位置を返す */
         __SEARCH__TYPE__ getSearchType() const;
 
     private:
@@ -69,7 +69,7 @@ class Virus : public __TagInterface                                  /* ウイ�
  * ================================================================================== */
 class __SearchStrategy {                                             /* インターフェイス */
     public:
-        virtual int searchStartPoint( const __TagInterface &, const __TagInterface & ) const = 0;
+        virtual int searchStartPoint( const Tag &, const Tag & ) const = 0;
                                                                      /* 取り付く位置を返す */
         virtual __SEARCH__TYPE__ getSearchType() const = 0;          /* 戦略の種類を返す */
         virtual void check( int vlen ) const = 0;
@@ -85,7 +85,7 @@ class __SearchStrategy {                                             /* イン�
 class Normal : public __SearchStrategy {                             /* 通常方式 */
     // 最小ハミング距離の位置に取り付く
     public:
-        virtual int searchStartPoint( const __TagInterface &myself, const __TagInterface &tag ) const;
+        virtual int searchStartPoint( const Tag &myself, const Tag &tag ) const;
                                                                      /* 取り付く位置を返す */
         virtual __SEARCH__TYPE__ getSearchType() const;              /* 戦略の種類を返す: __NORMAL__*/
         virtual void check( int vlen ) const;                        /* ウイルスの長さでエラーチェック*/
@@ -95,7 +95,7 @@ class Fixed : public __SearchStrategy {                              /* 固定�
     // 初期設定で指定された位置に取り付く
     public:
         Fixed( int n ) : sp_( n ) { }
-        virtual int searchStartPoint( const __TagInterface &, const __TagInterface & ) const;
+        virtual int searchStartPoint( const Tag &, const Tag & ) const;
                                                                      /* 取り付く位置を返す */
         virtual __SEARCH__TYPE__ getSearchType() const;              /* 戦略の種類を返す: __FIXED__ */
         virtual void check( int vlen ) const;

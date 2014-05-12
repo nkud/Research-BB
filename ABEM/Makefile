@@ -33,7 +33,7 @@ $(BINDIR)/$(TARGET): $(LIBSPATH)
 # コンパイルする
 $(LIBSPATH):
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
-	@$(MAKE) -C $@ -f $(notdir $@).mk
+	@-$(MAKE) -C $@ -f $(notdir $@).mk
 
 # 実行する
 run:
@@ -42,13 +42,13 @@ run:
 
 # 結果を出力する
 gene:
-	@$(PRINT) '[ generate ]'
+	@$(PRINT) '>>> Generating...'
 	@cd $(BINDIR); python ../script/gene.py
 	@-cd $(BINDIR); gnuplot auto.plt
 
 # 結果をパッケージングする
 pack:
-	@$(PRINT) [ package ]
+	@$(PRINT) '>>> Packaging'
 	@[ -d $(MASTER) ] || $(MKDIR) $(MASTER)
 	@cd $(MASTER); $(MKDIR) $(NOW)/src
 	@cd $(MASTER); $(MKDIR) $(NOW)/assets
@@ -60,8 +60,9 @@ pack:
 
 # 削除する
 clean:
-	@$(PRINT) [ clean ]
-	@$(RM) -rvf $(OBJDIR) $(BINDIR)
+	@$(PRINT) -n '>>> Cleaning...'
+	@$(RM) -rf $(OBJDIR) $(BINDIR)
+	@$(PRINT) 'done'
 
 # テストする
 check:
@@ -72,7 +73,13 @@ print:
 	@$(PRINT) [ print ]
 
 grep:
-	find src -name '*.cpp' | xargs grep $(G) --color
+	@$(PRINT) '>>> src files'
+	@-find src -name '*.cpp' | xargs grep $(G) --color
+	@$(PRINT) '>>> include files'
+	@-find include -name '*.h' | xargs grep $(G) --color
+	@$(PRINT) '>>> makefile files'
+	@-grep $(G) Makefile --color
+	@-find src -name '*.mk' | xargs grep $(G) --color
 
 # コンパイル -> 実行 -> 結果出力
 all: $(BINDIR)/$(TARGET) run gene

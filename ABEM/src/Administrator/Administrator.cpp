@@ -120,11 +120,11 @@ int Administrator :: getNumOfAgent() const {
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Administrator :: numHasVirus( __TagInterface & )
+ *      Method:  Administrator :: numHasVirus( Tag & )
  * Description:  現在の感染者数を返す
  *--------------------------------------------------------------------------------------
  */
-int Administrator :: numHasVirus( __TagInterface &v ) const {
+int Administrator :: numHasVirus( Tag &v ) const {
   int ret = 0;
   ITERATOR(Agent *) it_a = agent_.begin();
   while( it_a != agent_.end() ) {                                    /* エージェント全員に対して */
@@ -138,7 +138,7 @@ int Administrator :: numHasVirus( __TagInterface &v ) const {
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Administrator :: numHasImmunity( __TagInterface & )
+ *      Method:  Administrator :: numHasImmunity( Tag & )
  * Description:  現在の免疫獲得者数数を返す
  *--------------------------------------------------------------------------------------
  */

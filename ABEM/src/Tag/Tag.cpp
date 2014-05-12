@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  TagInterface.cpp
+ *       Filename:  Tag.cpp
  *
  *    Description:  タグのインターフェイス
  *
@@ -11,7 +11,7 @@
  * =====================================================================================
  */
 
-#include "TagInterface.h"
+#include "Tag.h"
 #include "Global.h"
 #include "Function.h"
 
@@ -21,11 +21,11 @@
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  __TagInterface :: setTagRandom()
+ *      Method:  Tag :: setTagRandom()
  * Description:  タグをランダムに初期化する
  *--------------------------------------------------------------------------------------
  */
-void __TagInterface :: setTagRandom() {
+void Tag :: setTagRandom() {
     assert( len_ > 0 );
     FOR( i, len_ )
     {
@@ -34,11 +34,11 @@ void __TagInterface :: setTagRandom() {
 }
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  __TagInterface :: __TagInterface( int )
+ *      Method:  Tag :: Tag( int )
  * Description:  長さを指定して初期化する
  *--------------------------------------------------------------------------------------
  */
-__TagInterface :: __TagInterface( int l ) :
+Tag :: Tag( int l ) :
     len_( l ),                                                       /* 指定された長さで初期化 */
     tag_( 0 )
 {
@@ -48,18 +48,18 @@ __TagInterface :: __TagInterface( int l ) :
         tag_[i] = 0;                                                 /* すべてを０で初期化 */
     }
 }
-__TagInterface :: ~__TagInterface() {                                /* デストラクタ */
+Tag :: ~Tag() {                                /* デストラクタ */
     delete[] tag_;                                                   /* タグのメモリ領域を削除 */
 }
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  __TagInterface :: changeTagLenTo( int )
+ *      Method:  Tag :: changeTagLenTo( int )
  * Description:  タグの長さを変更する
  *               変更後はすべて０で初期化
  *--------------------------------------------------------------------------------------
  */
-void __TagInterface :: changeTagLenTo( int n ) {
+void Tag :: changeTagLenTo( int n ) {
     len_ = n;                                                        /* 長さを再設定 */
     delete[] tag_;                                                   /* 既存をメモリ削除 */
     tag_ = new tag_t[n];                                             /* 新たにメモリ割当 */
@@ -71,11 +71,11 @@ void __TagInterface :: changeTagLenTo( int n ) {
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  __TagInterface :: __TagInterface( const char * )
+ *      Method:  Tag :: Tag( const char * )
  * Description:  タグを文字列で直接指定して初期化
  *--------------------------------------------------------------------------------------
  */
-__TagInterface :: __TagInterface( const char *str ) :
+Tag :: Tag( const char *str ) :
     len_( strlen( str ) ),                                           /* 文字列の長さで初期化 */
     tag_( 0 )
 {
@@ -89,39 +89,39 @@ __TagInterface :: __TagInterface( const char *str ) :
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  __TagInterface :: getTag_()
+ *      Method:  Tag :: getTag_()
  * Description:  タグを返す
  *--------------------------------------------------------------------------------------
  */
-tag_t *__TagInterface :: getTag() const
+tag_t *Tag :: getTag() const
 {
     return tag_;                                                     /* タグを返す */
 }
 
 /*--------------------------------------------------------------------------------------
- *      Method:  __TagInterface :: getTagLen()
+ *      Method:  Tag :: getTagLen()
  * Description:  タグの長さを返す
  *----------------------------------------------------------------------------------- */
-int __TagInterface :: getLen() const {
+int Tag :: getLen() const {
     return len_;                                                     /* タグの長さを返す */
 }
 
 /*--------------------------------------------------------------------------------------
- *      Method:  __TagInterface :: tagAt( int )
+ *      Method:  Tag :: tagAt( int )
  * Description:  指定した位置のタグの値を返す
  *----------------------------------------------------------------------------------- */
-tag_t __TagInterface :: tagAt( const int n ) const {
+tag_t Tag :: tagAt( const int n ) const {
     assert( n < len_ );                                              /* 指定した位置が全長を越えるとエラー */
     return tag_[n];                                                  /* 指定された位置のタグを返す */
 }
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  __TagInterface :: printTag()
+ *      Method:  Tag :: printTag()
  * Description:  タグを表示する
  *--------------------------------------------------------------------------------------
  */
-void __TagInterface :: printTag() const {
+void Tag :: printTag() const {
     std::cout << "[ " <<this<< " ]" << ": ";                         /* 自身のポインタを表示する */
     FOR( i, len_ ) {
         std::cout << tag_[i];                                        /* タグを表示する */
@@ -131,11 +131,11 @@ void __TagInterface :: printTag() const {
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  __TagInterface :: setTag( tag_t *, int l )
+ *      Method:  Tag :: setTag( tag_t *, int l )
  * Description:  タグを設定する
  *--------------------------------------------------------------------------------------
  */
-void __TagInterface :: setTag( const tag_t *t, int l ) {
+void Tag :: setTag( const tag_t *t, int l ) {
     assert( l > 0 );                                                 /* 全長が０以下ならエラー */
     changeTagLenTo( l );                                             /* 全長を変更する */
     while( l-- ) {

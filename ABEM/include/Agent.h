@@ -14,7 +14,7 @@
 #ifndef ___AGENT
 #define ___AGENT
 
-#include "TagInterface.h"
+#include "Tag.h"
 #include "Virus.h"
 #include "AgentStrategy.h"
 
@@ -45,7 +45,7 @@ enum __LABEL__                                                       /* ラベ�
  * =====================================================================================
  */
 
-class Agent : public __TagInterface
+class Agent : public Tag
 {
   public:
     /*-----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ class Agent : public __TagInterface
     bool infection( Virus &v );                                      /* 感染プロセス  */
     void response();                                                 /* 免疫応答する（タグフリップ）  */
 
-    bool hasVirus( __TagInterface &v ) const;                        /* v に感染しているか */
+    bool hasVirus( Tag &v ) const;                        /* v に感染しているか */
     bool hasImmunity( const Virus &v ) const;                        /* v の免疫獲得済みか  */
     int numHoldingVirus() const;                                     /* 現在保持しているウイルスの数 */
     /*-----------------------------------------------------------------------------

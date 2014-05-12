@@ -17,7 +17,7 @@
 #include <map>
 #include <fstream>
 
-class __TagInterface;
+class Tag;
 
 /*
  * =====================================================================================
@@ -31,7 +31,7 @@ class Monitor {
          *  ゲッタ
          *-----------------------------------------------------------------------------*/
         int getContactNum() const;                                   /* 接触回数を返す */
-        int getInfectionContactNum( __TagInterface * );              /* 指定のウイルスの感染接触回数を返す */
+        int getInfectionContactNum( Tag * );              /* 指定のウイルスの感染接触回数を返す */
 
         static Monitor& Instance();                                  /* インスタンスを返す */
 
@@ -39,7 +39,7 @@ class Monitor {
          *  カウンタ
          *-----------------------------------------------------------------------------*/
         void countUpContact();                                       /* 接触しした回数 */
-        void countUpInfectionContact( __TagInterface * );            /* 感染のために接触してあるウイルスに感染した回数 */
+        void countUpInfectionContact( Tag * );            /* 感染のために接触してあるウイルスに感染した回数 */
 
         void resetAll();                                             /* 値をすべてリセット */
 
@@ -53,7 +53,7 @@ class Monitor {
         Monitor(): term_(0), num_contact_(0) { }                     /* コンストラクタ */
 
         int num_contact_;                                            /* 接触回数 */
-        std::map<__TagInterface *, int> num_infection_contact_;      /* 感染させた接触回数 */
+        std::map<Tag *, int> num_infection_contact_;      /* 感染させた接触回数 */
 
         int term_;
 };
