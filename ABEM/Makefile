@@ -33,7 +33,7 @@ $(BINDIR)/$(TARGET): $(LIBSPATH)
 # コンパイルする
 $(LIBSPATH):
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
-	@-$(MAKE) -C $@ -f $(notdir $@).mk
+	@$(MAKE) -C $@ -f $(notdir $@).mk
 
 # 実行する
 run:

@@ -25,23 +25,19 @@
  *--------------------------------------------------------------------------------------
  */
 Virus :: Virus() :
-    Tag( V_DEFAULT_LEN ),                                     /* タグの長さは初期設定 */
-    rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
+  rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
 {
-    FOR( i, V_DEFAULT_LEN ) {
-        tag_[i] = rand_binary();                                     /* タグをランダムに初期化 */
-    }
+  tag_ = new Tag( V_DEFAULT_LEN );
+  tag_->setTagRandom();                                                    /* タグをランダムに初期化 */
 }
 
 Virus :: Virus( __SearchStrategy *sp ) :
-    Tag( V_DEFAULT_LEN ),                                     /* タグの長さは初期設定 */
-    search_strategy_( sp ),
-    rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
+  search_strategy_( sp ),
+  rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
 {
-    FOR( i, V_DEFAULT_LEN ) {
-        tag_[i] = rand_binary();                                     /* タグをランダムに初期化 */
-    }
-    sp->check( V_DEFAULT_LEN );
+  tag_ = new Tag( V_DEFAULT_LEN );
+  tag_->setTagRandom();                                                    /* タグをランダムに初期化 */
+  sp->check( V_DEFAULT_LEN );
 }
 
 /*--------------------------------------------------------------------------------------
@@ -57,12 +53,10 @@ void Virus :: setRate( const double r ) { rate_ = r; }
  *               タグはランダム
  *----------------------------------------------------------------------------------- */
 Virus :: Virus( int l, double r ):
-    Tag( l ),                                             /* 長さを指定 */
-    rate_( r )                                                       /* 感染確率を指定 */
+  rate_( r )                                                       /* 感染確率を指定 */
 {
-    FOR( i, l ) {
-        tag_[i] = rand_binary();                                     /* タグをランダムに初期化 */
-    }
+  tag_ = new Tag( l );
+  tag_->setTagRandom();                                                    /* タグをランダムに初期化 */
 }
 
 /*
@@ -72,9 +66,10 @@ Virus :: Virus( int l, double r ):
  *--------------------------------------------------------------------------------------
  */
 Virus :: Virus( const char *str ) :
-    Tag( str ),                                           /* タグを直接指定 */
-    rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
-{}
+  rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
+{
+  tag_ = new Tag( str );
+}
 
 /*
  *--------------------------------------------------------------------------------------
@@ -83,9 +78,8 @@ Virus :: Virus( const char *str ) :
  *--------------------------------------------------------------------------------------
  */
 int Virus :: searchStartPoint( const Tag &tag ) const {
-    return search_strategy_->searchStartPoint( *this, tag );          /* 取り付く位置を返す */
+  return search_strategy_->searchStartPoint( *this, tag );          /* 取り付く位置を返す */
 }
-
 
 /*
  *--------------------------------------------------------------------------------------
@@ -94,18 +88,18 @@ int Virus :: searchStartPoint( const Tag &tag ) const {
  *--------------------------------------------------------------------------------------
  */
 __SEARCH__TYPE__ Virus :: getSearchType() const {
-    return search_strategy_->getSearchType();                         /* 戦略の種類を返す */
+  return search_strategy_->getSearchType();                         /* 戦略の種類を返す */
 }
 
 /*--------------------------------------------------------------------------------------
  *      Method:  Normal :: searchStartPoint( const Tag &, const Tag & )
  * Description:  
  *----------------------------------------------------------------------------------- */
-int Normal :: searchStartPoint( const Tag &myself, const Tag &tag ) const {
-    int sp = -1;                                                     /* 取り付く位置 */
-    sp                                                               /* 取り付く位置を計算する */
-        = min_ham_distance_point( tag.getTag(), myself.getTag(), tag.getLen(), myself.getLen() );
-    return sp;                                                       /* 取り付く位置を返す */
+int Normal :: searchStartPoint( const Virus &myself, const Tag &tag ) const {
+  int sp = -1;                                                     /* 取り付く位置 */
+  sp                                                               /* 取り付く位置を計算する */
+    = min_ham_distance_point( tag.getTag(), myself.getTag()->getTag(), tag.getLen(), myself.getTag()->getLen() );
+  return sp;                                                       /* 取り付く位置を返す */
 }
 
 /*
@@ -115,15 +109,15 @@ int Normal :: searchStartPoint( const Tag &myself, const Tag &tag ) const {
  *--------------------------------------------------------------------------------------
  */
 __SEARCH__TYPE__ Normal :: getSearchType() const {
-    return __NORMAL__;                                               /* 通常ウイルスであることを返す */
+  return __NORMAL__;                                               /* 通常ウイルスであることを返す */
 }
 
 /*--------------------------------------------------------------------------------------
  *      Method:  Fixed :: searchStartPoint( const Tag &, const Tag & )
  * Description:  
  *----------------------------------------------------------------------------------- */
-int Fixed :: searchStartPoint( const Tag &myself, const Tag &tag ) const {
-    return sp_;                                                       /* 取り付く位置を返す */
+int Fixed :: searchStartPoint( const Virus &myself, const Tag &tag ) const {
+  return sp_;                                                       /* 取り付く位置を返す */
 }
 
 
@@ -132,14 +126,13 @@ int Fixed :: searchStartPoint( const Tag &myself, const Tag &tag ) const {
  * Description:  
  *----------------------------------------------------------------------------------- */
 Virus :: Virus( int l, __SearchStrategy *sp ):
-    Tag( l ),                                             /* 長さを指定 */
-    search_strategy_( sp ),                                           /* 戦略指定 */
-    rate_( INFECTION_RATE )                                          /* 感染確率を指定 */
+  search_strategy_( sp ),                                           /* 戦略指定 */
+  rate_( INFECTION_RATE )                                          /* 感染確率を指定 */
 {
-    FOR( i, l ) {
-        tag_[i] = rand_binary();                                     /* タグをランダムに初期化 */
-    }
-    sp->check( l );
+  tag_ = new Tag( l );
+  tag_->setTagRandom();                                                    /* タグをランダムに初期化 */
+
+  sp->check( l );
 }
 
 /*
@@ -149,10 +142,12 @@ Virus :: Virus( int l, __SearchStrategy *sp ):
  *--------------------------------------------------------------------------------------
  */
 Virus :: Virus( const char *str, __SearchStrategy *sp ) :
-    Tag( str ),                                           /* タグを直接指定 */
-    search_strategy_( sp ),                                           /* 戦略指定 */
-    rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
-{ }
+  search_strategy_( sp ),                                           /* 戦略指定 */
+  rate_( INFECTION_RATE )                                          /* 感染確率は初期設定 */
+{
+  tag_ = new Tag( str );
+  tag_->setTagRandom();                                                    /* タグをランダムに初期化 */
+}
 
 /*
  *--------------------------------------------------------------------------------------
@@ -161,13 +156,13 @@ Virus :: Virus( const char *str, __SearchStrategy *sp ) :
  *--------------------------------------------------------------------------------------
  */
 __SEARCH__TYPE__ Fixed :: getSearchType() const {
-    return __FIXED__;                                                /* 固定ウイルスであることを返す */
+  return __FIXED__;                                                /* 固定ウイルスであることを返す */
 }
 
 void Normal :: check ( int vlen ) const {
-    return;
+  return;
 }
 
 void Fixed :: check( int vlen ) const {
-    assert( vlen+sp_ <= A_DEFAULT_LEN );
+  assert( vlen+sp_ <= A_DEFAULT_LEN );
 }
