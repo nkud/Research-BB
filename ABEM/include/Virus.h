@@ -59,6 +59,8 @@ class Virus
     __SEARCH__TYPE__ getSearchType() const;
 
     Tag* getTag() const { return tag_; }
+    int getLen() const { return tag_->getLen(); }
+    tag_t tagAt(int n) const { return tag_->tagAt(n); }
 
   private:
     Tag *tag_;                                                        /* 電子タグ */

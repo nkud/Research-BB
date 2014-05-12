@@ -85,7 +85,7 @@ class Agent
     bool infection( Virus &v );                                      /* 感染プロセス  */
     void response();                                                 /* 免疫応答する（タグフリップ）  */
 
-    bool hasVirus( Tag &v ) const;                        /* v に感染しているか */
+    bool hasVirus( Virus &v ) const;                        /* v に感染しているか */
     bool hasImmunity( const Virus &v ) const;                        /* v の免疫獲得済みか  */
     int numHoldingVirus() const;                                     /* 現在保持しているウイルスの数 */
     /*-----------------------------------------------------------------------------
@@ -117,6 +117,10 @@ class Agent
     bool hasAlreadyGiveBirth();                                      /* 出産済みかどうか */
     void setGiveBirth();                                             /* 出産後にする */
     void resetGiveBirth();                                           /* 出産したかをリセット */
+
+    int getLen() const { return tag_->getLen(); }
+    tag_t tagAt(int n) const { return tag_->tagAt(n); }
+    Tag* getTag() const { return tag_; }
 
   private:
     bool give_birth_;                                                /* 出産済みか */

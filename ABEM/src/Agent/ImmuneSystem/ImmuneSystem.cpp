@@ -25,7 +25,7 @@ void TagFlip :: response(Agent &self)
   if( self.hasNoVirusData() ) return;                                /* 保持ウイルスなし、終了する */
 
   ITERATOR(VirusData *) it = self.getVirusListIteratorBegin();       /* 先頭のウイルスに対し */
-  flip_once( self.getTag()+(*it)->sp_, (*it)->v_->getTag(), (*it)->v_->getLen() );            /* ひとつフリップする */
+  flip_once( self.getTag()->getTag()+(*it)->sp_, (*it)->v_->getTag()->getTag(), (*it)->v_->getLen() );            /* ひとつフリップする */
 
   if( self.hasImmunity( *((*it)->v_) ) )
   {                                                                  /* 免疫獲得すれば */
@@ -57,7 +57,7 @@ bool TagFlip :: infection(Agent &self, Virus &v)
   }
   VirusData *vdata                                                   /* 新しいウイルスデータを作成して */
     //        = new VirusData( v, min_ham_distance_point( tag_, v.getTag(), len_, v.getLen() ) );
-    = new VirusData( v, v.searchStartPoint( self ) );
+    = new VirusData( v, v.searchStartPoint( *self.getTag() ) );
   self.pushVirusData( vdata );                                       /* 保持ウイルスリストに追加する */
 
 //  Monitor::Instance().countUpInfectionContact(vdata->v_);            /* 感染のために接触した回数を増やす */

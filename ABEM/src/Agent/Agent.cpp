@@ -289,7 +289,7 @@ void Agent :: response()
  */
 bool Agent :: hasImmunity( const Virus &v ) const                    /* true -> 免疫獲得済み  */
 {
-  if( min_ham_distance_point( tag_->getTag(), v.getTag(), tag_->getLen(), v.getLen() ) < 0 )                   /* スタートポイントが -1 以下なら */
+  if( min_ham_distance_point( tag_->getTag(), v.getTag()->getTag(), tag_->getLen(), v.getTag()->getLen() ) < 0 )                   /* スタートポイントが -1 以下なら */
     return true;                                                     /* 免疫獲得済み */
   else                                                               /* 0 以上なら */
     return false;                                                    /* 未獲得 */
@@ -300,7 +300,7 @@ bool Agent :: hasImmunity( const Virus &v ) const                    /* true -> 
  * Description:  特定のウイルスを保持しているかどうか
  *               リストを走査することで確かめる
  *----------------------------------------------------------------------------------- */
-bool Agent :: hasVirus( Tag &v ) const {
+bool Agent :: hasVirus( Virus &v ) const {
   C_ITERATOR(VirusData *) it_vd = (*vlist_).begin();                 /* ウイルスリストの先頭から */
   while( it_vd != (*vlist_).end() ) {                                /* 末尾まで */
     if( (*it_vd)->v_ == &v ) {                                       /* 感染済みであれば */

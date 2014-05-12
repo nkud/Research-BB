@@ -80,7 +80,7 @@ class Administrator {
     /*-----------------------------------------------------------------------------
      *  カウント
      *-----------------------------------------------------------------------------*/
-    int numHasVirus( Tag & ) const;                       /* v に感染している人の数 */
+    int numHasVirus( Virus & ) const;                       /* v に感染している人の数 */
     int numHasAllVirus() const;                                      /* 全ウイルスに感染している人の数 */
     int numHasImmunity( Virus &v ) const;                            /* v の免疫獲得者数 */
     int numHasAllImmunity() const;                                   /* 全ウイルスの免疫獲得者数 */

@@ -27,7 +27,7 @@
  */
 int Monitor :: getContactNum() const { return num_contact_; }        /* 接触回数を返す*/
 
-int Monitor :: getInfectionContactNum( Tag *t ) {
+int Monitor :: getInfectionContactNum( Virus *t ) {
     return num_infection_contact_[ t ];                              /* 感染接触回数を返す */
 }
 
@@ -55,7 +55,7 @@ void Monitor :: resetAll()
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-void Monitor :: countUpInfectionContact( Tag *pv ) {
+void Monitor :: countUpInfectionContact( Virus *pv ) {
     num_infection_contact_[ pv ]++;                                  /* 指定のウイルスの感染接触回数をカウント */
 }
 void Monitor :: countUpContact() { num_contact_++; }                 /* 接触回数をカウント */

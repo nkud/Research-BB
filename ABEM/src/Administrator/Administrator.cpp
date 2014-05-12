@@ -124,7 +124,7 @@ int Administrator :: getNumOfAgent() const {
  * Description:  現在の感染者数を返す
  *--------------------------------------------------------------------------------------
  */
-int Administrator :: numHasVirus( Tag &v ) const {
+int Administrator :: numHasVirus( Virus &v ) const {
   int ret = 0;
   ITERATOR(Agent *) it_a = agent_.begin();
   while( it_a != agent_.end() ) {                                    /* エージェント全員に対して */
@@ -298,8 +298,8 @@ void Administrator :: printInitInfo() const {
 
   std::cout << "VIRUS:" << std::endl;                                /* ウイルス情報 */
   FOR(i,virus_.size()) { std::cout<<"\trate_"<<i<<":\t"<<(*virus_[i]).getRate();
-    std::cout<<"\tlen_"<<i<<":\t"<<(*virus_[i]).getLen()<<std::endl; }
-  FOR( i, virus_.size() ) (*virus_[ i ]).printTag();                 /* 全ウイルスのタグを表示 */
+    std::cout<<"\tlen_"<<i<<":\t"<<(*virus_[i]).getTag()->getLen()<<std::endl; }
+  FOR( i, virus_.size() ) (*virus_[ i ]).getTag()->printTag();       /* 全ウイルスのタグを表示 */
 }
 /*
  *--------------------------------------------------------------------------------------
