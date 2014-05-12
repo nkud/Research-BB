@@ -7,10 +7,11 @@
  *
  * ========================================================================== */
 
+#include "AdministratorStrategy/AdministratorStrategy.h"
+
 #include "Administrator.h"
 #include "Landscape.h"
 #include "Agent.h"
-#include "AdministratorStrategy.h"
 #include "Monitor.h"
 #include "Function.h"
 
@@ -66,7 +67,7 @@ __ModelStrategy :: initAgent() {
   Relocate *relocate = new Relocate;
   FOR( i, A_INIT_NUM ) {                                             /* 初期エージェントの数だけ */
     ad_->agent()->push_back(
-        new Agent( relocate, A_TAG_LEN ) );                          /* ランダムウォーク */
+        new Agent( relocate, A_DEFAULT_LEN ) );                          /* ランダムウォーク */
   }
 }
 void
@@ -183,19 +184,6 @@ __ModelStrategy :: contact() {
 }
 void
 __ModelStrategy :: mating() {
-  // no process
-}
-void
-__ModelStrategy :: aging() {
-  // no process
-}
-/*-----------------------------------------------------------------------------
- *
- *  デフォルト
- *
- *-----------------------------------------------------------------------------*/
-void
-Default :: mating() {
   /*-----------------------------------------------------------------------------
    *  交配・出産
    *-----------------------------------------------------------------------------*/
@@ -273,7 +261,7 @@ NEXT_AGENT:                                                          /* => 出�
   new_child_.clear();                                                /* 新しく誕生したエージェントの配列をクリア */
 }
 void
-Default :: aging() {
+__ModelStrategy :: aging() {
   /*-----------------------------------------------------------------------------
    *  老化
    *-----------------------------------------------------------------------------*/
@@ -291,61 +279,12 @@ Default :: aging() {
 }
 /*-----------------------------------------------------------------------------
  *
- *  NonOverlappingPopulation 戦略
+ *  デフォルト
  *
  *-----------------------------------------------------------------------------*/
-void NonOverlappingPopulation :: initAgent() {
-  RandomWalk *random_walk = new RandomWalk( 1 );
-  Relocate *relocate = new Relocate;
-  FOR( i, A_INIT_NUM ) {                                             /* 初期エージェントの数だけ */
-    ad_->agent()->push_back(
-        new Agent( random_walk, 20 ) );                                 /* ランダムウォーク */
-  }
-//  ITERATOR(Agent *) it = ad_->getAgentIteratorBegin();               /* 先頭のエージェントから */
-//  while( it != ad_->getAgentIteratorEnd() ) {                        /* エージェントの末尾まで */
-//    (*it)->setAge(0);
-//    it++;
-//  }
-}
-
 //void
-//NonOverlappingPopulation :: oneDay() {
-//  ad_->agingAgent();                                                   /* 老化する */
-//  ad_->moveAgent();                                                    /* 移動する */
-//
-//  ad_->contactAgent();                                                 /* 近隣に接触する */
-//  ad_->infectAgent();                                                  /* 待機ウイルスを感染させる */
-//  ad_->responseAgent();                                                /* 免疫応答（タグフリップ） */
+//Default :: mating() {
 //}
-
-void
-NonOverlappingPopulation :: aging() {
-  int die=0;
-  ITERATOR(Agent *) it = ad_->getAgentIteratorBegin();               /* 先頭のエージェントから */
-  while( it != ad_->getAgentIteratorEnd() ) {                        /* エージェントの末尾まで */
-    (*it)->aging();                                                  /* 老化させる */
-    if( (*it)->getAge() > A_MAX_AGE ) {                              /* もし寿命をこえたら */
-      (*it)->resetParam();                                            /* 生まれ変わる */
-      die++;
-    }
-    it++;                                                            /* 次のエージェントへ */
-  }
-  // 死亡人数を表示
-  LOG(die);
-}
-
-void
-NonOverlappingPopulation :: mating() {
-  ITERATOR(Agent *) it_b = ad_->getAgentIteratorBegin();
-  ITERATOR(Agent *) it_e = ad_->getAgentIteratorEnd();
-  it_e--;
-  while( it_b < it_e ) {
-    (*it_b)->resetParam();
-    (*it_e)->resetParam();
-    it_b++;
-    it_e--;
-  }
-  if(it_b==it_e) {
-    (*it_b)->resetParam();
-  }
-}
+//void
+//Default :: aging() {
+//}

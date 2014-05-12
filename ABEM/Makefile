@@ -70,6 +70,12 @@ check:
 	@$(PRINT) [ check ]
 	@$(PRINT) there is no test.
 
+print:
+	@$(PRINT) [ print ]
+
+grep:
+	find src -name '*.cpp' | xargs grep $(G) --color
+
 # コンパイル -> 実行 -> 結果出力
 all: $(BINDIR)/$(TARGET) run gene
 

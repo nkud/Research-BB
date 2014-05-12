@@ -40,7 +40,7 @@ Administrator :: Administrator( VECTOR(Agent *) &a, VECTOR(Virus *) &v, Landscap
   assert( &v != 0 );                                                 /* NULLならエラー */
   assert( l != 0 );                                                  /* NULLならエラー */
 
-  model_strategy_ = new Default;
+  model_strategy_ = new __ModelStrategy;
   model_strategy_->setAdministrator(this);
 
   agent_.reserve( A_MAX_NUM );                                       /* 最大エージェント数まで領域確保 */

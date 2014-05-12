@@ -45,33 +45,13 @@ class __ModelStrategy {
     Administrator *ad_;
 };
 
-/*-----------------------------------------------------------------------------
- *  デフォルト 戦略
- *-----------------------------------------------------------------------------*/
-class Default : public __ModelStrategy {
-  public:
-    virtual void aging();
-    virtual void mating();
-};
-
-/*-----------------------------------------------------------------------------
- *  NonOverlappingPopulation 戦略
- *-----------------------------------------------------------------------------*/
-class NonOverlappingPopulation : public __ModelStrategy {
-  public:
-    virtual void initAgent();
-
-    virtual void aging();
-    virtual void mating();
-//    virtual void oneDay();
-};
-
-
-/*-----------------------------------------------------------------------------
- *  OverlappingPopulation 戦略
- *-----------------------------------------------------------------------------*/
-class OverlappingPopulation : public __ModelStrategy {
-    public:
-};
-
+///*-----------------------------------------------------------------------------
+// *  デフォルト 戦略
+// *-----------------------------------------------------------------------------*/
+//class Default : public __ModelStrategy {
+//  public:
+//    virtual void aging();
+//    virtual void mating();
+//};
+//
 #endif

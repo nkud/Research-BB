@@ -15,7 +15,7 @@
 #define ___ADMINISTRATOR
 
 #include "Global.h"
-#include "AdministratorStrategy.h"
+#include "AdministratorStrategy/AdministratorStrategy.h"
 
 #include <vector>
 
