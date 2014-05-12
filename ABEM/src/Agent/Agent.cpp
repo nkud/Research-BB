@@ -41,7 +41,7 @@ Agent :: Agent() :
   vlist_ = new std::vector<VirusData *>;                             /* 保持ウイルスリストを初期化 */
   stand_by_list_ = new std::vector<Virus *>;                         /* 待機ウイルスリストを初期化 */
 
-  tag_->setTagRandom();                                                    /* タグをランダムに初期化 */
+  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
 
@@ -63,7 +63,7 @@ Agent :: Agent( __MovingStrategy *ms ) :
   vlist_ = new std::vector<VirusData *>;                             /* 保持ウイルスリストを初期化 */
   stand_by_list_ = new std::vector<Virus *>;                         /* 待機ウイルスリストを初期化 */
 
-  tag_->setTagRandom();                                                    /* タグをランダムに初期化 */
+  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
 
@@ -87,7 +87,7 @@ Agent :: Agent( __MovingStrategy *ms, int len ) :
   vlist_ = new std::vector<VirusData *>;                             /* 保持ウイルスリストを初期化 */
   stand_by_list_ = new std::vector<Virus *>;                         /* 待機ウイルスリストを初期化 */
 
-  tag_->setTagRandom();                                                    /* タグをランダムに初期化 */
+  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
 
@@ -127,11 +127,11 @@ Agent :: Agent( __MovingStrategy *ms, int minl, int maxl ) :
   moving_strategy_( ms ),
   childbirth_strategy_( new CoupleTag )
 {
-  tag_ = new Tag( rand_interval_int(minl, maxl) );                       /* ランダム長にタグを設定 */
+  tag_ = new Tag( rand_interval_int(minl, maxl) );                   /* ランダム長にタグを設定 */
   vlist_ = new std::vector<VirusData *>;                             /* 保持ウイルスリストを初期化 */
   stand_by_list_ = new std::vector<Virus *>;                         /* 待機ウイルスリストを初期化 */
 
-  tag_->setTagRandom();                                                    /* タグをランダムに初期化 */
+  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
 
@@ -150,11 +150,11 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int m
   moving_strategy_( ms ),
   childbirth_strategy_( cbs )
 {
-  tag_ = new Tag( rand_interval_int(minl, maxl) );                       /* ランダム長にタグを設定 */
+  tag_ = new Tag( rand_interval_int(minl, maxl) );                   /* ランダム長にタグを設定 */
   vlist_ = new std::vector<VirusData *>;                             /* 保持ウイルスリストを初期化 */
   stand_by_list_ = new std::vector<Virus *>;                         /* 待機ウイルスリストを初期化 */
 
-  tag_->setTagRandom();                                                    /* タグをランダムに初期化 */
+  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
 

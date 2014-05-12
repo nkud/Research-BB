@@ -43,11 +43,10 @@ class Tag
     tag_t tagAt( const int ) const ;                                 /* 特定の位置のタグの値を返す */
     void changeTagLenTo( int n );                                    /* タグの長さを変える */
     void printTag() const;                                           /* タグを表示 */
+
   private:
-  protected:
     int len_;                                                        /* タグ長 */
     tag_t *tag_;                                                     /* タグ */
-
 };
 
 #endif

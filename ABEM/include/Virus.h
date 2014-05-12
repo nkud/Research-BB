@@ -22,13 +22,13 @@ class __SearchStrategy;
  *  ラベル
  *-----------------------------------------------------------------------------*/
 enum __SEARCH__TYPE__ {                                              /* 取り付く位置の戦略 */
-  __NORMAL__,                                                      /* 通常方式 */
-  __FIXED__                                                        /* 固定方式 */
+  __NORMAL__,                                                        /* 通常方式 */
+  __FIXED__                                                          /* 固定方式 */
 };
 // XXX
 enum __CLING_POS__ {                                                 /* 取り付く位置 */
-  __LEFT__,                                                        /* 取り付く位置：左 */
-  __RIGHT__                                                        /* 取り付く位置：右 */
+  __LEFT__,                                                          /* 取り付く位置：左 */
+  __RIGHT__                                                          /* 取り付く位置：右 */
 };
 /*
  * =====================================================================================
@@ -42,30 +42,34 @@ class Virus
     /*-----------------------------------------------------------------------------
      *  コンストラクタ
      *-----------------------------------------------------------------------------*/
-    Virus( const char * );                                       /* コンストラクタ: タグ */
-    Virus( int, double );                                        /* コンストラクタ: タグ長, 感染率 */
-    Virus();                                                     /* コンストラクタ: default */
+    Virus( const char * );                                           /* コンストラクタ: タグ */
+    Virus( int, double );                                            /* コンストラクタ: タグ長, 感染率 */
+    Virus();                                                         /* コンストラクタ: default */
 
-    Virus( __SearchStrategy * );                                 /* コンストラクタ: 戦略 */
-    Virus( int, __SearchStrategy * );                            /* コンストラクタ: タグ長, 戦略 */
-    Virus( const char *, __SearchStrategy * );                   /* コンストラクタ: タグ長, 戦略 */
+    Virus( __SearchStrategy * );                                     /* コンストラクタ: 戦略 */
+    Virus( int, __SearchStrategy * );                                /* コンストラクタ: タグ長, 戦略 */
+    Virus( const char *, __SearchStrategy * );                       /* コンストラクタ: タグ長, 戦略 */
     /*-----------------------------------------------------------------------------
      *  パラメータ操作
      *-----------------------------------------------------------------------------*/
-    double getRate() const;                                      /* 感染確率を返す */
-    void setRate( const double r );                              /* 感染確率を設定 */
+    double getRate() const;                                          /* 感染確率を返す */
+    void setRate( const double r );                                  /* 感染確率を設定 */
 
-    int searchStartPoint( const Tag & ) const;        /* タグに取り付く位置を返す */
+    int searchStartPoint( const Tag & ) const;                       /* タグに取り付く位置を返す */
     __SEARCH__TYPE__ getSearchType() const;
 
-    Tag* getTag() const { return tag_; }
-    int getLen() const { return tag_->getLen(); }
-    tag_t tagAt(int n) const { return tag_->tagAt(n); }
+
+    /*-----------------------------------------------------------------------------
+     *  タグ操作
+     *-----------------------------------------------------------------------------*/
+    Tag* getTag() const { return tag_; }                             /* タグを返す */
+    int getLen() const { return tag_->getLen(); }                    /* タグ長を返す */
+    tag_t tagAt(int n) const { return tag_->tagAt(n); }              /* 特定位置のタグを返す */
 
   private:
-    Tag *tag_;                                                        /* 電子タグ */
-    double rate_;                                                /* 感染確率 */
-    const __SearchStrategy *search_strategy_;                    /* 取り付く位置の決め方の戦略を格納 */
+    Tag *tag_;                                                       /* 電子タグ */
+    double rate_;                                                    /* 感染確率 */
+    const __SearchStrategy *search_strategy_;                        /* 取り付く位置の決め方の戦略を格納 */
 };
 
 /* =====================================================================================
@@ -76,7 +80,7 @@ class __SearchStrategy {                                             /* イン�
   public:
     virtual int searchStartPoint( const Virus &, const Tag & ) const = 0;
     /* 取り付く位置を返す */
-    virtual __SEARCH__TYPE__ getSearchType() const = 0;          /* 戦略の種類を返す */
+    virtual __SEARCH__TYPE__ getSearchType() const = 0;              /* 戦略の種類を返す */
     virtual void check( int vlen ) const = 0;
 };
 
@@ -92,8 +96,8 @@ class Normal : public __SearchStrategy {                             /* 通常�
   public:
     virtual int searchStartPoint( const Virus &myself, const Tag &tag ) const;
     /* 取り付く位置を返す */
-    virtual __SEARCH__TYPE__ getSearchType() const;              /* 戦略の種類を返す: __NORMAL__*/
-    virtual void check( int vlen ) const;                        /* ウイルスの長さでエラーチェック*/
+    virtual __SEARCH__TYPE__ getSearchType() const;                  /* 戦略の種類を返す: __NORMAL__*/
+    virtual void check( int vlen ) const;                            /* ウイルスの長さでエラーチェック*/
 };
 
 class Fixed : public __SearchStrategy {                              /* 固定方式 */
@@ -102,10 +106,10 @@ class Fixed : public __SearchStrategy {                              /* 固定�
     Fixed( int n ) : sp_( n ) { }
     virtual int searchStartPoint( const Virus &, const Tag & ) const;
     /* 取り付く位置を返す */
-    virtual __SEARCH__TYPE__ getSearchType() const;              /* 戦略の種類を返す: __FIXED__ */
+    virtual __SEARCH__TYPE__ getSearchType() const;                  /* 戦略の種類を返す: __FIXED__ */
     virtual void check( int vlen ) const;
   private:
-    int sp_;                                                     /* 取り付く位置 */
+    int sp_;                                                         /* 取り付く位置 */
 };
 
 #endif
