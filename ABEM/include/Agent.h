@@ -53,7 +53,7 @@ class Agent
      *-----------------------------------------------------------------------------*/
     Agent();                                                         /* コンストラクタ  */
     Agent( __MovingStrategy *ms );                                   /* コンストラクタ  */
-    Agent( __MovingStrategy *ms, int len );
+    Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int len );
     Agent( __MovingStrategy *ms, const char *tag );
     Agent( __MovingStrategy *ms, int minl, int maxl );
     Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int maxl );
@@ -132,6 +132,7 @@ class Agent
     __LABEL__ life_;                                                 /* 生死 */
 
     Tag *tag_;                                                       /* 電子タグ */
+    ImmuneSystem *immune_system_;                                    /* 免疫機構 */
 
     /*-----------------------------------------------------------------------------
      *  配列

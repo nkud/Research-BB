@@ -65,9 +65,10 @@ __ModelStrategy :: initAgent() {
   //    CoupleTag *couple_tag = new CoupleTag;
   //  InheritanceLen *inh_len = new InheritanceLen;
   Relocate *relocate = new Relocate;
+  __ChildBirthStrategy *cbs = new CoupleTag;
   FOR( i, A_INIT_NUM ) {                                             /* 初期エージェントの数だけ */
     ad_->agent()->push_back(
-        new Agent( relocate, A_DEFAULT_LEN ) );                          /* ランダムウォーク */
+        new Agent( relocate, cbs, A_DEFAULT_LEN ) );                          /* ランダムウォーク */
   }
 }
 void

@@ -29,9 +29,10 @@
 void NonOverlappingPopulation :: initAgent() {
   RandomWalk *random_walk = new RandomWalk( 1 );
   Relocate *relocate = new Relocate;
+  __ChildBirthStrategy *cbs = new CoupleTag;
   FOR( i, A_INIT_NUM ) {                                             /* 初期エージェントの数だけ */
     ad_->agent()->push_back(
-        new Agent( random_walk, 20 ) );                                 /* ランダムウォーク */
+        new Agent( random_walk, cbs, 20 ) );                                 /* ランダムウォーク */
   }
 //  ITERATOR(Agent *) it = ad_->getAgentIteratorBegin();               /* 先頭のエージェントから */
 //  while( it != ad_->getAgentIteratorEnd() ) {                        /* エージェントの末尾まで */

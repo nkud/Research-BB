@@ -29,4 +29,4 @@ $(OBJDIR)%.o: %.cpp
 
 $(OBJDIR)Agent.o: Global.h Agent.h AgentStrategy.h Function.h Monitor.h Tag.h
 $(OBJDIR)AgentStrategy.o: AgentStrategy.h Agent.h Function.h
-$(OBJDIR)ImmuneSystem.o: AgentStrategy.h Agent.h Function.h
+$(OBJDIR)ImmuneSystem.o: AgentStrategy.h Agent.h Function.h ImmuneSystemStrategy.h
