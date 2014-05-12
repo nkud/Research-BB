@@ -77,3 +77,4 @@ grep:
 # コンパイル -> 実行 -> 結果出力
 all: $(BINDIR)/$(TARGET) run gene
 
+build: clean $(BINDIR)/$(TARGET)

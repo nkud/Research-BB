@@ -160,8 +160,8 @@ struct VirusData                                                     /* 保持�
 /*-----------------------------------------------------------------------------
  *  エージェントを操作
  *-----------------------------------------------------------------------------*/
-void die( Agent &a );                                                /* 死亡処理 */
-Agent* childbirth( const Agent &a, const Agent &b );                 /* 親から子を作成 */
+//void die( Agent &a );                                                /* 死亡処理 */
+//Agent* childbirth( const Agent &a, const Agent &b );                 /* 親から子を作成 */
 bool isOppositeSex( const Agent &a, const Agent &b );                /* 異性かどうか */
 
 #endif

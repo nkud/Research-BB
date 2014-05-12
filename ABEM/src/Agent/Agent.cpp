@@ -23,26 +23,6 @@
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Agent :: move
- * Description:  指定された戦略を使用して移動する
- *--------------------------------------------------------------------------------------
- */
-void Agent :: move() {
-  moving_strategy_->move( x_, y_ );                                  /* 戦略を使用して移動する */
-}
-__MovingStrategy* Agent :: getMovingStrategy() const { return moving_strategy_; }
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Agent :: childBirthWith
- * Description:  指定された戦略を使用して移動する
- *--------------------------------------------------------------------------------------
- */
-Agent* Agent :: childBirthWith( const Agent &partner ) const {
-  return childbirth_strategy_->childbirth( *this, partner );         /* 戦略を使用して移動する */
-}
-__ChildBirthStrategy* Agent :: getChildBirthStrategy() const { return childbirth_strategy_; }
-/*
- *--------------------------------------------------------------------------------------
  *      Method:  Agent :: Agent() / ~Agent()
  * Description:  コンストラクタ、デストラクタ
  *               性別はランダムに初期化
@@ -347,9 +327,9 @@ int Agent :: numHoldingVirus() const {
  *  Description:  
  * =====================================================================================
  */
-void die( Agent &a ) {
-  a.setLife( __DEATH__ );                                            /* 死亡する */
-}
+//void die( Agent &a ) {
+//  a.setLife( __DEATH__ );                                            /* 死亡する */
+//}
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -358,46 +338,46 @@ void die( Agent &a ) {
  *                タグはそれぞれからもらう。
  * =====================================================================================
  */
-Agent* childbirth( const Agent &a, const Agent &b ) {
-  assert( isOppositeSex( a, b ) );                                   /* 同性ならエラー */
-
-  Agent *child = new Agent;                                          /* 子供を作成 */
-
-  child->resetParam();                                               /* パラメータをリセット */
-
-#ifdef COUPLE_TAG
-  child->changeTagLenTo( A_DEFAULT_LEN );                            /* タグの長さを設定 */
-
-  tag_t *couple_tag = new tag_t[ a.getLen() + b.getLen() ];          /* 両親を元にした */
-  tag_t *p = couple_tag;                                             /* カップルタグを作成 */
-
-  FOR( i, a.getLen() ) {                                             /* 両親の */
-    *(p++) = a.tagAt( i );                                           /* タグを */
-  }
-  FOR( i, b.getLen() ) {                                             /* コピーしていく */
-    *(p++) = b.tagAt( i );
-  }
-  child->setTag(                                                     /* カップルタグを元に */
-      couple_tag+rand_interval_int(0,a.getLen()) , A_DEFAULT_LEN     /* 子供のタグを作成 */
-      );
-  delete[] couple_tag;                                               /* カップルタグを削除 */
-#endif
-
-  if( a.getSex() == __FEMALE__ ) {                                   /* 母親の居場所に */
-    int tx = a.getX();
-    int ty = a.getY();
-    child->setX( tx );                                               /* 子供を配置 */
-    child->setY( ty );
-  } else {
-    int tx = b.getX();
-    int ty = b.getY();
-    child->setX( tx );
-    child->setY( ty );
-  }
-
-  return child;                                                      /* 子供を返す */
-}
-
+//Agent* childbirth( const Agent &a, const Agent &b ) {
+//  assert( isOppositeSex( a, b ) );                                   /* 同性ならエラー */
+//
+//  Agent *child = new Agent;                                          /* 子供を作成 */
+//
+//  child->resetParam();                                               /* パラメータをリセット */
+//
+//#ifdef COUPLE_TAG
+//  child->changeTagLenTo( A_DEFAULT_LEN );                            /* タグの長さを設定 */
+//
+//  tag_t *couple_tag = new tag_t[ a.getLen() + b.getLen() ];          /* 両親を元にした */
+//  tag_t *p = couple_tag;                                             /* カップルタグを作成 */
+//
+//  FOR( i, a.getLen() ) {                                             /* 両親の */
+//    *(p++) = a.tagAt( i );                                           /* タグを */
+//  }
+//  FOR( i, b.getLen() ) {                                             /* コピーしていく */
+//    *(p++) = b.tagAt( i );
+//  }
+//  child->setTag(                                                     /* カップルタグを元に */
+//      couple_tag+rand_interval_int(0,a.getLen()) , A_DEFAULT_LEN     /* 子供のタグを作成 */
+//      );
+//  delete[] couple_tag;                                               /* カップルタグを削除 */
+//#endif
+//
+//  if( a.getSex() == __FEMALE__ ) {                                   /* 母親の居場所に */
+//    int tx = a.getX();
+//    int ty = a.getY();
+//    child->setX( tx );                                               /* 子供を配置 */
+//    child->setY( ty );
+//  } else {
+//    int tx = b.getX();
+//    int ty = b.getY();
+//    child->setX( tx );
+//    child->setY( ty );
+//  }
+//
+//  return child;                                                      /* 子供を返す */
+//}
+//
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  isOppositeSex( Agent &, Agent & )
@@ -411,3 +391,23 @@ bool isOppositeSex( const Agent &a, const Agent &b ) {
     return true;                                                     /* true */
   }
 }
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Agent :: move
+ * Description:  指定された戦略を使用して移動する
+ *--------------------------------------------------------------------------------------
+ */
+void Agent :: move() {
+  moving_strategy_->move( x_, y_ );                                  /* 戦略を使用して移動する */
+}
+__MovingStrategy* Agent :: getMovingStrategy() const { return moving_strategy_; }
+/*
+ *--------------------------------------------------------------------------------------
+ *      Method:  Agent :: childBirthWith
+ * Description:  指定された戦略を使用して移動する
+ *--------------------------------------------------------------------------------------
+ */
+Agent* Agent :: childBirthWith( const Agent &partner ) const {
+  return childbirth_strategy_->childbirth( *this, partner );         /* 戦略を使用して移動する */
+}
+__ChildBirthStrategy* Agent :: getChildBirthStrategy() const { return childbirth_strategy_; }
