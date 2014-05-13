@@ -11,6 +11,7 @@
  * =====================================================================================
  */
 #include "Agent.h"
+#include "Tag.h"
 #include "AgentStrategy.h"
 #include "Function.h"
 
@@ -20,15 +21,16 @@
  * Description:  コンストラクタ
  *--------------------------------------------------------------------------------------
  */
-ImmuneSystem :: ImmuneSystem() {
-    vlist_ = new std::vector<VirusData *>;
-    stand_by_list_ = new std::vector<Virus *>;
-    immunesystem_strategy_ = new TagFlip();
+ImmuneSystem :: ImmuneSystem()
+{
+  vlist_ = new std::vector<VirusData *>;
+  stand_by_list_ = new std::vector<Virus *>;
+  immunesystem_strategy_ = new TagFlip();
 }
 ImmuneSystem :: ~ImmuneSystem() {
-    delete vlist_;
-    delete stand_by_list_;
-    delete immunesystem_strategy_;
+  delete vlist_;
+  delete stand_by_list_;
+  delete immunesystem_strategy_;
 }
 /*-----------------------------------------------------------------------------
  *  ウイルスセット操作

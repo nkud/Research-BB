@@ -29,6 +29,7 @@ $(BINDIR)/$(TARGET): $(LIBSPATH)
 	@$(PRINT) -n 'Generating $(notdir $@)...'
 	@$(CC) -o $@ $(OBJS)
 	@$(PRINT) 'Done.'
+	@$(PRINT) '[ success compiling ]'
 
 # コンパイルする
 $(LIBSPATH):
