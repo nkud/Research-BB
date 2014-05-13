@@ -16,6 +16,7 @@
 #include "Global.h"
 #include "Virus.h"
 #include "Function.h"
+#include "Tag.h"
 
 /*
  *--------------------------------------------------------------------------------------
@@ -79,6 +80,26 @@ Virus :: Virus( const char *str ) :
   rate_( INFECTION_RATE )                                            /* 感染確率は初期設定 */
 {
   tag_ = new Tag( str );
+}
+
+Virus :: Virus( Virus *v ) {
+  cling_point_ = 0;
+  infection_time_ = 0;
+  rate_ = v->getRate();
+  tag_ = new Tag( v->getLen(), v->getTag()->getTag() );
+}
+
+bool Virus :: isEqualTo( Virus &v ) {
+  int len = getLen();
+  if( len != v.getLen() ) {
+    return false;
+  }
+  FOR( i, len ) {
+    if( tagAt(i) != v.tagAt(i) ) {
+      return false;
+    }
+  }
+  return true;
 }
 
 /*

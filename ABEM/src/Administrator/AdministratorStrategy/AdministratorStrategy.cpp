@@ -67,7 +67,7 @@ __ModelStrategy :: response() {
       = (*it_a)->getImmuneSystem()->getVirusListIteratorBegin();     /* 先頭のウイルスデータから */
     while( it_v != (*it_a)->getImmuneSystem()->getVirusListIteratorEnd() ) /* 末尾まで */
     {
-      if( (*it_v)->getInfectionTime() > V_LETHAL_PERIOD ) {            /* 感染期間が長すぎる */
+      if( (*it_v)->getInfectionTime() > V_LETHAL_PERIOD ) {          /* 感染期間が長すぎる */
         flag = true;                                                 /* ウイルスがあれば */
         break;
       }
@@ -137,34 +137,34 @@ __ModelStrategy :: infect() {
    *  感染の処理
    *-----------------------------------------------------------------------------*/
   ITERATOR(Virus *) itt;
-  Virus *tv;
+  Virus *v;
   int n;
   int infection_count;                                               /* 同時感染数をカウント。最大値を越えないように */
 
   ITERATOR(Agent *) it_myself = ad_->getAgentIteratorBegin();
   while( it_myself != ad_->getAgentIteratorEnd() ) {
-    if( (*it_myself)->getImmuneSystem()->hasNoStandByVirus() ) {                        /* 待機ウイルスが無ければ */
+    if( (*it_myself)->getImmuneSystem()->hasNoStandByVirus() ) {     /* 待機ウイルスが無ければ */
       it_myself++;                                                   /* 次のエージェントに */
       continue;                                                      /* スキップ */
     } else {                                                         /* あれば */
       infection_count = 0;
 
-      while( ! (*it_myself)->getImmuneSystem()->hasNoStandByVirus() ) {                 /* 待機ウイルスがなくなるまで */
+      while( ! (*it_myself)->getImmuneSystem()->hasNoStandByVirus() ) { /* 待機ウイルスがなくなるまで */
         if( infection_count >= A_MAX_V_INFECTED_ONE_TERM ) {         /* もし最大同時感染数を越えそうなら */
           break;                                                     /* 次のエージェントへ */
         }
 
-        n = rand_array( (*it_myself)->getImmuneSystem()->getStandByVirusListSize() );        /* ランダムに一個の */
-        tv = (*it_myself)->getImmuneSystem()->getStandByVirusAt( n );                   /* ウイルスを選んで */
-        if( (*it_myself)->infection( *tv ) ) {                       /* 感染させたら */
+        n = rand_array( (*it_myself)->getImmuneSystem()->getStandByVirusListSize() ); /* ランダムに一個の */
+        v = (*it_myself)->getImmuneSystem()->getStandByVirusAt( n ); /* ウイルスを選んで */
+        if( (*it_myself)->infection( *v ) ) {                        /* 感染させたら */
           infection_count++;                                         /* カウントを増やす */
         } else {
           itt = (*it_myself)->getImmuneSystem()->getStandByVirusListIteratorBegin();         /* もし感染しなければ */
           while(n-->0) { itt++; }                                    /* そのウイルスを */
-          (*it_myself)->getImmuneSystem()->eraseStandByVirus( itt );                    /* 待機ウイルスからはずして次のウイルス */
+          (*it_myself)->getImmuneSystem()->eraseStandByVirus( itt ); /* 待機ウイルスからはずして次のウイルス */
         }
       }
-      (*it_myself)->getImmuneSystem()->clearStandByVirus();                             /* 待機ウイルスをクリア */
+      (*it_myself)->getImmuneSystem()->clearStandByVirus();          /* 待機ウイルスをクリア */
     }
     it_myself++;                                                     /* 次のエージェントに */
   }

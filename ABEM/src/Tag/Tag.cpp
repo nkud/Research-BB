@@ -19,6 +19,16 @@
 #include <cassert>
 
 
+Tag :: Tag( int n, tag_t *t )
+{
+  len_ = n;
+  tag_ = new tag_t[ n ];
+  FOR( i, n )
+  {
+    tag_[i] = t[i];                                                 /* すべてを０で初期化 */
+  }
+}
+
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Tag :: setTagRandom()

@@ -32,6 +32,7 @@ class Tag
     Tag( int );                                                      /* コンストラクタ: 長さ */
     Tag( int minl, int maxl );                                       /* XXX コンストラクタ: 長さ */
     Tag( const char * );                                             /* コンストラクタ: 文字列 */
+    Tag( int, tag_t * );
     ~Tag();                                                          /* デストラクタ */
     /*-----------------------------------------------------------------------------
      *  タグ操作セット
@@ -43,6 +44,7 @@ class Tag
     tag_t tagAt( const int ) const ;                                 /* 特定の位置のタグの値を返す */
     void changeTagLenTo( int n );                                    /* タグの長さを変える */
     void printTag() const;                                           /* タグを表示 */
+    const tag_t *getTagString();
 
   private:
     int len_;                                                        /* タグ長 */

@@ -45,6 +45,7 @@ class Virus
     Virus( const char * );                                           /* コンストラクタ: タグ */
     Virus( int, double );                                            /* コンストラクタ: タグ長, 感染率 */
     Virus();                                                         /* コンストラクタ: default */
+    Virus( Virus * );
 
     Virus( __SearchStrategy * );                                     /* コンストラクタ: 戦略 */
     Virus( int, __SearchStrategy * );                                /* コンストラクタ: タグ長, 戦略 */
@@ -59,6 +60,8 @@ class Virus
 
     int searchStartPoint( const Tag & ) const;                       /* タグに取り付く位置を返す */
     __SEARCH__TYPE__ getSearchType() const;
+
+    bool isEqualTo( Virus & );
 
 
     /*-----------------------------------------------------------------------------

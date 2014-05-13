@@ -128,7 +128,7 @@ int ImmuneSystem :: response( Agent &self )
  */
 int TagFlip :: response(Agent &self)
 {
-  if( self.getImmuneSystem()->hasNoVirus() ) {                   /* 感染していなければ */
+  if( self.getImmuneSystem()->hasNoVirus() ) {                       /* 感染していなければ */
     self.getImmuneSystem()->resetInfectionTime();                    /* 感染期間は０で */
     return 0;                                                        /* 終了する */
   }
@@ -141,18 +141,18 @@ int TagFlip :: response(Agent &self)
       (*it)->getTag()->getTag(),
       (*it)->getLen() );
 
-  if( self.hasImmunity( **it ) )                             /* そのウイルスに対して */
+  if( self.hasImmunity( **it ) )                                     /* そのウイルスに対して */
   {                                                                  /* 免疫獲得すれば */
     // XXX: 要検討
-    self.getImmuneSystem()->eraseVirus( it );                    /* 保持ウイルスから v(先頭) を削除 */
+    self.getImmuneSystem()->eraseVirus( it );                        /* 保持ウイルスから v(先頭) を削除 */
   }
 
-  ITERATOR( Virus * ) it_v                                      /* 先頭のウイルスデータから */
+  ITERATOR( Virus * ) it_v                                           /* 先頭のウイルスデータから */
     = self.getImmuneSystem()->getVirusListIteratorBegin();
   while( it_v != self.getImmuneSystem()->getVirusListIteratorEnd() ) /* 末尾まで */
   {
-    (*it_v)->incrementInfectionTime();                                     /* 感染期間を */
-    it_v++;                                                         /* 増やす */
+    (*it_v)->incrementInfectionTime();                               /* 感染期間を */
+    it_v++;                                                          /* 増やす */
   }
 
   if( self.getImmuneSystem()->getVirusListSize() > 0 ) {             /* まだ感染していれば */
@@ -188,24 +188,26 @@ void ImmuneSystem :: resetInfectionTime() {
  * Description:  感染したら true を返す
  *--------------------------------------------------------------------------------------
  */
-bool TagFlip :: infection(Agent &self, Virus &v)
+bool TagFlip :: infection( Agent &self, Virus &v )
 {
-  if( self.getImmuneSystem()->getVirusListSize() >= A_MAX_V_CAN_HAVE ) {                /* 最大値を越えてたら */
+  if( self.getImmuneSystem()->getVirusListSize() >= A_MAX_V_CAN_HAVE ) { /* 最大値を越えてたら */
+    // A_MAX_V_CAPACITY
     return false;                                                    /* 感染せずに終了 */
   }
-  ITERATOR(Virus *) it_v = self.getImmuneSystem()->getVirusListIteratorBegin();    /* 保持ウイルスリストを取得 */
-  while( it_v != self.getImmuneSystem()->getVirusListIteratorEnd() ) {                 /* 既に保持しているウイルスなら */
-    if( (*it_v) == &v ) {
+  ITERATOR(Virus *) it_v = self.getImmuneSystem()->getVirusListIteratorBegin(); /* 保持ウイルスリストを取得 */
+  while( it_v != self.getImmuneSystem()->getVirusListIteratorEnd() ) { /* 既に保持しているウイルスなら */
+    if( (*it_v)->isEqualTo( v ) ) {
+      // XXX: あってる？？有効？？
       return false;                                                  /* 感染せずに終了 */
     }
-    it_v++;                                                         /* 次の保持ウイルス */
+    it_v++;                                                          /* 次の保持ウイルス */
   }
   if( self.hasImmunity( v ) ) {                                      /* 免疫獲得済みなら  */
     return false;                                                    /* 感染せずに終了 */
   }
 //  Virus *new_v                                                   /* 新しいウイルスデータを作成して */
 //    = new Virus( v, v.searchStartPoint( *self.getTag() ), 0 );
-  self.getImmuneSystem()->pushVirus( &v );                                       /* 保持ウイルスリストに追加する */
+  self.getImmuneSystem()->pushVirus( new Virus( &v ) );                           /* 保持ウイルスリストに追加する */
 
 //  Monitor::Instance().countUpInfectionContact(vdata->v_);            /* 感染のために接触した回数を増やす */
   return true;                                                       /* 感染して true を返す */
