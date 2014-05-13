@@ -40,8 +40,7 @@ Administrator :: Administrator( VECTOR(Agent *) &a, VECTOR(Virus *) &v, Landscap
   assert( &v != 0 );                                                 /* NULLならエラー */
   assert( l != 0 );                                                  /* NULLならエラー */
 
-  model_strategy_ = new __ModelStrategy;
-  model_strategy_->setAdministrator(this);
+  model_strategy_ = new __ModelStrategy( this );                     /* デフォルトモデル */
 
   agent_.reserve( A_MAX_NUM );                                       /* 最大エージェント数まで領域確保 */
 }
@@ -59,9 +58,17 @@ Administrator :: Administrator( VECTOR(Agent *) &a, VECTOR(Virus *) &v, Landscap
   assert( l != 0 );                                                  /* NULLならエラー */
   assert( model != 0 );                                              /* NULLならエラー */
 
-  model_strategy_->setAdministrator(this);
+  model_strategy_->setAdministrator( this );
 
   agent_.reserve( A_MAX_NUM );                                       /* 最大エージェント数まで領域確保 */
+}
+
+void Administrator :: initAgent( __MovingStrategy *mbs, __ChildBirthStrategy *cbs, int len, int num )
+{
+    /*-----------------------------------------------------------------------------
+     *  エージェントを初期化する
+     *-----------------------------------------------------------------------------*/
+    model_strategy_->initAgent( mbs, cbs, len, num );
 }
 
 /*--------------------------------------------------------------------------------------

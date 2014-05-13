@@ -18,6 +18,9 @@
 #define ___BENCHMARK
 #endif
 
+const int V_LETHAL_TIME = 10;
+const int V_INCUBATION_PERIOD = 5;
+
 /*-----------------------------------------------------------------------------
  *
  *  初期設定
@@ -28,7 +31,7 @@
 
 //#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-const int TERM                      = 500                 ;         /* 期間 */
+const int TERM                      = 500                 ;          /* 期間 */
 const int OUTPUT_INTERVAL           = 1                    ;         /* 出力する間隔 */
 const int MINI_SIZE_TERM            = 200                  ;
 
@@ -41,10 +44,11 @@ const int A_MAX_V_INFECTED_ONE_TERM = 1                    ;         /* １期�
 
 const int A_INIT_NUM                = 1000                  ;        /* 初期エージェントの数 */
 
-const double A_INIT_INFECTED_RATE   = 3                  ;         /* 初期感染率 */
+const double A_INIT_INFECTED_RATE   = 3                  ;           /* 初期感染率 */
 
 const int A_DEFAULT_LEN             = 20                   ;         /* エージェントのタグ長 */
 const int V_DEFAULT_LEN             = 18                   ;         /* エージェントのタグ長 */
+
 
 #define V_TAG_0 "000000000000"
 #define V_TAG_1 "111111111111"
@@ -54,7 +58,7 @@ const int A_MAX_NUM                 = A_INIT_NUM * 5       ;         /* 最大�
 
 const int A_MOVE_DISTANCE           = 10                   ;         /* エージェントの移動距離 */
 
-const int A_MAX_AGE                 = 10                  ;         /* 寿命 */
+const int A_MAX_AGE                 = 10                  ;          /* 寿命 */
 
 const double A_BIRTH_RATE           = 0.5                  ;         /* 出生率 */
 const int A_BIRTH_AGE_FROM          = int(A_MAX_AGE * 0.2) ;

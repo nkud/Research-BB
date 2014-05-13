@@ -10,7 +10,10 @@
 #ifndef ___ADMINISTRATOR_STRATEGY
 #define ___ADMINISTRATOR_STRATEGY
 
+class Virus;
 class Administrator;
+class __MovingStrategy;
+class __ChildBirthStrategy;
 
 /* =====================================================================================
  *        Class:  __ModelStrategy
@@ -20,38 +23,34 @@ class Administrator;
 class __ModelStrategy {
   public:
     /*-----------------------------------------------------------------------------
+     *  コンストラクタ・セッタ
+     *-----------------------------------------------------------------------------*/
+    __ModelStrategy( Administrator * );
+    void setAdministrator( Administrator * );
+    /*-----------------------------------------------------------------------------
      *  初期化
      *-----------------------------------------------------------------------------*/
-    void setAdministrator(Administrator *ad) { ad_ = ad; }
-    virtual void initAgent();
+    virtual void initAgent( __MovingStrategy *, __ChildBirthStrategy *, int, int );
     virtual void initVirus();
+    virtual void initVirus( Virus * );
     /*-----------------------------------------------------------------------------
      *  各フェイズ
      *-----------------------------------------------------------------------------*/
-    virtual void migrate();
+    virtual void migrate();                                          /* 移動 */
 
-    virtual void contact();
-    virtual void infect();
-    virtual void response();
+    virtual void contact();                                          /* 接触 */
+    virtual void infect();                                           /* 感染 */
+    virtual void response();                                         /* 免疫応答 */
 
-    virtual void aging();
-    virtual void mating();
+    virtual void aging();                                            /* 老化 */
+    virtual void mating();                                           /* 交配 */
     /*-----------------------------------------------------------------------------
      *  すべてプロセスを実行
      *-----------------------------------------------------------------------------*/
-//    virtual void oneDay();
+    virtual void executeOneDay();
 
   protected:                                                         /* XXX: あまりよくない */
     Administrator *ad_;
 };
 
-///*-----------------------------------------------------------------------------
-// *  デフォルト 戦略
-// *-----------------------------------------------------------------------------*/
-//class Default : public __ModelStrategy {
-//  public:
-//    virtual void aging();
-//    virtual void mating();
-//};
-//
 #endif

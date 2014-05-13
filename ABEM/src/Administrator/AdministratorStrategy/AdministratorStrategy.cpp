@@ -14,35 +14,40 @@
 #include "Agent.h"
 #include "Monitor.h"
 #include "Function.h"
+#include "Virus.h"
 
 #include <string>
+#include <cstdarg>
 
-/*-----------------------------------------------------------------------------
- *
- *  基底クラス
- *
- *-----------------------------------------------------------------------------*/
-//void __ModelStrategy :: oneDay() {
-//  /*-----------------------------------------------------------------------------
-//   *  エージェントの一日の行動
-//   *    1. 老化
-//   *    2. 交配・出産
-//   *    3. 移動
-//   *    4. 近隣に接触
-//   *    5. 感染
-//   *    6. 免疫応答
-//   *-----------------------------------------------------------------------------*/
-//#ifdef AGING_AGENT
-//  ad_->agingAgent();                                                 /* 老化する */
-//#endif
-//#ifdef MATING_AGENT
-//  ad_->matingAgant();                                                /* 交配、出産する */
-//#endif
-//  ad_->moveAgent();                                                  /* 移動する */
-//  ad_->contactAgent();                                               /* 近隣に接触する */
-//  ad_->infectAgent();                                                /* 待機ウイルスを感染させる */
-//  ad_->responseAgent();                                              /* 免疫応答（タグフリップ） */
-//}
+
+__ModelStrategy :: __ModelStrategy( Administrator *ad ) {
+  ad_ = ad;
+}
+void __ModelStrategy :: setAdministrator( Administrator *ad ) {
+  ad_ = ad;
+}
+
+void __ModelStrategy :: executeOneDay() {
+  /*-----------------------------------------------------------------------------
+   *  エージェントの一日の行動
+   *    1. 老化
+   *    2. 交配・出産
+   *    3. 移動
+   *    4. 近隣に接触
+   *    5. 感染
+   *    6. 免疫応答
+   *-----------------------------------------------------------------------------*/
+#ifdef AGING_AGENT
+  ad_->agingAgent();                                                 /* 老化する */
+#endif
+#ifdef MATING_AGENT
+  ad_->matingAgant();                                                /* 交配、出産する */
+#endif
+  ad_->moveAgent();                                                  /* 移動する */
+  ad_->contactAgent();                                               /* 近隣に接触する */
+  ad_->infectAgent();                                                /* 待機ウイルスを感染させる */
+  ad_->responseAgent();                                              /* 免疫応答（タグフリップ） */
+}
 void
 __ModelStrategy :: response() {
   /*-----------------------------------------------------------------------------
@@ -56,20 +61,14 @@ __ModelStrategy :: response() {
 
 }
 void
-__ModelStrategy :: initAgent() {
+__ModelStrategy :: initAgent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int len, int num )
+{
   /*-----------------------------------------------------------------------------
    *  エージェントを初期化する
    *-----------------------------------------------------------------------------*/
-  //  Relocate *relocate = new Relocate;
-  RandomWalk *random_walk = new RandomWalk( 1 );
-  //    CoupleTag *couple_tag = new CoupleTag;
-  //  InheritanceLen *inh_len = new InheritanceLen;
-  Relocate *relocate = new Relocate;
-  __ChildBirthStrategy *cbs = new CoupleTag;
-
-  FOR( i, A_INIT_NUM ) {                                             /* 初期エージェントの数だけ */
+  FOR( i, num ) {                                             /* 初期エージェントの数だけ */
     ad_->agent()->push_back(
-        new Agent( relocate, cbs, A_DEFAULT_LEN ) );                          /* ランダムウォーク */
+        new Agent( ms, cbs, len ) );
   }
 }
 void
@@ -77,14 +76,20 @@ __ModelStrategy :: initVirus() {
   /*-----------------------------------------------------------------------------
    *  ウイルスを初期化する
    *-----------------------------------------------------------------------------*/
-  // XXX
   //                                   1234567890123456789
-  ad_->virus()->push_back( new Virus( V_TAG_0, new Normal ) );        /* 通常ウイルスを追加 */
+  ad_->virus()->push_back( new Virus( V_TAG_0, new Normal ) );       /* 通常ウイルスを追加 */
   ad_->virus()->push_back( new Virus( V_TAG_1, new Normal ) );       /* 通常ウイルスを追加 */
   //  ad_->virus()->push_back( new Virus( 15, new Normal ) );          /* 通常ウイルスを追加 */
   //  ad_->virus()->push_back( new Virus( 15, new Normal ) );          /* 通常ウイルスを追加 */
   //  virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
   //  virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */
+}
+void
+__ModelStrategy :: initVirus( Virus *v ) {
+  /*-----------------------------------------------------------------------------
+   *  ウイルスを初期化する（指定）
+   *-----------------------------------------------------------------------------*/
+  ad_->virus()->push_back( v );                                      /* 通常ウイルスを追加 */
 }
 void __ModelStrategy :: migrate() {
   /*-----------------------------------------------------------------------------
@@ -279,14 +284,3 @@ __ModelStrategy :: aging() {
     }
   }
 }
-/*-----------------------------------------------------------------------------
- *
- *  デフォルト
- *
- *-----------------------------------------------------------------------------*/
-//void
-//Default :: mating() {
-//}
-//void
-//Default :: aging() {
-//}

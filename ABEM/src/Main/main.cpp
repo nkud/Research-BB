@@ -55,9 +55,13 @@ int main()
   VECTOR(Virus *) virus;                                             /* ウイルスの配列 */
   Landscape *landscape = new Landscape;                              /* 土地 */
 
+  /* 戦略 */
+  Relocate *relocate = new Relocate;
+  CoupleTag *couple_tag = new CoupleTag;
+
   /* 管理者 */
   Administrator admin( agent, virus, landscape );                    /* 管理者に登録 */
-  admin.initAgent();                                                 /* エージェント初期化 */
+  admin.initAgent( relocate, couple_tag, A_DEFAULT_LEN, A_INIT_NUM );            /* エージェント初期化 */
   admin.initVirus();                                                 /* ウイルス初期化 */
 
   /* モニター・ファイル生成クラス */
@@ -133,11 +137,7 @@ int main()
   ff.outputFile_LastLog( "Log.txt");
   admin.printInitInfo();                                             /* 初期状態を表示 */
 
-  //    ff.generateResultHtml(admin.getTerm());                          /* 結果表示用HTMLファイル出力 */
-  //    ff.generatePlotScriptForPng();                                   /* gnuplot用ファイル出力 */
-
   // 確認用 -----------------------------------------------------------------
-  // メモ
   LOG(sizeof(Agent));
   LOG(sizeof(Virus));
   LOG(sizeof(admin));

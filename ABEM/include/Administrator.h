@@ -21,6 +21,7 @@
 
 class Tag;
 class __ModelStrategy;
+class __ChildBirthStrategy;
 class Agent;
 class Virus;
 class Landscape;
@@ -40,7 +41,7 @@ class Administrator {
     Administrator( VECTOR(Agent *) & , VECTOR(Virus *) &, Landscape * );   /* コンストラクタ */
     Administrator( VECTOR(Agent *) & , VECTOR(Virus *) &, Landscape *,
         __ModelStrategy *model );                                    /* コンストラクタ */
-    void initAgent() { model_strategy_->initAgent(); }
+    void initAgent( __MovingStrategy *, __ChildBirthStrategy *, int, int );
     void initVirus() { model_strategy_->initVirus(); }
 
     /*------------------------------------------------------------------------

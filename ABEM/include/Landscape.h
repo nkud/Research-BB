@@ -13,7 +13,7 @@
 
 #ifndef ___LANDSCAPE
 #define ___LANDSCAPE
-                                                
+
 #include "Global.h"
 
 #include <vector>
