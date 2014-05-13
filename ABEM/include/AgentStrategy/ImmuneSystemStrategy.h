@@ -21,13 +21,15 @@ class ImmuneSystem {
 
     bool hasVirus( Virus & ) const;
     void incrementInfectionTime();
-    int getInfectioinTime() const;
+    int getInfectionTime() const;
     void resetInfectionTime();
     /*-----------------------------------------------------------------------------
      *  保持ウイルス操作セット
      *-----------------------------------------------------------------------------*/
     VirusData *getVirusDataAt( int ) const;                        /* 指定の保持ウイルスを返す */
+    VirusData *getOnSetVirusDataAt( int ) const;
     int getVirusListSize() const;                                  /* 保持ウイルスのリストを返す */
+    int getOnSetVirusListSize() const;
     void pushVirusData( VirusData * );                             /* 保持ウイルスに追加する */
     void eraseVirusData( std::vector<VirusData *>::iterator );     /* 指定の保持ウイルスを削除する */
     bool hasNoVirusData() const;                                   /* ウイルスを保持していない */
@@ -48,7 +50,7 @@ class ImmuneSystem {
     /*-----------------------------------------------------------------------------
      *  パラメータ
      *-----------------------------------------------------------------------------*/
-    int infectioin_time_;                                          /* 感染期間 */
+    int infection_time_;                                          /* 感染期間 */
     /*-----------------------------------------------------------------------------
      *  配列
      *-----------------------------------------------------------------------------*/
@@ -61,18 +63,20 @@ class ImmuneSystem {
  * =====================================================================================
  *        Class:  VirusList, VirusData
  *  Description:  エージェントの保持ウイルスデータ
+ *                XXX: ウイルスクラスにまとめるべきか
  * =====================================================================================
  */
 struct VirusData                                                     /* 保持ウイルスデータ  */
 {
   Virus *v_;                                                         /* 保持ウイルスへのポインタ  */
   int sp_;                                                           /* スタートポイント  */
+  int infection_time_;                                               /* ウイルス感染期間 */
 
   /*-----------------------------------------------------------------------------
    *  コンストラクタ
    *-----------------------------------------------------------------------------*/
-  VirusData(): v_( 0 ), sp_( 0 ) {};                                 /* ウイルスデータを初期化 */
-  VirusData( Virus &v, int sp ): v_(&v), sp_(sp) {};
+  VirusData(): v_( 0 ), sp_( 0 ), infection_time_( 0 ) {};                                 /* ウイルスデータを初期化 */
+  VirusData( Virus &v, int sp, int it ): v_(&v), sp_(sp), infection_time_(it) {};
 };
 
 

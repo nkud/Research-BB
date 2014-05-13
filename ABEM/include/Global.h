@@ -28,7 +28,7 @@
 
 //#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-const int TERM                      = 500                 ;          /* 期間 */
+const int TERM                      = 1000                 ;          /* 期間 */
 const int OUTPUT_INTERVAL           = 1                    ;         /* 出力する間隔 */
 const int MINI_SIZE_TERM            = 200                  ;
 
@@ -46,8 +46,8 @@ const double A_INIT_INFECTED_RATE   = 3                  ;           /* 初期�
 const int A_DEFAULT_LEN             = 20                   ;         /* エージェントのタグ長 */
 const int V_DEFAULT_LEN             = 18                   ;         /* エージェントのタグ長 */
 
-const int V_INCUBATION_PERIOD       = 3;
-const int V_LETHAL_PERIOD           = 20;
+const int V_INCUBATION_PERIOD       = 2;
+const int V_LETHAL_PERIOD           = 15;
 
 #define V_TAG_0 "000000000000"
 #define V_TAG_1 "111111111111"

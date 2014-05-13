@@ -61,11 +61,29 @@ __ModelStrategy :: response() {
   while( it_a != ad_->getAgentIteratorEnd() )                        /* 末尾まで */
   { 
     (*it_a)->response();                                             /* 免疫応答させる */
-    if( (*it_a)->getImmuneSystem()->getInfectioinTime() > V_LETHAL_PERIOD ) { /* もし寿命をこえたら */
+
+    bool flag = false;
+    ITERATOR( VirusData * ) it_vd
+      = (*it_a)->getImmuneSystem()->getVirusListIteratorBegin();     /* 先頭のウイルスデータから */
+    while( it_vd != (*it_a)->getImmuneSystem()->getVirusListIteratorEnd() ) /* 末尾まで */
+    {
+      if( (*it_vd)->infection_time_ > V_LETHAL_PERIOD ) {            /* 感染期間が長すぎる */
+        flag = true;                                                 /* ウイルスがあれば */
+        break;
+      }
+      it_vd++;
+    }
+    if( flag ) {
       ad_->deleteAgent( it_a );                                      /* 生存配列から削除される */
     } else {
       it_a++;                                                        /* 次のエージェントへ */
     }
+
+//    if( (*it_a)->getImmuneSystem()->getInfectioinTime() > V_LETHAL_PERIOD ) { /* もし寿命をこえたら */
+//      ad_->deleteAgent( it_a );                                      /* 生存配列から削除される */
+//    } else {
+//      it_a++;                                                        /* 次のエージェントへ */
+//    }
   }
 
 }
@@ -161,9 +179,13 @@ __ModelStrategy :: contact() {
 
   ITERATOR(Agent *) it_myself = ad_->getAgentIteratorBegin();        /* エージェントの先頭から */
   while( it_myself != ad_->getAgentIteratorEnd() ) {                 /* 末尾まで */
-    if( (*it_myself)->numHoldingVirus() <= 0 ) {
-      it_myself++;
-      continue;                                                      /* 健康ならスキップ */
+//    if( (*it_myself)->numHoldingVirus() <= 0 ) {
+//      it_myself++;
+//      continue;                                                      /* 健康ならスキップ */
+//    }
+    if( (*it_myself)->getImmuneSystem()->getOnSetVirusListSize() < 1 ) { /* 発症していなければ */
+      it_myself++;                                                   /* 次のエージェントへ */
+      continue;
     }
     ax = (*it_myself)->getX();                                       /* 感染者自身の位置 */
     ay = (*it_myself)->getY();
@@ -183,7 +205,8 @@ __ModelStrategy :: contact() {
         while( it != ad_->landscape()->getAgentIteratorEndAt( tx, ty ) )
         {                                                            /* その位置にいる人全員に */
           VirusData *tvdata =                                        /* ランダムに保持ウイルスから選んで */
-            (*it_myself)->getImmuneSystem()->getVirusDataAt( rand_array((*it_myself)->getImmuneSystem()->getVirusListSize()) );
+//            (*it_myself)->getImmuneSystem()->getVirusDataAt( rand_array((*it_myself)->getImmuneSystem()->getVirusListSize()) );
+            (*it_myself)->getImmuneSystem()->getOnSetVirusDataAt( rand_array((*it_myself)->getImmuneSystem()->getOnSetVirusListSize()) );
 
           if( tvdata->v_->getRate() > rand_interval_double(0,1) )
           {                                                          /* ウイルス特有の感染確率で */

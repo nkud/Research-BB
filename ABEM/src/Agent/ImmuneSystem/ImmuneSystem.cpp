@@ -22,7 +22,7 @@
  *--------------------------------------------------------------------------------------
  */
 ImmuneSystem :: ImmuneSystem() :
-  infectioin_time_( 0 )
+  infection_time_( 0 )
 {
   vlist_ = new std::vector<VirusData *>;
   stand_by_list_ = new std::vector<Virus *>;
@@ -56,6 +56,29 @@ std::vector<Virus *>::iterator ImmuneSystem :: getStandByListIteratorEnd() { ret
 void ImmuneSystem :: eraseStandByVirus( std::vector<Virus *>::iterator it ) { (*stand_by_list_).erase( it ); }
 void ImmuneSystem :: clearStandByVirus() { (*stand_by_list_).clear(); }
 
+int ImmuneSystem :: getOnSetVirusListSize() const {
+  int ret = 0;
+  C_ITERATOR(VirusData *) it_vd = (*vlist_).begin();                 /* ウイルスリストの先頭から */
+  while( it_vd != (*vlist_).end() ) {                                /* 末尾まで */
+    if( (*it_vd)->infection_time_ > V_INCUBATION_PERIOD ) {
+      ret++;
+    }
+    it_vd++;                                                         /* 次のウイルスリストへ */
+  }
+  return ret;
+}
+VirusData *ImmuneSystem :: getOnSetVirusDataAt( int n ) const {
+  int num = 0;
+  C_ITERATOR(VirusData *) it_vd = (*vlist_).begin();                 /* ウイルスリストの先頭から */
+  while( it_vd != (*vlist_).end() ) {                                /* 末尾まで */
+    if( num == n and (*it_vd)->infection_time_ > V_INCUBATION_PERIOD ) {
+      return (*it_vd);
+    }
+    it_vd++;                                                         /* 次のウイルスリストへ */
+    num++;
+  }
+  return (*it_vd);
+}
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  ImmuneSystem :: hasVirus( Virus & )
@@ -118,37 +141,45 @@ int TagFlip :: response(Agent &self)
       (*it)->v_->getTag()->getTag(),
       (*it)->v_->getLen() );
 
-  if( self.hasImmunity( *((*it)->v_) ) )
+  if( self.hasImmunity( *((*it)->v_) ) )                             /* そのウイルスに対して */
   {                                                                  /* 免疫獲得すれば */
     // XXX: 要検討
     self.getImmuneSystem()->eraseVirusData( it );                    /* 保持ウイルスから v(先頭) を削除 */
   }
 
+  ITERATOR( VirusData * ) it_vd                                      /* 先頭のウイルスデータから */
+    = self.getImmuneSystem()->getVirusListIteratorBegin();
+  while( it_vd != self.getImmuneSystem()->getVirusListIteratorEnd() ) /* 末尾まで */
+  {
+    (*it_vd)->infection_time_++;                                     /* 感染期間を */
+    it_vd++;                                                         /* 増やす */
+  }
+
   if( self.getImmuneSystem()->getVirusListSize() > 0 ) {             /* まだ感染していれば */
-    self.getImmuneSystem()->incrementInfectionTime();                /* 感染期間を増やして */
+    self.getImmuneSystem()->incrementInfectionTime();                /* 総感染期間を増やして */
   } else {                                                           /* そうでなければ */
     self.getImmuneSystem()->resetInfectionTime();                    /* 感染期間を０にリセット */
   }
-  return self.getImmuneSystem()->getInfectioinTime();                /* 感染期間を返す */
+  return self.getImmuneSystem()->getInfectionTime();                 /* 総染期間を返す */
 }
 void ImmuneSystem :: incrementInfectionTime() {
   /*-----------------------------------------------------------------------------
    *  感染期間を増やす
    *-----------------------------------------------------------------------------*/
-  assert( infectioin_time_ >= 0 );
-  infectioin_time_++;
+  assert( infection_time_ >= 0 );
+  infection_time_++;
 }
-int ImmuneSystem :: getInfectioinTime() const {
+int ImmuneSystem :: getInfectionTime() const {
   /*-----------------------------------------------------------------------------
    *  感染期間を返す
    *-----------------------------------------------------------------------------*/
-  return infectioin_time_;
+  return infection_time_;
 }
 void ImmuneSystem :: resetInfectionTime() {
   /*-----------------------------------------------------------------------------
    *  感染期間を０にリセットする
    *-----------------------------------------------------------------------------*/
-  infectioin_time_ = 0;
+  infection_time_ = 0;
 }
 
 /*
@@ -173,8 +204,7 @@ bool TagFlip :: infection(Agent &self, Virus &v)
     return false;                                                    /* 感染せずに終了 */
   }
   VirusData *vdata                                                   /* 新しいウイルスデータを作成して */
-    //        = new VirusData( v, min_ham_distance_point( tag_, v.getTag(), len_, v.getLen() ) );
-    = new VirusData( v, v.searchStartPoint( *self.getTag() ) );
+    = new VirusData( v, v.searchStartPoint( *self.getTag() ), 0 );
   self.getImmuneSystem()->pushVirusData( vdata );                                       /* 保持ウイルスリストに追加する */
 
 //  Monitor::Instance().countUpInfectionContact(vdata->v_);            /* 感染のために接触した回数を増やす */
