@@ -32,8 +32,8 @@ int Monitor :: getInfectionContactNum( Virus *t ) {
 }
 
 Monitor& Monitor :: Instance() {
-    static Monitor coredata;
-    return coredata;                                                 /* インスタンスを返す */
+    static Monitor singleton;
+    return singleton;                                                /* インスタンスを返す */
 }
 
 /*

@@ -29,40 +29,15 @@
  *               寿命は０才から最大年齢までの範囲でランダムに初期化
  *--------------------------------------------------------------------------------------
  */
-//Agent :: Agent() :
-//  x_( 0 ),
-//  y_( 0 ),
-//  age_( 0 ),
-//  sex_( __MALE__ ),
-//  life_( __ALIVE__ )
-//{
-//  tag_ = new Tag(A_DEFAULT_LEN);
-//
-//  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
-//
-//  sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
-//
-//  age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
-//
-//}
-//Agent :: Agent( __MovingStrategy *ms ) :
-//  x_( 0 ),
-//  y_( 0 ),
-//  age_( 0 ),
-//  sex_( __MALE__ ),
-//  life_( __ALIVE__ ),
-//  moving_strategy_( ms )
-//{
-//  tag_ = new Tag(A_DEFAULT_LEN);
-//
-//  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
-//
-//  sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
-//
-//  age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
-//
-//}
-Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int len ) :
+
+/*-----------------------------------------------------------------------------
+ *  移動戦略・子孫戦略・タグ長　指定
+ *-----------------------------------------------------------------------------*/
+Agent :: Agent(
+    __MovingStrategy *ms,                                            /* 移動戦略 */
+    __ChildBirthStrategy *cbs,                                       /* 子孫戦略 */
+    int len                                                          /* タグ長 */
+    ) :
   x_( 0 ),
   y_( 0 ),
   age_( 0 ),
@@ -71,51 +46,41 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int len ) :
   moving_strategy_( ms ),
   childbirth_strategy_( cbs )
 {
-  tag_ = new Tag(len);
+  immune_system_ = new ImmuneSystem();                               /* 免疫機構実装 */
 
+  tag_ = new Tag(len);
   tag_->setTagRandom();                                              /* タグをランダムに初期化 */
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
-
   age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
-
-  immune_system_ = new ImmuneSystem();
-
 }
-//Agent :: Agent( __MovingStrategy *ms, const char *tag ) :
-//  x_( 0 ),
-//  y_( 0 ),
-//  age_( 0 ),
-//  sex_( __MALE__ ),
-//  life_( __ALIVE__ ),
-//  moving_strategy_( ms ),
-//  childbirth_strategy_( new CoupleTag )
-//{
-//  tag_ = new Tag(tag);
-//
-//  sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
-//
-//  age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
-//
-//}
-//Agent :: Agent( __MovingStrategy *ms, int minl, int maxl ) :
-//  x_( 0 ),
-//  y_( 0 ),
-//  age_( 0 ),
-//  sex_( __MALE__ ),
-//  life_( __ALIVE__ ),
-//  moving_strategy_( ms ),
-//  childbirth_strategy_( new CoupleTag )
-//{
-//  tag_ = new Tag( rand_interval_int(minl, maxl) );                   /* ランダム長にタグを設定 */
-//
-//  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
-//
-//  sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
-//
-//  age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
-//
-//}
+
+/*-----------------------------------------------------------------------------
+ *  移動戦略・子孫戦略・タグ　指定
+ *-----------------------------------------------------------------------------*/
+Agent :: Agent(
+    __MovingStrategy *ms,                                            /* 移動戦略 */
+    __ChildBirthStrategy *cbs,                                       /* 子孫戦略 */
+    Tag *tag                                                         /* 電子タグ */
+    ) :
+  x_( 0 ),
+  y_( 0 ),
+  age_( 0 ),
+  sex_( __MALE__ ),
+  life_( __ALIVE__ ),
+  moving_strategy_( ms ),
+  childbirth_strategy_( cbs )
+{
+  immune_system_ = new ImmuneSystem();                               /* 免疫機構実装 */
+
+  tag_ = tag;                                                        /* 指定のタグに設定 */
+
+  sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
+  age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
+}
+/*-----------------------------------------------------------------------------
+ *  移動戦略・子孫戦略・タグ長（最小値~最大値）　指定
+ *-----------------------------------------------------------------------------*/
 Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int maxl ) :
   x_( 0 ),
   y_( 0 ),
@@ -125,20 +90,23 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int m
   moving_strategy_( ms ),
   childbirth_strategy_( cbs )
 {
-  tag_ = new Tag( rand_interval_int(minl, maxl) );                   /* ランダム長にタグを設定 */
+  immune_system_ = new ImmuneSystem();                               /* 免疫機構実装 */
 
+  tag_ = new Tag( rand_interval_int(minl, maxl) );                   /* ランダム長にタグを設定 */
   tag_->setTagRandom();                                              /* タグをランダムに初期化 */
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
-
   age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
 
-  immune_system_ = new ImmuneSystem();                               /*  */
 }
 
-/* デストラクタ */
+/*-----------------------------------------------------------------------------
+ *  デストラクタ
+ *  XXX: 初期化の仕方によって、デストラクトの方法を変更する必要有
+ *-----------------------------------------------------------------------------*/
 Agent :: ~Agent() {
   delete tag_;
+  delete immune_system_;
 }
 
 /*
@@ -179,36 +147,16 @@ void Agent :: resetGiveBirth() {
  *      Method:  Agent :: *
  * Description:  セッタ、ゲッタ関連
  *----------------------------------------------------------------------------------- */
-/*
- * エージェントの位置
- */
+/*-----------------------------------------------------------------------------
+ *  エージェントの位置
+ *-----------------------------------------------------------------------------*/
 void Agent :: setX( int x ) { x_ = x; }                              /* エージェントの位置を設定 */
 void Agent :: setY( int y ) { y_ = y; }                              /* エージェントの位置を設定 */
 int Agent :: getX() const { return x_; }                             /* エージェントの位置を返す */
 int Agent :: getY() const { return y_; }                             /* エージェントの位置を返す */
-/*
- * 保持ウイルスセット
- */
-VirusData *Agent :: getVirusDataAt( int n ) const { return immune_system_->getVirusDataAt(n); }
-void Agent :: pushVirusData( VirusData *vd ) { immune_system_->pushVirusData(vd); }
-void Agent :: eraseVirusData( std::vector<VirusData *>::iterator it ) { immune_system_->eraseVirusData(it); }
-int Agent :: getVirusListSize() const { return immune_system_->getVirusListSize(); }
-std::vector<VirusData *>::iterator Agent :: getVirusListIteratorBegin() { return immune_system_->getVirusListIteratorBegin(); }
-std::vector<VirusData *>::iterator Agent :: getVirusListIteratorEnd() { return immune_system_->getVirusListIteratorEnd(); }
-bool Agent :: hasNoVirusData() const { return immune_system_->hasNoVirusData(); }
-/*
- * 待機ウイルスセット
- */
-void Agent :: pushStandByVirus( Virus *v ) { immune_system_->pushStandByVirus(v); }
-bool Agent :: hasNoStandByVirus() const { return immune_system_->hasNoStandByVirus(); }
-int Agent :: getStandByListSize() const { return immune_system_->getStandByListSize(); }
-Virus *Agent :: getStandByVirusAt( int n ) const { return immune_system_->getStandByVirusAt(n); }
-std::vector<Virus *>::iterator Agent :: getStandByListIteratorBegin() { return immune_system_->getStandByListIteratorBegin(); }
-std::vector<Virus *>::iterator Agent :: getStandByListIteratorEnd() { return immune_system_->getStandByListIteratorEnd(); }
-void Agent :: eraseStandByVirus( std::vector<Virus *>::iterator it ) { immune_system_->eraseStandByVirus(it); }
-void Agent :: clearStandByVirus() { immune_system_->clearStandByVirus(); }
-
-/* パラメータ */
+/*-----------------------------------------------------------------------------
+ *  パラメータ
+ *-----------------------------------------------------------------------------*/
 __LABEL__ Agent :: getSex() const { return sex_; }
 int Agent :: getAge() const { return age_; }
 bool Agent :: hasAbilityToChildbirth() const
@@ -236,9 +184,7 @@ int Agent :: aging() {
  *--------------------------------------------------------------------------------------
  */
 bool Agent :: infection( Virus &v )
-{
-  return immune_system_->infection( *this, v );
-}
+{ return immune_system_->infection( *this, v ); }
 
 /*
  *--------------------------------------------------------------------------------------
@@ -248,10 +194,7 @@ bool Agent :: infection( Virus &v )
  *--------------------------------------------------------------------------------------
  */
 void Agent :: response()
-{
-  immune_system_->response( *this );
-}
-
+{ immune_system_->response( *this ); } 
 /* 
  *--------------------------------------------------------------------------------------
  *      Method:  Agent :: hasImmunity( Virus & )
@@ -282,20 +225,7 @@ bool Agent :: hasVirus( Virus &v ) const {
  *--------------------------------------------------------------------------------------
  */
 int Agent :: numHoldingVirus() const {
-  return getVirusListSize();                                         /* ウイルスリストのサイズを返す */
-}
-/* 
- * ===  FUNCTION  ======================================================================
- *         Name:  isOppositeSex( Agent &, Agent & )
- *  Description:  異性であれば true
- * =====================================================================================
- */
-bool isOppositeSex( const Agent &a, const Agent &b ) {
-  if( a.getSex() == b.getSex() ) {                                   /* 性別が同じなら */
-    return false;                                                    /* false */
-  } else {                                                           /* 異なれば */
-    return true;                                                     /* true */
-  }
+  return immune_system_->getVirusListSize();                         /* ウイルスリストのサイズを返す */
 }
 /*
  *--------------------------------------------------------------------------------------
@@ -320,58 +250,14 @@ __ChildBirthStrategy* Agent :: getChildBirthStrategy() const { return childbirth
 
 /* 
  * ===  FUNCTION  ======================================================================
- *         Name:  die( Agent & )
- *  Description:  
+ *         Name:  isOppositeSex( Agent &, Agent & )
+ *  Description:  異性であれば true
  * =====================================================================================
  */
-//void die( Agent &a ) {
-//  a.setLife( __DEATH__ );                                            /* 死亡する */
-//}
-
-/* 
- * ===  FUNCTION  ======================================================================
- *         Name:  childbirth( Agent &, Agent & )
- *  Description:  親から子を作成する。
- *                タグはそれぞれからもらう。
- * =====================================================================================
- */
-//Agent* childbirth( const Agent &a, const Agent &b ) {
-//  assert( isOppositeSex( a, b ) );                                   /* 同性ならエラー */
-//
-//  Agent *child = new Agent;                                          /* 子供を作成 */
-//
-//  child->resetParam();                                               /* パラメータをリセット */
-//
-//#ifdef COUPLE_TAG
-//  child->changeTagLenTo( A_DEFAULT_LEN );                            /* タグの長さを設定 */
-//
-//  tag_t *couple_tag = new tag_t[ a.getLen() + b.getLen() ];          /* 両親を元にした */
-//  tag_t *p = couple_tag;                                             /* カップルタグを作成 */
-//
-//  FOR( i, a.getLen() ) {                                             /* 両親の */
-//    *(p++) = a.tagAt( i );                                           /* タグを */
-//  }
-//  FOR( i, b.getLen() ) {                                             /* コピーしていく */
-//    *(p++) = b.tagAt( i );
-//  }
-//  child->setTag(                                                     /* カップルタグを元に */
-//      couple_tag+rand_interval_int(0,a.getLen()) , A_DEFAULT_LEN     /* 子供のタグを作成 */
-//      );
-//  delete[] couple_tag;                                               /* カップルタグを削除 */
-//#endif
-//
-//  if( a.getSex() == __FEMALE__ ) {                                   /* 母親の居場所に */
-//    int tx = a.getX();
-//    int ty = a.getY();
-//    child->setX( tx );                                               /* 子供を配置 */
-//    child->setY( ty );
-//  } else {
-//    int tx = b.getX();
-//    int ty = b.getY();
-//    child->setX( tx );
-//    child->setY( ty );
-//  }
-//
-//  return child;                                                      /* 子供を返す */
-//}
-//
+bool isOppositeSex( const Agent &a, const Agent &b ) {
+  if( a.getSex() == b.getSex() ) {                                   /* 性別が同じなら */
+    return false;                                                    /* false */
+  } else {                                                           /* 異なれば */
+    return true;                                                     /* true */
+  }
+}

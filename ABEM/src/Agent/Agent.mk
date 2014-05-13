@@ -10,7 +10,7 @@ CPPFLAGS     = $(addprefix -I, $(INCLUDE))
 
 SRCDIR := $(shell find . -type d)
 
-VPATH = $(INCLUDE) $(SRCDIR)
+VPATH = $(INCLUDE) $(SRCDIR) $(OBJDIR)
 
 TARGET	 = Agent.o MovingStrategy.o ImmuneSystem.o \
 		   CoupleTag.o Inheritance.o
@@ -26,5 +26,8 @@ $(OBJDIR)%.o: %.cpp
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
 
 $(OBJDIR)Agent.o: Global.h Agent.h AgentStrategy.h Function.h Monitor.h Tag.h
-$(OBJDIR)AgentStrategy.o: AgentStrategy.h Agent.h Function.h
 $(OBJDIR)ImmuneSystem.o: AgentStrategy.h Agent.h Function.h ImmuneSystemStrategy.h
+
+$(OBJDIR)AgentStrategy.o: AgentStrategy.h Agent.h Function.h
+$(OBJDIR)MovingStrategy.o: AgentStrategy.h Agent.h Function.h
+$(OBJDIR)CoupleTag.o: AgentStrategy.h Agent.h Function.h

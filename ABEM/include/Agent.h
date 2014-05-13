@@ -21,11 +21,9 @@
 #include <vector>
 #include <map>
 
-
 struct VirusData;
 class __MovingStrategy;
 class __ChildBirthStrategy;
-
 
 /*-----------------------------------------------------------------------------
  *  ラベル
@@ -38,13 +36,13 @@ enum __LABEL__                                                       /* ラベ�
   __MALE__,                                                          /* 男性 */
   __FEMALE__                                                         /* 女性 */
 };
+
 /*
  * =====================================================================================
  *        Class:  Agent
  *  Description:  エージェントクラス
  * =====================================================================================
  */
-
 class Agent
 {
   public:
@@ -52,33 +50,14 @@ class Agent
      *  コンストラクタ / デストラクタ
      *-----------------------------------------------------------------------------*/
     Agent();                                                         /* コンストラクタ  */
-    Agent( __MovingStrategy *ms );                                   /* コンストラクタ  */
     Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int len );
-    Agent( __MovingStrategy *ms, const char *tag );
-    Agent( __MovingStrategy *ms, int minl, int maxl );
+    Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, Tag *tag );
     Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int maxl );
     ~Agent();
     /*-----------------------------------------------------------------------------
-     *  保持ウイルス操作セット
+     *  免疫機構操作
      *-----------------------------------------------------------------------------*/
-    VirusData *getVirusDataAt( int ) const;                          /* 指定の保持ウイルスを返す */
-    int getVirusListSize() const;                                    /* 保持ウイルスのリストを返す */
-    void pushVirusData( VirusData * );                               /* 保持ウイルスに追加する */
-    void eraseVirusData( std::vector<VirusData *>::iterator );       /* 指定の保持ウイルスを削除する */
-    bool hasNoVirusData() const;                                     /* ウイルスを保持していない */
-    std::vector<VirusData *>::iterator getVirusListIteratorBegin();  /* 先頭へのイテレータを返す */
-    std::vector<VirusData *>::iterator getVirusListIteratorEnd();    /* 末尾へのイテレータを返す */
-    /*-----------------------------------------------------------------------------
-     *  待機ウイルス操作セット
-     *-----------------------------------------------------------------------------*/
-    Virus *getStandByVirusAt( int n ) const;                         /* 指定の待機ウイルスを返す */
-    int getStandByListSize() const;                                  /* 待機ウイルスの数を返す */
-    void pushStandByVirus( Virus *v );                               /* 待機ウイルスに追加する */
-    void eraseStandByVirus( std::vector<Virus *>::iterator it );     /* 指定の待機ウイルスを削除 */
-    void clearStandByVirus();                                        /* 待機ウイルスをすべて削除 */
-    bool hasNoStandByVirus() const;                                  /* ウイルスを保持していない */
-    std::vector<Virus *>::iterator getStandByListIteratorBegin();    /* 先頭へのイテレータを返す */
-    std::vector<Virus *>::iterator getStandByListIteratorEnd();      /* 末尾へのイテレータを返す */
+    ImmuneSystem *getImmuneSystem() { return immune_system_; }
     /*-----------------------------------------------------------------------------
      *  ウイルス操作セット
      *-----------------------------------------------------------------------------*/
@@ -135,12 +114,6 @@ class Agent
 
     Tag *tag_;                                                       /* 電子タグ */
     ImmuneSystem *immune_system_;                                    /* 免疫機構 */
-
-    /*-----------------------------------------------------------------------------
-     *  配列
-     *-----------------------------------------------------------------------------*/
-//    std::vector<VirusData *> *vlist_;                                /* 保持ウイルスのリスト */
-//    std::vector<Virus *> *stand_by_list_;                            /* 待機ウイルスリスト */
     /*-----------------------------------------------------------------------------
      *  戦略
      *-----------------------------------------------------------------------------*/
@@ -168,8 +141,6 @@ struct VirusData                                                     /* 保持�
 /*-----------------------------------------------------------------------------
  *  エージェントを操作
  *-----------------------------------------------------------------------------*/
-//void die( Agent &a );                                                /* 死亡処理 */
-//Agent* childbirth( const Agent &a, const Agent &b );                 /* 親から子を作成 */
 bool isOppositeSex( const Agent &a, const Agent &b );                /* 異性かどうか */
 
 #endif
