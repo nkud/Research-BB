@@ -61,7 +61,7 @@ class Agent
      *  ウイルス操作セット
      *-----------------------------------------------------------------------------*/
     bool infection( Virus &v );                                      /* 感染プロセス  */
-    void response();                                                 /* 免疫応答する（タグフリップ）  */
+    int response();                                                 /* 免疫応答する（タグフリップ）  */
 
     bool hasVirus( Virus &v ) const;                                 /* v に感染しているか */
     bool hasImmunity( const Virus &v ) const;                        /* v の免疫獲得済みか  */

@@ -193,8 +193,8 @@ bool Agent :: infection( Virus &v )
  *               １期間に１つタグをフリップさせていく。
  *--------------------------------------------------------------------------------------
  */
-void Agent :: response()
-{ immune_system_->response( *this ); } 
+int Agent :: response()
+{ return immune_system_->response( *this ); } 
 /* 
  *--------------------------------------------------------------------------------------
  *      Method:  Agent :: hasImmunity( Virus & )

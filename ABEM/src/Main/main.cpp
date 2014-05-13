@@ -3,12 +3,13 @@
  *
  *       Filename:  main.cpp
  *
- *    Description:  
+ *    Description:  説明を書く
  *
  *         Author:  Naoki Ueda
  *   Organization:  OPU, 3G
  *   TODO:
- *      new 系を Factory method で統一したい
+ *      - new 系を Factory method で統一したい
+ *      - readme
  *
  * =====================================================================================
  */

@@ -18,9 +18,6 @@
 #define ___BENCHMARK
 #endif
 
-const int V_LETHAL_TIME = 10;
-const int V_INCUBATION_PERIOD = 5;
-
 /*-----------------------------------------------------------------------------
  *
  *  初期設定
@@ -49,6 +46,8 @@ const double A_INIT_INFECTED_RATE   = 3                  ;           /* 初期�
 const int A_DEFAULT_LEN             = 20                   ;         /* エージェントのタグ長 */
 const int V_DEFAULT_LEN             = 18                   ;         /* エージェントのタグ長 */
 
+const int V_INCUBATION_PERIOD       = 3;
+const int V_LETHAL_PERIOD           = 10;
 
 #define V_TAG_0 "000000000000"
 #define V_TAG_1 "111111111111"

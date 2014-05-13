@@ -17,9 +17,11 @@ class ImmuneSystem {
        *  免疫機構操作
        *-----------------------------------------------------------------------------*/
       bool infection( Agent &self, Virus &v );                       /* 感染プロセス  */
-      void response( Agent &self );                                  /* 免疫応答する（タグフリップ）  */
+      int response( Agent &self );                                  /* 免疫応答する（タグフリップ）  */
 
       bool hasVirus( Virus & ) const;
+      void incrementInfectionTime();
+      int getInfectioinTime() const;
       /*-----------------------------------------------------------------------------
        *  保持ウイルス操作セット
        *-----------------------------------------------------------------------------*/
@@ -42,6 +44,10 @@ class ImmuneSystem {
       void eraseStandByVirus( std::vector<Virus *>::iterator it );   /* 指定の待機ウイルスを削除 */
       void clearStandByVirus();                                      /* 待機ウイルスをすべて削除 */
     private:
+      /*-----------------------------------------------------------------------------
+       *  パラメータ
+       *-----------------------------------------------------------------------------*/
+      int infectioin_time_;                                          /* 感染期間 */
       /*-----------------------------------------------------------------------------
        *  配列
        *-----------------------------------------------------------------------------*/
@@ -76,7 +82,7 @@ struct VirusData                                                     /* 保持�
 class __ImmuneSystemStrategy {
   public:
     virtual ~__ImmuneSystemStrategy() { };
-    virtual void response(Agent &self) = 0;
+    virtual int response(Agent &self) = 0;
     virtual bool infection(Agent &self, Virus &v ) = 0;
 };
 
@@ -85,7 +91,7 @@ class __ImmuneSystemStrategy {
  *-----------------------------------------------------------------------------*/
 class TagFlip : public __ImmuneSystemStrategy {
   public:
-    virtual void response(Agent &self);
+    virtual int response(Agent &self);
     virtual bool infection(Agent &self, Virus &v );
 };
 

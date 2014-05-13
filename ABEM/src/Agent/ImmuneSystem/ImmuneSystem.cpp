@@ -21,7 +21,8 @@
  * Description:  コンストラクタ
  *--------------------------------------------------------------------------------------
  */
-ImmuneSystem :: ImmuneSystem()
+ImmuneSystem :: ImmuneSystem() :
+  infectioin_time_( 0 )
 {
   vlist_ = new std::vector<VirusData *>;
   stand_by_list_ = new std::vector<Virus *>;
@@ -33,11 +34,11 @@ ImmuneSystem :: ~ImmuneSystem() {
   delete immunesystem_strategy_;
 }
 /*-----------------------------------------------------------------------------
- *  ウイルスセット操作
+ *
+ *  ウイルス操作セット
+ *
  *-----------------------------------------------------------------------------*/
-/*
- * 保持ウイルスセット
- */
+/* 保持ウイルスセット */
 VirusData *ImmuneSystem :: getVirusDataAt( int n ) const { return (*vlist_).at( n ); }
 int ImmuneSystem :: getVirusListSize() const { return (*vlist_).size(); }
 void ImmuneSystem :: pushVirusData( VirusData *vd ) { (*vlist_).push_back( vd ); }
@@ -45,9 +46,7 @@ void ImmuneSystem :: eraseVirusData( std::vector<VirusData *>::iterator it ) { d
 bool ImmuneSystem :: hasNoVirusData() const { if( (*vlist_).empty() ) return true; else return false; }
 std::vector<VirusData *>::iterator ImmuneSystem :: getVirusListIteratorBegin() { return (*vlist_).begin(); }
 std::vector<VirusData *>::iterator ImmuneSystem :: getVirusListIteratorEnd() { return (*vlist_).end(); }
-/*
- * 待機ウイルスセット
- */
+/* 待機ウイルスセット */
 Virus *ImmuneSystem :: getStandByVirusAt( int n ) const { return (*stand_by_list_).at(n); }
 void ImmuneSystem :: pushStandByVirus( Virus *v ) { (*stand_by_list_).push_back( v ); }
 int ImmuneSystem :: getStandByListSize() const { return (*stand_by_list_).size(); }
@@ -69,7 +68,7 @@ bool ImmuneSystem :: hasVirus( Virus &v ) const {
     if( (*it_vd)->v_ == &v ) {                                       /* 感染済みであれば */
       return true;                                                   /* true を返す */
     }
-    it_vd++;
+    it_vd++;                                                         /* 次のウイルスリストへ */
   }
   return false;                                                      /* 未感染なので false を返す */
 }
@@ -92,20 +91,21 @@ bool ImmuneSystem :: infection( Agent &self, Virus &v )
  *               １期間に１つタグをフリップさせていく。
  *--------------------------------------------------------------------------------------
  */
-void ImmuneSystem :: response( Agent &self )
+int ImmuneSystem :: response( Agent &self )
 {
-  immunesystem_strategy_->response(self);
+  return immunesystem_strategy_->response(self);
 }
 
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  TagFlip :: response
  * Description:  タグを１つずつフリップする
+ *               感染期間を返す
  *--------------------------------------------------------------------------------------
  */
-void TagFlip :: response(Agent &self)
+int TagFlip :: response(Agent &self)
 {
-  if( self.getImmuneSystem()->hasNoVirusData() ) return;                                /* 保持ウイルスなし、終了する */
+  if( self.getImmuneSystem()->hasNoVirusData() ) return 0;           /* 保持ウイルスなし、終了する */
 
   ITERATOR(VirusData *) it = self.getImmuneSystem()->getVirusListIteratorBegin();       /* 先頭のウイルスに対し */
   flip_once( self.getTag()->getTag()+(*it)->sp_, (*it)->v_->getTag()->getTag(), (*it)->v_->getLen() );            /* ひとつフリップする */
@@ -113,8 +113,19 @@ void TagFlip :: response(Agent &self)
   if( self.hasImmunity( *((*it)->v_) ) )
   {                                                                  /* 免疫獲得すれば */
     // XXX: 要検討
-    self.getImmuneSystem()->eraseVirusData( it );                                       /* 保持ウイルスから v(先頭) を削除して */
+    self.getImmuneSystem()->eraseVirusData( it );                    /* 保持ウイルスから v(先頭) を削除して */
   }
+  if( self.getImmuneSystem()->getVirusListSize() > 0 ) {             /* 感染していれば */
+    self.getImmuneSystem()->incrementInfectionTime();                /* 感染期間を増やして */
+  }
+  return self.getImmuneSystem()->getInfectioinTime();                /* 感染期間を返す */
+}
+void ImmuneSystem :: incrementInfectionTime() {
+  assert( infectioin_time_ >= 0 );
+  infectioin_time_++;
+}
+int ImmuneSystem :: getInfectioinTime() const {
+  return infectioin_time_;
 }
 
 /*
