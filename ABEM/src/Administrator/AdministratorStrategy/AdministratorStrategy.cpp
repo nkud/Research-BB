@@ -63,15 +63,15 @@ __ModelStrategy :: response() {
     (*it_a)->response();                                             /* 免疫応答させる */
 
     bool flag = false;
-    ITERATOR( VirusData * ) it_vd
+    ITERATOR( Virus * ) it_v
       = (*it_a)->getImmuneSystem()->getVirusListIteratorBegin();     /* 先頭のウイルスデータから */
-    while( it_vd != (*it_a)->getImmuneSystem()->getVirusListIteratorEnd() ) /* 末尾まで */
+    while( it_v != (*it_a)->getImmuneSystem()->getVirusListIteratorEnd() ) /* 末尾まで */
     {
-      if( (*it_vd)->infection_time_ > V_LETHAL_PERIOD ) {            /* 感染期間が長すぎる */
+      if( (*it_v)->getInfectionTime() > V_LETHAL_PERIOD ) {            /* 感染期間が長すぎる */
         flag = true;                                                 /* ウイルスがあれば */
         break;
       }
-      it_vd++;
+      it_v++;
     }
     if( flag ) {
       ad_->deleteAgent( it_a );                                      /* 生存配列から削除される */
@@ -79,7 +79,7 @@ __ModelStrategy :: response() {
       it_a++;                                                        /* 次のエージェントへ */
     }
 
-//    if( (*it_a)->getImmuneSystem()->getInfectioinTime() > V_LETHAL_PERIOD ) { /* もし寿命をこえたら */
+//    if( (*it_a)->getImmuneSystem()->getInfectionTime() > V_LETHAL_PERIOD ) { /* もし寿命をこえたら */
 //      ad_->deleteAgent( it_a );                                      /* 生存配列から削除される */
 //    } else {
 //      it_a++;                                                        /* 次のエージェントへ */
@@ -154,12 +154,12 @@ __ModelStrategy :: infect() {
           break;                                                     /* 次のエージェントへ */
         }
 
-        n = rand_array( (*it_myself)->getImmuneSystem()->getStandByListSize() );        /* ランダムに一個の */
+        n = rand_array( (*it_myself)->getImmuneSystem()->getStandByVirusListSize() );        /* ランダムに一個の */
         tv = (*it_myself)->getImmuneSystem()->getStandByVirusAt( n );                   /* ウイルスを選んで */
         if( (*it_myself)->infection( *tv ) ) {                       /* 感染させたら */
           infection_count++;                                         /* カウントを増やす */
         } else {
-          itt = (*it_myself)->getImmuneSystem()->getStandByListIteratorBegin();         /* もし感染しなければ */
+          itt = (*it_myself)->getImmuneSystem()->getStandByVirusListIteratorBegin();         /* もし感染しなければ */
           while(n-->0) { itt++; }                                    /* そのウイルスを */
           (*it_myself)->getImmuneSystem()->eraseStandByVirus( itt );                    /* 待機ウイルスからはずして次のウイルス */
         }
@@ -204,13 +204,13 @@ __ModelStrategy :: contact() {
         ITERATOR(Agent *) it = ad_->landscape()->getAgentIteratorBeginAt( tx, ty );
         while( it != ad_->landscape()->getAgentIteratorEndAt( tx, ty ) )
         {                                                            /* その位置にいる人全員に */
-          VirusData *tvdata =                                        /* ランダムに保持ウイルスから選んで */
+          Virus *v =                                        /* ランダムに保持ウイルスから選んで */
 //            (*it_myself)->getImmuneSystem()->getVirusDataAt( rand_array((*it_myself)->getImmuneSystem()->getVirusListSize()) );
-            (*it_myself)->getImmuneSystem()->getOnSetVirusDataAt( rand_array((*it_myself)->getImmuneSystem()->getOnSetVirusListSize()) );
+            (*it_myself)->getImmuneSystem()->getOnSetVirusAt( rand_array((*it_myself)->getImmuneSystem()->getOnSetVirusListSize()) );
 
-          if( tvdata->v_->getRate() > rand_interval_double(0,1) )
+          if( v->getRate() > rand_interval_double(0,1) )
           {                                                          /* ウイルス特有の感染確率で */
-            (*it)->getImmuneSystem()->pushStandByVirus( tvdata->v_ );                   /* 待機ウイルスにする */
+            (*it)->getImmuneSystem()->pushStandByVirus( v );                   /* 待機ウイルスにする */
           }
           it++;                                                      /* 着目をその位置の次にいる人 */
 

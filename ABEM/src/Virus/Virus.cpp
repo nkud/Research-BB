@@ -25,6 +25,8 @@
  *--------------------------------------------------------------------------------------
  */
 Virus :: Virus() :
+  cling_point_( 0 ),
+  infection_time_( 0 ),
   rate_( INFECTION_RATE )                                            /* 感染確率は初期設定 */
 {
   tag_ = new Tag( V_DEFAULT_LEN );
@@ -33,11 +35,17 @@ Virus :: Virus() :
 
 Virus :: Virus( __SearchStrategy *sp ) :
   search_strategy_( sp ),
+  cling_point_( 0 ),
+  infection_time_( 0 ),
   rate_( INFECTION_RATE )                                            /* 感染確率は初期設定 */
 {
   tag_ = new Tag( V_DEFAULT_LEN );
   tag_->setTagRandom();                                              /* タグをランダムに初期化 */
   sp->check( V_DEFAULT_LEN );
+}
+
+Virus :: ~Virus() {
+  delete tag_;
 }
 
 /*--------------------------------------------------------------------------------------
@@ -66,6 +74,8 @@ Virus :: Virus( int l, double r ):
  *--------------------------------------------------------------------------------------
  */
 Virus :: Virus( const char *str ) :
+  cling_point_( 0 ),
+  infection_time_( 0 ),
   rate_( INFECTION_RATE )                                            /* 感染確率は初期設定 */
 {
   tag_ = new Tag( str );
@@ -127,6 +137,8 @@ int Fixed :: searchStartPoint( const Virus &myself, const Tag &tag ) const {
  *----------------------------------------------------------------------------------- */
 Virus :: Virus( int l, __SearchStrategy *sp ):
   search_strategy_( sp ),                                            /* 戦略指定 */
+  cling_point_( 0 ),
+  infection_time_( 0 ),
   rate_( INFECTION_RATE )                                            /* 感染確率を指定 */
 {
   tag_ = new Tag( l );
@@ -143,6 +155,8 @@ Virus :: Virus( int l, __SearchStrategy *sp ):
  */
 Virus :: Virus( const char *str, __SearchStrategy *sp ) :
   search_strategy_( sp ),                                            /* 戦略指定 */
+  cling_point_( 0 ),
+  infection_time_( 0 ),
   rate_( INFECTION_RATE )                                            /* 感染確率は初期設定 */
 {
   tag_ = new Tag( str );
