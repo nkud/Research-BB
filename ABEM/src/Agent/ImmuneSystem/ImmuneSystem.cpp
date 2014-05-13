@@ -58,23 +58,23 @@ void ImmuneSystem :: clearStandByVirus() { (*stand_by_virus_list_).clear(); }
 
 int ImmuneSystem :: getOnSetVirusListSize() {
   int ret = 0;
-  C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();                 /* ウイルスリストの先頭から */
-  while( it_v != getVirusListIteratorEnd() ) {                                /* 末尾まで */
+  C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();            /* ウイルスリストの先頭から */
+  while( it_v != getVirusListIteratorEnd() ) {                       /* 末尾まで */
     if( (*it_v)->getInfectionTime() > V_INCUBATION_PERIOD ) {
       ret++;
     }
-    it_v++;                                                         /* 次のウイルスリストへ */
+    it_v++;                                                          /* 次のウイルスリストへ */
   }
   return ret;
 }
 Virus *ImmuneSystem :: getOnSetVirusAt( int n ) {
   int num = 0;
-  C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();                 /* ウイルスリストの先頭から */
-  while( it_v != getVirusListIteratorEnd() ) {                                /* 末尾まで */
+  C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();            /* ウイルスリストの先頭から */
+  while( it_v != getVirusListIteratorEnd() ) {                       /* 末尾まで */
     if( num == n and (*it_v)->getInfectionTime() > V_INCUBATION_PERIOD ) {
       return (*it_v);
     }
-    it_v++;                                                         /* 次のウイルスリストへ */
+    it_v++;                                                          /* 次のウイルスリストへ */
     num++;
   }
   return (*it_v);
@@ -86,12 +86,12 @@ Virus *ImmuneSystem :: getOnSetVirusAt( int n ) {
  *--------------------------------------------------------------------------------------
  */
 bool ImmuneSystem :: hasVirus( Virus &v ) {
-  C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();                 /* ウイルスリストの先頭から */
-  while( it_v != getVirusListIteratorEnd() ) {                                /* 末尾まで */
-    if( (*it_v) == &v ) {                                       /* 感染済みであれば */
+  C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();            /* ウイルスリストの先頭から */
+  while( it_v != getVirusListIteratorEnd() ) {                       /* 末尾まで */
+    if( (*it_v)->isEqualTo( v ) ) {                                            /* 感染済みであれば */
       return true;                                                   /* true を返す */
     }
-    it_v++;                                                         /* 次のウイルスリストへ */
+    it_v++;                                                          /* 次のウイルスリストへ */
   }
   return false;                                                      /* 未感染なので false を返す */
 }
@@ -207,8 +207,11 @@ bool TagFlip :: infection( Agent &self, Virus &v )
   }
 //  Virus *new_v                                                   /* 新しいウイルスデータを作成して */
 //    = new Virus( v, v.searchStartPoint( *self.getTag() ), 0 );
-  self.getImmuneSystem()->pushVirus( new Virus( &v ) );                           /* 保持ウイルスリストに追加する */
+  Virus *new_v = new Virus( &v );
+  new_v->setClingPoint( new_v->searchStartPoint( *self.getTag() ) );
+  // XXX: ウイルスの関数にする setClingPoint( Tag * );
+  self.getImmuneSystem()->pushVirus( new_v );                        /* 保持ウイルスリストに追加する */
 
-//  Monitor::Instance().countUpInfectionContact(vdata->v_);            /* 感染のために接触した回数を増やす */
+//  Monitor::Instance().countUpInfectionContact(vdata->v_);          /* 感染のために接触した回数を増やす */
   return true;                                                       /* 感染して true を返す */
 }

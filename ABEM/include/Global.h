@@ -47,7 +47,7 @@ const int A_DEFAULT_LEN             = 20                   ;         /* エー�
 const int V_DEFAULT_LEN             = 18                   ;         /* エージェントのタグ長 */
 
 const int V_INCUBATION_PERIOD       = 2;
-const int V_LETHAL_PERIOD           = 15;
+const int V_LETHAL_PERIOD           = 8;
 
 #define V_TAG_0 "000000000000"
 #define V_TAG_1 "111111111111"

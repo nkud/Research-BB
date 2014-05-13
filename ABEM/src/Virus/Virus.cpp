@@ -87,6 +87,7 @@ Virus :: Virus( Virus *v ) {
   infection_time_ = 0;
   rate_ = v->getRate();
   tag_ = new Tag( v->getLen(), v->getTag()->getTag() );
+  search_strategy_ = new Normal();
 }
 
 bool Virus :: isEqualTo( Virus &v ) {

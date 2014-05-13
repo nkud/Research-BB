@@ -41,30 +41,15 @@ class FileFactory {
         void outputFile_LastLog( const char * ) const;               /* ログを出力 */
         void outputFile_Info( const char * ) const;                  /* パラメータ情報を出力 */
         double outputFile_peakSearch( const char * ) const;          /* 出力: ピークサーチ */
-        /*-----------------------------------------------------------------------------
-         *  計算結果確認用スクリプト出力
-         *-----------------------------------------------------------------------------*/
-//        void generatePlotScriptForPng() const;                       /* プロット用のスクリプトを生成 */
-//        void generateResultHtml(int last_term);                      /* 結果表示用のHTMLスクリプトを生成 */
 
     private:
         /*-----------------------------------------------------------------------------
          *  コンストラクタ
          *-----------------------------------------------------------------------------*/
         FileFactory( ) {}                                            /* コンストラクタ */
-
         Administrator *admin_;                                       /* 管理者を登録 */
-
         int last_term_;                                              /* 実際に計算を行った期間 */
 
-        /*-----------------------------------------------------------------------------
-         *  計算結果確認用スクリプト用関数セット
-         *-----------------------------------------------------------------------------*/
-//        void scriptForPopulationPng(std::ofstream &ofs) const;       /* 画像を出力するスクリプト */
-//        void scriptForHasVirusPng(std::ofstream &ofs) const;
-//        void scriptForHasImmunityPng(std::ofstream &ofs) const;
-//        void scriptForSIRPng(std::ofstream &ofs) const;
-//        void scriptForContactPng(std::ofstream &ofs) const;
 };
 
 

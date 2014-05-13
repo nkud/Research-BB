@@ -74,6 +74,7 @@ class Virus
     int getInfectionTime() const { return infection_time_; }
     void incrementInfectionTime() { infection_time_++; }
     int getClingPoint() const { return cling_point_; }
+    void setClingPoint( int cp ) { cling_point_ = cp; }
 
   private:
     Tag *tag_;                                                       /* 電子タグ */
