@@ -105,27 +105,50 @@ int ImmuneSystem :: response( Agent &self )
  */
 int TagFlip :: response(Agent &self)
 {
-  if( self.getImmuneSystem()->hasNoVirusData() ) return 0;           /* 保持ウイルスなし、終了する */
+  if( self.getImmuneSystem()->hasNoVirusData() ) {                   /* 感染していなければ */
+    self.getImmuneSystem()->resetInfectionTime();                    /* 感染期間は０で */
+    return 0;                                                        /* 終了する */
+  }
 
-  ITERATOR(VirusData *) it = self.getImmuneSystem()->getVirusListIteratorBegin();       /* 先頭のウイルスに対し */
-  flip_once( self.getTag()->getTag()+(*it)->sp_, (*it)->v_->getTag()->getTag(), (*it)->v_->getLen() );            /* ひとつフリップする */
+  ITERATOR(VirusData *) it
+    = self.getImmuneSystem()->getVirusListIteratorBegin();           /* 先頭のウイルスに対し */
+
+  flip_once(                                                         /* ひとつフリップする */
+      self.getTag()->getTag()+(*it)->sp_,
+      (*it)->v_->getTag()->getTag(),
+      (*it)->v_->getLen() );
 
   if( self.hasImmunity( *((*it)->v_) ) )
   {                                                                  /* 免疫獲得すれば */
     // XXX: 要検討
-    self.getImmuneSystem()->eraseVirusData( it );                    /* 保持ウイルスから v(先頭) を削除して */
+    self.getImmuneSystem()->eraseVirusData( it );                    /* 保持ウイルスから v(先頭) を削除 */
   }
-  if( self.getImmuneSystem()->getVirusListSize() > 0 ) {             /* 感染していれば */
+
+  if( self.getImmuneSystem()->getVirusListSize() > 0 ) {             /* まだ感染していれば */
     self.getImmuneSystem()->incrementInfectionTime();                /* 感染期間を増やして */
+  } else {                                                           /* そうでなければ */
+    self.getImmuneSystem()->resetInfectionTime();                    /* 感染期間を０にリセット */
   }
   return self.getImmuneSystem()->getInfectioinTime();                /* 感染期間を返す */
 }
 void ImmuneSystem :: incrementInfectionTime() {
+  /*-----------------------------------------------------------------------------
+   *  感染期間を増やす
+   *-----------------------------------------------------------------------------*/
   assert( infectioin_time_ >= 0 );
   infectioin_time_++;
 }
 int ImmuneSystem :: getInfectioinTime() const {
+  /*-----------------------------------------------------------------------------
+   *  感染期間を返す
+   *-----------------------------------------------------------------------------*/
   return infectioin_time_;
+}
+void ImmuneSystem :: resetInfectionTime() {
+  /*-----------------------------------------------------------------------------
+   *  感染期間を０にリセットする
+   *-----------------------------------------------------------------------------*/
+  infectioin_time_ = 0;
 }
 
 /*

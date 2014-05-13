@@ -31,3 +31,4 @@ $(OBJDIR)ImmuneSystem.o: AgentStrategy.h Agent.h Function.h ImmuneSystemStrategy
 $(OBJDIR)AgentStrategy.o: AgentStrategy.h Agent.h Function.h
 $(OBJDIR)MovingStrategy.o: AgentStrategy.h Agent.h Function.h
 $(OBJDIR)CoupleTag.o: AgentStrategy.h Agent.h Function.h
+$(OBJDIR)Inheritance.o: AgentStrategy.h Agent.h Function.h

@@ -38,7 +38,7 @@ class Administrator {
     /*------------------------------------------------------------------------
      *  コンストラクタ
      *------------------------------------------------------------------------*/
-    Administrator( VECTOR(Agent *) & , VECTOR(Virus *) &, Landscape * );   /* コンストラクタ */
+    Administrator( VECTOR(Agent *) & , VECTOR(Virus *) &, Landscape * ); /* コンストラクタ */
     Administrator( VECTOR(Agent *) & , VECTOR(Virus *) &, Landscape *,
         __ModelStrategy *model );                                    /* コンストラクタ */
     void initAgent( __MovingStrategy *, __ChildBirthStrategy *, int, int );
@@ -81,7 +81,7 @@ class Administrator {
     /*-----------------------------------------------------------------------------
      *  カウント
      *-----------------------------------------------------------------------------*/
-    int numHasVirus( Virus & ) const;                       /* v に感染している人の数 */
+    int numHasVirus( Virus & ) const;                                /* v に感染している人の数 */
     int numHasAllVirus() const;                                      /* 全ウイルスに感染している人の数 */
     int numHasImmunity( Virus &v ) const;                            /* v の免疫獲得者数 */
     int numHasAllImmunity() const;                                   /* 全ウイルスの免疫獲得者数 */

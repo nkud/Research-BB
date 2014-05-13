@@ -96,17 +96,16 @@ int main()
     monitor.resetAll();                                              /* モニターのカウンターをリセット */
 
     /* エージェント、ウイルス、土地の計算 */
-//    admin.oneDay();                                                  /* 一日を進める */
 #ifdef AGING_AGENT
-    admin.agingAgent();                                                 /* 老化する */
+    admin.agingAgent();                                              /* 老化する */
 #endif
 #ifdef MATING_AGENT
-    admin.matingAgant();                                                /* 交配、出産する */
+    admin.matingAgant();                                             /* 交配、出産する */
 #endif
-    admin.moveAgent();                                                  /* 移動する */
-    admin.contactAgent();                                               /* 近隣に接触する */
-    admin.infectAgent();                                                /* 待機ウイルスを感染させる */
-    admin.responseAgent();                                              /* 免疫応答（タグフリップ） */
+    admin.moveAgent();                                               /* 移動する */
+    admin.contactAgent();                                            /* 近隣に接触する */
+    admin.infectAgent();                                             /* 待機ウイルスを感染させる */
+    admin.responseAgent();                                           /* 免疫応答（タグフリップ） */
 
     /*  途中経過出力 */
     ff.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ; /* 出力：感染者 */
@@ -128,7 +127,6 @@ int main()
   Benchmark::Instance().stopTimer();                                 /* ベンチマークの計測終了 */
   Benchmark::Instance().printTime();                                 /* 計測時間表示 */
 #endif
-
 
   /*-----------------------------------------------------------------------------
    *  計算終了

@@ -168,11 +168,12 @@ int Administrator :: numHasImmunity( Virus &v ) const {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: responseAgent() {
-  ITERATOR( Agent * ) it_a = agent_.begin();
-  while( it_a != agent_.end() ) {
-    (*it_a)->response();                                             /* 免疫応答 */
-    it_a++;
-  }
+//  ITERATOR( Agent * ) it_a = agent_.begin();
+//  while( it_a != agent_.end() ) {
+//    (*it_a)->response();                                             /* 免疫応答 */
+//    it_a++;
+//  }
+  model_strategy_->response();
 }
 
 /*
