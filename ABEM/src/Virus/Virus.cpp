@@ -15,6 +15,7 @@
 
 #include "Global.h"
 #include "Virus.h"
+#include "VirusStrategy.h"
 #include "Function.h"
 #include "Tag.h"
 
@@ -44,23 +45,6 @@ Virus :: Virus( __SearchStrategy *sp ) :
   tag_->setTagRandom();                                              /* タグをランダムに初期化 */
   sp->check( V_DEFAULT_LEN );
 }
-
-Virus :: ~Virus() {
-  delete tag_;
-}
-
-/*--------------------------------------------------------------------------------------
- *      Method:  Virus :: *
- * Description:  セッタ、ゲッタ関連
- *----------------------------------------------------------------------------------- */
-double Virus :: getRate() const { return rate_; }
-void Virus :: setRate( const double r ) { rate_ = r; }
-
-/*--------------------------------------------------------------------------------------
- *      Method:  Virus :: Virus( int )
- * Description:  ウイルスの長さを指定して初期化
- *               タグはランダム
- *----------------------------------------------------------------------------------- */
 Virus :: Virus( int l, double r ):
   rate_( r )                                                         /* 感染確率を指定 */
 {
@@ -68,12 +52,6 @@ Virus :: Virus( int l, double r ):
   tag_->setTagRandom();                                              /* タグをランダムに初期化 */
 }
 
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Virus :: Virus( const char * )
- * Description:  ウイルスのタグを指定して初期化
- *--------------------------------------------------------------------------------------
- */
 Virus :: Virus( const char *str ) :
   cling_point_( 0 ),
   infection_time_( 0 ),
@@ -90,7 +68,21 @@ Virus :: Virus( Virus *v ) {
   search_strategy_ = new Normal();
 }
 
+Virus :: ~Virus() {
+  delete tag_;
+}
+
+/*--------------------------------------------------------------------------------------
+ *      Method:  Virus :: *
+ * Description:  セッタ、ゲッタ関連
+ *----------------------------------------------------------------------------------- */
+double Virus :: getRate() const { return rate_; }
+void Virus :: setRate( const double r ) { rate_ = r; }
+
 bool Virus :: isEqualTo( Virus &v ) {
+  /*-----------------------------------------------------------------------------
+   *  ウイルス v にタグが等しければ true を返す
+   *-----------------------------------------------------------------------------*/
   int len = getLen();
   if( len != v.getLen() ) {
     return false;
@@ -122,37 +114,6 @@ int Virus :: searchStartPoint( const Tag &tag ) const {
 __SEARCH__TYPE__ Virus :: getSearchType() const {
   return search_strategy_->getSearchType();                          /* 戦略の種類を返す */
 }
-
-/*--------------------------------------------------------------------------------------
- *      Method:  Normal :: searchStartPoint( const Tag &, const Tag & )
- * Description:  
- *----------------------------------------------------------------------------------- */
-int Normal :: searchStartPoint( const Virus &myself, const Tag &tag ) const {
-  int sp = -1;                                                       /* 取り付く位置 */
-  sp                                                                 /* 取り付く位置を計算する */
-    = min_ham_distance_point( tag.getTag(), myself.getTag()->getTag(), tag.getLen(), myself.getTag()->getLen() );
-  return sp;                                                         /* 取り付く位置を返す */
-}
-
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Normal :: getSearchType()
- * Description:  
- *--------------------------------------------------------------------------------------
- */
-__SEARCH__TYPE__ Normal :: getSearchType() const {
-  return __NORMAL__;                                                 /* 通常ウイルスであることを返す */
-}
-
-/*--------------------------------------------------------------------------------------
- *      Method:  Fixed :: searchStartPoint( const Tag &, const Tag & )
- * Description:  
- *----------------------------------------------------------------------------------- */
-int Fixed :: searchStartPoint( const Virus &myself, const Tag &tag ) const {
-  return sp_;                                                        /* 取り付く位置を返す */
-}
-
-
 /*--------------------------------------------------------------------------------------
  *      Method:  Virus :: Virus
  * Description:  
@@ -183,22 +144,4 @@ Virus :: Virus( const char *str, __SearchStrategy *sp ) :
 {
   tag_ = new Tag( str );
   tag_->setTagRandom();                                              /* タグをランダムに初期化 */
-}
-
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Normal :: getSearchType()
- * Description:  
- *--------------------------------------------------------------------------------------
- */
-__SEARCH__TYPE__ Fixed :: getSearchType() const {
-  return __FIXED__;                                                  /* 固定ウイルスであることを返す */
-}
-
-void Normal :: check ( int vlen ) const {
-  return;
-}
-
-void Fixed :: check( int vlen ) const {
-  assert( vlen+sp_ <= A_DEFAULT_LEN );
 }

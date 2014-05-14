@@ -1,7 +1,7 @@
 CC       = g++
 PRINT    = /bin/echo
 MKDIR	 = mkdir -vp
-MAKE 	 = make -k
+MAKE 	 = make --no-print-directory
 COPY	 = cp
 
 OBJDIR	 = obj
