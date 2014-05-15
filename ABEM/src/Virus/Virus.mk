@@ -3,21 +3,28 @@ PRINT    = /bin/echo
 MKDIR	 = mkdir -vp
 
 OBJDIR = ../../obj/
-INCLUDE = ../../include
+LIBDIR = ../../include
 
-VPATH = VirusStrategy $(INCLUDE)
-TARGET	 = Virus.o VirusStrategy.o
+INCLUDE := $(shell find $(LIBDIR) -type d)
+CPPFLAGS     = $(addprefix -I, $(INCLUDE))
 
-CPPFLAGS = -I ../../include
+SRCDIR := $(shell find . -type d)
+
+VPATH = $(INCLUDE) $(SRCDIR) $(OBJDIR)
+
+TARGET	 = Virus.o NormalVirus.o FixedVirus.o VirusStrategy.o
 
 
 OBJS = $(addprefix $(OBJDIR), $(TARGET))
+
 
 all: $(OBJS)
 
 $(OBJDIR)%.o: %.cpp
 	@$(PRINT) Compiling $(notdir $@)...
+	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
 
 $(OBJDIR)Virus.o: Global.h Virus.h Function.h
-$(OBJDIR)VirusStrategy.o: VirusStrategy.h
+$(OBJDIR)NormalVirus.o: NormalVirus.h
+$(OBJDIR)FixedVirus.o: FixedVirus.h

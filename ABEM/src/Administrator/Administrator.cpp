@@ -197,7 +197,7 @@ void Administrator :: relocateAgent() {
     assert( 0 <= tx && tx <= WIDTH-1 );                              /* 土地の外ならエラー */
     assert( 0 <= ty && ty <= WIDTH-1 );
 
-    landscape_->registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a );                   /* エージェントを登録 */
+    landscape_->registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a ); /* エージェントを登録 */
     it_a++;
   }
 }
