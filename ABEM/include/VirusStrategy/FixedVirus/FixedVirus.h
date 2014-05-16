@@ -14,11 +14,10 @@
 #ifndef __FIXED_VIRUS
 #define __FIXED_VIRUS
 
-#include "VirusStrategy.h"
+#include "SearchStrategy.h"
 
 class Tag;
 class Virus;
-class __SearchStrategy;
 
 /*
  * =====================================================================================

@@ -10,13 +10,13 @@
  *
  * =====================================================================================
  */
-#include <stdlib.h>
-
 #include "NormalVirus.h"
-#include "VirusStrategy.h"
+#include "SearchStrategy.h"
 #include "Tag.h"
 #include "Virus.h"
 #include "Function.h"
+
+#include <stdlib.h>
 
 /*--------------------------------------------------------------------------------------
  *      Method:  Normal :: searchStartPoint( const Tag &, const Tag & )

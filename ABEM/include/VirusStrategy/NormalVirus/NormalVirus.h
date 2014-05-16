@@ -14,11 +14,10 @@
 #ifndef __NORMAL_VIRUS
 #define __NORMAL_VIRUS
 
-#include "VirusStrategy.h"
+#include "SearchStrategy.h"
 
 class Tag;
 class Virus;
-class __SearchStrategy;
 
 /*
  * =====================================================================================

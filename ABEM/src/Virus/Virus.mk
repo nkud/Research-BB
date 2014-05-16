@@ -26,5 +26,5 @@ $(OBJDIR)%.o: %.cpp
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
 
 $(OBJDIR)Virus.o: Global.h Virus.h Function.h
-$(OBJDIR)NormalVirus.o: NormalVirus.h
-$(OBJDIR)FixedVirus.o: FixedVirus.h
+$(OBJDIR)NormalVirus.o: NormalVirus.h VirusStrategy.h
+$(OBJDIR)FixedVirus.o: FixedVirus.h VirusStrategy.h

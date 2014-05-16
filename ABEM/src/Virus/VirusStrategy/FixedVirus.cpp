@@ -13,7 +13,7 @@
 #include <stdlib.h>
 
 #include "FixedVirus.h"
-#include "VirusStrategy.h"
+#include "SearchStrategy.h"
 #include "Tag.h"
 #include "Virus.h"
 
