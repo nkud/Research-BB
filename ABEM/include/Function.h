@@ -35,6 +35,7 @@ double rand_interval_double( const double, const double );           /* 浮動�
 int rand_array( const int );                                         /* ０から整数までの乱数を返す */
 int rand_binary();                                                   /* ０か１の乱数を返す */
 int rand_sign();                                                     /* ー１か１の乱数を返す */
+bool probability( double );
 
 /*-----------------------------------------------------------------------------
  *  テンプレートセット

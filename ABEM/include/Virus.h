@@ -46,9 +46,12 @@ class Virus
     void setRate( const double r );                                  /* 感染確率を設定 */
 
     int searchStartPoint( const Tag & ) const;                       /* タグに取り付く位置を返す */
-    __SEARCH__TYPE__ getSearchType() const;
+    __SEARCH__TYPE__ getSearchType() const;                          /* サーチ戦略を返す */
 
-    bool isEqualTo( Virus & );
+    /*-----------------------------------------------------------------------------
+     *  ウイルス操作
+     *-----------------------------------------------------------------------------*/
+    bool isEqualTo( Virus & );                                       /* ウイルスのタグが等しいかどうか */
 
     /*-----------------------------------------------------------------------------
      *  タグ操作
@@ -57,11 +60,13 @@ class Virus
     int getLen() const { return tag_->getLen(); }                    /* タグ長を返す */
     tag_t tagAt(int n) const { return tag_->tagAt(n); }              /* 特定位置のタグを返す */
 
-    int getInfectionTime() const { return infection_time_; }
-    void incrementInfectionTime() { infection_time_++; }
-    int getClingPoint() const { return cling_point_; }
-    void setClingPoint( int cp ) { cling_point_ = cp; }
+    int getInfectionTime() const { return infection_time_; }         /* 感染期間を返す */
+    void incrementInfectionTime() { infection_time_++; }             /* 感染期間を増やす */
+    int getClingPoint() const { return cling_point_; }               /* 取り付く位置を返す */
+    void setClingPoint( int cp ) { cling_point_ = cp; }              /* 取り付く位置を設定する */
 
+    void mutation();                                                 /* 突然変異を起こす */
+    void mutation( double );                                         /* 突然変異を起こす */
   private:
     Tag *tag_;                                                       /* 電子タグ */
     double rate_;                                                    /* 感染確率 */

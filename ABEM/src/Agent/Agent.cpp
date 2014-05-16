@@ -44,7 +44,9 @@ Agent :: Agent(
   sex_( __MALE__ ),
   life_( __ALIVE__ ),
   moving_strategy_( ms ),
-  childbirth_strategy_( cbs )
+  childbirth_strategy_( cbs ),
+  immune_system_( NULL ),
+  tag_( NULL )
 {
   immune_system_ = new ImmuneSystem();                               /* 免疫機構実装 */
 
@@ -105,8 +107,14 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int m
  *  XXX: 初期化の仕方によって、デストラクトの方法を変更する必要有
  *-----------------------------------------------------------------------------*/
 Agent :: ~Agent() {
+  assert( tag_ != NULL );
+  assert( immune_system_ != NULL );
+
   delete tag_;
   delete immune_system_;
+
+  tag_ = NULL;
+  immune_system_ = NULL;
 }
 
 /*

@@ -100,6 +100,20 @@ double rand_interval_double(const double min, const double max) {
   return minn + (double)( rand() * (maxx - minn) / (1.0 + RAND_MAX) ); /* XXX: これでいいか？ */
 }
 
+
+/*-----------------------------------------------------------------------------
+ *  probability( double )
+ *      確率 prob で true を返す
+ *      ( 0 <= prob <= 100 )
+ *-----------------------------------------------------------------------------*/
+bool probability( double prob ) {
+  if( prob > rand_interval_double( 0, 100 ) ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 int rand_array( const int n ) {
   assert( n > 0 );
   return rand() % n;

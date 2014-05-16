@@ -1,4 +1,14 @@
+2014-05-17  naoki ueda
+
+	* todo:
+	- Landscapeをシングルトンに
+	- LandscapeにStrategyを導入する
+	- Agentのコンタクトを整理
+	  - Landscapeにneighbors funcを作り活用する
+	- Virusにresponseをもたせる
+	- Tag -> Gene
+
 2014-05-13  naoki ueda
 
-	* idea:
-	Tagにタグフリップ、突然変異機構を持たす。
+	* todo:
+	- Tagにタグフリップ、突然変異機構を持たす。

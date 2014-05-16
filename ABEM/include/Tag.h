@@ -33,6 +33,7 @@ class Tag
     Tag( int minl, int maxl );                                       /* XXX コンストラクタ: 長さ */
     Tag( const char * );                                             /* コンストラクタ: 文字列 */
     Tag( int, tag_t * );
+    Tag( Tag * );
     ~Tag();                                                          /* デストラクタ */
     /*-----------------------------------------------------------------------------
      *  タグ操作セット
@@ -45,6 +46,11 @@ class Tag
     void changeTagLenTo( int n );                                    /* タグの長さを変える */
     void printTag() const;                                           /* タグを表示 */
     const tag_t *getTagString();
+
+    void changeTagAtTo( int at, int num );
+
+    void mutation();                                                 /* 突然変異を起こす */
+    void mutation( double );                                         /* 突然変異を起こす */
 
   private:
     int len_;                                                        /* タグ長 */

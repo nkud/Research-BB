@@ -15,6 +15,8 @@
 #include "AgentStrategy.h"
 #include "Function.h"
 
+#include <vector>
+
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  ImmuneSystem :: ImmuneSystem
@@ -29,6 +31,19 @@ ImmuneSystem :: ImmuneSystem() :
   immunesystem_strategy_ = new TagFlip();
 }
 ImmuneSystem :: ~ImmuneSystem() {
+  while( virus_list_->size() > 0 ) {
+    ITERATOR(Virus *) temp = virus_list_->begin();
+    delete *temp;
+    virus_list_->erase(temp);
+  }
+  while( stand_by_virus_list_->size() > 0 ) {
+    ITERATOR(Virus *) temp = stand_by_virus_list_->begin();
+    delete *temp;
+    stand_by_virus_list_->erase(temp);
+  }
+  assert( virus_list_ != NULL );
+  assert( stand_by_virus_list_ != NULL );
+  assert( immunesystem_strategy_ != NULL );
   delete virus_list_;
   delete stand_by_virus_list_;
   delete immunesystem_strategy_;

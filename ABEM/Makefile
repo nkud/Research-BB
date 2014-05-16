@@ -1,8 +1,9 @@
-CC       = g++
+CC       = g++ -Wall
 PRINT    = /bin/echo
 MKDIR	 = mkdir -vp
 MAKE 	 = make --no-print-directory
 COPY	 = cp
+CTAGS	 = $(shell which ctags)
 
 OBJDIR	 = obj
 SRCDIR	 = src
@@ -28,13 +29,15 @@ $(BINDIR)/$(TARGET): $(LIBSPATH)
 	@[ -d $(BINDIR) ] || $(MKDIR) $(BINDIR)
 	@$(PRINT) -n 'Generating $(notdir $@)...'
 	@$(CC) -o $@ $(OBJS)
-	@$(PRINT) 'Done.'
-	@$(PRINT) '[ success compiling ]'
+	@$(PRINT) 'Done. ( success compiling )'
 
 # コンパイルする
+# Makefile名とフォルダ名は同じにする
 $(LIBSPATH):
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
+	@$(PRINT) -e '---> $(notdir $@)'
 	@$(MAKE) -C $@ -f $(notdir $@).mk
+	@$(PRINT) -e ''
 
 # 実行する
 run:
@@ -81,6 +84,10 @@ grep:
 	@$(PRINT) '>>> makefile files'
 	@-grep $(G) Makefile --color
 	@-find src -name '*.mk' | xargs grep $(G) --color
+
+tags:
+	@$(PRINT) '>>> ctag'
+	@find src -name '*.cpp' | xargs $(CTAGS)
 
 # コンパイル -> 実行 -> 結果出力
 all: $(BINDIR)/$(TARGET) run gene
