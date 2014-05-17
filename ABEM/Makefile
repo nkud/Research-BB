@@ -1,7 +1,7 @@
 CC       = g++ -Wall
 PRINT    = /bin/echo
-MKDIR	 = mkdir -vp
-MAKE 	 = make --no-print-directory
+MKDIR	 = mkdir -p
+MAKE 	 = make --no-print-directory -s
 COPY	 = cp
 CTAGS	 = $(shell which ctags)
 
@@ -27,7 +27,7 @@ TARGET := ABEM.out
 # ターゲットを作成する
 $(BINDIR)/$(TARGET): $(LIBSPATH)
 	@[ -d $(BINDIR) ] || $(MKDIR) $(BINDIR)
-	@$(PRINT) -n 'Generating $(notdir $@)...'
+	@$(PRINT) -n '===> $(notdir $@)...'
 	@$(CC) -o $@ $(OBJS)
 	@$(PRINT) 'Done. ( success compiling )'
 
@@ -35,9 +35,9 @@ $(BINDIR)/$(TARGET): $(LIBSPATH)
 # Makefile名とフォルダ名は同じにする
 $(LIBSPATH):
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
-	@$(PRINT) -e '---> $(notdir $@)'
+	@$(PRINT) '---> $(notdir $@)'
 	@$(MAKE) -C $@ -f $(notdir $@).mk
-	@$(PRINT) -e ''
+	@$(PRINT)
 
 # 実行する
 run:

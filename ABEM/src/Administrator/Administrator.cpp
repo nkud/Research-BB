@@ -42,7 +42,7 @@ Administrator :: Administrator( VECTOR(Agent *) &a, VECTOR(Virus *) &v, Landscap
 
   model_strategy_ = new __ModelStrategy( this );                     /* デフォルトモデル */
 
-  agent_.reserve( A_MAX_NUM );                                       /* 最大エージェント数まで領域確保 */
+//  agent_.reserve( A_MAX_NUM );                                       /* 最大エージェント数まで領域確保 */
 }
 
 Administrator :: Administrator( VECTOR(Agent *) &a, VECTOR(Virus *) &v, Landscape *l,

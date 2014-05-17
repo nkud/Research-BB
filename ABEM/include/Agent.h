@@ -52,7 +52,7 @@ class Agent
     Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int len );
     Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, Tag *tag );
     Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int maxl );
-    ~Agent();
+    virtual ~Agent();
     /*-----------------------------------------------------------------------------
      *  免疫機構操作
      *-----------------------------------------------------------------------------*/
@@ -85,8 +85,6 @@ class Agent
 
     bool hasAbilityToChildbirth() const;                             /* 出産可能か */
     void setLife( __LABEL__ life );                                  /* 生死を設定する */
-    //        bool isAlive() const;
-    //        bool isDead() const;
     /*-----------------------------------------------------------------------------
      *  交配・出産関連セット
      *-----------------------------------------------------------------------------*/
@@ -118,6 +116,9 @@ class Agent
      *-----------------------------------------------------------------------------*/
     __MovingStrategy *moving_strategy_;                              /* 移動戦略 */
     __ChildBirthStrategy *childbirth_strategy_;                      /* 子孫戦略 */
+
+    Agent(const Agent& other);                                       /* コピーコンストラクタを無効化 */
+    Agent& operator=(const Agent& other);                            /* 代入演算子を無効化 */
 };
 /*-----------------------------------------------------------------------------
  *  エージェントを操作
