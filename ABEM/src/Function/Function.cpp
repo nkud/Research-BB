@@ -21,15 +21,12 @@
  *  Description:  左から見て最初に違う位置をフリップ
  * =====================================================================================
  */
-int flip_once( tag_t * const a, const tag_t * const b, const int len ) /* 一回だけフリップ */
-{
+int flip_once( tag_t * const a, const tag_t * const b, const int len ) /* 一回だけフリップ */ {
   FOR( i, len )                                                      /* タグの長さだけ繰り返す */
   {
     if( *(a+i) == *(b+i) ) {
       continue;                                                      /* 同じなら次に移動 */
-    }
-    else                                                             /* 違ったら */
-    {
+    } else {                                                         /* 違ったら */
       *(a+i) = *(b+i);                                               /* ひとつタグをフリップ */
       return 0;                                                      /* 終了 */
     }
@@ -83,9 +80,11 @@ int min_ham_distance_point( const int * const a, const int * const v, const int 
 }
 
 
-/*-----------------------------------------------------------------------------
+/*=============================================================================
+ *
  *  RANDOMIZE SET
- *-----------------------------------------------------------------------------*/
+ *
+ *=============================================================================*/
 int rand_interval_int(const int min, const int max) {
   int minn = min;
   int maxx = max;
@@ -100,7 +99,6 @@ double rand_interval_double(const double min, const double max) {
   return minn + (double)( rand() * (maxx - minn) / (1.0 + RAND_MAX) ); /* XXX: これでいいか？ */
 }
 
-
 /*-----------------------------------------------------------------------------
  *  probability( double )
  *      確率 prob で true を返す
@@ -114,6 +112,10 @@ bool probability( double prob ) {
   }
 }
 
+/*-----------------------------------------------------------------------------
+ *  rand_array( const int n )
+ *      return (int) 0 ~ n-1
+ *-----------------------------------------------------------------------------*/
 int rand_array( const int n ) {
   assert( n > 0 );
   return rand() % n;

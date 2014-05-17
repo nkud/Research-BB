@@ -26,37 +26,51 @@
  *
  *-----------------------------------------------------------------------------*/
 Virus :: Virus() :
+  rate_( INFECTION_RATE ),                                            /* 感染確率は初期設定 */
   cling_point_( 0 ),
-  infection_time_( 0 ),
-  rate_( INFECTION_RATE )                                            /* 感染確率は初期設定 */
+  infection_time_( 0 )
 {
   tag_ = new Tag( V_DEFAULT_LEN );
   tag_->setTagRandom();                                              /* タグをランダムに初期化 */
 }
 
 Virus :: Virus( __SearchStrategy *sp ) :
+  rate_( INFECTION_RATE ),
   search_strategy_( sp ),
   cling_point_( 0 ),
-  infection_time_( 0 ),
-  rate_( INFECTION_RATE )                                            /* 感染確率は初期設定 */
-{
+  infection_time_( 0 ) {
   tag_ = new Tag( V_DEFAULT_LEN );
   tag_->setTagRandom();                                              /* タグをランダムに初期化 */
   sp->check( V_DEFAULT_LEN );
 }
 Virus :: Virus( int l, double r ):
-  rate_( r )                                                         /* 感染確率を指定 */
-{
+  rate_( r ) {
   tag_ = new Tag( l );
   tag_->setTagRandom();                                              /* タグをランダムに初期化 */
 }
 
 Virus :: Virus( const char *str ) :
+  rate_( INFECTION_RATE ),                                            /* 感染確率は初期設定 */
   cling_point_( 0 ),
-  infection_time_( 0 ),
-  rate_( INFECTION_RATE )                                            /* 感染確率は初期設定 */
+  infection_time_( 0 )
 {
   tag_ = new Tag( str );
+}
+
+/*--------------------------------------------------------------------------------------
+ *      Method:  Virus :: Virus
+ * Description:  
+ *----------------------------------------------------------------------------------- */
+Virus :: Virus( int l, __SearchStrategy *sp ):
+  rate_( INFECTION_RATE ),                                            /* 感染確率を指定 */
+  search_strategy_( sp ),                                            /* 戦略指定 */
+  cling_point_( 0 ),
+  infection_time_( 0 )
+{
+  tag_ = new Tag( l );
+  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
+
+  sp->check( l );
 }
 
 
@@ -68,9 +82,8 @@ Virus :: Virus( Virus *v ) {
   cling_point_ = 0;
   infection_time_ = 0;
   rate_ = v->getRate();
-//  tag_ = new Tag( v->getLen(), v->getTag()->getTag() );
   tag_ = new Tag( v->getTag() );
-  search_strategy_ = new Normal();
+  search_strategy_ = new Normal;
 
   tag_->mutation( V_MUTATION_RATE );
 }
@@ -79,8 +92,12 @@ Virus :: Virus( Virus *v ) {
  *  Virus :: ~Virus()
  *-----------------------------------------------------------------------------*/
 Virus :: ~Virus() {
+  assert( tag_ != NULL );
+  assert( search_strategy_ != NULL );
   delete tag_;
   delete search_strategy_;
+  tag_ = NULL;
+  search_strategy_ = NULL;
 }
 
 /*--------------------------------------------------------------------------------------
@@ -95,12 +112,12 @@ void Virus :: setRate( const double r ) { rate_ = r; }
  *      ウイルスのタグに等しければ true を返す
  *-----------------------------------------------------------------------------*/
 bool Virus :: isEqualTo( Virus &v ) {
-  int len = getLen();
-  if( len != v.getLen() ) {
+  unsigned int len = getLen();
+  if( len != (unsigned int)v.getLen() ) {
     return false;
   }
   FOR( i, len ) {
-    if( tagAt(i) != v.tagAt(i) ) {
+    if( tagAt(i) != (unsigned int)v.tagAt(i) ) {
       return false;
     }
   }
@@ -126,22 +143,6 @@ int Virus :: searchStartPoint( const Tag &tag ) const {
 __SEARCH__TYPE__ Virus :: getSearchType() const {
   return search_strategy_->getSearchType();                          /* 戦略の種類を返す */
 }
-/*--------------------------------------------------------------------------------------
- *      Method:  Virus :: Virus
- * Description:  
- *----------------------------------------------------------------------------------- */
-Virus :: Virus( int l, __SearchStrategy *sp ):
-  search_strategy_( sp ),                                            /* 戦略指定 */
-  cling_point_( 0 ),
-  infection_time_( 0 ),
-  rate_( INFECTION_RATE )                                            /* 感染確率を指定 */
-{
-  tag_ = new Tag( l );
-  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
-
-  sp->check( l );
-}
-
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Virus :: Virus( const char *, __SearchStrategy * )
@@ -149,10 +150,10 @@ Virus :: Virus( int l, __SearchStrategy *sp ):
  *--------------------------------------------------------------------------------------
  */
 Virus :: Virus( const char *str, __SearchStrategy *sp ) :
+  rate_( INFECTION_RATE ),                                            /* 感染確率は初期設定 */
   search_strategy_( sp ),                                            /* 戦略指定 */
   cling_point_( 0 ),
-  infection_time_( 0 ),
-  rate_( INFECTION_RATE )                                            /* 感染確率は初期設定 */
+  infection_time_( 0 )
 {
   tag_ = new Tag( str );
   tag_->setTagRandom();                                              /* タグをランダムに初期化 */

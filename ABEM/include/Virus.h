@@ -70,7 +70,9 @@ class Virus
   private:
     Tag *tag_;                                                       /* 電子タグ */
     double rate_;                                                    /* 感染確率 */
-    const __SearchStrategy *search_strategy_;                        /* 取り付く位置の決め方の戦略を格納 */
+    __SearchStrategy *search_strategy_;                              /* 取り付く位置の決め方の戦略を格納 */
+//    const __SearchStrategy *search_strategy_;                              /* 取り付く位置の決め方の戦略を格納 */
+    // why const ??
     // XXX: -> ClingPointStrategy
 
     int cling_point_;                                                /* 取り付いている位置 */

@@ -19,6 +19,11 @@
 #include <cassert>
 
 
+/*-----------------------------------------------------------------------------
+ *
+ *  コンストラクタ
+ *
+ *-----------------------------------------------------------------------------*/
 Tag :: Tag( int l, tag_t *t )
 {
   len_ = l;
@@ -58,8 +63,7 @@ void Tag :: setTagRandom() {
  */
 Tag :: Tag( int l ) :
   len_( l ),                                                       /* 指定された長さで初期化 */
-  tag_( 0 )
-{
+  tag_( NULL ) {
   tag_ = new tag_t[ l ];                                           /* タグのメモリ領域を確保 */
   FOR( i, l )
   {
@@ -98,8 +102,7 @@ void Tag :: changeTagLenTo( int n ) {
  */
 Tag :: Tag( const char *str ) :
     len_( strlen( str ) ),                                           /* 文字列の長さで初期化 */
-    tag_( 0 )
-{
+    tag_( 0 ) {
     assert( len_ > 0 );                                              /* 文字列の長さが０以下ならエラー */
     tag_ = new tag_t[ len_ ];                                        /* タグのメモリ領域を確保 */
 
@@ -114,8 +117,7 @@ Tag :: Tag( const char *str ) :
  * Description:  タグを返す
  *--------------------------------------------------------------------------------------
  */
-tag_t *Tag :: getTag() const
-{
+tag_t *Tag :: getTag() const {
     return tag_;                                                     /* タグを返す */
 }
 

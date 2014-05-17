@@ -43,12 +43,12 @@ Agent :: Agent(
   age_( 0 ),
   sex_( __MALE__ ),
   life_( __ALIVE__ ),
-  moving_strategy_( ms ),
-  childbirth_strategy_( cbs ),
+  tag_( NULL ),
   immune_system_( NULL ),
-  tag_( NULL )
+  moving_strategy_( ms ),
+  childbirth_strategy_( cbs )
 {
-  immune_system_ = new ImmuneSystem();                               /* 免疫機構実装 */
+  immune_system_ = new ImmuneSystem;                                 /* 免疫機構実装 */
 
   tag_ = new Tag(len);
   tag_->setTagRandom();                                              /* タグをランダムに初期化 */
@@ -73,7 +73,7 @@ Agent :: Agent(
   moving_strategy_( ms ),
   childbirth_strategy_( cbs )
 {
-  immune_system_ = new ImmuneSystem();                               /* 免疫機構実装 */
+  immune_system_ = new ImmuneSystem;                                 /* 免疫機構実装 */
 
   tag_ = tag;                                                        /* 指定のタグに設定 */
 

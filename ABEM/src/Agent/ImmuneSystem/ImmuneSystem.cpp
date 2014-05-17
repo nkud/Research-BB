@@ -30,17 +30,18 @@ ImmuneSystem :: ImmuneSystem() :
   stand_by_virus_list_ = new std::vector<Virus *>;
   immunesystem_strategy_ = new TagFlip();
 }
+/*-----------------------------------------------------------------------------
+ *  ImmuneSystem :: ~ImmuneSystem
+ *-----------------------------------------------------------------------------*/
 ImmuneSystem :: ~ImmuneSystem() {
-  while( virus_list_->size() > 0 ) {
-    ITERATOR(Virus *) temp = virus_list_->begin();
-    delete *temp;
-    virus_list_->erase(temp);
+  for( ITERATOR(Virus *) it = virus_list_->begin(); it != virus_list_->end(); it++ ) {
+    delete (*it);
   }
-  while( stand_by_virus_list_->size() > 0 ) {
-    ITERATOR(Virus *) temp = stand_by_virus_list_->begin();
-    delete *temp;
-    stand_by_virus_list_->erase(temp);
+  for( ITERATOR(Virus *) it = stand_by_virus_list_->begin(); it != stand_by_virus_list_->end(); it++ ) {
+    delete (*it);
   }
+  virus_list_->clear();
+  stand_by_virus_list_->clear();
   assert( virus_list_ != NULL );
   assert( stand_by_virus_list_ != NULL );
   assert( immunesystem_strategy_ != NULL );

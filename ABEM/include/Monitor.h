@@ -51,7 +51,7 @@ class Monitor {
         int getTerm() const;                                         /* 期間を返す */
 
     private:
-        Monitor(): term_(0), num_contact_(0) { }                     /* コンストラクタ */
+        Monitor(): num_contact_(0), term_(0) { }                     /* コンストラクタ */
 
         int num_contact_;                                            /* 接触回数 */
         std::map<Virus *, int> num_infection_contact_;      /* 感染させた接触回数 */
