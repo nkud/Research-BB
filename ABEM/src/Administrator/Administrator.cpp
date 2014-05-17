@@ -89,8 +89,12 @@ ITERATOR(Agent *) Administrator :: deleteAgent( ITERATOR(Agent *) &it )
   landscape_->removeAgent( (*it)->getX(), (*it)->getY(), **it );     /* 土地から削除 */
 
   assert( (*it) != 0 );                                              /* メモリが無ければエラー */
-  delete (*it);                                                      /* メモリ領域を削除 */
-  agent_.erase( it );                                                /* エージェントの配列から削除 */
+
+  ITERATOR(Agent *) ret = agent_.erase( it );
+  delete( *it );
+
+//  delete (*it);                                                      /* メモリ領域を削除 */
+//  agent_.erase( it );                                                /* エージェントの配列から削除 */
 
   return it;
 }

@@ -31,7 +31,7 @@ class ImmuneSystem {
     int getVirusListSize() const;                                    /* 保持ウイルスのリストを返す */
     int getOnSetVirusListSize();
     void pushVirus( Virus * );                                       /* 保持ウイルスに追加する */
-    void eraseVirus( std::vector<Virus *>::iterator );               /* 指定の保持ウイルスを削除する */
+    ITERATOR(Virus *) eraseVirus( std::vector<Virus *>::iterator );               /* 指定の保持ウイルスを削除する */
     bool hasNoVirus() const;                                         /* ウイルスを保持していない */
     std::vector<Virus *>::iterator getVirusListIteratorBegin();      /* 先頭へのイテレータを返す */
     std::vector<Virus *>::iterator getVirusListIteratorEnd();        /* 末尾へのイテレータを返す */
@@ -44,7 +44,7 @@ class ImmuneSystem {
     bool hasNoStandByVirus() const;                                  /* ウイルスを保持していない */
     std::vector<Virus *>::iterator getStandByVirusListIteratorBegin(); /* 先頭へのイテレータを返す */
     std::vector<Virus *>::iterator getStandByVirusListIteratorEnd(); /* 末尾へのイテレータを返す */
-    void eraseStandByVirus( std::vector<Virus *>::iterator it );     /* 指定の待機ウイルスを削除 */
+    ITERATOR(Virus *) eraseStandByVirus( std::vector<Virus *>::iterator it );     /* 指定の待機ウイルスを削除 */
     void clearStandByVirus();                                        /* 待機ウイルスをすべて削除 */
   private:
     /*-----------------------------------------------------------------------------

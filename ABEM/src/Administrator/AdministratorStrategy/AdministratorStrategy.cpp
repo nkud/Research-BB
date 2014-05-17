@@ -76,7 +76,7 @@ __ModelStrategy :: response() {
       it_v++;
     }
     if( flag ) {
-      ad_->deleteAgent( it_a );                                      /* 生存配列から削除される */
+      it_a = ad_->deleteAgent( it_a );                               /* 生存配列から削除される */
     } else {
       it_a++;                                                        /* 次のエージェントへ */
     }
@@ -159,7 +159,7 @@ __ModelStrategy :: infect() {
         } else {
           itt = (*it_myself)->getImmuneSystem()->getStandByVirusListIteratorBegin();         /* もし感染しなければ */
           while(n-->0) { itt++; }                                    /* そのウイルスを */
-          (*it_myself)->getImmuneSystem()->eraseStandByVirus( itt ); /* 待機ウイルスからはずして次のウイルス */
+          itt = (*it_myself)->getImmuneSystem()->eraseStandByVirus( itt ); /* 待機ウイルスからはずして次のウイルス */
         }
       }
       (*it_myself)->getImmuneSystem()->clearStandByVirus();          /* 待機ウイルスをクリア */

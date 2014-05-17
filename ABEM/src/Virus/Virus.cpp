@@ -94,8 +94,10 @@ Virus :: Virus( Virus *v ) {
 Virus :: ~Virus() {
   assert( tag_ != NULL );
   assert( search_strategy_ != NULL );
+
   delete tag_;
   delete search_strategy_;
+
   tag_ = NULL;
   search_strategy_ = NULL;
 }

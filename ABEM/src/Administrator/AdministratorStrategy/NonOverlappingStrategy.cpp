@@ -32,24 +32,9 @@ void NonOverlappingPopulation :: initAgent() {
   __ChildBirthStrategy *cbs = new CoupleTag;
   FOR( i, A_INIT_NUM ) {                                             /* 初期エージェントの数だけ */
     ad_->agent()->push_back(
-        new Agent( random_walk, cbs, 20 ) );                                 /* ランダムウォーク */
+        new Agent( random_walk, cbs, 20 ) );                         /* ランダムウォーク */
   }
-//  ITERATOR(Agent *) it = ad_->getAgentIteratorBegin();               /* 先頭のエージェントから */
-//  while( it != ad_->getAgentIteratorEnd() ) {                        /* エージェントの末尾まで */
-//    (*it)->setAge(0);
-//    it++;
-//  }
 }
-
-//void
-//NonOverlappingPopulation :: oneDay() {
-//  ad_->agingAgent();                                                   /* 老化する */
-//  ad_->moveAgent();                                                    /* 移動する */
-//
-//  ad_->contactAgent();                                                 /* 近隣に接触する */
-//  ad_->infectAgent();                                                  /* 待機ウイルスを感染させる */
-//  ad_->responseAgent();                                                /* 免疫応答（タグフリップ） */
-//}
 
 void
 NonOverlappingPopulation :: aging() {

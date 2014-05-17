@@ -104,7 +104,7 @@ void Landscape :: removeAgent( const int x, const int y, Agent &a ) {
         }
         it_a++;
     }
-    assert( ! ">>> the agent is not here !" );                       /* 見つからなければエラー */
+    assert( ! ">>> this agent is not here !" );                      /* 見つからなければエラー */
     return;
 }
 

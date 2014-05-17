@@ -58,7 +58,11 @@ ImmuneSystem :: ~ImmuneSystem() {
 Virus *ImmuneSystem :: getVirusAt( int n ) const { return (*virus_list_).at( n ); }
 int ImmuneSystem :: getVirusListSize() const { return (*virus_list_).size(); }
 void ImmuneSystem :: pushVirus( Virus *v ) { (*virus_list_).push_back( v ); }
-void ImmuneSystem :: eraseVirus( std::vector<Virus *>::iterator it ) { delete (*it); (*virus_list_).erase( it ); }
+ITERATOR(Virus *) ImmuneSystem :: eraseVirus( std::vector<Virus *>::iterator it ) {
+  ITERATOR(Virus *) ret = (*virus_list_).erase( it );                /* next iterator */
+  delete (*it);
+  return ret;
+}
 bool ImmuneSystem :: hasNoVirus() const { if( (*virus_list_).empty() ) return true; else return false; }
 std::vector<Virus *>::iterator ImmuneSystem :: getVirusListIteratorBegin() { return (*virus_list_).begin(); }
 std::vector<Virus *>::iterator ImmuneSystem :: getVirusListIteratorEnd() { return (*virus_list_).end(); }
@@ -69,8 +73,12 @@ int ImmuneSystem :: getStandByVirusListSize() const { return (*stand_by_virus_li
 bool ImmuneSystem :: hasNoStandByVirus() const { return (*stand_by_virus_list_).empty(); }
 std::vector<Virus *>::iterator ImmuneSystem :: getStandByVirusListIteratorBegin() { return (*stand_by_virus_list_).begin(); }
 std::vector<Virus *>::iterator ImmuneSystem :: getStandByVirusListIteratorEnd() { return (*stand_by_virus_list_).end(); }
-void ImmuneSystem :: eraseStandByVirus( std::vector<Virus *>::iterator it ) { (*stand_by_virus_list_).erase( it ); }
-void ImmuneSystem :: clearStandByVirus() { (*stand_by_virus_list_).clear(); }
+ITERATOR(Virus *) ImmuneSystem :: eraseStandByVirus( std::vector<Virus *>::iterator it ) {
+  ITERATOR(Virus *) ret = (*stand_by_virus_list_).erase( it );       /* next iterator */
+  delete (*it);
+  return ret;
+}
+void ImmuneSystem :: clearStandByVirus() { (*stand_by_virus_list_).clear(); } // XXX:メモリ削除！！！
 
 int ImmuneSystem :: getOnSetVirusListSize() {
   int ret = 0;
@@ -160,7 +168,7 @@ int TagFlip :: response(Agent &self)
   if( self.hasImmunity( **it ) )                                     /* そのウイルスに対して */
   {                                                                  /* 免疫獲得すれば */
     // XXX: 要検討
-    self.getImmuneSystem()->eraseVirus( it );                        /* 保持ウイルスから v(先頭) を削除 */
+    it = self.getImmuneSystem()->eraseVirus( it );                        /* 保持ウイルスから v(先頭) を削除 */
   }
 
   ITERATOR( Virus * ) it_v                                           /* 先頭のウイルスデータから */
@@ -178,10 +186,13 @@ int TagFlip :: response(Agent &self)
   }
   return self.getImmuneSystem()->getInfectionTime();                 /* 総染期間を返す */
 }
+
+
+/*-----------------------------------------------------------------------------
+ *  ImmuneSystem :: incrementInfectionTime()
+ *      感染期間を増やす
+ *-----------------------------------------------------------------------------*/
 void ImmuneSystem :: incrementInfectionTime() {
-  /*-----------------------------------------------------------------------------
-   *  感染期間を増やす
-   *-----------------------------------------------------------------------------*/
   assert( infection_time_ >= 0 );
   infection_time_++;
 }

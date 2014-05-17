@@ -1,4 +1,4 @@
-CC       = g++
+CC       = g++ -Wall -g -O0
 PRINT    = /bin/echo
 MKDIR	 = mkdir -vp
 
