@@ -31,10 +31,10 @@
  *--------------------------------------------------------------------------------------
  */
 Administrator :: Administrator( VECTOR(Agent *) &a, VECTOR(Virus *) &v, Landscape *l ) :
-  term_( 0 ),
   agent_( a ),
   virus_( v ),
-  landscape_( l )
+  landscape_( l ),
+  term_( 0 )
 {
   assert( &a != 0 );                                                 /* NULLならエラー */
   assert( &v != 0 );                                                 /* NULLならエラー */
@@ -47,11 +47,11 @@ Administrator :: Administrator( VECTOR(Agent *) &a, VECTOR(Virus *) &v, Landscap
 
 Administrator :: Administrator( VECTOR(Agent *) &a, VECTOR(Virus *) &v, Landscape *l,
     __ModelStrategy *model ) :
-  term_( 0 ),
   agent_( a ),
   virus_( v ),
   landscape_( l ),
-  model_strategy_( model )
+  model_strategy_( model ),
+  term_( 0 )
 {
   assert( &a != 0 );                                                 /* NULLならエラー */
   assert( &v != 0 );                                                 /* NULLならエラー */
@@ -86,7 +86,7 @@ Landscape *Administrator :: landscape() { return landscape_; }
  */
 ITERATOR(Agent *) Administrator :: deleteAgent( ITERATOR(Agent *) &it )
 {
-  assert( (*it) != 0 );                                              /* メモリが無ければエラー */
+  assert( (*it) != NULL );                                              /* メモリが無ければエラー */
 
   landscape_->removeAgent( (*it)->getX(), (*it)->getY(), **it );     /* 土地から削除 */
 
@@ -245,8 +245,8 @@ int Administrator :: numHasAllVirus() const {
 
   ITERATOR(Agent *) it_a = agent_.begin();
   while( it_a != agent_.end() ) {                                    /* エージェント全員に対して */
-    if( (*it_a)->numHoldingVirus() == virus_.size() ) {              /* 全ウイルスを保持していれば */
-      ret++;                                                         /* 数える */
+    if( (*it_a)->numHoldingVirus() == (int)virus_.size() ) {              /* 全ウイルスを保持していれば */
+      ret++;                                                         /* 数える*/
     }
     it_a++;
   }
@@ -264,7 +264,7 @@ int Administrator :: numHasAllImmunity() const {
 
   ITERATOR(Agent *) it_a = agent_.begin();                           /* エージェントの先頭から */
   while( it_a != agent_.end() ) {                                    /* 末尾まで */
-    FOR( j, virus_.size() ) {                                        /* すべてのウイルスに関して調べる */
+    FOR( j, (int)virus_.size() ) {                                        /* すべてのウイルスに関して調べる */
       if( ! (*it_a)->hasImmunity( *virus_[ j ] ) ) {                 /* もし免疫を持っていなければ */
         flag = 0;                                                    /* フラッグを下ろして */
         break;                                                       /* ループを抜ける */
@@ -306,9 +306,9 @@ void Administrator :: printInitInfo() const {
   std::cout << "\nNUM_V:\t\t" << virus_.size() << std::endl;
 
   std::cout << "VIRUS:" << std::endl;                                /* ウイルス情報 */
-  FOR(i,virus_.size()) { std::cout<<"\trate_"<<i<<":\t"<<(*virus_[i]).getRate();
+  FOR(i, (int)virus_.size()) { std::cout<<"\trate_"<<i<<":\t"<<(*virus_[i]).getRate();
     std::cout<<"\tlen_"<<i<<":\t"<<(*virus_[i]).getTag()->getLen()<<std::endl; }
-  FOR( i, virus_.size() ) (*virus_[ i ]).getTag()->printTag();       /* 全ウイルスのタグを表示 */
+  FOR( i, (int)virus_.size() ) (*virus_[ i ]).getTag()->printTag();       /* 全ウイルスのタグを表示 */
 }
 /*
  *--------------------------------------------------------------------------------------

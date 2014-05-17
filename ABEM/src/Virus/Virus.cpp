@@ -114,12 +114,12 @@ void Virus :: setRate( const double r ) { rate_ = r; }
  *      ウイルスのタグに等しければ true を返す
  *-----------------------------------------------------------------------------*/
 bool Virus :: isEqualTo( Virus &v ) {
-  unsigned int len = getLen();
-  if( len != (unsigned int)v.getLen() ) {
+  int len = getLen();
+  if( len != v.getLen() ) {
     return false;
   }
   FOR( i, len ) {
-    if( tagAt(i) != (unsigned int)v.tagAt(i) ) {
+    if( tagAt(i) != v.tagAt(i) ) {
       return false;
     }
   }

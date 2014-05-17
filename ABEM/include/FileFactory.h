@@ -56,7 +56,7 @@ class FileFactory {
 /*-----------------------------------------------------------------------------
  *  関数群
  *-----------------------------------------------------------------------------*/
-static int max_term_in_interval( const int data[], int cursor, int len );   /* 与えられた期間の最大時刻を探索する */
-static double average_period( const char *fname );                   /* ファイルの平均周期を求める */
+//static int max_term_in_interval( const int data[], int cursor, int len );   /* 与えられた期間の最大時刻を探索する */
+//static double average_period( const char *fname );                   /* ファイルの平均周期を求める */
 
 #endif

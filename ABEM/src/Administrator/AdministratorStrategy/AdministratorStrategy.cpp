@@ -62,6 +62,7 @@ __ModelStrategy :: response() {
   ITERATOR( Agent * ) it_a = ad_->getAgentIteratorBegin();           /* エージェントの先頭から */
   while( it_a != ad_->getAgentIteratorEnd() )                        /* 末尾まで */
   { 
+    assert( (*it_a) != NULL );
     (*it_a)->response();                                             /* 免疫応答させる */
 
     bool flag = false;

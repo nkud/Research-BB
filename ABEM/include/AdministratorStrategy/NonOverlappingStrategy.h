@@ -23,8 +23,6 @@ class __ModelStrategy;
  *-----------------------------------------------------------------------------*/
 class NonOverlappingPopulation : public __ModelStrategy {
   public:
-    virtual void initAgent();
-
     virtual void aging();
     virtual void mating();
 //    virtual void oneDay();

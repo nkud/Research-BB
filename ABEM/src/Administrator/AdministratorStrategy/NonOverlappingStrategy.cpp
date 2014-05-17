@@ -26,16 +26,6 @@
  *  NonOverlappingPopulation 戦略
  *
  *-----------------------------------------------------------------------------*/
-void NonOverlappingPopulation :: initAgent() {
-  RandomWalk *random_walk = new RandomWalk( 1 );
-  Relocate *relocate = new Relocate;
-  __ChildBirthStrategy *cbs = new CoupleTag;
-  FOR( i, A_INIT_NUM ) {                                             /* 初期エージェントの数だけ */
-    ad_->agent()->push_back(
-        new Agent( random_walk, cbs, 20 ) );                         /* ランダムウォーク */
-  }
-}
-
 void
 NonOverlappingPopulation :: aging() {
   int die=0;
@@ -48,8 +38,6 @@ NonOverlappingPopulation :: aging() {
     }
     it++;                                                            /* 次のエージェントへ */
   }
-  // 死亡人数を表示
-  LOG(die);
 }
 
 void

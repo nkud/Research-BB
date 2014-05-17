@@ -47,9 +47,9 @@ const int A_DEFAULT_LEN             = 20                   ;         /* エー�
 const int V_DEFAULT_LEN             = 18                   ;         /* エージェントのタグ長 */
 
 const int V_INCUBATION_PERIOD       = 3;
-const int V_LETHAL_PERIOD           = 10;
+const int V_LETHAL_PERIOD           = 20;
 
-const int V_MUTATION_RATE           = 0.5;
+const int V_MUTATION_RATE           = 10;
 
 #define V_TAG_0 "000000000000"
 #define V_TAG_1 "111111111111"
@@ -86,7 +86,7 @@ const int A_BIRTH_AGE_TO            = int(A_MAX_AGE * 0.6) ;
 #include <iostream>
 #include <cassert>
 
-#define FOR(i, m)           for(unsigned int (i)=0; (i)<(m); (i)++)  /* i: 0 ~ (m-1) */
+#define FOR(i, m)           for(int (i)=0; (i)<(m); (i)++)  /* i: 0 ~ (m-1) */
 #define REP(i, min, max)    for(int (i)=(min); (i)<=(max); (i)++)
 #define LOG(x)              do { std::cout<<"["<<#x"]: "<<x<<std::endl; }while(0);
 
