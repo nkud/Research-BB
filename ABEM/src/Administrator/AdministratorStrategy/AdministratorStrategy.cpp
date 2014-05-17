@@ -307,7 +307,7 @@ void __ModelStrategy :: aging() {
     (*it_a)->aging();                                                  /* 老化させる */
 
     if( (*it_a)->getAge() > A_MAX_AGE ) {                              /* もし寿命をこえたら */
-      ad_->deleteAgent( it_a );                                        /* 生存配列から削除される */
+      it_a = ad_->deleteAgent( it_a );                                        /* 生存配列から削除される */
     } else {
       it_a++;                                                          /* 次のエージェントへ */
     }

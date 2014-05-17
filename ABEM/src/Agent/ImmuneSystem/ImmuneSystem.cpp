@@ -59,8 +59,8 @@ Virus *ImmuneSystem :: getVirusAt( int n ) const { return (*virus_list_).at( n )
 int ImmuneSystem :: getVirusListSize() const { return (*virus_list_).size(); }
 void ImmuneSystem :: pushVirus( Virus *v ) { (*virus_list_).push_back( v ); }
 ITERATOR(Virus *) ImmuneSystem :: eraseVirus( std::vector<Virus *>::iterator it ) {
-  ITERATOR(Virus *) ret = (*virus_list_).erase( it );                /* next iterator */
   delete (*it);
+  ITERATOR(Virus *) ret = (*virus_list_).erase( it );                /* next iterator */
   return ret;
 }
 bool ImmuneSystem :: hasNoVirus() const { if( (*virus_list_).empty() ) return true; else return false; }
@@ -75,8 +75,7 @@ std::vector<Virus *>::iterator ImmuneSystem :: getStandByVirusListIteratorBegin(
 std::vector<Virus *>::iterator ImmuneSystem :: getStandByVirusListIteratorEnd() { return (*stand_by_virus_list_).end(); }
 ITERATOR(Virus *) ImmuneSystem :: eraseStandByVirus( std::vector<Virus *>::iterator it ) {
   ITERATOR(Virus *) ret = (*stand_by_virus_list_).erase( it );       /* next iterator */
-  delete (*it);
-  return ret;
+  return ret;                                                        /* delete はしない  */
 }
 void ImmuneSystem :: clearStandByVirus() { (*stand_by_virus_list_).clear(); } // XXX:メモリ削除！！！
 

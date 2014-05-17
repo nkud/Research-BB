@@ -49,7 +49,7 @@ const int V_DEFAULT_LEN             = 18                   ;         /* エー�
 const int V_INCUBATION_PERIOD       = 3;
 const int V_LETHAL_PERIOD           = 10;
 
-const int V_MUTATION_RATE           = 5;
+const int V_MUTATION_RATE           = 0.5;
 
 #define V_TAG_0 "000000000000"
 #define V_TAG_1 "111111111111"

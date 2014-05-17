@@ -75,7 +75,7 @@ int main()
    *-----------------------------------------------------------------------------*/
   /* エージェントへの初期感染 */
   FOR( i, virus.size() ) {
-    admin.initInfectAgentInRatio( *virus[i], A_INIT_INFECTED_RATE ); /* 初期感染させる */
+    admin.initInfectAgentInRatio( *( new Virus( virus[i] ) ), A_INIT_INFECTED_RATE ); /* 初期感染させる */
   }
   /* 土地にランダムに配置 */
   admin.relocateAgent();                                             /* ランダムに配置 */
