@@ -42,7 +42,7 @@ class Administrator {
     Administrator( VECTOR(Agent *) & , VECTOR(Virus *) &, Landscape *,
         __ModelStrategy *model );                                    /* コンストラクタ */
     void initAgent( __MovingStrategy *, __ChildBirthStrategy *, int, int );
-    void initVirus() { model_strategy_->initVirus(); }
+    void initVirus();
 
     /*------------------------------------------------------------------------
      *  ゲッタ・セッタ

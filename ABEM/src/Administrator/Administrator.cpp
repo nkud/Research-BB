@@ -63,13 +63,14 @@ Administrator :: Administrator( VECTOR(Agent *) &a, VECTOR(Virus *) &v, Landscap
   agent_.reserve( A_MAX_NUM );                                       /* 最大エージェント数まで領域確保 */
 }
 
+/*-----------------------------------------------------------------------------
+ *  initAgent, initVirus
+ *      エージェント・ウイルスを初期化
+ *-----------------------------------------------------------------------------*/
 void Administrator :: initAgent( __MovingStrategy *mbs, __ChildBirthStrategy *cbs, int len, int num )
-{
-    /*-----------------------------------------------------------------------------
-     *  エージェントを初期化する
-     *-----------------------------------------------------------------------------*/
-    model_strategy_->initAgent( mbs, cbs, len, num );
-}
+{ model_strategy_->initAgent( mbs, cbs, len, num ); }
+void Administrator :: initVirus()
+{ model_strategy_->initVirus(); }
 
 /*--------------------------------------------------------------------------------------
  *      Method:  Administrator :: *
@@ -169,11 +170,6 @@ int Administrator :: numHasImmunity( Virus &v ) const {
  *--------------------------------------------------------------------------------------
  */
 void Administrator :: responseAgent() {
-//  ITERATOR( Agent * ) it_a = agent_.begin();
-//  while( it_a != agent_.end() ) {
-//    (*it_a)->response();                                             /* 免疫応答 */
-//    it_a++;
-//  }
   model_strategy_->response();
 }
 
@@ -306,9 +302,13 @@ void Administrator :: printInitInfo() const {
   std::cout << "\nNUM_V:\t\t" << virus_.size() << std::endl;
 
   std::cout << "VIRUS:" << std::endl;                                /* ウイルス情報 */
-  FOR(i, (int)virus_.size()) { std::cout<<"\trate_"<<i<<":\t"<<(*virus_[i]).getRate();
-    std::cout<<"\tlen_"<<i<<":\t"<<(*virus_[i]).getTag()->getLen()<<std::endl; }
-  FOR( i, (int)virus_.size() ) (*virus_[ i ]).getTag()->printTag();       /* 全ウイルスのタグを表示 */
+  FOR(i, (int)virus_.size()) {
+    std::cout<<"\trate_"<<i<<":\t"<<(*virus_[i]).getRate();
+    std::cout<<"\tlen_"<<i<<":\t"<<(*virus_[i]).getTag()->getLen()<<std::endl;
+  }
+  FOR( i, (int)virus_.size() ) {
+    (*virus_[ i ]).getTag()->printTag();       /* 全ウイルスのタグを表示 */
+  }
 }
 /*
  *--------------------------------------------------------------------------------------

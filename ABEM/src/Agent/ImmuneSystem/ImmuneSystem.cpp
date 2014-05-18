@@ -161,15 +161,17 @@ int TagFlip :: response(Agent &self)
   ITERATOR(Virus *) it
     = self.getImmuneSystem()->getVirusListIteratorBegin();           /* 先頭のウイルスに対し */
 
-  flip_once(                                                         /* ひとつフリップする */
-      self.getTag()->getTag()+(*it)->getClingPoint(),
-      (*it)->getTag()->getTag(),
-      (*it)->getLen() );
+  if( ! self.hasImmunity( **it ) ) {                                 /* 免疫を獲得していなければ */
+    flip_once(                                                       /* ひとつフリップする */
+        self.getTag()->getTag()+(*it)->getClingPoint(),
+        (*it)->getTag()->getTag(),
+        (*it)->getLen() );
+  }
 
   if( self.hasImmunity( **it ) )                                     /* そのウイルスに対して */
   {                                                                  /* 免疫獲得すれば */
     // XXX: 要検討
-    it = self.getImmuneSystem()->eraseVirus( it );                        /* 保持ウイルスから v(先頭) を削除 */
+    it = self.getImmuneSystem()->eraseVirus( it );                   /* 保持ウイルスから v(先頭) を削除 */
   }
 
   ITERATOR( Virus * ) it_v                                           /* 先頭のウイルスデータから */
@@ -177,6 +179,9 @@ int TagFlip :: response(Agent &self)
   while( it_v != self.getImmuneSystem()->getVirusListIteratorEnd() ) /* 末尾まで */
   {
     (*it_v)->incrementInfectionTime();                               /* 感染期間を */
+    if( (*it_v)->isIncubationPeriod() ) {
+      (*it_v)->mutation(V_MUTATION_RATE);
+    }
     it_v++;                                                          /* 増やす */
   }
 

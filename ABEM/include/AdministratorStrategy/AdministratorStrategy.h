@@ -26,13 +26,13 @@ class __ModelStrategy {
      *  コンストラクタ・セッタ
      *-----------------------------------------------------------------------------*/
     __ModelStrategy( Administrator * );
-    void setAdministrator( Administrator * );
+    void setAdministrator( Administrator *ad );
     /*-----------------------------------------------------------------------------
      *  初期化
      *-----------------------------------------------------------------------------*/
-    virtual void initAgent( __MovingStrategy *, __ChildBirthStrategy *, int, int );
+    virtual void initAgent( __MovingStrategy *, __ChildBirthStrategy *, int len, int num );
     virtual void initVirus();
-    virtual void initVirus( Virus * );
+    virtual void initVirus( Virus *origin );
     /*-----------------------------------------------------------------------------
      *  各フェイズ
      *-----------------------------------------------------------------------------*/
@@ -44,10 +44,8 @@ class __ModelStrategy {
 
     virtual void aging();                                            /* 老化 */
     virtual void mating();                                           /* 交配 */
-    /*-----------------------------------------------------------------------------
-     *  すべてプロセスを実行
-     *-----------------------------------------------------------------------------*/
-    virtual void executeOneDay();
+
+    virtual void executeOneDay();                                    /* すべてのプロセスを実行 */
 
   protected:                                                         /* XXX: あまりよくない */
     Administrator *ad_;

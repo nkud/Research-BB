@@ -61,8 +61,8 @@ Tag :: Tag( const char *str ) :
 Tag :: ~Tag() {                                                      /* デストラクタ */
   assert( tag_ != NULL );
 
-  printTag();
   delete[] tag_;                                                     /* タグのメモリ領域を削除 */
+
   tag_ = NULL;
 }
 /*

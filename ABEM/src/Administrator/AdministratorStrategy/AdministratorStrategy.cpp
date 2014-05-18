@@ -58,11 +58,13 @@ void __ModelStrategy :: executeOneDay() {
  *      免疫応答
  *-----------------------------------------------------------------------------*/
 void
-__ModelStrategy :: response() {
+__ModelStrategy :: response()
+{
   ITERATOR( Agent * ) it_a = ad_->getAgentIteratorBegin();           /* エージェントの先頭から */
   while( it_a != ad_->getAgentIteratorEnd() )                        /* 末尾まで */
   { 
     assert( (*it_a) != NULL );
+
     (*it_a)->response();                                             /* 免疫応答させる */
 
     bool flag = false;
@@ -70,7 +72,7 @@ __ModelStrategy :: response() {
       = (*it_a)->getImmuneSystem()->getVirusListIteratorBegin();     /* 先頭のウイルスデータから */
     while( it_v != (*it_a)->getImmuneSystem()->getVirusListIteratorEnd() ) /* 末尾まで */
     {
-      if( (*it_v)->getInfectionTime() > V_LETHAL_PERIOD ) {          /* 感染期間が長すぎる */
+      if( (*it_v)->isLethalPeriod() ) {                              /* 感染期間が長すぎる */
         flag = true;                                                 /* ウイルスがあれば */
         break;
       }
@@ -109,6 +111,7 @@ __ModelStrategy :: initVirus() {
   //  ad_->virus()->push_back( new Virus( 15, new Normal ) );          /* 通常ウイルスを追加 */
   //  virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
   //  virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */
+  (*ad_->virus())[0]->getTag()->printTag();
 }
 void
 __ModelStrategy :: initVirus( Virus *v ) {
@@ -203,8 +206,7 @@ __ModelStrategy :: contact() {
         ITERATOR(Agent *) it = ad_->landscape()->getAgentIteratorBeginAt( tx, ty );
         while( it != ad_->landscape()->getAgentIteratorEndAt( tx, ty ) )
         {                                                            /* その位置にいる人全員に */
-          Virus *v =                                        /* ランダムに保持ウイルスから選んで */
-//            (*it_myself)->getImmuneSystem()->getVirusDataAt( rand_array((*it_myself)->getImmuneSystem()->getVirusListSize()) );
+          Virus *v =                                                 /* ランダムに保持ウイルスから選んで */
             (*it_myself)->getImmuneSystem()->getOnSetVirusAt( rand_array((*it_myself)->getImmuneSystem()->getOnSetVirusListSize()) );
 
           if( v->getRate() > rand_interval_double(0,1) )

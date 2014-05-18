@@ -84,7 +84,9 @@ int main()
   /* 10回になると、計算を強制終了させる */
 
   /*-----------------------------------------------------------------------------
+   *
    *  計算開始
+   *
    *-----------------------------------------------------------------------------*/
   FOR( i, TERM )                                                     /* 計算開始  */
   {
@@ -97,10 +99,10 @@ int main()
 
     /* エージェント、ウイルス、土地の計算 */
 #ifdef AGING_AGENT
-    admin.agingAgent();                                              /* 老化する */
+//    admin.agingAgent();                                              /* 老化する */
 #endif
 #ifdef MATING_AGENT
-    admin.matingAgant();                                             /* 交配、出産する */
+//    admin.matingAgant();                                             /* 交配、出産する */
 #endif
     admin.moveAgent();                                               /* 移動する */
     admin.contactAgent();                                            /* 近隣に接触する */
