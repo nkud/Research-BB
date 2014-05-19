@@ -129,6 +129,7 @@ bool Virus :: isEqualTo( const Virus &v ) const {
       return false;
     }
   }
+
   return true;
 }
 

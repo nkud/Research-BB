@@ -17,6 +17,7 @@
 #include <cstdio>
 #include <iostream>
 #include <cstring>
+#include <string>
 #include <fstream>
 #include <ctime>
 using namespace std;
@@ -118,9 +119,10 @@ int main()
     admin.infectAgent();                                             /* 待機ウイルスを感染させる */
     admin.responseAgent();                                           /* 免疫応答（タグフリップ） */
 
-    FOR( i, agent.size() ) {
-      ITERATOR(Virus*) it_v=agent[i]->getImmuneSystem()->getVirusListIteratorBegin();
-      while(it_v!=agent[i]->getImmuneSystem()->getVirusListIteratorEnd()) {
+    // data base
+    FOR( j, agent.size() ) {
+      ITERATOR(Virus*) it_v=agent[j]->getImmuneSystem()->getVirusListIteratorBegin();
+      while(it_v!=agent[j]->getImmuneSystem()->getVirusListIteratorEnd()) {
         VirusCounter::Instance().pushNewVirus(**it_v);
         it_v++;
       }
@@ -133,6 +135,13 @@ int main()
     ff.outputFile_Population            ( "A_population.txt"       ) ; /* 出力：人口 */
     ff.outputFile_VirusVariaty          ( "V_virusVariaty.txt"     ) ;
 
+    if (i % 1000 == 0)
+    {
+      char tfname[256];
+      sprintf(tfname, "%d_VirusDataBase.txt", i/10);
+      ff.outputFile_LastVirusDataBase(tfname);
+    }
+
     /* 途中経過表示用ログ */
     LOG( monitor.getContactNum() );
     LOG( agent.size() );
@@ -143,19 +152,16 @@ int main()
     if( monitor.getContactNum()==0 ) zero_count++;                   /* １０回以上接触感染がなければ */
     if( zero_count >= 20 ) break;                                    /* 強制的に終了する */
     if( agent.size() == A_MAX_NUM ) break;
-  }
+  } /* ============================================================== 計算終了 */
 
 #ifdef ___BENCHMARK
   Benchmark::Instance().stopTimer();                                 /* ベンチマークの計測終了 */
   Benchmark::Instance().printTime();                                 /* 計測時間表示 */
 #endif
 
-  /*-----------------------------------------------------------------------------
-   *  計算終了
-   *-----------------------------------------------------------------------------*/
-
   ff.outputFile_Info( "INFO.txt" );                                  /* プログラムの初期設定など出力 */
   ff.outputFile_LastLog( "Log.txt");
+  ff.outputFile_LastVirusDataBase( "VirusDataBase.txt");
   admin.printInitInfo();                                             /* 初期状態を表示 */
 
   // 確認用 -----------------------------------------------------------------
