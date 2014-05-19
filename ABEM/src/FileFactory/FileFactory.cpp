@@ -281,6 +281,18 @@ void FileFactory :: outputFile_LastLog( const char *fname ) const {
         it_v++;
     }
 }
+void FileFactory :: outputFile_LastVirusDataBase( const char *fname ) const {
+    std::ofstream ofs(fname);
+    ITERATOR(Virus*) it_v = VirusCounter::Instance().getVirusDataBaseIteratorBegin();
+    while(it_v!=VirusCounter::Instance().getVirusDataBaseIteratorEnd()) {
+        FOR(j, (*it_v)->getLen()) {
+            ofs<<(*it_v)->tagAt(j);                                  /* エージェントのタグ */
+        }
+        ofs<<ENDL;
+        it_v++;
+    }
+    ofs.close();
+}
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  FileFactory :: outputFile_peakSearch()
