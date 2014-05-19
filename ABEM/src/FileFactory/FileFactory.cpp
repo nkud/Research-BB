@@ -19,6 +19,7 @@
 #include "Administrator.h"
 #include "Agent.h"
 #include "Virus.h"
+#include "VirusCounter.h"
 #include "Global.h"
 #include "Monitor.h"
 #include "Benchmark.h"
@@ -99,23 +100,23 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
     OFSV( MINI_SIZE_TERM );                                          /* 拡大期間 */
     OFSV( WIDTH );                                                   /* 土地の幅 */
     /* エージェント */
-    OFSVP( A_LEN, (*admin_->agent())[0]->getLen() );                   /* エージェントのタグ長 */
+    OFSVP( A_LEN, (*admin_->agent())[0]->getLen() );                 /* エージェントのタグ長 */
     OFSV( A_INIT_NUM );                                              /* 初期エージェント数 */
     OFSV( A_MAX_NUM );                                               /* 最大エージェント数 */
-    OFSV( A_MAX_V_CAN_HAVE );                                    /* 最大保持ウイルス数 */
-    OFSV( A_MAX_V_INFECTED_ONE_TERM );                             /* １期間最大感染ウイルス数 */
-    OFSV( A_MAX_AGE );                                                 /* 寿命 */
-    OFSV( A_BIRTH_RATE );                                              /* 出生率 */
-    OFSV( A_BIRTH_AGE_FROM );                                          /* 出産適齢期 */
+    OFSV( A_MAX_V_CAN_HAVE );                                        /* 最大保持ウイルス数 */
+    OFSV( A_MAX_V_INFECTED_ONE_TERM );                               /* １期間最大感染ウイルス数 */
+    OFSV( A_MAX_AGE );                                               /* 寿命 */
+    OFSV( A_BIRTH_RATE );                                            /* 出生率 */
+    OFSV( A_BIRTH_AGE_FROM );                                        /* 出産適齢期 */
     OFSV( A_BIRTH_AGE_TO );
-    OFSV( A_MOVE_DISTANCE );                                           /* 移動距離 */
+    OFSV( A_MOVE_DISTANCE );                                         /* 移動距離 */
     OFSV( INFECTION_RATE );                                          /* 感染率 */
-    OFSV( A_INIT_INFECTED_RATE );                                     /* 初期感染数 */
+    OFSV( A_INIT_INFECTED_RATE );                                    /* 初期感染数 */
     /* ウイルス */
-    OFSVP( V_NUM, (*admin_->virus()).size() );                           /* ウイルスの種類 */
+    OFSVP( V_NUM, (*admin_->virus()).size() );                       /* ウイルスの種類 */
 
     ITERATOR(Virus *) it_v = admin_->getVirusIteratorBegin();
-    while(it_v != admin_->getVirusIteratorEnd()) {                            /* 各ウイルスの */
+    while(it_v != admin_->getVirusIteratorEnd()) {                   /* 各ウイルスの */
         ofs << "V_LEN[ "<<*it_v<<" ],";                              /* タグ長 */
         ofs << (*it_v)->getLen() << ENDL;
 
@@ -136,7 +137,7 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
      *  計算 後 情報
      *-----------------------------------------------------------------------------*/
     OFSVP( TERM, admin_->getTerm() );                                /* 計測器館 */
-    OFSVP( A_NUM, admin_->getAgentSize() );                           /* 最終エージェント数 */
+    OFSVP( A_NUM, admin_->getAgentSize() );                          /* 最終エージェント数 */
     OFSVP( LAST_TERM, last_term );                                   /* 実行期間 */
 #ifdef AGING_AGENT
     OFSVP( AGING_AGENT, 1 );
@@ -158,6 +159,17 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
 #endif
 }
 
+/*--------------------------------------------------------------------------------------
+ *      Method:  FileFactory :: outputFile_HasVirus
+ * Description:  ファイルに出力する
+ *               ウイルスの数によって、列を調整できる
+ *----------------------------------------------------------------------------------- */
+void FileFactory :: outputFile_VirusVariaty( const char *fname ) const {
+    if( admin_->getTerm() % OUTPUT_INTERVAL != 0 ) return;
+    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
+    ofs << admin_->getTerm() << SEPARATOR;                           /* ファイルに出力 */
+    ofs << VirusCounter::Instance().getVirusVariaty() << ENDL;
+}
 /*--------------------------------------------------------------------------------------
  *      Method:  FileFactory :: outputFile_HasVirus
  * Description:  ファイルに出力する
@@ -258,6 +270,15 @@ void FileFactory :: outputFile_LastLog( const char *fname ) const {
         ofs<<" "<<(*it_a)->numHoldingVirus();                        /* エージェントの保持ウイルス数 */
         ofs<<ENDL;
         it_a++;
+    }
+    ofs << ">>> Virus Data Base Last Status" << ENDL;
+    ITERATOR(Virus*) it_v = VirusCounter::Instance().getVirusDataBaseIteratorBegin();
+    while(it_v!=VirusCounter::Instance().getVirusDataBaseIteratorEnd()) {
+        FOR(j, (*it_v)->getLen()) {
+            ofs<<(*it_v)->tagAt(j);                                  /* エージェントのタグ */
+        }
+        ofs<<ENDL;
+        it_v++;
     }
 }
 /*

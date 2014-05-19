@@ -87,14 +87,14 @@ Landscape *Administrator :: landscape() { return landscape_; }
  */
 ITERATOR(Agent *) Administrator :: deleteAgent( ITERATOR(Agent *) &it )
 {
-  assert( (*it) != NULL );                                              /* メモリが無ければエラー */
+  assert( (*it) != NULL );                                           /* メモリが無ければエラー */
 
   landscape_->removeAgent( (*it)->getX(), (*it)->getY(), **it );     /* 土地から削除 */
 
   delete( *it );                                                     /* メモリ領域を削除 */
-  ITERATOR(Agent *) ret = agent_.erase( it );                        /* 配列から削除 */
+  ITERATOR(Agent *) next = agent_.erase( it );                        /* 配列から削除 */
 
-  return ret;
+  return next;
 }
 
 /*

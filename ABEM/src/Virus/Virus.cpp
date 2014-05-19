@@ -18,6 +18,7 @@
 #include "VirusStrategy.h"
 #include "Function.h"
 #include "Tag.h"
+#include "VirusCounter.h"
 
 /*-----------------------------------------------------------------------------
  *
@@ -118,7 +119,7 @@ void Virus :: setRate( const double r ) { rate_ = r; }
  *  Virus :: isEqualTo( Virus & )
  *      ウイルスのタグに等しければ true を返す
  *-----------------------------------------------------------------------------*/
-bool Virus :: isEqualTo( Virus &v ) {
+bool Virus :: isEqualTo( const Virus &v ) const {
   int len = getLen();
   if( len != v.getLen() ) {
     return false;
@@ -161,5 +162,6 @@ void Virus :: mutation() {
 void Virus :: mutation( double prob ) {
   if ( probability( prob ) ) {
     getTag()->mutation( prob );
+    VirusCounter::Instance().countUpMutation();                      /* カウントする */
   }
 }

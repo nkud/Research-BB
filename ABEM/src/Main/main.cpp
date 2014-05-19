@@ -30,6 +30,9 @@ using namespace std;
 #include "Administrator.h"
 #include "FileFactory.h"
 
+#include "VirusCounter.h"
+#include "AgentCounter.h"
+
 #ifdef ___BENCHMARK
 #include "Benchmark.h"
 #endif
@@ -68,6 +71,8 @@ int main()
   /* モニター・ファイル生成クラス */
   Monitor &monitor = Monitor::Instance();                            /* モニター */
   FileFactory &ff = FileFactory::Instance();                         /* 出力ファイルを管理 */
+  VirusCounter::Instance().reset();
+  AgentCounter::Instance().reset();
   ff.setAdministrator( admin );                                      /* 管理者を登録 */
 
   /*-----------------------------------------------------------------------------
@@ -95,7 +100,11 @@ int main()
 
     admin.incrementTerm();                                           /* 期間を進める */
 
+    /* カウンターのリセット */
     monitor.resetAll();                                              /* モニターのカウンターをリセット */
+    VirusCounter::Instance().reset();
+    AgentCounter::Instance().reset();
+
 
     /* エージェント、ウイルス、土地の計算 */
 #ifdef AGING_AGENT
@@ -109,15 +118,26 @@ int main()
     admin.infectAgent();                                             /* 待機ウイルスを感染させる */
     admin.responseAgent();                                           /* 免疫応答（タグフリップ） */
 
+    FOR( i, agent.size() ) {
+      ITERATOR(Virus*) it_v=agent[i]->getImmuneSystem()->getVirusListIteratorBegin();
+      while(it_v!=agent[i]->getImmuneSystem()->getVirusListIteratorEnd()) {
+        VirusCounter::Instance().pushNewVirus(**it_v);
+        it_v++;
+      }
+    }
+
     /*  途中経過出力 */
     ff.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ; /* 出力：感染者 */
     ff.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ; /* 出力：免疫獲得者 */
     ff.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ; /* 出力：接触回数 */
     ff.outputFile_Population            ( "A_population.txt"       ) ; /* 出力：人口 */
+    ff.outputFile_VirusVariaty          ( "V_virusVariaty.txt"     ) ;
 
     /* 途中経過表示用ログ */
     LOG( monitor.getContactNum() );
     LOG( agent.size() );
+    LOG( VirusCounter::Instance().getCountMutation() );
+    LOG( VirusCounter::Instance().getVirusVariaty() );
 
     /* 強制終了 */
     if( monitor.getContactNum()==0 ) zero_count++;                   /* １０回以上接触感染がなければ */

@@ -34,6 +34,7 @@ def generatePngPlot(fname, d):
     scriptForHasVirusPng(f, d)
     scriptForHasImmunityPng(f, d)
     scriptForSIR(f, d)
+    scriptForVirusVariaty(f, d)
     for i in range(v_num):
         scriptForEachSIR(f, d, i)
     scriptForContact(f, d)
@@ -213,3 +214,8 @@ def scriptForPopulation(f, data):
     of = OutputFactory(f, data, "A_population.txt", "Population", "Term", "Agent", "Population")
     of.init()
     of.plot('population')
+
+def scriptForVirusVariaty(f, data):
+    of = OutputFactory(f, data, "V_virusVariaty.txt", "VirusVariaty", "Term", "Variaty", "VirusVariaty")
+    of.init()
+    of.plot('variaty')

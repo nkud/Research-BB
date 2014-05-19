@@ -50,6 +50,9 @@ def generateResultHTML(fname, d):
     if int(d['AGING_AGENT']) == 1:
         outputLine(f, '<h2 id=population>Population</h2>')
         setImage(f, 'Population.svg')
+# VirusVariaty
+    outputLine(f, '<h2 id=>VirusVariaty</h2>')
+    setImage(f, 'VirusVariaty.svg')
 # HasVirus
     outputLine(f, '<h2 id=hasvirus>hasVirus</h2>')
     setImage(f, 'HasVirus.svg',

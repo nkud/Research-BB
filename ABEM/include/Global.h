@@ -36,7 +36,7 @@ const int WIDTH                     = 40                   ;         /* ラン�
 
 const double INFECTION_RATE         = 30.0                  ;         /* デフォルトの感染率 */
 
-const int A_MAX_V_CAN_HAVE          = 3                    ;         /* 最大保持ウイルス */
+const int A_MAX_V_CAN_HAVE          = 2                    ;         /* 最大保持ウイルス */
 const int A_MAX_V_INFECTED_ONE_TERM = 1                    ;         /* １期間で感染させるウイルスの最大数 */
 
 const int A_INIT_NUM                = 1000                  ;        /* 初期エージェントの数 */
@@ -46,14 +46,14 @@ const double A_INIT_INFECTED_RATE   = 5                  ;           /* 初期�
 const int A_DEFAULT_LEN             = 20                   ;         /* エージェントのタグ長 */
 const int V_DEFAULT_LEN             = 18                   ;         /* エージェントのタグ長 */
 
-const int V_INCUBATION_PERIOD       = 5;
+const int V_INCUBATION_PERIOD       = 3;
 const int V_LETHAL_PERIOD           = 20;
 
-const int V_MUTATION_RATE           = 100;
+const int V_MUTATION_RATE           = 3;
 
 #define V_TAG_0 "000000000000"
 #define V_TAG_1 "111111111111"
-#define V_NUM 1
+#define V_NUM 2
 
 const int A_MAX_NUM                 = A_INIT_NUM * 5       ;         /* 最大エージェント数 */
 
