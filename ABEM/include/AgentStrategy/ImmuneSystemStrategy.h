@@ -54,8 +54,8 @@ class ImmuneSystem {
     /*-----------------------------------------------------------------------------
      *  配列
      *-----------------------------------------------------------------------------*/
-    std::vector<Virus *> *virus_list_;                               /* 保持ウイルスのリスト */
-    std::vector<Virus *> *stand_by_virus_list_;                      /* 待機ウイルスリスト */
+    VECTOR(Virus *) virus_list_;                               /* 保持ウイルスのリスト */
+    VECTOR(Virus *) stand_by_virus_list_;                      /* 待機ウイルスリスト */
 
     __ImmuneSystemStrategy *immunesystem_strategy_;
 };

@@ -27,29 +27,29 @@
 ImmuneSystem :: ImmuneSystem() :
   infection_time_( 0 )
 {
-  virus_list_ = new std::vector<Virus *>;
-  stand_by_virus_list_ = new std::vector<Virus *>;
+//  virus_list_ = new std::vector<Virus *>;
+//  stand_by_virus_list_ = new std::vector<Virus *>;
   immunesystem_strategy_ = new TagFlip();
 }
 /*-----------------------------------------------------------------------------
  *  ImmuneSystem :: ~ImmuneSystem
  *-----------------------------------------------------------------------------*/
 ImmuneSystem :: ~ImmuneSystem() {
-  for( ITERATOR(Virus *) it = virus_list_->begin(); it != virus_list_->end(); it++ ) {
+  for( ITERATOR(Virus *) it = virus_list_.begin(); it != virus_list_.end(); it++ ) {
     delete (*it);
   }
-  for( ITERATOR(Virus *) it = stand_by_virus_list_->begin(); it != stand_by_virus_list_->end(); it++ ) {
+  for( ITERATOR(Virus *) it = stand_by_virus_list_.begin(); it != stand_by_virus_list_.end(); it++ ) {
     delete (*it);
   }
-  virus_list_->clear();
-  stand_by_virus_list_->clear();
+  virus_list_.clear();
+  stand_by_virus_list_.clear();
 
-  assert( virus_list_ != NULL );
-  assert( stand_by_virus_list_ != NULL );
+//  assert( virus_list_ != NULL );
+//  assert( stand_by_virus_list_ != NULL );
   assert( immunesystem_strategy_ != NULL );
 
-  delete virus_list_;
-  delete stand_by_virus_list_;
+//  delete virus_list_;
+//  delete stand_by_virus_list_;
   delete immunesystem_strategy_;
 }
 /*-----------------------------------------------------------------------------
@@ -58,29 +58,29 @@ ImmuneSystem :: ~ImmuneSystem() {
  *
  *-----------------------------------------------------------------------------*/
 /* 保持ウイルスセット */
-Virus *ImmuneSystem :: getVirusAt( int n ) const { return (*virus_list_).at( n ); }
-int ImmuneSystem :: getVirusListSize() const { return (*virus_list_).size(); }
-void ImmuneSystem :: pushVirus( Virus *v ) { (*virus_list_).push_back( v ); }
+Virus *ImmuneSystem :: getVirusAt( int n ) const { return virus_list_.at( n ); }
+int ImmuneSystem :: getVirusListSize() const { return virus_list_.size(); }
+void ImmuneSystem :: pushVirus( Virus *v ) { virus_list_.push_back( v ); }
 ITERATOR(Virus *) ImmuneSystem :: eraseVirus( ITERATOR(Virus *) it ) {
   delete (*it);
-  ITERATOR(Virus *) next = (*virus_list_).erase( it );                /* next iterator */
+  ITERATOR(Virus *) next = virus_list_.erase( it );                /* next iterator */
   return next;
 }
-bool ImmuneSystem :: hasNoVirus() const { if( (*virus_list_).empty() ) return true; else return false; }
-ITERATOR(Virus *) ImmuneSystem :: getVirusListIteratorBegin() { return (*virus_list_).begin(); }
-ITERATOR(Virus *) ImmuneSystem :: getVirusListIteratorEnd() { return (*virus_list_).end(); }
+bool ImmuneSystem :: hasNoVirus() const { if( virus_list_.empty() ) return true; else return false; }
+ITERATOR(Virus *) ImmuneSystem :: getVirusListIteratorBegin() { return virus_list_.begin(); }
+ITERATOR(Virus *) ImmuneSystem :: getVirusListIteratorEnd() { return virus_list_.end(); }
 /* 待機ウイルスセット */
-Virus *ImmuneSystem :: getStandByVirusAt( int n ) const { return (*stand_by_virus_list_).at(n); }
-void ImmuneSystem :: pushStandByVirus( Virus *v ) { (*stand_by_virus_list_).push_back( v ); }
-int ImmuneSystem :: getStandByVirusListSize() const { return (*stand_by_virus_list_).size(); }
-bool ImmuneSystem :: hasNoStandByVirus() const { return (*stand_by_virus_list_).empty(); }
-ITERATOR(Virus *) ImmuneSystem :: getStandByVirusListIteratorBegin() { return (*stand_by_virus_list_).begin(); }
-ITERATOR(Virus *) ImmuneSystem :: getStandByVirusListIteratorEnd() { return (*stand_by_virus_list_).end(); }
+Virus *ImmuneSystem :: getStandByVirusAt( int n ) const { return stand_by_virus_list_.at(n); }
+void ImmuneSystem :: pushStandByVirus( Virus *v ) { stand_by_virus_list_.push_back( v ); }
+int ImmuneSystem :: getStandByVirusListSize() const { return stand_by_virus_list_.size(); }
+bool ImmuneSystem :: hasNoStandByVirus() const { return stand_by_virus_list_.empty(); }
+ITERATOR(Virus *) ImmuneSystem :: getStandByVirusListIteratorBegin() { return stand_by_virus_list_.begin(); }
+ITERATOR(Virus *) ImmuneSystem :: getStandByVirusListIteratorEnd() { return stand_by_virus_list_.end(); }
 ITERATOR(Virus *) ImmuneSystem :: eraseStandByVirus( ITERATOR(Virus *) it ) {
-  ITERATOR(Virus *) next = (*stand_by_virus_list_).erase( it );       /* next iterator */
+  ITERATOR(Virus *) next = stand_by_virus_list_.erase( it );       /* next iterator */
   return next;                                                        /* delete はしない  */
 }
-void ImmuneSystem :: clearStandByVirus() { (*stand_by_virus_list_).clear(); }
+void ImmuneSystem :: clearStandByVirus() { stand_by_virus_list_.clear(); }
 
 int ImmuneSystem :: getOnSetVirusListSize() {
   int ret = 0;
