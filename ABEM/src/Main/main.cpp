@@ -58,14 +58,14 @@ int main()
 
   VECTOR(Agent *) agent;                                             /* エージェントの配列 */
   VECTOR(Virus *) virus;                                             /* ウイルスの配列 */
-  Landscape *landscape = new Landscape;                              /* 土地 */
+  Landscape &landscape = Landscape::Instance();
 
   /* 戦略 */
   Relocate *relocate = new Relocate;
   CoupleTag *couple_tag = new CoupleTag;
 
   /* 管理者 */
-  Administrator admin( agent, virus, landscape );                    /* 管理者に登録 */
+  Administrator admin( agent, virus, &landscape );                    /* 管理者に登録 */
   admin.initAgent( relocate, couple_tag, A_DEFAULT_LEN, A_INIT_NUM );            /* エージェント初期化 */
   admin.initVirus();                                                 /* ウイルス初期化 */
 

@@ -33,7 +33,11 @@ class Landscape {
         /*-----------------------------------------------------------------------------
          *  コンストラクタ
          *-----------------------------------------------------------------------------*/
-        Landscape();                                                 /* コンストラクタ */
+//        Landscape();                                                 /* コンストラクタ */
+        static Landscape& Instance() {
+          static Landscape singleton;
+          return singleton;
+        }
 
         /*-----------------------------------------------------------------------------
          *  関数
@@ -49,6 +53,8 @@ class Landscape {
 
     private:
         VECTOR(Agent *) agent_map_[WIDTH][WIDTH];                    /* エージェントの番号を登録する配列 */
+
+        Landscape();
 };
 
 #endif
