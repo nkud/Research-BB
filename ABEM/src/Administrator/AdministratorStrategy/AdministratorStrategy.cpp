@@ -57,8 +57,7 @@ void __ModelStrategy :: executeOneDay() {
  *  __ModelStrategy :: response()
  *      免疫応答
  *-----------------------------------------------------------------------------*/
-void
-__ModelStrategy :: response()
+void __ModelStrategy :: response()
 {
   ITERATOR( Agent * ) it_a = ad_->getAgentIteratorBegin();           /* エージェントの先頭から */
   while( it_a != ad_->getAgentIteratorEnd() )                        /* 末尾まで */
@@ -133,8 +132,7 @@ void __ModelStrategy :: migrate() {
     it_a++;                                                          /* 次のエージェントへ */
   }
 }
-void
-__ModelStrategy :: infect() {
+void __ModelStrategy :: infect() {
   /*-----------------------------------------------------------------------------
    *  感染の処理
    *-----------------------------------------------------------------------------*/
@@ -171,8 +169,7 @@ __ModelStrategy :: infect() {
     it_myself++;                                                     /* 次のエージェントに */
   }
 }
-void
-__ModelStrategy :: contact() {
+void __ModelStrategy :: contact() {
   /*-----------------------------------------------------------------------------
    *  接触
    *-----------------------------------------------------------------------------*/

@@ -25,6 +25,7 @@ using namespace std;
 #include "Global.h"
 #include "Function.h"
 #include "Agent.h"
+#include "AgentManager.h"
 #include "Virus.h"
 #include "Landscape.h"
 #include "Monitor.h"
@@ -66,7 +67,9 @@ int main()
 
   /* 管理者 */
   Administrator admin( agent, virus, &landscape );                    /* 管理者に登録 */
+  AgentManager am( agent );
   admin.initAgent( relocate, couple_tag, A_DEFAULT_LEN, A_INIT_NUM );            /* エージェント初期化 */
+  am.initAgent( relocate, couple_tag, A_DEFAULT_LEN, A_INIT_NUM );
   admin.initVirus();                                                 /* ウイルス初期化 */
 
   /* モニター・ファイル生成クラス */
@@ -120,7 +123,7 @@ int main()
     admin.responseAgent();                                           /* 免疫応答（タグフリップ） */
 
     // data base
-    FOR( j, agent.size() ) {
+    FOR( j, (int)agent.size() ) {
       ITERATOR(Virus*) it_v=agent[j]->getImmuneSystem()->getVirusListIteratorBegin();
       while(it_v!=agent[j]->getImmuneSystem()->getVirusListIteratorEnd()) {
         VirusCounter::Instance().pushNewVirus(**it_v);

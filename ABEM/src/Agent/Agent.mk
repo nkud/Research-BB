@@ -13,7 +13,8 @@ SRCDIR := $(shell find . -type d)
 VPATH = $(INCLUDE) $(SRCDIR) $(OBJDIR)
 	
 TARGET	 = Agent.o MovingStrategy.o ImmuneSystem.o \
-		   CoupleTag.o Inheritance.o AgentCounter.o
+		   CoupleTag.o Inheritance.o AgentCounter.o \
+		   AgentManager.o
 
 OBJS = $(addprefix $(OBJDIR), $(TARGET))
 
@@ -34,3 +35,4 @@ $(OBJDIR)CoupleTag.o: AgentStrategy.h Agent.h Function.h
 $(OBJDIR)Inheritance.o: AgentStrategy.h Agent.h Function.h
 
 $(OBJDIR)AgentCounter.o: AgentCounter.h
+$(OBJDIR)AgentManager.o: AgentManager.h Global.h Agent.h Virus.h
