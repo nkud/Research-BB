@@ -180,7 +180,7 @@ int TagFlip :: response(Agent &self)
   while( it_v != self.getImmuneSystem()->getVirusListIteratorEnd() ) /* 末尾まで */
   {
     (*it_v)->incrementInfectionTime();                               /* 感染期間を増やす */
-    if( (*it_v)->isIncubationPeriod() ) {                            /* ウイルスが潜伏期間なら */
+    if( (*it_v)->isCrisisPeriod() ) {                            /* ウイルスが潜伏期間なら */
       (*it_v)->mutation(V_MUTATION_RATE);                            /* 突然変異を確率で起こす */
     }
     it_v++;                                                          /* 増やす */
