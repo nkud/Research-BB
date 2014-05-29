@@ -224,6 +224,9 @@ bool Agent :: hasImmunity( const Virus &v ) const                    /* true -> 
 bool Agent :: hasVirus( Virus &v ) const {
     return immune_system_->hasVirus( v );
 }
+bool Agent :: hasVirus() const {
+    return immune_system_->hasVirus();
+}
 
 /*
  *--------------------------------------------------------------------------------------

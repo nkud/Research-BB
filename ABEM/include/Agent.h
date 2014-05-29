@@ -63,6 +63,7 @@ class Agent
     bool infection( Virus &v );                                      /* 感染プロセス  */
     int response();                                                 /* 免疫応答する（タグフリップ）  */
 
+    bool hasVirus() const;                                           /* v に感染しているか */
     bool hasVirus( Virus &v ) const;                                 /* v に感染しているか */
     bool hasImmunity( const Virus &v ) const;                        /* v の免疫獲得済みか  */
     int numHoldingVirus() const;                                     /* 現在保持しているウイルスの数 */

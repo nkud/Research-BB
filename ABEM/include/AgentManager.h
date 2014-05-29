@@ -27,6 +27,7 @@ class AgentManager {
      *  初期化
      *-----------------------------------------------------------------------------*/
     virtual void initAgent( __MovingStrategy *, __ChildBirthStrategy *, int len, int num );
+    virtual void initInfectAgentInRatio( Virus &, double );          /* 初期感染させる */
     /*-----------------------------------------------------------------------------
      *  集団的処理
      *-----------------------------------------------------------------------------*/
@@ -38,16 +39,20 @@ class AgentManager {
 
     virtual void aging();                                            /* 老化 */
     virtual void mating();                                           /* 交配 */
+
+    int numHasVirus();
+
+    void printInitInfo() const;                                      /* 初期状態の情報を端末に出力 */
     /*-----------------------------------------------------------------------------
      *  パラメータ操作
      *-----------------------------------------------------------------------------*/
     ITERATOR(Agent *) getAgentIteratorBegin() { return agents_.begin(); }
-    ITERATOR(Agent *) getAgentIteratorEnd() { return agents_.begin(); }
-    int getAgentSize() { return agents_.size(); }
+    ITERATOR(Agent *) getAgentIteratorEnd() { return agents_.end(); }
+    int getAgentSize() const { return agents_.size(); }
     ITERATOR(Agent *) deleteAgent( ITERATOR(Agent *) &it );
 
   private:
-    VECTOR(Agent *) agents_;
+    VECTOR(Agent *) &agents_;
 };
 
 #endif

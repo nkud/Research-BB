@@ -27,6 +27,7 @@ using namespace std;
 #include "Agent.h"
 #include "AgentManager.h"
 #include "Virus.h"
+#include "VirusManager.h"
 #include "Landscape.h"
 #include "Administrator.h"
 #include "FileFactory.h"
@@ -65,27 +66,27 @@ int main()
   CoupleTag *couple_tag = new CoupleTag;
 
   /* 管理者 */
-  Administrator admin( agent, virus, &landscape );                    /* 管理者に登録 */
+//  Administrator admin( agent, virus, &landscape );                    /* 管理者に登録 */
   AgentManager am( agent );
-  admin.initAgent( relocate, couple_tag, A_DEFAULT_LEN, A_INIT_NUM );            /* エージェント初期化 */
+  VirusManager vm( virus );
   am.initAgent( relocate, couple_tag, A_DEFAULT_LEN, A_INIT_NUM );
-  admin.initVirus();                                                 /* ウイルス初期化 */
+  vm.initVirus();
 
   /* モニター・ファイル生成クラス */
   FileFactory &ff = FileFactory::Instance();                         /* 出力ファイルを管理 */
-  VirusCounter::Instance().reset();
   AgentCounter::Instance().reset();
-  ff.setAdministrator( admin );                                      /* 管理者を登録 */
+  VirusCounter::Instance().reset();
+//  ff.setAdministrator( admin );                                      /* 管理者を登録 */
+  ff.setManager( am, vm );                                           /* 管理者を登録 */
 
   /*-----------------------------------------------------------------------------
    *  エージェントへの初期動作
    *-----------------------------------------------------------------------------*/
   /* エージェントへの初期感染 */
   FOR( i, V_NUM ) {
-    admin.initInfectAgentInRatio( *( new Virus( virus[i] ) ), A_INIT_INFECTED_RATE ); /* 初期感染させる */
+    virus[i]->getTag()->printTag();
+    am.initInfectAgentInRatio( *virus[i], A_INIT_INFECTED_RATE );    /* 初期感染させる */
   }
-  /* 土地にランダムに配置 */
-  admin.relocateAgent();                                             /* ランダムに配置 */
 
   int zero_count = 0;                                                /* 感染接触が起こらなかった数をカウント */
   /* 10回になると、計算を強制終了させる */
@@ -95,13 +96,9 @@ int main()
    *  計算開始
    *
    *-----------------------------------------------------------------------------*/
-  FOR( i, TERM )                                                     /* 計算開始  */
+  Time &time = Time::Instance();
+  while( time.incrementTermTo(TERM) )                                /* 計算開始  */
   {
-    cout << "===================================" << endl;
-    LOG( i );
-
-    admin.incrementTerm();                                           /* 期間を進める */
-
     /* カウンターのリセット */
     VirusCounter::Instance().reset();
     AgentCounter::Instance().reset();
@@ -109,15 +106,15 @@ int main()
 
     /* エージェント、ウイルス、土地の計算 */
 #ifdef AGING_AGENT
-//    admin.agingAgent();                                              /* 老化する */
+//    am.aging();                                              /* 老化する */
 #endif
 #ifdef MATING_AGENT
-//    admin.matingAgant();                                             /* 交配、出産する */
+//    am.mating();                                             /* 交配、出産する */
 #endif
-    admin.moveAgent();                                               /* 移動する */
-    admin.contactAgent();                                            /* 近隣に接触する */
-    admin.infectAgent();                                             /* 待機ウイルスを感染させる */
-    admin.responseAgent();                                           /* 免疫応答（タグフリップ） */
+    am.migrate();                                                    /* 移動する */
+    am.contact();                                                    /* 近隣に接触する */
+    am.infect();                                                     /* 待機ウイルスを感染させる */
+    am.response();                                                   /* 免疫応答（タグフリップ） */
 
     // data base
     FOR( j, (int)agent.size() ) {
@@ -129,29 +126,34 @@ int main()
     }
 
     /*  途中経過出力 */
-    ff.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ; /* 出力：感染者 */
-    ff.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ; /* 出力：免疫獲得者 */
-    ff.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ; /* 出力：接触回数 */
-    ff.outputFile_Population            ( "A_population.txt"       ) ; /* 出力：人口 */
+//    ff.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ; /* 出力：感染者 */
+//    ff.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ; /* 出力：免疫獲得者 */
+//    ff.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ; /* 出力：接触回数 */
+    ff.outputFile_Population            ( "A_population.txt"       ) ; /* 出力：人口 */ /*  */
     ff.outputFile_VirusVariaty          ( "V_virusVariaty.txt"     ) ;
 
-    if (i % 1000 == 0)
+    if ( time.getTerm() % 1000 == 0)
     {
       char tfname[256];
-      sprintf(tfname, "%d_VirusDataBase.txt", i/10);
+      sprintf(tfname, "%d_VirusDataBase.txt", time.getTerm()/10);
       ff.outputFile_LastVirusDataBase(tfname);
     }
 
     /* 途中経過表示用ログ */
-    LOG( AgentCounter::Instance().getCountContact() );
+    cout << "===================================" << endl;
+    LOG( time.getTerm() );
     LOG( agent.size() );
+    LOG( am.getAgentSize() );
+    LOG( AgentCounter::Instance().getCountContact() );
+    LOG( AgentCounter::Instance().getCountInfectionContact() );
+    LOG( am.numHasVirus() );
     LOG( VirusCounter::Instance().getCountMutation() );
     LOG( VirusCounter::Instance().getVirusVariaty() );
 
     /* 強制終了 */
     if( AgentCounter::Instance().getCountContact()==0 ) zero_count++;                   /* １０回以上接触感染がなければ */
     if( zero_count >= 20 ) break;                                    /* 強制的に終了する */
-    if( agent.size() == A_MAX_NUM ) break;
+    if( (int)agent.size() == A_MAX_NUM ) break;
   } /* ============================================================== 計算終了 */
 
 #ifdef ___BENCHMARK
@@ -162,12 +164,13 @@ int main()
   ff.outputFile_Info( "INFO.txt" );                                  /* プログラムの初期設定など出力 */
   ff.outputFile_LastLog( "Log.txt");
   ff.outputFile_LastVirusDataBase( "VirusDataBase.txt");
-  admin.printInitInfo();                                             /* 初期状態を表示 */
+  am.printInitInfo();                                                /* 初期状態を表示 */
+  vm.printInitInfo();                                                /* 初期状態を表示 */
 
   // 確認用 -----------------------------------------------------------------
   LOG(sizeof(Agent));
   LOG(sizeof(Virus));
-  LOG(sizeof(admin));
+//  LOG(sizeof(admin));
   LOG(sizeof(Relocate));
 
   return 0;

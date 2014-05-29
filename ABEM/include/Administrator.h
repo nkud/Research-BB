@@ -70,12 +70,9 @@ class Administrator {
     void agingAgent();                                               /* 老化 */
     void matingAgant();                                              /* 交配、出産 */
 
-
     ITERATOR(Agent *) deleteAgent( ITERATOR(Agent *) &it );          /* 配列から指定のエージェントを削除 */
 
     int getNumOfAgent() const;                                       /* エージェントの人数を返す */
-    void incrementTerm();                                            /* 期間を 1 進める */
-    int getTerm() const;                                             /* 進んだ期間 */
 
     /*-----------------------------------------------------------------------------
      *  カウント
@@ -101,6 +98,20 @@ class Administrator {
      *  その他
      *-----------------------------------------------------------------------------*/
     int term_;                                                       /* 現在の期間を記録 */
+};
+
+class Time {
+  public:
+    bool incrementTermTo( int max ) { if( term_++ < max ) return true; else return false; }
+    int getTerm() const { return term_; }
+
+    static Time& Instance() {
+      static Time singleton;
+      return singleton;
+    }
+  private:
+    Time() : term_( 0 ) { }
+    int term_;
 };
 
 #endif

@@ -17,6 +17,8 @@
 #include <fstream>
 
 class Administrator;
+class AgentManager;
+class VirusManager;
 
 /*
  * =====================================================================================
@@ -31,6 +33,7 @@ class FileFactory {
          *-----------------------------------------------------------------------------*/
         static FileFactory& Instance();                              /* インスタンスを返す */
         void setAdministrator( Administrator &admin ); 
+        void setManager( AgentManager &, VirusManager & ); 
         /*-----------------------------------------------------------------------------
          *  計算結果出力
          *-----------------------------------------------------------------------------*/
@@ -50,7 +53,11 @@ class FileFactory {
          *-----------------------------------------------------------------------------*/
         FileFactory( ) {}                                            /* コンストラクタ */
         Administrator *admin_;                                       /* 管理者を登録 */
-        int last_term_;                                              /* 実際に計算を行った期間 */
+
+        AgentManager *am_;                                           /* 管理者を登録 */
+        VirusManager *vm_;                                           /* 管理者を登録 */
+
+//        int last_term_;                                              /* 実際に計算を行った期間 */
 
 };
 

@@ -309,15 +309,3 @@ void Administrator :: printInitInfo() const {
     (*virus_[ i ]).getTag()->printTag();       /* 全ウイルスのタグを表示 */
   }
 }
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Administrator :: *
- * Description:  期間系の関数
- *--------------------------------------------------------------------------------------
- */
-void Administrator :: incrementTerm() {
-  term_++;                                                           /* 期間をインクリメント */
-}
-int Administrator :: getTerm() const {
-  return term_;                                                      /* 現在の期間 */
-}

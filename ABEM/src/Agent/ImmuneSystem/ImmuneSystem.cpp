@@ -122,6 +122,13 @@ bool ImmuneSystem :: hasVirus( Virus &v ) {
   }
   return false;                                                      /* 未感染なので false を返す */
 }
+bool ImmuneSystem :: hasVirus() const {
+  if( getVirusListSize() > 0 ) {
+    return true;
+  } else {
+    return false; 
+  }
+}
 
 /*
  *--------------------------------------------------------------------------------------

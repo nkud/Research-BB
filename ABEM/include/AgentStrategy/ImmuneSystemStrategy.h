@@ -20,6 +20,7 @@ class ImmuneSystem {
     int response( Agent &self );                                     /* 免疫応答する（タグフリップ）  */
 
     bool hasVirus( Virus & );
+    bool hasVirus() const;
     void incrementInfectionTime();
     int getInfectionTime() const;
     void resetInfectionTime();
