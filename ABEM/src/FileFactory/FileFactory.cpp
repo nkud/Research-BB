@@ -18,10 +18,10 @@
 #include "FileFactory.h"
 #include "Administrator.h"
 #include "Agent.h"
+#include "AgentCounter.h"
 #include "Virus.h"
 #include "VirusCounter.h"
 #include "Global.h"
-#include "Monitor.h"
 #include "Benchmark.h"
 
 #define AUTO_GPLOT_FILENAME     "auto.plt"
@@ -228,14 +228,14 @@ void FileFactory :: outputFile_InfectionContactRatio( const char *fname ) const 
     int sum = 0;                                                     /* 何らかのウイルスに感染した接触回数 */
 
     ofs << admin_->getTerm() << SEPARATOR;                           /* 期間 */
-    ofs << Monitor::Instance().getContactNum() << SEPARATOR;         /* 総接触数 */
+    ofs << AgentCounter::Instance().getCountContact() << SEPARATOR;         /* 総接触数 */
+    sum = AgentCounter::Instance().getCountInfectionContact();
     FOR( j, admin_->getVirusSize() ) {                                                /* その内感染した回数 */
-        sum += Monitor::Instance().getInfectionContactNum(admin_->virus(j));
-        ofs << Monitor::Instance().getInfectionContactNum(admin_->virus(j)) << SEPARATOR;
+//        ofs << Monitor::Instance().getInfectionContactNum(admin_->virus(j)) << SEPARATOR;
     }
 
     if( sum > 0 ) ratio
-        = (double)sum / (double) Monitor::Instance().getContactNum(); 
+        = (double)sum / (double) AgentCounter::Instance().getCountContact(); 
     ofs << ratio << ENDL;
 }
 

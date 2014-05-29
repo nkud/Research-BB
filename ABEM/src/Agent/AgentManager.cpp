@@ -5,19 +5,18 @@
  *
  *    Description:  
  *
- *         Author:  YOUR NAME (), 
- *   Organization:  
+ *         Author:  Naoki Ueda
+ *   Organization:  OPU
  *
  * =====================================================================================
  */
 
 #include "Global.h"
-#include "AgentManager.h"
 #include "Agent.h"
+#include "AgentManager.h"
+#include "AgentCounter.h"
 #include "Landscape.h"
 #include "Function.h"
-#include "Monitor.h"
-
 
 /*-----------------------------------------------------------------------------
  *  AgentManager
@@ -34,17 +33,16 @@ AgentManager :: AgentManager( VECTOR( Agent * ) &agents ) :
 void AgentManager :: initAgent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int len, int num )
 {
   FOR( i, num ) {                                                    /* num のだけ */
-    agents_.push_back( new Agent( ms, cbs, len ) );                 /* 新しくエージェントを加える */
+    agents_.push_back( new Agent( ms, cbs, len ) );                  /* 新しくエージェントを加える */
   }
 }
-
 void AgentManager :: migrate()
 {
   Landscape::Instance().clearAgentMap();                             /* エージェントの位置をリセットして */
   ITERATOR(Agent *) it_a = getAgentIteratorBegin();                  /* エージェントの先頭から */
   while( it_a != getAgentIteratorEnd() ) {                           /* 末尾まで */
     (*it_a)->move();                                                 /* 移動させる */
-    Landscape::Instance().putAgentOnMap( **it_a );                       /* 土地からはみ出てたら戻す */
+    Landscape::Instance().putAgentOnMap( **it_a );                   /* 土地からはみ出てたら戻す */
     Landscape::Instance().registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a );                   /* エージェントを登録 */
     it_a++;                                                          /* 次のエージェントへ */
   }
@@ -58,8 +56,8 @@ void AgentManager :: contact()
   int ax, ay;
   int tx, ty;
 
-  ITERATOR(Agent *) it_myself = getAgentIteratorBegin();        /* エージェントの先頭から */
-  while( it_myself != getAgentIteratorEnd() ) {                 /* 末尾まで */
+  ITERATOR(Agent *) it_myself = getAgentIteratorBegin();             /* エージェントの先頭から */
+  while( it_myself != getAgentIteratorEnd() ) {                      /* 末尾まで */
 //    if( (*it_myself)->numHoldingVirus() <= 0 ) {
 //      it_myself++;
 //      continue;                                                      /* 健康ならスキップ */
@@ -90,11 +88,11 @@ void AgentManager :: contact()
 
           if( v->getRate() > rand_interval_double(0,1) )
           {                                                          /* ウイルス特有の感染確率で */
-            (*it)->getImmuneSystem()->pushStandByVirus( v );                   /* 待機ウイルスにする */
+            (*it)->getImmuneSystem()->pushStandByVirus( v );         /* 待機ウイルスにする */
           }
           it++;                                                      /* 着目をその位置の次にいる人 */
 
-          Monitor::Instance().countUpContact();                      /* モニタリング */
+          AgentCounter::Instance().countUpContact();                 /* モニタリング */
         }
       }
     }
@@ -141,8 +139,8 @@ void AgentManager :: infect()
 }
 void AgentManager :: response()
 {
-  ITERATOR( Agent * ) it_a = getAgentIteratorBegin();           /* エージェントの先頭から */
-  while( it_a != getAgentIteratorEnd() )                        /* 末尾まで */
+  ITERATOR( Agent * ) it_a = getAgentIteratorBegin();                /* エージェントの先頭から */
+  while( it_a != getAgentIteratorEnd() )                             /* 末尾まで */
   { 
     assert( (*it_a) != NULL );
 
@@ -160,7 +158,7 @@ void AgentManager :: response()
       it_v++;
     }
     if( flag ) {
-      it_a = deleteAgent( it_a );                               /* 生存配列から削除される */
+      it_a = deleteAgent( it_a );                                    /* 生存配列から削除される */
     } else {
       it_a++;                                                        /* 次のエージェントへ */
     }
@@ -168,15 +166,15 @@ void AgentManager :: response()
 }
 void AgentManager :: aging()
 {
-  ITERATOR(Agent *) it_a = getAgentIteratorBegin();               /* 先頭のエージェントから */
+  ITERATOR(Agent *) it_a = getAgentIteratorBegin();                  /* 先頭のエージェントから */
   while( it_a != getAgentIteratorEnd() ) {                           /* エージェントの末尾まで */
 
-    (*it_a)->aging();                                                  /* 老化させる */
+    (*it_a)->aging();                                                /* 老化させる */
 
-    if( (*it_a)->getAge() > A_MAX_AGE ) {                              /* もし寿命をこえたら */
+    if( (*it_a)->getAge() > A_MAX_AGE ) {                            /* もし寿命をこえたら */
       it_a = deleteAgent( it_a );                                    /* 生存配列から削除される */
     } else {
-      it_a++;                                                          /* 次のエージェントへ */
+      it_a++;                                                        /* 次のエージェントへ */
     }
   }
 }
@@ -190,8 +188,8 @@ void AgentManager :: mating()
 
   VECTOR(Agent *) new_child_;                                        /* 新しく生まれるエージェント */
 
-  ITERATOR(Agent *) it_myself = getAgentIteratorBegin();          /* エージェント配列の先頭から */
-  while( it_myself != getAgentIteratorEnd() ) {                   /* 末尾まで */
+  ITERATOR(Agent *) it_myself = getAgentIteratorBegin();             /* エージェント配列の先頭から */
+  while( it_myself != getAgentIteratorEnd() ) {                      /* 末尾まで */
     ax = (*it_myself)->getX();                                       /* 着目エージェントの位置 */
     ay = (*it_myself)->getY();
 
@@ -215,12 +213,12 @@ void AgentManager :: mating()
 #endif
         tx = ax + i;
         ty = ay + j;
-        Landscape::Instance().putBackOnMap( tx, ty );                      /* 土地からはみ出てたら土地の上に戻す */
+        Landscape::Instance().putBackOnMap( tx, ty );                /* 土地からはみ出てたら土地の上に戻す */
 
         ITERATOR(Agent *) it_partner= Landscape::Instance().getAgentIteratorBeginAt( tx, ty );
         while( it_partner!= Landscape::Instance().getAgentIteratorEndAt( tx, ty ) )
         {                                                            /* 自分の近隣にいる人から */
-          if( getAgentSize()+new_child_.size() >= A_MAX_NUM ) {   /* 最大エージェントをこえそうなら */
+          if( getAgentSize()+new_child_.size() >= A_MAX_NUM ) {      /* 最大エージェントをこえそうなら */
             break;                                                   /* 終了 */
           }
           if( isOppositeSex( *(*it_myself), **it_partner) &&         /* 異性かつ */
@@ -244,15 +242,15 @@ NEXT_AGENT:                                                          /* => 出�
     it_myself++;
   }
 
-  ITERATOR(Agent *) it_a = getAgentIteratorBegin();               /* エージェントの先頭 */
-  while( it_a != getAgentIteratorEnd() ) {                        /* エージェント全員に対して */
+  ITERATOR(Agent *) it_a = getAgentIteratorBegin();                  /* エージェントの先頭 */
+  while( it_a != getAgentIteratorEnd() ) {                           /* エージェント全員に対して */
     (*it_a)->resetGiveBirth();                                       /* 未出産に戻す */
     it_a++;                                                          /* 次のエージェント */
   }
   LOG( new_child_.size() );
   ITERATOR( Agent * ) it_child = new_child_.begin();                 /* 新しく誕生したエージェントを */
   while( it_child != new_child_.end() ) {
-    agents_.push_back( *it_child );                              /* エージェント配列に一斉に加える */
+    agents_.push_back( *it_child );                                  /* エージェント配列に一斉に加える */
     Landscape::Instance().registAgent( (*it_child)->getX(), (*it_child)->getY(), **it_child ); /* 土地に配置 */
     it_child++;                                                      /* 次のエージェントに */
   }

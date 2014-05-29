@@ -18,7 +18,6 @@
 #include "Agent.h"
 #include "Virus.h"
 #include "Landscape.h"
-#include "Monitor.h"
 
 #include <vector>
 #include <fstream>
@@ -318,7 +317,6 @@ void Administrator :: printInitInfo() const {
  */
 void Administrator :: incrementTerm() {
   term_++;                                                           /* 期間をインクリメント */
-  Monitor::Instance().setTerm( term_ );                              /* モニターと期間を同期 */
 }
 int Administrator :: getTerm() const {
   return term_;                                                      /* 現在の期間 */

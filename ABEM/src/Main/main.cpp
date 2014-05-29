@@ -28,7 +28,6 @@ using namespace std;
 #include "AgentManager.h"
 #include "Virus.h"
 #include "Landscape.h"
-#include "Monitor.h"
 #include "Administrator.h"
 #include "FileFactory.h"
 
@@ -73,7 +72,6 @@ int main()
   admin.initVirus();                                                 /* ウイルス初期化 */
 
   /* モニター・ファイル生成クラス */
-  Monitor &monitor = Monitor::Instance();                            /* モニター */
   FileFactory &ff = FileFactory::Instance();                         /* 出力ファイルを管理 */
   VirusCounter::Instance().reset();
   AgentCounter::Instance().reset();
@@ -105,7 +103,6 @@ int main()
     admin.incrementTerm();                                           /* 期間を進める */
 
     /* カウンターのリセット */
-    monitor.resetAll();                                              /* モニターのカウンターをリセット */
     VirusCounter::Instance().reset();
     AgentCounter::Instance().reset();
 
@@ -146,13 +143,13 @@ int main()
     }
 
     /* 途中経過表示用ログ */
-    LOG( monitor.getContactNum() );
+    LOG( AgentCounter::Instance().getCountContact() );
     LOG( agent.size() );
     LOG( VirusCounter::Instance().getCountMutation() );
     LOG( VirusCounter::Instance().getVirusVariaty() );
 
     /* 強制終了 */
-    if( monitor.getContactNum()==0 ) zero_count++;                   /* １０回以上接触感染がなければ */
+    if( AgentCounter::Instance().getCountContact()==0 ) zero_count++;                   /* １０回以上接触感染がなければ */
     if( zero_count >= 20 ) break;                                    /* 強制的に終了する */
     if( agent.size() == A_MAX_NUM ) break;
   } /* ============================================================== 計算終了 */
@@ -171,7 +168,6 @@ int main()
   LOG(sizeof(Agent));
   LOG(sizeof(Virus));
   LOG(sizeof(admin));
-  LOG(sizeof(Monitor));
   LOG(sizeof(Relocate));
 
   return 0;

@@ -11,6 +11,7 @@
  * =====================================================================================
  */
 #include "Agent.h"
+#include "AgentCounter.h"
 #include "Tag.h"
 #include "AgentStrategy.h"
 #include "Function.h"
@@ -246,6 +247,7 @@ bool TagFlip :: infection( Agent &self, Virus &v )
   // XXX: ウイルスの関数にする setClingPoint( Tag * );
   self.getImmuneSystem()->pushVirus( new_v );                        /* 保持ウイルスリストに追加する */
 
+  AgentCounter::Instance().countUpInfectionContact();
 //  Monitor::Instance().countUpInfectionContact(vdata->v_);          /* 感染のために接触した回数を増やす */
   return true;                                                       /* 感染して true を返す */
 }

@@ -25,7 +25,6 @@ class __ChildBirthStrategy;
 class Agent;
 class Virus;
 class Landscape;
-class Monitor;
 
 /*
  * =============================================================================

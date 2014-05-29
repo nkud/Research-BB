@@ -12,7 +12,7 @@
 #include "Administrator.h"
 #include "Landscape.h"
 #include "Agent.h"
-#include "Monitor.h"
+#include "AgentCounter.h"
 #include "Function.h"
 #include "Virus.h"
 
@@ -212,7 +212,7 @@ void __ModelStrategy :: contact() {
           }
           it++;                                                      /* 着目をその位置の次にいる人 */
 
-          Monitor::Instance().countUpContact();                      /* モニタリング */
+          AgentCounter::Instance().countUpContact();                      /* モニタリング */
         }
       }
     }

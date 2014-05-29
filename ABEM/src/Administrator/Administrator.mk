@@ -24,6 +24,6 @@ $(OBJDIR)/%.o: %.cpp
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
 
-$(OBJDIR)/Administrator.o:  Global.h Function.h Administrator.h Agent.h Virus.h Landscape.h Monitor.h
-$(OBJDIR)/AdministratorStrategy.o: Global.h Administrator.h Landscape.h Agent.h AdministratorStrategy.h Monitor.h Function.h
-$(OBJDIR)/NonOverlappingStrategy.o: Global.h NonOverlappingStrategy.h Administrator.h Landscape.h Agent.h Monitor.h Function.h
+$(OBJDIR)/Administrator.o:  Global.h Function.h Administrator.h Agent.h Virus.h Landscape.h
+$(OBJDIR)/AdministratorStrategy.o: Global.h Administrator.h Landscape.h Agent.h AdministratorStrategy.h Function.h
+$(OBJDIR)/NonOverlappingStrategy.o: Global.h NonOverlappingStrategy.h Administrator.h Landscape.h Agent.h Function.h
