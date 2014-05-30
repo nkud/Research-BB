@@ -59,7 +59,6 @@ int main()
 
   VECTOR(Agent *) agent;                                             /* エージェントの配列 */
   VECTOR(Virus *) virus;                                             /* ウイルスの配列 */
-  Landscape &landscape = Landscape::Instance();
 
   /* 戦略 */
   Relocate *relocate = new Relocate;
