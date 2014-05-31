@@ -133,7 +133,7 @@ int main()
     if ( time.getTerm() % 1000 == 0)
     {
       char tfname[256];
-      sprintf(tfname, "%d_VirusDataBase.txt", time.getTerm()/10);
+      sprintf(tfname, "%d_VirusDataBase.txt", time.getTerm()/1000);
       ff.outputFile_LastVirusDataBase(tfname);
     }
 

@@ -211,7 +211,8 @@ void AgentManager :: response()
       it_v++;
     }
     if( flag ) {
-      it_a = deleteAgent( it_a );                                    /* 生存配列から削除される */
+      // it_a = deleteAgent( it_a );                                    /* 生存配列から削除される */
+      (*it_a)->rebirth();
     } else {
       it_a++;                                                        /* 次のエージェントへ */
     }

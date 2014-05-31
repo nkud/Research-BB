@@ -71,6 +71,7 @@ class Agent
      *  パラメータ操作セット
      *-----------------------------------------------------------------------------*/
     void resetParam();                                               /* パラメータをリセット */
+    void rebirth();
     void setX( int ); int getX() const;                              /* セッタ、ゲッタ */
     void setY( int ); int getY() const;
     __LABEL__ getSex() const;

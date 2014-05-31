@@ -135,8 +135,18 @@ void Agent :: resetParam() {
   age_ = 0;                                                          /* ０才で初期化 */
   if( rand_binary() == 0 ) { sex_ = __MALE__;                        /* 性別をランダムに初期化 */
   } else { sex_ = __FEMALE__; }
-  life_ = __ALIVE__;                                                 /* 生存 */
+  life_ = __ALIVE__;
   // immunesystem reset XXX
+}
+
+void Agent :: rebirth() {
+  resetParam();
+  int len = tag_->getLen();
+  delete tag_;
+  tag_ = new Tag(len);
+  tag_->setTagRandom();
+  delete immune_system_;
+  immune_system_ = new ImmuneSystem;
 }
 
 /*
