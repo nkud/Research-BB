@@ -125,11 +125,8 @@ int main()
     }
 
     /*  途中経過出力 */
-//    ff.outputFile_HasVirus              ( "A_hasVirus.txt"         ) ; /* 出力：感染者 */
-//    ff.outputFile_HasImmunity           ( "A_hasImmunity.txt"      ) ; /* 出力：免疫獲得者 */
-//    ff.outputFile_InfectionContactRatio ( "A_infectionContact.txt" ) ; /* 出力：接触回数 */
-    ff.outputFile_Population            ( "A_population.txt"       ) ; /* 出力：人口 */ /*  */
-    ff.outputFile_VirusVariaty          ( "V_virusVariaty.txt"     ) ;
+    ff.outputFile( "A_population.txt", am.getAgentSize() );
+    ff.outputFile( "V_virusVariaty.txt", VirusCounter::Instance().getVirusVariaty() );
 
     if ( time.getTerm() % 1000 == 0)
     {

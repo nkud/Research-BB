@@ -12,6 +12,7 @@
  */
 
 #include <fstream>
+#include <ios>
 #include <string>
 #include <cstring>
 
@@ -165,6 +166,13 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
 #endif
 }
 
+void FileFactory :: outputFile( const char *fname, int value ) const {
+    if( Time::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
+    std::ofstream ofs(fname, std::ios_base::out | std::ios_base::app);
+    ofs << Time::Instance().getTerm() << SEPARATOR;
+    ofs << value << ENDL;
+}
+
 /*--------------------------------------------------------------------------------------
  *      Method:  FileFactory :: outputFile_HasVirus
  * Description:  ファイルに出力する
@@ -173,7 +181,7 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
 void FileFactory :: outputFile_VirusVariaty( const char *fname ) const {
     if( Time::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
-    ofs << Time::Instance().getTerm() << SEPARATOR;                           /* ファイルに出力 */
+    ofs << Time::Instance().getTerm() << SEPARATOR;                  /* ファイルに出力 */
     ofs << VirusCounter::Instance().getVirusVariaty() << ENDL;
 }
 /*--------------------------------------------------------------------------------------
@@ -183,10 +191,10 @@ void FileFactory :: outputFile_VirusVariaty( const char *fname ) const {
  *----------------------------------------------------------------------------------- */
 void FileFactory :: outputFile_HasVirus( const char *fname ) const {
     if( Time::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
-    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
-    ofs << Time::Instance().getTerm() << SEPARATOR;                           /* ファイルに出力 */
+    static std::ofstream ofs(fname);                               /* インスタンスは１つだけ */
+    ofs << Time::Instance().getTerm() << SEPARATOR;                /* ファイルに出力 */
     FOR( j, vm_->getVirusSize() ) {                                /* ウイルスの数だけ */
-        ofs << admin_->numHasVirus( *(admin_->virus(j)) ) << SEPARATOR;                /* ウイルス j の保持者 */
+        ofs << admin_->numHasVirus( *(admin_->virus(j)) ) << SEPARATOR; /* ウイルス j の保持者 */
     }
     int num_has_all = admin_->numHasAllVirus();                      /* 全ウイルスに対する免疫獲得者 */
     ofs << num_has_all << SEPARATOR;                                 /* 全ウイルス保持者 */

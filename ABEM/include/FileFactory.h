@@ -47,6 +47,8 @@ class FileFactory {
         void outputFile_Info( const char * ) const;                  /* パラメータ情報を出力 */
         double outputFile_peakSearch( const char * ) const;          /* 出力: ピークサーチ */
 
+        void outputFile( const char *, int ) const;
+
     private:
         /*-----------------------------------------------------------------------------
          *  コンストラクタ
