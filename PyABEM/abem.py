@@ -90,5 +90,4 @@ if __name__ == "__main__":
     hf = HtmlFactory(BINDIR+'index.html')
     hf.generate()
     # plot()
-
     beep()

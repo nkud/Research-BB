@@ -17,7 +17,7 @@ FNAME_IS_INCUBATE = BINDIR + 'is_incubate.txt'
 FNAME_IS_ONSET = BINDIR + 'is_onset.txt'
 
 # Term, Landscape
-TERM = 10000
+TERM = 1000
 GENERATION_INTERVAL = 1
 WIDTH = 30
 
