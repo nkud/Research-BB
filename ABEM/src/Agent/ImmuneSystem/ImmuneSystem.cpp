@@ -16,8 +16,30 @@
 #include "AgentStrategy.h"
 #include "Function.h"
 #include "VirusCounter.h"
+#include "Global.h"
 
 #include <vector>
+
+bool ImmuneSystem :: isIncubation() {
+  C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();            /* ウイルスリストの先頭から */
+  while( it_v != getVirusListIteratorEnd() ) {                       /* 末尾まで */
+    if( (*it_v)->isIncubationPeriod() ) {                                            /* 感染済みであれば */
+      return true;                                                   /* true を返す */
+    }
+    it_v++;                                                          /* 次のウイルスリストへ */
+  }
+  return false;  
+}
+bool ImmuneSystem :: isCrisis() {
+  C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();            /* ウイルスリストの先頭から */
+  while( it_v != getVirusListIteratorEnd() ) {                       /* 末尾まで */
+    if( (*it_v)->isCrisisPeriod() ) {                                            /* 感染済みであれば */
+      return true;                                                   /* true を返す */
+    }
+    it_v++;                                                          /* 次のウイルスリストへ */
+  }
+  return false;  
+}
 
 /*
  *--------------------------------------------------------------------------------------

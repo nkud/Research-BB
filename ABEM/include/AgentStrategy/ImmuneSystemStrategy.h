@@ -24,6 +24,9 @@ class ImmuneSystem {
     void incrementInfectionTime();
     int getInfectionTime() const;
     void resetInfectionTime();
+
+    bool isIncubation();
+    bool isCrisis();
     /*-----------------------------------------------------------------------------
      *  保持ウイルス操作セット
      *-----------------------------------------------------------------------------*/

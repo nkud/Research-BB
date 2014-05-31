@@ -20,6 +20,14 @@
 #include <cassert>
 #include <iostream>
 
+
+bool Agent :: isIncubation() const {
+  return immune_system_->isIncubation();
+}
+bool Agent :: isCrisis() const {
+  return immune_system_->isCrisis();
+}
+
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Agent :: Agent() / ~Agent()

@@ -127,6 +127,8 @@ int main()
     /*  途中経過出力 */
     ff.outputFile( "A_population.txt", am.getAgentSize() );
     ff.outputFile( "V_virusVariaty.txt", VirusCounter::Instance().getVirusVariaty() );
+    ff.outputFile( "A_isIncubation.txt", am.numIsIncubation() );
+    ff.outputFile( "A_isCrisis.txt", am.numIsCrisis());
 
     if ( time.getTerm() % 1000 == 0)
     {

@@ -13,6 +13,8 @@ FONT = 'Arial,13'
 
 def IMG(img):
     return img+'.'+EXTENSION
+def TXT(title, ext='txt'):
+    return '%s.%s' % (title, ext)
 
 ### Plot Script
 def scriptForInitSetting(f):
@@ -94,6 +96,8 @@ class PlotFactory(object):
         
         output(self.file, 'Population', 'Term', 'Agent', 'Population', ('A_population.txt', 'Agent'))
         output(self.file, 'VirusVariaty', 'Term', 'Variaty', 'VirusVariaty', ('V_virusVariaty.txt', 'Variaty'))
+        output(self.file, 'IsIncubation', 'Term', 'Agent', 'IsIncubation', ('A_isIncubation.txt', 'Agent'))
+        output(self.file, 'IsCrisis', 'Term', 'Agent', 'IsCrisis', (TXT('A_isCrisis'), 'Agent'))
 
     def info(self):
         print 'have started generating PLOT SCRIPT.'
@@ -134,6 +138,7 @@ class HtmlFactory(object):
         # Image Section
         outputSection(self.file, 'Population', 2, IMG('Population'))
         outputSection(self.file, 'VirusVariaty', 2, IMG('VirusVariaty'))
+        outputSection(self.file, 'Incubation/Crisis', 2, IMG('IsIncubation'), IMG('IsCrisis'))
 
         # End
         outputLine(self.file, '</code></body></html>')

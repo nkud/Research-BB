@@ -42,6 +42,9 @@ class AgentManager {
 
     int numHasVirus();
 
+    int numIsIncubation() const;
+    int numIsCrisis() const;
+
     void printInitInfo() const;                                      /* 初期状態の情報を端末に出力 */
     /*-----------------------------------------------------------------------------
      *  パラメータ操作

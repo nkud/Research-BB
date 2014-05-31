@@ -86,6 +86,9 @@ class Agent
 
     bool hasAbilityToChildbirth() const;                             /* 出産可能か */
     void setLife( __LABEL__ life );                                  /* 生死を設定する */
+
+    bool isIncubation() const;
+    bool isCrisis() const;
     /*-----------------------------------------------------------------------------
      *  交配・出産関連セット
      *-----------------------------------------------------------------------------*/
