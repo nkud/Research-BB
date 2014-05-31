@@ -32,6 +32,7 @@ class Gene
     Gene( int );                                                      /* コンストラクタ: 長さ */
     Gene( int minl, int maxl );                                       /* XXX コンストラクタ: 長さ */
     Gene( const char * );                                             /* コンストラクタ: 文字列 */
+    // XXX: コピーコンストラクタにする
     Gene( Gene * );
     virtual ~Gene();                                                          /* デストラクタ */
     /*-----------------------------------------------------------------------------
@@ -53,7 +54,7 @@ class Gene
 
   private:
     int len_;                                                        /* タグ長 */
-    tag_t *tag_;                                                     /* タグ */
+    tag_t *tag_;                                                     /* 電子タグ */
 };
 
 #endif

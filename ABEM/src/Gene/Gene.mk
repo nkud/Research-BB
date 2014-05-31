@@ -5,7 +5,7 @@ MKDIR	 = mkdir -vp
 OBJDIR = ../../obj/
 
 VPATH = 
-TARGET	 = Tag.o
+TARGET	 = Gene.o
 
 CPPFLAGS = -I ../../include
 

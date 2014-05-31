@@ -14,7 +14,7 @@
 #ifndef ___AGENT
 #define ___AGENT
 
-#include "Tag.h"
+#include "Gene.h"
 #include "Virus.h"
 #include "AgentStrategy.h"
 

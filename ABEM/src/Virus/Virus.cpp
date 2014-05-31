@@ -17,7 +17,7 @@
 #include "Virus.h"
 #include "VirusStrategy.h"
 #include "Function.h"
-#include "Tag.h"
+#include "Gene.h"
 #include "VirusCounter.h"
 
 /*-----------------------------------------------------------------------------

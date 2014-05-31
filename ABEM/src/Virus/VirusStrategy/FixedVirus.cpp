@@ -14,7 +14,7 @@
 
 #include "FixedVirus.h"
 #include "SearchStrategy.h"
-#include "Tag.h"
+#include "Gene.h"
 #include "Virus.h"
 
 /*--------------------------------------------------------------------------------------

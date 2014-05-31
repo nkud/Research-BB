@@ -11,7 +11,7 @@
  * =====================================================================================
  */
 
-#include "Tag.h"
+#include "Gene.h"
 #include "Global.h"
 #include "Function.h"
 

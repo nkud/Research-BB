@@ -12,7 +12,7 @@
  */
 #include "Agent.h"
 #include "AgentCounter.h"
-#include "Tag.h"
+#include "Gene.h"
 #include "AgentStrategy.h"
 #include "Function.h"
 #include "VirusCounter.h"
@@ -195,7 +195,7 @@ int TagFlip :: response(Agent &self)
   if( ! self.hasImmunity( **it ) ) {                                 /* 免疫を獲得していなければ */
     flip_once(                                                       /* ひとつフリップする */
         self.getGene()->getTag()+(*it)->getClingPoint(),
-        (*it)->getTag()->getTag(),
+        (*it)->getGene()->getTag(),
         (*it)->getLen() );
   }
 

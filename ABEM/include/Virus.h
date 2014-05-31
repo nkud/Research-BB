@@ -14,7 +14,7 @@
 #ifndef ___VIRUS
 #define ___VIRUS
 
-#include "Tag.h"
+#include "Gene.h"
 #include "VirusStrategy.h"
 
 /*

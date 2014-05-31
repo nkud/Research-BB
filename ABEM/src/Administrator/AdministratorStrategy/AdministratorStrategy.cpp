@@ -110,7 +110,7 @@ __ModelStrategy :: initVirus() {
   //  ad_->virus()->push_back( new Virus( 15, new Normal ) );          /* 通常ウイルスを追加 */
   //  virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
   //  virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */
-  (*ad_->virus())[0]->getTag()->printTag();
+  (*ad_->virus())[0]->getGene()->printTag();
 }
 void
 __ModelStrategy :: initVirus( Virus *v ) {

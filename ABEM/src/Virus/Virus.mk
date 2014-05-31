@@ -26,7 +26,7 @@ $(OBJDIR)%.o: %.cpp
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
 
-$(OBJDIR)Virus.o: Global.h Virus.h Function.h SearchStrategy.h
+$(OBJDIR)Virus.o: Global.h Virus.h Function.h SearchStrategy.h Gene.h
 $(OBJDIR)NormalVirus.o: NormalVirus.h VirusStrategy.h SearchStrategy.h
 $(OBJDIR)FixedVirus.o: FixedVirus.h VirusStrategy.h SearchStrategy.h
 $(OBJDIR)VirusCounter.o: Global.h

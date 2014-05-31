@@ -26,7 +26,7 @@ $(OBJDIR)%.o: %.cpp
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
 
-$(OBJDIR)Agent.o: Global.h Agent.h AgentStrategy.h Function.h Tag.h
+$(OBJDIR)Agent.o: Global.h Agent.h AgentStrategy.h Function.h Gene.h
 $(OBJDIR)ImmuneSystem.o: Global.h AgentStrategy.h Agent.h Function.h ImmuneSystemStrategy.h
 
 $(OBJDIR)AgentStrategy.o: Global.h AgentStrategy.h Agent.h Function.h

@@ -15,5 +15,5 @@
 #include "Global.h"
 #include "Virus.h"
 #include "Function.h"
-#include "Tag.h"
+#include "Gene.h"
 

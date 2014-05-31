@@ -12,7 +12,7 @@
  */
 #include "NormalVirus.h"
 #include "SearchStrategy.h"
-#include "Tag.h"
+#include "Gene.h"
 #include "Virus.h"
 #include "Function.h"
 
@@ -25,7 +25,7 @@
 int Normal :: searchStartPoint( const Virus &myself, const Gene &tag ) const {
   int sp = -1;                                                       /* 取り付く位置 */
   sp                                                                 /* 取り付く位置を計算する */
-    = min_ham_distance_point( tag.getTag(), myself.getTag()->getTag(), tag.getLen(), myself.getTag()->getLen() );
+    = min_ham_distance_point( tag.getTag(), myself.getGene()->getTag(), tag.getLen(), myself.getGene()->getLen() );
   return sp;                                                         /* 取り付く位置を返す */
 }
 
