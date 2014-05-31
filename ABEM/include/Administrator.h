@@ -19,7 +19,7 @@
 
 #include <vector>
 
-class Tag;
+class Gene;
 class __ModelStrategy;
 class __ChildBirthStrategy;
 class Agent;

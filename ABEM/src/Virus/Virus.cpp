@@ -57,8 +57,8 @@ Virus :: Virus( __SearchStrategy *sp ) :
   search_strategy_( sp ),
   cling_point_( 0 ),
   infection_time_( 0 ) {
-  tag_ = new Tag( V_DEFAULT_LEN );
-  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
+  gene_ = new Gene( V_DEFAULT_LEN );
+  gene_->setTagRandom();                                              /* タグをランダムに初期化 */
   sp->check( V_DEFAULT_LEN );
 }
 Virus :: Virus( const char *str, __SearchStrategy *sp ) :
@@ -67,7 +67,7 @@ Virus :: Virus( const char *str, __SearchStrategy *sp ) :
   cling_point_( 0 ),
   infection_time_( 0 )
 {
-  tag_ = new Tag( str );
+  gene_ = new Gene( str );
 }
 Virus :: Virus( int l, __SearchStrategy *sp ):
   rate_( INFECTION_RATE ),                                            /* 感染確率を指定 */
@@ -75,8 +75,8 @@ Virus :: Virus( int l, __SearchStrategy *sp ):
   cling_point_( 0 ),
   infection_time_( 0 )
 {
-  tag_ = new Tag( l );
-  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
+  gene_ = new Gene( l );
+  gene_->setTagRandom();                                              /* タグをランダムに初期化 */
 
   sp->check( l );
 }
@@ -90,7 +90,7 @@ Virus :: Virus( Virus *v ) {
   cling_point_ = 0;
   infection_time_ = 0;
   rate_ = v->getRate();
-  tag_ = new Tag( v->getTag() );
+  gene_ = new Gene( v->getGene() );
   search_strategy_ = new Normal;
 }
 
@@ -98,13 +98,13 @@ Virus :: Virus( Virus *v ) {
  *  Virus :: ~Virus()
  *-----------------------------------------------------------------------------*/
 Virus :: ~Virus() {
-  assert( tag_ != NULL );
+  assert( gene_ != NULL );
   assert( search_strategy_ != NULL );
 
-  delete tag_;
+  delete gene_;
   delete search_strategy_;
 
-  tag_ = NULL;
+  gene_ = NULL;
   search_strategy_ = NULL;
 }
 
@@ -135,11 +135,11 @@ bool Virus :: isEqualTo( const Virus &v ) const {
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Virus :: searchStartPoint( Tag & )
+ *      Method:  Virus :: searchStartPoint( Gene & )
  * Description:  タグに対して、ハミング距離が最小となる位置に取り付く
  *--------------------------------------------------------------------------------------
  */
-int Virus :: searchStartPoint( const Tag &tag ) const {
+int Virus :: searchStartPoint( const Gene &tag ) const {
   return search_strategy_->searchStartPoint( *this, tag );           /* 取り付く位置を返す */
 }
 
@@ -158,11 +158,11 @@ __SEARCH__TYPE__ Virus :: getSearchType() const {
  *      突然変異を起こす
  *-----------------------------------------------------------------------------*/
 void Virus :: mutation() {
-  getTag()->mutation();
+  getGene()->mutation();
 }
 void Virus :: mutation( double prob ) {
   if ( probability( prob ) ) {
-    getTag()->mutation( prob );
+    getGene()->mutation( prob );
     VirusCounter::Instance().countUpMutation();                      /* カウントする */
   }
 }

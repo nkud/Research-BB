@@ -194,7 +194,7 @@ int TagFlip :: response(Agent &self)
 
   if( ! self.hasImmunity( **it ) ) {                                 /* 免疫を獲得していなければ */
     flip_once(                                                       /* ひとつフリップする */
-        self.getTag()->getTag()+(*it)->getClingPoint(),
+        self.getGene()->getTag()+(*it)->getClingPoint(),
         (*it)->getTag()->getTag(),
         (*it)->getLen() );
   }
@@ -272,7 +272,7 @@ bool TagFlip :: infection( Agent &self, Virus &v )
 //  Virus *new_v                                                   /* 新しいウイルスデータを作成して */
 //    = new Virus( v, v.searchStartPoint( *self.getTag() ), 0 );
   Virus *new_v = new Virus( &v );
-  new_v->setClingPoint( new_v->searchStartPoint( *self.getTag() ) );
+  new_v->setClingPoint( new_v->searchStartPoint( *self.getGene() ) );
   // XXX: ウイルスの関数にする setClingPoint( Tag * );
   self.getImmuneSystem()->pushVirus( new_v );                        /* 保持ウイルスリストに追加する */
 

@@ -19,10 +19,10 @@
 #include <stdlib.h>
 
 /*--------------------------------------------------------------------------------------
- *      Method:  Normal :: searchStartPoint( const Tag &, const Tag & )
+ *      Method:  Normal :: searchStartPoint( const Gene &, const Gene & )
  * Description:  
  *----------------------------------------------------------------------------------- */
-int Normal :: searchStartPoint( const Virus &myself, const Tag &tag ) const {
+int Normal :: searchStartPoint( const Virus &myself, const Gene &tag ) const {
   int sp = -1;                                                       /* 取り付く位置 */
   sp                                                                 /* 取り付く位置を計算する */
     = min_ham_distance_point( tag.getTag(), myself.getTag()->getTag(), tag.getLen(), myself.getTag()->getLen() );

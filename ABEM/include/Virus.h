@@ -42,7 +42,7 @@ class Virus
     double getRate() const;                                          /* 感染確率を返す */
     void setRate( const double r );                                  /* 感染確率を設定 */
 
-    int searchStartPoint( const Tag & ) const;                       /* タグに取り付く位置を返す */
+    int searchStartPoint( const Gene & ) const;                       /* タグに取り付く位置を返す */
     __SEARCH__TYPE__ getSearchType() const;                          /* サーチ戦略を返す */
 
     bool isIncubationPeriod() const;
@@ -55,9 +55,9 @@ class Virus
     /*-----------------------------------------------------------------------------
      *  タグ操作
      *-----------------------------------------------------------------------------*/
-    Tag* getTag() const { return tag_; }                             /* タグを返す */
-    int getLen() const { return tag_->getLen(); }                    /* タグ長を返す */
-    tag_t tagAt(int n) const { return tag_->tagAt(n); }              /* 特定位置のタグを返す */
+    Gene* getGene() const { return gene_; }                             /* タグを返す */
+    int getLen() const { return gene_->getLen(); }                    /* タグ長を返す */
+    tag_t tagAt(int n) const { return gene_->tagAt(n); }              /* 特定位置のタグを返す */
 
     int getInfectionTime() const { return infection_time_; }         /* 感染期間を返す */
     void incrementInfectionTime() { infection_time_++; }             /* 感染期間を増やす */
@@ -69,7 +69,7 @@ class Virus
     void mutation();                                                 /* 突然変異を起こす */
     void mutation( double );                                         /* 突然変異を起こす */
   private:
-    Tag *tag_;                                                       /* 電子タグ */
+    Gene *gene_;                                                       /* 電子タグ */
     double rate_;                                                    /* 感染確率 */
     __SearchStrategy *search_strategy_;                              /* 取り付く位置の決め方の戦略を格納 */
 //    const __SearchStrategy *search_strategy_;                              /* 取り付く位置の決め方の戦略を格納 */

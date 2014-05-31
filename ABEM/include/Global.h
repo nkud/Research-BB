@@ -90,6 +90,8 @@ const int A_BIRTH_AGE_TO            = int(A_MAX_AGE * 0.6) ;
 #define REP(i, min, max)    for(int (i)=(min); (i)<=(max); (i)++)
 #define LOG(x)              do { std::cout<<"["<<#x"]: "<<x<<std::endl; }while(0);
 
+#define EACH(i,c) for(typeof((c).begin()) i=(c).begin(); i!=(c).end(); ++i)
+
 #define VECTOR(type)        std::vector< type >
 #define ITERATOR(type)      std::vector< type >::iterator
 #define C_ITERATOR(type)    std::vector< type >::const_iterator

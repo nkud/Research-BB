@@ -50,7 +50,7 @@ class Agent
      *-----------------------------------------------------------------------------*/
     Agent();                                                         /* コンストラクタ  */
     Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int len );
-    Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, Tag *tag );
+    Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, Gene *gene );
     Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int maxl );
     virtual ~Agent();
     /*-----------------------------------------------------------------------------
@@ -101,9 +101,9 @@ class Agent
     /*-----------------------------------------------------------------------------
      *  タグ操作セット
      *-----------------------------------------------------------------------------*/
-    int getLen() const { return tag_->getLen(); }
-    tag_t tagAt(int n) const { return tag_->tagAt(n); }
-    Tag* getTag() const { return tag_; }
+    int getLen() const { return gene_->getLen(); }
+    tag_t tagAt(int n) const { return gene_->tagAt(n); }
+    Gene* getGene() const { return gene_; }
 
   private:
     bool give_birth_;                                                /* 出産済みか */
@@ -114,7 +114,7 @@ class Agent
     __LABEL__ sex_;                                                  /* 性別 */
     __LABEL__ life_;                                                 /* 生死 */
 
-    Tag *tag_;                                                       /* 電子タグ */
+    Gene *gene_;                                                     /* 電子タグ */
     ImmuneSystem *immune_system_;                                    /* 免疫機構 */
     /*-----------------------------------------------------------------------------
      *  戦略

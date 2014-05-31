@@ -14,7 +14,7 @@
 #ifndef __SEARCH_STRATEGY
 #define __SEARCH_STRATEGY
 
-class Tag;
+class Gene;
 class Virus;
 
 /*-----------------------------------------------------------------------------
@@ -32,7 +32,7 @@ enum __SEARCH__TYPE__ {                                              /* 取り�
 class __SearchStrategy {                                             /* インターフェイス */
   public:
     virtual ~__SearchStrategy() { };
-    virtual int searchStartPoint( const Virus &, const Tag & ) const = 0;
+    virtual int searchStartPoint( const Virus &, const Gene & ) const = 0;
     /* 取り付く位置を返す */
     virtual __SEARCH__TYPE__ getSearchType() const = 0;              /* 戦略の種類を返す */
     virtual void check( int vlen ) const = 0;

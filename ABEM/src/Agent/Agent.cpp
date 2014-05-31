@@ -50,15 +50,15 @@ Agent :: Agent(
   age_( 0 ),
   sex_( __MALE__ ),
   life_( __ALIVE__ ),
-  tag_( NULL ),
+  gene_( NULL ),
   immune_system_( NULL ),
   moving_strategy_( ms ),
   childbirth_strategy_( cbs )
 {
   immune_system_ = new ImmuneSystem;                                 /* 免疫機構実装 */
 
-  tag_ = new Tag(len);
-  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
+  gene_ = new Gene(len);
+  gene_->setTagRandom();                                              /* タグをランダムに初期化 */
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
   age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
@@ -70,7 +70,7 @@ Agent :: Agent(
 Agent :: Agent(
     __MovingStrategy *ms,                                            /* 移動戦略 */
     __ChildBirthStrategy *cbs,                                       /* 子孫戦略 */
-    Tag *tag                                                         /* 電子タグ */
+    Gene *tag                                                         /* 電子タグ */
     ) :
   x_( 0 ),
   y_( 0 ),
@@ -82,7 +82,7 @@ Agent :: Agent(
 {
   immune_system_ = new ImmuneSystem;                                 /* 免疫機構実装 */
 
-  tag_ = tag;                                                        /* 指定のタグに設定 */
+  gene_ = tag;                                                        /* 指定のタグに設定 */
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
   age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
@@ -101,8 +101,8 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int m
 {
   immune_system_ = new ImmuneSystem();                               /* 免疫機構実装 */
 
-  tag_ = new Tag( rand_interval_int(minl, maxl) );                   /* ランダム長にタグを設定 */
-  tag_->setTagRandom();                                              /* タグをランダムに初期化 */
+  gene_ = new Gene( rand_interval_int(minl, maxl) );                   /* ランダム長にタグを設定 */
+  gene_->setTagRandom();                                              /* タグをランダムに初期化 */
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
   age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
@@ -114,13 +114,13 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int m
  *  XXX: 初期化の仕方によって、デストラクトの方法を変更する必要有
  *-----------------------------------------------------------------------------*/
 Agent :: ~Agent() {
-  assert( tag_ != NULL );
+  assert( gene_ != NULL );
   assert( immune_system_ != NULL );
 
-  delete tag_;
+  delete gene_;
   delete immune_system_;
 
-  tag_ = NULL;
+  gene_ = NULL;
   immune_system_ = NULL;
 }
 
@@ -141,10 +141,10 @@ void Agent :: resetParam() {
 
 void Agent :: rebirth() {
   resetParam();
-  int len = tag_->getLen();
-  delete tag_;
-  tag_ = new Tag(len);
-  tag_->setTagRandom();
+  int len = gene_->getLen();
+  delete gene_;
+  gene_ = new Gene(len);
+  gene_->setTagRandom();
   delete immune_system_;
   immune_system_ = new ImmuneSystem;
 }
@@ -204,7 +204,7 @@ int Agent :: aging() {
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Agent :: infection( Tag & )
+ *      Method:  Agent :: infection( Gene & )
  * Description:  感染したら、true を返す
  *--------------------------------------------------------------------------------------
  */
@@ -213,7 +213,7 @@ bool Agent :: infection( Virus &v )
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Agent :: response( Tag & )
+ *      Method:  Agent :: response( Gene & )
  * Description:  先頭のウイルスに対する免疫を獲得するまで、
  *               １期間に１つタグをフリップさせていく。
  *--------------------------------------------------------------------------------------
@@ -228,14 +228,14 @@ int Agent :: response()
  */
 bool Agent :: hasImmunity( const Virus &v ) const                    /* true -> 免疫獲得済み  */
 {
-  if( min_ham_distance_point( tag_->getTag(), v.getTag()->getTag(), tag_->getLen(), v.getTag()->getLen() ) < 0 )                   /* スタートポイントが -1 以下なら */
+  if( min_ham_distance_point( gene_->getTag(), v.getTag()->getTag(), gene_->getLen(), v.getTag()->getLen() ) < 0 )                   /* スタートポイントが -1 以下なら */
     return true;                                                     /* 免疫獲得済み */
   else                                                               /* 0 以上なら */
     return false;                                                    /* 未獲得 */
 }
 
 /*--------------------------------------------------------------------------------------
- *      Method:  Agent :: hasVirus( Tag & )
+ *      Method:  Agent :: hasVirus( Virus & )
  * Description:  特定のウイルスを保持しているかどうか
  *               リストを走査することで確かめる
  *----------------------------------------------------------------------------------- */

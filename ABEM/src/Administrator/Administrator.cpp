@@ -128,7 +128,7 @@ int Administrator :: getNumOfAgent() const {
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Administrator :: numHasVirus( Tag & )
+ *      Method:  Administrator :: numHasVirus( Gene & )
  * Description:  現在の感染者数を返す
  *--------------------------------------------------------------------------------------
  */
@@ -146,7 +146,7 @@ int Administrator :: numHasVirus( Virus &v ) const {
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Administrator :: numHasImmunity( Tag & )
+ *      Method:  Administrator :: numHasImmunity( Gene & )
  * Description:  現在の免疫獲得者数数を返す
  *--------------------------------------------------------------------------------------
  */
@@ -303,9 +303,9 @@ void Administrator :: printInitInfo() const {
   std::cout << "VIRUS:" << std::endl;                                /* ウイルス情報 */
   FOR(i, (int)virus_.size()) {
     std::cout<<"\trate_"<<i<<":\t"<<(*virus_[i]).getRate();
-    std::cout<<"\tlen_"<<i<<":\t"<<(*virus_[i]).getTag()->getLen()<<std::endl;
+    std::cout<<"\tlen_"<<i<<":\t"<<(*virus_[i]).getGene()->getLen()<<std::endl;
   }
   FOR( i, (int)virus_.size() ) {
-    (*virus_[ i ]).getTag()->printTag();       /* 全ウイルスのタグを表示 */
+    (*virus_[ i ]).getGene()->printTag();       /* 全ウイルスのタグを表示 */
   }
 }
