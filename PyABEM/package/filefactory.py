@@ -19,16 +19,20 @@ class FileFactory(object):
         self.f_info = open(FNAME_INFO, 'w')
         self.f_config = open(FNAME_CONFIG, 'w')
         self.f_population = open(FNAME_POPULATION, 'w')
+        self.f_is_incubate = open(FNAME_IS_INCUBATE, 'w')
+        self.f_is_onset = open(FNAME_IS_ONSET, 'w')
 
     def outputHasVirus(self, t, agents, viruses):
         """ time infectedv1 infectedv2 ... """
         # if a is None: a = self.agents
         line = ''
         line += str(t)
+        line += ' %d' % numHasVirus(agents)
         for v in viruses:
             line += ' %d' % agentIsInfected(agents, v)
         line += '\n'
         self.f_has_virus.write(line)
+
     def outputTagLen(self, t, agents):
         self.f_ave_tag_len.write(
             str(t)+' '+str(ave_tag_len(agents))+' '+str(len(agents))+'\n'
@@ -46,9 +50,20 @@ class FileFactory(object):
             str(t)+' '+str( len(agents) )+'\n'
             )
 
+    def outputIsIncubate(self, t, agents):
+        self.f_is_incubate.write(
+            str(t)+' '+str( numIsIncubate(agents) )+'\n'
+            )
+    def outputIsOnset(self, t, agents):
+        self.f_is_onset.write(
+            str(t)+' '+str( numIsOnset(agents) )+'\n'
+            )
+
     def close(self):        
         self.f_has_virus.close()
         self.f_ave_tag_len.close()
         self.f_info.close()
         self.f_config.close()
         self.f_population.close()
+        self.f_is_incubate.close()
+        self.f_is_onset.close()

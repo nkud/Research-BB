@@ -10,8 +10,9 @@ class Virus( Tag ):
     def __init__(self, tl = V_TAG_LEN):
         super(Virus, self).__init__(tl)
 
-        self.incubate_period = 2
-        self.onset_period = 5
+        # 潜伏期間の設定
+        self.incubate_period = V_INCUBATE_PERIOD
+        self.onset_period = V_ONSET_PERIOD
 
     def infection(self, agent):
         """ エージェントに感染させる """

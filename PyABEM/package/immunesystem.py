@@ -57,7 +57,7 @@ class ImmuneSystem( object ):
         if len(self.virus_list) > 0:
             cp = self.virus_list[0].cling_point # 先頭のウイルスの取りつく位置
             v = self.virus_list[0].virus
-            if len(tag) < len(v.tag):
+            if len(tag) < len(v.tag) or len(tag)-cp < len(v.tag):
                 self.virus_list[0].time = V_LETHAL_TIME + 1
                 return tag
             for i in range(v.length):
@@ -92,13 +92,14 @@ class ImmuneSystem( object ):
     def isIncubate(self):
         """ 潜伏期間かどうか """
         for iv in self.virus_list:
-            if iv.time >= iv.virus.incubate_period and iv.time < iv.virus.onset_period:
+            # if iv.time >= iv.virus.incubate_period and iv.time < iv.virus.onset_period:
+            if iv.time < iv.virus.incubate_period:
                 return True
         return False
 
     def isOnset(self):
         """ 発症している """
         for iv in self.virus_list:
-            if iv.time >= iv.virus.onset_period:
+            if iv.time >= iv.virus.incubate_period:
                 return True
         return False
