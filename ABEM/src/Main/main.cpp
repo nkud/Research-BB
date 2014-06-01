@@ -29,8 +29,8 @@ using namespace std;
 #include "Virus.h"
 #include "VirusManager.h"
 #include "Landscape.h"
-#include "Administrator.h"
 #include "FileFactory.h"
+#include "TimeCounter.h"
 
 #include "VirusCounter.h"
 #include "AgentCounter.h"
@@ -54,9 +54,6 @@ int main()
   /*-----------------------------------------------------------------------------
    *  初期化
    *-----------------------------------------------------------------------------*/
-//  Default *df = new Default;                                         /* モデル戦略 */
-//  NonOverlappingPopulation *nlp = new NonOverlappingPopulation;      /* モデル戦略 */
-
   VECTOR(Agent *) agent;                                             /* エージェントの配列 */
   VECTOR(Virus *) virus;                                             /* ウイルスの配列 */
 
@@ -65,7 +62,6 @@ int main()
   CoupleTag *couple_tag = new CoupleTag;
 
   /* 管理者 */
-//  Administrator admin( agent, virus, &landscape );                    /* 管理者に登録 */
   AgentManager am( agent );
   VirusManager vm( virus );
   am.initAgent( relocate, couple_tag, A_DEFAULT_LEN, A_INIT_NUM );
@@ -75,7 +71,6 @@ int main()
   FileFactory &ff = FileFactory::Instance();                         /* 出力ファイルを管理 */
   AgentCounter::Instance().reset();
   VirusCounter::Instance().reset();
-//  ff.setAdministrator( admin );                                      /* 管理者を登録 */
   ff.setManager( am, vm );                                           /* 管理者を登録 */
 
   /*-----------------------------------------------------------------------------
@@ -105,10 +100,10 @@ int main()
 
     /* エージェント、ウイルス、土地の計算 */
 #ifdef AGING_AGENT
-//    am.aging();                                              /* 老化する */
+    am.aging();                                              /* 老化する */
 #endif
 #ifdef MATING_AGENT
-//    am.mating();                                             /* 交配、出産する */
+    am.mating();                                             /* 交配、出産する */
 #endif
     am.migrate();                                                    /* 移動する */
     am.contact();                                                    /* 近隣に接触する */
@@ -168,7 +163,6 @@ int main()
   // 確認用 -----------------------------------------------------------------
   LOG(sizeof(Agent));
   LOG(sizeof(Virus));
-//  LOG(sizeof(admin));
   LOG(sizeof(Relocate));
 
   return 0;

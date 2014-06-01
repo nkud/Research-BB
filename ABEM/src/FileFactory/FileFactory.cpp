@@ -17,7 +17,6 @@
 #include <cstring>
 
 #include "FileFactory.h"
-#include "Administrator.h"
 #include "Agent.h"
 #include "AgentManager.h"
 #include "AgentCounter.h"
@@ -26,9 +25,10 @@
 #include "VirusCounter.h"
 #include "Global.h"
 #include "Benchmark.h"
+#include "TimeCounter.h"
 
-#define AUTO_GPLOT_FILENAME     "auto.plt"
-#define FNAME_RESULT_HTML       "RESULT.html"
+//#define AUTO_GPLOT_FILENAME     "auto.plt"
+//#define FNAME_RESULT_HTML       "RESULT.html"
 
 /*-----------------------------------------------------------------------------
  *  マクロ
@@ -63,16 +63,6 @@ int averate_amplitude_;                                              /* 平均�
 FileFactory& FileFactory :: Instance() {
     static FileFactory coredata;
     return coredata;                                                 /* インスタンスを返す */
-}
-
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  FileFactory :: setadmi
- * Description:  管理者を登録する
- *--------------------------------------------------------------------------------------
- */
-void FileFactory :: setAdministrator( Administrator &admin ) {
-    admin_ = &admin;                                                 /* 管理者を登録 */
 }
 
 void FileFactory :: setManager( AgentManager &am, VirusManager &vm ) {
@@ -185,41 +175,6 @@ void FileFactory :: outputFile_VirusVariaty( const char *fname ) const {
     ofs << VirusCounter::Instance().getVirusVariaty() << ENDL;
 }
 /*--------------------------------------------------------------------------------------
- *      Method:  FileFactory :: outputFile_HasVirus
- * Description:  ファイルに出力する
- *               ウイルスの数によって、列を調整できる
- *----------------------------------------------------------------------------------- */
-void FileFactory :: outputFile_HasVirus( const char *fname ) const {
-    if( Time::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
-    static std::ofstream ofs(fname);                               /* インスタンスは１つだけ */
-    ofs << Time::Instance().getTerm() << SEPARATOR;                /* ファイルに出力 */
-    FOR( j, vm_->getVirusSize() ) {                                /* ウイルスの数だけ */
-        ofs << admin_->numHasVirus( *(admin_->virus(j)) ) << SEPARATOR; /* ウイルス j の保持者 */
-    }
-    int num_has_all = admin_->numHasAllVirus();                      /* 全ウイルスに対する免疫獲得者 */
-    ofs << num_has_all << SEPARATOR;                                 /* 全ウイルス保持者 */
-    ofs << (double)num_has_all/am_->getAgentSize() << SEPARATOR;
-    ofs << (double)admin_->numHasVirus( *(admin_->virus(0)))/am_->getAgentSize() << ENDL;
-}
-
-/*--------------------------------------------------------------------------------------
- *      Method:  FileFactory :: outputFile_HasImmunity
- * Description:  ファイルに出力する
- *               ウイルスの数によって、列を調整できる
- *----------------------------------------------------------------------------------- */
-void FileFactory :: outputFile_HasImmunity( const char *fname ) const {
-    if( Time::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
-    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
-    ofs << Time::Instance().getTerm() << SEPARATOR;                           /* ファイルに出力 */
-    FOR( k, admin_->getVirusSize() ) {
-        ofs << admin_->numHasImmunity( *(admin_->virus(k)) ) << SEPARATOR;             /* ウイルスに対する免疫獲得者数 */
-    }
-    int num_has_all = admin_->numHasAllImmunity();
-    ofs << num_has_all << SEPARATOR;
-    ofs << (double)num_has_all/am_->getAgentSize() << SEPARATOR;
-    ofs << (double)admin_->numHasImmunity( *(admin_->virus(0)) )/am_->getAgentSize() << ENDL;
-}
-/*--------------------------------------------------------------------------------------
  *      Method:  FileFactory :: outputFile_Population
  * Description:  人口推移を出力する
  *----------------------------------------------------------------------------------- */
@@ -229,28 +184,6 @@ void FileFactory :: outputFile_Population( const char *fname ) const {
     ofs << Time::Instance().getTerm() << SEPARATOR;                           /* 期間 */
     ofs << am_->getAgentSize() << SEPARATOR;                       /* 人口 */
     ofs << ENDL;
-}
-/*--------------------------------------------------------------------------------------
- *      Method:  FileFactory :: outputFile_InfectionContactRatio
- * Description:  ファイルに出力する
- *               ウイルスの数によって、列を調整できる
- *----------------------------------------------------------------------------------- */
-void FileFactory :: outputFile_InfectionContactRatio( const char *fname ) const {
-    if( Time::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
-    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
-    double ratio = 0;
-    int sum = 0;                                                     /* 何らかのウイルスに感染した接触回数 */
-
-    ofs << Time::Instance().getTerm() << SEPARATOR;                           /* 期間 */
-    ofs << AgentCounter::Instance().getCountContact() << SEPARATOR;         /* 総接触数 */
-    sum = AgentCounter::Instance().getCountInfectionContact();
-    FOR( j, admin_->getVirusSize() ) {                                                /* その内感染した回数 */
-//        ofs << Monitor::Instance().getInfectionContactNum(admin_->virus(j)) << SEPARATOR;
-    }
-
-    if( sum > 0 ) ratio
-        = (double)sum / (double) AgentCounter::Instance().getCountContact(); 
-    ofs << ratio << ENDL;
 }
 
 /*
@@ -272,9 +205,6 @@ void FileFactory :: outputFile_LastLog( const char *fname ) const {
     ofs << "INIT_INFECTED_RATIO:" << A_INIT_INFECTED_RATE << ENDL;
     ofs << "TAG_LEN_A:" << A_DEFAULT_LEN << ENDL;
     ofs << "TAG_LEN_V:" << V_DEFAULT_LEN << ENDL;
-//    FOR(i,vm_->getVirusSize()) { ofs<<"["<<(*admin_->virus(i)).getLen()<<"]:";
-//        FOR(j, (*admin_->virus(i)).getLen()) { ofs<<int((*admin_->virus(i)).tagAt(j)); } ofs<<ENDL;
-//    }
     ofs << ">>> Agent Last Status" << ENDL;
     ITERATOR(Agent *) it_a = am_->getAgentIteratorBegin();
     while(it_a!=am_->getAgentIteratorEnd()) {

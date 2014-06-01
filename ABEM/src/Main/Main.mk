@@ -25,4 +25,4 @@ $(OBJDIR)%.o: %.cpp
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
 
-$(OBJDIR)main.o: Global.h Function.h Agent.h Virus.h Landscape.h Administrator.h FileFactory.h
+$(OBJDIR)main.o: Global.h Function.h Agent.h Virus.h Landscape.h FileFactory.h
