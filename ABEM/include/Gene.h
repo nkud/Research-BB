@@ -48,8 +48,8 @@ class Gene
     // const tag_t *getTagString();
 
     int pointOfMinHamDistance( const Gene & ) const;
-
     int flipToGeneAtPosition( const Gene &, int pos );
+    int hamDistance( const Gene &, int pos ) const;
 
     void changeTagAtTo( int at, int num );
 

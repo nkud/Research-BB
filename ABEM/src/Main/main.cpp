@@ -123,7 +123,8 @@ int main()
     ff.outputFile( "A_population.txt", am.getAgentSize() );
     ff.outputFile( "V_virusVariaty.txt", VirusCounter::Instance().getVirusVariaty() );
     ff.outputFile( "A_isIncubation.txt", am.numIsIncubation() );
-    ff.outputFile( "A_isCrisis.txt", am.numIsCrisis());
+    ff.outputFile( "A_isCrisis.txt", am.numIsCrisis() );
+    ff.outputFile( "A_hasViruses.txt", am.numHasVirus() );
 
     if ( time.getTerm() % 1000 == 0)
     {

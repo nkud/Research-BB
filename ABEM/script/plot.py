@@ -8,7 +8,7 @@ IMG_SIZE = '1200,300'
 RESULT_WIDTH = 1000
 CSS_DIR = ''
 EXTENSION = 'svg'
-FONT = 'Arial,13'
+FONT = 'Arial,12'
 ###############################################################################
 
 def IMG(img):
@@ -57,7 +57,6 @@ def replot_script(f, text='notitle', title='notitle', using='1:2'):
     outputLine(f, 'replot "%s" using %s %s title "%s"' % (text, using, LINE_STYLE, title))
 
 def outputEnd(f):
-    outputTerminal(f)
     outputLine(f, 'replot')
     outputLine(f, 'set output')
 
@@ -66,7 +65,7 @@ def output(f, title, xl, yl, outputname, *inputs):
     first = True
     for i in inputs:
         if len(i)==2:
-            iname, ll = i[0], i[1]        
+            iname, ll = i[0], i[1]
             if first:
                 plot_script(f, iname, ll)
                 first = False
@@ -79,7 +78,6 @@ def output(f, title, xl, yl, outputname, *inputs):
                 first = False
                 continue
             replot_script(f, iname, ll, using)
-
     outputImg(f, outputname)
     outputEnd(f)
 
@@ -90,14 +88,15 @@ class PlotFactory(object):
         self.file = open(filename, 'w')
     def close(self):
         self.file.close()
-        
+
     def generate(self):
         scriptForInitSetting(self.file)
-        
-        output(self.file, 'Population', 'Term', 'Agent', 'Population', ('A_population.txt', 'Agent'))
+        outputTerminal(self.file)
         output(self.file, 'VirusVariaty', 'Term', 'Variaty', 'VirusVariaty', ('V_virusVariaty.txt', 'Variaty'))
+        output(self.file, 'Population', 'Term', 'Agent', 'Population', ('A_population.txt', 'Agent'))
         output(self.file, 'IsIncubation', 'Term', 'Agent', 'IsIncubation', ('A_isIncubation.txt', 'Agent'))
         output(self.file, 'IsCrisis', 'Term', 'Agent', 'IsCrisis', (TXT('A_isCrisis'), 'Agent'))
+        output(self.file, 'HasViruses', 'Term', 'Agent', 'HasViruses', (TXT('A_hasViruses'), 'Agent'))
 
     def info(self):
         print 'have started generating PLOT SCRIPT.'
@@ -127,7 +126,6 @@ class HtmlFactory(object):
         self.file = open(filename, 'w')
     def close(self):
         self.file.close()
-        
     def generate(self):
         # Init
         outputLine(self.file,
@@ -137,6 +135,7 @@ class HtmlFactory(object):
 
         # Image Section
         outputSection(self.file, 'Population', 2, IMG('Population'))
+        outputSection(self.file, 'HasViruses', 2, IMG('HasViruses'))
         outputSection(self.file, 'VirusVariaty', 2, IMG('VirusVariaty'))
         outputSection(self.file, 'Incubation/Crisis', 2, IMG('IsIncubation'), IMG('IsCrisis'))
 
