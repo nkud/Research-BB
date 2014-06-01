@@ -17,6 +17,42 @@
 
 #include <cstring>
 
+int Gene :: flipToGeneAtPosition( const Gene &gene, int pos )
+{
+  FOR( i, gene.getLen() )
+  {
+    if( *(tag_+i) == *(gene.getTag()+i) ) {
+      continue;
+    } else {
+      *(tag_+i) = gene.tagAt(i);
+      return 0;
+    }
+  }
+  return -1;
+}
+
+int Gene :: pointOfMinHamDistance( const Gene &gene ) const {
+  if( len_ < gene.getLen() ) return -1;
+  int minh = len_;
+  int sp = 0;
+  int tm = minh;
+  FOR( i, len_-gene.getLen()+1 )
+  {
+    tm = ham_distance( tag_+i, gene.getTag(), gene.getLen() );
+    if( tm <= 0 ) return -1;
+    if( minh >= tm )
+    {
+      if( minh == tm ) {
+        if( rand_binary() ) continue;
+      }
+      minh = tm;
+      sp = i;
+    }
+  }
+  if( minh <= 0 ) return -1;
+  return sp;
+}
+
 /*-----------------------------------------------------------------------------
  *
  *  コンストラクタ

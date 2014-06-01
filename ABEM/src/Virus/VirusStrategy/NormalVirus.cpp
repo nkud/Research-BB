@@ -22,10 +22,9 @@
  *      Method:  Normal :: searchStartPoint( const Gene &, const Gene & )
  * Description:  
  *----------------------------------------------------------------------------------- */
-int Normal :: searchStartPoint( const Virus &myself, const Gene &tag ) const {
+int Normal :: searchStartPoint( const Virus &selfv, const Gene &gene ) const {
   int sp = -1;                                                       /* 取り付く位置 */
-  sp                                                                 /* 取り付く位置を計算する */
-    = min_ham_distance_point( tag.getTag(), myself.getGene()->getTag(), tag.getLen(), myself.getGene()->getLen() );
+  sp = gene.pointOfMinHamDistance( selfv.getGene() );
   return sp;                                                         /* 取り付く位置を返す */
 }
 

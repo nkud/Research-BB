@@ -228,7 +228,7 @@ int Agent :: response()
  */
 bool Agent :: hasImmunity( const Virus &v ) const                    /* true -> 免疫獲得済み  */
 {
-  if( min_ham_distance_point( gene_->getTag(), v.getGene()->getTag(), gene_->getLen(), v.getGene()->getLen() ) < 0 )                   /* スタートポイントが -1 以下なら */
+  if( gene_->pointOfMinHamDistance( v.getGene() ) < 0 )
     return true;                                                     /* 免疫獲得済み */
   else                                                               /* 0 以上なら */
     return false;                                                    /* 未獲得 */

@@ -189,33 +189,35 @@ int TagFlip :: response(Agent &self)
     return 0;                                                        /* 終了する */
   }
 
-  ITERATOR(Virus *) it
+  ITERATOR(Virus *) it_v
     = self.getImmuneSystem()->getVirusListIteratorBegin();           /* 先頭のウイルスに対し */
 
-  if( ! self.hasImmunity( **it ) ) {                                 /* 免疫を獲得していなければ */
-    flip_once(                                                       /* ひとつフリップする */
-        self.getGene()->getTag()+(*it)->getClingPoint(),
-        (*it)->getGene()->getTag(),
-        (*it)->getLen() );
+  if( ! self.hasImmunity( **it_v ) ) {                                 /* 免疫を獲得していなければ */
+    // flip_once(                                                       /* ひとつフリップする */
+    //     self.getGene()->getTag()+(*it_v)->getClingPoint(),
+    //     (*it_v)->getGene()->getTag(),
+    //     (*it_v)->getLen() );
+    self.getGene()->flipToGeneAtPosition( (*it_v)->getGene(), (*it_v)->getClingPoint() );
   }
 
-  if( self.hasImmunity( **it ) )                                     /* そのウイルスに対して */
+  if( self.hasImmunity( **it_v ) )                                     /* そのウイルスに対して */
   {                                                                  /* 免疫獲得すれば */
     // XXX: 要検討
-    it = self.getImmuneSystem()->eraseVirus( it );                   /* 保持ウイルスから v(先頭) を削除 */
+    it_v = self.getImmuneSystem()->eraseVirus( it_v );                   /* 保持ウイルスから v(先頭) を削除 */
   }
 
-  ITERATOR( Virus * ) it_v                                           /* 先頭のウイルスデータから */
+  // 突然変異
+  ITERATOR( Virus * ) it_vv                                           /* 先頭のウイルスデータから */
     = self.getImmuneSystem()->getVirusListIteratorBegin();
-  while( it_v != self.getImmuneSystem()->getVirusListIteratorEnd() ) /* 末尾まで */
+  while( it_vv != self.getImmuneSystem()->getVirusListIteratorEnd() ) /* 末尾まで */
   {
-    (*it_v)->incrementInfectionTime();                               /* 感染期間を増やす */
-    if( (*it_v)->isCrisisPeriod() ) {                            /* ウイルスが潜伏期間なら */
-      (*it_v)->mutation(V_MUTATION_RATE);                            /* 突然変異を確率で起こす */
+    (*it_vv)->incrementInfectionTime();                               /* 感染期間を増やす */
+    if( (*it_vv)->isCrisisPeriod() ) {                            /* ウイルスが潜伏期間なら */
+      (*it_vv)->mutation(V_MUTATION_RATE);                            /* 突然変異を確率で起こす */
     }
-    it_v++;                                                          /* 増やす */
+    it_vv++;                                                          /* 増やす */
   }
-
+  // 感染期間を増やす
   if( self.getImmuneSystem()->getVirusListSize() > 0 ) {             /* まだ感染していれば */
     self.getImmuneSystem()->incrementInfectionTime();                /* 総感染期間を増やして */
   } else {                                                           /* そうでなければ */

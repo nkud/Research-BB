@@ -45,7 +45,11 @@ class Gene
     tag_t tagAt( const int ) const ;                                 /* 特定の位置のタグの値を返す */
     void changeTagLenTo( int n );                                    /* タグの長さを変える */
     void printTag() const;                                           /* タグを表示 */
-    const tag_t *getTagString();
+    // const tag_t *getTagString();
+
+    int pointOfMinHamDistance( const Gene & ) const;
+
+    int flipToGeneAtPosition( const Gene &, int pos );
 
     void changeTagAtTo( int at, int num );
 
