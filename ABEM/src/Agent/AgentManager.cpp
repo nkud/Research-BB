@@ -79,7 +79,7 @@ void AgentManager :: initAgent( __MovingStrategy *ms, __ChildBirthStrategy *cbs,
 void AgentManager :: initInfectAgentInRatio( Virus &v, double r ) {
   static int infected_from = 0;                                      /* ０番目のエージェントから順に感染させる */
   int infected_to;
-  infected_to = infected_from + (int)( getAgentSize() * r );
+  infected_to = infected_from + (int)( getAgentSize() * (r/100) );
   REP( i, infected_from, infected_to ) {
     agents_[ i%getAgentSize() ]->infection( v );
   }
@@ -211,6 +211,7 @@ void AgentManager :: response()
     if( flag ) {
       // it_a = deleteAgent( it_a );                                    /* 生存配列から削除される */
       (*it_a)->rebirth();
+      AgentCounter::Instance().countUpRemoved();
     } else {
       it_a++;                                                        /* 次のエージェントへ */
     }

@@ -218,7 +218,19 @@ void Gene :: setTag( const tag_t *t, int l ) {
  *-----------------------------------------------------------------------------*/
 void Gene :: mutation() {
   int pos = rand_array( len_ );                                      /* 配列から適当な位置を */
-  tag_[ pos ] = ( tag_[ pos ] + 1 ) % 2;                             /* 変更する */
+  if( tag_[pos] < 9 ) {
+    tag_[pos] += 1;
+    while(1) {
+      int reduce_pos = rand_array( len_ );
+      if( tag_[reduce_pos] > 1 ) { // 1 よりおおきければ
+        tag_[reduce_pos] -= 1; // その位置を減らす
+        break;
+      }
+    }
+    return;
+  }
+  mutation(); // 9 ならもう一回ためす
+  // tag_[ pos ] = ( tag_[ pos ] + 1 ) % 9;                             /* 変更する */
 }
 
 /*-----------------------------------------------------------------------------
@@ -233,8 +245,8 @@ void Gene :: changeTagAtTo( int at, int num ) {
  *      確率を指定する
  *-----------------------------------------------------------------------------*/
 void Gene :: mutation( double prob ) {
-  int pos = rand_array( len_ );                                      /* 配列から適当な位置を */
   if ( probability( prob ) ) {                                       /* 指定された確率で */
-    tag_[ pos ] = ( tag_[ pos ] + 1 ) % 2;                           /* 変更する */
+    // tag_[ pos ] = ( tag_[ pos ] + 1 ) % 2;                           /* 変更する */
+    mutation();
   }
 }

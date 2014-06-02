@@ -25,4 +25,5 @@ AgentCounter& AgentCounter :: Instance() {
 void AgentCounter :: reset() {
   resetContact();
   resetInfectionContact();
+  resetRemoved();
 }

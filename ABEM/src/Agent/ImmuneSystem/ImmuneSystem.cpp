@@ -213,7 +213,7 @@ int TagFlip :: response(Agent &self)
   {
     (*it_vv)->incrementInfectionTime();                               /* 感染期間を増やす */
     if( (*it_vv)->isCrisisPeriod() ) {                            /* ウイルスが潜伏期間なら */
-      (*it_vv)->mutation(V_MUTATION_RATE);                            /* 突然変異を確率で起こす */
+      (*it_vv)->mutation( (*it_vv)->getMutationRate() );                            /* 突然変異を確率で起こす */
     }
     it_vv++;                                                          /* 増やす */
   }

@@ -33,12 +33,17 @@ class AgentCounter {
     void resetInfectionContact() { count_infection_contact_ = 0; }
     int getCountContact() const { return count_contact_; }
     int getCountInfectionContact() const { return count_infection_contact_; }
+
+    void countUpRemoved() { count_removed_++; }
+    void resetRemoved() { count_removed_ = 0; }
+    int getCountRemoved() const { return count_removed_; }
   private:
     /*-----------------------------------------------------------------------------
      *  パラメータ
      *-----------------------------------------------------------------------------*/
     int count_contact_;
     int count_infection_contact_;
+    int count_removed_;
     AgentCounter() { };                                              /* コンストラクタ */
 };
 

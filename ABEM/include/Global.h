@@ -28,7 +28,7 @@
 
 //#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-const int TERM                      = 2000                ;          /* 期間 */
+const int TERM                      = 1000                ;          /* 期間 */
 const int OUTPUT_INTERVAL           = 1                    ;         /* 出力する間隔 */
 const int MINI_SIZE_TERM            = 200                  ;
 
@@ -36,25 +36,25 @@ const int WIDTH                     = 50                   ;         /* ラン�
 
 const double INFECTION_RATE         = 30.0                  ;        /* デフォルトの感染率 */
 
-const int A_MAX_V_CAN_HAVE          = 2                    ;         /* 最大保持ウイルス */
+const int A_MAX_V_CAN_HAVE          = 1                    ;         /* 最大保持ウイルス */
 const int A_MAX_V_INFECTED_ONE_TERM = 1                    ;         /* １期間で感染させるウイルスの最大数 */
 
 const int A_INIT_NUM                = 1000                  ;        /* 初期エージェントの数 */
 
-const double A_INIT_INFECTED_RATE   = 0.5                 ;           /* 初期感染率 */
+const double A_INIT_INFECTED_RATE   = 2                 ;           /* 初期感染率 0-100 */
 
-const int A_DEFAULT_LEN             = 15                   ;         /* エージェントのタグ長 */
+const int A_DEFAULT_LEN             = 60                   ;         /* エージェントのタグ長 */
 const int V_DEFAULT_LEN             = 18                   ;         /* エージェントのタグ長 */
 
 const int V_INCUBATION_PERIOD       = 0;
 const int V_LETHAL_PERIOD           = 50;
 
-const int V_MUTATION_RATE           = 0;
+const int V_MUTATION_RATE           = 5;
 
 //               1234567890123
-#define V_TAG_0 "000000000222"
-#define V_TAG_1 "444440000000"
-#define V_NUM 2
+#define V_TAG_0 "555555555555"
+#define V_TAG_1 "444441111111"
+#define V_NUM 1
 
 const int A_MAX_NUM                 = A_INIT_NUM * 5       ;         /* 最大エージェント数 */
 

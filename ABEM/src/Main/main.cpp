@@ -58,13 +58,14 @@ int main()
   VECTOR(Virus *) virus;                                             /* ウイルスの配列 */
 
   /* 戦略 */
-  Relocate *relocate = new Relocate;
+  // Relocate *relocate = new Relocate;
+  RandomWalk *rw = new RandomWalk( A_MOVE_DISTANCE );
   CoupleTag *couple_tag = new CoupleTag;
 
   /* 管理者 */
   AgentManager am( agent );
   VirusManager vm( virus );
-  am.initAgent( relocate, couple_tag, A_DEFAULT_LEN, A_INIT_NUM );
+  am.initAgent( rw, couple_tag, A_DEFAULT_LEN, A_INIT_NUM );
   vm.initVirus();
 
   /* モニター・ファイル生成クラス */
@@ -125,6 +126,7 @@ int main()
     ff.outputFile( "A_isIncubation.txt", am.numIsIncubation() );
     ff.outputFile( "A_isCrisis.txt", am.numIsCrisis() );
     ff.outputFile( "A_hasViruses.txt", am.numHasVirus() );
+    ff.outputFile( "A_removed.txt", AgentCounter::Instance().getCountRemoved() );
 
     if ( time.getTerm() % 1000 == 0)
     {

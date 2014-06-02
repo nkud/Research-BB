@@ -48,6 +48,12 @@ class Virus
     bool isIncubationPeriod() const;
     bool isCrisisPeriod() const;
     bool isLethalPeriod() const;
+
+    int value() const;
+    int getIncubationPeriod() const;
+    int getLethalPeriod() const;
+    int getInfectionRate() const;
+    int getMutationRate() const;
     /*-----------------------------------------------------------------------------
      *  ウイルス操作
      *-----------------------------------------------------------------------------*/

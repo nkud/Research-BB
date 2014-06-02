@@ -26,25 +26,48 @@
  *
  *-----------------------------------------------------------------------------*/
 bool Virus :: isIncubationPeriod() const {
-  if( getInfectionTime() <= V_INCUBATION_PERIOD ) {
+  if( getInfectionTime() <= getIncubationPeriod() ) {
     return true;
   } else {
     return false;
   }
 }
 bool Virus :: isCrisisPeriod() const {
-  if( getInfectionTime() > V_INCUBATION_PERIOD ) {                   /* 潜伏期間を過ぎている */
+  if( getInfectionTime() > getIncubationPeriod() ) {                   /* 潜伏期間を過ぎている */
     return true;
   } else {
     return false;
   }
 }
 bool Virus :: isLethalPeriod() const {
-  if( getInfectionTime() > V_LETHAL_PERIOD ) {
+  if( getInfectionTime() > getLethalPeriod() ) {
     return true;
   } else {
     return false;
   }
+}
+
+int diff(int a, int b) {
+  if( a > b ) return a - b;
+  else return b - a;
+}
+int Virus :: value() const {
+  int ret = 0;
+  FOR( i, getLen() ) {
+    ret += diff( 5, tagAt(i) );
+  }
+  return ret;
+}
+int Virus :: getIncubationPeriod() const {
+  // return V_INCUBATION_PERIOD;
+  return value();
+}
+int Virus :: getLethalPeriod() const {
+  // return V_LETHAL_PERIOD;
+  return 24 - value();
+}
+int Virus :: getMutationRate() const {
+  return V_MUTATION_RATE;
 }
 
 /*-----------------------------------------------------------------------------
