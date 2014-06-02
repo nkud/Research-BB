@@ -47,27 +47,28 @@ bool Virus :: isLethalPeriod() const {
   }
 }
 
-int diff(int a, int b) {
-  if( a > b ) return a - b;
-  else return b - a;
-}
 int Virus :: value() const {
   int ret = 0;
   FOR( i, getLen() ) {
-    ret += diff( 5, tagAt(i) );
+    ret += abs( tagAt(i) - 0 );
   }
   return ret;
 }
 int Virus :: getIncubationPeriod() const {
   // return V_INCUBATION_PERIOD;
-  return value();
+  return value()/9;
 }
 int Virus :: getLethalPeriod() const {
   // return V_LETHAL_PERIOD;
-  return 24 - value();
+  return 24 - value()/9;
 }
 int Virus :: getMutationRate() const {
   return V_MUTATION_RATE;
+}
+double Virus :: getRate() const { 
+  // return rate_; 
+  double rate = 1./(1+value());
+  return rate;
 }
 
 /*-----------------------------------------------------------------------------
@@ -135,7 +136,7 @@ Virus :: ~Virus() {
  *      Method:  Virus :: *
  * Description:  セッタ、ゲッタ関連
  *----------------------------------------------------------------------------------- */
-double Virus :: getRate() const { return rate_; }
+
 void Virus :: setRate( const double r ) { rate_ = r; }
 
 /*-----------------------------------------------------------------------------

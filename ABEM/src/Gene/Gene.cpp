@@ -136,7 +136,7 @@ void Gene :: setTagRandom() {
     FOR( i, len_ )
     {
         // tag_[i] = rand_binary();                                     /* タグをランダムに初期化  */
-      tag_[i] = rand_interval_int(1, 9);
+      tag_[i] = rand_interval_int(0, T_MAX);
     }
 }
 
@@ -218,19 +218,19 @@ void Gene :: setTag( const tag_t *t, int l ) {
  *-----------------------------------------------------------------------------*/
 void Gene :: mutation() {
   int pos = rand_array( len_ );                                      /* 配列から適当な位置を */
-  if( tag_[pos] < 9 ) {
+  if( tag_[pos] < T_MAX ) {
     tag_[pos] += 1;
-    while(1) {
-      int reduce_pos = rand_array( len_ );
-      if( tag_[reduce_pos] > 1 ) { // 1 よりおおきければ
-        tag_[reduce_pos] -= 1; // その位置を減らす
-        break;
-      }
-    }
-    return;
+    // while(1) {
+    //   int reduce_pos = rand_array( len_ );
+    //   if( tag_[reduce_pos] > 1 ) { // 1 よりおおきければ
+    //     tag_[reduce_pos] -= 1; // その位置を減らす
+    //     break;
+    //   }
+    // }
+    // return;
   }
-  mutation(); // 9 ならもう一回ためす
-  // tag_[ pos ] = ( tag_[ pos ] + 1 ) % 9;                             /* 変更する */
+  // mutation(); // T_MAX ならもう一回ためす
+  // tag_[ pos ] = ( tag_[ pos ] + 1 ) % T_MAX;                             /* 変更する */
 }
 
 /*-----------------------------------------------------------------------------
@@ -246,7 +246,6 @@ void Gene :: changeTagAtTo( int at, int num ) {
  *-----------------------------------------------------------------------------*/
 void Gene :: mutation( double prob ) {
   if ( probability( prob ) ) {                                       /* 指定された確率で */
-    // tag_[ pos ] = ( tag_[ pos ] + 1 ) % 2;                           /* 変更する */
     mutation();
   }
 }

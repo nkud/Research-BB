@@ -43,6 +43,8 @@ class VirusCounter {
     ITERATOR(Virus*) getVirusDataBaseIteratorBegin();
     ITERATOR(Virus*) getVirusDataBaseIteratorEnd();
 
+    double calcAveValue();
+
     static VirusCounter& Instance();                                  /* インスタンスを返す */
     void reset();
   private:
@@ -50,7 +52,7 @@ class VirusCounter {
      *  パラメータ
      *-----------------------------------------------------------------------------*/
     int count_mutation_;
-    VECTOR( Virus * ) *virus_data_base_;
+    VECTOR( Virus * ) virus_data_base_;
 
     VirusCounter();                                                  /* コンストラクタ */
 };

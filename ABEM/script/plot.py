@@ -98,6 +98,7 @@ class PlotFactory(object):
         output(self.file, 'IsCrisis', 'Term', 'Agent', 'IsCrisis', (TXT('A_isCrisis'), 'Agent'))
         output(self.file, 'HasViruses', 'Term', 'Agent', 'HasViruses', (TXT('A_hasViruses'), 'Agent'))
         output(self.file, 'Removed', 'Term', 'Agent', 'Removed', (TXT('A_removed'), 'removed'))
+        output(self.file, 'Value', 'Term', 'Value', 'Value', (TXT('V_aveValue'), 'value'))
 
     def info(self):
         print 'have started generating PLOT SCRIPT.'
@@ -140,6 +141,7 @@ class HtmlFactory(object):
         outputSection(self.file, 'VirusVariaty', 2, IMG('VirusVariaty'))
         outputSection(self.file, 'Incubation/Crisis', 2, IMG('IsIncubation'), IMG('IsCrisis'))
         outputSection(self.file, 'Removed', 2, IMG('Removed'))
+        outputSection(self.file, 'Value', 2, IMG('Value'))
 
         # End
         outputLine(self.file, '</code></body></html>')

@@ -127,6 +127,7 @@ int main()
     ff.outputFile( "A_isCrisis.txt", am.numIsCrisis() );
     ff.outputFile( "A_hasViruses.txt", am.numHasVirus() );
     ff.outputFile( "A_removed.txt", AgentCounter::Instance().getCountRemoved() );
+    ff.outputFile( "V_aveValue.txt", VirusCounter::Instance().calcAveValue() );
 
     if ( time.getTerm() % 1000 == 0)
     {
@@ -139,6 +140,7 @@ int main()
     cout << "===================================" << endl;
     LOG( time.getTerm() );
     LOG( agent.size() );
+    LOG( AgentCounter::Instance().getCountRemoved() );
     LOG( am.getAgentSize() );
     LOG( AgentCounter::Instance().getCountContact() );
     LOG( AgentCounter::Instance().getCountInfectionContact() );
