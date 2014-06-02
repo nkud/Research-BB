@@ -24,12 +24,16 @@ int Gene :: flipToGeneAtPosition( const Gene &other, int pos )
 {
   FOR( i, other.getLen() )
   {
-//    if( *(tag_+i) == *(other.getTag()+i) ) {
-    if( tagAt(pos+i) == other.tagAt(i) ) {
+    int mytag = tagAt(pos+i);
+    int othertag = other.tagAt(i);
+    if( mytag == othertag ) {
       continue;
     } else {
-//      *(tag_+i) = other.tagAt(i);
-      changeTagAtTo( pos+i, other.tagAt(i) );
+      if( mytag > othertag ) {
+        changeTagAtTo( pos+i, mytag-1);
+      } else {
+        changeTagAtTo( pos+i, mytag+1);
+      }
       return 0;
     }
   }
@@ -131,7 +135,8 @@ void Gene :: setTagRandom() {
     assert( len_ > 0 );
     FOR( i, len_ )
     {
-        tag_[i] = rand_binary();                                     /* タグをランダムに初期化  */
+        // tag_[i] = rand_binary();                                     /* タグをランダムに初期化  */
+      tag_[i] = rand_interval_int(1, 9);
     }
 }
 
