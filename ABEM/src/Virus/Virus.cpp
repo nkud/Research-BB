@@ -33,7 +33,7 @@ bool Virus :: isIncubationPeriod() const {
   }
 }
 bool Virus :: isCrisisPeriod() const {
-  if( getInfectionTime() > getIncubationPeriod() ) {                   /* 潜伏期間を過ぎている */
+  if( getInfectionTime() > getIncubationPeriod() and getInfectionTime() <= getLethalPeriod() ) {                   /* 潜伏期間を過ぎている */
     return true;
   } else {
     return false;

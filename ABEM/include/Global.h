@@ -49,7 +49,7 @@ const int V_DEFAULT_LEN             = 18                   ;         /* エー�
 const int V_INCUBATION_PERIOD       = 5;
 const int V_LETHAL_PERIOD           = 50;
 
-const int V_MUTATION_RATE           = 10;
+const int V_MUTATION_RATE           = 30;
 
 const int T_MAX           = 9;
 

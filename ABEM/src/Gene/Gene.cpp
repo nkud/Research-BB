@@ -132,8 +132,8 @@ Gene :: ~Gene() {                                                      /* デス
  *--------------------------------------------------------------------------------------
  */
 void Gene :: setTagRandom() {
-    assert( len_ > 0 );
-    FOR( i, len_ )
+    assert( getLen() > 0 );
+    FOR( i, getLen() )
     {
         // tag_[i] = rand_binary();                                     /* タグをランダムに初期化  */
       tag_[i] = rand_interval_int(0, T_MAX);
@@ -180,7 +180,7 @@ int Gene :: getLen() const {
  *      指定された位置のタグを返す
  *-----------------------------------------------------------------------------*/
 tag_t Gene :: tagAt( const int n ) const {
-    return tag_[ n % len_ ];                                         /* 指定された位置のタグを返す */
+    return tag_[ n % getLen() ];                                         /* 指定された位置のタグを返す */
 }
 
 /*
