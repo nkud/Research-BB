@@ -28,7 +28,7 @@
 
 //#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-const int TERM                      = 10000                ;          /* 期間 */
+const int TERM                      = 20000                ;          /* 期間 */
 const int OUTPUT_INTERVAL           = 1                    ;         /* 出力する間隔 */
 const int MINI_SIZE_TERM            = 200                  ;
 
@@ -49,7 +49,7 @@ const int V_DEFAULT_LEN             = 18                   ;         /* エー�
 const int V_INCUBATION_PERIOD       = 5;
 const int V_LETHAL_PERIOD           = 50;
 
-const int V_MUTATION_RATE           = 30;
+const int V_MUTATION_RATE           = 10;
 
 const int T_MAX           = 9;
 

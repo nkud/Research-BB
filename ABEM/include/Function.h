@@ -34,6 +34,7 @@ int rand_interval_int( const int, const int );                       /* 整数�
 double rand_interval_double( const double, const double );           /* 浮動小数点の幅の乱数を返す */
 int rand_array( const int );                                         /* ０から整数までの乱数を返す */
 int rand_binary();                                                   /* ０か１の乱数を返す */
+bool rand_bool();
 int rand_sign();                                                     /* ー１か１の乱数を返す */
 bool probability( double );
 

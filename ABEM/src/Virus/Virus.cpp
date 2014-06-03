@@ -56,7 +56,8 @@ int Virus :: value() const {
 }
 int Virus :: getIncubationPeriod() const {
   // return V_INCUBATION_PERIOD;
-  return value()/9;
+  // return 12 + value()/9;
+  return 12;
 }
 int Virus :: getLethalPeriod() const {
   // return V_LETHAL_PERIOD;
@@ -67,7 +68,7 @@ int Virus :: getMutationRate() const {
 }
 double Virus :: getRate() const { 
   // return rate_; 
-  double rate = 1./(1+value());
+  double rate = 1./(1+value()/9);
   return rate;
 }
 

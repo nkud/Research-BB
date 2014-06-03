@@ -217,9 +217,17 @@ void Gene :: setTag( const tag_t *t, int l ) {
  *      変異は必ず起こる
  *-----------------------------------------------------------------------------*/
 void Gene :: mutation() {
-  int pos = rand_array( len_ );                                      /* 配列から適当な位置を */
-  if( tag_[pos] < T_MAX ) {
-    tag_[pos] += 1;
+  int pos = rand_array( getLen() );                                      /* 配列から適当な位置を */
+  if( rand_bool() ) {
+    if( rand_bool() ) {
+      if( tag_[pos] < T_MAX )
+        tag_[pos] += 1;
+    } else {
+      if( tag_[pos] > 0 )
+        tag_[pos] -= 1;
+    }
+  }
+}
     // while(1) {
     //   int reduce_pos = rand_array( len_ );
     //   if( tag_[reduce_pos] > 1 ) { // 1 よりおおきければ
@@ -228,10 +236,10 @@ void Gene :: mutation() {
     //   }
     // }
     // return;
-  }
+  // }
   // mutation(); // T_MAX ならもう一回ためす
   // tag_[ pos ] = ( tag_[ pos ] + 1 ) % T_MAX;                             /* 変更する */
-}
+// }
 
 /*-----------------------------------------------------------------------------
  *  changeTagLenTo

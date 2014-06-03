@@ -127,6 +127,13 @@ int rand_binary() {
   return ret;
 }
 
+bool rand_bool() {
+  if( rand_binary() == 0 )
+    return true;
+  else
+    return false;
+}
+
 int rand_sign() {
   int ret; 
   ret = rand()%2 ? 1 : -1; 
