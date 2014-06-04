@@ -51,7 +51,7 @@ const int V_LETHAL_PERIOD           = 50;
 
 const int V_MUTATION_RATE           = 30;
 
-const int T_MAX           = 9;
+const int T_MAX                     = 9;
 
 //               1234567890123
 #define V_TAG_0 "000000000000"

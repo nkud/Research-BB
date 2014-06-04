@@ -271,7 +271,7 @@ void AgentManager :: mating()
         ITERATOR(Agent *) it_partner= Landscape::Instance().getAgentIteratorBeginAt( tx, ty );
         while( it_partner!= Landscape::Instance().getAgentIteratorEndAt( tx, ty ) )
         {                                                            /* 自分の近隣にいる人から */
-          if( getAgentSize()+new_child_.size() >= A_MAX_NUM ) {      /* 最大エージェントをこえそうなら */
+          if( getAgentSize()+(int)new_child_.size() >= A_MAX_NUM ) {      /* 最大エージェントをこえそうなら */
             break;                                                   /* 終了 */
           }
           if( isOppositeSex( *(*it_myself), **it_partner) &&         /* 異性かつ */

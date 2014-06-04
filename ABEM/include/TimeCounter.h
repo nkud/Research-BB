@@ -14,6 +14,8 @@
 #ifndef ___TIME
 #define ___TIME
 
+#include "Global.h"
+
 class Time {
   public:
     bool incrementTermTo( int max ) { if( term_++ < max ) return true; else return false; }
@@ -22,6 +24,9 @@ class Time {
     static Time& Instance() {
       static Time singleton;
       return singleton;
+    }
+    void printTerm() const {
+      std::cout << getTerm() << " -> " << TERM << std::endl;
     }
   private:
     Time() : term_( 0 ) { }

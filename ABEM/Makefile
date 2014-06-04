@@ -10,7 +10,7 @@ SRCDIR	 = src
 BINDIR	 = bin
 
 MASTER	 = master
-NOW		 = $(shell date +result-%y-%m%d-%H%M%S)
+NOW		 = $(shell date +result-%y%m%d-%H%M%S)
 
 VPATH = obj include
 
@@ -55,12 +55,7 @@ gene:
 pack:
 	@$(PRINT) '>>> Packaging'
 	@[ -d $(MASTER) ] || $(MKDIR) $(MASTER)
-	@cd $(MASTER); $(MKDIR) $(NOW)/src
-	@cd $(MASTER); $(MKDIR) $(NOW)/assets
-	@cd $(MASTER); $(MKDIR) $(NOW)/script
-	@-$(COPY) $(BINDIR)/*.txt $(MASTER)/$(NOW)/assets
-	@-$(COPY) $(BINDIR)/*.plt $(MASTER)/$(NOW)/script
-	@-$(COPY) $(BINDIR)/index.html template/result.css $(MASTER)/$(NOW)
+	@cp -r bin $(MASTER)/$(NOW)
 	@tree $(MASTER)/$(NOW)
 
 # 削除する

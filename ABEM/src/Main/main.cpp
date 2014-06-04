@@ -63,16 +63,16 @@ int main()
   CoupleTag *couple_tag = new CoupleTag;
 
   /* 管理者 */
-  AgentManager am( agent );
-  VirusManager vm( virus );
-  am.initAgent( rw, couple_tag, A_DEFAULT_LEN, A_INIT_NUM );
-  vm.initVirus();
+  AgentManager aManager( agent );
+  VirusManager vManager( virus );
+  aManager.initAgent( rw, couple_tag, A_DEFAULT_LEN, A_INIT_NUM );
+  vManager.initVirus();
 
   /* モニター・ファイル生成クラス */
   FileFactory &ff = FileFactory::Instance();                         /* 出力ファイルを管理 */
   AgentCounter::Instance().reset();
   VirusCounter::Instance().reset();
-  ff.setManager( am, vm );                                           /* 管理者を登録 */
+  ff.setManager( aManager, vManager );                                           /* 管理者を登録 */
 
   /*-----------------------------------------------------------------------------
    *  エージェントへの初期動作
@@ -80,7 +80,7 @@ int main()
   /* エージェントへの初期感染 */
   FOR( i, V_NUM ) {
     virus[i]->getGene()->printTag();
-    am.initInfectAgentInRatio( *virus[i], A_INIT_INFECTED_RATE );    /* 初期感染させる */
+    aManager.initInfectAgentInRatio( *virus[i], A_INIT_INFECTED_RATE );    /* 初期感染させる */
   }
 
   int zero_count = 0;                                                /* 感染接触が起こらなかった数をカウント */
@@ -101,17 +101,17 @@ int main()
 
     /* エージェント、ウイルス、土地の計算 */
 #ifdef AGING_AGENT
-    am.aging();                                              /* 老化する */
+    aManager.aging();                                              /* 老化する */
 #endif
 #ifdef MATING_AGENT
-    am.mating();                                             /* 交配、出産する */
+    aManager.mating();                                             /* 交配、出産する */
 #endif
-    am.migrate();                                                    /* 移動する */
-    am.contact();                                                    /* 近隣に接触する */
-    am.infect();                                                     /* 待機ウイルスを感染させる */
-    am.response();                                                   /* 免疫応答（タグフリップ） */
+    aManager.migrate();                                                    /* 移動する */
+    aManager.contact();                                                    /* 近隣に接触する */
+    aManager.infect();                                                     /* 待機ウイルスを感染させる */
+    aManager.response();                                                   /* 免疫応答（タグフリップ） */
 
-    // data base
+    // XXX: data base
     FOR( j, (int)agent.size() ) {
       ITERATOR(Virus*) it_v=agent[j]->getImmuneSystem()->getVirusListIteratorBegin();
       while(it_v!=agent[j]->getImmuneSystem()->getVirusListIteratorEnd()) {
@@ -121,11 +121,11 @@ int main()
     }
 
     /*  途中経過出力 */
-    ff.outputFile( "A_population.txt", am.getAgentSize() );
+    ff.outputFile( "A_population.txt", aManager.getAgentSize() );
     ff.outputFile( "V_virusVariaty.txt", VirusCounter::Instance().getVirusVariaty() );
-    ff.outputFile( "A_isIncubation.txt", am.numIsIncubation() );
-    ff.outputFile( "A_isCrisis.txt", am.numIsCrisis() );
-    ff.outputFile( "A_hasViruses.txt", am.numHasVirus() );
+    ff.outputFile( "A_isIncubation.txt", aManager.numIsIncubation() );
+    ff.outputFile( "A_isCrisis.txt", aManager.numIsCrisis() );
+    ff.outputFile( "A_hasViruses.txt", aManager.numHasVirus() );
     ff.outputFile( "A_removed.txt", AgentCounter::Instance().getCountRemoved() );
     ff.outputFile( "V_aveValue.txt", VirusCounter::Instance().calcAveValue() );
 
@@ -138,13 +138,14 @@ int main()
 
     /* 途中経過表示用ログ */
     cout << "===================================" << endl;
-    LOG( time.getTerm() );
+    // LOG( time.getTerm() << TERM );
+    time.printTerm();
     LOG( agent.size() );
     LOG( AgentCounter::Instance().getCountRemoved() );
-    LOG( am.getAgentSize() );
+    LOG( aManager.getAgentSize() );
     LOG( AgentCounter::Instance().getCountContact() );
     LOG( AgentCounter::Instance().getCountInfectionContact() );
-    LOG( am.numHasVirus() );
+    LOG( aManager.numHasVirus() );
     LOG( VirusCounter::Instance().getCountMutation() );
     LOG( VirusCounter::Instance().getVirusVariaty() );
 
@@ -162,13 +163,14 @@ int main()
   ff.outputFile_Info( "INFO.txt" );                                  /* プログラムの初期設定など出力 */
   ff.outputFile_LastLog( "Log.txt");
   ff.outputFile_LastVirusDataBase( "VirusDataBase.txt");
-  am.printInitInfo();                                                /* 初期状態を表示 */
-  vm.printInitInfo();                                                /* 初期状態を表示 */
+  aManager.printInitInfo();                                                /* 初期状態を表示 */
+  vManager.printInitInfo();                                                /* 初期状態を表示 */
 
   // 確認用 -----------------------------------------------------------------
   LOG(sizeof(Agent));
   LOG(sizeof(Virus));
   LOG(sizeof(Relocate));
+  LOG(sizeof(Time));
 
   return 0;
 }
