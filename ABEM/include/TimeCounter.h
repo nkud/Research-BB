@@ -26,7 +26,7 @@ class Time {
       return singleton;
     }
     void printTerm() const {
-      std::cout << getTerm() << " -> " << TERM << std::endl;
+      std::cout << ">>> Term: " << getTerm() << " -> " << TERM << std::endl;
     }
   private:
     Time() : term_( 0 ) { }
