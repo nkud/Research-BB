@@ -1,10 +1,8 @@
 #ifndef ___IMMUNESYSTEM_STRATEGY
 #define ___IMMUNESYSTEM_STRATEGY
 
-struct VirusData;
 class Agent;
 class __ImmuneSystemStrategy;
-class Tag;
 
 class ImmuneSystem {
   public:

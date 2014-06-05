@@ -12,7 +12,7 @@
  */
 
 #include "Gene.h"
-#include "Global.h"
+#include "Config.h"
 #include "Function.h"
 
 #include <cstring>

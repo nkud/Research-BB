@@ -14,7 +14,35 @@
 #ifndef ___FUNCTION
 #define ___FUNCTION
 
-#include "Global.h"
+#include "Config.h"
+
+/*-----------------------------------------------------------------------------
+ *
+ *  インクルードファイル
+ *
+ *-----------------------------------------------------------------------------*/
+#include <iostream>
+#include <vector>
+#include <iostream>
+#include <cassert>
+/*-----------------------------------------------------------------------------
+ *
+ *  マクロ
+ *
+ *-----------------------------------------------------------------------------*/
+#define FOR(i, m)           for(int (i)=0; (i)<(m); (i)++)  /* i: 0 ~ (m-1) */
+#define REP(i, min, max)    for(int (i)=(min); (i)<=(max); (i)++)
+#define LOG(x)              do { std::cout<<"["<<#x"]: "<<x<<std::endl; }while(0);
+#define DEBUG(x)						do { std::cerr<<">>> "<<#x<<" = "<<(x)<<" (L"<<__LINE__<<")"<<" "<<__FILE__<<std::endl; }while(0);
+
+#define ALL(a) 							(a).begin(),(a).end()
+#define EACH(i,c) 					for(typeof((c).begin()) i=(c).begin(); i!=(c).end(); ++i)
+
+#define VECTOR(type)        std::vector< type >
+#define ITERATOR(type)      std::vector< type >::iterator
+#define C_ITERATOR(type)    std::vector< type >::const_iterator
+
+#define SEPARATOR           " "                                      /* 出力データを分割する文字 */
 
 /*-----------------------------------------------------------------------------
  *  タグ操作セット

@@ -14,8 +14,6 @@
 #ifndef ___AGENT_MANAGER
 #define ___AGENT_MANAGER
 
-#include "Global.h"
-
 class Agent;
 class __MovingStrategy;
 class __ChildBirthStrategy;

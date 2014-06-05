@@ -22,7 +22,7 @@
 #include <ctime>
 using namespace std;
 
-#include "Global.h"
+#include "Config.h"
 #include "Function.h"
 #include "Agent.h"
 #include "AgentManager.h"

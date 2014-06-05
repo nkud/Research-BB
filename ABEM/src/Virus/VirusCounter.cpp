@@ -13,7 +13,8 @@
 
 #include "VirusCounter.h"
 #include "Virus.h"
-#include "Global.h"
+#include "Config.h"
+#include "Function.h"
 
 double VirusCounter :: calcAveValue() {
   double sum = 0;

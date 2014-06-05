@@ -14,8 +14,6 @@
 #ifndef ___TERM
 #define ___TERM
 
-#include "Global.h"
-
 class Term {
   public:
     bool incrementTermTo( int max ) { if( term_++ < max ) return true; else return false; }

@@ -16,6 +16,8 @@
 #include "SearchStrategy.h"
 #include "Gene.h"
 #include "Virus.h"
+#include "Config.h"
+#include "Function.h"
 
 /*--------------------------------------------------------------------------------------
  *      Method:  Fixed :: searchStartPoint( const Tag &, const Tag & )

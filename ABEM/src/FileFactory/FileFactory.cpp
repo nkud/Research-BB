@@ -23,7 +23,7 @@
 #include "Virus.h"
 #include "VirusManager.h"
 #include "VirusCounter.h"
-#include "Global.h"
+#include "Config.h"
 #include "Benchmark.h"
 #include "Term.h"
 

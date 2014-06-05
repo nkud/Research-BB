@@ -13,7 +13,7 @@
 #include "Agent.h"
 #include "AgentStrategy.h"
 #include "Function.h"
-#include "Global.h"
+#include "Config.h"
 #include "Gene.h"
 
 #include <vector>

@@ -14,7 +14,8 @@
 #ifndef ___LANDSCAPE
 #define ___LANDSCAPE
 
-#include "Global.h"
+#include "Config.h"
+#include "Function.h"
 
 #include <vector>
 

@@ -14,7 +14,8 @@
 #ifndef ___VIRUS_MANAGER
 #define ___VIRUS_MANAGER
 
-#include "Global.h"
+#include "Config.h"
+#include "Function.h"
 
 class Virus;
 

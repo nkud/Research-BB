@@ -13,7 +13,8 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "Global.h"
+#include "Config.h"
+#include "Function.h"
 #include "Virus.h"
 #include "VirusStrategy.h"
 #include "Function.h"
