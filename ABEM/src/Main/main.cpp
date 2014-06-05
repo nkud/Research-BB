@@ -35,7 +35,7 @@ using namespace std;
 #include "VirusCounter.h"
 #include "AgentCounter.h"
 
-#ifdef ___BENCHMARK
+#ifdef BENCHMARK
 #include "Benchmark.h"
 #endif
 
@@ -46,7 +46,7 @@ using namespace std;
  *-----------------------------------------------------------------------------*/
 int main()
 {
-#ifdef ___BENCHMARK
+#ifdef BENCHMARK
   Benchmark::Instance().startTimer();                                /* ベンチマーク計測開始 */
 #endif
   srand( (unsigned int)time(NULL)*time(NULL) );                      /* 乱数初期化 */
@@ -140,6 +140,7 @@ int main()
     cout << "===================================" << endl;
     // LOG( time.getTerm() << TERM );
     time.printTerm();
+    LOG( Benchmark::Instance().getTime() );
     LOG( agent.size() );
     LOG( AgentCounter::Instance().getCountRemoved() );
     LOG( aManager.getAgentSize() );
@@ -155,7 +156,7 @@ int main()
     if( (int)agent.size() == A_MAX_NUM ) break;
   } /* ============================================================== 計算終了 */
 
-#ifdef ___BENCHMARK
+#ifdef BENCHMARK
   Benchmark::Instance().stopTimer();                                 /* ベンチマークの計測終了 */
   Benchmark::Instance().printTime();                                 /* 計測時間表示 */
 #endif

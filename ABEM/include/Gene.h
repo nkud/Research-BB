@@ -42,7 +42,7 @@ class Gene
     tag_t *getTag() const;                                           /* タグ配列へのポインタを返す */
     void setTag( const tag_t *t, int l );                            /* タグを設定 */
     int getLen() const;                                              /* タグ長を返す */
-    tag_t tagAt( const int ) const ;                                 /* 特定の位置のタグの値を返す */
+    virtual tag_t tagAt( const int ) const ;                                 /* 特定の位置のタグの値を返す */
     void changeTagLenTo( int n );                                    /* タグの長さを変える */
     void printTag() const;                                           /* タグを表示 */
     // const tag_t *getTagString();

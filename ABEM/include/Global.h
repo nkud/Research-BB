@@ -15,7 +15,7 @@
 #define ___GLOBAL
 
 #if defined(__unix__) || defined(__APPLE__)
-#define ___BENCHMARK
+#define BENCHMARK
 #endif
 
 /*-----------------------------------------------------------------------------
@@ -92,8 +92,10 @@ const int A_BIRTH_AGE_TO            = int(A_MAX_AGE * 0.6) ;
 #define FOR(i, m)           for(int (i)=0; (i)<(m); (i)++)  /* i: 0 ~ (m-1) */
 #define REP(i, min, max)    for(int (i)=(min); (i)<=(max); (i)++)
 #define LOG(x)              do { std::cout<<"["<<#x"]: "<<x<<std::endl; }while(0);
+#define DEBUG(x)						cerr<<#x<<":"<<(x)<<"(L"<<__LINE__<<")"<<" "<<__FILE__<<endl;
 
-#define EACH(i,c) for(typeof((c).begin()) i=(c).begin(); i!=(c).end(); ++i)
+#define ALL(a) 							(a).begin(),(a).end()
+#define EACH(i,c) 					for(typeof((c).begin()) i=(c).begin(); i!=(c).end(); ++i)
 
 #define VECTOR(type)        std::vector< type >
 #define ITERATOR(type)      std::vector< type >::iterator

@@ -151,7 +151,7 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
 #else
     OFSVP( NO_DIAGONAL, 0 );
 #endif
-#ifdef ___BENCHMARK
+#ifdef BENCHMARK
     OFSVP( TIME, Benchmark::Instance().getTime() );                  /* 計測時間 */
 #endif
 }
