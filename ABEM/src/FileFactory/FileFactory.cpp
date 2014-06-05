@@ -25,7 +25,7 @@
 #include "VirusCounter.h"
 #include "Global.h"
 #include "Benchmark.h"
-#include "TimeCounter.h"
+#include "Term.h"
 
 //#define AUTO_GPLOT_FILENAME     "auto.plt"
 //#define FNAME_RESULT_HTML       "RESULT.html"
@@ -83,7 +83,7 @@ void FileFactory :: setManager( AgentManager &am, VirusManager &vm ) {
 void FileFactory :: outputFile_Info( const char *fname ) const {
     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
 
-    int t = Time::Instance().getTerm();                                       /* 計算後実行期間 */
+    int t = Term::Instance().getTerm();                                       /* 計算後実行期間 */
     int last_term;
     if( t < MINI_SIZE_TERM ) last_term = MINI_SIZE_TERM;
     else last_term = t;
@@ -133,7 +133,7 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
     /*-----------------------------------------------------------------------------
      *  計算 後 情報
      *-----------------------------------------------------------------------------*/
-    OFSVP( TERM, Time::Instance().getTerm() );                                /* 計測器館 */
+    OFSVP( TERM, Term::Instance().getTerm() );                                /* 計測器館 */
     OFSVP( A_NUM, am_->getAgentSize() );                          /* 最終エージェント数 */
     OFSVP( LAST_TERM, last_term );                                   /* 実行期間 */
 #ifdef AGING_AGENT
@@ -157,9 +157,9 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
 }
 
 void FileFactory :: outputFile( const char *fname, int value ) const {
-    if( Time::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
+    if( Term::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
     std::ofstream ofs(fname, std::ios_base::out | std::ios_base::app);
-    ofs << Time::Instance().getTerm() << SEPARATOR;
+    ofs << Term::Instance().getTerm() << SEPARATOR;
     ofs << value << ENDL;
 }
 
@@ -169,9 +169,9 @@ void FileFactory :: outputFile( const char *fname, int value ) const {
  *               ウイルスの数によって、列を調整できる
  *----------------------------------------------------------------------------------- */
 void FileFactory :: outputFile_VirusVariaty( const char *fname ) const {
-    if( Time::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
+    if( Term::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
-    ofs << Time::Instance().getTerm() << SEPARATOR;                  /* ファイルに出力 */
+    ofs << Term::Instance().getTerm() << SEPARATOR;                  /* ファイルに出力 */
     ofs << VirusCounter::Instance().getVirusVariaty() << ENDL;
 }
 /*--------------------------------------------------------------------------------------
@@ -179,9 +179,9 @@ void FileFactory :: outputFile_VirusVariaty( const char *fname ) const {
  * Description:  人口推移を出力する
  *----------------------------------------------------------------------------------- */
 void FileFactory :: outputFile_Population( const char *fname ) const {
-    if( Time::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
+    if( Term::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
-    ofs << Time::Instance().getTerm() << SEPARATOR;                           /* 期間 */
+    ofs << Term::Instance().getTerm() << SEPARATOR;                           /* 期間 */
     ofs << am_->getAgentSize() << SEPARATOR;                       /* 人口 */
     ofs << ENDL;
 }
@@ -194,7 +194,7 @@ void FileFactory :: outputFile_Population( const char *fname ) const {
  */
 void FileFactory :: outputFile_LastLog( const char *fname ) const {
     static std::ofstream ofs(fname);
-    ofs << "TERM:" << Time::Instance().getTerm() << ENDL;
+    ofs << "TERM:" << Term::Instance().getTerm() << ENDL;
     ofs << "MAX_AGE:" << A_MAX_AGE << ENDL;
     ofs << "BIRTH_RATE:" << A_BIRTH_RATE << ENDL;
     ofs << "WIDTH:" << WIDTH << ENDL;

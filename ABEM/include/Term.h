@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  Time.h
+ *       Filename:  Term.h
  *
  *    Description:  
  *
@@ -11,25 +11,25 @@
  * =====================================================================================
  */
 
-#ifndef ___TIME
-#define ___TIME
+#ifndef ___TERM
+#define ___TERM
 
 #include "Global.h"
 
-class Time {
+class Term {
   public:
     bool incrementTermTo( int max ) { if( term_++ < max ) return true; else return false; }
     int getTerm() const { return term_; }
 
-    static Time& Instance() {
-      static Time singleton;
+    static Term& Instance() {
+      static Term singleton;
       return singleton;
     }
     void printTerm() const {
       std::cout << ">>> Term: " << getTerm() << " -> " << TERM << std::endl;
     }
   private:
-    Time() : term_( 0 ) { }
+    Term() : term_( 0 ) { }
     int term_;
 };
 

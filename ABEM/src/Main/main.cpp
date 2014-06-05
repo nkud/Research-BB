@@ -30,7 +30,7 @@ using namespace std;
 #include "VirusManager.h"
 #include "Landscape.h"
 #include "FileFactory.h"
-#include "TimeCounter.h"
+#include "Term.h"
 
 #include "VirusCounter.h"
 #include "AgentCounter.h"
@@ -95,8 +95,8 @@ int main()
    *  計算開始
    *
    *-----------------------------------------------------------------------------*/
-  Time &time = Time::Instance();
-  while( time.incrementTermTo(TERM) )                                /* 計算開始  */
+  Term &term = Term::Instance();
+  while( term.incrementTermTo(TERM) )                                /* 計算開始  */
   {
     /* カウンターのリセット */
     VirusCounter::Instance().reset();
@@ -133,17 +133,17 @@ int main()
     ff.outputFile( "A_removed.txt", AgentCounter::Instance().getCountRemoved() );
     ff.outputFile( "V_aveValue.txt", VirusCounter::Instance().calcAveValue() );
 
-    if ( time.getTerm() % 1000 == 0)
+    if ( term.getTerm() % 1000 == 0)
     {
       char tfname[256];
-      sprintf(tfname, "%d_VirusDataBase.txt", time.getTerm()/1000);
+      sprintf(tfname, "%d_VirusDataBase.txt", term.getTerm()/1000);
       ff.outputFile_LastVirusDataBase(tfname);
     }
 
     /* 途中経過表示用ログ */
     cout << "===================================" << endl;
-    // LOG( time.getTerm() << TERM );
-    time.printTerm();
+    // LOG( term.getTerm() << TERM );
+    term.printTerm();
     Benchmark::Instance().printElapsedTime();
     LOG( agent.size() );
     LOG( AgentCounter::Instance().getCountRemoved() );
@@ -175,7 +175,7 @@ int main()
   LOG(sizeof(Agent));
   LOG(sizeof(Virus));
   LOG(sizeof(Relocate));
-  LOG(sizeof(Time));
+  LOG(sizeof(Term));
 
   return 0;
 }
