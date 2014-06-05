@@ -12,7 +12,7 @@
  */
 
 #include "AgentCounter.h"
-#include "Global.h"
+#include "Config.h"
 
 /*-----------------------------------------------------------------------------
  *  Instance()

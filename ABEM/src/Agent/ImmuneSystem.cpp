@@ -16,7 +16,7 @@
 #include "AgentStrategy.h"
 #include "Function.h"
 #include "VirusCounter.h"
-#include "Global.h"
+#include "Config.h"
 
 #include <vector>
 

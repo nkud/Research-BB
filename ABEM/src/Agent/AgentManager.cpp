@@ -11,7 +11,7 @@
  * =====================================================================================
  */
 
-#include "Global.h"
+#include "Config.h"
 #include "Agent.h"
 #include "AgentManager.h"
 #include "AgentCounter.h"
