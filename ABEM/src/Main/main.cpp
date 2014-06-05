@@ -59,13 +59,17 @@ int main()
 
   /* 戦略 */
   // Relocate *relocate = new Relocate;
-  RandomWalk *rw = new RandomWalk( A_MOVE_DISTANCE );
-  CoupleTag *couple_tag = new CoupleTag;
+  // RandomWalk *rw = new RandomWalk( A_MOVE_DISTANCE );
+  // CoupleTag *couple_tag = new CoupleTag;
 
   /* 管理者 */
   AgentManager aManager( agent );
   VirusManager vManager( virus );
-  aManager.initAgent( rw, couple_tag, A_DEFAULT_LEN, A_INIT_NUM );
+  aManager.initAgent( 
+    new RandomGaussWalk(A_MOVE_DISTANCE),
+    new CoupleTag(), 
+    A_DEFAULT_LEN, 
+    A_INIT_NUM );
   vManager.initVirus();
 
   /* モニター・ファイル生成クラス */
@@ -140,7 +144,7 @@ int main()
     cout << "===================================" << endl;
     // LOG( time.getTerm() << TERM );
     time.printTerm();
-    LOG( Benchmark::Instance().getTime() );
+    Benchmark::Instance().printElapsedTime();
     LOG( agent.size() );
     LOG( AgentCounter::Instance().getCountRemoved() );
     LOG( aManager.getAgentSize() );

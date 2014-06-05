@@ -61,4 +61,9 @@ class Gene
     tag_t *tag_;                                                     /* 電子タグ */
 };
 
+class RingGene : public Gene {
+public:
+    int pointOfMinHamDistance( const Gene &other ) const;
+};
+
 #endif

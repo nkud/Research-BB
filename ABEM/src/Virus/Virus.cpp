@@ -57,11 +57,12 @@ int Virus :: value() const {
 int Virus :: getIncubationPeriod() const {
   // return V_INCUBATION_PERIOD;
   // return 12 + value()/9;
-  return 12;
+  // return 12;
+  return 0;
 }
 int Virus :: getLethalPeriod() const {
   // return V_LETHAL_PERIOD;
-  return 24 - value()/9;
+  return 24000 - value()/9;
 }
 int Virus :: getMutationRate() const {
   return V_MUTATION_RATE;

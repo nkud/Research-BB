@@ -45,13 +45,34 @@ int Gene :: flipToGeneAtPosition( const Gene &other, int pos )
  *      ハミング距離が最小になる位置を返す
  *-----------------------------------------------------------------------------*/
 int Gene :: pointOfMinHamDistance( const Gene &other ) const {
-  if( len_ < other.getLen() ) return -1;                              /* 最小値 */
-  int minh = len_;                                                   /* タグを比べる位置 */
+  if( getLen() < other.getLen() ) return -1;                              /* 最小値 */
+  int minh = getLen();                                                   /* タグを比べる位置 */
   int sp = 0;
   int tm = minh;                                                     /* 初め最小ハミング距離は最大 */
-  FOR( i, len_ )                                                     /* ずらせる回数繰り返す */
+  FOR( i, getLen() )                                                     /* ずらせる回数繰り返す */
   {
 //    tm = ham_distance( tag_+i, gene.getTag(), gene.getLen() );       /* ずらした位置でのハミング距離 */
+    tm = hamDistance( other, i );
+    if( tm <= 0 ) return -1;                                         /* (免疫獲得済み) */
+    if( minh >= tm )                                                 /* の方が小さかったら */
+    {
+      if( minh == tm ) {                                             /* もしハミング距離が同じなら */
+        if( rand_binary() ) continue;                                /* 1/2 の確率で上書きする */
+      }
+      minh = tm;                                                     /* 最小値を更新 */
+      sp = i;                                                        /* タグの位置を記録 */
+    }
+  }
+  if( minh <= 0 ) return -1;                                         /* 免疫獲得済み */
+  return sp;                                     /* ウイルスのタグがとりつく位置を返す */
+}
+int RingGene :: pointOfMinHamDistance( const Gene &other ) const {
+  if( getLen() < other.getLen() ) return -1;                              /* 最小値 */
+  int minh = getLen();                                                   /* タグを比べる位置 */
+  int sp = 0;
+  int tm = minh;                                                     /* 初め最小ハミング距離は最大 */
+  FOR(i, getLen()-other.getLen())
+  {
     tm = hamDistance( other, i );
     if( tm <= 0 ) return -1;                                         /* (免疫獲得済み) */
     if( minh >= tm )                                                 /* の方が小さかったら */

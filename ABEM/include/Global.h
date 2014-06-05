@@ -28,11 +28,12 @@
 
 //#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-const int TERM                      = 20000                ;          /* 期間 */
+const int TERM                      = 1000                ;          /* 期間 */
 const int OUTPUT_INTERVAL           = 1                    ;         /* 出力する間隔 */
 const int MINI_SIZE_TERM            = 200                  ;
 
 const int WIDTH                     = 60                   ;         /* ランドスケープの幅 */
+const int A_MOVE_DISTANCE           = 10                   ;         /* エージェントの移動距離 */
 
 const double INFECTION_RATE         = 30.0                  ;        /* デフォルトの感染率 */
 
@@ -40,6 +41,7 @@ const int A_MAX_V_CAN_HAVE          = 1                    ;         /* 最大�
 const int A_MAX_V_INFECTED_ONE_TERM = 1                    ;         /* １期間で感染させるウイルスの最大数 */
 
 const int A_INIT_NUM                = 1000                  ;        /* 初期エージェントの数 */
+const int A_MAX_NUM                 = A_INIT_NUM * 5       ;         /* 最大エージェント数 */
 
 const double A_INIT_INFECTED_RATE   = 2                 ;           /* 初期感染率 0-100 */
 
@@ -49,7 +51,7 @@ const int V_DEFAULT_LEN             = 18                   ;         /* エー�
 const int V_INCUBATION_PERIOD       = 5;
 const int V_LETHAL_PERIOD           = 50;
 
-const int V_MUTATION_RATE           = 30;
+const int V_MUTATION_RATE           = 0;
 
 const int T_MAX                     = 9;
 
@@ -58,9 +60,6 @@ const int T_MAX                     = 9;
 #define V_TAG_1 "444441111111"
 #define V_NUM 1
 
-const int A_MAX_NUM                 = A_INIT_NUM * 5       ;         /* 最大エージェント数 */
-
-const int A_MOVE_DISTANCE           = 10                   ;         /* エージェントの移動距離 */
 
 const int A_MAX_AGE                 = 10                  ;          /* 寿命 */
 
@@ -83,16 +82,19 @@ const int A_BIRTH_AGE_TO            = int(A_MAX_AGE * 0.6) ;
  *  インクルードファイル
  *
  *-----------------------------------------------------------------------------*/
-
 #include <iostream>
 #include <vector>
 #include <iostream>
 #include <cassert>
-
+/*-----------------------------------------------------------------------------
+ *
+ *  マクロ
+ *
+ *-----------------------------------------------------------------------------*/
 #define FOR(i, m)           for(int (i)=0; (i)<(m); (i)++)  /* i: 0 ~ (m-1) */
 #define REP(i, min, max)    for(int (i)=(min); (i)<=(max); (i)++)
 #define LOG(x)              do { std::cout<<"["<<#x"]: "<<x<<std::endl; }while(0);
-#define DEBUG(x)						cerr<<#x<<":"<<(x)<<"(L"<<__LINE__<<")"<<" "<<__FILE__<<endl;
+#define DEBUG(x)						do { std::cerr<<">>> "<<#x<<" = "<<(x)<<" (L"<<__LINE__<<")"<<" "<<__FILE__<<std::endl; }while(0);
 
 #define ALL(a) 							(a).begin(),(a).end()
 #define EACH(i,c) 					for(typeof((c).begin()) i=(c).begin(); i!=(c).end(); ++i)

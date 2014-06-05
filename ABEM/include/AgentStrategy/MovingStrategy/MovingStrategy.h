@@ -1,6 +1,8 @@
 #ifndef ___MOVING_STRATEGY
 #define ___MOVING_STRATEGY
 
+#include "Function.h"
+
 class Agent;
 
 /*
@@ -30,8 +32,22 @@ class RandomWalk : public __MovingStrategy {                         /* ラン�
   public:
     RandomWalk( int dis ) : distance_( dis ) {}                      /* 距離を設定する */
     virtual void move( int &x, int &y );
+    int getDistance() const { return distance_; }
   private:
     const int distance_;
+};
+/*-----------------------------------------------------------------------------
+ *  ランダムウォーク (正規分布バージョン？)
+ *-----------------------------------------------------------------------------*/
+class RandomGaussWalk : public RandomWalk {
+public:
+  RandomGaussWalk( int dis ) : RandomWalk(dis) {}
+  void move( int &x, int &y ) {
+    FOR( i, getDistance() ) {
+      x += rand_bool() ? 1 : -1;
+      y += rand_bool() ? 1 : -1;
+    }
+  }
 };
 
 #endif
