@@ -26,6 +26,10 @@ class Term {
     void printTerm() const {
       std::cout << ">>> Term: " << getTerm() << " -> " << TERM << std::endl;
     }
+
+    bool isInterval( int interval ) {
+      if( getTerm() % interval == 0 ) return true; else return false;
+    }
   private:
     Term() : term_( 0 ) { }
     int term_;

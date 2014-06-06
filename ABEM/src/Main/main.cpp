@@ -70,10 +70,10 @@ int main()
   vManager.initVirus();
 
   /* モニター・ファイル生成クラス */
-  FileFactory &ff = FileFactory::Instance();                         /* 出力ファイルを管理 */
+  FileFactory &fFactory = FileFactory::Instance();                         /* 出力ファイルを管理 */
   AgentCounter::Instance().reset();
   VirusCounter::Instance().reset();
-  ff.setManager( aManager, vManager );                                           /* 管理者を登録 */
+  fFactory.setManager( aManager, vManager );                                           /* 管理者を登録 */
 
   /*-----------------------------------------------------------------------------
    *  エージェントへの初期動作
@@ -122,19 +122,19 @@ int main()
     }
 
     /*  途中経過出力 */
-    ff.outputFile( "A_population.txt", aManager.getAgentSize() );
-    ff.outputFile( "V_virusVariaty.txt", VirusCounter::Instance().getVirusVariaty() );
-    ff.outputFile( "A_isIncubation.txt", aManager.numIsIncubation() );
-    ff.outputFile( "A_isCrisis.txt", aManager.numIsCrisis() );
-    ff.outputFile( "A_hasViruses.txt", aManager.numHasVirus() );
-    ff.outputFile( "A_removed.txt", AgentCounter::Instance().getCountRemoved() );
-    ff.outputFile( "V_aveValue.txt", VirusCounter::Instance().calcAveValue() );
+    fFactory.outputValueWithTerm( "A_population.txt", aManager.getAgentSize() );
+    fFactory.outputValueWithTerm( "V_virusVariaty.txt", VirusCounter::Instance().getVirusVariaty() );
+    fFactory.outputValueWithTerm( "A_isIncubation.txt", aManager.numIsIncubation() );
+    fFactory.outputValueWithTerm( "A_isCrisis.txt", aManager.numIsCrisis() );
+    fFactory.outputValueWithTerm( "A_hasViruses.txt", aManager.numHasVirus() );
+    fFactory.outputValueWithTerm( "A_removed.txt", AgentCounter::Instance().getCountRemoved() );
+    fFactory.outputValueWithTerm( "V_aveValue.txt", VirusCounter::Instance().calcAveValue() );
 
-    if ( term.getTerm() % 1000 == 0)
+    if ( term.isInterval(100) )
     { // outputにやらせる
       char tfname[256];
-      sprintf(tfname, "%d_VirusDataBase.txt", term.getTerm()/1000);
-      ff.outputFile_LastVirusDataBase(tfname);
+      sprintf(tfname, "%d_VirusDataBase.txt", term.getTerm() );
+      fFactory.outputFile_LastVirusDataBase(tfname);
     }
 
     /* 途中経過表示用ログ */
@@ -163,9 +163,9 @@ int main()
   Benchmark::Instance().printTime();                                 /* 計測時間表示 */
 #endif
 
-  ff.outputFile_Info( "INFO.txt" );                                  /* プログラムの初期設定など出力 */
-  ff.outputFile_LastLog( "Log.txt");
-  ff.outputFile_LastVirusDataBase( "VirusDataBase.txt");
+  fFactory.outputFile_Info( "INFO.txt" );                                  /* プログラムの初期設定など出力 */
+  fFactory.outputFile_LastLog( "Log.txt");
+  fFactory.outputFile_LastVirusDataBase( "VirusDataBase.txt");
   aManager.printInitInfo();                                                /* 初期状態を表示 */
   vManager.printInitInfo();                                                /* 初期状態を表示 */
 

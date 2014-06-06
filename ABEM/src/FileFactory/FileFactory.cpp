@@ -74,6 +74,22 @@ void FileFactory :: setManager( AgentManager &am, VirusManager &vm ) {
  *  計算結果出力
  *
  *-----------------------------------------------------------------------------*/
+void FileFactory :: outputValueWithTerm( const char *fname, int value, int interval ) const {
+    if( Term::Instance().getTerm() % interval != 0 ) return;
+    if( interval != 1 ) {
+        char tfname[256];
+        sprintf(tfname, "%d_%s.txt", Term::Instance().getTerm(), fname);
+        std::ofstream ofs(tfname, std::ios_base::out | std::ios_base::app); 
+        ofs << Term::Instance().getTerm() << SEPARATOR;
+        ofs << value << ENDL;
+    } else {
+        std::ofstream ofs(fname, std::ios_base::out | std::ios_base::app);
+        ofs << Term::Instance().getTerm() << SEPARATOR;
+        ofs << value << ENDL;
+    }
+
+}
+
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  FileFactory :: outputFile_Info
@@ -156,12 +172,6 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
 #endif
 }
 
-void FileFactory :: outputFile( const char *fname, int value ) const {
-    if( Term::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
-    std::ofstream ofs(fname, std::ios_base::out | std::ios_base::app);
-    ofs << Term::Instance().getTerm() << SEPARATOR;
-    ofs << value << ENDL;
-}
 
 /*--------------------------------------------------------------------------------------
  *      Method:  FileFactory :: outputFile_HasVirus
@@ -178,13 +188,13 @@ void FileFactory :: outputFile_VirusVariaty( const char *fname ) const {
  *      Method:  FileFactory :: outputFile_Population
  * Description:  人口推移を出力する
  *----------------------------------------------------------------------------------- */
-void FileFactory :: outputFile_Population( const char *fname ) const {
-    if( Term::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
-    static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
-    ofs << Term::Instance().getTerm() << SEPARATOR;                           /* 期間 */
-    ofs << am_->getAgentSize() << SEPARATOR;                       /* 人口 */
-    ofs << ENDL;
-}
+// void FileFactory :: outputFile_Population( const char *fname ) const {
+//     if( Term::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
+//     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
+//     ofs << Term::Instance().getTerm() << SEPARATOR;                           /* 期間 */
+//     ofs << am_->getAgentSize() << SEPARATOR;                       /* 人口 */
+//     ofs << ENDL;
+// }
 
 /*
  *--------------------------------------------------------------------------------------
@@ -227,13 +237,16 @@ void FileFactory :: outputFile_LastLog( const char *fname ) const {
 }
 void FileFactory :: outputFile_LastVirusDataBase( const char *fname ) const {
     std::ofstream ofs(fname);
-    ITERATOR(Virus*) it_v = VirusCounter::Instance().getVirusDataBaseIteratorBegin();
-    while(it_v!=VirusCounter::Instance().getVirusDataBaseIteratorEnd()) {
+    // ITERATOR(Virus*) it_v = VirusCounter::Instance().getVirusDataBaseIteratorBegin();
+    // while(it_v!=VirusCounter::Instance().getVirusDataBaseIteratorEnd()) {
+    int i = 0;
+    EACH( it_v, VirusCounter::Instance().getVirusDataBase() ) {
         FOR(j, (*it_v)->getLen()) {
             ofs<<(*it_v)->tagAt(j);                                  /* エージェントのタグ */
         }
+        ofs << " " << VirusCounter::Instance().getNumVirus(i++);
         ofs<<ENDL;
-        it_v++;
+        // it_v++;
     }
     ofs.close();
 }

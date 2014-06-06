@@ -37,12 +37,12 @@ const double A_INIT_INFECTED_RATE   = 2                 ;           /* 初期感
 const int A_DEFAULT_LEN             = 32                   ;         /* エージェントのタグ長 */
 const int V_DEFAULT_LEN             = 18                   ;         /* エージェントのタグ長 */
 
-const int V_INCUBATION_PERIOD       = 5;
-const int V_LETHAL_PERIOD           = 50;
+const int V_INCUBATION_PERIOD       = 6;
+const int V_LETHAL_PERIOD           = 36;
 
 const int V_MUTATION_RATE           = 30;
 
-const int T_MAX                     = 5;
+const int T_MAX                     = 9;
 
 //               1234567890123
 #define V_TAG_0 "000000000000"

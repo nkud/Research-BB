@@ -74,6 +74,10 @@ class Virus
      *-----------------------------------------------------------------------------*/
     void mutation();                                                 /* 突然変異を起こす */
     void mutation( double );                                         /* 突然変異を起こす */
+
+    bool operator<(const Virus& other) const {
+      if( value() < other.value() ) return true; else return false;
+    }
   private:
     Gene *gene_;                                                       /* 電子タグ */
     double rate_;                                                    /* 感染確率 */

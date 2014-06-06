@@ -48,6 +48,7 @@ VirusCounter :: VirusCounter() {
 void VirusCounter :: reset() {
   resetCountMutation();
   resetVirusDataBase();
+  resetVirusNumberDataBase();
 }
 
 /*-----------------------------------------------------------------------------
@@ -68,25 +69,31 @@ int VirusCounter :: countUpMutation() {
  *  ウイルスの種類
  *
  *-----------------------------------------------------------------------------*/
-bool VirusCounter :: hasDataOfVirus( const Virus& v ) {
-  for(ITERATOR(Virus*) it_v=virus_data_base_.begin(); it_v!=virus_data_base_.end();)
+int VirusCounter :: hasDataOfVirus( const Virus& v ) {
+  int n = 0;
+  // for(ITERATOR(Virus*) it_v=virus_data_base_.begin(); it_v!=virus_data_base_.end();)
+  EACH( it_v, getVirusDataBase() )
   {
     if( v.isEqualTo((**it_v)) ) {
-      return true;
+      return n;
     }
-    it_v++;
+    n++;
+    // it_v++;
   }
-  return false;
+  return -1;
 }
 /*-----------------------------------------------------------------------------
  *  pushNewVirus
  *      データベースに新しいウイルスを登録
  *-----------------------------------------------------------------------------*/
 bool VirusCounter :: pushNewVirus( const Virus& v ) {
-  if( hasDataOfVirus(v) ) {                                          /* データがあれば */
+  int f = hasDataOfVirus(v);
+  if( f != -1 ) {                                          /* データがあれば */
+    virus_number_data_base_[f]++;
     return false;                                                    /* 終了 */
   } else {                                                           /* なければ */
     virus_data_base_.push_back( new Virus(v) );                     /* データを追加して */
+    virus_number_data_base_.push_back( 1 );
     return true;                                                     /* 終了 */
   }
 }
@@ -94,11 +101,11 @@ bool VirusCounter :: pushNewVirus( const Virus& v ) {
  *  resetVirusDataBase
  *-----------------------------------------------------------------------------*/
 void VirusCounter :: resetVirusDataBase() {
-  for(ITERATOR(Virus*) it_v=virus_data_base_.begin(); it_v!=virus_data_base_.end();)
-  {
-//    delete (*it_v);
-    it_v++;
-  }
+//   for(ITERATOR(Virus*) it_v=virus_data_base_.begin(); it_v!=virus_data_base_.end();)
+//   {
+// //    delete (*it_v);
+//     it_v++;
+//   }
   virus_data_base_.clear();
 }
 

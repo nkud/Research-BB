@@ -14,6 +14,8 @@
 #ifndef ___FILEFACTORY
 #define ___FILEFACTORY
 
+#include "Config.h"
+
 #include <fstream>
 
 class AgentManager;
@@ -44,7 +46,7 @@ class FileFactory {
         void outputFile_Info( const char * ) const;                  /* パラメータ情報を出力 */
         double outputFile_peakSearch( const char * ) const;          /* 出力: ピークサーチ */
 
-        void outputFile( const char *, int ) const;
+        void outputValueWithTerm( const char *, int, int interval=OUTPUT_INTERVAL ) const;
 
     private:
         /*-----------------------------------------------------------------------------
