@@ -130,7 +130,7 @@ int main()
     fFactory.outputValueWithTerm( "A_removed.txt", AgentCounter::Instance().getCountRemoved() );
     fFactory.outputValueWithTerm( "V_aveValue.txt", VirusCounter::Instance().calcAveValue() );
 
-    if ( term.isInterval(100) )
+    if ( term.isInterval(1000) )
     { // outputにやらせる
       char tfname[256];
       sprintf(tfname, "%d_VirusDataBase.txt", term.getTerm() );

@@ -13,5 +13,5 @@ def out(n):
 		for j in range(10):
 			fo.write('%d %d %d\n' % (i+1, j, data[i][j]))
 
-for i in range(6):
+for i in range(20):
 	out((i+1)*100)
