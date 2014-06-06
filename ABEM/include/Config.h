@@ -46,7 +46,7 @@ const int T_MAX                     = 9;
 
 //               1234567890123
 #define V_TAG_0 "000000000000"
-#define V_TAG_1 "444441111111"
+#define V_TAG_1 "111111111111"
 #define V_NUM 1
 
 
