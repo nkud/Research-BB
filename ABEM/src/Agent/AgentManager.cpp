@@ -49,10 +49,10 @@ AgentManager :: AgentManager( VECTOR( Agent * ) &agents ) :
 /*-----------------------------------------------------------------------------
  *  initAgent
  *-----------------------------------------------------------------------------*/
-void AgentManager :: initAgent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int len, int num )
+void AgentManager :: initAgent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, Gene *gene, int num )
 {
   FOR( i, num ) {                                                    /* num のだけ */
-    agents_.push_back( new Agent( ms, cbs, len ) );                  /* 新しくエージェントを加える */
+    agents_.push_back( new Agent( ms, cbs, gene->newCopy() ) );                  /* 新しくエージェントを加える */
   }
   // マップに配置する
   Landscape::Instance().clearAgentMap();                             /* エージェントの位置をリセット */

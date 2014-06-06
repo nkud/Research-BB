@@ -62,8 +62,9 @@ int main()
   VirusManager vManager( virus );
   aManager.initAgent( 
     new RandomGaussWalk( A_MOVE_DISTANCE ),
+    // new RandomWalk( A_MOVE_DISTANCE ),
     new CoupleTag(), 
-    A_DEFAULT_LEN, 
+    new Gene( A_DEFAULT_LEN ), 
     A_INIT_NUM );
   vManager.initVirus();
 

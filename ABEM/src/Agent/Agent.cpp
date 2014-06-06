@@ -70,7 +70,7 @@ Agent :: Agent(
 Agent :: Agent(
     __MovingStrategy *ms,                                            /* 移動戦略 */
     __ChildBirthStrategy *cbs,                                       /* 子孫戦略 */
-    Gene *tag                                                         /* 電子タグ */
+    Gene *gene                                                         /* 電子タグ */
     ) :
   x_( 0 ),
   y_( 0 ),
@@ -82,7 +82,8 @@ Agent :: Agent(
 {
   immune_system_ = new ImmuneSystem;                                 /* 免疫機構実装 */
 
-  gene_ = tag;                                                        /* 指定のタグに設定 */
+  gene_ = gene;                                                        /* 指定のタグに設定 */
+  gene_->setTagRandom();
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
   age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
@@ -262,9 +263,9 @@ int Agent :: numHoldingVirus() const {
  *--------------------------------------------------------------------------------------
  */
 void Agent :: move() {
-  if( ! isCrisis() ) { // 症候性期間でなければ
+  // if( ! isCrisis() ) { // 症候性期間でなければ
       moving_strategy_->move( x_, y_ );                                  /* 戦略を使用して移動する */
-  }
+  // }
 }
 __MovingStrategy* Agent :: getMovingStrategy() const { return moving_strategy_; }
 /*

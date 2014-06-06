@@ -16,6 +16,7 @@
 #define ___TAG
 
 #include "Config.h"
+#include "Function.h"
 
 /*
  * =====================================================================================
@@ -56,11 +57,20 @@ class Gene
     void mutation();                                                 /* 突然変異を起こす */
     void mutation( double );                                         /* 突然変異を起こす */
 
+    Gene *newCopy() const {
+        Gene *copy = new Gene(getLen());
+        FOR( i, getLen() ) {
+            copy->changeTagAtTo(i, tagAt(i));
+        }
+        return copy;
+    }
+
   private:
     int len_;                                                        /* タグ長 */
     tag_t *tag_;                                                     /* 電子タグ */
 };
 
+// 戦略にすべき
 class RingGene : public Gene {
 public:
     int pointOfMinHamDistance( const Gene &other ) const;

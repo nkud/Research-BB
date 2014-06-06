@@ -10,7 +10,8 @@ SRCDIR	 = src
 BINDIR	 = bin
 
 MASTER	 = master
-NOW		 = $(shell date +result-%y%m%d-%H%M%S)
+NOW		 = $(shell date +%y%m%d-%H%M%S)
+RESULT   = result-$(NOW)
 
 VPATH = obj include
 
@@ -20,6 +21,8 @@ LIBSPATH := $(addprefix $(SRCDIR)/, $(LIBS))
 OBJS     = $(addprefix $(OBJDIR)/, $(shell ls obj))
 
 TARGET := ABEM.out
+
+R = notitle
 
 .PHONY: all run gene $(BINDIR)/$(TARGET) $(LIBSPATH)
 
@@ -55,8 +58,8 @@ gene:
 pack:
 	@$(PRINT) '>>> Packaging'
 	@[ -d $(MASTER) ] || $(MKDIR) $(MASTER)
-	@cp -r bin $(MASTER)/$(NOW)
-	@tree $(MASTER)/$(NOW)
+	@cp -r bin $(MASTER)/$(RESULT)-$(R)
+	@ls $(MASTER)/$(RESULT)-$(R)
 
 # 削除する
 clean:
