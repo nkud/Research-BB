@@ -57,16 +57,11 @@ int main()
   VECTOR(Agent *) agent;                                             /* エージェントの配列 */
   VECTOR(Virus *) virus;                                             /* ウイルスの配列 */
 
-  /* 戦略 */
-  // Relocate *relocate = new Relocate;
-  // RandomWalk *rw = new RandomWalk( A_MOVE_DISTANCE );
-  // CoupleTag *couple_tag = new CoupleTag;
-
   /* 管理者 */
   AgentManager aManager( agent );
   VirusManager vManager( virus );
   aManager.initAgent( 
-    new RandomGaussWalk(A_MOVE_DISTANCE),
+    new RandomGaussWalk( A_MOVE_DISTANCE ),
     new CoupleTag(), 
     A_DEFAULT_LEN, 
     A_INIT_NUM );
@@ -146,6 +141,7 @@ int main()
     term.printTerm();
     Benchmark::Instance().printElapsedTime();
     LOG( agent.size() );
+    LOG( agent[0]->getX() );
     LOG( AgentCounter::Instance().getCountRemoved() );
     LOG( aManager.getAgentSize() );
     LOG( AgentCounter::Instance().getCountContact() );

@@ -137,7 +137,7 @@ void AgentManager :: contact()
           Virus *v =                                                 /* ランダムに保持ウイルスから選んで */
             (*it_myself)->getImmuneSystem()->getOnSetVirusAt( rand_array((*it_myself)->getImmuneSystem()->getOnSetVirusListSize()) );
 
-          if( v->getRate() > rand_interval_double(0,1) )
+          if( probability(v->getRate()) )
           {                                                          /* ウイルス特有の感染確率で */
             (*it)->getImmuneSystem()->pushStandByVirus( v );         /* 待機ウイルスにする */
           }

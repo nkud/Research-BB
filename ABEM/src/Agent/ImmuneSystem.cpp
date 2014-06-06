@@ -33,7 +33,7 @@ bool ImmuneSystem :: isIncubation() {
 bool ImmuneSystem :: isCrisis() {
   C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();            /* ウイルスリストの先頭から */
   while( it_v != getVirusListIteratorEnd() ) {                       /* 末尾まで */
-    if( (*it_v)->isCrisisPeriod() ) {                                            /* 感染済みであれば */
+    if( (*it_v)->isCrisisPeriod() or (*it_v)->isLethalPeriod() ) {   /* 感染済みであれば */
       return true;                                                   /* true を返す */
     }
     it_v++;                                                          /* 次のウイルスリストへ */

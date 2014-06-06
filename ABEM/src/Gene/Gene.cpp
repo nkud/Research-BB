@@ -50,6 +50,7 @@ int Gene :: pointOfMinHamDistance( const Gene &other ) const {
   int sp = 0;
   int tm = minh;                                                     /* 初め最小ハミング距離は最大 */
   FOR( i, getLen() )                                                     /* ずらせる回数繰り返す */
+  // FOR(i, getLen()-other.getLen())
   {
 //    tm = ham_distance( tag_+i, gene.getTag(), gene.getLen() );       /* ずらした位置でのハミング距離 */
     tm = hamDistance( other, i );
@@ -66,6 +67,7 @@ int Gene :: pointOfMinHamDistance( const Gene &other ) const {
   if( minh <= 0 ) return -1;                                         /* 免疫獲得済み */
   return sp;                                     /* ウイルスのタグがとりつく位置を返す */
 }
+
 int RingGene :: pointOfMinHamDistance( const Gene &other ) const {
   if( getLen() < other.getLen() ) return -1;                              /* 最小値 */
   int minh = getLen();                                                   /* タグを比べる位置 */

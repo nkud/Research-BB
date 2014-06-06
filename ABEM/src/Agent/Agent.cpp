@@ -262,7 +262,9 @@ int Agent :: numHoldingVirus() const {
  *--------------------------------------------------------------------------------------
  */
 void Agent :: move() {
-  moving_strategy_->move( x_, y_ );                                  /* 戦略を使用して移動する */
+  if( ! isCrisis() ) { // 症候性期間でなければ
+      moving_strategy_->move( x_, y_ );                                  /* 戦略を使用して移動する */
+  }
 }
 __MovingStrategy* Agent :: getMovingStrategy() const { return moving_strategy_; }
 /*

@@ -6,9 +6,9 @@ INIT_LINE_STYLE = 'set style line 1 lw 2'
 LINE_STYLE = 'w l'
 IMG_SIZE = '1200,300'
 RESULT_WIDTH = 1000
-CSS_DIR = ''
+CSS_DIR = '../template/result.css'
 EXTENSION = 'svg'
-FONT = 'Arial,12'
+FONT = 'times new roman,13'
 ###############################################################################
 
 def IMG(img):
@@ -114,7 +114,7 @@ def setImage(f, *imgnames):
 
 def outputHeader(f, htext, h):
     """ 見出しを設定する """
-    outputLine(f, '<h'+str(h)+'>'+htext+'</'+str(h)+'>')
+    outputLine(f, '<h%d>%s</h%d>' % (h, htext, h))
 
 def outputSection(f, htext, h, *imgs):
     """ 見出し、画像をセットし、セクションを作る """
@@ -131,8 +131,8 @@ class HtmlFactory(object):
     def generate(self):
         # Init
         outputLine(self.file,
-                '<html><link rel="stylesheet" href="'+CSS_DIR+'">'
-                '<body><font color=gray><code>')
+            '<html><link rel="stylesheet" href="%s">' % CSS_DIR +
+            '<body><font color=gray><code>')
         outputHeader(self.file, '<font color=black># RESULT</font>', 1)
 
         # Image Section
