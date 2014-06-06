@@ -64,7 +64,8 @@ int main()
     // new RandomGaussWalk( A_MOVE_DISTANCE ),
     new RandomWalk( A_MOVE_DISTANCE ),
     new CoupleTag(), 
-    new Gene( A_DEFAULT_LEN ), 
+    // new Gene( A_DEFAULT_LEN ), 
+    A_DEFAULT_LEN,
     A_INIT_NUM );
   vManager.initVirus();
 
@@ -130,7 +131,7 @@ int main()
     ff.outputFile( "V_aveValue.txt", VirusCounter::Instance().calcAveValue() );
 
     if ( term.getTerm() % 1000 == 0)
-    {
+    { // outputにやらせる
       char tfname[256];
       sprintf(tfname, "%d_VirusDataBase.txt", term.getTerm()/1000);
       ff.outputFile_LastVirusDataBase(tfname);

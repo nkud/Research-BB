@@ -26,6 +26,7 @@ class AgentManager {
      *  初期化
      *-----------------------------------------------------------------------------*/
     virtual void initAgent( __MovingStrategy *, __ChildBirthStrategy *, Gene *, int num );
+    virtual void initAgent( __MovingStrategy *, __ChildBirthStrategy *, int len, int num );
     virtual void initInfectAgentInRatio( Virus &, double );          /* 初期感染させる */
     /*-----------------------------------------------------------------------------
      *  集団的処理

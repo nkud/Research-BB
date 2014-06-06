@@ -72,7 +72,29 @@ void AgentManager :: initAgent( __MovingStrategy *ms, __ChildBirthStrategy *cbs,
     it_a++;
   }
 }
+void AgentManager :: initAgent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int len, int num )
+{
+  FOR( i, num ) {                                                    /* num のだけ */
+    agents_.push_back( new Agent( ms, cbs, len ) );                  /* 新しくエージェントを加える */
+  }
+  // マップに配置する
+  Landscape::Instance().clearAgentMap();                             /* エージェントの位置をリセット */
+  int tx, ty;                                                        /* 移動させる場所 */
 
+  ITERATOR(Agent *) it_a = getAgentIteratorBegin();                  /* エージェントの先頭から */
+  while( it_a != getAgentIteratorEnd() ) {                           /* 末尾まで */
+    tx = rand_interval_int( 0, WIDTH-1 );                            /* ランダムに設定 */
+    ty = rand_interval_int( 0, WIDTH-1 );
+    (*it_a)->setX( tx );                                             /* 配置 */
+    (*it_a)->setY( ty );
+
+    assert( 0 <= tx && tx <= WIDTH-1 );                              /* 土地の外ならエラー */
+    assert( 0 <= ty && ty <= WIDTH-1 );
+
+    Landscape::Instance().registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a ); /* エージェントを登録 */
+    it_a++;
+  }
+}
 /*-----------------------------------------------------------------------------
  *  initInfectAgentInRatio( Virus &, double )
  *-----------------------------------------------------------------------------*/
@@ -113,7 +135,8 @@ void AgentManager :: contact()
 //      it_myself++;
 //      continue;                                                      /* 健康ならスキップ */
 //    }
-    if( (*it_myself)->getImmuneSystem()->getOnSetVirusListSize() < 1 ) { /* 発症していなければ */
+    // if( (*it_myself)->getImmuneSystem()->getOnSetVirusListSize() < 1 ) { /* 発症していなければ */
+    if( ! (*it_myself)->isCrisis() ) {
       it_myself++;                                                   /* 次のエージェントへ */
       continue;
     }
@@ -138,6 +161,7 @@ void AgentManager :: contact()
             (*it_myself)->getImmuneSystem()->getOnSetVirusAt( rand_array((*it_myself)->getImmuneSystem()->getOnSetVirusListSize()) );
 
           if( probability(v->getRate()) )
+          // if( v->getRate() > rand_interval_double(0,1))
           {                                                          /* ウイルス特有の感染確率で */
             (*it)->getImmuneSystem()->pushStandByVirus( v );         /* 待機ウイルスにする */
           }

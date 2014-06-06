@@ -109,7 +109,8 @@ int ImmuneSystem :: getOnSetVirusListSize() {
   int ret = 0;
   C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();            /* ウイルスリストの先頭から */
   while( it_v != getVirusListIteratorEnd() ) {                       /* 末尾まで */
-    if( (*it_v)->getInfectionTime() > V_INCUBATION_PERIOD ) {
+    // if( (*it_v)->getInfectionTime() > V_INCUBATION_PERIOD ) {
+    if( (*it_v)->isCrisisPeriod() ) {
       ret++;
     }
     it_v++;                                                          /* 次のウイルスリストへ */
@@ -120,7 +121,8 @@ Virus *ImmuneSystem :: getOnSetVirusAt( int n ) {
   int num = 0;
   C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();            /* ウイルスリストの先頭から */
   while( it_v != getVirusListIteratorEnd() ) {                       /* 末尾まで */
-    if( num == n and (*it_v)->getInfectionTime() > V_INCUBATION_PERIOD ) {
+    // if( num == n and (*it_v)->getInfectionTime() > V_INCUBATION_PERIOD ) {
+    if( num == n and (*it_v)->isCrisisPeriod() ) {
       return (*it_v);
     }
     it_v++;                                                          /* 次のウイルスリストへ */
