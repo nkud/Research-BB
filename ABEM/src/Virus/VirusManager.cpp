@@ -28,12 +28,8 @@ void VirusManager :: initVirus() {
    *  ウイルスを初期化する
    *-----------------------------------------------------------------------------*/
   //                                   1234567890123456789
-  viruses_.push_back( new Virus( V_TAG_0, new Normal ) );       /* 通常ウイルスを追加 */
-  viruses_.push_back( new Virus( V_TAG_1, new Normal ) );       /* 通常ウイルスを追加 */
-  //  viruses_->push_back( new Virus( 15, new Normal ) );          /* 通常ウイルスを追加 */
-  //  viruses_->push_back( new Virus( 15, new Normal ) );          /* 通常ウイルスを追加 */
-  //  virus.push_back( new Virus( 20, new Fixed(0) ) );                /* 固定ウイルスを追加 */
-  //  virus.push_back( new Virus( 10, new Fixed(20) ) );               /* 固定ウイルスを追加 */
+  viruses_.push_back( new Virus( V_TAG_0 ) );       /* 通常ウイルスを追加 */
+  viruses_.push_back( new Virus( V_TAG_1 ) );       /* 通常ウイルスを追加 */
 }
 void VirusManager :: printInitInfo() {
   std::cout << "\nNUM_V:\t\t" << getVirusSize() << std::endl;

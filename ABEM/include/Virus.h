@@ -15,7 +15,6 @@
 #define ___VIRUS
 
 #include "Gene.h"
-#include "VirusStrategy.h"
 
 /*
  * =====================================================================================
@@ -31,9 +30,9 @@ class Virus
      *-----------------------------------------------------------------------------*/
     Virus( Virus * );
 
-    Virus( __SearchStrategy * );                                     /* コンストラクタ: 戦略 */
-    Virus( int, __SearchStrategy * );                                /* コンストラクタ: タグ長, 戦略 */
-    Virus( const char *, __SearchStrategy * );                       /* コンストラクタ: タグ長, 戦略 */
+    // Virus( __SearchStrategy * );                                     /* コンストラクタ: 戦略 */
+    Virus( int );                                /* コンストラクタ: タグ長, 戦略 */
+    Virus( const char * );                       /* コンストラクタ: タグ長, 戦略 */
 
     virtual ~Virus();                                                        /* デストラクタ */
     /*-----------------------------------------------------------------------------
@@ -43,7 +42,7 @@ class Virus
     void setRate( const double r );                                  /* 感染確率を設定 */
 
     int searchStartPoint( const Gene & ) const;                       /* タグに取り付く位置を返す */
-    __SEARCH__TYPE__ getSearchType() const;                          /* サーチ戦略を返す */
+    // __SEARCH__TYPE__ getSearchType() const;                          /* サーチ戦略を返す */
 
     bool isIncubationPeriod() const;
     bool isCrisisPeriod() const;
@@ -81,10 +80,6 @@ class Virus
   private:
     Gene *gene_;                                                       /* 電子タグ */
     double rate_;                                                    /* 感染確率 */
-    __SearchStrategy *search_strategy_;                              /* 取り付く位置の決め方の戦略を格納 */
-//    const __SearchStrategy *search_strategy_;                              /* 取り付く位置の決め方の戦略を格納 */
-    // why const ??
-    // XXX: -> ClingPointStrategy
 
     int cling_point_;                                                /* 取り付いている位置 */
     int infection_time_;                                             /* 感染期間 */
