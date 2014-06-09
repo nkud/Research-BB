@@ -20,6 +20,7 @@
 #include <vector>
 #include <cassert>
 #include <iostream>
+#include <algorithm>
 
 
 bool Agent :: isIncubation() const {
@@ -33,11 +34,15 @@ bool Agent :: isLethal() const {
 }
 
 void Agent :: contact( Agent &other ) {
-  Virus *v = other.getImmuneSystem()->getOnSetVirusAt(rand_array(other.getImmuneSystem()->getOnSetVirusListSize()));
-  if( probability(v->getRate()))
-  {
-    getImmuneSystem()->pushStandByVirus( v );
+  // Virus *v = other.getImmuneSystem()->getOnSetVirusAt(rand_array(other.getImmuneSystem()->getOnSetVirusListSize()));
+  VECTOR(Virus *) crisis_virus = other.getImmuneSystem()->getCrisisVirusList();
+  std::random_shuffle( ALL(crisis_virus) ); // XXX: low level shuffle
+  EACH( it_v, crisis_virus ) {
+    if( probability((*it_v)->getRate()) ) {
+      getImmuneSystem()->pushStandByVirus( *it_v );
+    }
   }
+  // if( probability(v->getRate()))
 }
 
 /*

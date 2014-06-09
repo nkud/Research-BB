@@ -70,7 +70,7 @@ bool probability( double );
  *  テンプレートセット
  *-----------------------------------------------------------------------------*/
 template < typename T >                                              /* スワップ */
-void swap( T &a, T &b ) { T t = a; a = b; b = t; }
+void SWAP( T &a, T &b ) { T t = a; a = b; b = t; }
 template < typename T >                                              /* ランダム選択 */
 T random_select( const T a, const T b ) { if(rand_binary() == 0) return a; else return b; }
 template < typename T >                                              /* ログ出力用 */

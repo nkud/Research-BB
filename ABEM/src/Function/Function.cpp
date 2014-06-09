@@ -89,14 +89,14 @@ int min_ham_distance_point( const int * const a, const int * const v, const int 
 int rand_interval_int(const int min, const int max) {
   int minn = min;
   int maxx = max;
-  if( minn > maxx ) swap(minn, maxx);
+  if( minn > maxx ) SWAP(minn, maxx);
   return minn + (int)( rand() * (maxx - minn + 1.0) / (1.0 + RAND_MAX) );
 }
 
 double rand_interval_double(const double min, const double max) {
   double minn = min;
   double maxx = max;
-  if( minn > maxx ) swap(minn, maxx);
+  if( minn > maxx ) SWAP(minn, maxx);
   return minn + (double)( rand() * (maxx - minn) / (1.0 + RAND_MAX) ); /* XXX: これでいいか？ */
 }
 
