@@ -32,5 +32,5 @@ __SEARCH__TYPE__ Fixed :: getSearchType() const {
 }
 
 void Fixed :: check( int vlen ) const {
-  assert( vlen+sp_ <= A_DEFAULT_LEN );
+  // assert( vlen+sp_ <= A_DEFAULT_LEN );
 }

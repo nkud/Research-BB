@@ -1,8 +1,7 @@
-#ifndef ___IMMUNESYSTEM_STRATEGY
-#define ___IMMUNESYSTEM_STRATEGY
+#ifndef ___IMMUNESYSTEM
+#define ___IMMUNESYSTEM
 
 class Agent;
-class __ImmuneSystemStrategy;
 
 class ImmuneSystem {
   public:
@@ -59,27 +58,7 @@ class ImmuneSystem {
     VECTOR(Virus *) virus_list_;                               /* 保持ウイルスのリスト */
     VECTOR(Virus *) stand_by_virus_list_;                      /* 待機ウイルスリスト */
 
-    __ImmuneSystemStrategy *immunesystem_strategy_;
-};
-
-/* =====================================================================================
- *        Class:  __ImmuneSystemStrategy
- *  Description:  免疫応答戦略インターフェイス
- * ================================================================================== */
-class __ImmuneSystemStrategy {
-  public:
-    virtual ~__ImmuneSystemStrategy() { };
-    virtual int response(Agent &self) = 0;
-    virtual bool infection(Agent &self, Virus &v ) = 0;
-};
-
-/*-----------------------------------------------------------------------------
- *  タグフリップ
- *-----------------------------------------------------------------------------*/
-class TagFlip : public __ImmuneSystemStrategy {
-  public:
-    virtual int response(Agent &self);
-    virtual bool infection(Agent &self, Virus &v );
+    // __ImmuneSystemStrategy *immunesystem_strategy_;
 };
 
 #endif

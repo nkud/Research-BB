@@ -12,6 +12,7 @@
  */
 #include "Agent.h"
 #include "AgentStrategy.h"
+#include "ImmuneSystem.h"
 #include "Function.h"
 #include "Config.h"
 #include "Gene.h"

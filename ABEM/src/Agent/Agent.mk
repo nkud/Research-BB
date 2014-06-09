@@ -28,7 +28,7 @@ $(OBJDIR)%.o: %.cpp
 
 $(OBJDIR)Agent.o: Config.h Agent.h AgentStrategy.h Function.h Gene.h
 $(OBJDIR)ImmuneSystem.o: Config.h AgentStrategy.h Agent.h Function.h \
-						 ImmuneSystemStrategy.h AgentCounter.h VirusCounter.h
+						 ImmuneSystem.h AgentCounter.h VirusCounter.h
 
 $(OBJDIR)MovingStrategy.o: AgentStrategy.h Agent.h Function.h
 $(OBJDIR)CoupleTag.o: AgentStrategy.h Agent.h Function.h

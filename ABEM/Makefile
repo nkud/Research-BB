@@ -59,6 +59,7 @@ pack:
 	@$(PRINT) '>>> Packaging'
 	@[ -d $(MASTER) ] || $(MKDIR) $(MASTER)
 	@cp -r bin $(MASTER)/$(RESULT)-$(R)
+	@cp -r include src script $(MASTER)/$(RESULT)-$(R)
 	@ls $(MASTER)/$(RESULT)-$(R)
 
 # 削除する

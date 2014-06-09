@@ -17,6 +17,7 @@
 #include "Gene.h"
 #include "Virus.h"
 #include "AgentStrategy.h"
+#include "ImmuneSystem.h"
 
 #include <vector>
 #include <map>
