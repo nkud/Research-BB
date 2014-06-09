@@ -28,6 +28,9 @@ bool Agent :: isIncubation() const {
 bool Agent :: isCrisis() const {
   return immune_system_->isCrisis();
 }
+bool Agent :: isLethal() const {
+  return immune_system_->isLethal();
+}
 
 /*
  *--------------------------------------------------------------------------------------

@@ -52,6 +52,7 @@ class AgentManager {
     ITERATOR(Agent *) getAgentIteratorBegin() { return agents_.begin(); }
     ITERATOR(Agent *) getAgentIteratorEnd() { return agents_.end(); }
     int getAgentSize() const { return agents_.size(); }
+    VECTOR(Agent *) & getAgentList() { return agents_; }
     ITERATOR(Agent *) deleteAgent( ITERATOR(Agent *) &it );
 
   private:

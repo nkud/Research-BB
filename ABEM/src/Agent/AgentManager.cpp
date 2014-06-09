@@ -157,6 +157,10 @@ void AgentManager :: contact()
         ITERATOR(Agent *) it = Landscape::Instance().getAgentIteratorBeginAt( tx, ty );
         while( it != Landscape::Instance().getAgentIteratorEndAt( tx, ty ) )
         {                                                            /* その位置にいる人全員に */
+          if( (*it_myself)->getImmuneSystem()->getOnSetVirusListSize() <= 0) {
+            it++;
+            continue;
+          }
           Virus *v =                                                 /* ランダムに保持ウイルスから選んで */
             (*it_myself)->getImmuneSystem()->getOnSetVirusAt( rand_array((*it_myself)->getImmuneSystem()->getOnSetVirusListSize()) );
 
@@ -184,10 +188,12 @@ void AgentManager :: infect()
   int n;
   int infection_count;                                               /* 同時感染数をカウント。最大値を越えないように */
 
-  ITERATOR(Agent *) it_myself = getAgentIteratorBegin();
-  while( it_myself != getAgentIteratorEnd() ) {
+  // ITERATOR(Agent *) it_myself = getAgentIteratorBegin();
+  // while( it_myself != getAgentIteratorEnd() ) {
+  EACH( it_myself, getAgentList() )
+  {
     if( (*it_myself)->getImmuneSystem()->hasNoStandByVirus() ) {     /* 待機ウイルスが無ければ */
-      it_myself++;                                                   /* 次のエージェントに */
+      // it_myself++;                                                   /* 次のエージェントに */
       continue;                                                      /* スキップ */
     } else {                                                         /* あれば */
       infection_count = 0;
@@ -209,36 +215,27 @@ void AgentManager :: infect()
       }
       (*it_myself)->getImmuneSystem()->clearStandByVirus();          /* 待機ウイルスをクリア */
     }
-    it_myself++;                                                     /* 次のエージェントに */
+    // it_myself++;                                                     /* 次のエージェントに */
   }
 }
 void AgentManager :: response()
 {
-  ITERATOR( Agent * ) it_a = getAgentIteratorBegin();                /* エージェントの先頭から */
-  while( it_a != getAgentIteratorEnd() )                             /* 末尾まで */
+  // ITERATOR( Agent * ) it_a = getAgentIteratorBegin();                /* エージェントの先頭から */
+  // while( it_a != getAgentIteratorEnd() )                             /* 末尾まで */
+  EACH( it_a, getAgentList() )
   { 
     assert( (*it_a) != NULL );
 
     (*it_a)->response();                                             /* 免疫応答させる */
 
-    bool flag = false;
-    ITERATOR( Virus * ) it_v
-      = (*it_a)->getImmuneSystem()->getVirusListIteratorBegin();     /* 先頭のウイルスデータから */
-    while( it_v != (*it_a)->getImmuneSystem()->getVirusListIteratorEnd() ) /* 末尾まで */
-    {
-      if( (*it_v)->isLethalPeriod() ) {                              /* 感染期間が長すぎる */
-        flag = true;                                                 /* ウイルスがあれば */
-        break;
-      }
-      it_v++;
-    }
-    if( flag ) {
+    if( (*it_a)->isLethal() ) {
       // it_a = deleteAgent( it_a );                                    /* 生存配列から削除される */
       (*it_a)->rebirth();
       AgentCounter::Instance().countUpRemoved();
-    } else {
-      it_a++;                                                        /* 次のエージェントへ */
     }
+    // } else {
+      // it_a++;                                                        /* 次のエージェントへ */
+    // }
   }
 }
 void AgentManager :: aging()

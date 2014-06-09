@@ -21,24 +21,37 @@
 #include <vector>
 
 bool ImmuneSystem :: isIncubation() {
-  C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();            /* ウイルスリストの先頭から */
-  while( it_v != getVirusListIteratorEnd() ) {                       /* 末尾まで */
+  bool incubation_flag = false;
+  bool crisis_flag = false;
+  EACH( it_v, getVirusList() ) {
     if( (*it_v)->isIncubationPeriod() ) {                                            /* 感染済みであれば */
+      // return true;                                                   /* true を返す */
+      incubation_flag = true;
+    } else if( (*it_v)->isCrisisPeriod() or (*it_v)->isLethalPeriod() ) {
+      crisis_flag = true;
+    }
+  }
+  if( incubation_flag and !crisis_flag )
+    return true;
+  else
+    return false;  
+}
+bool ImmuneSystem :: isCrisis() {
+  EACH( it_v, getVirusList() ) {
+    if( (*it_v)->isCrisisPeriod() ) {   /* 感染済みであれば */
       return true;                                                   /* true を返す */
     }
-    it_v++;                                                          /* 次のウイルスリストへ */
   }
   return false;  
 }
-bool ImmuneSystem :: isCrisis() {
-  C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();            /* ウイルスリストの先頭から */
-  while( it_v != getVirusListIteratorEnd() ) {                       /* 末尾まで */
-    if( (*it_v)->isCrisisPeriod() or (*it_v)->isLethalPeriod() ) {   /* 感染済みであれば */
-      return true;                                                   /* true を返す */
+bool ImmuneSystem :: isLethal() {
+  EACH( it_v, getVirusList() )
+  {
+    if( (*it_v)->isLethalPeriod() ) {
+      return true;
     }
-    it_v++;                                                          /* 次のウイルスリストへ */
   }
-  return false;  
+  return false;
 }
 
 /*
@@ -94,15 +107,14 @@ ITERATOR(Virus *) ImmuneSystem :: eraseStandByVirus( ITERATOR(Virus *) it ) {
 }
 void ImmuneSystem :: clearStandByVirus() { stand_by_virus_list_.clear(); }
 
+// XXX
 int ImmuneSystem :: getOnSetVirusListSize() {
   int ret = 0;
-  C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();            /* ウイルスリストの先頭から */
-  while( it_v != getVirusListIteratorEnd() ) {                       /* 末尾まで */
+  EACH( it_v, getVirusList() ) {
     // if( (*it_v)->getInfectionTime() > V_INCUBATION_PERIOD ) {
     if( (*it_v)->isCrisisPeriod() ) {
       ret++;
     }
-    it_v++;                                                          /* 次のウイルスリストへ */
   }
   return ret;
 }
@@ -117,6 +129,7 @@ Virus *ImmuneSystem :: getOnSetVirusAt( int n ) {
     it_v++;                                                          /* 次のウイルスリストへ */
     num++;
   }
+  assert( (*it_v)->isCrisisPeriod() );
   return (*it_v);
 }
 /*
@@ -211,16 +224,17 @@ int ImmuneSystem :: response( Agent &self )
     it_v = self.getImmuneSystem()->eraseVirus( it_v );                   /* 保持ウイルスから v(先頭) を削除 */
   }
 
+  return progressDisease(self);
+}
+
+int ImmuneSystem :: progressDisease( Agent &self ) {
   // 突然変異
-  ITERATOR( Virus * ) it_vv                                           /* 先頭のウイルスデータから */
-    = self.getImmuneSystem()->getVirusListIteratorBegin();
-  while( it_vv != self.getImmuneSystem()->getVirusListIteratorEnd() ) /* 末尾まで */
+  EACH( it_v, getVirusList() )
   {
-    (*it_vv)->incrementInfectionTime();                               /* 感染期間を増やす */
-    if( (*it_vv)->isCrisisPeriod() ) {                            /* ウイルスが潜伏期間なら */
-      (*it_vv)->mutation( (*it_vv)->getMutationRate() );                            /* 突然変異を確率で起こす */
+    (*it_v)->incrementInfectionTime();                               /* 感染期間を増やす */
+    if( (*it_v)->isCrisisPeriod() ) {                            /* ウイルスが潜伏期間なら */
+      (*it_v)->mutation( (*it_v)->getMutationRate() );             /* 突然変異を確率で起こす */
     }
-    it_vv++;                                                          /* 増やす */
   }
   // 感染期間を増やす
   if( self.getImmuneSystem()->getVirusListSize() > 0 ) {             /* まだ感染していれば */

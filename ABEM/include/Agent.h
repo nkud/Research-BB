@@ -91,6 +91,7 @@ class Agent
 
     bool isIncubation() const;
     bool isCrisis() const;
+    bool isLethal() const;
     // bool isSafe() const;
     /*-----------------------------------------------------------------------------
      *  交配・出産関連セット

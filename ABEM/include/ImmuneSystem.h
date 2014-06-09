@@ -16,6 +16,8 @@ class ImmuneSystem {
     bool infection( Agent &self, Virus &v );                         /* 感染プロセス  */
     int response( Agent &self );                                     /* 免疫応答する（タグフリップ）  */
 
+    int progressDisease( Agent &self );
+
     bool hasVirus( Virus & );
     bool hasVirus() const;
     void incrementInfectionTime();
@@ -24,6 +26,7 @@ class ImmuneSystem {
 
     bool isIncubation();
     bool isCrisis();
+    bool isLethal();
     /*-----------------------------------------------------------------------------
      *  保持ウイルス操作セット
      *-----------------------------------------------------------------------------*/
@@ -36,6 +39,7 @@ class ImmuneSystem {
     bool hasNoVirus() const;                                         /* ウイルスを保持していない */
     std::vector<Virus *>::iterator getVirusListIteratorBegin();      /* 先頭へのイテレータを返す */
     std::vector<Virus *>::iterator getVirusListIteratorEnd();        /* 末尾へのイテレータを返す */
+    VECTOR(Virus *) & getVirusList() { return virus_list_; }
     /*-----------------------------------------------------------------------------
      *  待機ウイルス操作セット
      *-----------------------------------------------------------------------------*/
