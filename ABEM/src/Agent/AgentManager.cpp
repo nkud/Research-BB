@@ -21,20 +21,14 @@
 int AgentManager :: numIsIncubation() const {
   int ret = 0;
   EACH( it_a, agents_ ) {
-    if( (*it_a)->isIncubation() ) {
-      ret++;
-    }
-  }
-  return ret;
+    if( (*it_a)->isIncubation() ) { ret++; }
+  } return ret;
 }
 int AgentManager :: numIsCrisis() const {
   int ret = 0;
   EACH( it_a, agents_ ) {
-    if( (*it_a)->isCrisis() ) {
-      ret++;
-    }
-  }
-  return ret;
+    if( (*it_a)->isCrisis() ) { ret++; }
+  } return ret;
 }
 
 /*-----------------------------------------------------------------------------
@@ -81,8 +75,8 @@ void AgentManager :: initAgent( __MovingStrategy *ms, __ChildBirthStrategy *cbs,
   Landscape::Instance().clearAgentMap();                             /* エージェントの位置をリセット */
   int tx, ty;                                                        /* 移動させる場所 */
 
-  ITERATOR(Agent *) it_a = getAgentIteratorBegin();                  /* エージェントの先頭から */
-  while( it_a != getAgentIteratorEnd() ) {                           /* 末尾まで */
+  EACH( it_a, getAgentList() )
+  {
     tx = rand_interval_int( 0, WIDTH-1 );                            /* ランダムに設定 */
     ty = rand_interval_int( 0, WIDTH-1 );
     (*it_a)->setX( tx );                                             /* 配置 */
@@ -92,7 +86,6 @@ void AgentManager :: initAgent( __MovingStrategy *ms, __ChildBirthStrategy *cbs,
     assert( 0 <= ty && ty <= WIDTH-1 );
 
     Landscape::Instance().registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a ); /* エージェントを登録 */
-    it_a++;
   }
 }
 /*-----------------------------------------------------------------------------
@@ -113,12 +106,11 @@ void AgentManager :: initInfectAgentInRatio( Virus &v, double r ) {
 void AgentManager :: migrate()
 {
   Landscape::Instance().clearAgentMap();                             /* エージェントの位置をリセットして */
-  ITERATOR(Agent *) it_a = getAgentIteratorBegin();                  /* エージェントの先頭から */
-  while( it_a != getAgentIteratorEnd() ) {                           /* 末尾まで */
+  EACH( it_a, getAgentList() )                                       /* それぞれのエージェントを */
+  {
     (*it_a)->move();                                                 /* 移動させる */
     Landscape::Instance().putAgentOnMap( **it_a );                   /* 土地からはみ出てたら戻す */
     Landscape::Instance().registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a );                   /* エージェントを登録 */
-    it_a++;                                                          /* 次のエージェントへ */
   }
 }
 /*-----------------------------------------------------------------------------
@@ -135,63 +127,12 @@ void AgentManager :: contact()
       (**it_a).contact( **it_n );
     }
   }
-//   int ax, ay;
-//   int tx, ty;
-
-//   ITERATOR(Agent *) it_myself = getAgentIteratorBegin();             /* エージェントの先頭から */
-//   while( it_myself != getAgentIteratorEnd() ) {                      /* 末尾まで */
-// //    if( (*it_myself)->numHoldingVirus() <= 0 ) {
-// //      it_myself++;
-// //      continue;                                                      /* 健康ならスキップ */
-// //    }
-//     // if( (*it_myself)->getImmuneSystem()->getOnSetVirusListSize() < 1 ) { /* 発症していなければ */
-//     if( ! (*it_myself)->isCrisis() ) {
-//       it_myself++;                                                   /* 次のエージェントへ */
-//       continue;
-//     }
-//     ax = (*it_myself)->getX();                                       /* 感染者自身の位置 */
-//     ay = (*it_myself)->getY();
-
-//     REP( i, -1, 1 ) {                                                /* 自分の縦・横・自マスに感染させる（計５マス） */
-//       REP( j, -1, 1 ) {
-// #ifdef NO_DIAGONAL
-//         if( i*j != 0 ) {
-//           continue;                                                  /* 斜めは入れない */
-//         }
-// #endif
-//         tx = ax + i;
-//         ty = ay + j;
-//         Landscape::Instance().putBackOnMap( tx, ty );
-
-//         ITERATOR(Agent *) it = Landscape::Instance().getAgentIteratorBeginAt( tx, ty );
-//         while( it != Landscape::Instance().getAgentIteratorEndAt( tx, ty ) )
-//         {                                                            /* その位置にいる人全員に */
-//           if( (*it_myself)->getImmuneSystem()->getOnSetVirusListSize() <= 0) {
-//             it++;
-//             continue;
-//           }
-//           Virus *v =                                                 /* ランダムに保持ウイルスから選んで */
-//             (*it_myself)->getImmuneSystem()->getOnSetVirusAt( rand_array((*it_myself)->getImmuneSystem()->getOnSetVirusListSize()) );
-
-//           if( probability(v->getRate()) )
-//           // if( v->getRate() > rand_interval_double(0,1))
-//           {                                                          /* ウイルス特有の感染確率で */
-//             (*it)->getImmuneSystem()->pushStandByVirus( v );         /* 待機ウイルスにする */
-//           }
-//           it++;                                                      /* 着目をその位置の次にいる人 */
-
-//           AgentCounter::Instance().countUpContact();                 /* モニタリング */
-//         }
-//       }
-//     }
-//     it_myself++;
-//   }
 }
+/*-----------------------------------------------------------------------------
+ *  infect()
+ *-----------------------------------------------------------------------------*/
 void AgentManager :: infect()
 {
-  /*-----------------------------------------------------------------------------
-   *  感染の処理
-   *-----------------------------------------------------------------------------*/
   ITERATOR(Virus *) itt;
   Virus *v;
   int n;

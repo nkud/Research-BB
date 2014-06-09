@@ -161,13 +161,19 @@ void Agent :: resetParam() {
   // immunesystem reset XXX
 }
 
+/*-----------------------------------------------------------------------------
+ *  rebirth()
+ *      エージェントを初期化して再利用する
+ *-----------------------------------------------------------------------------*/
 void Agent :: rebirth() {
   resetParam();
   int len = gene_->getLen();
+
   delete gene_;
+  delete immune_system_;
+
   gene_ = new Gene(len);
   gene_->setTagRandom();
-  delete immune_system_;
   immune_system_ = new ImmuneSystem;
 }
 

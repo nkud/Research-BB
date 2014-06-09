@@ -22,7 +22,7 @@ const int OUTPUT_INTERVAL           = 1                    ;         /* 出力�
 const int MINI_SIZE_TERM            = 200                  ;
 
 const int WIDTH                     = 50                   ;         /* ランドスケープの幅 */
-const int A_MOVE_DISTANCE           = 10                   ;         /* エージェントの移動距離 */
+const int A_MOVE_DISTANCE           = 2                   ;         /* エージェントの移動距離 */
 
 const double INFECTION_RATE         = 30.0                  ;        /* デフォルトの感染率 */
 
@@ -37,10 +37,10 @@ const double A_INIT_INFECTED_RATE   = 2                 ;            /* 初期�
 const int A_DEFAULT_LEN             = 32                   ;         /* エージェントのタグ長 */
 const int V_DEFAULT_LEN             = 12                   ;         /* エージェントのタグ長 */
 
-const int V_INCUBATION_PERIOD       = 5;
-const int V_LETHAL_PERIOD           = 10;
+const int V_INCUBATION_PERIOD       = 3;
+const int V_LETHAL_PERIOD           = 24;
 
-const int V_MUTATION_RATE           = 30;
+const int V_MUTATION_RATE           = 20;
 
 const int T_MAX                     = 9;
 
