@@ -197,12 +197,9 @@ void AgentManager :: infect()
   int n;
   int infection_count;                                               /* 同時感染数をカウント。最大値を越えないように */
 
-  // ITERATOR(Agent *) it_myself = getAgentIteratorBegin();
-  // while( it_myself != getAgentIteratorEnd() ) {
   EACH( it_myself, getAgentList() )
   {
     if( (*it_myself)->getImmuneSystem()->hasNoStandByVirus() ) {     /* 待機ウイルスが無ければ */
-      // it_myself++;                                                   /* 次のエージェントに */
       continue;                                                      /* スキップ */
     } else {                                                         /* あれば */
       infection_count = 0;
@@ -219,18 +216,18 @@ void AgentManager :: infect()
         } else {
           itt = (*it_myself)->getImmuneSystem()->getStandByVirusListIteratorBegin();         /* もし感染しなければ */
           while(n-->0) { itt++; }                                    /* そのウイルスを */
-          itt = (*it_myself)->getImmuneSystem()->eraseStandByVirus( itt ); /* 待機ウイルスからはずして次のウイルス */
+          (*it_myself)->getImmuneSystem()->eraseStandByVirus( itt ); /* 待機ウイルスからはずして次のウイルス */
         }
       }
       (*it_myself)->getImmuneSystem()->clearStandByVirus();          /* 待機ウイルスをクリア */
     }
-    // it_myself++;                                                     /* 次のエージェントに */
   }
 }
+/*-----------------------------------------------------------------------------
+ *  response()
+ *-----------------------------------------------------------------------------*/
 void AgentManager :: response()
 {
-  // ITERATOR( Agent * ) it_a = getAgentIteratorBegin();                /* エージェントの先頭から */
-  // while( it_a != getAgentIteratorEnd() )                             /* 末尾まで */
   EACH( it_a, getAgentList() )
   { 
     assert( (*it_a) != NULL );
@@ -242,11 +239,11 @@ void AgentManager :: response()
       (*it_a)->rebirth();
       AgentCounter::Instance().countUpRemoved();
     }
-    // } else {
-      // it_a++;                                                        /* 次のエージェントへ */
-    // }
   }
 }
+/*-----------------------------------------------------------------------------
+ *  aging()
+ *-----------------------------------------------------------------------------*/
 void AgentManager :: aging()
 {
   ITERATOR(Agent *) it_a = getAgentIteratorBegin();                  /* 先頭のエージェントから */

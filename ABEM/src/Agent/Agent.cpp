@@ -34,17 +34,19 @@ bool Agent :: isLethal() const {
   return immune_system_->isLethal();
 }
 
+/*-----------------------------------------------------------------------------
+ *  contact( Agent & )
+ *      他エージェントが保持する感染力を持ったすべてのウイルスに対して、
+ *      そのウイルス固有の感染力に従って待機ウイルスとする。
+ *-----------------------------------------------------------------------------*/
 void Agent :: contact( Agent &other ) {
-  // Virus *v = other.getImmuneSystem()->getOnSetVirusAt(rand_array(other.getImmuneSystem()->getOnSetVirusListSize()));
-  VECTOR(Virus *) crisis_virus = other.getImmuneSystem()->getCrisisVirusList();
-  std::random_shuffle( ALL(crisis_virus) ); // XXX: low level shuffle
-  EACH( it_v, crisis_virus ) {
-    if( probability((*it_v)->getRate()) ) {
-      getImmuneSystem()->pushStandByVirus( *it_v );
-      AgentCounter::Instance().countUpContact();                 /* モニタリング */
+  VECTOR(Virus *) crisis_virus = other.getImmuneSystem()->getCrisisVirusList(); /*  */
+  EACH( it_v, crisis_virus ) {                                       /* すべての感染ウイルスの */
+    if( probability((*it_v)->getRate()) ) {                          /* 感染率に従って */
+      getImmuneSystem()->pushStandByVirus( *it_v );                  /* 待機ウイルスにする */
+      AgentCounter::Instance().countUpContact();                     /* モニタリング */
     }
   }
-  // if( probability(v->getRate()))
 }
 
 /*
@@ -77,7 +79,7 @@ Agent :: Agent(
   immune_system_ = new ImmuneSystem;                                 /* 免疫機構実装 */
 
   gene_ = new Gene(len);
-  gene_->setTagRandom();                                              /* タグをランダムに初期化 */
+  gene_->setTagRandom();                                             /* タグをランダムに初期化 */
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
   age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
@@ -89,7 +91,7 @@ Agent :: Agent(
 Agent :: Agent(
     __MovingStrategy *ms,                                            /* 移動戦略 */
     __ChildBirthStrategy *cbs,                                       /* 子孫戦略 */
-    Gene *gene                                                         /* 電子タグ */
+    Gene *gene                                                       /* 電子タグ */
     ) :
   x_( 0 ),
   y_( 0 ),
@@ -101,7 +103,7 @@ Agent :: Agent(
 {
   immune_system_ = new ImmuneSystem;                                 /* 免疫機構実装 */
 
-  gene_ = gene;                                                        /* 指定のタグに設定 */
+  gene_ = gene;                                                      /* 指定のタグに設定 */
   gene_->setTagRandom();
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
@@ -121,8 +123,8 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int m
 {
   immune_system_ = new ImmuneSystem();                               /* 免疫機構実装 */
 
-  gene_ = new Gene( rand_interval_int(minl, maxl) );                   /* ランダム長にタグを設定 */
-  gene_->setTagRandom();                                              /* タグをランダムに初期化 */
+  gene_ = new Gene( rand_interval_int(minl, maxl) );                 /* ランダム長にタグを設定 */
+  gene_->setTagRandom();                                             /* タグをランダムに初期化 */
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
   age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
@@ -283,7 +285,7 @@ int Agent :: numHoldingVirus() const {
  */
 void Agent :: move() {
   // if( ! isCrisis() ) { // 症候性期間でなければ
-      moving_strategy_->move( x_, y_ );                                  /* 戦略を使用して移動する */
+      moving_strategy_->move( x_, y_ );                              /* 戦略を使用して移動する */
   // }
 }
 __MovingStrategy* Agent :: getMovingStrategy() const { return moving_strategy_; }

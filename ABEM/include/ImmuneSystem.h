@@ -31,9 +31,9 @@ class ImmuneSystem {
      *  保持ウイルス操作セット
      *-----------------------------------------------------------------------------*/
     Virus *getVirusAt( int ) const;                                  /* 指定の保持ウイルスを返す */
-    Virus *getOnSetVirusAt( int );
+//    Virus *getOnSetVirusAt( int );
     int getVirusListSize() const;                                    /* 保持ウイルスのリストを返す */
-    int getOnSetVirusListSize();
+//    int getOnSetVirusListSize();
     void pushVirus( Virus * );                                       /* 保持ウイルスに追加する */
     ITERATOR(Virus *) eraseVirus( std::vector<Virus *>::iterator );               /* 指定の保持ウイルスを削除する */
     bool hasNoVirus() const;                                         /* ウイルスを保持していない */
@@ -63,8 +63,6 @@ class ImmuneSystem {
      *-----------------------------------------------------------------------------*/
     VECTOR(Virus *) virus_list_;                               /* 保持ウイルスのリスト */
     VECTOR(Virus *) stand_by_virus_list_;                      /* 待機ウイルスリスト */
-
-    // __ImmuneSystemStrategy *immunesystem_strategy_;
 };
 
 #endif

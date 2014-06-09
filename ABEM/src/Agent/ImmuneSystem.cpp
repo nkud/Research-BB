@@ -22,23 +22,21 @@
 
 bool ImmuneSystem :: isIncubation() {
   bool incubation_flag = false;
-  bool crisis_flag = false;
   EACH( it_v, getVirusList() ) {
-    if( (*it_v)->isIncubationPeriod() ) {                                            /* 感染済みであれば */
-      // return true;                                                   /* true を返す */
+    if( (*it_v)->isIncubationPeriod() ) {                            /* 感染済みであれば */
       incubation_flag = true;
     } else if( (*it_v)->isCrisisPeriod() or (*it_v)->isLethalPeriod() ) {
-      crisis_flag = true;
+      return false;
     }
   }
-  if( incubation_flag and !crisis_flag )
+  if( incubation_flag )
     return true;
   else
     return false;  
 }
 bool ImmuneSystem :: isCrisis() {
   EACH( it_v, getVirusList() ) {
-    if( (*it_v)->isCrisisPeriod() ) {   /* 感染済みであれば */
+    if( (*it_v)->isCrisisPeriod() ) {                                /* 感染済みであれば */
       return true;                                                   /* true を返す */
     }
   }
@@ -108,31 +106,34 @@ ITERATOR(Virus *) ImmuneSystem :: eraseStandByVirus( ITERATOR(Virus *) it ) {
 void ImmuneSystem :: clearStandByVirus() { stand_by_virus_list_.clear(); }
 
 // XXX
-int ImmuneSystem :: getOnSetVirusListSize() {
-  int ret = 0;
-  EACH( it_v, getVirusList() ) {
-    // if( (*it_v)->getInfectionTime() > V_INCUBATION_PERIOD ) {
-    if( (*it_v)->isCrisisPeriod() ) {
-      ret++;
-    }
-  }
-  return ret;
-}
-Virus *ImmuneSystem :: getOnSetVirusAt( int n ) {
-  int num = 0;
-  C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();            /* ウイルスリストの先頭から */
-  while( it_v != getVirusListIteratorEnd() ) {                       /* 末尾まで */
-    // if( num == n and (*it_v)->getInfectionTime() > V_INCUBATION_PERIOD ) {
-    if( num == n and (*it_v)->isCrisisPeriod() ) {
-      return (*it_v);
-    }
-    it_v++;                                                          /* 次のウイルスリストへ */
-    num++;
-  }
-  assert( (*it_v)->isCrisisPeriod() );
-  return (*it_v);
-}
+//int ImmuneSystem :: getOnSetVirusListSize() {
+//  int ret = 0;
+//  EACH( it_v, getVirusList() ) {
+//    // if( (*it_v)->getInfectionTime() > V_INCUBATION_PERIOD ) {
+//    if( (*it_v)->isCrisisPeriod() ) {
+//      ret++;
+//    }
+//  }
+//  return ret;
+//}
+//Virus *ImmuneSystem :: getOnSetVirusAt( int n ) {
+//  int num = 0;
+//  C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();            /* ウイルスリストの先頭から */
+//  while( it_v != getVirusListIteratorEnd() ) {                       /* 末尾まで */
+//    // if( num == n and (*it_v)->getInfectionTime() > V_INCUBATION_PERIOD ) {
+//    if( num == n and (*it_v)->isCrisisPeriod() ) {
+//      return (*it_v);
+//    }
+//    it_v++;                                                          /* 次のウイルスリストへ */
+//    num++;
+//  }
+//  assert( (*it_v)->isCrisisPeriod() );
+//  return (*it_v);
+//}
 
+/*-----------------------------------------------------------------------------
+ *  getCrisisVirusList()
+ *-----------------------------------------------------------------------------*/
 VECTOR(Virus *) ImmuneSystem :: getCrisisVirusList() {
   VECTOR(Virus *) crisis_virus;
   EACH( it_v, getVirusList() )
