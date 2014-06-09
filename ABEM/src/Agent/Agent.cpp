@@ -16,6 +16,7 @@
 #include "Function.h"
 #include "Config.h"
 #include "Gene.h"
+#include "AgentCounter.h"
 
 #include <vector>
 #include <cassert>
@@ -40,6 +41,7 @@ void Agent :: contact( Agent &other ) {
   EACH( it_v, crisis_virus ) {
     if( probability((*it_v)->getRate()) ) {
       getImmuneSystem()->pushStandByVirus( *it_v );
+      AgentCounter::Instance().countUpContact();                 /* モニタリング */
     }
   }
   // if( probability(v->getRate()))

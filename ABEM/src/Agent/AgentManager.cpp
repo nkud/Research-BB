@@ -133,7 +133,6 @@ void AgentManager :: contact()
     EACH( it_n, neighbors ) {
       assert( *it_a != *it_n ); // 自分ならエラー
       (**it_a).contact( **it_n );
-      AgentCounter::Instance().countUpContact();                 /* モニタリング */
     }
   }
 //   int ax, ay;
