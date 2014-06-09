@@ -32,6 +32,14 @@ bool Agent :: isLethal() const {
   return immune_system_->isLethal();
 }
 
+void Agent :: contact( Agent &other ) {
+  Virus *v = other.getImmuneSystem()->getOnSetVirusAt(rand_array(other.getImmuneSystem()->getOnSetVirusListSize()));
+  if( probability(v->getRate()))
+  {
+    getImmuneSystem()->pushStandByVirus( v );
+  }
+}
+
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Agent :: Agent() / ~Agent()

@@ -63,6 +63,7 @@ class Agent
      *-----------------------------------------------------------------------------*/
     bool infection( Virus &v );                                      /* 感染プロセス  */
     int response();                                                 /* 免疫応答する（タグフリップ）  */
+    void contact( Agent &other );
 
     bool hasVirus() const;                                           /* v に感染しているか */
     bool hasVirus( Virus &v ) const;                                 /* v に感染しているか */

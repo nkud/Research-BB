@@ -51,6 +51,9 @@ class Landscape {
         void removeAgent( int x, int y, Agent & );                   /* エージェントを削除 */
         ITERATOR(Agent *) getAgentIteratorBeginAt( int, int );       /* 指定の場所にいるエージェントの配列の先頭 */
         ITERATOR(Agent *) getAgentIteratorEndAt( int, int );         /* 指定の場所にいるエージェントの配列の末尾 */
+        VECTOR(Agent *) & getAgentList( int x, int y ) { return agent_map_[x][y]; }
+
+        VECTOR(Agent *) getNeighbors( const Agent & );
 
     private:
         VECTOR(Agent *) agent_map_[WIDTH][WIDTH];                    /* エージェントの番号を登録する配列 */

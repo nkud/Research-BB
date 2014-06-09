@@ -132,6 +132,18 @@ Virus *ImmuneSystem :: getOnSetVirusAt( int n ) {
   assert( (*it_v)->isCrisisPeriod() );
   return (*it_v);
 }
+
+VECTOR(Virus *) ImmuneSystem :: getCrisisVirusList() {
+  VECTOR(Virus *) crisis_virus;
+  EACH( it_v, getVirusList() )
+  {
+    if( (*it_v)->isCrisisPeriod() )
+    {
+      crisis_virus.push_back( *it_v );
+    }
+  }
+  return crisis_virus;
+}
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  ImmuneSystem :: hasVirus( Virus & )

@@ -16,6 +16,35 @@
 #include "Function.h"
 
 #include <cassert>
+
+// エージェントの近隣を返す
+VECTOR(Agent *)
+Landscape :: getNeighbors( const Agent &agent )
+{
+    int x = agent.getX();
+    int y = agent.getY();
+    VECTOR(Agent *) neighbors;
+    REP(i, -1, 1)
+    {
+        REP(j, -1, 1)
+        {
+            if( isOnMap(x+i, y+j) )
+            {
+                EACH( it_a, getAgentList(x+i, y+j) ) {
+                    neighbors.push_back( *it_a );
+                }
+            }
+        }
+    }
+    EACH( it_n, neighbors ) {
+        if ( *it_n == &agent )
+        {
+            neighbors.erase(it_n);
+            break;
+        }
+    }
+    return neighbors;
+}
  
 Landscape :: Landscape()
 {

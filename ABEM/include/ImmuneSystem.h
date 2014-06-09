@@ -40,6 +40,8 @@ class ImmuneSystem {
     std::vector<Virus *>::iterator getVirusListIteratorBegin();      /* 先頭へのイテレータを返す */
     std::vector<Virus *>::iterator getVirusListIteratorEnd();        /* 末尾へのイテレータを返す */
     VECTOR(Virus *) & getVirusList() { return virus_list_; }
+
+    VECTOR(Virus *) getCrisisVirusList();
     /*-----------------------------------------------------------------------------
      *  待機ウイルス操作セット
      *-----------------------------------------------------------------------------*/
