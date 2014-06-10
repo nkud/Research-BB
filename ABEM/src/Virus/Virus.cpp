@@ -56,7 +56,7 @@ double Virus :: value() const {
 }
 
 int Virus :: getIncubationPeriod() const {
-  return V_INCUBATION_PERIOD; 
+  return V_INCUBATION_PERIOD;
 }
 int Virus :: getLethalPeriod() const {
   // return V_LETHAL_PERIOD;
