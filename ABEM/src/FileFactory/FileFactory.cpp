@@ -250,13 +250,26 @@ void FileFactory :: outputFile_LastVirusDataBase( const char *fname ) const {
     }
     ofs.close();
 }
+
+void FileFactory :: outputFile_AgentGeneDistribution( const char *fname ) {
+    std::ofstream ofs(fname);
+    EACH( it_a, am_->getAgentList() )
+    {
+        FOR(j, (*it_a)->getLen()) {
+            ofs<<(*it_a)->tagAt(j);                                  /* エージェントのタグ */
+        }
+        ofs<<" "<<(*it_a)->numHoldingVirus();                        /* エージェントの保持ウイルス数 */
+        ofs<<ENDL;
+    }
+}
+
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  FileFactory :: outputFile_peakSearch()
  * Description:  ピークサーチする
  *--------------------------------------------------------------------------------------
  */
-static int max_term_in_interval( const int data[], int cursor, int len ) {
+static int max_term_in_interval( int data[], int cursor, int len ) {
     /*-----------------------------------------------------------------------------
      *  与えられた期間の最大値を検索する
      *-----------------------------------------------------------------------------*/

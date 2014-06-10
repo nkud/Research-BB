@@ -130,11 +130,14 @@ int main()
     fFactory.outputValueWithTerm( "A_removed.txt", AgentCounter::Instance().getCountRemoved() );
     fFactory.outputValueWithTerm( "V_aveValue.txt", VirusCounter::Instance().calcAveValue() );
 
-    if ( term.isInterval(1000) )
-    { // outputにやらせる
-      char tfname[256];
+    if ( term.isInterval(500) )
+    {
+      char tfname[256], afname[256];
       sprintf(tfname, "%d_VirusDataBase.txt", term.getTerm() );
+      sprintf(afname, "%d_AgentGeneDistribution.txt", term.getTerm() );
       fFactory.outputFile_LastVirusDataBase(tfname);
+      /* Agent Gene Distribution */
+      fFactory.outputFile_AgentGeneDistribution(afname);
     }
 
     /* 途中経過表示用ログ */

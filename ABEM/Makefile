@@ -57,9 +57,10 @@ gene:
 # 結果をパッケージングする
 pack:
 	@$(PRINT) '>>> Packaging'
+	@$(PRINT) FNAME:[ $(RESULT)-$(R) ]
 	@[ -d $(MASTER) ] || $(MKDIR) $(MASTER)
 	@cp -r bin $(MASTER)/$(RESULT)-$(R)
-	@cp -r include src script $(MASTER)/$(RESULT)-$(R)
+	@cp -r Makefile include src script $(MASTER)/$(RESULT)-$(R)
 	@ls $(MASTER)/$(RESULT)-$(R)
 
 # 削除する

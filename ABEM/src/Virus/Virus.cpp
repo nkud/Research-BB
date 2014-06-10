@@ -67,7 +67,9 @@ int Virus :: getMutationRate() const {
 }
 double Virus :: getRate() const { 
   // return rate_; 
-  double rate = 100*1./(1+value()/9);
+  // double rate = 100*1./(1+value()/9);
+  // double rate = 50.*((108-value())/108.);
+  double rate = 50;
   return rate;
 }
 
