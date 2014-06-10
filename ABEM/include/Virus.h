@@ -48,7 +48,7 @@ class Virus
     bool isCrisisPeriod() const;
     bool isLethalPeriod() const;
 
-    int value() const;
+    double value() const;
     int getIncubationPeriod() const;
     int getLethalPeriod() const;
     int getInfectionRate() const;

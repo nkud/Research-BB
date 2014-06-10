@@ -45,7 +45,7 @@ $(LIBSPATH):
 # 実行する
 run:
 	@$(PRINT) '[ run ]'
-	@$(RM) $(BINDIR)/*.txt
+	@$(RM) $(BINDIR)/*
 	@cd $(BINDIR); ./$(TARGET)
 
 # 結果を出力する

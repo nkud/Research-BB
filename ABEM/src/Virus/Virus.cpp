@@ -47,7 +47,7 @@ bool Virus :: isLethalPeriod() const {
   }
 }
 
-int Virus :: value() const {
+double Virus :: value() const {
   int ret = 0;
   FOR( i, getLen() ) {
     ret += abs( tagAt(i) - 0 );
@@ -60,16 +60,18 @@ int Virus :: getIncubationPeriod() const {
 }
 int Virus :: getLethalPeriod() const {
   // return V_LETHAL_PERIOD;
-  return V_LETHAL_PERIOD - value()/9;
+  // return V_LETHAL_PERIOD - value()/9;
+  return V_LETHAL_PERIOD - value();
 }
 int Virus :: getMutationRate() const {
   return V_MUTATION_RATE;
 }
 double Virus :: getRate() const { 
   // return rate_; 
-  // double rate = 100*1./(1+value()/9);
+  double rate = 100*1./(1+value()/9.);
+  // LOG(rate)
   // double rate = 50.*((108-value())/108.);
-  double rate = 50;
+  // double rate = 30;
   return rate;
 }
 

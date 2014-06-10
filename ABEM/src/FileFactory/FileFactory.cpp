@@ -172,29 +172,12 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
 #endif
 }
 
-
-/*--------------------------------------------------------------------------------------
- *      Method:  FileFactory :: outputFile_HasVirus
- * Description:  ファイルに出力する
- *               ウイルスの数によって、列を調整できる
- *----------------------------------------------------------------------------------- */
 void FileFactory :: outputFile_VirusVariaty( const char *fname ) const {
     if( Term::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
     ofs << Term::Instance().getTerm() << SEPARATOR;                  /* ファイルに出力 */
     ofs << VirusCounter::Instance().getVirusVariaty() << ENDL;
 }
-/*--------------------------------------------------------------------------------------
- *      Method:  FileFactory :: outputFile_Population
- * Description:  人口推移を出力する
- *----------------------------------------------------------------------------------- */
-// void FileFactory :: outputFile_Population( const char *fname ) const {
-//     if( Term::Instance().getTerm() % OUTPUT_INTERVAL != 0 ) return;
-//     static std::ofstream ofs(fname);                                 /* インスタンスは１つだけ */
-//     ofs << Term::Instance().getTerm() << SEPARATOR;                           /* 期間 */
-//     ofs << am_->getAgentSize() << SEPARATOR;                       /* 人口 */
-//     ofs << ENDL;
-// }
 
 /*
  *--------------------------------------------------------------------------------------
@@ -237,8 +220,6 @@ void FileFactory :: outputFile_LastLog( const char *fname ) const {
 }
 void FileFactory :: outputFile_LastVirusDataBase( const char *fname ) const {
     std::ofstream ofs(fname);
-    // ITERATOR(Virus*) it_v = VirusCounter::Instance().getVirusDataBaseIteratorBegin();
-    // while(it_v!=VirusCounter::Instance().getVirusDataBaseIteratorEnd()) {
     int i = 0;
     EACH( it_v, VirusCounter::Instance().getVirusDataBase() ) {
         FOR(j, (*it_v)->getLen()) {
@@ -261,6 +242,7 @@ void FileFactory :: outputFile_AgentGeneDistribution( const char *fname ) {
         ofs<<" "<<(*it_a)->numHoldingVirus();                        /* エージェントの保持ウイルス数 */
         ofs<<ENDL;
     }
+    ofs.close();
 }
 
 /*

@@ -99,7 +99,6 @@ int main()
     VirusCounter::Instance().reset();
     AgentCounter::Instance().reset();
 
-
     /* エージェント、ウイルス、土地の計算 */
 #ifdef AGING_AGENT
     aManager.aging();                                              /* 老化する */

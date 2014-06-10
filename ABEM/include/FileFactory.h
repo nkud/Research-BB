@@ -37,12 +37,9 @@ class FileFactory {
         /*-----------------------------------------------------------------------------
          *  計算結果出力
          *-----------------------------------------------------------------------------*/
-        void outputFile_HasVirus( const char * ) const;              /* ウイルス保持者出力 */
         void outputFile_VirusVariaty( const char * ) const;
         void outputFile_LastVirusDataBase( const char * ) const;
         void outputFile_AgentGeneDistribution( const char *);
-//        void outputFile_HasImmunity( const char * ) const;           /* ファイルに出力 */
-        void outputFile_Population( const char * ) const;            /* 人口推移を出力 */
         void outputFile_LastLog( const char * ) const;               /* ログを出力 */
         void outputFile_Info( const char * ) const;                  /* パラメータ情報を出力 */
         double outputFile_peakSearch( const char * ) const;          /* 出力: ピークサーチ */
