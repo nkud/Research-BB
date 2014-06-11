@@ -16,7 +16,6 @@
 #include "Config.h"
 #include "Function.h"
 #include "Virus.h"
-#include "Function.h"
 #include "Gene.h"
 #include "VirusCounter.h"
 
@@ -80,37 +79,29 @@ double Virus :: getRate() const {
  *  コンストラクタ
  *
  *-----------------------------------------------------------------------------*/
+/* Tag */
 Virus :: Virus( const char *str ) :
   rate_( INFECTION_RATE ),                                            /* 感染確率は初期設定 */
-  // search_strategy_( sp ),                                            /* 戦略指定 */
   cling_point_( 0 ),
   infection_time_( 0 )
 {
   gene_ = new Gene( str );
 }
+/* Tag Len */
 Virus :: Virus( int l ):
   rate_( INFECTION_RATE ),                                            /* 感染確率を指定 */
-  // search_strategy_( sp ),                                            /* 戦略指定 */
   cling_point_( 0 ),
   infection_time_( 0 )
 {
   gene_ = new Gene( l );
   gene_->setTagRandom();                                              /* タグをランダムに初期化 */
-
-  // sp->check( l );
 }
-
-
-/*-----------------------------------------------------------------------------
- *  Virus :: Virus( Virus * )
- *      ウイルスをコピーするコンストラクタ
- *-----------------------------------------------------------------------------*/
-Virus :: Virus( Virus *v ) {
+/* Virus */
+Virus :: Virus( Virus &origin ) {
   cling_point_ = 0;
   infection_time_ = 0;
-  rate_ = v->getRate();
-  gene_ = new Gene( v->getGene() );
-  // search_strategy_ = new Normal;
+  rate_ = origin.getRate();
+  gene_ = new Gene( origin.getGene() );
 }
 
 /*-----------------------------------------------------------------------------
@@ -118,13 +109,10 @@ Virus :: Virus( Virus *v ) {
  *-----------------------------------------------------------------------------*/
 Virus :: ~Virus() {
   assert( gene_ != NULL );
-  // assert( search_strategy_ != NULL );
 
   delete gene_;
-  // delete search_strategy_;
 
   gene_ = NULL;
-  // search_strategy_ = NULL;
 }
 
 /*--------------------------------------------------------------------------------------

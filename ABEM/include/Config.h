@@ -26,7 +26,7 @@ const int A_MOVE_DISTANCE           = 2                   ;         /* エージ
 
 const double INFECTION_RATE         = 30.0                  ;        /* デフォルトの感染率 */
 
-const int A_MAX_V_CAN_HAVE          = 1                    ;         /* 最大保持ウイルス */
+const int A_MAX_V_CAPACITY         = 1                    ;         /* 最大保持ウイルス */
 const int A_MAX_V_INFECTED_ONE_TERM = 1                    ;         /* １期間で感染させるウイルスの最大数 */
 
 const int A_INIT_NUM                = 1000                  ;        /* 初期エージェントの数 */
@@ -46,7 +46,6 @@ const int T_MAX                     = 9;
 
 //               1234567890123
 #define V_TAG_0 "00000000"
-#define V_TAG_1 "111111111111"
 #define V_NUM 1
 
 

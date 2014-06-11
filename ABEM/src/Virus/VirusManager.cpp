@@ -29,7 +29,6 @@ void VirusManager :: initVirus() {
    *-----------------------------------------------------------------------------*/
   //                                   1234567890123456789
   viruses_.push_back( new Virus( V_TAG_0 ) );       /* 通常ウイルスを追加 */
-  viruses_.push_back( new Virus( V_TAG_1 ) );       /* 通常ウイルスを追加 */
 }
 void VirusManager :: printInitInfo() {
   std::cout << "\nNUM_V:\t\t" << getVirusSize() << std::endl;

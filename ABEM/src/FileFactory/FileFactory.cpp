@@ -116,7 +116,7 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
     OFSVP( A_LEN, A_DEFAULT_LEN );                 /* エージェントのタグ長 */
     OFSV( A_INIT_NUM );                                              /* 初期エージェント数 */
     OFSV( A_MAX_NUM );                                               /* 最大エージェント数 */
-    OFSV( A_MAX_V_CAN_HAVE );                                        /* 最大保持ウイルス数 */
+    OFSV( A_MAX_V_CAPACITY );                                        /* 最大保持ウイルス数 */
     OFSV( A_MAX_V_INFECTED_ONE_TERM );                               /* １期間最大感染ウイルス数 */
     OFSV( A_MAX_AGE );                                               /* 寿命 */
     OFSV( A_BIRTH_RATE );                                            /* 出生率 */

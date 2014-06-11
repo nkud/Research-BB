@@ -28,7 +28,7 @@ class Virus
     /*-----------------------------------------------------------------------------
      *  コンストラクタ・デストラクタ
      *-----------------------------------------------------------------------------*/
-    Virus( Virus * );
+    Virus( Virus & );
 
     // Virus( __SearchStrategy * );                                     /* コンストラクタ: 戦略 */
     Virus( int );                                /* コンストラクタ: タグ長, 戦略 */
@@ -76,6 +76,17 @@ class Virus
 
     bool operator<(const Virus& other) const {
       if( value() < other.value() ) return true; else return false;
+    }
+    bool operator==(const Virus& other) const {
+      if( getLen() != other.getLen() ) {
+        return false;
+      }
+      FOR( i, getLen() ) {
+        if( tagAt(i) != other.tagAt(i) ) {
+          return false;
+        }
+      }
+      return true;
     }
   private:
     Gene *gene_;                                                       /* 電子タグ */

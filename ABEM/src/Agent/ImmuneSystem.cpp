@@ -160,31 +160,30 @@ bool ImmuneSystem :: hasVirus() const {
  */
 bool ImmuneSystem :: infection( Agent &self, Virus &v )
 {
-  // return immunesystem_strategy_->infection(self, v);
-    if( self.getImmuneSystem()->getVirusListSize() >= A_MAX_V_CAN_HAVE ) { /* 最大値を越えてたら */
-    // A_MAX_V_CAPACITY
+    if( self.getImmuneSystem()->getVirusListSize() >= A_MAX_V_CAPACITY ) { /* 最大値を越えてたら */
     return false;                                                    /* 感染せずに終了 */
   }
-  ITERATOR(Virus *) it_v = self.getImmuneSystem()->getVirusListIteratorBegin(); /* 保持ウイルスリストを取得 */
-  while( it_v != self.getImmuneSystem()->getVirusListIteratorEnd() ) { /* 既に保持しているウイルスなら */
-    if( (*it_v)->isEqualTo( v ) ) {
+  // ITERATOR(Virus *) it_v = self.getImmuneSystem()->getVirusListIteratorBegin(); /* 保持ウイルスリストを取得 */
+  // while( it_v != self.getImmuneSystem()->getVirusListIteratorEnd() ) { /* 既に保持しているウイルスなら */
+  EACH( it_v, getVirusList() ) 
+  {
+    if( (**it_v) == v ) {
       // XXX: あってる？？有効？？
+      assert( (*it_v)->isEqualTo(v) );
       return false;                                                  /* 感染せずに終了 */
     }
-    it_v++;                                                          /* 次の保持ウイルス */
   }
   if( self.hasImmunity( v ) ) {                                      /* 免疫獲得済みなら  */
     return false;                                                    /* 感染せずに終了 */
   }
-//  Virus *new_v                                                   /* 新しいウイルスデータを作成して */
-//    = new Virus( v, v.searchStartPoint( *self.getTag() ), 0 );
-  Virus *new_v = new Virus( &v );
+
+  Virus *new_v = new Virus( v );                                      /* 新しいウイルスデータを作成して */
   new_v->setClingPoint( new_v->searchStartPoint( self.getGene() ) );
   // XXX: ウイルスの関数にする setClingPoint( Tag * );
   self.getImmuneSystem()->pushVirus( new_v );                        /* 保持ウイルスリストに追加する */
 
   AgentCounter::Instance().countUpInfectionContact();
-//  Monitor::Instance().countUpInfectionContact(vdata->v_);          /* 感染のために接触した回数を増やす */
+
   return true;                                                       /* 感染して true を返す */
 }
 

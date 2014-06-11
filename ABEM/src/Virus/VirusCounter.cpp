@@ -86,13 +86,13 @@ int VirusCounter :: hasDataOfVirus( const Virus& v ) {
  *  pushNewVirus
  *      データベースに新しいウイルスを登録
  *-----------------------------------------------------------------------------*/
-bool VirusCounter :: pushNewVirus( const Virus& v ) {
+bool VirusCounter :: pushNewVirus( Virus& v ) {
   int f = hasDataOfVirus(v);
   if( f != -1 ) {                                          /* データがあれば */
     virus_number_data_base_[f]++;
     return false;                                                    /* 終了 */
   } else {                                                           /* なければ */
-    virus_data_base_.push_back( new Virus(v) );                     /* データを追加して */
+    virus_data_base_.push_back( new Virus( v ) );                     /* データを追加して */
     virus_number_data_base_.push_back( 1 );
     return true;                                                     /* 終了 */
   }

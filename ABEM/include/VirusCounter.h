@@ -37,7 +37,7 @@ class VirusCounter {
     int getCountMutation() const { return count_mutation_; }
     void resetCountMutation() { count_mutation_ = 0; }
     // ウイルスの種類
-    bool pushNewVirus( const Virus& v );
+    bool pushNewVirus( Virus& v );
     int hasDataOfVirus( const Virus& v );
     void resetVirusDataBase();
     int getVirusVariaty() const;
