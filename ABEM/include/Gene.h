@@ -34,7 +34,7 @@ class Gene
     Gene( int minl, int maxl );                                       /* XXX コンストラクタ: 長さ */
     Gene( const char * );                                             /* コンストラクタ: 文字列 */
     // XXX: コピーコンストラクタにする
-    Gene( Gene * );
+    Gene( Gene & );
     virtual ~Gene();                                                          /* デストラクタ */
     /*-----------------------------------------------------------------------------
      *  タグ操作セット
@@ -71,9 +71,9 @@ class Gene
 };
 
 // 戦略にすべき
-class RingGene : public Gene {
-public:
-    int pointOfMinHamDistance( const Gene &other ) const;
-};
+// class RingGene : public Gene {
+// public:
+//     int pointOfMinHamDistance( const Gene &other ) const;
+// };
 
 #endif

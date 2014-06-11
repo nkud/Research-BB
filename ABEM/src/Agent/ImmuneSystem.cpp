@@ -179,7 +179,7 @@ bool ImmuneSystem :: infection( Agent &self, Virus &v )
 //  Virus *new_v                                                   /* 新しいウイルスデータを作成して */
 //    = new Virus( v, v.searchStartPoint( *self.getTag() ), 0 );
   Virus *new_v = new Virus( &v );
-  new_v->setClingPoint( new_v->searchStartPoint( *self.getGene() ) );
+  new_v->setClingPoint( new_v->searchStartPoint( self.getGene() ) );
   // XXX: ウイルスの関数にする setClingPoint( Tag * );
   self.getImmuneSystem()->pushVirus( new_v );                        /* 保持ウイルスリストに追加する */
 
@@ -206,7 +206,7 @@ int ImmuneSystem :: response( Agent &self )
     = self.getImmuneSystem()->getVirusListIteratorBegin();           /* 先頭のウイルスに対し */
 
   if( ! self.hasImmunity( **it_v ) ) {                                 /* 免疫を獲得していなければ */
-    self.getGene()->flipToGeneAtPosition( (*it_v)->getGene(), (*it_v)->getClingPoint() );
+    self.getGene().flipToGeneAtPosition( (*it_v)->getGene(), (*it_v)->getClingPoint() );
   }
 
   if( self.hasImmunity( **it_v ) )                                     /* そのウイルスに対して */

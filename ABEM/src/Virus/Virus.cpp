@@ -157,9 +157,9 @@ bool Virus :: isEqualTo( const Virus &v ) const {
  * Description:  タグに対して、ハミング距離が最小となる位置に取り付く
  *--------------------------------------------------------------------------------------
  */
-int Virus :: searchStartPoint( const Gene &gene ) const {
+int Virus :: searchStartPoint( Gene &gene ) {
   int sp = -1;
-  sp = gene.pointOfMinHamDistance( this->getGene() );
+  sp = gene.pointOfMinHamDistance( getGene() );
   return sp;
   // return search_strategy_->searchStartPoint( *this, tag );           /* 取り付く位置を返す */
 }
@@ -169,11 +169,11 @@ int Virus :: searchStartPoint( const Gene &gene ) const {
  *      突然変異を起こす
  *-----------------------------------------------------------------------------*/
 void Virus :: mutation() {
-  getGene()->mutation();
+  getGene().mutation();
 }
 void Virus :: mutation( double prob ) {
   if ( probability( prob ) ) {
-    getGene()->mutation( prob );
+    getGene().mutation( prob );
     VirusCounter::Instance().countUpMutation();                      /* カウントする */
   }
 }

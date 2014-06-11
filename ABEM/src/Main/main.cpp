@@ -80,7 +80,7 @@ int main()
    *-----------------------------------------------------------------------------*/
   /* エージェントへの初期感染 */
   FOR( i, V_NUM ) {
-    virus[i]->getGene()->printTag();
+    virus[i]->getGene().printTag();
     aManager.initInfectAgentInRatio( *virus[i], A_INIT_INFECTED_RATE );    /* 初期感染させる */
   }
 

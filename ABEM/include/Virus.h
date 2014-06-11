@@ -41,7 +41,7 @@ class Virus
     double getRate() const;                                          /* 感染確率を返す */
     void setRate( const double r );                                  /* 感染確率を設定 */
 
-    int searchStartPoint( const Gene & ) const;                       /* タグに取り付く位置を返す */
+    int searchStartPoint( Gene & );                       /* タグに取り付く位置を返す */
     // __SEARCH__TYPE__ getSearchType() const;                          /* サーチ戦略を返す */
 
     bool isIncubationPeriod() const;
@@ -60,7 +60,7 @@ class Virus
     /*-----------------------------------------------------------------------------
      *  タグ操作
      *-----------------------------------------------------------------------------*/
-    Gene* getGene() const { return gene_; }                             /* タグを返す */
+    Gene & getGene() { return *gene_; }                             /* タグを返す */
     int getLen() const { return gene_->getLen(); }                    /* タグ長を返す */
     tag_t tagAt(int n) const { return gene_->tagAt(n); }              /* 特定位置のタグを返す */
 

@@ -37,9 +37,9 @@ void VirusManager :: printInitInfo() {
   std::cout << "VIRUS:" << std::endl;                                /* ウイルス情報 */
   FOR(i, getVirusSize()) {
     std::cout<<"\trate_"<<i<<":\t"<<viruses_[i]->getRate();
-    std::cout<<"\tlen_"<<i<<":\t"<<viruses_[i]->getGene()->getLen()<<std::endl;
+    std::cout<<"\tlen_"<<i<<":\t"<<viruses_[i]->getGene().getLen()<<std::endl;
   }
   FOR( i, getVirusSize() ) {
-    viruses_[i]->getGene()->printTag();       /* 全ウイルスのタグを表示 */
+    viruses_[i]->getGene().printTag();       /* 全ウイルスのタグを表示 */
   }
 }

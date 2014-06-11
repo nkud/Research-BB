@@ -254,9 +254,9 @@ int Agent :: response()
  * Description:  免疫を獲得しているかどうか
  *--------------------------------------------------------------------------------------
  */
-bool Agent :: hasImmunity( const Virus &v ) const                    /* true -> 免疫獲得済み  */
+bool Agent :: hasImmunity( Virus &v )                    /* true -> 免疫獲得済み  */
 {
-  if( gene_->pointOfMinHamDistance( v.getGene() ) < 0 )
+  if( getGene().pointOfMinHamDistance( v.getGene() ) < 0 )
     return true;                                                     /* 免疫獲得済み */
   else                                                               /* 0 以上なら */
     return false;                                                    /* 未獲得 */
