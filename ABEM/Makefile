@@ -8,6 +8,7 @@ CTAGS	 = $(shell which ctags)
 OBJDIR	 = obj
 SRCDIR	 = src
 BINDIR	 = bin
+PRGDIR	 = program
 
 MASTER	 = master
 NOW		 = $(shell date +%y%m%d-%H%M%S)
@@ -59,14 +60,15 @@ pack:
 	@$(PRINT) '>>> Packaging'
 	@$(PRINT) FNAME:[ $(RESULT)-$(R) ]
 	@[ -d $(MASTER) ] || $(MKDIR) $(MASTER)
-	@cp -r bin $(MASTER)/$(RESULT)-$(R)
-	@cp -r Makefile include src script $(MASTER)/$(RESULT)-$(R)
+	@[ -d $(MASTER)/$(RESULT)-$(R)/$(PRGDIR) ] || $(MKDIR) $(MASTER)/$(RESULT)-$(R)/$(PRGDIR)
+	@cp -r bin/* $(MASTER)/$(RESULT)-$(R)
+	@cp -r Makefile include src script $(MASTER)/$(RESULT)-$(R)/$(PRGDIR)
 	@ls $(MASTER)/$(RESULT)-$(R)
 
 # 削除する
 clean:
 	@$(PRINT) -n '>>> Cleaning...'
-	@$(RM) -rf $(OBJDIR) $(BINDIR)
+	@$(RM) -vrf $(OBJDIR) $(BINDIR)
 	@$(PRINT) 'done'
 
 # テストする
