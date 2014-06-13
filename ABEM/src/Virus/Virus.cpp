@@ -83,7 +83,7 @@ double Virus :: getRate() const {
 Virus :: Virus( const char *str ) :
   rate_( INFECTION_RATE ),                                            /* 感染確率は初期設定 */
   cling_point_( 0 ),
-  infection_time_( 0 )
+  infection_age_( 0 )
 {
   gene_ = new Gene( str );
 }
@@ -91,7 +91,7 @@ Virus :: Virus( const char *str ) :
 Virus :: Virus( int l ):
   rate_( INFECTION_RATE ),                                            /* 感染確率を指定 */
   cling_point_( 0 ),
-  infection_time_( 0 )
+  infection_age_( 0 )
 {
   gene_ = new Gene( l );
   gene_->setTagRandom();                                              /* タグをランダムに初期化 */
@@ -99,7 +99,7 @@ Virus :: Virus( int l ):
 /* Virus */
 Virus :: Virus( Virus &origin ) {
   cling_point_ = 0;
-  infection_time_ = 0;
+  infection_age_ = 0;
   rate_ = origin.getRate();
   gene_ = new Gene( origin.getGene() );
 }

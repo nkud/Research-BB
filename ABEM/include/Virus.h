@@ -44,15 +44,20 @@ class Virus
     int searchStartPoint( Gene & );                       /* タグに取り付く位置を返す */
     // __SEARCH__TYPE__ getSearchType() const;                          /* サーチ戦略を返す */
 
-    bool isIncubationPeriod() const;
-    bool isCrisisPeriod() const;
-    bool isLethalPeriod() const;
-
     double value() const;
     int getIncubationPeriod() const;
     int getLethalPeriod() const;
     int getInfectionRate() const;
     int getMutationRate() const;
+    /*-----------------------------------------------------------------------------
+     *  状態
+     *-----------------------------------------------------------------------------*/
+    bool IsInfectiousPeriod() const;                                 /* 感染性期間 */
+    bool isNonInfectiousPeriod() const;                              /* 非感染性期間 */
+
+    bool isIncubationPeriod() const;
+    bool isCrisisPeriod() const;
+    bool isLethalPeriod() const;
     /*-----------------------------------------------------------------------------
      *  ウイルス操作
      *-----------------------------------------------------------------------------*/
@@ -64,8 +69,8 @@ class Virus
     int getLen() const { return gene_->getLen(); }                    /* タグ長を返す */
     tag_t tagAt(int n) const { return gene_->tagAt(n); }              /* 特定位置のタグを返す */
 
-    int getInfectionTime() const { return infection_time_; }         /* 感染期間を返す */
-    void incrementInfectionTime() { infection_time_++; }             /* 感染期間を増やす */
+    int getInfectionTime() const { return infection_age_; }         /* 感染期間を返す */
+    void incrementInfectionTime() { infection_age_++; }             /* 感染期間を増やす */
     int getClingPoint() const { return cling_point_; }               /* 取り付く位置を返す */
     void setClingPoint( int cp ) { cling_point_ = cp; }              /* 取り付く位置を設定する */
     /*-----------------------------------------------------------------------------
@@ -93,6 +98,6 @@ class Virus
     double rate_;                                                    /* 感染確率 */
 
     int cling_point_;                                                /* 取り付いている位置 */
-    int infection_time_;                                             /* 感染期間 */
+    int infection_age_;                                             /* 感染期間 */
 };
 #endif

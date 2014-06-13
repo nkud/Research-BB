@@ -21,9 +21,18 @@
 #include <vector>
 
 /*-----------------------------------------------------------------------------
- *  isIncubation()
+ *  isSusceptible()
  *-----------------------------------------------------------------------------*/
-bool ImmuneSystem :: isIncubation() {
+bool ImmuneSystem :: isSusceptible() {
+  if( getVirusListSize() <= 0 )                                      /* 保持ウイルスが０ならば */
+    return true;                                                     /* 感受性保持 */
+  else                                                               /* そうでなければ */
+    return false;                                                    /* 感染者 */
+}
+/*-----------------------------------------------------------------------------
+ *  isIncubationPeriod()
+ *-----------------------------------------------------------------------------*/
+bool ImmuneSystem :: isIncubationPeriod() {
   bool incubation_flag = false;
   EACH( it_v, getVirusList() ) {
     if( (*it_v)->isIncubationPeriod() ) {                            /* 感染済みであれば */
@@ -38,9 +47,10 @@ bool ImmuneSystem :: isIncubation() {
     return false;  
 }
 /*-----------------------------------------------------------------------------
- *  isCrisis()
+ *  isSymptomaticPeriod()
+ *      症候性期間であれば true
  *-----------------------------------------------------------------------------*/
-bool ImmuneSystem :: isCrisis() {
+bool ImmuneSystem :: isSymptomaticPeriod() {
   EACH( it_v, getVirusList() ) {
     if( (*it_v)->isCrisisPeriod() ) {                                /* 感染済みであれば */
       return true;                                                   /* true を返す */

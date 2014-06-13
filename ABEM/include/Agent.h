@@ -90,8 +90,12 @@ class Agent
     bool hasAbilityToChildbirth() const;                             /* 出産可能か */
     void setLife( __LABEL__ life );                                  /* 生死を設定する */
 
-    bool isIncubation() const;
-    bool isCrisis() const;
+    /*-----------------------------------------------------------------------------
+     *  状態
+     *-----------------------------------------------------------------------------*/
+    bool isSusceptible() const;                                      /* 感受性保持者、未感染者 */
+    bool isIncubationPeriod() const;
+    bool isSymptomaticPeriod() const;
     bool isLethal() const;
     // bool isSafe() const;
     /*-----------------------------------------------------------------------------

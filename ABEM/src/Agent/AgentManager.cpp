@@ -21,13 +21,13 @@
 int AgentManager :: numIsIncubation() const {
   int ret = 0;
   EACH( it_a, agents_ ) {
-    if( (*it_a)->isIncubation() ) { ret++; }
+    if( (*it_a)->isIncubationPeriod() ) { ret++; }
   } return ret;
 }
 int AgentManager :: numIsCrisis() const {
   int ret = 0;
   EACH( it_a, agents_ ) {
-    if( (*it_a)->isCrisis() ) { ret++; }
+    if( (*it_a)->isSymptomaticPeriod() ) { ret++; }
   } return ret;
 }
 
