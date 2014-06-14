@@ -24,6 +24,29 @@
  *  パラメータ操作
  *
  *-----------------------------------------------------------------------------*/
+bool Virus :: isNonInfectiousPeriod() const {
+  /*-----------------------------------------------------------------------------
+   *  感染性期間
+   *-----------------------------------------------------------------------------*/
+  if( getInfectionTime() <= getIncubationPeriod() ) {
+    assert( ! IsInfectiousPeriod() );
+    return true;
+  } else {
+    return false;
+  }
+}
+bool Virus :: IsInfectiousPeriod() const {
+  /*-----------------------------------------------------------------------------
+   *  非感染性期間
+   *-----------------------------------------------------------------------------*/
+  if( getInfectionTime() > getIncubationPeriod() ) {
+    assert( ! isNonInfectiousPeriod() );
+    return true;
+  } else {
+    return false;
+  }
+}
+
 bool Virus :: isIncubationPeriod() const {
   if( getInfectionTime() <= getIncubationPeriod() ) {
     return true;

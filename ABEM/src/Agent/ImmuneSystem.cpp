@@ -33,11 +33,14 @@ bool ImmuneSystem :: isSusceptible() {
  *  isIncubationPeriod()
  *-----------------------------------------------------------------------------*/
 bool ImmuneSystem :: isIncubationPeriod() {
-  bool incubation_flag = false;
+  if( isSusceptible() ) return false;                                /* 感受性保持者なら終了 */
+
+  bool incubation_flag = false;                                      /* フラッグを設定 */
   EACH( it_v, getVirusList() ) {
     if( (*it_v)->isIncubationPeriod() ) {                            /* 感染済みであれば */
       incubation_flag = true;
-    } else if( (*it_v)->isCrisisPeriod() or (*it_v)->isLethalPeriod() ) {
+    } else {
+      assert( (*it_v)->isCrisisPeriod() or (*it_v)->isLethalPeriod() );
       return false;
     }
   }
