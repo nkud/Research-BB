@@ -1,2 +1,2 @@
-master/result*
+master/*
 !master.py
