@@ -41,13 +41,8 @@ class RandomWalk : public __MovingStrategy {                         /* ラン�
  *-----------------------------------------------------------------------------*/
 class RandomGaussWalk : public RandomWalk {
 public:
-  RandomGaussWalk( int dis ) : RandomWalk(dis) {}
-  void move( int &x, int &y ) {
-    FOR( i, getDistance() ) {
-      x += rand_bool() ? 1 : -1;
-      y += rand_bool() ? 1 : -1;
-    }
-  }
+  RandomGaussWalk( int dis ) : RandomWalk(dis) {}                    /* コンストラクタ */
+  void move( int &x, int &y );
 };
 
 #endif
