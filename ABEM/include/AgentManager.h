@@ -31,11 +31,11 @@ class AgentManager {
     /*-----------------------------------------------------------------------------
      *  集団的処理
      *-----------------------------------------------------------------------------*/
-    virtual void migrate();                                          /* 移動 */
+    // virtual void migrate();                                          /* 移動 */
 
-    virtual void contact();                                          /* 接触 */
-    virtual void infect();                                           /* 感染 */
-    virtual void response();                                         /* 免疫応答 */
+    // virtual void contact();                                          /* 接触 */
+    // virtual void infect();                                           /* 感染 */
+    // virtual void response();                                         /* 免疫応答 */
 
     virtual void aging();                                            /* 老化 */
     virtual void mating();                                           /* 交配 */

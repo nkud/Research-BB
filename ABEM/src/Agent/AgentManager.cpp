@@ -103,85 +103,85 @@ void AgentManager :: initInfectAgentInRatio( Virus &v, double r ) {
 /*-----------------------------------------------------------------------------
  *  migrate()
  *-----------------------------------------------------------------------------*/
-void AgentManager :: migrate()
-{
-  Landscape::Instance().clearAgentMap();                             /* エージェントの位置をリセットして */
-  EACH( it_a, getAgentList() )                                       /* それぞれのエージェントを */
-  {
-    (*it_a)->move();                                                 /* 移動させる */
-    Landscape::Instance().putAgentOnMap( **it_a );                   /* 土地からはみ出てたら戻す */
-    Landscape::Instance().registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a );                   /* エージェントを登録 */
-  }
-}
+// void AgentManager :: migrate()
+// {
+//   Landscape::Instance().clearAgentMap();                             /* エージェントの位置をリセットして */
+//   EACH( it_a, getAgentList() )                                       /* それぞれのエージェントを */
+//   {
+//     (*it_a)->move();                                                 /* 移動させる */
+//     Landscape::Instance().putAgentOnMap( **it_a );                   /* 土地からはみ出てたら戻す */
+//     Landscape::Instance().registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a );                   /* エージェントを登録 */
+//   }
+// }
 /*-----------------------------------------------------------------------------
  *  contact()
  *-----------------------------------------------------------------------------*/
-void AgentManager :: contact()
-{
-  EACH( it_a, getAgentList() ) {
-    VECTOR(Agent *) neighbors = Landscape::Instance().getNeighbors( **it_a );
-    if( neighbors.size() <= 0 )
-      continue;
-    EACH( it_n, neighbors ) {
-      assert( *it_a != *it_n ); // 自分ならエラー
-      (**it_a).contact( **it_n );
-    }
-  }
-}
+// void AgentManager :: contact()
+// {
+//   EACH( it_a, getAgentList() ) {
+//     VECTOR(Agent *) neighbors = Landscape::Instance().getNeighbors( **it_a );
+//     if( neighbors.size() <= 0 )
+//       continue;
+//     EACH( it_n, neighbors ) {
+//       assert( *it_a != *it_n ); // 自分ならエラー
+//       (**it_a).contact( **it_n );
+//     }
+//   }
+// }
 /*-----------------------------------------------------------------------------
  *  infect()
  *-----------------------------------------------------------------------------*/
-void AgentManager :: infect()
-{
-  ITERATOR(Virus *) itt;
-  Virus *v;
-  int n;
-  int infection_count;                                               /* 同時感染数をカウント。最大値を越えないように */
+// void AgentManager :: infect()
+// {
+//   ITERATOR(Virus *) itt;
+//   Virus *v;
+//   int n;
+//   int infection_count;                                               /* 同時感染数をカウント。最大値を越えないように */
 
-  EACH( it_myself, getAgentList() )
-  {
-    if( (*it_myself)->getImmuneSystem()->hasNoStandByVirus() ) {     /* 待機ウイルスが無ければ */
-      continue;                                                      /* スキップ */
-    } else {                                                         /* あれば */
-      infection_count = 0;
+//   EACH( it_myself, getAgentList() )
+//   {
+//     if( (*it_myself)->getImmuneSystem()->hasNoStandByVirus() ) {     /* 待機ウイルスが無ければ */
+//       continue;                                                      /* スキップ */
+//     } else {                                                         /* あれば */
+//       infection_count = 0;
 
-      while( ! (*it_myself)->getImmuneSystem()->hasNoStandByVirus() ) { /* 待機ウイルスがなくなるまで */
-        if( infection_count >= A_MAX_V_INFECTED_ONE_TERM ) {         /* もし最大同時感染数を越えそうなら */
-          break;                                                     /* 次のエージェントへ */
-        }
+//       while( ! (*it_myself)->getImmuneSystem()->hasNoStandByVirus() ) { /* 待機ウイルスがなくなるまで */
+//         if( infection_count >= A_MAX_V_INFECTED_ONE_TERM ) {         /* もし最大同時感染数を越えそうなら */
+//           break;                                                     /* 次のエージェントへ */
+//         }
 
-        n = rand_array( (*it_myself)->getImmuneSystem()->getStandByVirusListSize() ); /* ランダムに一個の */
-        v = (*it_myself)->getImmuneSystem()->getStandByVirusAt( n ); /* ウイルスを選んで */
-        if( (*it_myself)->infection( *v ) ) {                        /* 感染させたら */
-          infection_count++;                                         /* カウントを増やす */
-        } else {
-          itt = (*it_myself)->getImmuneSystem()->getStandByVirusListIteratorBegin();         /* もし感染しなければ */
-          while(n-->0) { itt++; }                                    /* そのウイルスを */
-          (*it_myself)->getImmuneSystem()->eraseStandByVirus( itt ); /* 待機ウイルスからはずして次のウイルス */
-        }
-      }
-      (*it_myself)->getImmuneSystem()->clearStandByVirus();          /* 待機ウイルスをクリア */
-    }
-  }
-}
+//         n = rand_array( (*it_myself)->getImmuneSystem()->getStandByVirusListSize() ); /* ランダムに一個の */
+//         v = (*it_myself)->getImmuneSystem()->getStandByVirusAt( n ); /* ウイルスを選んで */
+//         if( (*it_myself)->infection( *v ) ) {                        /* 感染させたら */
+//           infection_count++;                                         /* カウントを増やす */
+//         } else {
+//           itt = (*it_myself)->getImmuneSystem()->getStandByVirusListIteratorBegin();         /* もし感染しなければ */
+//           while(n-->0) { itt++; }                                    /* そのウイルスを */
+//           (*it_myself)->getImmuneSystem()->eraseStandByVirus( itt ); /* 待機ウイルスからはずして次のウイルス */
+//         }
+//       }
+//       (*it_myself)->getImmuneSystem()->clearStandByVirus();          /* 待機ウイルスをクリア */
+//     }
+//   }
+// }
 /*-----------------------------------------------------------------------------
  *  response()
  *-----------------------------------------------------------------------------*/
-void AgentManager :: response()
-{
-  EACH( it_a, getAgentList() )
-  { 
-    assert( (*it_a) != NULL );
+// void AgentManager :: response()
+// {
+//   EACH( it_a, getAgentList() )
+//   { 
+//     assert( (*it_a) != NULL );
 
-    (*it_a)->response();                                             /* 免疫応答させる */
+//     (*it_a)->response();                                             /* 免疫応答させる */
 
-    if( (*it_a)->isLethal() ) {
-      // it_a = deleteAgent( it_a );                                    /* 生存配列から削除される */
-      (*it_a)->rebirth();
-      AgentCounter::Instance().countUpRemoved();
-    }
-  }
-}
+//     if( (*it_a)->isLethal() ) {
+//       // it_a = deleteAgent( it_a );                                    /* 生存配列から削除される */
+//       (*it_a)->rebirth();
+//       AgentCounter::Instance().countUpRemoved();
+//     }
+//   }
+// }
 /*-----------------------------------------------------------------------------
  *  aging()
  *-----------------------------------------------------------------------------*/

@@ -36,7 +36,7 @@ using namespace std;
 #include "AgentCounter.h"
 
 #ifdef BENCHMARK
-#include "Benchmark.h"
+#include "Benchmark.h"                                               
 #endif
 
 /*-----------------------------------------------------------------------------
@@ -62,11 +62,11 @@ int main()
   VirusManager vManager( virus );
   aManager.initAgent( 
       new RandomGaussWalk( A_MOVE_DISTANCE ),
-//    new RandomWalk( A_MOVE_DISTANCE ),
-    new CoupleTag(), 
-    // new Gene( A_DEFAULT_LEN ), 
-    A_DEFAULT_LEN,
-    A_INIT_NUM );
+      //    new RandomWalk( A_MOVE_DISTANCE ),
+      new CoupleTag(), 
+      // new Gene( A_DEFAULT_LEN ), 
+      A_DEFAULT_LEN,
+      A_INIT_NUM );
   vManager.initVirus();
 
   /* モニター・ファイル生成クラス */
@@ -106,10 +106,71 @@ int main()
 #ifdef MATING_AGENT
     aManager.mating();                                             /* 交配、出産する */
 #endif
-    aManager.migrate();                                                    /* 移動する */
-    aManager.contact();                                                    /* 近隣に接触する */
-    aManager.infect();                                                     /* 待機ウイルスを感染させる */
-    aManager.response();                                                   /* 免疫応答（タグフリップ） */
+    // aManager.migrate();                                                    /* 移動する */
+    /* MIGRATE */
+    Landscape::Instance().clearAgentMap();
+    EACH( it_a, agent ) {
+      (*it_a)->move();
+      Landscape::Instance().putAgentOnMap( **it_a );
+      Landscape::Instance().registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a );
+    }
+    /* CONTACT */
+    EACH( it_a, agent ) {
+      VECTOR(Agent *) neighbors = Landscape::Instance().getNeighbors( **it_a );
+      if( neighbors.size() <= 0 ) continue;
+      EACH( it_n, neighbors ) {
+        assert( *it_a != *it_n );
+        (**it_a).contact( **it_n );
+      }
+    }
+    // aManager.contact();                                                    /* 近隣に接触する */
+    /* INFECTION */
+    ITERATOR(Virus *) itt;
+    Virus *v;
+    int n;
+    int infection_count;                                               /* 同時感染数をカウント。最大値を越えないように */
+
+    EACH( it_myself, agent )
+    {
+      if( (*it_myself)->getImmuneSystem()->hasNoStandByVirus() ) {     /* 待機ウイルスが無ければ */
+        continue;                                                      /* スキップ */
+      } else {                                                         /* あれば */
+        infection_count = 0;
+
+        while( ! (*it_myself)->getImmuneSystem()->hasNoStandByVirus() ) { /* 待機ウイルスがなくなるまで */
+          if( infection_count >= A_MAX_V_INFECTED_ONE_TERM ) {         /* もし最大同時感染数を越えそうなら */
+            break;                                                     /* 次のエージェントへ */
+          }
+
+          n = rand_array( (*it_myself)->getImmuneSystem()->getStandByVirusListSize() ); /* ランダムに一個の */
+          v = (*it_myself)->getImmuneSystem()->getStandByVirusAt( n ); /* ウイルスを選んで */
+          if( (*it_myself)->infection( *v ) ) {                        /* 感染させたら */
+            infection_count++;                                         /* カウントを増やす */
+          } else {
+            itt = (*it_myself)->getImmuneSystem()->getStandByVirusListIteratorBegin();         /* もし感染しなければ */
+            while(n-->0) { itt++; }                                    /* そのウイルスを */
+            (*it_myself)->getImmuneSystem()->eraseStandByVirus( itt ); /* 待機ウイルスからはずして次のウイルス */
+          }
+        }
+        (*it_myself)->getImmuneSystem()->clearStandByVirus();          /* 待機ウイルスをクリア */
+      }
+    }
+    // aManager.infect();                                                     /* 待機ウイルスを感染させる */
+
+    // aManager.response();                                                   /* 免疫応答（タグフリップ） */
+    /* RESPONSE */
+    EACH( it_a, agent )
+    { 
+      assert( (*it_a) != NULL );
+
+      (*it_a)->response();                                             /* 免疫応答させる */
+
+      if( (*it_a)->isLethal() ) {
+        // it_a = deleteAgent( it_a );                                    /* 生存配列から削除される */
+        (*it_a)->rebirth();
+        AgentCounter::Instance().countUpRemoved();
+      }
+    }
 
     // XXX: data base
     FOR( j, (int)agent.size() ) {
