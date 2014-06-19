@@ -53,7 +53,7 @@ run:
 gene:
 	@$(PRINT) '>>> Generating...'
 	@cd $(BINDIR); python ../script/gene.py
-	@cd $(BINDIR); gnuplot auto.plt
+	@cd $(BINDIR); gnuplot auto.plt 1>/dev/null
 
 # 結果をパッケージングする
 pack:
