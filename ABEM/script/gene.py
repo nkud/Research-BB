@@ -16,7 +16,7 @@ def read_data(fname):
     return _data
 
 # Read data file
-for item in csv.reader( open('INFO.txt', 'r') ):
+for item in csv.reader( open('info.txt', 'r') ):
     info_dict[item[0]] = item[1]
 
 def main():
@@ -26,7 +26,7 @@ def main():
         Generate a html for gathering images and listing up information.
     """
     # info_dict = {}
-    info_dict = read_data('INFO.txt')
+    info_dict = read_data('info.txt')
     # generatePngPlot('auto.plt', info_dict)
     # generateResultHTML('index.html', info_dict)
     pf = PlotFactory('auto.plt')

@@ -11,6 +11,8 @@ BINDIR	 = bin
 PRGDIR	 = program
 
 MASTER	 = master
+AGENTDIR	 = AgentDataBase
+VIRUSDIR	 = VirusDataBase
 NOW		 = $(shell date +%y%m%d-%H%M%S)
 RESULT   = result-$(NOW)
 
@@ -52,6 +54,12 @@ run:
 # 結果を出力する
 gene:
 	@$(PRINT) '>>> Generating...'
+	@[ -d $(BINDIR)/$(AGENTDIR) ] || $(MKDIR) $(BINDIR)/$(AGENTDIR)
+	@[ -d $(BINDIR)/$(VIRUSDIR) ] || $(MKDIR) $(BINDIR)/$(VIRUSDIR)
+	@-cd $(BINDIR); mv *_VirusGeneDistribution.txt $(VIRUSDIR)
+	@-cd $(BINDIR); mv *_AgentGeneDistribution.txt $(AGENTDIR)
+	@-cd $(BINDIR); cp ../script/VirusValueDistribution.py $(VIRUSDIR)
+	@-cd $(BINDIR); cp ../script/AgentValueDistribution.py $(AGENTDIR)
 	@cd $(BINDIR); python ../script/gene.py
 	@cd $(BINDIR); gnuplot auto.plt 1>/dev/null
 
@@ -91,6 +99,8 @@ grep:
 tags:
 	@$(PRINT) '>>> ctag'
 	@find src -name '*.cpp' | xargs $(CTAGS)
+
+test:
 
 # コンパイル -> 実行 -> 結果出力
 all: $(BINDIR)/$(TARGET) run gene

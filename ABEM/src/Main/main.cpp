@@ -3,13 +3,12 @@
  *
  *       Filename:  main.cpp
  *
- *    Description:  説明を書く
+ *    Description:  ABEM program.
  *
  *         Author:  Naoki Ueda
  *   Organization:  OPU, 3G
  *   TODO:
  *      - new 系を Factory method で統一したい
- *      - readme
  *
  * =====================================================================================
  */
@@ -106,15 +105,19 @@ int main()
 #ifdef MATING_AGENT
     aManager.mating();                                             /* 交配、出産する */
 #endif
-    // aManager.migrate();                                                    /* 移動する */
-    /* MIGRATE */
+    /*-----------------------------------------------------------------------------
+     *  移動
+     *-----------------------------------------------------------------------------*/
     Landscape::Instance().clearAgentMap();
     EACH( it_a, agent ) {
       (*it_a)->move();
       Landscape::Instance().putAgentOnMap( **it_a );
       Landscape::Instance().registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a );
     }
-    /* CONTACT */
+
+    /*-----------------------------------------------------------------------------
+     *  接触
+     *-----------------------------------------------------------------------------*/
     EACH( it_a, agent ) {
       VECTOR(Agent *) neighbors = Landscape::Instance().getNeighbors( **it_a );
       if( neighbors.size() <= 0 ) continue;
@@ -123,8 +126,9 @@ int main()
         (**it_a).contact( **it_n );
       }
     }
-    // aManager.contact();                                                    /* 近隣に接触する */
-    /* INFECTION */
+    /*-----------------------------------------------------------------------------
+     *  感染
+     *-----------------------------------------------------------------------------*/
     ITERATOR(Virus *) itt;
     Virus *v;
     int n;
@@ -155,10 +159,9 @@ int main()
         (*it_myself)->getImmuneSystem()->clearStandByVirus();          /* 待機ウイルスをクリア */
       }
     }
-    // aManager.infect();                                                     /* 待機ウイルスを感染させる */
-
-    // aManager.response();                                                   /* 免疫応答（タグフリップ） */
-    /* RESPONSE */
+    /*-----------------------------------------------------------------------------
+     *  免疫応答
+     *-----------------------------------------------------------------------------*/
     EACH( it_a, agent )
     { 
       assert( (*it_a) != NULL );
@@ -193,7 +196,7 @@ int main()
     if ( term.isInterval(500) )
     {
       char tfname[256], afname[256];
-      sprintf(tfname, "%d_VirusDataBase.txt", term.getTerm() );
+      sprintf(tfname, "%d_VirusGeneDistribution.txt", term.getTerm() );
       sprintf(afname, "%d_AgentGeneDistribution.txt", term.getTerm() );
       fFactory.outputFile_LastVirusDataBase(tfname);
       /* Agent Gene Distribution */
@@ -226,9 +229,9 @@ int main()
   Benchmark::Instance().printTime();                                 /* 計測時間表示 */
 #endif
 
-  fFactory.outputFile_Info( "INFO.txt" );                                  /* プログラムの初期設定など出力 */
+  fFactory.outputFile_Info( "info.txt" );                                  /* プログラムの初期設定など出力 */
   fFactory.outputFile_LastLog( "Log.txt");
-  fFactory.outputFile_LastVirusDataBase( "VirusDataBase.txt");
+  fFactory.outputFile_LastVirusDataBase( "LastVirusDataBase.txt");
   aManager.printInitInfo();                                                /* 初期状態を表示 */
   vManager.printInitInfo();                                                /* 初期状態を表示 */
 
