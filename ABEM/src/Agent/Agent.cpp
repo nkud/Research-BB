@@ -60,7 +60,7 @@ bool Agent :: isLethal() const {
 void Agent :: contact( Agent &other ) {
   VECTOR(Virus *) crisis_virus = other.getImmuneSystem()->getCrisisVirusList(); /*  */
   EACH( it_v, crisis_virus ) {                                       /* すべての感染ウイルスの */
-  assert( (**it_v).isInfectiousPeriod() ) /* 感染性ウイルスでなければエラー */
+    assert( (**it_v).isInfectiousPeriod() ); /* 感染性ウイルスでなければエラー */
     if( probability((*it_v)->getRate()) ) {                          /* 感染率に従って */
       getImmuneSystem()->pushStandByVirus( *it_v );                  /* 待機ウイルスにする */
       AgentCounter::Instance().countUpContact();                     /* モニタリング */

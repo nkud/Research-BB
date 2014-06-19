@@ -48,7 +48,8 @@ Landscape :: getNeighbors( const Agent &agent )
  
 Landscape :: Landscape()
 {
-    FOR( i, WIDTH ) FOR( j, WIDTH ) agent_map_[i][j].clear();        /* エージェントのマップをクリア */
+    // FOR( i, WIDTH ) FOR( j, WIDTH ) agent_map_[i][j].clear();        /* エージェントのマップをクリア */
+    clearAgentMap();
     log("init Landscape");
 }
 
@@ -77,10 +78,9 @@ void Landscape :: putAgentOnMap( Agent &a ) {
     int x = a.getX();                                                /* 座標を取得する */
     int y = a.getY();
 
-    while( x < 0 ) x += WIDTH;
-    while( y < 0 ) y += WIDTH;
-    x %= WIDTH;
-    y %= WIDTH;
+    putBackOnMap( x, y );
+
+    assert( isOnMap(x,y) );
 
     a.setX( x );                                                     /* 座標を設定しなおす */
     a.setY( y );
@@ -125,13 +125,14 @@ void Landscape :: registAgent( const int x, const int y, Agent &a ) {
     agent_map_[ x ][ y ].push_back( &a );                            /* エージェントを登録 */
 }
 void Landscape :: removeAgent( const int x, const int y, Agent &a ) {
-    ITERATOR(Agent *) it_a = getAgentIteratorBeginAt( x, y );        /* 指定の場所の配列の先頭から */
-    while( it_a != getAgentIteratorEndAt( x, y ) ) {                 /* 末尾まで */
+    // ITERATOR(Agent *) it_a = getAgentIteratorBeginAt( x, y );        /* 指定の場所の配列の先頭から */
+    // while( it_a != getAgentIteratorEndAt( x, y ) ) {                 /* 末尾まで */
+    EACH( it_a, getAgentList(x, y) ) {
         if( *it_a == &a ) {                                          /* エージェントを探して */
             agent_map_[x][y].erase( it_a );                          /* 削除する */
             return;                                                  /* 終了 */
         }
-        it_a++;
+        // it_a++;
     }
     assert( ! ">>> this agent is not here !" );                      /* 見つからなければエラー */
     return;

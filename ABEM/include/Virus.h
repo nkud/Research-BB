@@ -52,7 +52,7 @@ class Virus
     /*-----------------------------------------------------------------------------
      *  状態
      *-----------------------------------------------------------------------------*/
-    bool IsInfectiousPeriod() const;                                 /* 感染性期間 */
+    bool isInfectiousPeriod() const;                                 /* 感染性期間 */
     bool isNonInfectiousPeriod() const;                              /* 非感染性期間 */
 
     bool isIncubationPeriod() const;
@@ -77,7 +77,7 @@ class Virus
      *  突然変異
      *-----------------------------------------------------------------------------*/
     void mutation();                                                 /* 突然変異を起こす */
-    void mutation( double );                                         /* 突然変異を起こす */
+    void mutation( double prob=100 );                                         /* 突然変異を起こす */
 
     bool operator<(const Virus& other) const {
       if( value() < other.value() ) return true; else return false;

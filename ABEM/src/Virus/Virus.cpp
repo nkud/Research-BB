@@ -29,13 +29,13 @@ bool Virus :: isNonInfectiousPeriod() const {
    *  感染性期間
    *-----------------------------------------------------------------------------*/
   if( getInfectionTime() <= getIncubationPeriod() ) {
-    assert( ! IsInfectiousPeriod() );
+    assert( ! isInfectiousPeriod() );
     return true;
   } else {
     return false;
   }
 }
-bool Virus :: IsInfectiousPeriod() const {
+bool Virus :: isInfectiousPeriod() const {
   /*-----------------------------------------------------------------------------
    *  非感染性期間
    *-----------------------------------------------------------------------------*/
