@@ -18,12 +18,11 @@
 #include <cassert>
 
 
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Landscape :: getNeighbors
- * Description:  近隣の配列を取得する
- *--------------------------------------------------------------------------------------
- */
+ ///---------------------------------------------------------------------------
+ /// getNeighbors
+ ///    @pram Agent
+ ///    @memo 近隣の配列を取得する
+ ///
 VECTOR(Agent *)
 Landscape :: getNeighbors( const Agent &agent )
 {
@@ -48,7 +47,11 @@ Landscape :: getNeighbors( const Agent &agent )
   return neighbors;
 }
 
-Landscape :: Landscape()
+///----------------------------------------------------------------------------
+/// Construct
+///   @param WIDTH
+///
+Landscape :: Landscape() : width_( WIDTH )
 {
   clearAgentMap();
   log("init Landscape");
@@ -63,10 +66,10 @@ Landscape :: Landscape()
  *--------------------------------------------------------------------------------------
  */
 void Landscape :: putBackOnMap( int &x, int &y) {
-  while( x < 0 ) x += WIDTH;
-  while( y < 0 ) y += WIDTH;
-  x %= WIDTH;
-  y %= WIDTH;
+  while( x < 0 ) x += getWidth();
+  while( y < 0 ) y += getWidth();
+  x %= getWidth();
+  y %= getWidth();
 }
 /*
  *--------------------------------------------------------------------------------------
@@ -97,8 +100,8 @@ bool Landscape :: isOnMap( const int x, const int y) const
 {
   if( x < 0 ) { return false; }
   if( y < 0 ) { return false; }
-  if( x > WIDTH-1 ) { return false; }
-  if( y > WIDTH-1 ) { return false; }
+  if( x > getWidth()-1 ) { return false; }
+  if( y > getWidth()-1 ) { return false; }
   return true;
 }
 
@@ -109,8 +112,8 @@ bool Landscape :: isOnMap( const int x, const int y) const
  *--------------------------------------------------------------------------------------
  */
 void Landscape :: clearAgentMap() {
-  FOR( i, WIDTH ) {
-    FOR( j, WIDTH ) {
+  FOR( i, getWidth() ) {
+    FOR( j, getWidth() ) {
       agent_map_[ i ][ j ].clear();
     }
   }
@@ -150,5 +153,5 @@ void Landscape :: removeAgent( const int x, const int y, Agent &a ) {
  *               指定の場所のエージェント配列の先頭・末尾へのイテレータを返す
  *--------------------------------------------------------------------------------------
  */
-ITERATOR(Agent *) Landscape :: getAgentIteratorBeginAt(int x, int y) { return agent_map_[x][y].begin(); }
-ITERATOR(Agent *) Landscape :: getAgentIteratorEndAt(int x, int y) { return agent_map_[x][y].end(); }
+// ITERATOR(Agent *) Landscape :: getAgentIteratorBeginAt(int x, int y) { return agent_map_[x][y].begin(); }
+// ITERATOR(Agent *) Landscape :: getAgentIteratorEndAt(int x, int y) { return agent_map_[x][y].end(); }

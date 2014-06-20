@@ -53,12 +53,15 @@ int main()
   /*-----------------------------------------------------------------------------
    *  初期化
    *-----------------------------------------------------------------------------*/
-  VECTOR(Agent *) agent;                                             /* エージェントの配列 */
-  VECTOR(Virus *) virus;                                             /* ウイルスの配列 */
+  VECTOR(Agent *) agents;                                             /* エージェントの配列 */
+  VECTOR(Virus *) viruses;                                             /* ウイルスの配列 */
+  Landscape::Instance().initialize( WIDTH );
 
   /* 管理者 */
-  AgentManager aManager( agent );
-  VirusManager vManager( virus );
+  AgentManager aManager( agents );
+  VirusManager vManager( viruses );
+
+  /// プロトタイプを使う XXX
   aManager.initAgent( 
       new RandomGaussWalk( A_MOVE_DISTANCE ),
       //    new RandomWalk( A_MOVE_DISTANCE ),
@@ -79,8 +82,8 @@ int main()
    *-----------------------------------------------------------------------------*/
   /* エージェントへの初期感染 */
   FOR( i, V_NUM ) {
-    virus[i]->getGene().printTag();
-    aManager.initInfectAgentInRatio( *virus[i], A_INIT_INFECTED_RATE );    /* 初期感染させる */
+    viruses[i]->getGene().printTag();
+    aManager.initInfectAgentInRatio( *viruses[i], A_INIT_INFECTED_RATE );    /* 初期感染させる */
   }
 
   int zero_count = 0;                                                /* 感染接触が起こらなかった数をカウント */
@@ -92,7 +95,8 @@ int main()
    *
    *-----------------------------------------------------------------------------*/
   Term &term = Term::Instance();
-  while( term.incrementTermTo(TERM) )                                /* 計算開始  */
+  term.setMaxTerm( TERM );
+  while( term.incrementTerm() )                                /* 計算開始  */
   {
     /* カウンターのリセット */
     VirusCounter::Instance().reset();
@@ -109,7 +113,7 @@ int main()
      *  移動
      *-----------------------------------------------------------------------------*/
     Landscape::Instance().clearAgentMap();
-    EACH( it_a, agent ) {
+    EACH( it_a, agents ) {
       (*it_a)->move();
       Landscape::Instance().putAgentOnMap( **it_a );
       Landscape::Instance().registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a );
@@ -118,7 +122,7 @@ int main()
     /*-----------------------------------------------------------------------------
      *  接触
      *-----------------------------------------------------------------------------*/
-    EACH( it_a, agent ) {
+    EACH( it_a, agents ) {
       VECTOR(Agent *) neighbors = Landscape::Instance().getNeighbors( **it_a );
       if( neighbors.size() <= 0 ) continue;
       EACH( it_n, neighbors ) {
@@ -134,7 +138,7 @@ int main()
     int n;
     int infection_count;                                               /* 同時感染数をカウント。最大値を越えないように */
 
-    EACH( it_myself, agent )
+    EACH( it_myself, agents )
     {
       if( (*it_myself)->getImmuneSystem()->hasNoStandByVirus() ) {     /* 待機ウイルスが無ければ */
         continue;                                                      /* スキップ */
@@ -162,7 +166,7 @@ int main()
     /*-----------------------------------------------------------------------------
      *  免疫応答
      *-----------------------------------------------------------------------------*/
-    EACH( it_a, agent )
+    EACH( it_a, agents )
     { 
       assert( (*it_a) != NULL );
 
@@ -170,15 +174,15 @@ int main()
 
       if( (*it_a)->isLethal() ) {
         // it_a = deleteAgent( it_a );                                    /* 生存配列から削除される */
-        (*it_a)->rebirth();
+        (*it_a)->rebirth(); // 初期化再生
         AgentCounter::Instance().countUpRemoved();
       }
     }
 
-    // XXX: data base
-    FOR( j, (int)agent.size() ) {
-      ITERATOR(Virus*) it_v=agent[j]->getImmuneSystem()->getVirusListIteratorBegin();
-      while(it_v!=agent[j]->getImmuneSystem()->getVirusListIteratorEnd()) {
+    /// XXX: data base
+    FOR( j, (int)agents.size() ) {
+      ITERATOR(Virus*) it_v=agents[j]->getImmuneSystem()->getVirusListIteratorBegin();
+      while(it_v!=agents[j]->getImmuneSystem()->getVirusListIteratorEnd()) {
         VirusCounter::Instance().pushNewVirus(**it_v);
         it_v++;
       }
@@ -192,6 +196,7 @@ int main()
     fFactory.outputValueWithTerm( "A_hasViruses.txt", aManager.numHasVirus() );
     fFactory.outputValueWithTerm( "A_removed.txt", AgentCounter::Instance().getCountRemoved() );
     fFactory.outputValueWithTerm( "V_aveValue.txt", VirusCounter::Instance().calcAveValue() );
+    // fFactory.outputValueWithTerm( "A_aveValue.txt", AgentCounter::Instance().calcAveValue() );XXX
 
     if ( term.isInterval(500) )
     {
@@ -199,7 +204,6 @@ int main()
       sprintf(tfname, "%d_VirusGeneDistribution.txt", term.getTerm() );
       sprintf(afname, "%d_AgentGeneDistribution.txt", term.getTerm() );
       fFactory.outputFile_LastVirusDataBase(tfname);
-      /* Agent Gene Distribution */
       fFactory.outputFile_AgentGeneDistribution(afname);
     }
 
@@ -208,8 +212,8 @@ int main()
     // LOG( term.getTerm() << TERM );
     term.printTerm();
     Benchmark::Instance().printElapsedTime();
-    LOG( agent.size() );
-    LOG( agent[0]->getX() );
+    LOG( agents.size() );
+    LOG( agents[0]->getX() );
     LOG( AgentCounter::Instance().getCountRemoved() );
     LOG( aManager.getAgentSize() );
     LOG( AgentCounter::Instance().getCountContact() );
@@ -221,7 +225,7 @@ int main()
     /* 強制終了 */
     if( AgentCounter::Instance().getCountContact()==0 ) zero_count++;                   /* １０回以上接触感染がなければ */
     if( zero_count >= 20 ) break;                                    /* 強制的に終了する */
-    if( (int)agent.size() == A_MAX_NUM ) break;
+    if( (int)agents.size() == A_MAX_NUM ) break;
   } /* ============================================================== 計算終了 */
 
 #ifdef BENCHMARK
@@ -230,7 +234,7 @@ int main()
 #endif
 
   fFactory.outputFile_Info( "info.txt" );                                  /* プログラムの初期設定など出力 */
-  fFactory.outputFile_LastLog( "Log.txt");
+  fFactory.outputFile_LastLog( "last_log.txt");
   fFactory.outputFile_LastVirusDataBase( "LastVirusDataBase.txt");
   aManager.printInitInfo();                                                /* 初期状態を表示 */
   vManager.printInitInfo();                                                /* 初期状態を表示 */

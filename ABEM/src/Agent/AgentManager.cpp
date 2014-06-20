@@ -236,8 +236,7 @@ void AgentManager :: mating()
         ty = ay + j;
         Landscape::Instance().putBackOnMap( tx, ty );                /* 土地からはみ出てたら土地の上に戻す */
 
-        ITERATOR(Agent *) it_partner= Landscape::Instance().getAgentIteratorBeginAt( tx, ty );
-        while( it_partner!= Landscape::Instance().getAgentIteratorEndAt( tx, ty ) )
+        EACH( it_partner, Landscape::Instance().getAgentList( tx, ty ))
         {                                                            /* 自分の近隣にいる人から */
           if( getAgentSize()+(int)new_child_.size() >= A_MAX_NUM ) {      /* 最大エージェントをこえそうなら */
             break;                                                   /* 終了 */
@@ -255,7 +254,6 @@ void AgentManager :: mating()
             (*it_partner)->setGiveBirth();                           /* パートナーと自分を */
             (*it_myself)->setGiveBirth();                            /* 出産済にする */
           }                                                          /* XXX: パートナーを探すエージェントのランダム性 */
-          it_partner++;                                              /* パートナーをその位置の次にいる人に移す */
         }
       }
     }

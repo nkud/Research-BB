@@ -190,6 +190,8 @@ void Agent :: rebirth() {
 
   delete gene_;
   delete immune_system_;
+  assert( gene_ == 0 );
+  assert( immune_system_ == 0 );
 
   gene_ = new Gene(len);
   gene_->setTagRandom();
