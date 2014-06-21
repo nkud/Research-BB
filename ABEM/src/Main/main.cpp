@@ -183,7 +183,7 @@ int main()
     EACH( it_a, agents )
     {
       EACH( it_v, (**it_a).getImmuneSystem().getVirusList() ) {      /* エージェントの保持ウイルス全てに対して */
-        (*it_v)->incrementInfectionTime();                           /* 感染期間を増やす */
+        (*it_v)->incrementInfectionTime();                           /* ウイルス固有の感染期間を増やす */
         if( (*it_v)->isInfectiousPeriod() ) {                        /* ウイルスが感染性期間なら */
           (*it_v)->mutation( (*it_v)->getMutationRate() );           /* 突然変異を確率で起こす */
         }
@@ -194,11 +194,9 @@ int main()
     /*-----------------------------------------------------------------------------
      *  Virus データベース処理
      *-----------------------------------------------------------------------------*/
-    FOR( j, (int)agents.size() ) {
-      ITERATOR(Virus*) it_v=agents[j]->getImmuneSystem().getVirusListIteratorBegin();
-      while(it_v!=agents[j]->getImmuneSystem().getVirusListIteratorEnd()) {
-        VirusCounter::Instance().pushNewVirus(**it_v);
-        it_v++;
+    EACH( it_a, agents ) {                                           /* 全エージェントの */
+      EACH( it_v, (**it_a).getImmuneSystem().getVirusList() ) {      /* 全保持ウイルスに対して */
+        VirusCounter::Instance().pushNewVirus(**it_v);               /* 新しいウイルスをデータベースに保存 */
       }
     }
 
