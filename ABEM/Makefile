@@ -59,8 +59,8 @@ run:
 gene:
 	@$(PRINT) '>>> Generating...'
 
-	@-cd $(BINDIR); cp ../script/VirusValueDistribution.py $(VIRUSDIR)
-	@-cd $(BINDIR); cp ../script/AgentValueDistribution.py $(AGENTDIR)
+	# @-cd $(BINDIR); cp ../script/VirusValueDistribution.py $(VIRUSDIR)
+	# @-cd $(BINDIR); cp ../script/AgentValueDistribution.py $(AGENTDIR)
 	@cd $(BINDIR); python ../script/gene.py
 	@cd $(BINDIR); gnuplot auto.plt 1>/dev/null
 

@@ -211,7 +211,7 @@ int main()
     fFactory.outputValueWithTerm( "V_aveValue.txt", vCounter.calcAveValue() );
     fFactory.outputValueWithTerm( "A_aveValue.txt", aCounter.calcAveValue(agents) );
 
-    if ( term.isInterval(500) )
+    if ( term.isInterval(DATABASE_INTERVAL) )
     {
       char tfname[256], afname[256];
       sprintf(tfname, "VirusDataBase/%d_VirusGeneDistribution.txt", term.getTerm() );

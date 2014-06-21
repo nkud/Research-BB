@@ -9,16 +9,17 @@ LINE_STYLE = 'w l'
 IMG_SIZE = '1200,300'
 RESULT_WIDTH = 1000
 CSS_DIR = '../template/result.css'
-EXTENSION = 'svg'
+IMG_EXT = 'svg'
 FONT = 'times new roman,13'
 
 IMG_DIR = 'image/'
+TXT_DIR = ''
 ###############################################################################
 
 def IMG(img):
-    return '%s%s.%s' % (IMG_DIR, img, EXTENSION)
+    return '%s%s.%s' % (IMG_DIR, img, IMG_EXT)
 def TXT(title, ext='txt'):
-    return '%s.%s' % (title, ext)
+    return '%s%s.%s' % (TXT_DIR, title, ext)
 
 ### Plot Script
 def scriptForInitSetting(f):
@@ -44,11 +45,11 @@ def initImg(f, title, xl, yl):
     """ タイトル、ラベルを初期化 """
     outputLine(f, 'set title "%s";set xl "%s";set yl "%s";' % (title, xl, yl))
 
-def outputImg(f, imgname, ext=EXTENSION):
+def outputImg(f, imgname, ext=IMG_EXT):
     """ 出力先ファイルを指定 """
     outputLine(f, 'set output "%s";' % IMG(imgname))
 
-def outputTerminal(f, ext=EXTENSION):
+def outputTerminal(f, ext=IMG_EXT):
     """ 出力形式を指定 """
     outputLine(f, 'set terminal %s size %s font "%s";' % (ext, IMG_SIZE, FONT))
 

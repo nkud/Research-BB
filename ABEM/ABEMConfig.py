@@ -27,3 +27,5 @@ if __name__ == '__main__':
     f = Frame()
     f.pack()
     f.mainloop()
+    print "hello"
+    n = raw_input()

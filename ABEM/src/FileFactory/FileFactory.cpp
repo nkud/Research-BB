@@ -125,6 +125,7 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
     OFSV( A_MOVE_DISTANCE );                                         /* 移動距離 */
     OFSV( INFECTION_RATE );                                          /* 感染率 */
     OFSV( A_INIT_INFECTED_RATE );                                    /* 初期感染数 */
+    OFSV( DATABASE_INTERVAL );
     /* ウイルス */
     OFSVP( V_NUM, ( VirusCounter::Instance().getVirusVariaty() ) );    /* ウイルスの種類 */
 

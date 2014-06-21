@@ -31,6 +31,11 @@ def main():
     pf.generate()
     hf.generate()
 
+    last_term = int(info_dict['LAST_TERM'])
+    interval = int(info_dict['DATABASE_INTERVAL'])
+    generatePlotForVirusValueHistogram(last_term, interval);
+    generatePlotForAgentValueHistogram(last_term, interval);
+
     pf.close()
     hf.close()
 
