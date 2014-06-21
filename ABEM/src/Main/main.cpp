@@ -196,7 +196,7 @@ int main()
     fFactory.outputValueWithTerm( "A_hasViruses.txt", aManager.numHasVirus() );
     fFactory.outputValueWithTerm( "A_removed.txt", AgentCounter::Instance().getCountRemoved() );
     fFactory.outputValueWithTerm( "V_aveValue.txt", VirusCounter::Instance().calcAveValue() );
-    // fFactory.outputValueWithTerm( "A_aveValue.txt", AgentCounter::Instance().calcAveValue() );XXX
+    fFactory.outputValueWithTerm( "A_aveValue.txt", AgentCounter::Instance().calcAveValue(agents) );
 
     if ( term.isInterval(500) )
     {

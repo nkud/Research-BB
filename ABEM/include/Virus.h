@@ -65,7 +65,7 @@ class Virus
     /*-----------------------------------------------------------------------------
      *  タグ操作
      *-----------------------------------------------------------------------------*/
-    Gene & getGene() { return *gene_; }                             /* タグを返す */
+    Gene & getGene() const { return *gene_; }                             /* タグを返す */
     int getLen() const { return gene_->getLen(); }                    /* タグ長を返す */
     tag_t tagAt(int n) const { return gene_->tagAt(n); }              /* 特定位置のタグを返す */
 

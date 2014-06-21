@@ -70,11 +70,7 @@ bool Virus :: isLethalPeriod() const {
 }
 
 double Virus :: value() const {
-  int ret = 0;
-  FOR( i, getLen() ) {
-    ret += abs( tagAt(i) - 0 );
-  }
-  return ret;
+  return getGene().value();
 }
 
 int Virus :: getIncubationPeriod() const {

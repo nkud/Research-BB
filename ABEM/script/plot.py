@@ -61,6 +61,15 @@ def outputEnd(f):
     outputLine(f, 'set output')
 
 def output(f, title, xl, yl, outputname, *inputs):
+    """ output image file
+    Args:
+        f: file
+        title: plot title
+        xl: x axis label
+        yl: y axis label
+        outputname: output file name
+        inputs: input file name
+    """
     initImg(f, title, xl, yl)
     first = True
     for i in inputs:
@@ -98,7 +107,8 @@ class PlotFactory(object):
         output(self.file, 'IsCrisis', 'Term', 'Agent', 'IsCrisis', (TXT('A_isCrisis'), 'Agent'))
         output(self.file, 'HasViruses', 'Term', 'Agent', 'HasViruses', (TXT('A_hasViruses'), 'Agent'))
         output(self.file, 'Removed', 'Term', 'Agent', 'Removed', (TXT('A_removed'), 'removed'))
-        output(self.file, 'Value', 'Term', 'Value', 'Value', (TXT('V_aveValue'), 'value'))
+        output(self.file, 'VirusValue', 'Term', 'Value', 'VirusValue', (TXT('V_aveValue'), 'value'))
+        output(self.file, 'AgentValue', 'Term', 'Value', 'AgentValue', (TXT('A_aveValue'), 'value'))
 
     def info(self):
         print 'have started generating PLOT SCRIPT.'
@@ -141,7 +151,7 @@ class HtmlFactory(object):
         outputSection(self.file, 'VirusVariaty', 2, IMG('VirusVariaty'))
         outputSection(self.file, 'Incubation/Crisis', 2, IMG('IsIncubation'), IMG('IsCrisis'))
         outputSection(self.file, 'Removed', 2, IMG('Removed'))
-        outputSection(self.file, 'Value', 2, IMG('Value'))
+        outputSection(self.file, 'Value', 2, IMG('VirusValue'), IMG('AgentValue'))
 
         # End
         outputLine(self.file, '</code></body></html>')

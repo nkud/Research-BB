@@ -57,6 +57,8 @@ class Gene
     void mutation();                                                 /* 突然変異を起こす */
     void mutation( double );                                         /* 突然変異を起こす */
 
+    int value();
+
     Gene *newCopy() const {
         Gene *copy = new Gene(getLen());
         FOR( i, getLen() ) {

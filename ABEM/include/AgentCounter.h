@@ -13,6 +13,10 @@
 #ifndef ___AGENT_COUNTER
 #define ___AGENT_COUNTER
 
+#include "Function.h"
+
+class Agent;
+
 /*
  * =====================================================================================
  *        Class:  Agent
@@ -37,6 +41,8 @@ class AgentCounter {
     void countUpRemoved() { count_removed_++; }
     void resetRemoved() { count_removed_ = 0; }
     int getCountRemoved() const { return count_removed_; }
+
+    double calcAveValue( VECTOR(Agent*) &agents );
   private:
     /*-----------------------------------------------------------------------------
      *  パラメータ

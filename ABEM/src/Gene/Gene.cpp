@@ -15,6 +15,17 @@
 #include "Function.h"
 
 #include <cstring>
+#include <cstdlib>
+
+///
+/// value
+int Gene :: value() {
+  int ret = 0;
+  FOR( i, getLen() ) {
+    ret += abs( tagAt(i) - 0 );
+  }
+  return ret;
+}
 
 /*-----------------------------------------------------------------------------
  *  flipToGeneAtPosition
