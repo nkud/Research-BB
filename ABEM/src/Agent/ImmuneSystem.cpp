@@ -172,7 +172,7 @@ bool ImmuneSystem :: hasVirus() const {
  */
 bool ImmuneSystem :: infection( Agent &self, Virus &v )
 {
-    if( self.getImmuneSystem()->getVirusListSize() >= A_MAX_V_CAPACITY ) { /* 最大値を越えてたら */
+    if( self.getImmuneSystem().getVirusListSize() >= A_MAX_V_CAPACITY ) { /* 最大値を越えてたら */
     return false;                                                    /* 感染せずに終了 */
   }
   EACH( it_v, getVirusList() ) 
@@ -191,7 +191,7 @@ bool ImmuneSystem :: infection( Agent &self, Virus &v )
   Virus *new_v = new Virus( v );                                      /* 新しいウイルスデータを作成して */
   new_v->setClingPoint( new_v->searchStartPoint( self.getGene() ) );
   // XXX: ウイルスの関数にする setClingPoint( Tag * );
-  self.getImmuneSystem()->pushVirus( new_v );                        /* 保持ウイルスリストに追加する */
+  self.getImmuneSystem().pushVirus( new_v );                        /* 保持ウイルスリストに追加する */
 
   AgentCounter::Instance().countUpInfectionContact();
 
@@ -207,13 +207,13 @@ bool ImmuneSystem :: infection( Agent &self, Virus &v )
  */
 int ImmuneSystem :: response( Agent &self )
 {
-  if( self.getImmuneSystem()->hasNoVirus() ) {                       /* 感染していなければ */
-    self.getImmuneSystem()->resetInfectionTime();                    /* 感染期間は０で */
+  if( self.getImmuneSystem().hasNoVirus() ) {                       /* 感染していなければ */
+    self.getImmuneSystem().resetInfectionTime();                    /* 感染期間は０で */
     return 0;                                                        /* 終了する */
   }
 
   ITERATOR(Virus *) it_v
-    = self.getImmuneSystem()->getVirusListIteratorBegin();           /* 先頭のウイルスに対し */
+    = self.getImmuneSystem().getVirusListIteratorBegin();           /* 先頭のウイルスに対し */
 
   if( ! self.hasImmunity( **it_v ) ) {                                 /* 免疫を獲得していなければ */
     self.getGene().flipToGeneAtPosition( (*it_v)->getGene(), (*it_v)->getClingPoint() );
@@ -222,9 +222,9 @@ int ImmuneSystem :: response( Agent &self )
   if( self.hasImmunity( **it_v ) )                                     /* そのウイルスに対して */
   {                                                                  /* 免疫獲得すれば */
     // XXX: 要検討
-    it_v = self.getImmuneSystem()->eraseVirus( it_v );                   /* 保持ウイルスから v(先頭) を削除 */
+    it_v = self.getImmuneSystem().eraseVirus( it_v );                   /* 保持ウイルスから v(先頭) を削除 */
   }
-  return self.getImmuneSystem()->getInfectionTime();
+  return self.getImmuneSystem().getInfectionTime();
 }
 
 int ImmuneSystem :: progressDisease() {
