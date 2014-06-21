@@ -224,26 +224,26 @@ int ImmuneSystem :: response( Agent &self )
     // XXX: 要検討
     it_v = self.getImmuneSystem()->eraseVirus( it_v );                   /* 保持ウイルスから v(先頭) を削除 */
   }
-
-  return progressDisease(self);
+  return self.getImmuneSystem()->getInfectionTime();
 }
 
-int ImmuneSystem :: progressDisease( Agent &self ) {
+int ImmuneSystem :: progressDisease() {
   // 突然変異
   EACH( it_v, getVirusList() )
   {
     (*it_v)->incrementInfectionTime();                               /* 感染期間を増やす */
     if( (*it_v)->isCrisisPeriod() ) {                                /* ウイルスが潜伏期間なら */
+      assert((*it_v)->isInfectiousPeriod() );
       (*it_v)->mutation( (*it_v)->getMutationRate() );               /* 突然変異を確率で起こす */
     }
   }
   // 感染期間を増やす
-  if( self.getImmuneSystem()->getVirusListSize() > 0 ) {             /* まだ感染していれば */
-    self.getImmuneSystem()->incrementInfectionTime();                /* 総感染期間を増やして */
+  if( getVirusListSize() > 0 ) {             /* まだ感染していれば */
+    incrementInfectionTime();                /* 総感染期間を増やして */
   } else {                                                           /* そうでなければ */
-    self.getImmuneSystem()->resetInfectionTime();                    /* 感染期間を０にリセット */
+    resetInfectionTime();                    /* 感染期間を０にリセット */
   }
-  return self.getImmuneSystem()->getInfectionTime();                 /* 総染期間を返す */
+  return getInfectionTime();                 /* 総染期間を返す */
 }
 
 /*-----------------------------------------------------------------------------

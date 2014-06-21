@@ -16,7 +16,7 @@ class ImmuneSystem {
     bool infection( Agent &self, Virus &v );                         /* 感染プロセス  */
     int response( Agent &self );                                     /* 免疫応答する（タグフリップ）  */
 
-    int progressDisease( Agent &self );
+    int progressDisease();
 
     bool hasVirus( Virus & );
     bool hasVirus() const;
