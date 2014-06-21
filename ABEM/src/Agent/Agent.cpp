@@ -14,7 +14,6 @@
 #include "AgentStrategy.h"
 #include "ImmuneSystem.h"
 #include "Function.h"
-#include "Config.h"
 #include "Gene.h"
 #include "AgentCounter.h"
 
@@ -188,10 +187,9 @@ void Agent :: rebirth() {
   resetParam();
   int len = gene_->getLen();
 
-  delete gene_;
-  delete immune_system_;
-  assert( gene_ == 0 );
-  assert( immune_system_ == 0 );
+  SAFE_DELETE( gene_ );
+  SAFE_DELETE( immune_system_ );
+
 
   gene_ = new Gene(len);
   gene_->setTagRandom();

@@ -55,7 +55,7 @@ int main()
    *-----------------------------------------------------------------------------*/
   VECTOR(Agent *) agents;                                             /* エージェントの配列 */
   VECTOR(Virus *) viruses;                                             /* ウイルスの配列 */
-  Landscape::Instance().initialize( WIDTH );
+  // Landscape::Instance().initialize( WIDTH );
 
   /* 管理者 */
   AgentManager aManager( agents );

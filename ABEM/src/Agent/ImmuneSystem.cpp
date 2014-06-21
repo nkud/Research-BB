@@ -16,7 +16,6 @@
 #include "AgentStrategy.h"
 #include "Function.h"
 #include "VirusCounter.h"
-#include "Config.h"
 
 #include <vector>
 
@@ -176,13 +175,12 @@ bool ImmuneSystem :: infection( Agent &self, Virus &v )
     if( self.getImmuneSystem()->getVirusListSize() >= A_MAX_V_CAPACITY ) { /* 最大値を越えてたら */
     return false;                                                    /* 感染せずに終了 */
   }
-  // ITERATOR(Virus *) it_v = self.getImmuneSystem()->getVirusListIteratorBegin(); /* 保持ウイルスリストを取得 */
-  // while( it_v != self.getImmuneSystem()->getVirusListIteratorEnd() ) { /* 既に保持しているウイルスなら */
   EACH( it_v, getVirusList() ) 
   {
     if( (**it_v) == v ) {
       // XXX: あってる？？有効？？
       assert( (*it_v)->isEqualTo(v) );
+      assert( (**it_v).getGene().hamDistance( v.getGene(), 0) == 0 );
       return false;                                                  /* 感染せずに終了 */
     }
   }
