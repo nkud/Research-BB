@@ -88,10 +88,10 @@ ImmuneSystem :: ImmuneSystem() :
  *-----------------------------------------------------------------------------*/
 ImmuneSystem :: ~ImmuneSystem() {
   for( ITERATOR(Virus *) it = virus_list_.begin(); it != virus_list_.end(); it++ ) {
-    delete (*it);
+    SAFE_DELETE(*it);
   }
   for( ITERATOR(Virus *) it = stand_by_virus_list_.begin(); it != stand_by_virus_list_.end(); it++ ) {
-    delete (*it);
+    SAFE_DELETE(*it);
   }
   virus_list_.clear();
   stand_by_virus_list_.clear();
@@ -106,7 +106,7 @@ Virus *ImmuneSystem :: getVirusAt( int n ) const { return virus_list_.at( n ); }
 int ImmuneSystem :: getVirusListSize() const { return virus_list_.size(); }
 void ImmuneSystem :: pushVirus( Virus *v ) { virus_list_.push_back( v ); }
 ITERATOR(Virus *) ImmuneSystem :: eraseVirus( ITERATOR(Virus *) it ) {
-  delete (*it);
+  SAFE_DELETE(*it);
   ITERATOR(Virus *) next = virus_list_.erase( it );                /* next iterator */
   return next;
 }

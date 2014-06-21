@@ -12,7 +12,6 @@
  */
 
 #include "Gene.h"
-#include "Config.h"
 #include "Function.h"
 
 #include <cstring>
@@ -143,10 +142,7 @@ Gene :: Gene( const char *str ) :
  *-----------------------------------------------------------------------------*/
 Gene :: ~Gene() {                                                      /* デストラクタ */
   assert( tag_ != NULL );
-
-  delete[] tag_;                                                     /* タグのメモリ領域を削除 */
-
-  tag_ = NULL;
+  SAFE_DELETE_ARRAY( tag_ );
 }
 /*
  *--------------------------------------------------------------------------------------
@@ -172,7 +168,8 @@ void Gene :: setTagRandom() {
  */
 void Gene :: changeTagLenTo( int n ) {
     len_ = n;                                                        /* 長さを再設定 */
-    delete[] tag_;                                                   /* 既存をメモリ削除 */
+    // delete[] tag_;                                                   /* 既存をメモリ削除 */
+  SAFE_DELETE_ARRAY(tag_);
     tag_ = new tag_t[n];                                             /* 新たにメモリ割当 */
     FOR( i, n )
     {

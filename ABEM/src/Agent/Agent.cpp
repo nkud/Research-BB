@@ -157,8 +157,8 @@ Agent :: ~Agent() {
   assert( gene_ != NULL );
   assert( immune_system_ != NULL );
 
-  delete gene_;
-  delete immune_system_;
+  SAFE_DELETE( gene_ );
+  SAFE_DELETE( immune_system_ );
 
   gene_ = NULL;
   immune_system_ = NULL;
@@ -189,7 +189,6 @@ void Agent :: rebirth() {
 
   SAFE_DELETE( gene_ );
   SAFE_DELETE( immune_system_ );
-
 
   gene_ = new Gene(len);
   gene_->setTagRandom();

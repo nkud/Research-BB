@@ -14,7 +14,6 @@
 #ifndef ___VIRUS_COUNTER
 #define ___VIRUS_COUNTER
 
-#include "Config.h"
 #include "Function.h"
 
 class Virus;

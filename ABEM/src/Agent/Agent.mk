@@ -27,12 +27,12 @@ $(OBJDIR)%.o: %.cpp
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
 
 $(OBJDIR)Agent.o: Agent.h AgentStrategy.h Function.h Gene.h
-$(OBJDIR)ImmuneSystem.o: Config.h AgentStrategy.h Agent.h Function.h \
+$(OBJDIR)ImmuneSystem.o: AgentStrategy.h Agent.h Function.h \
 						 ImmuneSystem.h AgentCounter.h VirusCounter.h
 
 $(OBJDIR)MovingStrategy.o: AgentStrategy.h Agent.h Function.h
 $(OBJDIR)CoupleTag.o: AgentStrategy.h Agent.h Function.h
 $(OBJDIR)Inheritance.o: AgentStrategy.h Agent.h Function.h
 
-$(OBJDIR)AgentCounter.o: AgentCounter.h Config.h
-$(OBJDIR)AgentManager.o: AgentManager.h Config.h Agent.h Virus.h Landscape.h Function.h
+$(OBJDIR)AgentCounter.o: AgentCounter.h
+$(OBJDIR)AgentManager.o: AgentManager.h Agent.h Virus.h Landscape.h Function.h

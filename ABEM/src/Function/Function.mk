@@ -3,17 +3,23 @@ PRINT    = /bin/echo
 MKDIR	 = mkdir -vp
 
 OBJDIR = ../../obj/
+LIBDIR = ../../include
 
-VPATH = 
+INCLUDE := $(shell find $(LIBDIR) -type d)
+CPPFLAGS     = $(addprefix -I, $(INCLUDE))
+
+SRCDIR := $(shell find . -type d)
+
+VPATH = $(INCLUDE) $(SRCDIR) $(OBJDIR)
+	
 TARGET	 = Function.o
 
-CPPFLAGS = -I ../../include
-
-
 OBJS = $(addprefix $(OBJDIR), $(TARGET))
+
 
 all: $(OBJS)
 
 $(OBJDIR)%.o: %.cpp
 	@$(PRINT) Compiling $(notdir $@)...
+	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
