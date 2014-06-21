@@ -1,6 +1,8 @@
 #! /usr/bin/python
 # coding=utf-8
 
+import os
+
 ### CONFIGURE #################################################################
 INIT_LINE_STYLE = 'set style line 1 lw 2'
 LINE_STYLE = 'w l'
@@ -9,10 +11,12 @@ RESULT_WIDTH = 1000
 CSS_DIR = '../template/result.css'
 EXTENSION = 'svg'
 FONT = 'times new roman,13'
+
+IMG_DIR = 'image/'
 ###############################################################################
 
 def IMG(img):
-    return img+'.'+EXTENSION
+    return '%s%s.%s' % (IMG_DIR, img, EXTENSION)
 def TXT(title, ext='txt'):
     return '%s.%s' % (title, ext)
 
@@ -42,7 +46,7 @@ def initImg(f, title, xl, yl):
 
 def outputImg(f, imgname, ext=EXTENSION):
     """ 出力先ファイルを指定 """
-    outputLine(f, 'set output "%s.%s";' % (imgname, ext))
+    outputLine(f, 'set output "%s";' % IMG(imgname))
 
 def outputTerminal(f, ext=EXTENSION):
     """ 出力形式を指定 """
@@ -90,6 +94,12 @@ def output(f, title, xl, yl, outputname, *inputs):
     outputImg(f, outputname)
     outputEnd(f)
 
+def makeDirectory(dir_name):
+    if os.path.exists(dir_name):
+        return False
+    os.mkdir(dir_name)
+    return True;
+
 ### PlotFacroty
 class PlotFactory(object):
     """ Gnuplot用のファイルを出力する """
@@ -99,6 +109,7 @@ class PlotFactory(object):
         self.file.close()
 
     def generate(self):
+        makeDirectory(IMG_DIR)
         scriptForInitSetting(self.file)
         outputTerminal(self.file)
         output(self.file, 'VirusVariaty', 'Term', 'Variaty', 'VirusVariaty', ('V_virusVariaty.txt', 'Variaty'))

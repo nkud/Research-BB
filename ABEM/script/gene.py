@@ -25,14 +25,12 @@ def main():
         Generate a script for plotting.
         Generate a html for gathering images and listing up information.
     """
-    # info_dict = {}
     info_dict = read_data('info.txt')
-    # generatePngPlot('auto.plt', info_dict)
-    # generateResultHTML('index.html', info_dict)
     pf = PlotFactory('auto.plt')
     hf = HtmlFactory('index.html')
     pf.generate()
     hf.generate()
+
     pf.close()
     hf.close()
 

@@ -47,17 +47,18 @@ $(LIBSPATH):
 
 # 実行する
 run:
-	@$(PRINT) '[ run ]'
-	@$(RM) $(BINDIR)/*.txt
+	@$(PRINT) '[ run ]'	
+	@$(RM) $(BINDIR)/*.txt	
+	@[ -d $(BINDIR)/$(AGENTDIR) ] || $(MKDIR) $(BINDIR)/$(AGENTDIR)
+	@[ -d $(BINDIR)/$(VIRUSDIR) ] || $(MKDIR) $(BINDIR)/$(VIRUSDIR)
+	@$(RM) $(BINDIR)/$(AGENTDIR)/*.txt
+	@$(RM) $(BINDIR)/$(VIRUSDIR)/*.txt
 	@cd $(BINDIR); ./$(TARGET)
 
 # 結果を出力する
 gene:
 	@$(PRINT) '>>> Generating...'
-	@[ -d $(BINDIR)/$(AGENTDIR) ] || $(MKDIR) $(BINDIR)/$(AGENTDIR)
-	@[ -d $(BINDIR)/$(VIRUSDIR) ] || $(MKDIR) $(BINDIR)/$(VIRUSDIR)
-	@-cd $(BINDIR); mv *_VirusGeneDistribution.txt $(VIRUSDIR)
-	@-cd $(BINDIR); mv *_AgentGeneDistribution.txt $(AGENTDIR)
+
 	@-cd $(BINDIR); cp ../script/VirusValueDistribution.py $(VIRUSDIR)
 	@-cd $(BINDIR); cp ../script/AgentValueDistribution.py $(AGENTDIR)
 	@cd $(BINDIR); python ../script/gene.py

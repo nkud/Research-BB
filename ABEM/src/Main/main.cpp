@@ -201,8 +201,8 @@ int main()
     if ( term.isInterval(500) )
     {
       char tfname[256], afname[256];
-      sprintf(tfname, "%d_VirusGeneDistribution.txt", term.getTerm() );
-      sprintf(afname, "%d_AgentGeneDistribution.txt", term.getTerm() );
+      sprintf(tfname, "VirusDataBase/%d_VirusGeneDistribution.txt", term.getTerm() );
+      sprintf(afname, "AgentDataBase/%d_AgentGeneDistribution.txt", term.getTerm() );
       fFactory.outputFile_LastVirusDataBase(tfname);
       fFactory.outputFile_AgentGeneDistribution(afname);
     }
