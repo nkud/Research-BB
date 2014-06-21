@@ -55,8 +55,8 @@ class Virus
     bool isInfectiousPeriod() const;                                 /* 感染性期間 */
     bool isNonInfectiousPeriod() const;                              /* 非感染性期間 */
 
-    bool isIncubationPeriod() const;
-    bool isCrisisPeriod() const;
+    // bool isIncubationPeriod() const;
+    // bool isCrisisPeriod() const;
     bool isLethalPeriod() const;
     /*-----------------------------------------------------------------------------
      *  ウイルス操作

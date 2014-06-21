@@ -36,10 +36,10 @@ bool ImmuneSystem :: isIncubationPeriod() {
 
   bool incubation_flag = false;                                      /* フラッグを設定 */
   EACH( it_v, getVirusList() ) {
-    if( (*it_v)->isIncubationPeriod() ) {                            /* 感染済みであれば */
+    if( (*it_v)->isNonInfectiousPeriod() ) {                            /* 感染済みであれば */
       incubation_flag = true;
     } else {
-      assert( (*it_v)->isCrisisPeriod() or (*it_v)->isLethalPeriod() );
+      assert( (*it_v)->isInfectiousPeriod() or (*it_v)->isLethalPeriod() );
       return false;
     }
   }
@@ -54,7 +54,7 @@ bool ImmuneSystem :: isIncubationPeriod() {
  *-----------------------------------------------------------------------------*/
 bool ImmuneSystem :: isSymptomaticPeriod() {
   EACH( it_v, getVirusList() ) {
-    if( (*it_v)->isCrisisPeriod() ) {                                /* 感染済みであれば */
+    if( (*it_v)->isInfectiousPeriod() ) {                                /* 感染済みであれば */
       return true;                                                   /* true を返す */
     }
   }
@@ -133,7 +133,7 @@ VECTOR(Virus *) ImmuneSystem :: getCrisisVirusList() {
   VECTOR(Virus *) crisis_virus;
   EACH( it_v, getVirusList() )
   {
-    if( (*it_v)->isCrisisPeriod() )
+    if( (*it_v)->isInfectiousPeriod() )
     {
       crisis_virus.push_back( *it_v );
     }
@@ -232,8 +232,7 @@ int ImmuneSystem :: progressDisease() {
   EACH( it_v, getVirusList() )
   {
     (*it_v)->incrementInfectionTime();                               /* 感染期間を増やす */
-    if( (*it_v)->isCrisisPeriod() ) {                                /* ウイルスが潜伏期間なら */
-      assert((*it_v)->isInfectiousPeriod() );
+    if( (*it_v)->isInfectiousPeriod() ) {                            /* ウイルスが潜伏期間なら */
       (*it_v)->mutation( (*it_v)->getMutationRate() );               /* 突然変異を確率で起こす */
     }
   }

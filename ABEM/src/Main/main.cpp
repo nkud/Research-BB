@@ -182,10 +182,18 @@ int main()
      *-----------------------------------------------------------------------------*/
     EACH( it_a, agents )
     {
-      (**it_a).getImmuneSystem().progressDisease();
+      EACH( it_v, (**it_a).getImmuneSystem().getVirusList() ) {      /* エージェントの保持ウイルス全てに対して */
+        (*it_v)->incrementInfectionTime();                           /* 感染期間を増やす */
+        if( (*it_v)->isInfectiousPeriod() ) {                        /* ウイルスが感染性期間なら */
+          (*it_v)->mutation( (*it_v)->getMutationRate() );           /* 突然変異を確率で起こす */
+        }
+      }
     }
 
-    /// XXX: data base
+
+    /*-----------------------------------------------------------------------------
+     *  Virus データベース処理
+     *-----------------------------------------------------------------------------*/
     FOR( j, (int)agents.size() ) {
       ITERATOR(Virus*) it_v=agents[j]->getImmuneSystem().getVirusListIteratorBegin();
       while(it_v!=agents[j]->getImmuneSystem().getVirusListIteratorEnd()) {

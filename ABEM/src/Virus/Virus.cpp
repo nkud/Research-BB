@@ -26,10 +26,10 @@
  *-----------------------------------------------------------------------------*/
 bool Virus :: isNonInfectiousPeriod() const {
   /*-----------------------------------------------------------------------------
-   *  感染性期間
+   *  非感染性期間
    *-----------------------------------------------------------------------------*/
   if( getInfectionTime() <= getIncubationPeriod() ) {
-    assert( ! isInfectiousPeriod() );
+    assert( ! isInfectiousPeriod() and "感染性期間ではない" );
     return true;
   } else {
     return false;
@@ -37,30 +37,30 @@ bool Virus :: isNonInfectiousPeriod() const {
 }
 bool Virus :: isInfectiousPeriod() const {
   /*-----------------------------------------------------------------------------
-   *  非感染性期間
+   *  感染性期間
    *-----------------------------------------------------------------------------*/
   if( getInfectionTime() > getIncubationPeriod() ) {
-    assert( ! isNonInfectiousPeriod() );
+    assert( ! isNonInfectiousPeriod() and "非感染性期間ではない" );
     return true;
   } else {
     return false;
   }
 }
 
-bool Virus :: isIncubationPeriod() const {
-  if( getInfectionTime() <= getIncubationPeriod() ) {
-    return true;
-  } else {
-    return false;
-  }
-}
-bool Virus :: isCrisisPeriod() const {
-  if( getInfectionTime() > getIncubationPeriod() and getInfectionTime() <= getLethalPeriod() ) {                   /* 潜伏期間を過ぎている */
-    return true;
-  } else {
-    return false;
-  }
-}
+// bool Virus :: isIncubationPeriod() const {
+//   if( getInfectionTime() <= getIncubationPeriod() ) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
+// bool Virus :: isCrisisPeriod() const {
+//   if( getInfectionTime() > getIncubationPeriod() and getInfectionTime() <= getLethalPeriod() ) {                   /* 潜伏期間を過ぎている */
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
 bool Virus :: isLethalPeriod() const {
   if( getInfectionTime() > getLethalPeriod() ) {
     return true;
