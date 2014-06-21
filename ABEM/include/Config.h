@@ -19,15 +19,15 @@ typedef int tag_t;                                                   /* タグ�
 
 const int TERM                      = 2000                ;          /* 期間 */
 const int OUTPUT_INTERVAL           = 1                    ;         /* 出力する間隔 */
-const int DATABASE_INTERVAL					= 500									;
+const int DATABASE_INTERVAL         = 500                  ;         /* データベースを出力する期間 */
 const int MINI_SIZE_TERM            = 200                  ;
 
 const int WIDTH                     = 60                   ;         /* ランドスケープの幅 */
-const int A_MOVE_DISTANCE           = 2                   ;         /* エージェントの移動距離 */
+const int A_MOVE_DISTANCE           = 2                   ;          /* エージェントの移動距離 */
 
 const double INFECTION_RATE         = 30.0                  ;        /* デフォルトの感染率 */
 
-const int A_MAX_V_CAPACITY         = 1                    ;         /* 最大保持ウイルス */
+const int A_MAX_V_CAPACITY         = 1                    ;          /* 最大保持ウイルス */
 const int A_MAX_V_INFECTED_ONE_TERM = 1                    ;         /* １期間で感染させるウイルスの最大数 */
 
 const int A_INIT_NUM                = 1000                  ;        /* 初期エージェントの数 */

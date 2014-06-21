@@ -233,6 +233,10 @@ void FileFactory :: outputFile_LastVirusDataBase( const char *fname ) const {
     ofs.close();
 }
 
+///
+/// outputFile_AgentGeneDistribution
+///     @note エージェント評価値分布を出力
+///
 void FileFactory :: outputFile_AgentGeneDistribution( const char *fname ) {
     std::ofstream ofs(fname);
     EACH( it_a, am_->getAgentList() )
@@ -252,91 +256,91 @@ void FileFactory :: outputFile_AgentGeneDistribution( const char *fname ) {
  * Description:  ピークサーチする
  *--------------------------------------------------------------------------------------
  */
-static int max_term_in_interval( int data[], int cursor, int len ) {
-    /*-----------------------------------------------------------------------------
-     *  与えられた期間の最大値を検索する
-     *-----------------------------------------------------------------------------*/
-    int mv = 0;
-    int mt = 0;
-    FOR( i, len ) {                                                  /* 検索範囲だけ */
-        if( cursor+i >= TERM ) continue;                             /* 添字が０未満ならスキップ */
-        if( data[cursor+i] > mv ) {                                  /* 現最大値より大きければ */
-            mv = data[cursor+i];                                     /* 最大値を更新し */
-            mt = i;                                                  /* 期間を記録する */
-        }
-    }
-    return cursor + mt;
-}
-
-static double average_cycle( const char *origin_fname ) {
-    /*-----------------------------------------------------------------------------
-     *  そのファイルの平均周期を求める
-     *-----------------------------------------------------------------------------*/
-    std::ifstream ifs( origin_fname, std::ios::in );
-    std::string line;
-    int t, v;
-    int n = 0;
-    int pre = 0;
-    int sum = 0;
-
-    while( std::getline( ifs, line ) )
-    {
-        std::sscanf( line.data(), "%d %d", &t, &v );
-        n++;
-        if( pre == 0 ) {
-            pre = t;
-        } else {
-            sum += t - pre;
-            pre = t;
-        }
-    }
-    return (double)sum/n;
-}
+//static int max_term_in_interval( int data[], int cursor, int len ) {
+//    /*-----------------------------------------------------------------------------
+//     *  与えられた期間の最大値を検索する
+//     *-----------------------------------------------------------------------------*/
+//    int mv = 0;
+//    int mt = 0;
+//    FOR( i, len ) {                                                  /* 検索範囲だけ */
+//        if( cursor+i >= TERM ) continue;                             /* 添字が０未満ならスキップ */
+//        if( data[cursor+i] > mv ) {                                  /* 現最大値より大きければ */
+//            mv = data[cursor+i];                                     /* 最大値を更新し */
+//            mt = i;                                                  /* 期間を記録する */
+//        }
+//    }
+//    return cursor + mt;
+//}
 //
-// XXX: need check
-double FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
-    std::string line;
-    std::ifstream ifs( origin_fname, std::ios::in );                 /* ウイルス保持者出力を読込専用で開く */
-    char prefix[256] = PEAK_PREFIX;
-    char *fname = strcat(prefix, origin_fname);                      /* 元のファイル名に接頭辞を付ける */
-    std::ofstream ofs( fname );                                      /* 出力先ファイル */
-
-    int t, v;
-    int term = 0;
-    int data[TERM];
-    int vmax = 0;
-    int vmin = A_INIT_NUM;
-    while( std::getline( ifs, line ) ) {                             /* １行ずつ読み取って */
-        std::sscanf( line.data(), "%d %d", &t, &v );                 /* 期間を読み込む */
-        data[ term++ ] = v;
-        if( t > TERM-MINI_SIZE_TERM ) {                              /* 最後の期間の */
-            if( vmax < v ) vmax = v;                                 /* 最大値 */
-            if( vmin > v ) vmin = v;                                 /* 最小値 */
-        }
-    }
-    averate_amplitude_ = vmax - vmin;                                /* 平均振幅＝最大値−最小値 */
-
-    int mt = 0;                                                      /* その期間での最大時刻 */
-    int count = 1;                                                   /* カウンタ */
-    int temp;
-    FOR( i, TERM ) {
-        temp = max_term_in_interval( data, i, CHECK_INTERVAL );      /* その期間での最大時刻と */
-        if( data[temp] == data[mt] ) {                               /* 一時最大時刻が同じなら */
-            count++;                                                 /* カウントを増やす */
-        } else {                                                     /* 違ったら */
-            mt = temp;                                               /* 最大時刻を更新して */
-            count = 1;                                               /* カウントを１に戻す */
-        }
-        if( count == CHECK_INTERVAL && data[mt] != 0 ) {
-            //            if( i > TERM - MINI_SIZE_TERM - CHECK_INTERVAL )       /* 最後の期間だけ */
-            if( mt+1 != TERM ) {                                     /* 最後はいれず */
-                ofs << mt+1 << SEPARATOR << data[mt] << ENDL;
-            }
-            mt = i + CHECK_INTERVAL - 1;
-            count = 1;                                               /* カウントを１に戻す */
-        }
-    }
-
-    return average_cycle( fname );                                  /* 平均周期を返す */
-}
-
+//static double average_cycle( const char *origin_fname ) {
+//    /*-----------------------------------------------------------------------------
+//     *  そのファイルの平均周期を求める
+//     *-----------------------------------------------------------------------------*/
+//    std::ifstream ifs( origin_fname, std::ios::in );
+//    std::string line;
+//    int t, v;
+//    int n = 0;
+//    int pre = 0;
+//    int sum = 0;
+//
+//    while( std::getline( ifs, line ) )
+//    {
+//        std::sscanf( line.data(), "%d %d", &t, &v );
+//        n++;
+//        if( pre == 0 ) {
+//            pre = t;
+//        } else {
+//            sum += t - pre;
+//            pre = t;
+//        }
+//    }
+//    return (double)sum/n;
+//}
+//
+//// XXX: need check
+//double FileFactory :: outputFile_peakSearch( const char *origin_fname ) const {
+//    std::string line;
+//    std::ifstream ifs( origin_fname, std::ios::in );                 /* ウイルス保持者出力を読込専用で開く */
+//    char prefix[256] = PEAK_PREFIX;
+//    char *fname = strcat(prefix, origin_fname);                      /* 元のファイル名に接頭辞を付ける */
+//    std::ofstream ofs( fname );                                      /* 出力先ファイル */
+//
+//    int t, v;
+//    int term = 0;
+//    int data[TERM];
+//    int vmax = 0;
+//    int vmin = A_INIT_NUM;
+//    while( std::getline( ifs, line ) ) {                             /* １行ずつ読み取って */
+//        std::sscanf( line.data(), "%d %d", &t, &v );                 /* 期間を読み込む */
+//        data[ term++ ] = v;
+//        if( t > TERM-MINI_SIZE_TERM ) {                              /* 最後の期間の */
+//            if( vmax < v ) vmax = v;                                 /* 最大値 */
+//            if( vmin > v ) vmin = v;                                 /* 最小値 */
+//        }
+//    }
+//    averate_amplitude_ = vmax - vmin;                                /* 平均振幅＝最大値−最小値 */
+//
+//    int mt = 0;                                                      /* その期間での最大時刻 */
+//    int count = 1;                                                   /* カウンタ */
+//    int temp;
+//    FOR( i, TERM ) {
+//        temp = max_term_in_interval( data, i, CHECK_INTERVAL );      /* その期間での最大時刻と */
+//        if( data[temp] == data[mt] ) {                               /* 一時最大時刻が同じなら */
+//            count++;                                                 /* カウントを増やす */
+//        } else {                                                     /* 違ったら */
+//            mt = temp;                                               /* 最大時刻を更新して */
+//            count = 1;                                               /* カウントを１に戻す */
+//        }
+//        if( count == CHECK_INTERVAL && data[mt] != 0 ) {
+//            //            if( i > TERM - MINI_SIZE_TERM - CHECK_INTERVAL )       /* 最後の期間だけ */
+//            if( mt+1 != TERM ) {                                     /* 最後はいれず */
+//                ofs << mt+1 << SEPARATOR << data[mt] << ENDL;
+//            }
+//            mt = i + CHECK_INTERVAL - 1;
+//            count = 1;                                               /* カウントを１に戻す */
+//        }
+//    }
+//
+//    return average_cycle( fname );                                  /* 平均周期を返す */
+//}
+//
