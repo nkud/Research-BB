@@ -71,9 +71,11 @@ int main()
   vManager.initVirus();
 
   /* モニター・ファイル生成クラス */
-  FileFactory &fFactory = FileFactory::Instance();                   /* 出力ファイルを管理 */
-  AgentCounter::Instance().reset();
-  VirusCounter::Instance().reset();
+  FileFactory& fFactory = FileFactory::Instance();                   /* 出力ファイルを管理 */
+  AgentCounter& aCounter = AgentCounter::Instance();
+  VirusCounter& vCounter = VirusCounter::Instance();
+  aCounter.reset();
+  vCounter.reset();
   fFactory.setManager( aManager, vManager );                         /* 管理者を登録 */
 
   /*-----------------------------------------------------------------------------
@@ -98,9 +100,8 @@ int main()
   while( term.incrementTerm() )                                      /* 計算開始  */
   {
     /* カウンターのリセット */
-    VirusCounter::Instance().reset();
-    AgentCounter::Instance().reset();
-
+    aCounter.reset();
+    vCounter.reset();
     /* エージェント、ウイルス、土地の計算 */
 #ifdef AGING_AGENT
     aManager.aging();                                                /* 老化する */
@@ -202,13 +203,13 @@ int main()
 
     /*  途中経過出力 */
     fFactory.outputValueWithTerm( "A_population.txt", aManager.getAgentSize() );
-    fFactory.outputValueWithTerm( "V_virusVariaty.txt", VirusCounter::Instance().getVirusVariaty() );
+    fFactory.outputValueWithTerm( "V_virusVariaty.txt", vCounter.getVirusVariaty() );
     fFactory.outputValueWithTerm( "A_isIncubation.txt", aManager.numIsIncubation() );
     fFactory.outputValueWithTerm( "A_isCrisis.txt", aManager.numIsCrisis() );
     fFactory.outputValueWithTerm( "A_hasViruses.txt", aManager.numHasVirus() );
-    fFactory.outputValueWithTerm( "A_removed.txt", AgentCounter::Instance().getCountRemoved() );
-    fFactory.outputValueWithTerm( "V_aveValue.txt", VirusCounter::Instance().calcAveValue() );
-    fFactory.outputValueWithTerm( "A_aveValue.txt", AgentCounter::Instance().calcAveValue(agents) );
+    fFactory.outputValueWithTerm( "A_removed.txt", aCounter.getCountRemoved() );
+    fFactory.outputValueWithTerm( "V_aveValue.txt", vCounter.calcAveValue() );
+    fFactory.outputValueWithTerm( "A_aveValue.txt", aCounter.calcAveValue(agents) );
 
     if ( term.isInterval(500) )
     {

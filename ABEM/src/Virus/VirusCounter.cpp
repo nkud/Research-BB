@@ -71,14 +71,13 @@ int VirusCounter :: countUpMutation() {
  *-----------------------------------------------------------------------------*/
 int VirusCounter :: hasDataOfVirus( const Virus& v ) {
   int n = 0;
-  // for(ITERATOR(Virus*) it_v=virus_data_base_.begin(); it_v!=virus_data_base_.end();)
   EACH( it_v, getVirusDataBase() )
   {
     if( v.isEqualTo((**it_v)) ) {
+      assert( v == (**it_v) and "同じウイルス" );
       return n;
     }
     n++;
-    // it_v++;
   }
   return -1;
 }

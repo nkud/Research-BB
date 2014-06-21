@@ -45,7 +45,7 @@ class VirusCounter {
 
     ITERATOR(Virus*) getVirusDataBaseIteratorBegin();
     ITERATOR(Virus*) getVirusDataBaseIteratorEnd();
-    VECTOR(Virus *) &getVirusDataBase() { return virus_data_base_; }
+    VECTOR(Virus *)& getVirusDataBase() { return virus_data_base_; }
 
     double calcAveValue();
 
