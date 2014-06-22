@@ -31,17 +31,17 @@ class Virus
     Virus( Virus & );
 
     // Virus( __SearchStrategy * );                                     /* コンストラクタ: 戦略 */
-    Virus( int );                                /* コンストラクタ: タグ長, 戦略 */
-    Virus( const char * );                       /* コンストラクタ: タグ長, 戦略 */
+    Virus( int );                                                    /* コンストラクタ: タグ長, 戦略 */
+    Virus( const char * );                                           /* コンストラクタ: タグ長, 戦略 */
 
-    virtual ~Virus();                                                        /* デストラクタ */
+    virtual ~Virus();                                                /* デストラクタ */
     /*-----------------------------------------------------------------------------
      *  パラメータ操作
      *-----------------------------------------------------------------------------*/
     double getRate() const;                                          /* 感染確率を返す */
     void setRate( const double r );                                  /* 感染確率を設定 */
 
-    int searchStartPoint( Gene & );                       /* タグに取り付く位置を返す */
+    int searchStartPoint( Gene & );                                  /* タグに取り付く位置を返す */
     // __SEARCH__TYPE__ getSearchType() const;                          /* サーチ戦略を返す */
 
     double value() const;
@@ -62,19 +62,19 @@ class Virus
     /*-----------------------------------------------------------------------------
      *  タグ操作
      *-----------------------------------------------------------------------------*/
-    Gene & getGene() const { return *gene_; }                             /* タグを返す */
-    int getLen() const { return gene_->getLen(); }                    /* タグ長を返す */
-    tag_t tagAt(int n) const { return gene_->tagAt(n); }              /* 特定位置のタグを返す */
+    Gene & getGene() const { return *gene_; }                        /* タグを返す */
+    int getLen() const { return gene_->getLen(); }                   /* タグ長を返す */
+    tag_t tagAt(int n) const { return gene_->tagAt(n); }             /* 特定位置のタグを返す */
 
-    int getInfectionTime() const { return infection_age_; }         /* 感染期間を返す */
-    void incrementInfectionTime() { infection_age_++; }             /* 感染期間を増やす */
+    int getInfectionTime() const { return infection_age_; }          /* 感染期間を返す */
+    void incrementInfectionTime() { infection_age_++; }              /* 感染期間を増やす */
     int getClingPoint() const { return cling_point_; }               /* 取り付く位置を返す */
     void setClingPoint( int cp ) { cling_point_ = cp; }              /* 取り付く位置を設定する */
     /*-----------------------------------------------------------------------------
      *  突然変異
      *-----------------------------------------------------------------------------*/
     void mutation();                                                 /* 突然変異を起こす */
-    void mutation( double prob=100 );                                         /* 突然変異を起こす */
+    void mutation( double prob=100 );                                /* 突然変異を起こす */
 
     bool operator<(const Virus& other) const {
       if( value() < other.value() ) return true; else return false;
@@ -91,10 +91,10 @@ class Virus
       return true;
     }
   private:
-    Gene *gene_;                                                       /* 電子タグ */
+    Gene *gene_;                                                     /* 電子タグ */
     double rate_;                                                    /* 感染確率 */
 
     int cling_point_;                                                /* 取り付いている位置 */
-    int infection_age_;                                             /* 感染期間 */
+    int infection_age_;                                              /* 感染期間 */
 };
 #endif

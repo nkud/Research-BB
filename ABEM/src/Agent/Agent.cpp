@@ -84,20 +84,19 @@ Agent :: Agent(
     __ChildBirthStrategy *cbs,                                       /* 子孫戦略 */
     int len                                                          /* タグ長 */
     ) :
+  Life( len ),
   x_( 0 ),
   y_( 0 ),
   age_( 0 ),
   sex_( __MALE__ ),
   life_( __ALIVE__ ),
-  gene_( NULL ),
   immune_system_( NULL ),
   moving_strategy_( ms ),
   childbirth_strategy_( cbs )
 {
   immune_system_ = new ImmuneSystem;                                 /* 免疫機構実装 */
 
-  gene_ = new Gene(len);
-  gene_->setTagRandom();                                             /* タグをランダムに初期化 */
+  getGene().setTagRandom();                                             /* タグをランダムに初期化 */
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
   age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
@@ -111,6 +110,7 @@ Agent :: Agent(
     __ChildBirthStrategy *cbs,                                       /* 子孫戦略 */
     Gene *gene                                                       /* 電子タグ */
     ) :
+  Life( *gene ),
   x_( 0 ),
   y_( 0 ),
   age_( 0 ),
@@ -121,8 +121,7 @@ Agent :: Agent(
 {
   immune_system_ = new ImmuneSystem;                                 /* 免疫機構実装 */
 
-  gene_ = gene;                                                      /* 指定のタグに設定 */
-  gene_->setTagRandom();
+  getGene().setTagRandom();
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
   age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
@@ -131,6 +130,7 @@ Agent :: Agent(
  *  移動戦略・子孫戦略・タグ長（最小値~最大値）　指定
  *-----------------------------------------------------------------------------*/
 Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int maxl ) :
+  Life( rand_interval_int(minl, maxl) ),
   x_( 0 ),
   y_( 0 ),
   age_( 0 ),
@@ -141,8 +141,7 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int m
 {
   immune_system_ = new ImmuneSystem();                               /* 免疫機構実装 */
 
-  gene_ = new Gene( rand_interval_int(minl, maxl) );                 /* ランダム長にタグを設定 */
-  gene_->setTagRandom();                                             /* タグをランダムに初期化 */
+  getGene().setTagRandom();                                             /* タグをランダムに初期化 */
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
   age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
@@ -154,14 +153,7 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int m
  *  XXX: 初期化の仕方によって、デストラクトの方法を変更する必要有
  *-----------------------------------------------------------------------------*/
 Agent :: ~Agent() {
-  assert( gene_ != NULL );
-  assert( immune_system_ != NULL );
-
-  SAFE_DELETE( gene_ );
   SAFE_DELETE( immune_system_ );
-
-  gene_ = NULL;
-  immune_system_ = NULL;
 }
 
 /*
@@ -185,13 +177,14 @@ void Agent :: resetParam() {
  *-----------------------------------------------------------------------------*/
 void Agent :: rebirth() {
   resetParam();
-  int len = gene_->getLen();
+//  int len = gene_->getLen();
 
-  SAFE_DELETE( gene_ );
+//  SAFE_DELETE( gene_ );
   SAFE_DELETE( immune_system_ );
 
-  gene_ = new Gene(len);
-  gene_->setTagRandom();
+//  gene_ = new Gene(len);
+//  gene_->setTagRandom();
+  initGene();
   immune_system_ = new ImmuneSystem;
 }
 
