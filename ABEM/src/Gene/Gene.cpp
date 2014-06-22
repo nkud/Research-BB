@@ -290,6 +290,17 @@ void Gene :: mutation( double prob ) {
   }
 }
 
+///
+/// clone()
+///     @note クローン作成
+///
+Gene& Gene :: clone() const {
+  Gene *copy = new Gene(getLen());
+  FOR( i, getLen() ) {
+    copy->changeTagAtTo(i, tagAt(i));
+  }
+  return *copy;
+}
 /*-----------------------------------------------------------------------------
  *
  *  Life

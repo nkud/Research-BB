@@ -59,13 +59,7 @@ class Gene
 
     int value();
 
-    Gene *clone() const {
-        Gene *copy = new Gene(getLen());
-        FOR( i, getLen() ) {
-            copy->changeTagAtTo(i, tagAt(i));
-        }
-        return copy;
-    }
+    Gene& clone() const;                                             /* クローンを作成 */
 
   private:
     int len_;                                                        /* タグ長 */
