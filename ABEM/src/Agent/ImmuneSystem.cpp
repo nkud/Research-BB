@@ -104,7 +104,11 @@ ImmuneSystem :: ~ImmuneSystem() {
 /* 保持ウイルスセット */
 Virus *ImmuneSystem :: getVirusAt( int n ) const { return virus_list_.at( n ); }
 int ImmuneSystem :: getVirusListSize() const { return virus_list_.size(); }
-void ImmuneSystem :: pushVirus( Virus *v ) { virus_list_.push_back( v ); }
+void ImmuneSystem :: pushVirus( Virus& v, Agent& a ) {
+  Virus *new_virus = new Virus( v );                                     /* 新しいウイルスデータを作成して */
+  new_virus->setClingPoint( new_virus->searchStartPoint( a.getGene() ) );
+  virus_list_.push_back( new_virus );
+}
 ITERATOR(Virus *) ImmuneSystem :: eraseVirus( ITERATOR(Virus *) it ) {
   SAFE_DELETE(*it);
   ITERATOR(Virus *) next = virus_list_.erase( it );                /* next iterator */
@@ -115,12 +119,16 @@ ITERATOR(Virus *) ImmuneSystem :: getVirusListIteratorBegin() { return virus_lis
 ITERATOR(Virus *) ImmuneSystem :: getVirusListIteratorEnd() { return virus_list_.end(); }
 /* 待機ウイルスセット */
 Virus *ImmuneSystem :: getStandByVirusAt( int n ) const { return stand_by_virus_list_.at(n); }
-void ImmuneSystem :: pushStandByVirus( Virus *v ) { stand_by_virus_list_.push_back( v ); }
+void ImmuneSystem :: pushStandByVirus( Virus& v ) {
+  Virus *new_virus = new Virus( v );
+  stand_by_virus_list_.push_back( new_virus );
+}
 int ImmuneSystem :: getStandByVirusListSize() const { return stand_by_virus_list_.size(); }
 bool ImmuneSystem :: hasNoStandByVirus() const { return stand_by_virus_list_.empty(); }
 ITERATOR(Virus *) ImmuneSystem :: getStandByVirusListIteratorBegin() { return stand_by_virus_list_.begin(); }
 ITERATOR(Virus *) ImmuneSystem :: getStandByVirusListIteratorEnd() { return stand_by_virus_list_.end(); }
 ITERATOR(Virus *) ImmuneSystem :: eraseStandByVirus( ITERATOR(Virus *) it ) {
+  SAFE_DELETE(*it);
   ITERATOR(Virus *) next = stand_by_virus_list_.erase( it );       /* next iterator */
   return next;                                                        /* delete はしない  */
 }
@@ -188,10 +196,10 @@ bool ImmuneSystem :: infection( Agent &self, Virus &v )
     return false;                                                    /* 感染せずに終了 */
   }
 
-  Virus *new_v = new Virus( v );                                      /* 新しいウイルスデータを作成して */
-  new_v->setClingPoint( new_v->searchStartPoint( self.getGene() ) );
+//  Virus *new_v = new Virus( v );                                      /* 新しいウイルスデータを作成して */
+//  new_v->setClingPoint( new_v->searchStartPoint( self.getGene() ) );
   // XXX: ウイルスの関数にする setClingPoint( Tag * );
-  self.getImmuneSystem().pushVirus( new_v );                        /* 保持ウイルスリストに追加する */
+  self.getImmuneSystem().pushVirus( v, self );                   /* 保持ウイルスリストに追加する */
 
   AgentCounter::Instance().countUpInfectionContact();
 

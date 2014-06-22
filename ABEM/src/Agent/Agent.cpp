@@ -59,9 +59,9 @@ bool Agent :: isLethal() const {
 void Agent :: contact( Agent &other ) {
   VECTOR(Virus *) crisis_virus = other.getImmuneSystem().getCrisisVirusList(); /*  */
   EACH( it_v, crisis_virus ) {                                       /* すべての感染ウイルスの */
-    assert( (**it_v).isInfectiousPeriod() ); /* 感染性ウイルスでなければエラー */
+    assert( (**it_v).isInfectiousPeriod() );                         /* 感染性ウイルスでなければエラー */
     if( probability((*it_v)->getRate()) ) {                          /* 感染率に従って */
-      getImmuneSystem().pushStandByVirus( *it_v );                  /* 待機ウイルスにする */
+      getImmuneSystem().pushStandByVirus( **it_v );                   /* 待機ウイルスにする */
       AgentCounter::Instance().countUpContact();                     /* モニタリング */
     }
   }
@@ -96,7 +96,7 @@ Agent :: Agent(
 {
   immune_system_ = new ImmuneSystem;                                 /* 免疫機構実装 */
 
-  getGene().setTagRandom();                                             /* タグをランダムに初期化 */
+  getGene().setTagRandom();                                          /* タグをランダムに初期化 */
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
   age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
@@ -141,7 +141,7 @@ Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int m
 {
   immune_system_ = new ImmuneSystem();                               /* 免疫機構実装 */
 
-  getGene().setTagRandom();                                             /* タグをランダムに初期化 */
+  getGene().setTagRandom();                                          /* タグをランダムに初期化 */
 
   sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
   age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
@@ -265,7 +265,7 @@ int Agent :: response()
  * Description:  免疫を獲得しているかどうか
  *--------------------------------------------------------------------------------------
  */
-bool Agent :: hasImmunity( Virus &v )                    /* true -> 免疫獲得済み  */
+bool Agent :: hasImmunity( Virus &v )                                /* true -> 免疫獲得済み  */
 {
   if( getGene().pointOfMinHamDistance( v.getGene() ) < 0 )
     return true;                                                     /* 免疫獲得済み */

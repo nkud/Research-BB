@@ -35,7 +35,7 @@ class ImmuneSystem {
 //    Virus *getOnSetVirusAt( int );
     int getVirusListSize() const;                                    /* 保持ウイルスのリストを返す */
 //    int getOnSetVirusListSize();
-    void pushVirus( Virus * );                                       /* 保持ウイルスに追加する */
+    void pushVirus( Virus& virus, Agent& agent );                                       /* 保持ウイルスに追加する */
     ITERATOR(Virus *) eraseVirus( std::vector<Virus *>::iterator );               /* 指定の保持ウイルスを削除する */
     bool hasNoVirus() const;                                         /* ウイルスを保持していない */
     std::vector<Virus *>::iterator getVirusListIteratorBegin();      /* 先頭へのイテレータを返す */
@@ -47,7 +47,7 @@ class ImmuneSystem {
      *  待機ウイルス操作セット
      *-----------------------------------------------------------------------------*/
     Virus *getStandByVirusAt( int n ) const;                         /* 指定の待機ウイルスを返す */
-    void pushStandByVirus( Virus *v );                               /* 待機ウイルスに追加する */
+    void pushStandByVirus( Virus& v );                               /* 待機ウイルスに追加する */
     int getStandByVirusListSize() const;                             /* 待機ウイルスの数を返す */
     bool hasNoStandByVirus() const;                                  /* ウイルスを保持していない */
     std::vector<Virus *>::iterator getStandByVirusListIteratorBegin(); /* 先頭へのイテレータを返す */
