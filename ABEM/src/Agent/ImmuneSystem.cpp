@@ -87,11 +87,11 @@ ImmuneSystem :: ImmuneSystem() :
  *  ImmuneSystem :: ~ImmuneSystem
  *-----------------------------------------------------------------------------*/
 ImmuneSystem :: ~ImmuneSystem() {
-  for( ITERATOR(Virus *) it = virus_list_.begin(); it != virus_list_.end(); it++ ) {
-    SAFE_DELETE(*it);
+  EACH( it_v, getVirusList() ) {
+    SAFE_DELETE( *it_v );
   }
-  for( ITERATOR(Virus *) it = stand_by_virus_list_.begin(); it != stand_by_virus_list_.end(); it++ ) {
-    SAFE_DELETE(*it);
+  EACH( it_v, getStandByVirusList() ) {
+    SAFE_DELETE( *it_v );
   }
   virus_list_.clear();
   stand_by_virus_list_.clear();
@@ -132,7 +132,12 @@ ITERATOR(Virus *) ImmuneSystem :: eraseStandByVirus( ITERATOR(Virus *) it ) {
   ITERATOR(Virus *) next = stand_by_virus_list_.erase( it );       /* next iterator */
   return next;                                                        /* delete はしない  */
 }
-void ImmuneSystem :: clearStandByVirus() { stand_by_virus_list_.clear(); }
+void ImmuneSystem :: clearStandByVirus() {
+  EACH( it_v, getStandByVirusList() ) {
+    SAFE_DELETE( *it_v );
+  }
+  stand_by_virus_list_.clear();
+}
 
 /*-----------------------------------------------------------------------------
  *  getCrisisVirusList()

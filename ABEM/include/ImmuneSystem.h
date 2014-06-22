@@ -40,7 +40,7 @@ class ImmuneSystem {
     bool hasNoVirus() const;                                         /* ウイルスを保持していない */
     std::vector<Virus *>::iterator getVirusListIteratorBegin();      /* 先頭へのイテレータを返す */
     std::vector<Virus *>::iterator getVirusListIteratorEnd();        /* 末尾へのイテレータを返す */
-    VECTOR(Virus *) & getVirusList() { return virus_list_; }
+    VECTOR(Virus *)& getVirusList() { return virus_list_; }
 
     VECTOR(Virus *) getCrisisVirusList();
     /*-----------------------------------------------------------------------------
@@ -54,6 +54,7 @@ class ImmuneSystem {
     std::vector<Virus *>::iterator getStandByVirusListIteratorEnd(); /* 末尾へのイテレータを返す */
     ITERATOR(Virus *) eraseStandByVirus( std::vector<Virus *>::iterator it );     /* 指定の待機ウイルスを削除 */
     void clearStandByVirus();                                        /* 待機ウイルスをすべて削除 */
+    VECTOR(Virus *)& getStandByVirusList() { return stand_by_virus_list_; }
   private:
     /*-----------------------------------------------------------------------------
      *  パラメータ

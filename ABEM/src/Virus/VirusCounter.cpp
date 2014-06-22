@@ -100,11 +100,9 @@ bool VirusCounter :: pushNewVirus( Virus& v ) {
  *  resetVirusDataBase
  *-----------------------------------------------------------------------------*/
 void VirusCounter :: resetVirusDataBase() {
-//   for(ITERATOR(Virus*) it_v=virus_data_base_.begin(); it_v!=virus_data_base_.end();)
-//   {
-// //    delete (*it_v);
-//     it_v++;
-//   }
+  EACH( it_v, getVirusDataBase() ) {
+    SAFE_DELETE( *it_v );
+  }
   virus_data_base_.clear();
 }
 
