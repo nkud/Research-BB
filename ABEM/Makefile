@@ -59,10 +59,10 @@ run:
 gene:
 	@$(PRINT) '>>> Generating...'
 
-	# @-cd $(BINDIR); cp ../script/VirusValueDistribution.py $(VIRUSDIR)
-	# @-cd $(BINDIR); cp ../script/AgentValueDistribution.py $(AGENTDIR)
 	@cd $(BINDIR); python ../script/gene.py
 	@cd $(BINDIR); gnuplot auto.plt 1>/dev/null
+	@cd $(BINDIR)/$(VIRUSDIR); gnuplot vvd.plt 1>/dev/null
+	@cd $(BINDIR)/$(AGENTDIR); gnuplot avd.plt 1>/dev/null
 
 # 結果をパッケージングする
 pack:

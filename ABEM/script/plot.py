@@ -126,12 +126,12 @@ class PlotFactory(object):
         print 'have started generating PLOT SCRIPT.'
 
 ### HtmlFactory
-def setImage(f, *imgnames):
+def setImage(f, width, *imgnames):
     """ 画像をセットする """
     outputLine(f, '<!-- IMAGE -->')
     outputLine(f, '<table class="graph">')
     for name in imgnames:
-        outputLine(f, '    <tr><td><img src="%s" width="%d"/></td></tr>' % (name, RESULT_WIDTH))
+        outputLine(f, '    <tr><td><img src="%s" width="%d"/></td></tr>' % (name, width))
     outputLine(f, '<tr></table>')
 
 def outputHeader(f, htext, h):
@@ -142,10 +142,10 @@ def outputSection(f, htext, h, *imgs):
     """ 見出し、画像をセットし、セクションを作る """
     outputHeader(f, htext, h)
     for img in imgs:
-        setImage(f, img)
+        setImage(f, RESULT_WIDTH, img)
 
 class HtmlFactory(object):
-    """ 結果表示用のＨＴＭＬを出力する """
+    """ 結果表示用のHTMLを出力する """
     def __init__(self, filename):
         self.file = open(filename, 'w')
     def close(self):
