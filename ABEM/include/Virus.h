@@ -84,9 +84,7 @@ class Virus
         return false;
       }
       FOR( i, getLen() ) {
-        if( tagAt(i) != other.tagAt(i) ) {
-          return false;
-        }
+        if( tagAt(i) != other.tagAt(i) ) { return false; }
       }
       return true;
     }

@@ -288,3 +288,20 @@ void Gene :: mutation( double prob ) {
     mutation();
   }
 }
+
+/*-----------------------------------------------------------------------------
+ *
+ *  Life
+ *
+ *-----------------------------------------------------------------------------*/
+void Life :: initGene() {
+  int len = getLen();
+  SAFE_DELETE( gene_ );
+  gene_ = new Gene( len );
+  gene_->setTagRandom();
+}
+void Life :: mutation( double prob ) {
+  if( probability( prob ) ) {
+    getGene().mutation( prob );
+  }
+}

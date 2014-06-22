@@ -84,6 +84,8 @@ class Gene
  *  Description:  Geneを持つ生命体
  * =====================================================================================
  */
+class Gene;
+
 class Life {
   public:
     /*-----------------------------------------------------------------------------
@@ -103,12 +105,9 @@ class Life {
     int getLen() const { return gene_->getLen(); }                   /* タグ長を返す */
     tag_t tagAt(int n) const { return gene_->tagAt(n); }             /* 特定位置のタグを返す */
 
-    void initGene() {
-      int len = getLen();
-      SAFE_DELETE( gene_ );
-      gene_ = new Gene( len );
-      gene_->setTagRandom();
-    }
+    void initGene();
+
+    void mutation( double prob=100 );
   private:
     Gene *gene_;
 };
