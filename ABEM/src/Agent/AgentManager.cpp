@@ -45,7 +45,7 @@ AgentManager :: AgentManager( VECTOR( Agent * ) &agents ) :
 void AgentManager :: initAgent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, Gene *gene, int num )
 {
   FOR( i, num ) {                                                    /* num のだけ */
-    agents_.push_back( new Agent( ms, cbs, gene->newCopy() ) );                  /* 新しくエージェントを加える */
+    agents_.push_back( new Agent( ms, cbs, gene->clone() ) );                  /* 新しくエージェントを加える */
   }
   // マップに配置する
   Landscape::Instance().clearAgentMap();                             /* エージェントの位置をリセット */
@@ -284,7 +284,8 @@ ITERATOR(Agent *) AgentManager :: deleteAgent( ITERATOR(Agent *) &it )
 
   Landscape::Instance().removeAgent( (*it)->getX(), (*it)->getY(), **it );     /* 土地から削除 */
 
-  delete( *it );                                                     /* メモリ領域を削除 */
+//  delete( *it );                                                     /* メモリ領域を削除 */
+  SAFE_DELETE( *it );
   ITERATOR(Agent *) next = agents_.erase( it );                      /* 配列から削除 */
 
   return next;

@@ -17,8 +17,45 @@
 #include <cstring>
 #include <cstdlib>
 
+/*-----------------------------------------------------------------------------
+ *
+ *  コンストラクタ
+ *
+ *-----------------------------------------------------------------------------*/
+
+Gene :: Gene( Gene & gene )
+{
+  len_ = gene.getLen();
+  tag_ = new tag_t[ len_ ];
+  FOR( i, len_ ) {
+    tag_[i] = gene.tagAt(i);
+  }
+}
+
+Gene :: Gene( int l ) :
+  len_( l ),                                                         /* 指定された長さで初期化 */
+  tag_( 0 )
+{
+  tag_ = new tag_t[ l ];                                             /* タグのメモリ領域を確保 */
+  FOR( i, len_ ) {
+    tag_[i] = 0;                                                     /* すべてを０で初期化 */
+  }
+}
+
+Gene :: Gene( const char *str ) :
+    len_( strlen( str ) ),                                           /* 文字列の長さで初期化 */
+    tag_( 0 )
+{
+    assert( len_ > 0 );                                              /* 文字列の長さが０以下ならエラー */
+    tag_ = new tag_t[ len_ ];                                        /* タグのメモリ領域を確保 */
+
+    FOR( i, len_ ) {
+        tag_[ i ] = str[ i ] - '0';                                  /* 指定された文字列で初期化 */
+    }
+}
 ///
 /// value
+///
 int Gene :: value() {
   int ret = 0;
   FOR( i, getLen() ) {
@@ -55,11 +92,11 @@ int Gene :: flipToGeneAtPosition( const Gene &other, int pos )
  *      ハミング距離が最小になる位置を返す
  *-----------------------------------------------------------------------------*/
 int Gene :: pointOfMinHamDistance( const Gene &other ) const {
-  if( getLen() < other.getLen() ) return -1;                              /* 最小値 */
-  int minh = getLen();                                                   /* タグを比べる位置 */
+  if( getLen() < other.getLen() ) return -1;                         /* 最小値 */
+  int minh = getLen();                                               /* タグを比べる位置 */
   int sp = 0;
   int tm = minh;                                                     /* 初め最小ハミング距離は最大 */
-  FOR( i, getLen() )                                                     /* ずらせる回数繰り返す */
+  FOR( i, getLen() )                                                 /* ずらせる回数繰り返す */
   // FOR(i, getLen()-other.getLen())
   {
 //    tm = ham_distance( tag_+i, gene.getTag(), gene.getLen() );       /* ずらした位置でのハミング距離 */
@@ -75,7 +112,7 @@ int Gene :: pointOfMinHamDistance( const Gene &other ) const {
     }
   }
   if( minh <= 0 ) return -1;                                         /* 免疫獲得済み */
-  return sp;                                     /* ウイルスのタグがとりつく位置を返す */
+  return sp;                                                         /* ウイルスのタグがとりつく位置を返す */
 }
 
 // int RingGene :: pointOfMinHamDistance( const Gene &other ) const {
@@ -113,45 +150,9 @@ int Gene :: hamDistance( const Gene &other, int pos ) const {
   return diff;
 }
 /*-----------------------------------------------------------------------------
- *
- *  コンストラクタ
- *
- *-----------------------------------------------------------------------------*/
-
-Gene :: Gene( Gene & gene )
-{
-  len_ = gene.getLen();
-  tag_ = new tag_t[ len_ ];
-  FOR( i, len_ ) {
-    tag_[i] = gene.tagAt(i);
-  }
-}
-
-Gene :: Gene( int l ) :
-  len_( l ),                                                         /* 指定された長さで初期化 */
-  tag_( 0 )
-{
-  tag_ = new tag_t[ l ];                                             /* タグのメモリ領域を確保 */
-  FOR( i, len_ ) {
-    tag_[i] = 0;                                                     /* すべてを０で初期化 */
-  }
-}
-
-Gene :: Gene( const char *str ) :
-    len_( strlen( str ) ),                                           /* 文字列の長さで初期化 */
-    tag_( 0 )
-{
-    assert( len_ > 0 );                                              /* 文字列の長さが０以下ならエラー */
-    tag_ = new tag_t[ len_ ];                                        /* タグのメモリ領域を確保 */
-
-    FOR( i, len_ ) {
-        tag_[ i ] = str[ i ] - '0';                                  /* 指定された文字列で初期化 */
-    }
-}
-/*-----------------------------------------------------------------------------
  *  Gene :: ~Gene()
  *-----------------------------------------------------------------------------*/
-Gene :: ~Gene() {                                                      /* デストラクタ */
+Gene :: ~Gene() {                                                    /* デストラクタ */
   assert( tag_ != NULL );
   SAFE_DELETE_ARRAY( tag_ );
 }
@@ -211,7 +212,7 @@ int Gene :: getLen() const {
  *      指定された位置のタグを返す
  *-----------------------------------------------------------------------------*/
 tag_t Gene :: tagAt( const int n ) const {
-    return tag_[ n % getLen() ];                                         /* 指定された位置のタグを返す */
+    return tag_[ n % getLen() ];                                     /* 指定された位置のタグを返す */
 }
 
 /*
@@ -248,7 +249,7 @@ void Gene :: setTag( const tag_t *t, int l ) {
  *      変異は必ず起こる
  *-----------------------------------------------------------------------------*/
 void Gene :: mutation() {
-  int pos = rand_array( getLen() );                                      /* 配列から適当な位置を */
+  int pos = rand_array( getLen() );                                  /* 配列から適当な位置を */
   if( rand_bool() ) {
     if( rand_bool() ) {
       if( tag_[pos] < T_MAX )
@@ -294,14 +295,31 @@ void Gene :: mutation( double prob ) {
  *  Life
  *
  *-----------------------------------------------------------------------------*/
+///
+/// initGene()
+///     @note 遺伝子初期化
+///
 void Life :: initGene() {
-  int len = getLen();
-  SAFE_DELETE( gene_ );
-  gene_ = new Gene( len );
-  gene_->setTagRandom();
+  int len = getLen();                                                /* 現在の遺伝子の長さを取得して */
+  SAFE_DELETE( gene_ );                                              /* 削除 */
+  gene_ = new Gene( len );                                           /* 新たに遺伝子を作成したあと */
+  gene_->setTagRandom();                                             /* タグをランダムに設定 */
 }
+
+///
+/// mutation()
+///     @note 突然変異
+///
 void Life :: mutation( double prob ) {
   if( probability( prob ) ) {
     getGene().mutation( prob );
   }
+}
+///
+/// clone()
+///     @note クローン作成
+///
+Life& Life :: clone( Life& origin ) {
+  Life *new_life = new Life( origin.getGene() );
+  return *new_life;
 }

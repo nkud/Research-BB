@@ -30,12 +30,12 @@ class Gene
     /*-----------------------------------------------------------------------------
      *  コンストラクタ / デストラクタ
      *-----------------------------------------------------------------------------*/
-    Gene( int );                                                      /* コンストラクタ: 長さ */
-    Gene( int minl, int maxl );                                       /* XXX コンストラクタ: 長さ */
-    Gene( const char * );                                             /* コンストラクタ: 文字列 */
+    Gene( int );                                                     /* コンストラクタ: 長さ */
+    Gene( int minl, int maxl );                                      /* XXX コンストラクタ: 長さ */
+    Gene( const char * );                                            /* コンストラクタ: 文字列 */
     // XXX: コピーコンストラクタにする
     Gene( Gene & );
-    virtual ~Gene();                                                          /* デストラクタ */
+    virtual ~Gene();                                                 /* デストラクタ */
     /*-----------------------------------------------------------------------------
      *  タグ操作セット
      *-----------------------------------------------------------------------------*/
@@ -43,7 +43,7 @@ class Gene
     tag_t *getTag() const;                                           /* タグ配列へのポインタを返す */
     void setTag( const tag_t *t, int l );                            /* タグを設定 */
     int getLen() const;                                              /* タグ長を返す */
-    virtual tag_t tagAt( const int ) const ;                                 /* 特定の位置のタグの値を返す */
+    virtual tag_t tagAt( const int ) const ;                         /* 特定の位置のタグの値を返す */
     void changeTagLenTo( int n );                                    /* タグの長さを変える */
     void printTag() const;                                           /* タグを表示 */
     // const tag_t *getTagString();
@@ -59,7 +59,7 @@ class Gene
 
     int value();
 
-    Gene *newCopy() const {
+    Gene *clone() const {
         Gene *copy = new Gene(getLen());
         FOR( i, getLen() ) {
             copy->changeTagAtTo(i, tagAt(i));
@@ -94,6 +94,7 @@ class Life {
     Life( const char *str ) { gene_ = new Gene( str ); }
     Life( int len ) { gene_ = new Gene( len ); }
     Life( Gene& gene ) { gene_ = new Gene( gene ); }
+    Life( Life& life ) { gene_ = new Gene( life.getGene() ); }
     /*-----------------------------------------------------------------------------
      *  デストラクタ
      *-----------------------------------------------------------------------------*/
@@ -105,9 +106,11 @@ class Life {
     int getLen() const { return gene_->getLen(); }                   /* タグ長を返す */
     tag_t tagAt(int n) const { return gene_->tagAt(n); }             /* 特定位置のタグを返す */
 
-    void initGene();
+    Life& clone( Life& origin );
 
-    void mutation( double prob=100 );
+    void initGene();                                                 /* 遺伝子を初期化する */
+
+    void mutation( double prob=100 );                                /* 突然変異する */
   private:
     Gene *gene_;
 };

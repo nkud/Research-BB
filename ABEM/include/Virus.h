@@ -22,7 +22,7 @@
  *  Description:  ウイルス
  * =====================================================================================
  */
-class Virus
+class Virus : public Life
 {
   public:
     /*-----------------------------------------------------------------------------
@@ -59,12 +59,6 @@ class Virus
      *  ウイルス操作
      *-----------------------------------------------------------------------------*/
     bool isEqualTo( const Virus& ) const;                            /* ウイルスのタグが等しいかどうか */
-    /*-----------------------------------------------------------------------------
-     *  タグ操作
-     *-----------------------------------------------------------------------------*/
-    Gene & getGene() const { return *gene_; }                        /* タグを返す */
-    int getLen() const { return gene_->getLen(); }                   /* タグ長を返す */
-    tag_t tagAt(int n) const { return gene_->tagAt(n); }             /* 特定位置のタグを返す */
 
     int getInfectionTime() const { return infection_age_; }          /* 感染期間を返す */
     void incrementInfectionTime() { infection_age_++; }              /* 感染期間を増やす */
@@ -73,7 +67,6 @@ class Virus
     /*-----------------------------------------------------------------------------
      *  突然変異
      *-----------------------------------------------------------------------------*/
-    void mutation();                                                 /* 突然変異を起こす */
     void mutation( double prob=100 );                                /* 突然変異を起こす */
 
     bool operator<(const Virus& other) const {
@@ -89,7 +82,6 @@ class Virus
       return true;
     }
   private:
-    Gene *gene_;                                                     /* 電子タグ */
     double rate_;                                                    /* 感染確率 */
 
     int cling_point_;                                                /* 取り付いている位置 */

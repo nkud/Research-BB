@@ -100,38 +100,34 @@ double Virus :: getRate() const {
  *-----------------------------------------------------------------------------*/
 /* Tag */
 Virus :: Virus( const char *str ) :
+  Life( str ),
   rate_( INFECTION_RATE ),                                            /* 感染確率は初期設定 */
   cling_point_( 0 ),
   infection_age_( 0 )
 {
-  gene_ = new Gene( str );
 }
 /* Tag Len */
 Virus :: Virus( int l ):
+  Life( l ),
   rate_( INFECTION_RATE ),                                            /* 感染確率を指定 */
   cling_point_( 0 ),
   infection_age_( 0 )
 {
-  gene_ = new Gene( l );
-  gene_->setTagRandom();                                              /* タグをランダムに初期化 */
+  getGene().setTagRandom();                                              /* タグをランダムに初期化 */
 }
 /* Virus */
-Virus :: Virus( Virus &origin ) {
+Virus :: Virus( Virus &origin ) :
+  Life( origin.getGene() )
+{
   cling_point_ = 0;
   infection_age_ = 0;
   rate_ = origin.getRate();
-  gene_ = new Gene( origin.getGene() );
 }
 
 /*-----------------------------------------------------------------------------
  *  Virus :: ~Virus()
  *-----------------------------------------------------------------------------*/
 Virus :: ~Virus() {
-  assert( gene_ != NULL );
-
-  delete gene_;
-
-  gene_ = NULL;
 }
 
 /*--------------------------------------------------------------------------------------
@@ -175,9 +171,9 @@ int Virus :: searchStartPoint( Gene &gene ) {
  *  Virus :: mutation()
  *      突然変異を起こす
  *-----------------------------------------------------------------------------*/
-void Virus :: mutation() {
-  getGene().mutation();
-}
+//void Virus :: mutation() {
+//  getGene().mutation();
+//}
 void Virus :: mutation( double prob ) {
   if ( probability( prob ) ) {
     getGene().mutation( prob );
