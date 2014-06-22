@@ -44,7 +44,7 @@ class Virus : public Life
     int searchStartPoint( Gene & );                                  /* タグに取り付く位置を返す */
     // __SEARCH__TYPE__ getSearchType() const;                          /* サーチ戦略を返す */
 
-    double value() const;
+//    double value() const;
     int getIncubationPeriod() const;
     int getLethalPeriod() const;
     int getInfectionRate() const;

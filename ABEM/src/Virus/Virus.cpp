@@ -69,9 +69,9 @@ bool Virus :: isLethalPeriod() const {
   }
 }
 
-double Virus :: value() const {
-  return getGene().value();
-}
+//double Virus :: value() const {
+//  return getGene().value();
+//}
 
 int Virus :: getIncubationPeriod() const {
   return V_INCUBATION_PERIOD;

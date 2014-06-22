@@ -237,7 +237,7 @@ void FileFactory :: outputFile_LastVirusDataBase( const char *fname ) const {
 /// outputFile_AgentGeneDistribution
 ///     @note エージェント評価値分布を出力
 ///
-void FileFactory :: outputFile_AgentGeneDistribution( const char *fname ) {
+void FileFactory :: outputFile_AgentDataBase( const char *fname ) {
     std::ofstream ofs(fname);
     EACH( it_a, am_->getAgentList() )
     {

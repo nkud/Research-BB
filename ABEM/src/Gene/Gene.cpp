@@ -315,6 +315,7 @@ void Life :: mutation( double prob ) {
     getGene().mutation( prob );
   }
 }
+
 ///
 /// clone()
 ///     @note クローン作成

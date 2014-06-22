@@ -217,7 +217,7 @@ int main()
       sprintf(tfname, "VirusDataBase/%d_VirusGeneDistribution.txt", term.getTerm() );
       sprintf(afname, "AgentDataBase/%d_AgentGeneDistribution.txt", term.getTerm() );
       fFactory.outputFile_LastVirusDataBase(tfname);
-      fFactory.outputFile_AgentGeneDistribution(afname);
+      fFactory.outputFile_AgentDataBase(afname);
     }
 
     /* 途中経過表示用ログ */

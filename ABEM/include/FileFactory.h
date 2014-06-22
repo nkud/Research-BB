@@ -39,7 +39,7 @@ class FileFactory {
          *-----------------------------------------------------------------------------*/
         void outputFile_VirusVariaty( const char * ) const;
         void outputFile_LastVirusDataBase( const char * ) const;
-        void outputFile_AgentGeneDistribution( const char *);
+        void outputFile_AgentDataBase( const char *);
         void outputFile_LastLog( const char * ) const;               /* ログを出力 */
         void outputFile_Info( const char * ) const;                  /* パラメータ情報を出力 */
         double outputFile_peakSearch( const char * ) const;          /* 出力: ピークサーチ */
