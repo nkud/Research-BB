@@ -107,7 +107,7 @@ class Life {
     tag_t tagAt(int n) const { return gene_->tagAt(n); }             /* 特定位置のタグを返す */
     int value() const { return getGene().value(); }
 
-    Life& clone( Life& origin );
+    Life& clone();
 
     void initGene();                                                 /* 遺伝子を初期化する */
 

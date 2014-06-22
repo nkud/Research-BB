@@ -320,7 +320,7 @@ void Life :: mutation( double prob ) {
 /// clone()
 ///     @note クローン作成
 ///
-Life& Life :: clone( Life& origin ) {
-  Life *new_life = new Life( origin.getGene() );
+Life& Life :: clone() {
+  Life *new_life = new Life( getGene() );
   return *new_life;
 }
