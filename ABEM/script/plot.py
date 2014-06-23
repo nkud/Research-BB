@@ -156,6 +156,8 @@ class HtmlFactory(object):
             '<html><link rel="stylesheet" href="%s">' % CSS_DIR +
             '<body><font color=gray><code>')
         outputHeader(self.file, '<font color=black># RESULT</font>', 1)
+        outputLine(self.file, '<a href="AgentDataBase/index.html">>>> AgentDataBase</a></ br>')
+        outputLine(self.file, '<a href="VirusDataBase/index.html">>>> VirusDataBase</a></ br>')
 
         # Image Section
         outputSection(self.file, 'Population', 2, IMG('Population'))

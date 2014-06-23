@@ -55,7 +55,7 @@ def generatePlotForVirusValueHistogram(last_term, interval):
 
     # Image Section
     for i in range(n):
-      setImage( fhtml, 300, '%d_vvd.png' % ((i+1)*interval) )
+      setImage( fhtml, 400, '%d_vvd.png' % ((i+1)*interval) )
 
     # End
     outputLine(fhtml, '</code></body></html>')
