@@ -97,8 +97,10 @@ int main()
    *-----------------------------------------------------------------------------*/
   Term &term = Term::Instance();
   term.setMaxTerm( TERM );
+  TERMINAL_CLR;
   while( term.incrementTerm() )                                      /* 計算開始  */
   {
+    TERMINAL_LOCATION(0,0);
     /* カウンターのリセット */
     aCounter.reset();
     vCounter.reset();
@@ -220,8 +222,8 @@ int main()
       fFactory.outputFile_AgentDataBase(afname);
     }
 
+    /// TERMINAL ///////////////////////////////////////////////////////////////
     /* 途中経過表示用ログ */
-    cout << "===================================" << endl;
     // LOG( term.getTerm() << TERM );
     term.printTerm();
     Benchmark::Instance().printElapsedTime();
@@ -234,6 +236,7 @@ int main()
     LOG( aManager.numHasVirus() );
     LOG( VirusCounter::Instance().getCountMutation() );
     LOG( VirusCounter::Instance().getVirusVariaty() );
+    ////////////////////////////////////////////////////////////////////////////
 
     /* 強制終了 */
     if( AgentCounter::Instance().getCountContact()==0 ) zero_count++;                   /* １０回以上接触感染がなければ */
