@@ -30,7 +30,7 @@
  *-----------------------------------------------------------------------------*/
 #define FOR(i, m)           for(int (i)=0; (i)<(m); (i)++)  /* i: 0 ~ (m-1) */
 #define REP(i, min, max)    for(int (i)=(min); (i)<=(max); (i)++)
-#define LOG(x)              do { std::cout<<"["<<"\033[31m"<<#x<<"\033[39m"<<"]: "<<x<<std::endl; }while(0);
+#define LOG(x)              do { std::cout<<"["<<"\033[36m"<<#x<<"\033[39m"<<"]: "<<x<<std::endl; }while(0);
 #define DEBUG(x)						do { std::cerr<<">>> "<<#x<<" = "<<(x)<<" (L"<<__LINE__<<")"<<" "<<__FILE__<<std::endl; }while(0);
 
 #define TERMINAL_CLR        do { std::cout<<"\033[2J"<<std::endl; }while(0);

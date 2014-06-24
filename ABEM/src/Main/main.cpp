@@ -236,6 +236,7 @@ int main()
     LOG( aManager.numHasVirus() );
     LOG( VirusCounter::Instance().getCountMutation() );
     LOG( VirusCounter::Instance().getVirusVariaty() );
+    term.printStatusBar();
     ////////////////////////////////////////////////////////////////////////////
 
     /* 強制終了 */
