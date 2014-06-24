@@ -43,9 +43,9 @@ class Term {
       std::cout << "\n( " << n << " % )\n";
       std::cout << "[";
       FOR( i, n-1 ) {
-        std::cout << BLUE_BG << " " << CLR_BG;
+        std::cout << RED << "=";
       }
-//      if( n > 0 ) std::cout << ">";
+      if( n > 0 ) std::cout << ">" << CLR_ST;
       FOR( i, 100-n ) {
         std::cout << " ";
       }
