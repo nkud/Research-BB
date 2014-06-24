@@ -35,9 +35,6 @@
 
 #define DEBUG(x)			do { std::cerr<<">>> "<<#x<<" = "<<(x)<<" (L"<<__LINE__<<")"<<" "<<__FILE__<<std::endl; }while(0);
 
-#define TERMINAL_CLEAR        do { std::cout<<"\033[2J"<<std::endl; }while(0);
-#define TERMINAL_LOCATION(x,y)  std::cout<<"\033["<<x<<";"<<y<<"H"<<std::endl;
-
 #define ALL(a) 				(a).begin(),(a).end()
 #define EACH(i,c) 			for(typeof((c).begin()) i=(c).begin(); i!=(c).end(); ++i)
 
@@ -51,13 +48,17 @@
 #define SEPARATOR           " "                                      /* 出力データを分割する文字 */
 
 /// エスケープシーケンス
+#define TERMINAL_CLEAR          std::cout<<"\033[2J";
+#define TERMINAL_LOCATION(x,y)  std::cout<<"\033["<<x<<";"<<y<<"H";
+
+#define RED    "\033[31m"
 #define BLUE    "\033[34m"
 #define CYAN    "\033[36m"
 #define BLUE_BG    "\033[44m"
 #define CLR_BG    "\033[49m"
-#define CLR_ST    "\33[39m"
+#define CLR_ST    "\033[39m"
 #define CURSOR_HIDE "\033[>5h"
-#define CURSOR_CLEAR do { std::cout<<CURSOR_HIDE<<std::endl; } while(0);
+#define CURSOR_CLEAR  std::cout<<CURSOR_HIDE;
 
 /*-----------------------------------------------------------------------------
  *  タグ操作セット

@@ -98,10 +98,10 @@ int main()
   Term &term = Term::Instance();
   term.setMaxTerm( TERM );
   TERMINAL_CLEAR;
-  CURSOR_CLEAR;
   while( term.incrementTerm() )                                      /* 計算開始  */
   {
     TERMINAL_LOCATION(0,0);
+    CURSOR_CLEAR;
     /* カウンターのリセット */
     aCounter.reset();
     vCounter.reset();
@@ -244,6 +244,7 @@ int main()
     if( AgentCounter::Instance().getCountContact()==0 ) zero_count++;                   /* １０回以上接触感染がなければ */
     if( zero_count >= 20 ) break;                                    /* 強制的に終了する */
     if( (int)agents.size() == A_MAX_NUM ) break;
+    CURSOR_CLEAR;
   }                                                                  /* ============================================================== 計算終了 */
 
 #ifdef BENCHMARK
