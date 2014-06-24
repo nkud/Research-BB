@@ -97,7 +97,8 @@ int main()
    *-----------------------------------------------------------------------------*/
   Term &term = Term::Instance();
   term.setMaxTerm( TERM );
-  TERMINAL_CLR;
+  TERMINAL_CLEAR;
+  CURSOR_CLEAR;
   while( term.incrementTerm() )                                      /* 計算開始  */
   {
     TERMINAL_LOCATION(0,0);

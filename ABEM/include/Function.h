@@ -31,11 +31,11 @@
 #define FOR(i, m)           for(int (i)=0; (i)<(m); (i)++)  /* i: 0 ~ (m-1) */
 #define REP(i, min, max)    for(int (i)=(min); (i)<=(max); (i)++)
 
-#define LOG(x)              do { std::cout<<"["<<"\033[36m"<<#x<<"\033[39m"<<"]: "<<x<<std::endl; }while(0);
+#define LOG(x)              do { std::cout<<"["<<CYAN<<#x<<CLR_ST<<"]: "<<x<<std::endl; }while(0);
 
-#define DEBUG(x)						do { std::cerr<<">>> "<<#x<<" = "<<(x)<<" (L"<<__LINE__<<")"<<" "<<__FILE__<<std::endl; }while(0);
+#define DEBUG(x)			do { std::cerr<<">>> "<<#x<<" = "<<(x)<<" (L"<<__LINE__<<")"<<" "<<__FILE__<<std::endl; }while(0);
 
-#define TERMINAL_CLR        do { std::cout<<"\033[2J"<<std::endl; }while(0);
+#define TERMINAL_CLEAR        do { std::cout<<"\033[2J"<<std::endl; }while(0);
 #define TERMINAL_LOCATION(x,y)  std::cout<<"\033["<<x<<";"<<y<<"H"<<std::endl;
 
 #define ALL(a) 				(a).begin(),(a).end()
@@ -49,6 +49,15 @@
 #define SAFE_DELETE_ARRAY(p)	delete[] p; p = NULL;
 
 #define SEPARATOR           " "                                      /* 出力データを分割する文字 */
+
+/// エスケープシーケンス
+#define BLUE    "\033[34m"
+#define CYAN    "\033[36m"
+#define BLUE_BG    "\033[44m"
+#define CLR_BG    "\033[49m"
+#define CLR_ST    "\33[39m"
+#define CURSOR_HIDE "\033[>5h"
+#define CURSOR_CLEAR do { std::cout<<CURSOR_HIDE<<std::endl; } while(0);
 
 /*-----------------------------------------------------------------------------
  *  タグ操作セット
