@@ -40,10 +40,17 @@ $(BINDIR)/$(TARGET): $(LIBSPATH)
 # コンパイルする
 # Makefile名とフォルダ名は同じにする
 $(LIBSPATH):
+
+	@echo -ne '\033[31m'
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
 	@$(PRINT) '---> $(notdir $@)'
+	@echo -ne '\033[39m'
 	@$(MAKE) -C $@ -f $(notdir $@).mk
 	@$(PRINT)
+
+### テスト
+test:
+	# $(MAKE) -C -f $(notdir $@).mk test
 
 # 実行する
 run:
