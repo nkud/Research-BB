@@ -87,18 +87,20 @@ int min_ham_distance_point( const int * const a, const int * const v, const int 
  *  RANDOMIZE SET
  *
  *=============================================================================*/
-int rand_interval_int(const int min, const int max) {
-  int minn = min;
-  int maxx = max;
-  if( minn > maxx ) SWAP(minn, maxx);
-  return minn + (int)( rand() * (maxx - minn + 1.0) / (1.0 + RAND_MAX) );
+int rand_interval_int(int min, int max) {
+  // int minn = min;
+  // int maxx = max;
+  // if( minn > maxx ) SWAP(minn, maxx);
+  // return minn + (int)( rand() * (maxx - minn + 1.0) / (1.0 + RAND_MAX) );
+  return Random::Instance().uniformInt(min, max);
 }
 
-double rand_interval_double(const double min, const double max) {
-  double minn = min;
-  double maxx = max;
-  if( minn > maxx ) SWAP(minn, maxx);
-  return minn + (double)( rand() * (maxx - minn) / (1.0 + RAND_MAX) ); /* XXX: これでいいか？ */
+double rand_interval_double(double min, double max) {
+  // double minn = min;
+  // double maxx = max;
+  // if( minn > maxx ) SWAP(minn, maxx);
+  // return minn + (double)( rand() * (maxx - minn) / (1.0 + RAND_MAX) ); /* XXX: これでいいか？ */
+  return Random::Instance().uniformDouble(min, max);
 }
 
 /*-----------------------------------------------------------------------------
@@ -120,13 +122,15 @@ bool probability( double prob ) {
  *-----------------------------------------------------------------------------*/
 int rand_array( const int n ) {
   assert( n > 0 );
-  return rand() % n;
+  // return rand() % n;
+  return rand_interval_int( 0, n-1 );
 }
 
 int rand_binary() {
-  int ret; 
-  ret = rand() % 2; 
-  return ret;
+  // int ret; 
+  // ret = rand() % 2; 
+  // return ret;
+  return rand_interval_int( 0, 1 );
 }
 
 bool rand_bool() {
@@ -138,6 +142,6 @@ bool rand_bool() {
 
 int rand_sign() {
   int ret; 
-  ret = rand()%2 ? 1 : -1; 
+  ret = rand_bool() ? 1 : -1; 
   return ret;
 }
