@@ -48,7 +48,7 @@ int main()
 #ifdef BENCHMARK
   Benchmark::Instance().startTimer();                                /* ベンチマーク計測開始 */
 #endif
-  srand( (unsigned int)time(NULL)*time(NULL) );                      /* 乱数初期化 */
+  // srand( (unsigned int)time(NULL)*time(NULL) );                      /* 乱数初期化 */
 
   /*-----------------------------------------------------------------------------
    *  初期化

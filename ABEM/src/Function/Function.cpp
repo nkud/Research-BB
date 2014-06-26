@@ -41,14 +41,14 @@
  *  Description:  ハミング距離を返す
  * =====================================================================================
  */
-int ham_distance(const int * const a, const int * const b, const int n) {
-  int diff = 0;
-  FOR(i, n) {
-    if( a[i] != b[i] )
-      diff++;
-  }
-  return diff;
-}
+// int ham_distance(const int * const a, const int * const b, const int n) {
+//   int diff = 0;
+//   FOR(i, n) {
+//     if( a[i] != b[i] )
+//       diff++;
+//   }
+//   return diff;
+// }
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -57,28 +57,28 @@ int ham_distance(const int * const a, const int * const b, const int n) {
  *                最小ハミング距離が n（ >0 ）-> return sp（タグの位置）
  * =====================================================================================
  */
-int min_ham_distance_point( const int * const a, const int * const v, const int an, const int vn)           /* XXX: a > b だけ想定している */
-{
-  int minh = an;                                                     /* 最小値 */
-  int sp = 0;                                                        /* タグを比べる位置 */
+// int min_ham_distance_point( const int * const a, const int * const v, const int an, const int vn)           /* XXX: a > b だけ想定している */
+// {
+//   int minh = an;                                                     /* 最小値 */
+//   int sp = 0;                                                        /* タグを比べる位置 */
 
-  int tm = minh;                                                     /* 初め最小ハミング距離は最大 */
-  FOR( i, an-vn+1 )                                                  /* ずらせる回数繰り返す */
-  {
-    tm = ham_distance( a+i, v, vn );                                 /* ずらした位置でのハミング距離 */
-    if( tm <= 0 ) return -1;                                         /* (免疫獲得済み) */
-    if( minh >= tm )                                                 /* の方が小さかったら */
-    {
-      if( minh == tm ) {                                             /* もしハミング距離が同じなら */
-        if( rand_binary() ) continue;                                /* 1/2 の確率で上書きする */
-      }
-      minh = tm;                                                     /* 最小値を更新 */
-      sp = i;                                                        /* タグの位置を記録 */
-    }
-  }
-  if( minh <= 0 ) return -1;                                         /* 免疫獲得済み */
-  return sp;                                                         /* ウイルスのタグがとりつく位置を返す */
-}
+//   int tm = minh;                                                     /* 初め最小ハミング距離は最大 */
+//   FOR( i, an-vn+1 )                                                  /* ずらせる回数繰り返す */
+//   {
+//     tm = ham_distance( a+i, v, vn );                                 /* ずらした位置でのハミング距離 */
+//     if( tm <= 0 ) return -1;                                          (免疫獲得済み) 
+//     if( minh >= tm )                                                 /* の方が小さかったら */
+//     {
+//       if( minh == tm ) {                                             /* もしハミング距離が同じなら */
+//         if( rand_binary() ) continue;                                /* 1/2 の確率で上書きする */
+//       }
+//       minh = tm;                                                     /* 最小値を更新 */
+//       sp = i;                                                        /* タグの位置を記録 */
+//     }
+//   }
+//   if( minh <= 0 ) return -1;                                         /* 免疫獲得済み */
+//   return sp;                                                         /* ウイルスのタグがとりつく位置を返す */
+// }
 
 
 /*=============================================================================

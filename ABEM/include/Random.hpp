@@ -28,9 +28,16 @@ class __Random {
     static __Random& Instance();
     virtual void setRandomStrategy();
 
-    virtual int random();
+    virtual int randomInt();
+    virtual double randomDouble();
     virtual int uniformInt( int min, int max );
-    virtual int uniformDouble( double min, double max );
+    virtual double uniformDouble( double min, double max );
+
+    bool probability( double prob );
+    int randArray( const int n );
+    int randBinary();
+    bool randBool();
+    int randSign();
 
     virtual std::string getStrategyName();                           /* 戦略名を取得 */
   private:
@@ -40,6 +47,12 @@ class __Random {
 class __RandomStrategy {
   public:
   private:
+};
+
+///
+/// メルセンヌ・ツイスタ
+class __MersenneTwister : public __RandomStrategy {
+
 };
 
 class Random {
