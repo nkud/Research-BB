@@ -54,7 +54,7 @@ Landscape :: getNeighbors( const Agent &agent )
 Landscape :: Landscape() : width_( WIDTH )
 {
   clearAgentMap();
-  log("init Landscape");
+  OUT("init Landscape");
 }
 
 

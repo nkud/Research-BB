@@ -14,22 +14,38 @@
 #ifndef ___RANDOM
 #define ___RANDOM
 
+#include <random>
+
 class Random {
 public:
-	Random& Instance() {
-		if ( instance_ == NULL )
-		{
-			instance_ = new Random();
-		}
-		return *instance_;
+	static Random& Instance() {
+		static Random singleton;
+		return singleton;
 	}
-	int randomInt();
+
+	std::mt19937& getMT() {
+		if ( mt == NULL ) {
+			std::random_device rd;
+			mt = new std::mt19937(rd());
+		}
+		return *mt;
+	}
+	int randomInt() {
+		return (getMT())();
+	}
 	double randomDouble();
-	int uniformInt();
-	double uniformDouble();
+	int uniformInt( int min, int max ) {
+		std::uniform_int_distribution<int> random(min,max);
+		return random(getMT());
+	}
+	double uniformDouble( double min, double max ) {
+		std::uniform_real_distribution<double> random(min,max);
+		return random(getMT());
+	}
 private:
 	Random() {}
-	Random *instance_;
+
+	std::mt19937 *mt;
 };
 
 #endif

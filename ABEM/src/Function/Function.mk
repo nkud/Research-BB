@@ -16,8 +16,6 @@ TARGET	 = Function.o
 
 OBJS = $(addprefix $(OBJDIR), $(TARGET))
 
-.PHONY: all test clean
-
 all: $(OBJS)
 
 $(OBJDIR)%.o: %.cpp
