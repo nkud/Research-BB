@@ -16,6 +16,7 @@
 
  #include <iostream>
  #include "Function.h"
+#include "Benchmark.h"
 
 class Term {
   public:
@@ -37,19 +38,49 @@ class Term {
     bool isInterval( int interval ) {
       if( getTerm() % interval == 0 ) return true; else return false;
     }
+    int getRemainingTerm() { return getMaxTerm() - getTerm(); }
+
+    double calcEstimatedRemainingTime() {
+      static double prev_time = 0;
+      static double estimated_time = -1;
+      double now_time;
+      int interval = 100;
+      if( isInterval( interval ) ) {
+        now_time = Benchmark::Instance().getElapsedTime();
+        estimated_time = (now_time - prev_time) / interval * getRemainingTerm();
+        prev_time = now_time; 
+      }
+      return estimated_time;
+    }
+
+    double progressRate() {
+      double ret = 100 * (double)getTerm() / getMaxTerm();
+      return ret;
+    }
 
     void printStatusBar() {
-      int n = 100 * (double)getTerm() / getMaxTerm();
+      int n = (int)progressRate();
       std::cout << "\n";
       FOR( i, n ) {
-        std::cout << BLUE_BG << " " << CLR_BG;
+        std::cout << GREEN_BG << " " << CLR_BG;
       }
 //      if( n > 0 ) std::cout << ">" << CLR_ST;
       FOR( i, 100-n ) {
-        std::cout << "-";
+        // std::cout << WHITE_BG <<  " " << CLR_BG;
+        std::cout << REVERSE << " " << STANDARD;
       }
-      std::cout << "\n";
-      std::cout << "[ " << n << " % ]\n";
+      std::cout << " [ " << n << " % ] " << std::endl;
+      double estimated_time = calcEstimatedRemainingTime();
+      int estimated_min = estimated_time/60;
+      int estimated_sec = estimated_time - estimated_min*60;
+      std::cout << CLEAR_RIGHT << "\n>>> ESTIMATED REMAINING TIME: ";
+      if ( estimated_time > 0 ) {
+        std::cout << CLEAR_RIGHT << UNDERLINE
+         << estimated_min << " min " << estimated_sec << " sec"
+         << STANDARD;
+      } else {
+        std::cout << "calculating...";
+      }
     }
   private:
     Term() : term_(0), max_term_(0) { }

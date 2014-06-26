@@ -244,7 +244,6 @@ int main()
     if( AgentCounter::Instance().getCountContact()==0 ) zero_count++;                   /* １０回以上接触感染がなければ */
     if( zero_count >= 20 ) break;                                    /* 強制的に終了する */
     if( (int)agents.size() == A_MAX_NUM ) break;
-    CURSOR_CLEAR;
   }                                                                  /* ============================================================== 計算終了 */
 
 #ifdef BENCHMARK

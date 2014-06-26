@@ -1,4 +1,4 @@
-CC       = g++ -Wall -std=c++11
+CC       = g++ -Wall -g -O0 -std=c++11
 PRINT    = /bin/echo
 MKDIR	 = mkdir -p
 MAKE	 = make --no-print-directory -s

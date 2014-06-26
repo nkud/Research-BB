@@ -12,7 +12,7 @@ SRCDIR := $(shell find . -type d)
 
 VPATH = $(INCLUDE) $(SRCDIR) $(OBJDIR)
 	
-TARGET	 = Function.o
+TARGET	 = Function.o Random.o
 
 OBJS = $(addprefix $(OBJDIR), $(TARGET))
 
@@ -26,3 +26,5 @@ $(OBJDIR)%.o: %.cpp
 test:
 
 clean:
+
+$(OBJDIR)Random.o: Random.hpp

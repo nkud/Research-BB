@@ -31,7 +31,7 @@
 #define FOR(i, m)           for(int (i)=0; (i)<(m); (i)++)  /* i: 0 ~ (m-1) */
 #define REP(i, min, max)    for(int (i)=(min); (i)<=(max); (i)++)
 
-#define LOG(x)              do { std::cout<<"["<<CYAN<<#x<<CLR_ST<<"]: "<<x<<std::endl; }while(0);
+#define LOG(x)              do { std::cout<< CLEAR_RIGHT << "["<<CYAN<<#x<<CLR_ST<<"]: "<<x<<std::endl; }while(0);
 
 #define DEBUG(x)			do { std::cerr<<">>> "<<#x<<" = "<<(x)<<" (L"<<__LINE__<<")"<<" "<<__FILE__<<std::endl; }while(0);
 
@@ -50,15 +50,20 @@
 /// エスケープシーケンス
 #define TERMINAL_CLEAR          std::cout<<"\033[H\033[2J";
 #define TERMINAL_LOCATION(x,y)  std::cout<<"\033["<<x<<";"<<y<<"H";
+#define CLEAR_RIGHT	"\033[0K"
 
 #define REVERSE "\033[7m"
-#define STANDARD "\033[1m"
+#define STANDARD "\033[0m"
+#define UNDERLINE "\033[4m"
 #define RED    "\033[31m"
+#define GREEN    "\033[32m"
 #define BLUE    "\033[34m"
 #define CYAN    "\033[36m"
 #define WHITE    "\033[37m"
+#define WHITE_BG "\033[47m"
 #define BLUE_BG    "\033[44m"
 #define RED_BG    "\033[41m"
+#define GREEN_BG	"\033[42m"
 #define BLACK_BG    "\033[40m"
 #define CLR_BG    "\033[49m"
 #define CLR_ST    "\033[39m"

@@ -45,10 +45,15 @@ class Benchmark {
         void printTime() const                                      /* 計測時間を表示 */
         { std::cout << "[ time ]: " << end_ - start_ << " sec" << std::endl; }
 
+        double getElapsedTime() {
+            gettimeofday(&tv_, NULL);
+            double now = tv_.tv_sec + tv_.tv_usec * 1e-6;
+            return now - start_;
+        }
+
         void printElapsedTime() {                                     /* 計測時間を表示 */
-        gettimeofday(&tv_, NULL);
-        double now = tv_.tv_sec + tv_.tv_usec * 1e-6;
-        std::cout << "[ elapsed time (sec) ]: " << now - start_ << std::endl; }
+        
+        std::cout << "[ elapsed time (sec) ]: " << getElapsedTime() << std::endl; }
 
     private:
         Benchmark() {}
