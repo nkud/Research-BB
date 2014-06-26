@@ -1,4 +1,4 @@
-CC       = g++ -Wall -g -O0
+CC       = g++ -Wall -g -O0 -std=c++11
 PRINT    = /bin/echo
 MKDIR	 = mkdir -vp
 
@@ -16,6 +16,7 @@ TARGET	 = Function.o
 
 OBJS = $(addprefix $(OBJDIR), $(TARGET))
 
+.PHONY: all test clean
 
 all: $(OBJS)
 
@@ -23,3 +24,7 @@ $(OBJDIR)%.o: %.cpp
 	@$(PRINT) Compiling $(notdir $@)...
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
+
+test:
+
+clean:

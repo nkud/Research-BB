@@ -48,7 +48,7 @@
 #define SEPARATOR           " "                                      /* 出力データを分割する文字 */
 
 /// エスケープシーケンス
-#define TERMINAL_CLEAR          std::cout<<"\033[2J";
+#define TERMINAL_CLEAR          std::cout<<"\033[H\033[2J";
 #define TERMINAL_LOCATION(x,y)  std::cout<<"\033["<<x<<";"<<y<<"H";
 
 #define RED    "\033[31m"
@@ -91,7 +91,7 @@ template < typename T >                                              /* スワ�
 void SWAP( T &a, T &b ) { T t = a; a = b; b = t; }
 template < typename T >                                              /* ランダム選択 */
 T random_select( const T a, const T b ) { if(rand_binary() == 0) return a; else return b; }
-template < typename T >                                              /* ログ出力用 */
-void log(T str) { int static i=0;std::cout<<i++<<":\t"<<str<<std::endl; }
+// template < typename T >                                              /* ログ出力用 */
+// void log(T str) { int static i=0;std::cout<<i++<<":\t"<<str<<std::endl; }
 
 #endif

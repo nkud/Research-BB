@@ -15,6 +15,8 @@
 #include <cstdlib>
 #include <algorithm>
 
+#include "Random.hpp"
+
 /* 
  * ===  FUNCTION  ======================================================================
  *         Name:  flip_once
