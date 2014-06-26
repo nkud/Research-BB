@@ -1,7 +1,7 @@
 CC       = g++ -Wall -std=c++11
 PRINT    = /bin/echo
 MKDIR	 = mkdir -p
-MAKE 	 = make --no-print-directory -s
+MAKE	 = make --no-print-directory -s
 COPY	 = cp
 CTAGS	 = $(shell which ctags)
 
@@ -41,10 +41,10 @@ $(BINDIR)/$(TARGET): $(LIBSPATH)
 # Makefile名とフォルダ名は同じにする
 $(LIBSPATH):
 
-	@echo -ne '\033[31m'
+	@printf '\033[31m'
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
 	@$(PRINT) '---> $(notdir $@)'
-	@echo -ne '\033[39m'
+	@printf '\033[39m'
 	@$(MAKE) -C $@ -f $(notdir $@).mk
 	@$(PRINT)
 
@@ -54,8 +54,8 @@ test:
 
 # 実行する
 run:
-	@$(PRINT) '[ run ]'	
-	@$(RM) $(BINDIR)/*.txt	
+	@$(PRINT) '[ run ]'
+	@$(RM) $(BINDIR)/*.txt
 	@[ -d $(BINDIR)/$(AGENTDIR) ] || $(MKDIR) $(BINDIR)/$(AGENTDIR)
 	@[ -d $(BINDIR)/$(VIRUSDIR) ] || $(MKDIR) $(BINDIR)/$(VIRUSDIR)
 	@$(RM) $(BINDIR)/$(AGENTDIR)/*.txt
