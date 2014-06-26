@@ -51,11 +51,14 @@
 #define TERMINAL_CLEAR          std::cout<<"\033[H\033[2J";
 #define TERMINAL_LOCATION(x,y)  std::cout<<"\033["<<x<<";"<<y<<"H";
 
+#define REVERSE "\033[7m"
+#define STANDARD "\033[1m"
 #define RED    "\033[31m"
 #define BLUE    "\033[34m"
 #define CYAN    "\033[36m"
 #define WHITE    "\033[37m"
 #define BLUE_BG    "\033[44m"
+#define RED_BG    "\033[41m"
 #define BLACK_BG    "\033[40m"
 #define CLR_BG    "\033[49m"
 #define CLR_ST    "\033[39m"

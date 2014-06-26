@@ -40,16 +40,16 @@ class Term {
 
     void printStatusBar() {
       int n = 100 * (double)getTerm() / getMaxTerm();
-      std::cout << "\n( " << n << " % )\n";
-      std::cout << "[";
-      FOR( i, n-1 ) {
-        std::cout << RED << "=";
+      std::cout << "\n";
+      FOR( i, n ) {
+        std::cout << BLUE_BG << " " << CLR_BG;
       }
-      if( n > 0 ) std::cout << ">" << CLR_ST;
+//      if( n > 0 ) std::cout << ">" << CLR_ST;
       FOR( i, 100-n ) {
-        std::cout << " ";
+        std::cout << "-";
       }
-      std::cout << "]\n\n";
+      std::cout << "\n";
+      std::cout << "[ " << n << " % ]\n";
     }
   private:
     Term() : term_(0), max_term_(0) { }
