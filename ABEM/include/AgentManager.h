@@ -16,7 +16,6 @@
 
 class Agent;
 class __MovingStrategy;
-class __ChildBirthStrategy;
 class Gene;
 
 class AgentManager {
@@ -25,21 +24,11 @@ class AgentManager {
     /*-----------------------------------------------------------------------------
      *  初期化
      *-----------------------------------------------------------------------------*/
-    virtual void initAgent( __MovingStrategy *, __ChildBirthStrategy *, Gene *, int num );
-    virtual void initAgent( __MovingStrategy *, __ChildBirthStrategy *, int len, int num );
+    virtual void initAgent( __MovingStrategy *, int len, int num );
     virtual void initInfectAgentInRatio( Virus &, double );          /* 初期感染させる */
     /*-----------------------------------------------------------------------------
      *  集団的処理
      *-----------------------------------------------------------------------------*/
-    // virtual void migrate();                                          /* 移動 */
-
-    // virtual void contact();                                          /* 接触 */
-    // virtual void infect();                                           /* 感染 */
-    // virtual void response();                                         /* 免疫応答 */
-
-    virtual void aging();                                            /* 老化 */
-    virtual void mating();                                           /* 交配 */
-
     int numHasVirus();
 
     int numIsIncubation() const;

@@ -81,25 +81,17 @@ void Agent :: contact( Agent &other ) {
  *-----------------------------------------------------------------------------*/
 Agent :: Agent(
     __MovingStrategy *ms,                                            /* 移動戦略 */
-    __ChildBirthStrategy *cbs,                                       /* 子孫戦略 */
     int len                                                          /* タグ長 */
     ) :
   Life( len ),
   x_( 0 ),
   y_( 0 ),
-  age_( 0 ),
-  sex_( __MALE__ ),
-  life_( __ALIVE__ ),
   immune_system_( NULL ),
-  moving_strategy_( ms ),
-  childbirth_strategy_( cbs )
+  moving_strategy_( ms )
 {
   immune_system_ = new ImmuneSystem;                                 /* 免疫機構実装 */
 
   getGene().setTagRandom();                                          /* タグをランダムに初期化 */
-
-  sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
-  age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
 }
 
 /*-----------------------------------------------------------------------------
@@ -107,45 +99,29 @@ Agent :: Agent(
  *-----------------------------------------------------------------------------*/
 Agent :: Agent(
     __MovingStrategy *ms,                                            /* 移動戦略 */
-    __ChildBirthStrategy *cbs,                                       /* 子孫戦略 */
     Gene *gene                                                       /* 電子タグ */
     ) :
   Life( *gene ),
   x_( 0 ),
   y_( 0 ),
-  age_( 0 ),
-  sex_( __MALE__ ),
-  life_( __ALIVE__ ),
-  moving_strategy_( ms ),
-  childbirth_strategy_( cbs )
+  moving_strategy_( ms )
 {
   immune_system_ = new ImmuneSystem;                                 /* 免疫機構実装 */
 
   getGene().setTagRandom();
-
-  sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
-  age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
 }
 /*-----------------------------------------------------------------------------
  *  移動戦略・子孫戦略・タグ長（最小値~最大値）　指定
  *-----------------------------------------------------------------------------*/
-Agent :: Agent( __MovingStrategy *ms, __ChildBirthStrategy *cbs, int minl, int maxl ) :
+Agent :: Agent( __MovingStrategy *ms, int minl, int maxl ) :
   Life( rand_interval_int(minl, maxl) ),
   x_( 0 ),
   y_( 0 ),
-  age_( 0 ),
-  sex_( __MALE__ ),
-  life_( __ALIVE__ ),
-  moving_strategy_( ms ),
-  childbirth_strategy_( cbs )
+  moving_strategy_( ms )
 {
   immune_system_ = new ImmuneSystem();                               /* 免疫機構実装 */
 
   getGene().setTagRandom();                                          /* タグをランダムに初期化 */
-
-  sex_ = random_select( __MALE__, __FEMALE__ );                      /* 性別をランダムに初期化 */
-  age_ = rand_interval_int( 0, A_MAX_AGE );                          /* 寿命をランダムに設定 */
-
 }
 
 /*-----------------------------------------------------------------------------
@@ -156,56 +132,14 @@ Agent :: ~Agent() {
   SAFE_DELETE( immune_system_ );
 }
 
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Agent :: resetParam()
- * Description:  エージェントのパラメータをリセット
- *               年齢は０才で初期化
- *--------------------------------------------------------------------------------------
- */
-void Agent :: resetParam() {
-  age_ = 0;                                                          /* ０才で初期化 */
-  if( rand_binary() == 0 ) { sex_ = __MALE__;                        /* 性別をランダムに初期化 */
-  } else { sex_ = __FEMALE__; }
-  life_ = __ALIVE__;
-  // immunesystem reset XXX
-}
-
 /*-----------------------------------------------------------------------------
  *  rebirth()
  *      エージェントを初期化して再利用する
  *-----------------------------------------------------------------------------*/
 void Agent :: rebirth() {
-  resetParam();
-//  int len = gene_->getLen();
-
-//  SAFE_DELETE( gene_ );
   SAFE_DELETE( immune_system_ );
-
-//  gene_ = new Gene(len);
-//  gene_->setTagRandom();
   initGene();
   immune_system_ = new ImmuneSystem;
-}
-
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Agent :: birthChild *
- * Description:  出産関連の関数
- *--------------------------------------------------------------------------------------
- */
-bool Agent :: hasAlreadyGiveBirth() {
-  if( give_birth_ ) {                                                /* 出産済みなら */
-    return true;                                                     /* true */
-  } else {                                                           /* そうでないなら */
-    return false;                                                    /* false */
-  }
-}
-void Agent :: setGiveBirth() {
-  give_birth_ = true;                                                /* 出産後にする */
-}
-void Agent :: resetGiveBirth() {
-  give_birth_ = false;                                               /* 未出産にする */
 }
 /*--------------------------------------------------------------------------------------
  *      Method:  Agent :: *
@@ -218,29 +152,6 @@ void Agent :: setX( int x ) { x_ = x; }                              /* エー�
 void Agent :: setY( int y ) { y_ = y; }                              /* エージェントの位置を設定 */
 int Agent :: getX() const { return x_; }                             /* エージェントの位置を返す */
 int Agent :: getY() const { return y_; }                             /* エージェントの位置を返す */
-/*-----------------------------------------------------------------------------
- *  パラメータ
- *-----------------------------------------------------------------------------*/
-__LABEL__ Agent :: getSex() const { return sex_; }
-int Agent :: getAge() const { return age_; }
-bool Agent :: hasAbilityToChildbirth() const
-{ if(A_BIRTH_AGE_FROM<=age_ && age_<=A_BIRTH_AGE_TO) return true; else return false; }
-
-void Agent :: setLife( __LABEL__ l ) { life_ = l; }
-//bool Agent :: isAlive() const { if( life_ == __ALIVE__ ) return true; else return false; }
-//bool Agent :: isDead() const { if( life_ == __DEATH__ ) return false; else return true; }
-
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Agent :: aging
- * Description:  老化する
- *--------------------------------------------------------------------------------------
- */
-int Agent :: aging() {
-  age_++;                                                            /* 年齢をインクリメント */
-  return age_;
-}
-
 /*
  *--------------------------------------------------------------------------------------
  *      Method:  Agent :: infection( Gene & )
@@ -306,27 +217,3 @@ void Agent :: move() {
   // }
 }
 __MovingStrategy* Agent :: getMovingStrategy() const { return moving_strategy_; }
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Agent :: childBirthWith
- * Description:  指定された戦略を使用して移動する
- *--------------------------------------------------------------------------------------
- */
-Agent* Agent :: childBirthWith( const Agent &partner ) const {
-  return childbirth_strategy_->childbirth( *this, partner );         /* 戦略を使用して移動する */
-}
-__ChildBirthStrategy* Agent :: getChildBirthStrategy() const { return childbirth_strategy_; }
-
-/* 
- * ===  FUNCTION  ======================================================================
- *         Name:  isOppositeSex( Agent &, Agent & )
- *  Description:  異性であれば true
- * =====================================================================================
- */
-bool isOppositeSex( const Agent &a, const Agent &b ) {
-  if( a.getSex() == b.getSex() ) {                                   /* 性別が同じなら */
-    return false;                                                    /* false */
-  } else {                                                           /* 異なれば */
-    return true;                                                     /* true */
-  }
-}

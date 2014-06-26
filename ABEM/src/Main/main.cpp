@@ -65,7 +65,6 @@ int main()
   aManager.initAgent( 
       new RandomGaussWalk( A_MOVE_DISTANCE ),
       //    new RandomWalk( A_MOVE_DISTANCE ),
-      new CoupleTag(), 
       A_DEFAULT_LEN,
       A_INIT_NUM );
   vManager.initVirus();
@@ -106,12 +105,6 @@ int main()
     aCounter.reset();
     vCounter.reset();
     /* エージェント、ウイルス、土地の計算 */
-#ifdef AGING_AGENT
-    aManager.aging();                                                /* 老化する */
-#endif
-#ifdef MATING_AGENT
-    aManager.mating();                                               /* 交配、出産する */
-#endif
     /*-----------------------------------------------------------------------------
      *  移動
      *-----------------------------------------------------------------------------*/
