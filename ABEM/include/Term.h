@@ -74,12 +74,12 @@ class Term {
       int estimated_min = estimated_time/60;
       int estimated_sec = estimated_time - estimated_min*60;
       std::cout << CLEAR_RIGHT << "\n>>> ESTIMATED REMAINING TIME: ";
-      if ( estimated_time > 0 ) {
+      if ( estimated_time >= 0 ) {
         std::cout << CLEAR_RIGHT << UNDERLINE
          << estimated_min << " min " << estimated_sec << " sec"
-         << STANDARD;
+         << STANDARD << std::endl;
       } else {
-        std::cout << "calculating...";
+        std::cout << "calculating..." << std::endl;
       }
     }
   private:
