@@ -19,7 +19,7 @@ typedef int tag_t;                                                   /* タグ�
 
 const int TERM                      = 10000                ;          /* 期間 */
 const int OUTPUT_INTERVAL           = 1                    ;         /* 出力する間隔 */
-const int DATABASE_INTERVAL         = 500                  ;         /* データベースを出力する期間 */
+const int DATABASE_INTERVAL         = 100                  ;         /* データベースを出力する期間 */
 const int MINI_SIZE_TERM            = 200                  ;
 
 const int WIDTH                     = 60                   ;         /* ランドスケープの幅 */

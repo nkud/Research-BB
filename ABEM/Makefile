@@ -68,8 +68,11 @@ gene:
 
 	@cd $(BINDIR); python ../script/gene.py
 	@cd $(BINDIR); gnuplot auto.plt 1>/dev/null
-	@cd $(BINDIR)/$(VIRUSDIR); gnuplot vvd.plt 1>/dev/null
-	@cd $(BINDIR)/$(AGENTDIR); gnuplot avd.plt 1>/dev/null
+	# @cd $(BINDIR)/$(VIRUSDIR); gnuplot vvd.plt 1>/dev/null
+	# @cd $(BINDIR)/$(AGENTDIR); gnuplot avd.plt 1>/dev/null
+	@cd $(BINDIR)/$(AGENTDIR); gnuplot animation.plt >/dev/null 2>&1
+	@cd $(BINDIR)/$(VIRUSDIR); gnuplot animation.plt >/dev/null 2>&1
+
 
 # 結果をパッケージングする
 pack:

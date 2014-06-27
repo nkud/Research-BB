@@ -36,6 +36,9 @@ def main():
     generatePlotForVirusValueHistogram(last_term, interval);
     generatePlotForAgentValueHistogram(last_term, interval);
 
+    generatePlotForVirusValueAnimation(last_term, interval);
+    generatePlotForAgentValueAnimation(last_term, interval);
+
     pf.close()
     hf.close()
 
