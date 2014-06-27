@@ -5,7 +5,7 @@ AGENT_DIR = 'AgentDataBase/'
 def value(v):
     ret = 0
     for i in range(len(v)):
-        ret += int(v[i])
+        ret += 1
     return ret
 def out(n):
     fi = open(AGENT_DIR+'%d_AgentGeneDistribution.txt' % n, 'r')
@@ -64,7 +64,7 @@ def generatePlotForAgentValueAnimation(last_term, interval):
     fframe = open(AGENT_DIR+'frame.plt', 'w')
     fframe.write('title(n)=sprintf("t = %d", n);\n')
     fframe.write('file(n)=sprintf("%d_AgentValueDistribution.txt", n);\n')
-    fframe.write('set yl textcolor lt 0;set xrange[0:200];set yrange[0:100];\n')
+    fframe.write('set yl textcolor lt 0;set xrange[0:200];set yrange[0:500];\n')
     fframe.write('set title title(n);\n')
     fframe.write('plot file(n) using 1:2 w boxes title "num";\n')
     fframe.write('if(n<%d) n=n+%d; reread;' % (last_term-1, interval))
@@ -72,7 +72,7 @@ def generatePlotForAgentValueAnimation(last_term, interval):
     fanim = open(AGENT_DIR+'animation.plt', 'w')
     fanim.write('set terminal gif animate optimize size 600,240 delay 10;\n')
     fanim.write('set output "animation.gif";\n')
-    fanim.write('set title font "times new roman,12";\n')
+    # fanim.write('set title font "times new roman,12";\n')
     fanim.write('set style line 1 lw 2;\n')
     fanim.write('set key below right;\n')
     fanim.write('set key textcolor lt 0;\n')

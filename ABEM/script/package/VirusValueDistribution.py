@@ -72,7 +72,7 @@ def generatePlotForVirusValueAnimation(last_term, interval):
     fanim = open(VIDRUS_DIR+'animation.plt', 'w')
     fanim.write('set terminal gif animate optimize size 600,240 delay 10;\n')
     fanim.write('set output "animation.gif";\n')
-    fanim.write('set title font "times new roman,12";\n')
+    # fanim.write('set title font "times new roman,12";\n')
     fanim.write('set style line 1 lw 2;\n')
     fanim.write('set key below right;\n')
     fanim.write('set key textcolor lt 0;\n')
