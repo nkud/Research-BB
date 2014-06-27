@@ -13,8 +13,10 @@ PRGDIR	 = program
 MASTER	 = master
 AGENTDIR	 = AgentDataBase
 VIRUSDIR	 = VirusDataBase
-NOW		 = $(shell date +%y%m%d-%H%M%S)
+
+NOW		 := $(shell date +%y%m%d-%H%M%S)
 RESULT   = result-$(NOW)
+PROGRAM  = program-$(NOW)
 
 VPATH = obj include
 
@@ -83,6 +85,16 @@ pack:
 	@cp -r bin/* $(MASTER)/$(RESULT)-$(R)
 	@cp -r Makefile include src script $(MASTER)/$(RESULT)-$(R)/$(PRGDIR)
 	@ls $(MASTER)/$(RESULT)-$(R)
+
+ext:
+	@$(PRINT) '>>> Extraction'
+	@$(PRINT) FNAME:[ $(PROGRAM) ]
+	@[ -d $(PROGRAM) ] || $(MKDIR) $(PROGRAM)
+	@[ -d $(PROGRAM)/src ] || $(MKDIR) $(PROGRAM)/src
+	@[ -d $(PROGRAM)/include ] || $(MKDIR) $(PROGRAM)/include
+	@-find src -name '*.cpp' -exec cp {} $(PROGRAM)/src/ \;
+	@-find include -name '*.h' -exec cp {} $(PROGRAM)/include \;
+	@-find include -name '*.hpp' -exec cp {} $(PROGRAM)/include \;
 
 # 削除する
 clean:
