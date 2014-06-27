@@ -27,7 +27,7 @@ const int A_MOVE_DISTANCE           = 2                   ;          /* エー�
 
 const double INFECTION_RATE         = 30.0                  ;        /* デフォルトの感染率 */
 
-const int A_MAX_V_CAPACITY         = 1                    ;          /* 最大保持ウイルス */
+const int A_MAX_V_CAPACITY          = 1                    ;          /* 最大保持ウイルス */
 const int A_MAX_V_INFECTED_ONE_TERM = 1                    ;         /* １期間で感染させるウイルスの最大数 */
 
 const int A_INIT_NUM                = 1000                  ;        /* 初期エージェントの数 */
@@ -39,7 +39,7 @@ const int A_DEFAULT_LEN             = 10                   ;         /* エー�
 const int V_DEFAULT_LEN             = 12                   ;         /* エージェントのタグ長 */
 
 const int V_INCUBATION_PERIOD       = 6;
-const int V_LETHAL_PERIOD           = 20;
+const int V_LETHAL_PERIOD           = 16;
 
 const int V_MUTATION_RATE           = 30;
 

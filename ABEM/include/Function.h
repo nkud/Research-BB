@@ -23,6 +23,8 @@
 #include <vector>
 #include <iostream>
 #include <cassert>
+
+#include "Terminal.hpp"
 /*-----------------------------------------------------------------------------
  *
  *  マクロ
@@ -33,42 +35,19 @@
 
 #define LOG(x)              do { std::cout<< CLEAR_RIGHT << "["<<CYAN<<#x<<CLR_ST<<"]: "<<x<<std::endl; }while(0);
 
-#define DEBUG(x)			do { std::cerr<<">>> "<<#x<<" = "<<(x)<<" (L"<<__LINE__<<")"<<" "<<__FILE__<<std::endl; }while(0);
+#define DEBUG(x)            do { std::cerr<<">>> "<<#x<<" = "<<(x)<<" (L"<<__LINE__<<")"<<" "<<__FILE__<<std::endl; }while(0);
 
-#define ALL(a) 				(a).begin(),(a).end()
-#define EACH(i,c) 			for(typeof((c).begin()) i=(c).begin(); i!=(c).end(); ++i)
+#define ALL(a)              (a).begin(),(a).end()
+#define EACH(i,c)           for(typeof((c).begin()) i=(c).begin(); i!=(c).end(); ++i)
 
 #define VECTOR(type)        std::vector< type >
 #define ITERATOR(type)      std::vector< type >::iterator
 #define C_ITERATOR(type)    std::vector< type >::const_iterator
 
-#define SAFE_DELETE(p)			delete p; p = NULL;
-#define SAFE_DELETE_ARRAY(p)	delete[] p; p = NULL;
+#define SAFE_DELETE(p)          delete p; p = NULL;
+#define SAFE_DELETE_ARRAY(p)    delete[] p; p = NULL;
 
 #define SEPARATOR           " "                                      /* 出力データを分割する文字 */
-
-/// エスケープシーケンス
-#define TERMINAL_CLEAR          std::cout<<"\033[H\033[2J";
-#define TERMINAL_LOCATION(x,y)  std::cout<<"\033["<<x<<";"<<y<<"H";
-#define CLEAR_RIGHT	"\033[0K"
-
-#define REVERSE "\033[7m"
-#define STANDARD "\033[0m"
-#define UNDERLINE "\033[4m"
-#define RED    "\033[31m"
-#define GREEN    "\033[32m"
-#define BLUE    "\033[34m"
-#define CYAN    "\033[36m"
-#define WHITE    "\033[37m"
-#define WHITE_BG "\033[47m"
-#define BLUE_BG    "\033[44m"
-#define RED_BG    "\033[41m"
-#define GREEN_BG	"\033[42m"
-#define BLACK_BG    "\033[40m"
-#define CLR_BG    "\033[49m"
-#define CLR_ST    "\033[39m"
-#define CURSOR_HIDE "\033[>5h"
-#define CURSOR_CLEAR  std::cout<<CURSOR_HIDE;
 
 /*-----------------------------------------------------------------------------
  *  タグ操作セット

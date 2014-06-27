@@ -63,11 +63,12 @@ class Term {
       std::cout << "\n";
       FOR( i, n ) {
         std::cout << GREEN_BG << " " << CLR_BG;
+//        std::cout << GREEN << "|" << CLR_ST;
       }
 //      if( n > 0 ) std::cout << ">" << CLR_ST;
       FOR( i, 100-n ) {
-        // std::cout << WHITE_BG <<  " " << CLR_BG;
         std::cout << REVERSE << " " << STANDARD;
+//        std::cout << RED << "|" << CLR_ST;
       }
       std::cout << " [ " << n << " % ] " << std::endl;
       double estimated_time = calcEstimatedRemainingTime();

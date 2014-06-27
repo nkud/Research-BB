@@ -28,3 +28,4 @@ test:
 clean:
 
 $(OBJDIR)Random.o: Random.hpp
+$(OBJDIR)Function.o: Terminal.hpp

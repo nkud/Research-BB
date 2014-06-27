@@ -97,6 +97,7 @@ int main()
   Term &term = Term::Instance();
   term.setMaxTerm( TERM );
   TERMINAL_CLEAR;
+//  terminal_clear();
   while( term.incrementTerm() )                                      /* 計算開始  */
   {
     TERMINAL_LOCATION(0,0);
