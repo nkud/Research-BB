@@ -17,7 +17,7 @@ typedef int tag_t;                                                   /* タグ�
 
 //#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-const int TERM                      = 200000                ;          /* 期間 */
+const int TERM                      = 100000                ;          /* 期間 */
 const int OUTPUT_INTERVAL           = 1                    ;         /* 出力する間隔 */
 const int DATABASE_INTERVAL         = 100                  ;         /* データベースを出力する期間 */
 const int MINI_SIZE_TERM            = 200                  ;
@@ -39,7 +39,7 @@ const int A_DEFAULT_LEN             = 10                   ;         /* エー�
 const int V_DEFAULT_LEN             = 12                   ;         /* エージェントのタグ長 */
 
 const int V_INCUBATION_PERIOD       = 6;
-const int V_LETHAL_PERIOD           = 12;
+const int V_LETHAL_PERIOD           = 10;
 
 const int V_MUTATION_RATE           = 30;
 
