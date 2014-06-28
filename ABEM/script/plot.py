@@ -9,7 +9,7 @@ LINE_STYLE = 'w l'
 IMG_SIZE = '1200,300'
 RESULT_WIDTH = 1000
 CSS_DIR = '../template/result.css'
-IMG_EXT = 'svg'
+IMG_EXT = 'png'
 FONT = 'times new roman,13'
 
 IMG_DIR = 'image/'
