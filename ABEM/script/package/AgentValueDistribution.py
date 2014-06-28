@@ -5,7 +5,7 @@ AGENT_DIR = 'AgentDataBase/'
 def value(v):
     ret = 0
     for i in range(len(v)):
-        ret += 1
+        ret += int(v[i])
     return ret
 def out(n):
     fi = open(AGENT_DIR+'%d_AgentGeneDistribution.txt' % n, 'r')
@@ -18,7 +18,7 @@ def out(n):
         line = line.split(' ')
         val = value(line[0])
         if(data.has_key(str(val))):
-            data[ str(val) ] += int(line[1])
+            data[ str(val) ] += 1
         else:
             data[ str(val) ] = 0
 
