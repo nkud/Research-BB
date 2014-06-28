@@ -32,8 +32,8 @@ fo.write('set style line 1 lw 2;'
 'set xl textcolor lt 0;'
 'set yl textcolor lt 0;'
 'set terminal png size 600,400 font "times new roman,13";'
-'set xrange[0:200];'
-'set yrange[0:200];\n')
+'set xrange[0:100];'
+'set yrange[0:300];\n')
 
 def plot(n):
     fo.write('set title "AgentValueHistogram";set xl "Value";set yl "Num";'+
@@ -64,7 +64,7 @@ def generatePlotForAgentValueAnimation(last_term, interval):
     fframe = open(AGENT_DIR+'frame.plt', 'w')
     fframe.write('title(n)=sprintf("t = %d", n);\n')
     fframe.write('file(n)=sprintf("%d_AgentValueDistribution.txt", n);\n')
-    fframe.write('set yl textcolor lt 0;set xrange[0:200];set yrange[0:500];\n')
+    fframe.write('set yl textcolor lt 0;set xrange[0:100];set yrange[0:300];\n')
     fframe.write('set title title(n);\n')
     fframe.write('plot file(n) using 1:2 w boxes title "num";\n')
     fframe.write('if(n<%d) n=n+%d; reread;' % (last_term-1, interval))
