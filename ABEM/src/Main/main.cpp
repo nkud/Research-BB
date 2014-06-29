@@ -60,6 +60,7 @@ int main()
   VirusManager vManager( viruses );                                  /* ウイルスの配列を登録 */
 
   /// プロトタイプを使う XXX
+  /// エージェント初期化
   FOR( i, A_INIT_NUM ) {                                                    /* num のだけ */
     agents.push_back( new Agent(
       new RandomGaussWalk( A_MOVE_DISTANCE ),
@@ -77,8 +78,8 @@ int main()
     (*it_a)->setY( ty );
     landscape.registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a ); /* エージェントを登録 */
   }
-
-  vManager.initVirus();
+  /// ウイルス初期化
+  viruses.push_back( new Virus( V_TAG_0 ) );       /* 通常ウイルスを追加 */
 
   /* モニター・ファイル生成クラス */
   FileFactory& fFactory = FileFactory::Instance();                   /* 出力ファイルを管理 */

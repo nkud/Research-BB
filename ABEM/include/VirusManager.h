@@ -22,7 +22,6 @@ class Virus;
 class VirusManager {
   public:
     VirusManager( VECTOR(Virus *) &viruses );
-    void initVirus();
 
     ITERATOR(Virus *) getVirusIteratorBegin() { return viruses_.begin(); }
     ITERATOR(Virus *) getVirusIteratorEnd() { return viruses_.end(); }
