@@ -14,11 +14,13 @@
 #ifndef ___RANDOM
 #define ___RANDOM
 
+#include "Function.h"
+
 #include <random>
 #include <string>
 
 #include <random>
-
+#include <cstdlib>
 
 class Random;
 class __RandomStrategy;
@@ -39,7 +41,6 @@ class __RandomStrategy {
     virtual double uniformDouble( double min, double mas ) = 0;
   private:
 };
-
 
 /*
  * =====================================================================================
@@ -71,6 +72,38 @@ class __MersenneTwister : public __RandomStrategy {
     std::mt19937 *mt;
 };
 
+/// 線形合同法
+class __LinearCongruentialGenerator : public __RandomStrategy {
+public:
+  double randomDouble() {
+    static int x = 10;
+    int a=1103515245, b=12345, c=2147483647;
+    x = (a*x + b)&c;
+
+    return ((double)x+1.0) / ((double)c+2.0);
+  }
+private:
+};
+
+/// stdlib
+class __Default : public __RandomStrategy {
+public:
+  double randomDouble() { return ((double)rand()+1.0)/((double)RAND_MAX+2.0); }
+  int randomInt() {
+    return rand();
+  }
+  int uniformInt( int min, int max ) {
+    int ret = rand()%( max - min + 1 ) + min;
+    return ret;
+  }
+  double uniformDouble( double min, double max ) {
+    return uniformInt(min, max-1) + randomDouble();
+  }
+  __Default() {
+    srand((unsigned)time(NULL));
+  }
+private:
+};
 
 /*
  * =====================================================================================
@@ -95,7 +128,7 @@ class Random {
     static Random& Instance() { 
       static Random singleton;
       if ( singleton.getRandomStrategy() == NULL ) {
-        singleton.setRandomStrategy( new __MersenneTwister );        /* メルセンヌ・ツイスタを使用 */
+        singleton.setRandomStrategy( new __Default );        /* メルセンヌ・ツイスタを使用 */
       }
       return singleton;
     }
@@ -103,40 +136,5 @@ class Random {
      Random() {}
     __RandomStrategy *random_strategy_;
 };
-
-
-// /
-// / Random
-// class Random {
-//   public:
-//     static Random& Instance() {
-//       static Random singleton;
-//       return singleton;
-//     }
-
-//     std::mt19937& getMT() {
-//       if ( mt == NULL ) {
-//         std::random_device rd;
-//         mt = new std::mt19937(rd());
-//       }
-//       return *mt;
-//     }
-//     int randomInt() {
-//       return (getMT())();
-//     }
-//     double randomDouble();
-//     int uniformInt( int min, int max ) {
-//       std::uniform_int_distribution<int> random(min,max);
-//       return random(getMT());
-//     }
-//     double uniformDouble( double min, double max ) {
-//       std::uniform_real_distribution<double> random(min,max);
-//       return random(getMT());
-//     }
-//   private:
-//     Random() {}
-
-//     std::mt19937 *mt;
-// };
 
 #endif
