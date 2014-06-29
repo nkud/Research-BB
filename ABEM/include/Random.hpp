@@ -72,7 +72,11 @@ class __MersenneTwister : public __RandomStrategy {
     std::mt19937 *mt;
 };
 
-/// 線形合同法
+////////////////////////////////////////////////////////////////////////////////
+/// @brief 線形合同法を用いた乱数生成戦略クラス
+/// @date 日時
+/// @note メモ
+/// @todo コンストラクタ周りを整理する
 class __LinearCongruentialGenerator : public __RandomStrategy {
 public:
   double randomDouble() {
@@ -85,7 +89,9 @@ public:
 private:
 };
 
-/// standard library
+////////////////////////////////////////////////////////////////////////////////
+/// @brief standard library
+/// @todo 動作確認
 class __Standard : public __RandomStrategy {
 public:
   double randomDouble() { return ((double)rand()+1.0)/((double)RAND_MAX+2.0); }

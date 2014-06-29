@@ -17,7 +17,7 @@ typedef int tag_t;                                                   /* タグ�
 
 //#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-const int TERM                      = 50000                ;          /* 期間 */
+const int TERM                      = 1000                ;          /* 期間 */
 const int OUTPUT_INTERVAL           = 1                    ;         /* 出力する間隔 */
 const int DATABASE_INTERVAL         = 100                  ;         /* データベースを出力する期間 */
 const int MINI_SIZE_TERM            = 200                  ;

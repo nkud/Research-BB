@@ -24,6 +24,7 @@
  *  Description:  遺伝子
  * =====================================================================================
  */
+/// @todo 戦略で実装する
 class Gene
 {
   public:
@@ -48,7 +49,8 @@ class Gene
     void printTag() const;                                           /* タグを表示 */
     // const tag_t *getTagString();
 
-    int pointOfMinHamDistance( const Gene & ) const;
+    int pointOfMinHamDistance( const Gene & ) const;                 ///< @todo 戦略で実装する 
+                                                                     ///< @brief 最小ハミング距離になる位置を返す
     int flipToGeneAtPosition( const Gene &, int pos );
     int hamDistance( const Gene &, int pos ) const;
 
