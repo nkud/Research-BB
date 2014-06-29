@@ -48,8 +48,6 @@ int main()
 #ifdef BENCHMARK
   Benchmark::Instance().startTimer();                                /* ベンチマーク計測開始 */
 #endif
-  // srand( (unsigned int)time(NULL)*time(NULL) );                      /* 乱数初期化 */
-
   /*-----------------------------------------------------------------------------
    *  初期化
    *-----------------------------------------------------------------------------*/
@@ -62,11 +60,24 @@ int main()
   VirusManager vManager( viruses );                                  /* ウイルスの配列を登録 */
 
   /// プロトタイプを使う XXX
-  aManager.initAgent( 
+  FOR( i, A_INIT_NUM ) {                                                    /* num のだけ */
+    agents.push_back( new Agent(
       new RandomGaussWalk( A_MOVE_DISTANCE ),
-      //    new RandomWalk( A_MOVE_DISTANCE ),
-      A_DEFAULT_LEN,
-      A_INIT_NUM );
+      A_DEFAULT_LEN )
+    );                  /* 新しくエージェントを加える */
+  }
+  // マップに配置する
+  landscape.clearAgentMap();                             /* エージェントの位置をリセット */
+  int tx, ty;                                                        /* 移動させる場所 */
+
+  EACH( it_a, agents ) {
+    tx = rand_interval_int( 0, WIDTH-1 );                            /* ランダムに設定 */
+    ty = rand_interval_int( 0, WIDTH-1 );
+    (*it_a)->setX( tx );                                             /* 配置 */
+    (*it_a)->setY( ty );
+    landscape.registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a ); /* エージェントを登録 */
+  }
+
   vManager.initVirus();
 
   /* モニター・ファイル生成クラス */

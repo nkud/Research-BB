@@ -85,8 +85,8 @@ public:
 private:
 };
 
-/// stdlib
-class __Default : public __RandomStrategy {
+/// standard library
+class __Standard : public __RandomStrategy {
 public:
   double randomDouble() { return ((double)rand()+1.0)/((double)RAND_MAX+2.0); }
   int randomInt() {
@@ -99,7 +99,7 @@ public:
   double uniformDouble( double min, double max ) {
     return uniformInt(min, max-1) + randomDouble();
   }
-  __Default() {
+  __Standard() {
     srand((unsigned)time(NULL));
   }
 private:
@@ -128,7 +128,7 @@ class Random {
     static Random& Instance() { 
       static Random singleton;
       if ( singleton.getRandomStrategy() == NULL ) {
-        singleton.setRandomStrategy( new __Default );        /* メルセンヌ・ツイスタを使用 */
+        singleton.setRandomStrategy( new __MersenneTwister );        /* メルセンヌ・ツイスタを使用 */
       }
       return singleton;
     }

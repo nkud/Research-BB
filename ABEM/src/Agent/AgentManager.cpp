@@ -40,32 +40,6 @@ AgentManager :: AgentManager( VECTOR( Agent * ) &agents ) :
 }
 
 /*-----------------------------------------------------------------------------
- *  initAgent
- *-----------------------------------------------------------------------------*/
-
-void AgentManager :: initAgent( __MovingStrategy *ms, int len, int num )
-{
-  FOR( i, num ) {                                                    /* num のだけ */
-    agents_.push_back( new Agent( ms, len ) );                  /* 新しくエージェントを加える */
-  }
-  // マップに配置する
-  Landscape::Instance().clearAgentMap();                             /* エージェントの位置をリセット */
-  int tx, ty;                                                        /* 移動させる場所 */
-
-  EACH( it_a, getAgentList() )
-  {
-    tx = rand_interval_int( 0, WIDTH-1 );                            /* ランダムに設定 */
-    ty = rand_interval_int( 0, WIDTH-1 );
-    (*it_a)->setX( tx );                                             /* 配置 */
-    (*it_a)->setY( ty );
-
-    assert( 0 <= tx && tx <= WIDTH-1 );                              /* 土地の外ならエラー */
-    assert( 0 <= ty && ty <= WIDTH-1 );
-
-    Landscape::Instance().registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a ); /* エージェントを登録 */
-  }
-}
-/*-----------------------------------------------------------------------------
  *  initInfectAgentInRatio( Virus &, double )
  *-----------------------------------------------------------------------------*/
 void AgentManager :: initInfectAgentInRatio( Virus &v, double r ) {
