@@ -97,7 +97,7 @@ int main()
   Term &term = Term::Instance();
   term.setMaxTerm( TERM );
   TERMINAL_CLEAR;
-//  terminal_clear();
+  //  terminal_clear();
   while( term.incrementTerm() )                                      /* 計算開始  */
   {
     TERMINAL_LOCATION(0,0);
@@ -135,38 +135,34 @@ int main()
     int n;
     int infection_count;                                             /* 同時感染数をカウント。最大値を越えないように */
 
-    EACH( it_myself, agents )
+    EACH( it_a, agents )
     {
-      if( (*it_myself)->getImmuneSystem().hasNoStandByVirus() ) {   /* 待機ウイルスが無ければ */
+      if( (*it_a)->getImmuneSystem().hasNoStandByVirus() )    /* 待機ウイルスが無ければ */
         continue;                                                    /* スキップ */
-      } else {                                                       /* あれば */
-        infection_count = 0;
 
-        while( ! (*it_myself)->getImmuneSystem().hasNoStandByVirus() ) { /* 待機ウイルスがなくなるまで */
-          if( infection_count >= A_MAX_V_INFECTED_ONE_TERM ) {       /* もし最大同時感染数を越えそうなら */
-            break;                                                   /* 次のエージェントへ */
-          }
-
-          n = rand_array( (*it_myself)->getImmuneSystem().getStandByVirusListSize() ); /* ランダムに一個の */
-          v = (*it_myself)->getImmuneSystem().getStandByVirusAt( n ); /* ウイルスを選んで */
-          if( (*it_myself)->infection( *v ) ) {                      /* 感染させたら */
-            infection_count++;                                       /* カウントを増やす */
-          } else {
-            itt = (*it_myself)->getImmuneSystem().getStandByVirusListIteratorBegin();         /* もし感染しなければ */
-            while(n-->0) { itt++; }                                  /* そのウイルスを */
-            (*it_myself)->getImmuneSystem().eraseStandByVirus( itt ); /* 待機ウイルスからはずして次のウイルス */
-          }
+      infection_count = 0;
+      while( ! (*it_a)->getImmuneSystem().hasNoStandByVirus() ) { /* 待機ウイルスがなくなるまで */
+        if( infection_count >= A_MAX_V_INFECTED_ONE_TERM ) {         /* もし最大同時感染数を越えそうなら */
+          break;                                                     /* 次のエージェントへ */
         }
-        (*it_myself)->getImmuneSystem().clearStandByVirus();        /* 待機ウイルスをクリア */
+
+        n = rand_array( (*it_a)->getImmuneSystem().getStandByVirusListSize() ); /* ランダムに一個の */
+        v = (*it_a)->getImmuneSystem().getStandByVirusAt( n );  /* ウイルスを選んで */
+        if( (*it_a)->infection( *v ) ) {                        /* 感染させたら */
+          infection_count++;                                         /* カウントを増やす */
+        } else {
+          itt = (*it_a)->getImmuneSystem().getStandByVirusListIteratorBegin();         /* もし感染しなければ */
+          while(n-->0) { itt++; }                                    /* そのウイルスを */
+          (*it_a)->getImmuneSystem().eraseStandByVirus( itt );  /* 待機ウイルスからはずして次のウイルス */
+        }
       }
+      (*it_a)->getImmuneSystem().clearStandByVirus();           /* 待機ウイルスをクリア */
     }
     /*-----------------------------------------------------------------------------
      *  免疫応答
      *-----------------------------------------------------------------------------*/
     EACH( it_a, agents )
     { 
-      assert( (*it_a) != NULL );
-
       (*it_a)->response();                                           /* 免疫応答させる */
 
       if( (*it_a)->isLethal() ) {

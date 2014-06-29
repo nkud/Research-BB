@@ -33,10 +33,11 @@ class __MovingStrategy;
 class Agent : public Life
 {
   public:
-    /*-----------------------------------------------------------------------------
-     *  コンストラクタ / デストラクタ
-     *-----------------------------------------------------------------------------*/
+    /// コンストラクタ
     Agent();                                                         /* コンストラクタ  */
+    /// コンストラクタ
+    /// @param ms 移動戦略
+    /// @param len タグの長さ
     Agent( __MovingStrategy *ms, int len );
     Agent( __MovingStrategy *ms, Gene *gene );
     Agent( __MovingStrategy *ms, int minl, int maxl );
@@ -48,6 +49,8 @@ class Agent : public Life
     /*-----------------------------------------------------------------------------
      *  ウイルス操作セット
      *-----------------------------------------------------------------------------*/
+    /// @param v ウイルス
+    /// @return 感染したら true
     bool infection( Virus &v );                                      /* 感染プロセス  */
     int response();                                                  /* 免疫応答する（タグフリップ）  */
     void contact( Agent &other );
