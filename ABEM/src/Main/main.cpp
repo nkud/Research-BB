@@ -63,18 +63,16 @@ int main()
   AgentManager aManager( agents );                                   /* エージェントの配列を登録 */
   VirusManager vManager( viruses );                                  /* ウイルスの配列を登録 */
 
-  /// プロトタイプを使う XXX
   /// エージェント初期化
+  /// @note プロトタイプを用いた方がいいかも
   FOR( i, A_INIT_NUM ) {                                                    /* num のだけ */
     agents.push_back( new Agent(
       new RandomGaussWalk( A_MOVE_DISTANCE ),
       A_DEFAULT_LEN )
     );                  /* 新しくエージェントを加える */
   }
-  // マップに配置する
   landscape.clearAgentMap();                             /* エージェントの位置をリセット */
   int tx, ty;                                                        /* 移動させる場所 */
-
   EACH( it_a, agents ) {
     tx = rand_interval_int( 0, WIDTH-1 );                            /* ランダムに設定 */
     ty = rand_interval_int( 0, WIDTH-1 );

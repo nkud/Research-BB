@@ -26,13 +26,9 @@ class Random;
 class __RandomStrategy;
 class __MersenneTwister;
 
-
-/*
- * =====================================================================================
- *        Class:  __RandomStrategy
- *  Description:  乱数生成器の戦略, 純粋仮想関数
- * =====================================================================================
- */
+////////////////////////////////////////////////////////////////////////////////
+/// @brief 乱数生成器の戦略
+/// @note  純粋仮想数
 class __RandomStrategy {
   public:
     // virtual double randomDouble();
@@ -42,12 +38,9 @@ class __RandomStrategy {
   private:
 };
 
-/*
- * =====================================================================================
- *        Class:  __MersenneTwister
- *  Description:  メルセンヌ・ツイスタ法を使用した戦略
- * =====================================================================================
- */
+////////////////////////////////////////////////////////////////////////////////
+/// @brief メルセンヌ・ツイスタ法を使用した戦略
+/// @todo 動作確認
 class __MersenneTwister : public __RandomStrategy {
   public:
     std::mt19937& getMT() {                                          /* 乱数生成関数を作成 */
@@ -73,25 +66,23 @@ class __MersenneTwister : public __RandomStrategy {
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-/// @brief 線形合同法を用いた乱数生成戦略クラス
-/// @date 日時
-/// @note メモ
-/// @todo コンストラクタ周りを整理する
+/// @brief 自作線形合同法を使用した乱数生成戦略クラス
+/// @todo 動作確認
 class __LinearCongruentialGenerator : public __RandomStrategy {
 public:
   double randomDouble() {
     static int x = 10;
     int a=1103515245, b=12345, c=2147483647;
     x = (a*x + b)&c;
-
     return ((double)x+1.0) / ((double)c+2.0);
   }
 private:
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-/// @brief standard library
+/// @brief srand()を用いた標準の乱数生成戦略クラス
 /// @todo 動作確認
+/// @note randomInt()は使用していない。
 class __Standard : public __RandomStrategy {
 public:
   double randomDouble() { return ((double)rand()+1.0)/((double)RAND_MAX+2.0); }
@@ -111,12 +102,8 @@ public:
 private:
 };
 
-/*
- * =====================================================================================
- *        Class:  Random
- *  Description:  乱数生成クラス
- * =====================================================================================
- */
+////////////////////////////////////////////////////////////////////////////////
+/// @brief 乱数生成クラス
 class Random {
   public:
     int randomInt() { return random_strategy_->randomInt(); }        /* 乱数を生成 */
@@ -134,7 +121,7 @@ class Random {
     static Random& Instance() { 
       static Random singleton;
       if ( singleton.getRandomStrategy() == NULL ) {
-        singleton.setRandomStrategy( new __MersenneTwister );        /* メルセンヌ・ツイスタを使用 */
+        singleton.setRandomStrategy( new __Standard );        /* メルセンヌ・ツイスタを使用 */
       }
       return singleton;
     }
