@@ -121,7 +121,7 @@ class Random {
     static Random& Instance() { 
       static Random singleton;
       if ( singleton.getRandomStrategy() == NULL ) {
-        singleton.setRandomStrategy( new __Standard );        /* メルセンヌ・ツイスタを使用 */
+        singleton.setRandomStrategy( new __MersenneTwister );        /* メルセンヌ・ツイスタを使用 */
       }
       return singleton;
     }

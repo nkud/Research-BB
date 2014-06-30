@@ -158,7 +158,7 @@ class HtmlFactory(object):
         outputHeader(self.file, '<font color=black># RESULT</font>', 1)
         outputLine(self.file, '<a href="AgentDataBase/index.html">>>> AgentDataBase</a></ br>')
         outputLine(self.file, '<a href="VirusDataBase/index.html">>>> VirusDataBase</a></ br>')
-        setImage(self.file, 400, 'AgentDataBase/animation.gif', 'VirusDataBase/animation.gif');
+        setImage(self.file, 600, 'AgentDataBase/animation.gif', 'VirusDataBase/animation.gif');
 
         # Image Section
         outputSection(self.file, 'Population', 2, IMG('Population'))
