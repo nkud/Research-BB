@@ -66,13 +66,13 @@ int main()
 
   /// エージェント初期化
   /// @note プロトタイプを用いた方がいいかも
-  FOR( i, A_INIT_NUM ) {                                                    /* num のだけ */
+  FOR( i, A_INIT_NUM ) {                                             /* num のだけ */
     agents.push_back( new Agent(
       new RandomGaussWalk( A_MOVE_DISTANCE ),
       A_DEFAULT_LEN )
-    );                  /* 新しくエージェントを加える */
+    );                                                               /* 新しくエージェントを加える */
   }
-  landscape.clearAgentMap();                             /* エージェントの位置をリセット */
+  landscape.clearAgentMap();                                         /* エージェントの位置をリセット */
   int tx, ty;                                                        /* 移動させる場所 */
   EACH( it_a, agents ) {
     tx = rand_interval_int( 0, WIDTH-1 );                            /* ランダムに設定 */
@@ -82,7 +82,7 @@ int main()
     landscape.registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a ); /* エージェントを登録 */
   }
   /// ウイルス初期化
-  viruses.push_back( new Virus( V_TAG_0 ) );       /* 通常ウイルスを追加 */
+  viruses.push_back( new Virus( V_TAG_0 ) );                         /* 通常ウイルスを追加 */
 
   /* モニター・ファイル生成クラス */
   FileFactory& fFactory = FileFactory::Instance();                   /* 出力ファイルを管理 */
@@ -152,26 +152,26 @@ int main()
 
     EACH( it_a, agents )
     {
-      if( (*it_a)->getImmuneSystem().hasNoStandByVirus() )    /* 待機ウイルスが無ければ */
+      if( (*it_a)->getImmuneSystem().hasNoStandByVirus() )           /* 待機ウイルスが無ければ */
         continue;                                                    /* スキップ */
 
       infection_count = 0;
-      while( ! (*it_a)->getImmuneSystem().hasNoStandByVirus() ) { /* 待機ウイルスがなくなるまで */
+      while( ! (*it_a)->getImmuneSystem().hasNoStandByVirus() ) {    /* 待機ウイルスがなくなるまで */
         if( infection_count >= A_MAX_V_INFECTED_ONE_TERM ) {         /* もし最大同時感染数を越えそうなら */
           break;                                                     /* 次のエージェントへ */
         }
 
         n = rand_array( (*it_a)->getImmuneSystem().getStandByVirusListSize() ); /* ランダムに一個の */
-        v = (*it_a)->getImmuneSystem().getStandByVirusAt( n );  /* ウイルスを選んで */
-        if( (*it_a)->infection( *v ) ) {                        /* 感染させたら */
+        v = (*it_a)->getImmuneSystem().getStandByVirusAt( n );       /* ウイルスを選んで */
+        if( (*it_a)->infection( *v ) ) {                             /* 感染させたら */
           infection_count++;                                         /* カウントを増やす */
         } else {
           itt = (*it_a)->getImmuneSystem().getStandByVirusListIteratorBegin();         /* もし感染しなければ */
           while(n-->0) { itt++; }                                    /* そのウイルスを */
-          (*it_a)->getImmuneSystem().eraseStandByVirus( itt );  /* 待機ウイルスからはずして次のウイルス */
+          (*it_a)->getImmuneSystem().eraseStandByVirus( itt );       /* 待機ウイルスからはずして次のウイルス */
         }
       }
-      (*it_a)->getImmuneSystem().clearStandByVirus();           /* 待機ウイルスをクリア */
+      (*it_a)->getImmuneSystem().clearStandByVirus();                /* 待機ウイルスをクリア */
     }
     /*-----------------------------------------------------------------------------
      *  免疫応答
