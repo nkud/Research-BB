@@ -54,8 +54,8 @@ def send_via_gmail(from_addr, to_addr, msg):
 if __name__ == '__main__':
   from_addr = 'su104003@gmail.com'
   to_addr = 'su104003@gmail.com'
-  title = '数値実験結果よ！'
-  body = 'message'
+  title = '数値実験結果'
+  body = 'RESULT'
   msg = create_message(from_addr, to_addr, title, body, 'utf-8')
   send_via_gmail(from_addr, to_addr, msg)
 

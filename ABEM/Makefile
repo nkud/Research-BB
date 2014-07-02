@@ -123,6 +123,10 @@ tags:
 	@$(PRINT) '>>> ctag'
 	@find src -name '*.cpp' | xargs $(CTAGS)
 
+mail:
+	@$(PRINT) '>>> mail'
+	@-cd $(BINDIR); python ../script/mail.py
+
 test:
 
 # コンパイル -> 実行 -> 結果出力

@@ -28,32 +28,32 @@ class VirusManager;
  * =====================================================================================
  */
 class FileFactory {
-    public:
-        /*-----------------------------------------------------------------------------
-         *  初期化
-         *-----------------------------------------------------------------------------*/
-        static FileFactory& Instance();                              /* インスタンスを返す */
-        void setManager( AgentManager &, VirusManager & ); 
-        /*-----------------------------------------------------------------------------
-         *  計算結果出力
-         *-----------------------------------------------------------------------------*/
-        void outputFile_VirusVariaty( const char * ) const;
-        void outputFile_LastVirusDataBase( const char * ) const;
-        void outputFile_AgentDataBase( const char *);
-        void outputFile_LastLog( const char * ) const;               /* ログを出力 */
-        void outputFile_Info( const char * ) const;                  /* パラメータ情報を出力 */
-        double outputFile_peakSearch( const char * ) const;          /* 出力: ピークサーチ */
+  public:
+    /*-----------------------------------------------------------------------------
+     *  初期化
+     *-----------------------------------------------------------------------------*/
+    static FileFactory& Instance();                              /* インスタンスを返す */
+    void setManager( AgentManager &, VirusManager & ); 
+    /*-----------------------------------------------------------------------------
+     *  計算結果出力
+     *-----------------------------------------------------------------------------*/
+    void outputFile_VirusVariaty( const char * ) const;
+    void outputFile_LastVirusDataBase( const char * ) const;
+    void outputFile_AgentDataBase( const char *);
+    void outputFile_LastLog( const char * ) const;               /* ログを出力 */
+    void outputFile_Info( const char * ) const;                  /* パラメータ情報を出力 */
+    double outputFile_peakSearch( const char * ) const;          /* 出力: ピークサーチ */
 
-        void outputValueWithTerm( const char *, int, int interval=OUTPUT_INTERVAL ) const;
+    void outputValueWithTerm( const char *, int, int interval=OUTPUT_INTERVAL ) const;
 
-    private:
-        /*-----------------------------------------------------------------------------
-         *  コンストラクタ
-         *-----------------------------------------------------------------------------*/
-        FileFactory( ) {}                                            /* コンストラクタ */
+  private:
+    /*-----------------------------------------------------------------------------
+     *  コンストラクタ
+     *-----------------------------------------------------------------------------*/
+    FileFactory( ) {}                                            /* コンストラクタ */
 
-        AgentManager *am_;                                           /* 管理者を登録 */
-        VirusManager *vm_;                                           /* 管理者を登録 */
+    AgentManager *am_;                                           /* 管理者を登録 */
+    VirusManager *vm_;                                           /* 管理者を登録 */
 
 };
 
