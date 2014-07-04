@@ -1,9 +1,14 @@
+HOME	 = ~/workspace/AgentBasedEpidemicModel/ABEM
+
 CC       = g++ -Wall -g -O0 -std=c++11
 PRINT    = /bin/echo
 MKDIR	 = mkdir -p
 MAKE	 = make --no-print-directory -s
 COPY	 = cp
 CTAGS	 = $(shell which ctags)
+
+SRC		 = $(shell find src -name '*.cpp')
+INCLUDE  = $(shell find include -name '*.h' -or -name '*.hpp')
 
 OBJDIR	 = obj
 SRCDIR	 = src
@@ -42,7 +47,6 @@ $(BINDIR)/$(TARGET): $(LIBSPATH)
 # コンパイルする
 # Makefile名とフォルダ名は同じにする
 $(LIBSPATH):
-
 	@printf '\033[31m'
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
 	@$(PRINT) '---> $(notdir $@)'
@@ -77,14 +81,20 @@ gene:
 
 
 # 結果をパッケージングする
-pack:
+pack: doc
 	@$(PRINT) '>>> Packaging'
 	@$(PRINT) FNAME:[ $(RESULT)-$(R) ]
 	@[ -d $(MASTER) ] || $(MKDIR) $(MASTER)
 	@[ -d $(MASTER)/$(RESULT)-$(R)/$(PRGDIR) ] || $(MKDIR) $(MASTER)/$(RESULT)-$(R)/$(PRGDIR)
 	@cp -r bin/* $(MASTER)/$(RESULT)-$(R)
 	@cp -r Makefile include src script $(MASTER)/$(RESULT)-$(R)/$(PRGDIR)
+	@cp -r html $(MASTER)/$(RESULT)-$(R)
+	@cd $(MASTER)/$(RESULT)-$(R); ln -s html/index.html document.html
 	@ls $(MASTER)/$(RESULT)-$(R)
+
+doc: $(SRC)
+	@$(PRINT) '>>> create Documents'
+	@doxygen 2>/dev/null 1>/dev/null
 
 ext:
 	@$(PRINT) '>>> Extraction'
