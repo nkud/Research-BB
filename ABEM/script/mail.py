@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import smtplib
 import glob
+import sys
 from email.MIMEText import MIMEText
 from email.MIMEImage import MIMEImage
 from email.MIMEMultipart import MIMEMultipart
@@ -22,6 +23,7 @@ def create_message(from_addr, to_addr, subject, body, encoding):
   content = MIMEText(body, 'plain', encoding)
   alt.attach(content)
 
+  # 画像を添付
   for filename in glob.glob('image/*.png'):
     print 'attached ' + filename
     fp = file('%s' % filename, 'rb')
@@ -51,12 +53,26 @@ def send_via_gmail(from_addr, to_addr, msg):
   s.sendmail(from_addr, [to_addr], msg.as_string())
   s.close()
 
+def read_config( config_fname ):
+  body = ""
+  f = open(config_fname, 'r')
+  for l in f:
+    ll = l.split()
+    if('=' in ll):
+      body += '%s: %s\n' % (ll[2], ll[4])
+  return body
+
 if __name__ == '__main__':
+  argvs = sys.argv
+  argc = len(argvs)
   from_addr = 'su104003@gmail.com'
   to_addr = 'su104003@gmail.com'
   #to_addr = 's067803.f0aa8@m.evernote.com'
+
   title = '数値実験結果'
-  body = 'RESULT'
+  if argc > 1:
+    title += ': '+argvs[1]
+  body = read_config( '../include/Config.h' )
   msg = create_message(from_addr, to_addr, title, body, 'utf-8')
   send_via_gmail(from_addr, to_addr, msg)
 

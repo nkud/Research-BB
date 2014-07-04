@@ -135,7 +135,7 @@ tags:
 
 mail:
 	@$(PRINT) '>>> mail'
-	@-cd $(BINDIR); python ../script/mail.py
+	@-cd $(BINDIR); python ../script/mail.py $(NOW)
 
 test:
 
