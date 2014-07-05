@@ -92,6 +92,9 @@ pack: doc
 	@cd $(MASTER)/$(RESULT)-$(R); ln -s html/index.html document.html
 	@ls $(MASTER)/$(RESULT)-$(R)
 
+archive:
+	@python script/archive.py
+
 doc: $(SRC)
 	@$(PRINT) '>>> create Documents'
 	@doxygen 2>/dev/null 1>/dev/null
