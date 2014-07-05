@@ -13,6 +13,7 @@
 
 #include "Gene.h"
 #include "Function.h"
+#include "Config.h"
 
 #include <cstring>
 #include <cstdlib>
@@ -59,7 +60,7 @@ Gene :: Gene( const char *str ) :
 int Gene :: value() {
   int ret = 0;
   FOR( i, getLen() ) {
-    ret += abs( tagAt(i) - 0 );
+    ret += abs( tagAt(i) - BASE_TAG );
   }
   return ret;
 }
