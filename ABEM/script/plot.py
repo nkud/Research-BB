@@ -14,6 +14,7 @@ FONT = 'times new roman,13'
 
 IMG_DIR = 'image/'
 TXT_DIR = ''
+CONFIG_PATH = '../include/Config.h'
 ###############################################################################
 
 def IMG(img):
@@ -144,6 +145,15 @@ def outputSection(f, htext, h, *imgs):
     for img in imgs:
         setImage(f, RESULT_WIDTH, img)
 
+def read_config( config_fname ):
+  body = ""
+  f = open(config_fname, 'r')
+  for l in f:
+    ll = l.split()
+    if('=' in ll):
+      body += '%s: %s<br />' % (ll[2], ll[4])
+  return body
+
 class HtmlFactory(object):
     """ 結果表示用のHTMLを出力する """
     def __init__(self, filename):
@@ -156,6 +166,13 @@ class HtmlFactory(object):
             '<html><link rel="stylesheet" href="%s">' % CSS_DIR +
             '<body><font color=gray><code>')
         outputHeader(self.file, '<font color=black># RESULT</font>', 1)
+
+        # 初期設定を表示
+        outputHeader(self.file, 'Config', 2)
+        outputLine(self.file, '%s' % read_config( CONFIG_PATH ) )
+
+
+        outputHeader(self.file, 'GeneDataBase', 2)
         outputLine(self.file, '<a href="AgentDataBase/index.html">>>> AgentDataBase</a></ br>')
         outputLine(self.file, '<a href="VirusDataBase/index.html">>>> VirusDataBase</a></ br>')
         setImage(self.file, 600, 'AgentDataBase/animation.gif', 'VirusDataBase/animation.gif');
