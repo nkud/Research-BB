@@ -18,7 +18,7 @@ def configure(inc, sym):
   os.system( command_lethal );
 
 def run(inc, sym):
-  command = 'make build run gene pack mail R="IN%dSY%d"' \
+  command = 'cd ~/workspace/AgentBasedEpidemicModel/ABEM;make build run gene pack mail R="IN%dSY%d"' \
       % ( int(inc), int(sym) )
   os.system( command );
 
