@@ -174,6 +174,18 @@ int main()
       (*it_a)->getImmuneSystem().clearStandByVirus();                /* 待機ウイルスをクリア */
     }
     /*-----------------------------------------------------------------------------
+     *  症状進行 XXX name
+     *-----------------------------------------------------------------------------*/
+    EACH( it_a, agents )
+    {
+      EACH( it_v, (**it_a).getImmuneSystem().getVirusList() ) {      /* エージェントの保持ウイルス全てに対して */
+        (*it_v)->incrementInfectionTime();                           /* ウイルス固有の感染期間を増やす */
+        if( (*it_v)->isInfectiousPeriod() ) {                        /* ウイルスが感染性期間なら */
+          (*it_v)->mutation( (*it_v)->getMutationRate() );           /* 突然変異を確率で起こす */
+        }
+      }
+    }
+    /*-----------------------------------------------------------------------------
      *  免疫応答
      *-----------------------------------------------------------------------------*/
     EACH( it_a, agents )
@@ -184,18 +196,6 @@ int main()
         // it_a = deleteAgent( it_a );                                    /* 生存配列から削除される */
         (*it_a)->rebirth();                                          // 初期化再生
         AgentCounter::Instance().countUpRemoved();
-      }
-    }
-    /*-----------------------------------------------------------------------------
-     *  症状進行 XXX name
-     *-----------------------------------------------------------------------------*/
-    EACH( it_a, agents )
-    {
-      EACH( it_v, (**it_a).getImmuneSystem().getVirusList() ) {      /* エージェントの保持ウイルス全てに対して */
-        (*it_v)->incrementInfectionTime();                           /* ウイルス固有の感染期間を増やす */
-        if( (*it_v)->isInfectiousPeriod() ) {                        /* ウイルスが感染性期間なら */
-          (*it_v)->mutation( (*it_v)->getMutationRate() );           /* 突然変異を確率で起こす */
-        }
       }
     }
 
