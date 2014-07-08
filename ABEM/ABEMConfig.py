@@ -5,11 +5,11 @@ import os
 CONFIG_PATH = 'include/Config.h'
 
 def configure(inc, sym):
-  command_incubation = 'cat "%s" | \
+  command_incubation = 'cat %s | \
       sed -e "/INCUBATION_PERIOD/c const int V_INCUBATION_PERIOD = %d;" \
       > %s' \
       % ( CONFIG_PATH, inc, CONFIG_PATH )
-  command_lethal = 'cat "%s" | \
+  command_lethal = 'cat %s | \
       sed -e "/LETHAL_PERIOD/c const int V_LETHAL_PERIOD = %d;" \
       > %s' \
       % ( CONFIG_PATH, inc+sym, CONFIG_PATH )
