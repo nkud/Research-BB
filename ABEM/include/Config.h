@@ -17,7 +17,7 @@ typedef int tag_t;                                                   /* タグ�
 
 //#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-const int TERM                      = 10000                ;           /* :期間: */
+const int TERM                      = 200                ;           /* :期間: */
 const int OUTPUT_INTERVAL           = 1                    ;         /* :出力する間隔: */
 const int DATABASE_INTERVAL         = 100                  ;         /* :データベースを出力する期間: */
 const int MINI_SIZE_TERM            = 200                  ;
@@ -43,7 +43,7 @@ const int V_LETHAL_PERIOD = 32;
 
 const int V_MUTATION_RATE           = 30;
 
-const int T_MAX                     = 9											;				 /*  */
+const int T_MAX                     = 9;
 const int BASE_TAG                  = 0;
 
 //               12345678901234567890
