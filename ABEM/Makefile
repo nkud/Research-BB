@@ -81,7 +81,7 @@ gene:
 
 
 # 結果をパッケージングする
-pack: doc
+pack:
 	@$(PRINT) '>>> Packaging'
 	@$(PRINT) FNAME:[ $(RESULT)-$(R) ]
 	@[ -d $(MASTER) ] || $(MKDIR) $(MASTER)
