@@ -24,7 +24,7 @@ def run(inc, sym):
 
 
 def main():
-  inc_range = 1
+  inc_range = 10
   sym_range = 20
 
   for inc in range(inc_range):
