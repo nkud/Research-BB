@@ -1,30 +1,20 @@
-import Tkinter as Tk
+#! /usr/bin/python
+# coding=utf-8
+import os
 
-class Frame(Tk.Frame):
-    """ Frame with three label """
+CONFIG_PATH = 'include/Config.h'
 
-    def __init__(self, master=None):
-        Tk.Frame.__init__(self, master)
-        self.master.title('ABEM Configure')
+incubation = int( raw_input("Incubation Period = ") )
+symptomatic = int( raw_input("Symptomatic Period = ") )
 
-        # First Label
-        term = Tk.Label(self, text='TERM',  bg='yellow', relief=Tk.RIDGE, bd=2)
-        term.pack()
-        term_sp = Tk.Spinbox(self, width=10, from_=0, to=1000000)
-        term_sp.pack()
+command_incubation = 'cat "%s" | \
+    sed -e "/INCUBATION/c const int V_INCUBATION_PERIOD = %d;" \
+    > %s' \
+    % ( CONFIG_PATH, incubation, CONFIG_PATH )
+command_lethal = 'cat "%s" | \
+    sed -e "/LETHAL/c const int V_LETHAL_PERIOD = %d;" \
+    > %s' \
+    % ( CONFIG_PATH, incubation+symptomatic, CONFIG_PATH )
 
-        # Second Label
-        lb = Tk.Label(self, text='Oh My God!', bg='red', relief=Tk.RIDGE, bd=2)
-        lb.pack()
-
-        # Third Label
-        lc = Tk.Label(self, text='See you tomorrow.', bg='LightSkyBlue', relief=Tk.RIDGE, bd=2)
-        lc.pack()
-
-        sp = Tk.Spinbox(self, width=10, from_=0, to=29)
-        sp.pack()
-
-if __name__ == '__main__':
-    f = Frame()
-    f.pack()
-    f.mainloop()
+os.system( command_incubation );
+os.system( command_lethal );
