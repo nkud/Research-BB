@@ -4,18 +4,13 @@ import os
 
 CONFIG_PATH = 'include/Config.h'
 
-def configure(inc, sym):
-  command_incubation = 'cat %s | \
-      sed -e "/INCUBATION_PERIOD/c const int V_INCUBATION_PERIOD = %d;" \
-      > %s' \
-      % ( CONFIG_PATH, inc, CONFIG_PATH )
-  command_lethal = 'cat %s | \
-      sed -e "/LETHAL_PERIOD/c const int V_LETHAL_PERIOD = %d;" \
-      > %s' \
-      % ( CONFIG_PATH, inc+sym, CONFIG_PATH )
+def sed( command, fname ):
+  line = 'sed -ie "%s" %s' % ( command, fname )
+  os.system( line )
 
-  os.system( command_incubation );
-  os.system( command_lethal );
+def configure(inc, sym):
+  sed( '/V_INCUBATION_PERIOD/c const int V_INCUBATION_PERIOD = %d;' % inc, CONFIG_PATH )
+  sed( '/V_LETHAL_PERIOD/c const int V_LETHAL_PERIOD = %d;' % (inc+sym), CONFIG_PATH )
 
 def run(inc, sym):
   command = 'cd ~/workspace/AgentBasedEpidemicModel/ABEM;make build run gene pack mail R="IN%dSY%d"' \
