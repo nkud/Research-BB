@@ -17,7 +17,7 @@ typedef int tag_t;                                                   /* タグ�
 
 //#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-const int TERM                      = 10000                ;           /* :期間: */
+const int TERM                      = 1000                ;           /* :期間: */
 const int OUTPUT_INTERVAL           = 1                    ;         /* :出力する間隔: */
 const int DATABASE_INTERVAL         = 100                  ;         /* :データベースを出力する期間: */
 const int MINI_SIZE_TERM            = 200                  ;
@@ -38,24 +38,17 @@ const double A_INIT_INFECTED_RATE   = 5                 ;            /* :初期�
 const int A_DEFAULT_LEN             = 10                   ;         /* :エージェントのタグ長: */
 const int V_DEFAULT_LEN             = 12                   ;         /* :エージェントのタグ長: */
 
-const int V_NONINFECTIOUS_PERIOD = 0;
-const int V_INFECTIOUS_PERIOD = 3;
+const int V_NONINFECTIOUS_PERIOD = 0;                                /* :潜伏期間: */
+const int V_INFECTIOUS_PERIOD = 3;                                   /* :症候性期間: */
 
-const int V_MUTATION_RATE           = 30;
+const int V_MUTATION_RATE           = 30;                            /* :突然変異率: */
 
-const int T_MAX                     = 9;
-const int BASE_TAG                  = 0;
+const int T_MAX                     = 9;                             /* :タグの最大値: */
+const int BASE_TAG                  = 0;                             /* :基準タグ: */
 
 //               12345678901234567890
 #define V_TAG_0 "0000000000"
 #define V_NUM 1
-
-
-const int A_MAX_AGE                 = 10                  ;          /* 寿命 */
-
-const double A_BIRTH_RATE           = 0.5                  ;         /* 出生率 */
-const int A_BIRTH_AGE_FROM          = int(A_MAX_AGE * 0.2) ;
-const int A_BIRTH_AGE_TO            = int(A_MAX_AGE * 0.6) ;
 
 /*-----------------------------------------------------------------------------
  *

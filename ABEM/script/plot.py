@@ -145,13 +145,17 @@ def outputSection(f, htext, h, *imgs):
     for img in imgs:
         setImage(f, RESULT_WIDTH, img)
 
-def read_config( config_fname ):
+def read_config( config_fname, SEPARATOR='<br />' ):
   body = ""
   f = open(config_fname, 'r')
   for l in f:
     ll = l.split()
+    lc = l.split(':')
     if('=' in ll):
-      body += '%s: %s<br />' % (ll[2], ll[4])
+      if(':' in l):
+        body += '%s: %s%s' % (lc[1], ll[4], SEPARATOR)
+      else:
+        body += '%s: %s%s' % (ll[2], ll[4], SEPARATOR)
   return body
 
 class HtmlFactory(object):

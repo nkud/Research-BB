@@ -53,13 +53,17 @@ def send_via_gmail(from_addr, to_addr, msg):
   s.sendmail(from_addr, [to_addr], msg.as_string())
   s.close()
 
-def read_config( config_fname ):
+def read_config( config_fname, SEPARATOR='<br />' ):
   body = ""
   f = open(config_fname, 'r')
   for l in f:
     ll = l.split()
+    lc = l.split(':')
     if('=' in ll):
-      body += '%s: %s\n' % (ll[2], ll[4])
+      if(':' in l):
+        body += '%s: %s%s' % (lc[1], ll[4], SEPARATOR)
+      else:
+        body += '%s: %s%s' % (ll[2], ll[4], SEPARATOR)
   return body
 
 if __name__ == '__main__':
@@ -72,7 +76,8 @@ if __name__ == '__main__':
   title = '数値実験結果'
   if argc > 1:
     title += ': '+argvs[1]
-  body = read_config( '../include/Config.h' )
+  body = read_config( '../include/Config.h', '\n' )
+  print body
   msg = create_message(from_addr, to_addr, title, body, 'utf-8')
   send_via_gmail(from_addr, to_addr, msg)
 

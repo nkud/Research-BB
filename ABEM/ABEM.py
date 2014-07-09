@@ -9,8 +9,12 @@ def sed( command, fname ):
   os.system( line )
 
 def configure(inc, sym):
-  sed( '/V_NONINFECTIOUS_PERIOD/c const int V_NONINFECTIOUS_PERIOD = %d;' % inc, CONFIG_PATH )
-  sed( '/V_INFECTIOUS_PERIOD/c const int V_INFECTIOUS_PERIOD = %d;' % sym, CONFIG_PATH )
+  sed( command_generator( "V_NONINFECTIOUS_PERIOD", "int", str(inc), "潜伏期間") )
+  sed( command_generator( "V_INFECTIOUS_PERIOD", "int", str(sym), "症候性期間") )
+
+def command_generator(var, type, value, comment):
+  cmd = '/%s/c const %s %s = %s; /* :%s: */' % (var, type, var, value, comment)
+  return cmd
 
 def run(inc, sym):
   command = 'cd ~/workspace/AgentBasedEpidemicModel/ABEM;make build run gene pack mail R="IN%dSY%d"' \

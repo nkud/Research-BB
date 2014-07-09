@@ -118,10 +118,6 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
     OFSV( A_MAX_NUM );                                               /* 最大エージェント数 */
     OFSV( A_MAX_V_CAPACITY );                                        /* 最大保持ウイルス数 */
     OFSV( A_MAX_V_INFECTED_ONE_TERM );                               /* １期間最大感染ウイルス数 */
-    OFSV( A_MAX_AGE );                                               /* 寿命 */
-    OFSV( A_BIRTH_RATE );                                            /* 出生率 */
-    OFSV( A_BIRTH_AGE_FROM );                                        /* 出産適齢期 */
-    OFSV( A_BIRTH_AGE_TO );
     OFSV( A_MOVE_DISTANCE );                                         /* 移動距離 */
     OFSV( INFECTION_RATE );                                          /* 感染率 */
     OFSV( A_INIT_INFECTED_RATE );                                    /* 初期感染数 */
@@ -189,8 +185,6 @@ void FileFactory :: outputFile_VirusVariaty( const char *fname ) const {
 void FileFactory :: outputFile_LastLog( const char *fname ) const {
     static std::ofstream ofs(fname);
     ofs << "TERM:" << Term::Instance().getTerm() << ENDL;
-    ofs << "MAX_AGE:" << A_MAX_AGE << ENDL;
-    ofs << "BIRTH_RATE:" << A_BIRTH_RATE << ENDL;
     ofs << "WIDTH:" << WIDTH << ENDL;
     ofs << "NUM_A:" << am_->getAgentSize() << ENDL;
     ofs << "A_INIT_NUM:" << A_INIT_NUM << ENDL;
