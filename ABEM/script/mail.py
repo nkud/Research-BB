@@ -76,7 +76,7 @@ if __name__ == '__main__':
   title = '数値実験結果'
   if argc > 1:
     title += ': '+argvs[1]
-  body = read_config( '../include/Config.h', '\n' )
+  body = read_config( '../include/Config.h' )
   print body
   msg = create_message(from_addr, to_addr, title, body, 'utf-8')
   send_via_gmail(from_addr, to_addr, msg)

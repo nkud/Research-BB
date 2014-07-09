@@ -133,7 +133,7 @@ def setImage(f, width, *imgnames):
     outputLine(f, '<table class="graph">')
     for name in imgnames:
         outputLine(f, '    <tr><td><img src="%s" width="%d"/></td></tr>' % (name, width))
-    outputLine(f, '<tr></table>')
+    outputLine(f, '</table>')
 
 def outputHeader(f, htext, h):
     """ 見出しを設定する """
@@ -145,7 +145,7 @@ def outputSection(f, htext, h, *imgs):
     for img in imgs:
         setImage(f, RESULT_WIDTH, img)
 
-def read_config( config_fname, SEPARATOR='<br />' ):
+def read_config( config_fname, SEP0='', SEP1=': ', SEP2='\n' ):
   body = ""
   f = open(config_fname, 'r')
   for l in f:
@@ -153,9 +153,9 @@ def read_config( config_fname, SEPARATOR='<br />' ):
     lc = l.split(':')
     if('=' in ll):
       if(':' in l):
-        body += '%s: %s%s' % (lc[1], ll[4], SEPARATOR)
+        body += '%s%s%s%s%s' % (SEP0, lc[1], SEP1, ll[4], SEP2)
       else:
-        body += '%s: %s%s' % (ll[2], ll[4], SEPARATOR)
+        body += '%s%s%s%s%s' % (SEP0, ll[2], SEP1, ll[4], SEP2)
   return body
 
 class HtmlFactory(object):
@@ -173,7 +173,12 @@ class HtmlFactory(object):
 
         # 初期設定を表示
         outputHeader(self.file, 'Config', 2)
-        outputLine(self.file, '%s' % read_config( CONFIG_PATH ) )
+        config = '<table>'
+        config += '%s' % read_config(
+            CONFIG_PATH, '<tr><td>', '</td><td>', '</td></tr>'
+            )
+        config += '</table>'
+        outputLine( self.file, config )
 
 
         outputHeader(self.file, 'GeneDataBase', 2)
