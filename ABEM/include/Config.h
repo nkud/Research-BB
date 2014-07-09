@@ -38,8 +38,8 @@ const double A_INIT_INFECTED_RATE   = 5              ;               /* :初期�
 const int A_DEFAULT_LEN             = 10             ;               /* :エージェントのタグ長: */
 const int V_DEFAULT_LEN             = 12             ;               /* :エージェントのタグ長: */
 
-const int V_NONINFECTIOUS_PERIOD    = 0              ;               /* :潜伏期間: */
-const int V_INFECTIOUS_PERIOD       = 3              ;               /* :症候性期間: */
+const int V_NONINFECTIOUS_PERIOD = 0 ; /* :<u>潜伏期間</u>: */
+const int V_INFECTIOUS_PERIOD = 2 ; /* :<u>症候性期間</u>: */
 
 const int V_MUTATION_RATE           = 30             ;               /* :突然変異率: */
 

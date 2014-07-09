@@ -53,7 +53,7 @@ def send_via_gmail(from_addr, to_addr, msg):
   s.sendmail(from_addr, [to_addr], msg.as_string())
   s.close()
 
-def read_config( config_fname, SEPARATOR='<br />' ):
+def read_config( config_fname, SEP0='', SEP1=': ', SEP2='\n' ):
   body = ""
   f = open(config_fname, 'r')
   for l in f:
@@ -61,9 +61,9 @@ def read_config( config_fname, SEPARATOR='<br />' ):
     lc = l.split(':')
     if('=' in ll):
       if(':' in l):
-        body += '%s: %s%s' % (lc[1], ll[4], SEPARATOR)
+        body += '%s%s%s%s%s' % (SEP0, lc[1], SEP1, ll[4], SEP2)
       else:
-        body += '%s: %s%s' % (ll[2], ll[4], SEPARATOR)
+        body += '%s%s%s%s%s' % (SEP0, ll[2], SEP1, ll[4], SEP2)
   return body
 
 if __name__ == '__main__':
