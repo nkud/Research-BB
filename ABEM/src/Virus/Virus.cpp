@@ -19,48 +19,33 @@
 #include "Gene.h"
 #include "VirusCounter.h"
 
-/*-----------------------------------------------------------------------------
- *
- *  パラメータ操作
- *
- *-----------------------------------------------------------------------------*/
+/**
+ * 非感染性期間かどうか
+ */
 bool Virus :: isNonInfectiousPeriod() const {
-  /*-----------------------------------------------------------------------------
-   *  非感染性期間
-   *-----------------------------------------------------------------------------*/
-  if( getInfectionTime() <= getIncubationPeriod() ) {
+  if( getInfectionTime() <= getNonInfectiousPeriod() ) {             //< 感染期間が非感染性期間以下なら
     assert( ! isInfectiousPeriod() and "感染性期間ではない" );
-    return true;
-  } else {
-    return false;
-  }
-}
-bool Virus :: isInfectiousPeriod() const {
-  /*-----------------------------------------------------------------------------
-   *  感染性期間
-   *-----------------------------------------------------------------------------*/
-  if( getInfectionTime() > getIncubationPeriod() ) {
-    assert( ! isNonInfectiousPeriod() and "非感染性期間ではない" );
-    return true;
-  } else {
-    return false;
+    return true;                                                     //< 真
+  } else {                                                           //< そうでなければ 
+    return false;                                                    //< 偽 
   }
 }
 
-// bool Virus :: isIncubationPeriod() const {
-//   if( getInfectionTime() <= getIncubationPeriod() ) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
-// bool Virus :: isCrisisPeriod() const {
-//   if( getInfectionTime() > getIncubationPeriod() and getInfectionTime() <= getLethalPeriod() ) {                   /* 潜伏期間を過ぎている */
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
+/**
+ * 感染性期間かどうか
+ */
+bool Virus :: isInfectiousPeriod() const {
+  if( getInfectionTime() > getNonInfectiousPeriod() ) {              //< 感染期間が非感染性期間を超えれば 
+    assert( ! isNonInfectiousPeriod() and "非感染性期間ではない" );
+    return true;                                                     //< 真 
+  } else {                                                           //< そうでなければ 
+    return false;                                                    //< 偽 
+  }
+}
+
+/**
+ * 感染性期間を返す
+ */
 bool Virus :: isLethalPeriod() const {
   if( getInfectionTime() > getLethalPeriod() ) {
     return true;
@@ -69,21 +54,33 @@ bool Virus :: isLethalPeriod() const {
   }
 }
 
-//double Virus :: value() const {
-//  return getGene().value();
-//}
-
-int Virus :: getIncubationPeriod() const {
-  return V_INCUBATION_PERIOD;
+/**
+ * 感染性期間を返す
+ */
+int Virus :: getInfectiousPeriod() const {
+  return V_INFECTIOUS_PERIOD;
 }
+/**
+ * 非感染性期間を返す
+ */
+int Virus :: getNonInfectiousPeriod() const {
+  return V_NONINFECTIOUS_PERIOD;
+}
+/**
+ * 致死期間を返す
+ */
 int Virus :: getLethalPeriod() const {
- return V_LETHAL_PERIOD;
-// return V_LETHAL_PERIOD - value()/9;
-//  return V_LETHAL_PERIOD - value();
+ return getInfectiousPeriod() + getNonInfectiousPeriod();
 }
+/**
+ * 突然変異率を返す
+ */
 int Virus :: getMutationRate() const {
   return V_MUTATION_RATE;
 }
+/**
+ * 感染率を返す
+ */
 double Virus :: getRate() const { 
   // return rate_; 
   double rate = 100*1./(1+value()/9.);

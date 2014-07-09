@@ -5,12 +5,12 @@ import os
 CONFIG_PATH = 'include/Config.h'
 
 def sed( command, fname ):
-  line = 'sed -ie "%s" %s' % ( command, fname )
+  line = 'sed -i -e "%s" %s' % ( command, fname )
   os.system( line )
 
 def configure(inc, sym):
-  sed( '/V_INCUBATION_PERIOD/c const int V_INCUBATION_PERIOD = %d;' % inc, CONFIG_PATH )
-  sed( '/V_LETHAL_PERIOD/c const int V_LETHAL_PERIOD = %d;' % (inc+sym), CONFIG_PATH )
+  sed( '/V_NONINFECTIOUS_PERIOD/c const int V_NONINFECTIOUS_PERIOD = %d;' % inc, CONFIG_PATH )
+  sed( '/V_INFECTIOUS_PERIOD/c const int V_INFECTIOUS_PERIOD = %d;' % sym, CONFIG_PATH )
 
 def run(inc, sym):
   command = 'cd ~/workspace/AgentBasedEpidemicModel/ABEM;make build run gene pack mail R="IN%dSY%d"' \
@@ -19,7 +19,7 @@ def run(inc, sym):
 
 
 def main():
-  inc_range = 10
+  inc_range = 20
   sym_range = 20
 
   for inc in range(inc_range):

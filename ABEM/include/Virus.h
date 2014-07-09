@@ -46,6 +46,8 @@ class Virus : public Life
 
 //    double value() const;
     int getIncubationPeriod() const;
+    int getInfectiousPeriod() const;
+    int getNonInfectiousPeriod() const;
     int getLethalPeriod() const;
     int getInfectionRate() const;
     int getMutationRate() const;
