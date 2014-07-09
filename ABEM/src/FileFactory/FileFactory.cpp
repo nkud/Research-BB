@@ -192,7 +192,6 @@ void FileFactory :: outputFile_LastLog( const char *fname ) const {
     ofs << "INFECTION_RATE:" << INFECTION_RATE << ENDL;
     ofs << "INIT_INFECTED_RATIO:" << A_INIT_INFECTED_RATE << ENDL;
     ofs << "TAG_LEN_A:" << A_DEFAULT_LEN << ENDL;
-    ofs << "TAG_LEN_V:" << V_DEFAULT_LEN << ENDL;
     ofs << ">>> Agent Last Status" << ENDL;
     ITERATOR(Agent *) it_a = am_->getAgentIteratorBegin();
     while(it_a!=am_->getAgentIteratorEnd()) {
