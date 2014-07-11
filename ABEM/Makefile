@@ -89,7 +89,7 @@ pack:
 	@cp -r bin/* $(MASTER)/$(RESULT)-$(R)
 	@cp -r Makefile include src script $(MASTER)/$(RESULT)-$(R)/$(PRGDIR)
 	@cp -r html $(MASTER)/$(RESULT)-$(R)
-	@cd $(MASTER)/$(RESULT)-$(R); ln -s html/index.html document.html
+	#@cd $(MASTER)/$(RESULT)-$(R); ln -s html/index.html document.html
 	@ls $(MASTER)/$(RESULT)-$(R)
 
 archive:
