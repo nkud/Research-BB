@@ -17,17 +17,17 @@ def command_generator(var, type, value, comment):
   return cmd
 
 def run(inc, sym):
-  command = 'cd ~/workspace/AgentBasedEpidemicModel/ABEM;make build run gene pack mail R="IN%dSY%d"' \
+  command = 'cd ~/workspace/AgentBasedEpidemicModel/ABEM;make build run gene pack R="IN%dSY%d"' \
       % ( int(inc), int(sym) )
   os.system( command );
 
 
 def main():
-  inc_range = 20
-  sym_range = 20
+  inc_range = 15
+  sym_range = 40
 
   for inc in range(inc_range):
-    for sym in range(sym_range):
+    for sym in range(sym_range)[20:]:
       configure(inc, sym)
       run(inc, sym)
 
