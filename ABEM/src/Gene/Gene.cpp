@@ -103,7 +103,7 @@ int Gene :: pointOfMinHamDistance( const Gene &other ) const {
   int sp = 0;
   int tm = minh;                                                     /* 初め最小ハミング距離は最大 */
 //  FOR( i, getLen() )                                                 /* ずらせる回数繰り返す */
-  FOR(i, getLen()-other.getLen())
+  FOR(i, getLen()-other.getLen())                                    /* 線分タグ */
   {
 //    tm = ham_distance( tag_+i, gene.getTag(), gene.getLen() );       /* ずらした位置でのハミング距離 */
     tm = hamDistance( other, i );
@@ -171,7 +171,7 @@ void Gene :: setTagRandom() {
     assert( getLen() > 0 );
     FOR( i, getLen() )
     {
-      tag_[i] = rand_interval_int(0, T_MAX);                         /* タグをランダムに初期化 */
+      tag_[i] = rand_interval_int(0, T_RANDOM_MAX);                  /* タグをランダムに初期化 */
     }
 }
 

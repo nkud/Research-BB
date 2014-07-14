@@ -12,9 +12,6 @@ typedef int tag_t;                                                   /* タグ�
  *  初期設定
  *
  *-----------------------------------------------------------------------------*/
-//#define AGING_AGENT
-//#define MATING_AGENT
-
 //#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
 const int TERM                      = 10000          ;               /* :期間: */
@@ -35,19 +32,19 @@ const int A_MAX_NUM                 = A_INIT_NUM * 5 ;               /* :最大�
 
 const double A_INIT_INFECTED_RATE   = 5              ;               /* :初期感染率 0-100: */
 
-const int A_DEFAULT_LEN             = 10             ;               /* :エージェントのタグ長: */
-
 const int V_NONINFECTIOUS_PERIOD    = 6              ;               /* :<u>潜伏期間</u>: */
 const int V_INFECTIOUS_PERIOD       = 14              ;               /* :<u>症候性期間</u>: */
 
 const int V_MUTATION_RATE           = 30             ;               /* :突然変異率: */
 
 const int T_MAX                     = 9              ;               /* :タグの最大値: */
-const int T_RANDOM_MAX              = 9              ;               /* :ランダムにする時の最大値: */
+const int T_RANDOM_MAX              = 0              ;               /* :ランダムにする時の最大値: */
 const int BASE_TAG                  = 0              ;               /* :基準タグ: */
 
+const int A_DEFAULT_LEN             = 20             ;               /* :エージェントのタグ長: */
+
 //               12345678901234567890
-#define V_TAG_0 "0000000000"
+#define V_TAG_0 "4444444444"
 #define V_NUM 1
 
 #endif

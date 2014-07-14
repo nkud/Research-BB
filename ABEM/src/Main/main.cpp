@@ -193,6 +193,7 @@ int main()
     {
       EACH( it_v, (**it_a).getImmuneSystem().getVirusList() ) {      /* エージェントの保持ウイルス全てに対して */
         if( (*it_v)->isInfectiousPeriod() ) {                        /* ウイルスが感染性期間なら */
+          assert( (**it_a).isSymptomaticPeriod() and "エージェントは症候性期間" );
           (*it_v)->mutation( (*it_v)->getMutationRate() );           /* 突然変異を確率で起こす */
         }
         (*it_v)->incrementInfectionTime();                           /* ウイルス固有の感染期間を増やす */

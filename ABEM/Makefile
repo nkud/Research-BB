@@ -135,6 +135,9 @@ mail:
 	@$(PRINT) '>>> mail'
 	@-cd $(BINDIR); python ../script/mail.py $(NOW)
 
+open:
+	@open bin/index.html
+
 # コンパイル -> 実行 -> 結果出力
 all: $(BINDIR)/$(TARGET) run gene
 
