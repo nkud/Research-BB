@@ -18,12 +18,11 @@
 #include <cstring>
 #include <cstdlib>
 
-/*-----------------------------------------------------------------------------
- *
- *  コンストラクタ
- *
- *-----------------------------------------------------------------------------*/
-
+/** 
+ * コンストラクタ 
+ * 
+ * @param gene  オリジナルの遺伝子
+ */
 Gene :: Gene( Gene & gene )
 {
   len_ = gene.getLen();
@@ -54,9 +53,12 @@ Gene :: Gene( const char *str ) :
         tag_[ i ] = str[ i ] - '0';                                  /* 指定された文字列で初期化 */
     }
 }
-///
-/// value
-///
+
+/** 
+ * 評価値を計算する 
+ * 
+ * @return 評価値
+ */
 int Gene :: value() {
   int ret = 0;
   FOR( i, getLen() ) {
@@ -65,9 +67,12 @@ int Gene :: value() {
   return ret;
 }
 
-/*-----------------------------------------------------------------------------
- *  flipToGeneAtPosition
- *-----------------------------------------------------------------------------*/
+/** 
+ * 他遺伝子に対してフリップする
+ * 
+ * @param pos 位置
+ * @return 
+ */
 int Gene :: flipToGeneAtPosition( const Gene &other, int pos )
 {
   FOR( i, other.getLen() )
@@ -97,8 +102,8 @@ int Gene :: pointOfMinHamDistance( const Gene &other ) const {
   int minh = getLen();                                               /* タグを比べる位置 */
   int sp = 0;
   int tm = minh;                                                     /* 初め最小ハミング距離は最大 */
-  FOR( i, getLen() )                                                 /* ずらせる回数繰り返す */
-  // FOR(i, getLen()-other.getLen())
+//  FOR( i, getLen() )                                                 /* ずらせる回数繰り返す */
+  FOR(i, getLen()-other.getLen())
   {
 //    tm = ham_distance( tag_+i, gene.getTag(), gene.getLen() );       /* ずらした位置でのハミング距離 */
     tm = hamDistance( other, i );
@@ -157,18 +162,16 @@ Gene :: ~Gene() {                                                    /* デス�
   assert( tag_ != NULL );
   SAFE_DELETE_ARRAY( tag_ );
 }
-/*
- *--------------------------------------------------------------------------------------
- *      Method:  Gene :: setTagRandom()
- * Description:  タグをランダムに初期化する
- *--------------------------------------------------------------------------------------
+
+/** 
+ * タグをランダムに初期化する 
+ * 
  */
 void Gene :: setTagRandom() {
     assert( getLen() > 0 );
     FOR( i, getLen() )
     {
-        // tag_[i] = rand_binary();                                     /* タグをランダムに初期化  */
-      tag_[i] = rand_interval_int(0, T_MAX);
+      tag_[i] = rand_interval_int(0, T_MAX);                         /* タグをランダムに初期化 */
     }
 }
 
@@ -244,11 +247,10 @@ void Gene :: setTag( const tag_t *t, int l ) {
 }
 
 
-/*-----------------------------------------------------------------------------
- *  Gene :: mutation()
- *      突然変異を起こす
- *      変異は必ず起こる
- *-----------------------------------------------------------------------------*/
+/** 
+ * 突然変異を起こす
+ * 
+ */
 void Gene :: mutation() {
   int pos = rand_array( getLen() );                                  /* 配列から適当な位置を */
   if( rand_bool() ) {
@@ -307,10 +309,11 @@ Gene& Gene :: clone() const {
  *  Life
  *
  *-----------------------------------------------------------------------------*/
-///
-/// initGene()
-///     @note 遺伝子初期化
-///
+
+/** 
+ * 遺伝子初期化
+ * 
+ */
 void Life :: initGene() {
   int len = getLen();                                                /* 現在の遺伝子の長さを取得して */
   SAFE_DELETE( gene_ );                                              /* 削除 */
@@ -318,20 +321,22 @@ void Life :: initGene() {
   gene_->setTagRandom();                                             /* タグをランダムに設定 */
 }
 
-///
-/// mutation()
-///     @note 突然変異
-///
+/**
+ * 突然変異 
+ * 
+ * @param prob 突然変異率
+ */
 void Life :: mutation( double prob ) {
   if( probability( prob ) ) {
     getGene().mutation( prob );
   }
 }
 
-///
-/// clone()
-///     @note クローン作成
-///
+/**
+ * クローンを作成 
+ * 
+ * @return クローンへの参照
+ */
 Life& Life :: clone() {
   Life *new_life = new Life( getGene() );
   return *new_life;

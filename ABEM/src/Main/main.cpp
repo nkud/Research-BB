@@ -12,10 +12,23 @@
  *
  * =====================================================================================
  */
-////////////////////////////////////////////////////////////////////////////////
-/// @mainpage RESULT
-/// <A HREF="../bin/index.html">result</A>
-////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @mainpage モデルの説明
+ *
+ * @section agent-infection 感染
+ * 他者への感染は、ウイルスが感染性期間の時。現段階では症候性期間と同じ。
+ *
+ * @section virus-mutation 突然変異
+ * ウイルスのみ、症候性期間の時に突然変異する。
+ *
+ * @todo コメントを整理する
+ * @todo Configクラスを作成する
+ */
+/**
+ * @file メイン関数 
+ */
+
 #include <cstdlib>
 #include <cstdio>
 #include <iostream>
@@ -82,7 +95,7 @@ int main()
     landscape.registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a ); /* エージェントを登録 */
   }
   /// ウイルス初期化
-  viruses.push_back( new Virus( "0000000000" ) );                    /* 通常ウイルスを追加 */
+  viruses.push_back( new Virus( V_TAG_0 ) );                    /* 通常ウイルスを追加 */
 
   /* モニター・ファイル生成クラス */
   FileFactory& fFactory = FileFactory::Instance();                   /* 出力ファイルを管理 */
@@ -179,10 +192,10 @@ int main()
     EACH( it_a, agents )
     {
       EACH( it_v, (**it_a).getImmuneSystem().getVirusList() ) {      /* エージェントの保持ウイルス全てに対して */
-        (*it_v)->incrementInfectionTime();                           /* ウイルス固有の感染期間を増やす */
         if( (*it_v)->isInfectiousPeriod() ) {                        /* ウイルスが感染性期間なら */
           (*it_v)->mutation( (*it_v)->getMutationRate() );           /* 突然変異を確率で起こす */
         }
+        (*it_v)->incrementInfectionTime();                           /* ウイルス固有の感染期間を増やす */
       }
     }
     /*-----------------------------------------------------------------------------

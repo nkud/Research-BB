@@ -1,14 +1,10 @@
-/*
- * =====================================================================================
+/* file name  : /Users/naoki/workspace/AgentBasedEpidemicModel/ABEM/src/Agent/Agent.cpp
+ * authors    : Naoki Ueda
+ * created    : Mon Jul 14 19:46:43 2014
+ * copyright  : Naoki Ueda
  *
- *       Filename:  Agent.cpp
+ * modifications:
  *
- *    Description:  
- *
- *         Author:  Naoki Ueda
- *   Organization:  OPU, 3G
- *
- * =====================================================================================
  */
 #include "Agent.h"
 #include "AgentStrategy.h"
@@ -51,11 +47,13 @@ bool Agent :: isLethal() const {
   return immune_system_->isLethal();
 }
 
-/*-----------------------------------------------------------------------------
- *  contact( Agent & )
- *      他エージェントが保持する感染力を持ったすべてのウイルスに対して、
- *      そのウイルス固有の感染力に従って待機ウイルスとする。
- *-----------------------------------------------------------------------------*/
+/** 
+ * 他のエージェントが保持する感染力をもったすべてのウイルスに対して、
+ * そのウイルス固有の感染力に従って待機ウイルスとする。
+ * 
+ * @param other 他のエージェント
+ * @return 
+ */
 void Agent :: contact( Agent &other ) {
   VECTOR(Virus *) crisis_virus = other.getImmuneSystem().getCrisisVirusList(); /*  */
   EACH( it_v, crisis_virus ) {                                       /* すべての感染ウイルスの */
@@ -132,10 +130,11 @@ Agent :: ~Agent() {
   SAFE_DELETE( immune_system_ );
 }
 
-/*-----------------------------------------------------------------------------
- *  rebirth()
- *      エージェントを初期化して再利用する
- *-----------------------------------------------------------------------------*/
+/** 
+ * エージェントを初期化して再利用する 
+ *
+ * @return 
+ */
 void Agent :: rebirth() {
   SAFE_DELETE( immune_system_ );
   initGene();
