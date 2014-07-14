@@ -39,7 +39,7 @@ using namespace std;
 #include "AgentCounter.h"
 
 #ifdef BENCHMARK
-#include "Benchmark.h"                                               
+#include "Benchmark.h"
 #endif
 
 /*-----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ int main()
     landscape.registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a ); /* エージェントを登録 */
   }
   /// ウイルス初期化
-  viruses.push_back( new Virus( V_TAG_0 ) );                         /* 通常ウイルスを追加 */
+  viruses.push_back( new Virus( "0000000000" ) );                    /* 通常ウイルスを追加 */
 
   /* モニター・ファイル生成クラス */
   FileFactory& fFactory = FileFactory::Instance();                   /* 出力ファイルを管理 */

@@ -89,7 +89,7 @@ pack:
 	@cp -r bin/* $(MASTER)/$(RESULT)-$(R)
 	@cp -r Makefile include src script $(MASTER)/$(RESULT)-$(R)/$(PRGDIR)
 	@cp -r html $(MASTER)/$(RESULT)-$(R)
-	@cd $(MASTER)/$(RESULT)-$(R); ln -s html/index.html document.html
+	#@cd $(MASTER)/$(RESULT)-$(R); ln -s html/index.html document.html
 	@ls $(MASTER)/$(RESULT)-$(R)
 
 archive:
@@ -115,13 +115,8 @@ clean:
 	@$(RM) -vrf $(OBJDIR) $(BINDIR)
 	@$(PRINT) 'done'
 
-# テストする
-check:
-	@$(PRINT) [ check ]
-	@$(PRINT) there is no test.
-
 print:
-	@$(PRINT) [ print ]
+	@$(PRINT) '>>> Print'
 
 grep:
 	@$(PRINT) '>>> src files'
@@ -139,8 +134,6 @@ tags:
 mail:
 	@$(PRINT) '>>> mail'
 	@-cd $(BINDIR); python ../script/mail.py $(NOW)
-
-test:
 
 # コンパイル -> 実行 -> 結果出力
 all: $(BINDIR)/$(TARGET) run gene
