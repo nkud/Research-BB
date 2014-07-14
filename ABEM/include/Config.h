@@ -17,7 +17,7 @@ typedef int tag_t;                                                   /* タグ�
 
 //#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-const int TERM                      = 10000          ;               /* :期間: */
+const int TERM                      = 3000          ;               /* :期間: */
 const int OUTPUT_INTERVAL           = 1              ;               /* :出力する間隔: */
 const int DATABASE_INTERVAL         = 100            ;               /* :データベースを出力する期間: */
 const int MINI_SIZE_TERM            = 200            ;               /* :拡大画像間隔: */
@@ -37,14 +37,14 @@ const double A_INIT_INFECTED_RATE   = 5              ;               /* :初期�
 
 const int A_DEFAULT_LEN             = 10             ;               /* :エージェントのタグ長: */
 
-const int V_NONINFECTIOUS_PERIOD    = 0              ;               /* :<u>潜伏期間</u>: */
-const int V_INFECTIOUS_PERIOD       = 2              ;               /* :<u>症候性期間</u>: */
+const int V_NONINFECTIOUS_PERIOD    = 6              ;               /* :<u>潜伏期間</u>: */
+const int V_INFECTIOUS_PERIOD       = 14              ;               /* :<u>症候性期間</u>: */
 
 const int V_MUTATION_RATE           = 30             ;               /* :突然変異率: */
 
 const int T_MAX                     = 9              ;               /* :タグの最大値: */
-const int T_RANDOM_MAX              = 9              ;               /* ランダムにする時の最大値 */
-const int BASE_TAG                  = 0              ;               /* :基準タグ: */
+const int T_RANDOM_MAX              = 9              ;               /* :ランダムにする時の最大値: */
+const int BASE_TAG                  = 4              ;               /* :基準タグ: */
 
 //               12345678901234567890
 #define V_TAG_0 "0000000000"
