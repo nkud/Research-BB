@@ -17,7 +17,7 @@ def command_generator(var, type, value, comment):
   return cmd
 
 def run(inc, sym):
-  command = 'cd ~/workspace/AgentBasedEpidemicModel/ABEM;make build run gene pack mail R="IN%dSY%d"' \
+  command = 'cd ~/workspace/AgentBasedEpidemicModel/ABEM;make build run gene pack R="IN%dSY%d"' \
       % ( int(inc), int(sym) )
   os.system( command );
 

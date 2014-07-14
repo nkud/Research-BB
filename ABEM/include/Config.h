@@ -37,12 +37,13 @@ const double A_INIT_INFECTED_RATE   = 5              ;               /* :初期�
 
 const int A_DEFAULT_LEN             = 10             ;               /* :エージェントのタグ長: */
 
-const int V_NONINFECTIOUS_PERIOD = 0 ; /* :<u>潜伏期間</u>: */
-const int V_INFECTIOUS_PERIOD = 2 ; /* :<u>症候性期間</u>: */
+const int V_NONINFECTIOUS_PERIOD    = 0              ;               /* :<u>潜伏期間</u>: */
+const int V_INFECTIOUS_PERIOD       = 2              ;               /* :<u>症候性期間</u>: */
 
 const int V_MUTATION_RATE           = 30             ;               /* :突然変異率: */
 
 const int T_MAX                     = 9              ;               /* :タグの最大値: */
+const int T_RANDOM_MAX              = 9              ;               /* ランダムにする時の最大値 */
 const int BASE_TAG                  = 0              ;               /* :基準タグ: */
 
 //               12345678901234567890

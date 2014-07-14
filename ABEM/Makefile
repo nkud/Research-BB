@@ -115,13 +115,8 @@ clean:
 	@$(RM) -vrf $(OBJDIR) $(BINDIR)
 	@$(PRINT) 'done'
 
-# テストする
-check:
-	@$(PRINT) [ check ]
-	@$(PRINT) there is no test.
-
 print:
-	@$(PRINT) [ print ]
+	@$(PRINT) '>>> Print'
 
 grep:
 	@$(PRINT) '>>> src files'
@@ -139,8 +134,6 @@ tags:
 mail:
 	@$(PRINT) '>>> mail'
 	@-cd $(BINDIR); python ../script/mail.py $(NOW)
-
-test:
 
 # コンパイル -> 実行 -> 結果出力
 all: $(BINDIR)/$(TARGET) run gene
