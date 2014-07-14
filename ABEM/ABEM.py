@@ -27,7 +27,7 @@ def main():
   sym_range = 40
 
   for inc in range(inc_range):
-    for sym in range(sym_range)[20:]:
+    for sym in range(sym_range):
       configure(inc, sym)
       run(inc, sym)
 
