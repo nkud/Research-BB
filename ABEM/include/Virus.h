@@ -16,11 +16,16 @@
 
 #include "Gene.h"
 
-/*
- * =====================================================================================
- *        Class:  Virus
- *  Description:  ウイルス
- * =====================================================================================
+/** 
+ * ウイルスのインターフェイス 
+ */
+class __VirusInterface
+{
+
+};
+
+/** 
+ * ウイルス
  */
 class Virus : public Life
 {
@@ -38,7 +43,7 @@ class Virus : public Life
     /*-----------------------------------------------------------------------------
      *  パラメータ操作
      *-----------------------------------------------------------------------------*/
-    double getRate() const;                                          /* 感染確率を返す */
+    virtual double getRate() const;                                          /* 感染確率を返す */
     void setRate( const double r );                                  /* 感染確率を設定 */
 
     int searchStartPoint( Gene & );                                  /* タグに取り付く位置を返す */
@@ -88,5 +93,22 @@ class Virus : public Life
 
     int cling_point_;                                                /* 取り付いている位置 */
     int infection_age_;                                              /* 感染期間 */
+};
+
+/** 
+ * 区分ウイルス
+ */
+class SectionedVirus : public Virus {
+ public:
+   SectionedVirus( const char *tag ) : Virus(tag) {}
+
+   double getRate() const { return 0; }                              /* 感染確率を返す */
+   int getIncubationPeriod() const;
+   int getInfectiousPeriod() const;
+   int getNonInfectiousPeriod() const;
+   int getLethalPeriod() const;
+   int getInfectionRate() const;
+   int getMutationRate() const;
+ private:
 };
 #endif

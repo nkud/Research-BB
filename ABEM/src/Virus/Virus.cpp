@@ -1,15 +1,12 @@
-/*
- * =====================================================================================
+/* file name  : src/Virus/Virus.cpp
+ * authors    : Naoki Ueda
+ * created    : Tue Jul 15 09:35:42 2014
+ * copyright  : Naoki Ueda
  *
- *       Filename:  Virus.cpp
+ * modifications:
  *
- *    Description:  ウイルスのクラス
- *
- *         Author:  Naoki ueda
- *   Organization:  OPU, 3G
- *
- * =====================================================================================
  */
+
 #include <cstdlib>
 #include <cstring>
 
@@ -120,6 +117,7 @@ Virus :: Virus( Virus &origin ) :
   infection_age_ = 0;
   rate_ = origin.getRate();
 }
+
 
 /*-----------------------------------------------------------------------------
  *  Virus :: ~Virus()

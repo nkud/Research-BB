@@ -23,3 +23,5 @@ __*
 
 # 例外
 !__init__.py
+*#
+!.gitignore

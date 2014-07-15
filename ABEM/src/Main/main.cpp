@@ -95,7 +95,8 @@ int main()
     landscape.registAgent( (*it_a)->getX(), (*it_a)->getY(), **it_a ); /* エージェントを登録 */
   }
   /// ウイルス初期化
-  viruses.push_back( new Virus( V_TAG_0 ) );                    /* 通常ウイルスを追加 */
+//  viruses.push_back( new Virus( V_TAG_0 ) );                         /* 通常ウイルスを追加 */
+  viruses.push_back( new SectionedVirus( V_TAG_0 ) );                /* 通常ウイルスを追加 */
 
   /* モニター・ファイル生成クラス */
   FileFactory& fFactory = FileFactory::Instance();                   /* 出力ファイルを管理 */
