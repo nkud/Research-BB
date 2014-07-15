@@ -30,19 +30,18 @@ class __VirusInterface : public Life {
     /*-----------------------------------------------------------------------------
      *  パラメータ操作
      *-----------------------------------------------------------------------------*/
-    virtual double getRate() const;                                          /* 感染確率を返す */
+    virtual int getInfectiousPeriod() const;
+    virtual int getNonInfectiousPeriod() const;
+    virtual int getLethalPeriod() const;
+    virtual int getMutationRate() const;
+    virtual double getRate() const;
+
     void setRate( const double r );                                  /* 感染確率を設定 */
 
     int searchStartPoint( Gene & );                                  /* タグに取り付く位置を返す */
     // __SEARCH__TYPE__ getSearchType() const;                          /* サーチ戦略を返す */
 
 //    double value() const;
-    int getIncubationPeriod() const;
-    int getInfectiousPeriod() const;
-    int getNonInfectiousPeriod() const;
-    int getLethalPeriod() const;
-    int getInfectionRate() const;
-    int getMutationRate() const;
     /*-----------------------------------------------------------------------------
      *  状態
      *-----------------------------------------------------------------------------*/
@@ -81,34 +80,33 @@ class __VirusInterface : public Life {
     int cling_point_;                                                /* 取り付いている位置 */
     int infection_age_;                                              /* 感染期間 */
 };
+
 /** 
  * ウイルスのインターフェイス 
  */
-class Virus : public __VirusInterface
+class NormalVirus : public __VirusInterface
 {
   public:
-    double getRate() const;
-    int getIncubationPeriod() const;
-    int getInfectiousPeriod() const;
-    int getNonInfectiousPeriod() const;
-    int getLethalPeriod() const;
-    int getInfectionRate() const;
-    int getMutationRate() const;
+    NormalVirus( const char *tag ) : __VirusInterface(tag) {}
+
+    double getRate() const { return 0; }
+//    int getInfectiousPeriod() const;
+//    int getNonInfectiousPeriod() const;
+//    int getLethalPeriod() const;
+//    int getMutationRate() const;
   private:
 };
 
 /** 
  * 区分ウイルス
  */
-class SectionedVirus : public __VirusInterface {
- public:
-   double getRate() const { return 0; }                              /* 感染確率を返す */
-   int getIncubationPeriod() const;
-   int getInfectiousPeriod() const;
-   int getNonInfectiousPeriod() const;
-   int getLethalPeriod() const;
-   int getInfectionRate() const;
-   int getMutationRate() const;
- private:
-};
+//class SectionedVirus : public __VirusInterface {
+// public:
+//   double getRate() const { return 0; }                              /* 感染確率を返す */
+//   int getInfectiousPeriod() const;
+//   int getNonInfectiousPeriod() const;
+//   int getLethalPeriod() const;
+//   int getMutationRate() const;
+// private:
+//};
 #endif

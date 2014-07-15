@@ -96,7 +96,7 @@ int main()
   }
   /// ウイルス初期化
 //  viruses.push_back( new Virus( V_TAG_0 ) );                         /* 通常ウイルスを追加 */
-  viruses.push_back( new __VirusInterface( V_TAG_0 ) );                /* 通常ウイルスを追加 */
+  viruses.push_back( new NormalVirus( V_TAG_0 ) );                /* 通常ウイルスを追加 */
 
   /* モニター・ファイル生成クラス */
   FileFactory& fFactory = FileFactory::Instance();                   /* 出力ファイルを管理 */

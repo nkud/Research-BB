@@ -110,13 +110,14 @@ __VirusInterface :: __VirusInterface( int l ):
   getGene().setTagRandom();                                              /* タグをランダムに初期化 */
 }
 /* __VirusInterface */
-__VirusInterface :: __VirusInterface( __VirusInterface &origin ) :
-  Life( origin.getGene() )
-{
-  cling_point_ = 0;
-  infection_age_ = 0;
-  rate_ = origin.getRate();
-}
+//__VirusInterface :: __VirusInterface( __VirusInterface &origin ) :
+//  Life( origin.getGene() )
+//{
+//  cling_point_ = 0;
+//  infection_age_ = 0;
+//  rate_ = origin.getRate();
+//}
+//
 
 
 /*-----------------------------------------------------------------------------
