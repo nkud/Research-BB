@@ -70,7 +70,7 @@ int main()
    *  初期化
    *-----------------------------------------------------------------------------*/
   VECTOR(Agent *) agents;                                            /* エージェントの配列 */
-  VECTOR(Virus *) viruses;                                           /* ウイルスの配列 */
+  VECTOR(__VirusInterface *) viruses;                                           /* ウイルスの配列 */
   Landscape &landscape = Landscape::Instance();
 
   /* 管理者 */
@@ -96,7 +96,7 @@ int main()
   }
   /// ウイルス初期化
 //  viruses.push_back( new Virus( V_TAG_0 ) );                         /* 通常ウイルスを追加 */
-  viruses.push_back( new SectionedVirus( V_TAG_0 ) );                /* 通常ウイルスを追加 */
+  viruses.push_back( new __VirusInterface( V_TAG_0 ) );                /* 通常ウイルスを追加 */
 
   /* モニター・ファイル生成クラス */
   FileFactory& fFactory = FileFactory::Instance();                   /* 出力ファイルを管理 */
@@ -159,8 +159,8 @@ int main()
     /*-----------------------------------------------------------------------------
      *  感染
      *-----------------------------------------------------------------------------*/
-    ITERATOR(Virus *) itt;
-    Virus *v;
+    ITERATOR(__VirusInterface *) itt;
+    __VirusInterface *v;
     int n;
     int infection_count;                                             /* 同時感染数をカウント。最大値を越えないように */
 
@@ -280,7 +280,7 @@ int main()
 
   // 確認用 -----------------------------------------------------------------
   LOG(sizeof(Agent));
-  LOG(sizeof(Virus));
+  LOG(sizeof(__VirusInterface));
   LOG(sizeof(Relocate));
   LOG(sizeof(Term));
 

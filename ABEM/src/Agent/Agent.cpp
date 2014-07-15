@@ -55,7 +55,7 @@ bool Agent :: isLethal() const {
  * @return 
  */
 void Agent :: contact( Agent &other ) {
-  VECTOR(Virus *) crisis_virus = other.getImmuneSystem().getCrisisVirusList(); /*  */
+  VECTOR(__VirusInterface *) crisis_virus = other.getImmuneSystem().getCrisisVirusList(); /*  */
   EACH( it_v, crisis_virus ) {                                       /* すべての感染ウイルスの */
     assert( (**it_v).isInfectiousPeriod() );                         /* 感染性ウイルスでなければエラー */
     if( probability((*it_v)->getRate()) ) {                          /* 感染率に従って */
@@ -157,7 +157,7 @@ int Agent :: getY() const { return y_; }                             /* エー�
  * Description:  感染したら、true を返す
  *--------------------------------------------------------------------------------------
  */
-bool Agent :: infection( Virus &v )
+bool Agent :: infection( __VirusInterface &v )
 { return immune_system_->infection( *this, v ); }
 
 /*
@@ -171,11 +171,11 @@ int Agent :: response()
 { return immune_system_->response( *this ); } 
 /* 
  *--------------------------------------------------------------------------------------
- *      Method:  Agent :: hasImmunity( Virus & )
+ *      Method:  Agent :: hasImmunity( __VirusInterface & )
  * Description:  免疫を獲得しているかどうか
  *--------------------------------------------------------------------------------------
  */
-bool Agent :: hasImmunity( Virus &v )                                /* true -> 免疫獲得済み  */
+bool Agent :: hasImmunity( __VirusInterface &v )                                /* true -> 免疫獲得済み  */
 {
   if( getGene().pointOfMinHamDistance( v.getGene() ) < 0 )
     return true;                                                     /* 免疫獲得済み */
@@ -184,11 +184,11 @@ bool Agent :: hasImmunity( Virus &v )                                /* true -> 
 }
 
 /*--------------------------------------------------------------------------------------
- *      Method:  Agent :: hasVirus( Virus & )
+ *      Method:  Agent :: hasVirus( __VirusInterface & )
  * Description:  特定のウイルスを保持しているかどうか
  *               リストを走査することで確かめる
  *----------------------------------------------------------------------------------- */
-bool Agent :: hasVirus( Virus &v ) const {
+bool Agent :: hasVirus( __VirusInterface &v ) const {
     return immune_system_->hasVirus( v );
 }
 bool Agent :: hasVirus() const {

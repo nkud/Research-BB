@@ -102,34 +102,34 @@ ImmuneSystem :: ~ImmuneSystem() {
  *
  *-----------------------------------------------------------------------------*/
 /* 保持ウイルスセット */
-Virus *ImmuneSystem :: getVirusAt( int n ) const { return virus_list_.at( n ); }
+__VirusInterface *ImmuneSystem :: getVirusAt( int n ) const { return virus_list_.at( n ); }
 int ImmuneSystem :: getVirusListSize() const { return virus_list_.size(); }
-void ImmuneSystem :: pushVirus( Virus& v, Agent& a ) {
-  Virus *new_virus = new Virus( v );                                     /* 新しいウイルスデータを作成して */
+void ImmuneSystem :: pushVirus( __VirusInterface& v, Agent& a ) {
+  __VirusInterface *new_virus = new __VirusInterface( v );                                     /* 新しいウイルスデータを作成して */
   new_virus->setClingPoint( new_virus->searchStartPoint( a.getGene() ) );
   virus_list_.push_back( new_virus );
 }
-ITERATOR(Virus *) ImmuneSystem :: eraseVirus( ITERATOR(Virus *) it ) {
+ITERATOR(__VirusInterface *) ImmuneSystem :: eraseVirus( ITERATOR(__VirusInterface *) it ) {
   SAFE_DELETE(*it);
-  ITERATOR(Virus *) next = virus_list_.erase( it );                /* next iterator */
+  ITERATOR(__VirusInterface *) next = virus_list_.erase( it );                /* next iterator */
   return next;
 }
 bool ImmuneSystem :: hasNoVirus() const { if( virus_list_.empty() ) return true; else return false; }
-ITERATOR(Virus *) ImmuneSystem :: getVirusListIteratorBegin() { return virus_list_.begin(); }
-ITERATOR(Virus *) ImmuneSystem :: getVirusListIteratorEnd() { return virus_list_.end(); }
+ITERATOR(__VirusInterface *) ImmuneSystem :: getVirusListIteratorBegin() { return virus_list_.begin(); }
+ITERATOR(__VirusInterface *) ImmuneSystem :: getVirusListIteratorEnd() { return virus_list_.end(); }
 /* 待機ウイルスセット */
-Virus *ImmuneSystem :: getStandByVirusAt( int n ) const { return stand_by_virus_list_.at(n); }
-void ImmuneSystem :: pushStandByVirus( Virus& v ) {
-  Virus *new_virus = new Virus( v );
+__VirusInterface *ImmuneSystem :: getStandByVirusAt( int n ) const { return stand_by_virus_list_.at(n); }
+void ImmuneSystem :: pushStandByVirus( __VirusInterface& v ) {
+  __VirusInterface *new_virus = new __VirusInterface( v );
   stand_by_virus_list_.push_back( new_virus );
 }
 int ImmuneSystem :: getStandByVirusListSize() const { return stand_by_virus_list_.size(); }
 bool ImmuneSystem :: hasNoStandByVirus() const { return stand_by_virus_list_.empty(); }
-ITERATOR(Virus *) ImmuneSystem :: getStandByVirusListIteratorBegin() { return stand_by_virus_list_.begin(); }
-ITERATOR(Virus *) ImmuneSystem :: getStandByVirusListIteratorEnd() { return stand_by_virus_list_.end(); }
-ITERATOR(Virus *) ImmuneSystem :: eraseStandByVirus( ITERATOR(Virus *) it ) {
+ITERATOR(__VirusInterface *) ImmuneSystem :: getStandByVirusListIteratorBegin() { return stand_by_virus_list_.begin(); }
+ITERATOR(__VirusInterface *) ImmuneSystem :: getStandByVirusListIteratorEnd() { return stand_by_virus_list_.end(); }
+ITERATOR(__VirusInterface *) ImmuneSystem :: eraseStandByVirus( ITERATOR(__VirusInterface *) it ) {
   SAFE_DELETE(*it);
-  ITERATOR(Virus *) next = stand_by_virus_list_.erase( it );       /* next iterator */
+  ITERATOR(__VirusInterface *) next = stand_by_virus_list_.erase( it );       /* next iterator */
   return next;                                                        /* delete はしない  */
 }
 void ImmuneSystem :: clearStandByVirus() {
@@ -142,8 +142,8 @@ void ImmuneSystem :: clearStandByVirus() {
 /*-----------------------------------------------------------------------------
  *  getCrisisVirusList()
  *-----------------------------------------------------------------------------*/
-VECTOR(Virus *) ImmuneSystem :: getCrisisVirusList() {
-  VECTOR(Virus *) crisis_virus;
+VECTOR(__VirusInterface *) ImmuneSystem :: getCrisisVirusList() {
+  VECTOR(__VirusInterface *) crisis_virus;
   EACH( it_v, getVirusList() )
   {
     if( (*it_v)->isInfectiousPeriod() )
@@ -155,12 +155,12 @@ VECTOR(Virus *) ImmuneSystem :: getCrisisVirusList() {
 }
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  ImmuneSystem :: hasVirus( Virus & )
+ *      Method:  ImmuneSystem :: hasVirus( __VirusInterface & )
  * Description:  
  *--------------------------------------------------------------------------------------
  */
-bool ImmuneSystem :: hasVirus( Virus &v ) {
-  C_ITERATOR(Virus *) it_v = getVirusListIteratorBegin();            /* ウイルスリストの先頭から */
+bool ImmuneSystem :: hasVirus( __VirusInterface &v ) {
+  C_ITERATOR(__VirusInterface *) it_v = getVirusListIteratorBegin();            /* ウイルスリストの先頭から */
   while( it_v != getVirusListIteratorEnd() ) {                       /* 末尾まで */
     if( (*it_v)->isEqualTo( v ) ) {                                            /* 感染済みであれば */
       return true;                                                   /* true を返す */
@@ -183,7 +183,7 @@ bool ImmuneSystem :: hasVirus() const {
  * Description:  感染したら、true を返す
  *--------------------------------------------------------------------------------------
  */
-bool ImmuneSystem :: infection( Agent &self, Virus &v )
+bool ImmuneSystem :: infection( Agent &self, __VirusInterface &v )
 {
     if( self.getImmuneSystem().getVirusListSize() >= A_MAX_V_CAPACITY ) { /* 最大値を越えてたら */
     return false;                                                    /* 感染せずに終了 */
@@ -201,7 +201,7 @@ bool ImmuneSystem :: infection( Agent &self, Virus &v )
     return false;                                                    /* 感染せずに終了 */
   }
 
-//  Virus *new_v = new Virus( v );                                      /* 新しいウイルスデータを作成して */
+//  __VirusInterface *new_v = new __VirusInterface( v );                                      /* 新しいウイルスデータを作成して */
 //  new_v->setClingPoint( new_v->searchStartPoint( self.getGene() ) );
   // XXX: ウイルスの関数にする setClingPoint( Tag * );
   self.getImmuneSystem().pushVirus( v, self );                   /* 保持ウイルスリストに追加する */
@@ -225,7 +225,7 @@ int ImmuneSystem :: response( Agent &self )
     return 0;                                                        /* 終了する */
   }
 
-  ITERATOR(Virus *) it_v
+  ITERATOR(__VirusInterface *) it_v
     = self.getImmuneSystem().getVirusListIteratorBegin();           /* 先頭のウイルスに対し */
 
   if( ! self.hasImmunity( **it_v ) ) {                                 /* 免疫を獲得していなければ */

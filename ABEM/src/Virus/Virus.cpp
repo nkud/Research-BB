@@ -19,7 +19,7 @@
 /**
  * 非感染性期間かどうか
  */
-bool Virus :: isNonInfectiousPeriod() const {
+bool __VirusInterface :: isNonInfectiousPeriod() const {
   if( getInfectionTime() <= getNonInfectiousPeriod() ) {             //< 感染期間が非感染性期間以下なら
     assert( ! isInfectiousPeriod() and "感染性期間ではない" );
     return true;                                                     //< 真
@@ -31,7 +31,7 @@ bool Virus :: isNonInfectiousPeriod() const {
 /**
  * 感染性期間かどうか
  */
-bool Virus :: isInfectiousPeriod() const {
+bool __VirusInterface :: isInfectiousPeriod() const {
   if( getInfectionTime() > getNonInfectiousPeriod() ) {              //< 感染期間が非感染性期間を超えれば 
     assert( ! isNonInfectiousPeriod() and "非感染性期間ではない" );
     return true;                                                     //< 真 
@@ -43,7 +43,7 @@ bool Virus :: isInfectiousPeriod() const {
 /**
  * 感染性期間を返す
  */
-bool Virus :: isLethalPeriod() const {
+bool __VirusInterface :: isLethalPeriod() const {
   if( getInfectionTime() > getLethalPeriod() ) {
     return true;
   } else {
@@ -54,31 +54,31 @@ bool Virus :: isLethalPeriod() const {
 /**
  * 感染性期間を返す
  */
-int Virus :: getInfectiousPeriod() const {
+int __VirusInterface :: getInfectiousPeriod() const {
   return V_INFECTIOUS_PERIOD;
 }
 /**
  * 非感染性期間を返す
  */
-int Virus :: getNonInfectiousPeriod() const {
+int __VirusInterface :: getNonInfectiousPeriod() const {
   return V_NONINFECTIOUS_PERIOD;
 }
 /**
  * 致死期間を返す
  */
-int Virus :: getLethalPeriod() const {
+int __VirusInterface :: getLethalPeriod() const {
  return getInfectiousPeriod() + getNonInfectiousPeriod();
 }
 /**
  * 突然変異率を返す
  */
-int Virus :: getMutationRate() const {
+int __VirusInterface :: getMutationRate() const {
   return V_MUTATION_RATE;
 }
 /**
  * 感染率を返す
  */
-double Virus :: getRate() const { 
+double __VirusInterface :: getRate() const { 
   // return rate_; 
   double rate = 100*1./(1+value()/9.);
   // LOG(rate)
@@ -93,7 +93,7 @@ double Virus :: getRate() const {
  *
  *-----------------------------------------------------------------------------*/
 /* Tag */
-Virus :: Virus( const char *str ) :
+__VirusInterface :: __VirusInterface( const char *str ) :
   Life( str ),
   rate_( INFECTION_RATE ),                                            /* 感染確率は初期設定 */
   cling_point_( 0 ),
@@ -101,7 +101,7 @@ Virus :: Virus( const char *str ) :
 {
 }
 /* Tag Len */
-Virus :: Virus( int l ):
+__VirusInterface :: __VirusInterface( int l ):
   Life( l ),
   rate_( INFECTION_RATE ),                                            /* 感染確率を指定 */
   cling_point_( 0 ),
@@ -109,8 +109,8 @@ Virus :: Virus( int l ):
 {
   getGene().setTagRandom();                                              /* タグをランダムに初期化 */
 }
-/* Virus */
-Virus :: Virus( Virus &origin ) :
+/* __VirusInterface */
+__VirusInterface :: __VirusInterface( __VirusInterface &origin ) :
   Life( origin.getGene() )
 {
   cling_point_ = 0;
@@ -120,23 +120,23 @@ Virus :: Virus( Virus &origin ) :
 
 
 /*-----------------------------------------------------------------------------
- *  Virus :: ~Virus()
+ *  __VirusInterface :: ~__VirusInterface()
  *-----------------------------------------------------------------------------*/
-Virus :: ~Virus() {
+__VirusInterface :: ~__VirusInterface() {
 }
 
 /*--------------------------------------------------------------------------------------
- *      Method:  Virus :: *
+ *      Method:  __VirusInterface :: *
  * Description:  セッタ、ゲッタ関連
  *----------------------------------------------------------------------------------- */
 
-void Virus :: setRate( const double r ) { rate_ = r; }
+void __VirusInterface :: setRate( const double r ) { rate_ = r; }
 
 /*-----------------------------------------------------------------------------
- *  Virus :: isEqualTo( Virus & )
+ *  __VirusInterface :: isEqualTo( __VirusInterface & )
  *      ウイルスのタグに等しければ true を返す
  *-----------------------------------------------------------------------------*/
-bool Virus :: isEqualTo( const Virus &v ) const {
+bool __VirusInterface :: isEqualTo( const __VirusInterface &v ) const {
   int len = getLen();
   if( len != v.getLen() ) {
     return false;
@@ -151,11 +151,11 @@ bool Virus :: isEqualTo( const Virus &v ) const {
 
 /*
  *--------------------------------------------------------------------------------------
- *      Method:  Virus :: searchStartPoint( Gene & )
+ *      Method:  __VirusInterface :: searchStartPoint( Gene & )
  * Description:  タグに対して、ハミング距離が最小となる位置に取り付く
  *--------------------------------------------------------------------------------------
  */
-int Virus :: searchStartPoint( Gene &gene ) {
+int __VirusInterface :: searchStartPoint( Gene &gene ) {
   int sp = -1;
   sp = gene.pointOfMinHamDistance( getGene() );
   return sp;
@@ -163,13 +163,13 @@ int Virus :: searchStartPoint( Gene &gene ) {
 }
 
 /*-----------------------------------------------------------------------------
- *  Virus :: mutation()
+ *  __VirusInterface :: mutation()
  *      突然変異を起こす
  *-----------------------------------------------------------------------------*/
-//void Virus :: mutation() {
+//void __VirusInterface :: mutation() {
 //  getGene().mutation();
 //}
-void Virus :: mutation( double prob ) {
+void __VirusInterface :: mutation( double prob ) {
   if ( probability( prob ) ) {
     getGene().mutation( prob );
     VirusCounter::Instance().countUpMutation();                      /* カウントする */

@@ -69,7 +69,7 @@ int VirusCounter :: countUpMutation() {
  *  ウイルスの種類
  *
  *-----------------------------------------------------------------------------*/
-int VirusCounter :: hasDataOfVirus( const Virus& v ) {
+int VirusCounter :: hasDataOfVirus( const __VirusInterface& v ) {
   int n = 0;
   EACH( it_v, getVirusDataBase() )
   {
@@ -85,13 +85,13 @@ int VirusCounter :: hasDataOfVirus( const Virus& v ) {
  *  pushNewVirus
  *      データベースに新しいウイルスを登録
  *-----------------------------------------------------------------------------*/
-bool VirusCounter :: pushNewVirus( Virus& v ) {
+bool VirusCounter :: pushNewVirus( __VirusInterface& v ) {
   int f = hasDataOfVirus(v);
   if( f != -1 ) {                                          /* データがあれば */
     virus_number_data_base_[f]++;
     return false;                                                    /* 終了 */
   } else {                                                           /* なければ */
-    virus_data_base_.push_back( new Virus( v ) );                     /* データを追加して */
+    virus_data_base_.push_back( new __VirusInterface( v ) );                     /* データを追加して */
     virus_number_data_base_.push_back( 1 );
     return true;                                                     /* 終了 */
   }
@@ -109,9 +109,9 @@ void VirusCounter :: resetVirusDataBase() {
 int VirusCounter :: getVirusVariaty() const {
   return virus_data_base_.size();
 }
-ITERATOR(Virus*) VirusCounter :: getVirusDataBaseIteratorBegin() {
+ITERATOR(__VirusInterface*) VirusCounter :: getVirusDataBaseIteratorBegin() {
   return virus_data_base_.begin();
 }
-ITERATOR(Virus*) VirusCounter :: getVirusDataBaseIteratorEnd() {
+ITERATOR(__VirusInterface*) VirusCounter :: getVirusDataBaseIteratorEnd() {
   return virus_data_base_.end();
 }

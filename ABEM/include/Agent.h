@@ -45,13 +45,13 @@ class Agent : public Life
      *-----------------------------------------------------------------------------*/
     /// @param v ウイルス
     /// @return 感染したら true
-    bool infection( Virus &v );                                      /* 感染プロセス  */
+    bool infection( __VirusInterface &v );                                      /* 感染プロセス  */
     int response();                                                  /* 免疫応答する（タグフリップ）  */
     void contact( Agent &other );
 
     bool hasVirus() const;                                           /* v に感染しているか */
-    bool hasVirus( Virus &v ) const;                                 /* v に感染しているか */
-    bool hasImmunity( Virus &v );                                    /* v の免疫獲得済みか  */
+    bool hasVirus( __VirusInterface &v ) const;                                 /* v に感染しているか */
+    bool hasImmunity( __VirusInterface &v );                                    /* v の免疫獲得済みか  */
     int numHoldingVirus() const;                                     /* 現在保持しているウイルスの数 */
     /*-----------------------------------------------------------------------------
      *  パラメータ操作セット

@@ -16,7 +16,7 @@
 /*-----------------------------------------------------------------------------
  *  VirusManager
  *-----------------------------------------------------------------------------*/
-VirusManager :: VirusManager( VECTOR( Virus * ) &viruses ) :
+VirusManager :: VirusManager( VECTOR( __VirusInterface * ) &viruses ) :
   viruses_( viruses )
 {
   LOG("init VirusManager");

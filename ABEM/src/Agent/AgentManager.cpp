@@ -42,7 +42,7 @@ AgentManager :: AgentManager( VECTOR( Agent * ) &agents ) :
 /*-----------------------------------------------------------------------------
  *  initInfectAgentInRatio( Virus &, double )
  *-----------------------------------------------------------------------------*/
-void AgentManager :: initInfectAgentInRatio( Virus &v, double r ) {
+void AgentManager :: initInfectAgentInRatio( __VirusInterface &v, double r ) {
   static int infected_from = 0;                                      /* ０番目のエージェントから順に感染させる */
   int infected_to;
   infected_to = infected_from + (int)( getAgentSize() * (r/100) );

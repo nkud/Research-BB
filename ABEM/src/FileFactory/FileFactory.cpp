@@ -125,7 +125,7 @@ void FileFactory :: outputFile_Info( const char *fname ) const {
     /* ウイルス */
     OFSVP( V_NUM, ( VirusCounter::Instance().getVirusVariaty() ) );    /* ウイルスの種類 */
 
-    ITERATOR(Virus *) it_v = vm_->getVirusIteratorBegin();
+    ITERATOR(__VirusInterface *) it_v = vm_->getVirusIteratorBegin();
     while(it_v != vm_->getVirusIteratorEnd()) {                   /* 各ウイルスの */
         ofs << "V_LEN[ "<<*it_v<<" ],";                              /* タグ長 */
         ofs << (*it_v)->getLen() << ENDL;
@@ -203,7 +203,7 @@ void FileFactory :: outputFile_LastLog( const char *fname ) const {
         it_a++;
     }
     ofs << ">>> Virus Data Base Last Status" << ENDL;
-    ITERATOR(Virus*) it_v = VirusCounter::Instance().getVirusDataBaseIteratorBegin();
+    ITERATOR(__VirusInterface*) it_v = VirusCounter::Instance().getVirusDataBaseIteratorBegin();
     while(it_v!=VirusCounter::Instance().getVirusDataBaseIteratorEnd()) {
         FOR(j, (*it_v)->getLen()) {
             ofs<<(*it_v)->tagAt(j);                                  /* エージェントのタグ */

@@ -1,14 +1,10 @@
-/*
- * =====================================================================================
+/* file name  : include/Virus.h
+ * authors    : Naoki Ueda
+ * created    : Tue Jul 15 18:59:03 2014
+ * copyright  : Naoki Ueda
  *
- *       Filename:  Virus.h
+ * modifications:
  *
- *    Description:  ウイルスのクラス
- *
- *         Author:  Naoki Ueda
- *   Organization:  OPU, 3G
- *
- * =====================================================================================
  */
 
 #ifndef ___VIRUS
@@ -17,29 +13,20 @@
 #include "Gene.h"
 
 /** 
- * ウイルスのインターフェイス 
+ * ウイルスのインターフェイス
  */
-class __VirusInterface
-{
-
-};
-
-/** 
- * ウイルス
- */
-class Virus : public Life
-{
+class __VirusInterface : public Life {
   public:
     /*-----------------------------------------------------------------------------
      *  コンストラクタ・デストラクタ
      *-----------------------------------------------------------------------------*/
-    Virus( Virus &virus );
+    __VirusInterface( __VirusInterface &origin );
 
-    // Virus( __SearchStrategy * );                                     /* コンストラクタ: 戦略 */
-    Virus( int );                                                    /* コンストラクタ: タグ長, 戦略 */
-    Virus( const char * );                                           /* コンストラクタ: タグ長, 戦略 */
+    // __VirusInterface( __SearchStrategy * );                                     /* コンストラクタ: 戦略 */
+    __VirusInterface( int );                                                    /* コンストラクタ: タグ長, 戦略 */
+    __VirusInterface( const char * );                                           /* コンストラクタ: タグ長, 戦略 */
 
-    virtual ~Virus();                                                /* デストラクタ */
+    virtual ~__VirusInterface();                                                /* デストラクタ */
     /*-----------------------------------------------------------------------------
      *  パラメータ操作
      *-----------------------------------------------------------------------------*/
@@ -65,7 +52,7 @@ class Virus : public Life
     /*-----------------------------------------------------------------------------
      *  ウイルス操作
      *-----------------------------------------------------------------------------*/
-    bool isEqualTo( const Virus& ) const;                            /* ウイルスのタグが等しいかどうか */
+    bool isEqualTo( const __VirusInterface& ) const;                            /* ウイルスのタグが等しいかどうか */
 
     int getInfectionTime() const { return infection_age_; }          /* 感染期間を返す */
     void incrementInfectionTime() { infection_age_++; }              /* 感染期間を増やす */
@@ -76,10 +63,10 @@ class Virus : public Life
      *-----------------------------------------------------------------------------*/
     void mutation( double prob=100 );                                /* 突然変異を起こす */
 
-    bool operator<(const Virus& other) const {
+    bool operator<(const __VirusInterface& other) const {
       if( value() < other.value() ) return true; else return false;
     }
-    bool operator==(const Virus& other) const {
+    bool operator==(const __VirusInterface& other) const {
       if( getLen() != other.getLen() ) {
         return false;
       }
@@ -94,14 +81,27 @@ class Virus : public Life
     int cling_point_;                                                /* 取り付いている位置 */
     int infection_age_;                                              /* 感染期間 */
 };
+/** 
+ * ウイルスのインターフェイス 
+ */
+class Virus : public __VirusInterface
+{
+  public:
+    double getRate() const;
+    int getIncubationPeriod() const;
+    int getInfectiousPeriod() const;
+    int getNonInfectiousPeriod() const;
+    int getLethalPeriod() const;
+    int getInfectionRate() const;
+    int getMutationRate() const;
+  private:
+};
 
 /** 
  * 区分ウイルス
  */
-class SectionedVirus : public Virus {
+class SectionedVirus : public __VirusInterface {
  public:
-   SectionedVirus( const char *tag ) : Virus(tag) {}
-
    double getRate() const { return 0; }                              /* 感染確率を返す */
    int getIncubationPeriod() const;
    int getInfectiousPeriod() const;
