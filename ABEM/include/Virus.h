@@ -36,6 +36,8 @@ class __VirusInterface : public Life {
     virtual int getMutationRate() const;
     virtual double getRate() const;
 
+    virtual __VirusInterface& clone() = 0;
+
     void setRate( const double r );                                  /* 感染確率を設定 */
 
     int searchStartPoint( Gene & );                                  /* タグに取り付く位置を返す */
@@ -89,7 +91,11 @@ class NormalVirus : public __VirusInterface
   public:
     NormalVirus( const char *tag ) : __VirusInterface(tag) {}
 
-    double getRate() const { return 0; }
+    double getRate() const { return 100; }
+    NormalVirus& clone() {
+      NormalVirus *virus = new NormalVirus(*this);
+      return *virus;
+    }
 //    int getInfectiousPeriod() const;
 //    int getNonInfectiousPeriod() const;
 //    int getLethalPeriod() const;

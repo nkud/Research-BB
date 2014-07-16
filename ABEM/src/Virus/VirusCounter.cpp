@@ -91,7 +91,9 @@ bool VirusCounter :: pushNewVirus( __VirusInterface& v ) {
     virus_number_data_base_[f]++;
     return false;                                                    /* 終了 */
   } else {                                                           /* なければ */
-    virus_data_base_.push_back( new __VirusInterface( v ) );                     /* データを追加して */
+//    virus_data_base_.push_back( new __VirusInterface( v ) );                     /* データを追加して */
+    /// @todo ウイルスのクローンについて要検証
+    virus_data_base_.push_back( &v.clone() );                     /* データを追加して */
     virus_number_data_base_.push_back( 1 );
     return true;                                                     /* 終了 */
   }

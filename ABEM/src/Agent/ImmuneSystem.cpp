@@ -15,6 +15,7 @@
 #include "Gene.h"
 #include "AgentStrategy.h"
 #include "Function.h"
+#include "Virus.h"
 #include "VirusCounter.h"
 
 #include <vector>
@@ -105,9 +106,9 @@ ImmuneSystem :: ~ImmuneSystem() {
 __VirusInterface *ImmuneSystem :: getVirusAt( int n ) const { return virus_list_.at( n ); }
 int ImmuneSystem :: getVirusListSize() const { return virus_list_.size(); }
 void ImmuneSystem :: pushVirus( __VirusInterface& v, Agent& a ) {
-  __VirusInterface *new_virus = new __VirusInterface( v );                                     /* 新しいウイルスデータを作成して */
-  new_virus->setClingPoint( new_virus->searchStartPoint( a.getGene() ) );
-  virus_list_.push_back( new_virus );
+  __VirusInterface& new_virus = v.clone();
+  new_virus.setClingPoint( new_virus.searchStartPoint( a.getGene() ) );
+  virus_list_.push_back( &new_virus );
 }
 ITERATOR(__VirusInterface *) ImmuneSystem :: eraseVirus( ITERATOR(__VirusInterface *) it ) {
   SAFE_DELETE(*it);
@@ -120,7 +121,7 @@ ITERATOR(__VirusInterface *) ImmuneSystem :: getVirusListIteratorEnd() { return 
 /* 待機ウイルスセット */
 __VirusInterface *ImmuneSystem :: getStandByVirusAt( int n ) const { return stand_by_virus_list_.at(n); }
 void ImmuneSystem :: pushStandByVirus( __VirusInterface& v ) {
-  __VirusInterface *new_virus = new __VirusInterface( v );
+  __VirusInterface *new_virus = &v.clone();
   stand_by_virus_list_.push_back( new_virus );
 }
 int ImmuneSystem :: getStandByVirusListSize() const { return stand_by_virus_list_.size(); }
