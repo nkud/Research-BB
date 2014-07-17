@@ -12,7 +12,7 @@
 
 #include "Config.h"
 #include "Function.h"
-#include "Virus.h"
+#include "VirusInterface.hpp"
 #include "Gene.h"
 #include "VirusCounter.h"
 
@@ -51,41 +51,6 @@ bool __VirusInterface :: isLethalPeriod() const {
   }
 }
 
-/**
- * 感染性期間を返す
- */
-int __VirusInterface :: getInfectiousPeriod() const {
-  return V_INFECTIOUS_PERIOD;
-}
-/**
- * 非感染性期間を返す
- */
-int __VirusInterface :: getNonInfectiousPeriod() const {
-  return V_NONINFECTIOUS_PERIOD;
-}
-/**
- * 致死期間を返す
- */
-int __VirusInterface :: getLethalPeriod() const {
- return getInfectiousPeriod() + getNonInfectiousPeriod();
-}
-/**
- * 突然変異率を返す
- */
-int __VirusInterface :: getMutationRate() const {
-  return V_MUTATION_RATE;
-}
-/**
- * 感染率を返す
- */
-double __VirusInterface :: getRate() const { 
-  // return rate_; 
-  double rate = 100*1./(1+value()/9.);
-  // LOG(rate)
-  // double rate = 50.*((108-value())/108.);
-// double rate = 30;
-  return rate;
-}
 
 /*-----------------------------------------------------------------------------
  *
@@ -175,4 +140,23 @@ void __VirusInterface :: mutation( double prob ) {
     getGene().mutation( prob );
     VirusCounter::Instance().countUpMutation();                      /* カウントする */
   }
+}
+
+int __VirusInterface :: getInfectionTime() const { return infection_age_; }          /* 感染期間を返す */
+void __VirusInterface :: incrementInfectionTime() { infection_age_++; }              /* 感染期間を増やす */
+int __VirusInterface :: getClingPoint() const { return cling_point_; }               /* 取り付く位置を返す */
+void __VirusInterface :: setClingPoint( int cp ) { cling_point_ = cp; }    
+
+bool __VirusInterface :: operator<(const __VirusInterface& other) const {
+  if( value() < other.value() ) return true; else return false;
+}
+
+bool __VirusInterface :: operator==(const __VirusInterface& other) const {
+  if( getLen() != other.getLen() ) {
+    return false;
+  }
+  FOR( i, getLen() ) {
+    if( tagAt(i) != other.tagAt(i) ) { return false; }
+  }
+  return true;
 }

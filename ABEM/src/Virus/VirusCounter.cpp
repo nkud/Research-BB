@@ -12,7 +12,7 @@
  */
 
 #include "VirusCounter.h"
-#include "Virus.h"
+#include "VirusInterface.hpp"
 #include "Config.h"
 #include "Function.h"
 

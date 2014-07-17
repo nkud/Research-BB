@@ -12,7 +12,7 @@ SRCDIR := $(shell find . -type d)
 
 VPATH = $(INCLUDE) $(SRCDIR) $(OBJDIR)
 
-TARGET	 = Virus.o VirusCounter.o VirusManager.o
+TARGET	 = Virus.o VirusCounter.o VirusManager.o NormalVirus.o
 
 
 OBJS = $(addprefix $(OBJDIR), $(TARGET))
@@ -25,6 +25,8 @@ $(OBJDIR)%.o: %.cpp
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
 
-$(OBJDIR)Virus.o: Config.h Virus.h Function.h Gene.h VirusCounter.h
-$(OBJDIR)VirusCounter.o: Config.h VirusCounter.h Virus.h Function.h
-$(OBJDIR)VirusManager.o: Config.h Virus.h VirusManager.h
+$(OBJDIR)Virus.o: Config.h VirusInterface.hpp Function.h Gene.h VirusCounter.h
+$(OBJDIR)VirusCounter.o: Config.h VirusCounter.h VirusInterface.hpp Function.h
+$(OBJDIR)VirusManager.o: Config.h VirusInterface.hpp VirusManager.h
+
+$(OBJDIR)NormalVirus.o: Config.h VirusInterface.hpp Function.h

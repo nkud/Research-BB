@@ -20,7 +20,7 @@
 #include "Agent.h"
 #include "AgentManager.h"
 #include "AgentCounter.h"
-#include "Virus.h"
+#include "VirusInterface.hpp"
 #include "VirusManager.h"
 #include "VirusCounter.h"
 #include "Config.h"

@@ -32,4 +32,4 @@ $(OBJDIR)ImmuneSystem.o: AgentStrategy.h Agent.h Function.h \
 $(OBJDIR)MovingStrategy.o: AgentStrategy.h Agent.h Function.h
 
 $(OBJDIR)AgentCounter.o: AgentCounter.h
-$(OBJDIR)AgentManager.o: AgentManager.h Agent.h Virus.h Landscape.h Function.h
+$(OBJDIR)AgentManager.o: AgentManager.h Agent.h VirusInterface.hpp Landscape.h Function.h

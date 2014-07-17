@@ -9,7 +9,7 @@
 #define ___AGENT
 
 #include "Gene.h"
-#include "Virus.h"
+#include "VirusInterface.hpp"
 #include "AgentStrategy.h"
 #include "ImmuneSystem.h"
 

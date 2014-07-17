@@ -102,8 +102,8 @@ int Gene :: pointOfMinHamDistance( const Gene &other ) const {
   int minh = getLen();                                               /* タグを比べる位置 */
   int sp = 0;
   int tm = minh;                                                     /* 初め最小ハミング距離は最大 */
-//  FOR( i, getLen() )                                                 /* ずらせる回数繰り返す */
-  FOR(i, getLen()-other.getLen())                                    /* 線分タグ */
+ FOR( i, getLen() )                                                 /* ずらせる回数繰り返す */
+  // FOR(i, getLen()-other.getLen())                                    /* 線分タグ */
   {
 //    tm = ham_distance( tag_+i, gene.getTag(), gene.getLen() );       /* ずらした位置でのハミング距離 */
     tm = hamDistance( other, i );

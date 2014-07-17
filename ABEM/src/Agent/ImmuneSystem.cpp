@@ -15,7 +15,7 @@
 #include "Gene.h"
 #include "AgentStrategy.h"
 #include "Function.h"
-#include "Virus.h"
+#include "VirusInterface.hpp"
 #include "VirusCounter.h"
 
 #include <vector>

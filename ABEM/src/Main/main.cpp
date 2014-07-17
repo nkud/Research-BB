@@ -36,13 +36,15 @@
 #include <string>
 #include <fstream>
 #include <ctime>
+#include <sstream>
 using namespace std;
 
 #include "Config.h"
 #include "Function.h"
 #include "Agent.h"
 #include "AgentManager.h"
-#include "Virus.h"
+#include "VirusInterface.hpp"
+#include "NormalVirus.hpp"
 #include "VirusManager.h"
 #include "Landscape.h"
 #include "FileFactory.h"
@@ -236,11 +238,11 @@ int main()
 
     if ( term.isInterval(DATABASE_INTERVAL) )
     {
-      char tfname[256], afname[256];
-      sprintf(tfname, "VirusDataBase/%d_VirusGeneDistribution.txt", term.getTerm() );
-      sprintf(afname, "AgentDataBase/%d_AgentGeneDistribution.txt", term.getTerm() );
-      fFactory.outputFile_LastVirusDataBase(tfname);
-      fFactory.outputFile_AgentDataBase(afname);
+      stringstream str_a, str_b;
+      str_a << "VirusDataBase/" << term.getTerm() << "_VirusGeneDistribution.txt";
+      str_b << "AgentDataBase/" << term.getTerm() << "_AgentGeneDistribution.txt";
+      fFactory.outputFile_LastVirusDataBase(str_b.str().c_str());
+      fFactory.outputFile_AgentDataBase(str_a.str().c_str());
     }
 
     ////////////////////////////////////////////////////////////////////////////

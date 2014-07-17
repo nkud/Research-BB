@@ -14,7 +14,7 @@ typedef int tag_t;                                                   /* タグ�
  *-----------------------------------------------------------------------------*/
 //#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-const int TERM                      = 1000          ;               /* :期間: */
+const int TERM                      = 10000          ;               /* :期間: */
 const int OUTPUT_INTERVAL           = 1              ;               /* :出力する間隔: */
 const int DATABASE_INTERVAL         = 100            ;               /* :データベースを出力する期間: */
 const int MINI_SIZE_TERM            = 200            ;               /* :拡大画像間隔: */
@@ -41,7 +41,7 @@ const int T_MAX                     = 9              ;               /* :タグ�
 const int T_RANDOM_MAX              = 9              ;               /* :ランダムにする時の最大値: */
 const int BASE_TAG                  = 0              ;               /* :基準タグ: */
 
-const int A_DEFAULT_LEN             = 20             ;               /* :エージェントのタグ長: */
+const int A_DEFAULT_LEN             = 10             ;               /* :エージェントのタグ長: */
 
 //               12345678901234567890
 #define V_TAG_0 "0000000000"
