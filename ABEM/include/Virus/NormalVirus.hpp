@@ -8,22 +8,14 @@ class Gene;
 class Life;
 
 /** 
- * ウイルスのインターフェイス 
+ * 通常ウイルス
  */
 class NormalVirus : public __VirusInterface
 {
   public:
     NormalVirus( const char *tag ) : __VirusInterface(tag) {}
 
-    /**
-     * 感染率
-     * @return
-     */
     double getRate() const;
-    /**
-     * クローン
-     * @return
-     */
     NormalVirus& clone() {
       NormalVirus *virus = new NormalVirus(*this);
       return *virus;
