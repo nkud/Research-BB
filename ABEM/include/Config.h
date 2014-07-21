@@ -32,8 +32,8 @@ const int A_MAX_NUM                 = A_INIT_NUM * 5 ;               /* :最大�
 
 const double A_INIT_INFECTED_RATE   = 5              ;               /* :初期感染率 0-100: */
 
-const int V_NONINFECTIOUS_PERIOD    = 6              ;               /* :<u>潜伏期間</u>: */
-const int V_INFECTIOUS_PERIOD       = 14              ;               /* :<u>症候性期間</u>: */
+const int V_NONINFECTIOUS_PERIOD    = 10              ;               /* :<u>潜伏期間</u>: */
+const int V_INFECTIOUS_PERIOD       = 40              ;               /* :<u>症候性期間</u>: */
 
 const int V_MUTATION_RATE           = 30             ;               /* :突然変異率: */
 
@@ -41,7 +41,7 @@ const int T_MAX                     = 9              ;               /* :タグ�
 const int T_RANDOM_MAX              = 9              ;               /* :ランダムにする時の最大値: */
 const int BASE_TAG                  = 0              ;               /* :基準タグ: */
 
-const int A_DEFAULT_LEN             = 100             ;               /* :エージェントのタグ長: */
+const int A_DEFAULT_LEN             = 50             ;               /* :エージェントのタグ長: */
 
 
 //               SCALE
