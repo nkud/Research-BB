@@ -238,10 +238,10 @@ int main()
 
     if ( term.isInterval(DATABASE_INTERVAL) )
     {
-      stringstream str_a, str_b;
-      str_a << "VirusDataBase/" << term.getTerm() << "_VirusGeneDistribution.txt";
-      str_b << "AgentDataBase/" << term.getTerm() << "_AgentGeneDistribution.txt";
-      fFactory.outputFile_LastVirusDataBase(str_b.str().c_str());
+      stringstream str_a, str_v;
+      str_a << "AgentDataBase/" << term.getTerm() << "_AgentGeneDistribution.txt";
+      str_v << "VirusDataBase/" << term.getTerm() << "_VirusGeneDistribution.txt";
+      fFactory.outputFile_LastVirusDataBase(str_v.str().c_str());
       fFactory.outputFile_AgentDataBase(str_a.str().c_str());
     }
 
