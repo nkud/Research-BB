@@ -23,7 +23,7 @@
  * 
  * @param gene  オリジナルの遺伝子
  */
-Gene :: Gene( Gene & gene )
+Gene :: Gene( const Gene & gene )
 {
   len_ = gene.getLen();
   tag_ = new tag_t[ len_ ];

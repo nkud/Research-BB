@@ -35,7 +35,7 @@ class Gene
     Gene( int minl, int maxl );                                      /* XXX コンストラクタ: 長さ */
     Gene( const char * );                                            /* コンストラクタ: 文字列 */
     // XXX: コピーコンストラクタにする
-    Gene( Gene & );
+    Gene( const Gene & gene );
     virtual ~Gene();                                                 /* デストラクタ */
     /*-----------------------------------------------------------------------------
      *  タグ操作セット
@@ -59,13 +59,23 @@ class Gene
     void mutation();                                                 /* 突然変異を起こす */
     void mutation( double );                                         /* 突然変異を起こす */
 
-    int value();
+    virtual int value();
 
     Gene& clone() const;                                             /* クローンを作成 */
 
   private:
     int len_;                                                        /* タグ長 */
     tag_t *tag_;                                                     /* 電子タグ */
+};
+
+/**
+ * @class RingGene
+ */
+class RingGene : public Gene {
+ public:
+  tag_t tagAt( const int n ) const;
+  int pointOfMinHamDistance( const Gene &other ) const;
+  int flipToGeneAtPosition( const Gene &, int pos ) const;
 };
 
 // 戦略にすべき
