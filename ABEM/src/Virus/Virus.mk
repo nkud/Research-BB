@@ -26,7 +26,10 @@ $(OBJDIR)%.o: %.cpp
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
 
 $(OBJDIR)Virus.o: Config.h VirusInterface.hpp Function.h Gene.h VirusCounter.h
+
 $(OBJDIR)VirusCounter.o: Config.h VirusCounter.h VirusInterface.hpp Function.h
 $(OBJDIR)VirusManager.o: Config.h VirusInterface.hpp VirusManager.h
 
-$(OBJDIR)NormalVirus.o: Config.h VirusInterface.hpp Function.h
+$(OBJDIR)NormalVirus.o: Config.h NormalVirus.hpp Function.h
+
+NormalVirus.hpp: VirusInterface.hpp

@@ -26,7 +26,6 @@ class Random;
 class __RandomStrategy;
 class __MersenneTwister;
 
-////////////////////////////////////////////////////////////////////////////////
 /// @brief 乱数生成器の戦略
 /// @note  純粋仮想数
 class __RandomStrategy {
@@ -38,7 +37,6 @@ class __RandomStrategy {
   private:
 };
 
-////////////////////////////////////////////////////////////////////////////////
 /// @brief メルセンヌ・ツイスタ法を使用した戦略
 /// @todo 動作確認
 class __MersenneTwister : public __RandomStrategy {
@@ -51,6 +49,7 @@ class __MersenneTwister : public __RandomStrategy {
       return *mt;
     }
     int randomInt() { return (getMT())(); }                          /* 乱数生成 */
+  
 
     // double randomDouble();
     int uniformInt( int min, int max ) {                             /* min~maxの乱数を生成 */

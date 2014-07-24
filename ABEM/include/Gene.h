@@ -68,9 +68,6 @@ class Gene
     tag_t *tag_;                                                     /* 電子タグ */
 };
 
-/**
- * @class RingGene
- */
 class RingGene : public Gene {
  public:
   tag_t tagAt( const int n ) const;

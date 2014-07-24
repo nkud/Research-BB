@@ -1,7 +1,6 @@
 #ifndef ___NORMAL_VIRUS
 #define ___NORMAL_VIRUS
 
-#include "Gene.h"
 #include "VirusInterface.hpp"
 
 class Gene;

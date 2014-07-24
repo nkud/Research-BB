@@ -18,6 +18,9 @@
  #include "Function.h"
 #include "Benchmark.h"
 
+/*
+ * @brief Term
+ */
 class Term {
   public:
     bool incrementTermTo( int max ) { if( term_++ < max ) return true; else return false; }

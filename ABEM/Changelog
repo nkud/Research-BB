@@ -1,18 +1,5 @@
-2014-06-04  naoki ueda
-	* todo:
-	- それぞれのウイルスの種類がエージェントに保持されていた数を出力
+2014-07-23  Naoki Ueda  <su104003@gmail.com>
 
-2014-05-17  naoki ueda
+	* src/Function/Random.cpp: TODO
+	ここに実装を移す
 
-	* todo:
-	- Landscapeをシングルトンに
-	- LandscapeにStrategyを導入する
-	- Agentのコンタクトを整理
-	  - Landscapeにneighbors funcを作り活用する
-	- Virusにresponseをもたせる
-	- Tag -> Gene
-
-2014-05-13  naoki ueda
-
-	* todo:
-	- Tagにタグフリップ、突然変異機構を持たす。

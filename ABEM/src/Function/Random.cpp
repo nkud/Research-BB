@@ -1,5 +1,6 @@
 #include "Random.hpp"
 
+
 // int __MersenneTwister :: randomInt() {
 // 	return (getMT())();
 // }
@@ -12,3 +13,4 @@
 // 	}
 // 	return singleton;
 // }
+
