@@ -72,10 +72,9 @@ class RingGene : public Gene {
  public:
   tag_t tagAt( const int n ) const;
   int pointOfMinHamDistance( const Gene &other ) const;
-  int flipToGeneAtPosition( const Gene &, int pos ) const;
+  int flipToGeneAtPosition( const Gene &other, int pos ) const;
 };
 
-// 戦略にすべき
 // class RingGene : public Gene {
 // public:
 //     int pointOfMinHamDistance( const Gene &other ) const;

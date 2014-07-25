@@ -24,14 +24,18 @@ int NormalVirus :: getLethalPeriod() const {
  * 突然変異率を返す
  */
 int NormalVirus :: getMutationRate() const {
-  return V_MUTATION_RATE;
+  //  return V_MUTATION_RATE;
+  //  double rate = 100
+  double rate = 100*1./(1+value()/9.);
+  return rate;
 }
 /**
  * 感染率を返す
  */
 double NormalVirus :: getRate() const { 
   // return rate_; 
-  double rate = 100*1./(1+value()/9.);
+  //double rate = 100*1./(1+value()/9.);
+  double rate = INFECTION_RATE;
   // LOG(rate)
   // double rate = 50.*((108-value())/108.);
 // double rate = 30;
