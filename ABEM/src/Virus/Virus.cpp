@@ -17,7 +17,9 @@
 #include "VirusCounter.h"
 
 /**
- * 非感染性期間かどうか
+ * @brief 非感染性期間
+ *
+ * @detail 非感染性期間以内だと、true  
  */
 bool __VirusInterface :: isNonInfectiousPeriod() const {
   if( getInfectionTime() <= getNonInfectiousPeriod() ) {             //< 感染期間が非感染性期間以下なら
@@ -29,7 +31,9 @@ bool __VirusInterface :: isNonInfectiousPeriod() const {
 }
 
 /**
- * 感染性期間かどうか
+ * @brief 感染性期間
+ * 
+ * @detail 非感染性期間を超えると、true  
  */
 bool __VirusInterface :: isInfectiousPeriod() const {
   if( getInfectionTime() > getNonInfectiousPeriod() ) {              //< 感染期間が非感染性期間を超えれば 
@@ -41,7 +45,7 @@ bool __VirusInterface :: isInfectiousPeriod() const {
 }
 
 /**
- * 感染性期間を返す
+ * 致死期間
  */
 bool __VirusInterface :: isLethalPeriod() const {
   if( getInfectionTime() > getLethalPeriod() ) {
