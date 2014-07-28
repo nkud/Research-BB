@@ -60,6 +60,16 @@ class Gene
     void mutation( double );                                         /* 突然変異を起こす */
 
     virtual int value();
+    
+    double valueInterval(int from, int to) { // 指定された間隔のウイルス評価値
+    int ret = 0;
+    to = std::max( getLen()+1, to );
+    REP( i, from, to-1 ) {
+      ret += abs( tagAt(i) - BASE_TAG );
+    }
+    return ret;
+  }
+
 
     Gene& clone() const;                                             /* クローンを作成 */
 
@@ -108,6 +118,7 @@ class Life {
     int getLen() const { return gene_->getLen(); }                   /* タグ長を返す */
     tag_t tagAt(int n) const { return gene_->tagAt(n); }             /* 特定位置のタグを返す */
     int value() const { return getGene().value(); }
+    int valueIntervale(int from, int to) const { return getGene().valueInterval(from, to); }
 
     Life& clone();
 

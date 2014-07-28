@@ -29,15 +29,6 @@ class __VirusInterface : public Life {
 
   //    double value() const;
 
-  double valueInterval(int from, int to) { // 指定された間隔のウイルス評価値
-    int ret = 0;
-    to = std::max( getLen()+1, to );
-    REP( i, from, to-1 ) {
-      ret += abs( tagAt(i) - BASE_TAG );
-    }
-    return ret;
-  }
-  
     /** 感染性期間 */
     bool isInfectiousPeriod() const;
     /** 非感染性期間 */

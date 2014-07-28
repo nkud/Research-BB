@@ -20,7 +20,6 @@ int NormalVirus :: getNonInfectiousPeriod() const {
  * 致死期間を返す
  */
 int NormalVirus :: getLethalPeriod() const {
-  // return -1;                    // 必ず死亡する
   return getInfectiousPeriod() + getNonInfectiousPeriod();
 }
 
@@ -43,6 +42,6 @@ double NormalVirus :: getRate() const {
   double rate = INFECTION_RATE;
   // LOG(rate)
   // double rate = 50.*((108-value())/108.);
-// double rate = 30;
+  // double rate = 30;
   return rate;
 }
