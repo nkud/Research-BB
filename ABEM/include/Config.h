@@ -14,7 +14,7 @@ typedef int tag_t;                                                   /* タグ�
  *-----------------------------------------------------------------------------*/
 //#define NO_DIAGONAL                                                  /* 対角線４マスを近隣に含まない */
 
-const int TERM                      = 100000          ;               /* :期間: */
+const int TERM                      = 10000          ;               /* :期間: */
 const int OUTPUT_INTERVAL           = 1              ;               /* :出力する間隔: */
 const int DATABASE_INTERVAL         = 100            ;               /* :データベースを出力する期間: */
 const int MINI_SIZE_TERM            = 200            ;               /* :拡大画像間隔: */
@@ -32,8 +32,8 @@ const int A_MAX_NUM                 = A_INIT_NUM * 5 ;               /* :最大�
 
 const double A_INIT_INFECTED_RATE   = 5              ;               /* :初期感染率 0-100: */
 
-const int V_NONINFECTIOUS_PERIOD    = 5              ;               /* :<u>潜伏期間</u>: */
-const int V_INFECTIOUS_PERIOD       = 15             ;               /* :<u>症候性期間</u>: */
+const int V_NONINFECTIOUS_PERIOD    = 0              ;               /* :<u>潜伏期間</u>: */
+const int V_INFECTIOUS_PERIOD       = 25             ;               /* :<u>症候性期間</u>: */
 
 const int V_MUTATION_RATE           = 30             ;               /* :突然変異率: */
 

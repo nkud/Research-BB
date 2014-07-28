@@ -20,7 +20,8 @@ int NormalVirus :: getNonInfectiousPeriod() const {
  * 致死期間を返す
  */
 int NormalVirus :: getLethalPeriod() const {
- return getInfectiousPeriod() + getNonInfectiousPeriod();
+  // return -1;                    // 必ず死亡する
+  return getInfectiousPeriod() + getNonInfectiousPeriod();
 }
 
 /**

@@ -169,9 +169,15 @@ Gene :: ~Gene() {                                                    /* デス�
  */
 void Gene :: setTagRandom() {
     assert( getLen() > 0 );
-    FOR( i, getLen() )
-    {
-      tag_[i] = rand_interval_int(0, T_RANDOM_MAX);                  /* タグをランダムに初期化 */
+    // FOR( i, getLen() )
+    // {
+    //   tag_[i] = rand_interval_int(0, T_RANDOM_MAX);                  /* タグをランダムに初期化 */
+    // }
+    
+    // タグの分布を一様にする
+    int n = rand_interval_int(0, T_RANDOM_MAX*getLen());
+    FOR( i, n ) {
+      tag_[ rand_interval_int(0,getLen()) ]++;
     }
 }
 
