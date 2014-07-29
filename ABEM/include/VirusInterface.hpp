@@ -38,19 +38,19 @@ class __VirusInterface : public Life {
     /*-----------------------------------------------------------------------------
      *  ウイルス操作
      *-----------------------------------------------------------------------------*/
-    bool isEqualTo( const __VirusInterface& ) const;                            /* ウイルスのタグが等しいかどうか */
+    bool isEqualTo( const __VirusInterface& ) const;                 /* ウイルスのタグが等しいかどうか */
 
-    int getInfectionTime() const;          /* 感染期間を返す */
-    void incrementInfectionTime();              /* 感染期間を増やす */
-    int getClingPoint() const;               /* 取り付く位置を返す */
-    void setClingPoint( int cp );              /* 取り付く位置を設定する */
+    int getInfectionTime() const;                                    /* 感染期間を返す */
+    void incrementInfectionTime();                                   /* 感染期間を増やす */
+    int getClingPoint() const;                                       /* 取り付く位置を返す */
+    void setClingPoint( int cp );                                    /* 取り付く位置を設定する */
     
     /**
      * 突然変異をさせる。デフォルトでは100％
      * 
      * @param prob
      */
-    virtual void mutation( double prob=100 );                                /* 突然変異を起こす */
+    virtual void mutation( double prob=100 );                        /* 突然変異を起こす */
 
     /** オペレータ */
     bool operator<(const __VirusInterface& other) const;
@@ -62,10 +62,10 @@ class __VirusInterface : public Life {
     __VirusInterface( __VirusInterface &origin );
 
     // __VirusInterface( __SearchStrategy * );                                     /* コンストラクタ: 戦略 */
-    __VirusInterface( int );                                                    /* コンストラクタ: タグ長, 戦略 */
-    __VirusInterface( const char * );                                           /* コンストラクタ: タグ長, 戦略 */
+    __VirusInterface( int );                                         /* コンストラクタ: タグ長, 戦略 */
+    __VirusInterface( const char * );                                /* コンストラクタ: タグ長, 戦略 */
 
-    virtual ~__VirusInterface();                                                /* デストラクタ */
+    virtual ~__VirusInterface();                                     /* デストラクタ */
   private:
     double rate_;                                                    /* 感染確率 */
 

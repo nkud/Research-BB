@@ -60,16 +60,16 @@ class Gene
     void mutation( double );                                         /* 突然変異を起こす */
 
     virtual int value();
-    
-    double valueInterval(int from, int to) { // 指定された間隔のウイルス評価値
-    int ret = 0;
-    to = std::max( getLen()+1, to );
-    REP( i, from, to-1 ) {
-      ret += abs( tagAt(i) - BASE_TAG );
-    }
-    return ret;
-  }
 
+    double valueInterval(int from, int to) { // 指定された間隔のウイルス評価値
+      int ret = 0;
+      to = std::max( getLen()+1, to );
+      REP( i, from, to-1 ) {
+        ret += abs( tagAt(i) - BASE_TAG );
+      }
+      return ret;
+    }
+    
 
     Gene& clone() const;                                             /* クローンを作成 */
 
