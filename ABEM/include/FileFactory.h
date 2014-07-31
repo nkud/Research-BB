@@ -29,31 +29,31 @@ class VirusManager;
  */
 class FileFactory {
   public:
-    /*-----------------------------------------------------------------------------
-     *  初期化
-     *-----------------------------------------------------------------------------*/
-    static FileFactory& Instance();                              /* インスタンスを返す */
+    //-----------------------------------------------------------------------------
+    //  初期化
+    //-----------------------------------------------------------------------------
+    static FileFactory& Instance(); /* インスタンスを返す */
     void setManager( AgentManager &, VirusManager & ); 
-    /*-----------------------------------------------------------------------------
-     *  計算結果出力
-     *-----------------------------------------------------------------------------*/
-    void outputFile_VirusVariaty( const char * ) const;
-    void outputFile_LastVirusDataBase( const char * ) const;
-    void outputFile_AgentDataBase( const char *);
-    void outputFile_LastLog( const char * ) const;               /* ログを出力 */
-    void outputFile_Info( const char * ) const;                  /* パラメータ情報を出力 */
-    double outputFile_peakSearch( const char * ) const;          /* 出力: ピークサーチ */
+    //-----------------------------------------------------------------------------
+    //  景観結果出力
+    //-----------------------------------------------------------------------------
+    void outputFile_VirusDataBase( const char * ) const; // ウイルスデータベースを出力
+    void outputFile_AgentDataBase( const char *) const;  // エージェントデータベースを出力
 
-    void outputValueWithTerm( const char *, int, int interval=OUTPUT_INTERVAL ) const;
+    void outputFile_appendLastInfo( const char * ) const; /* パラメータ情報を出力 */
+
+    void outputValueWithTerm( const char *, int, int interval=1 ) const; // 期間と数値を出力
 
   private:
-    /*-----------------------------------------------------------------------------
-     *  コンストラクタ
-     *-----------------------------------------------------------------------------*/
-    FileFactory( ) {}                                            /* コンストラクタ */
-
-    AgentManager *am_;                                           /* 管理者を登録 */
-    VirusManager *vm_;                                           /* 管理者を登録 */
+    //-----------------------------------------------------------------------------
+    //  コンストラクタ
+    //-----------------------------------------------------------------------------
+    FileFactory( ) {}           /* コンストラクタ */
+    //-----------------------------------------------------------------------------
+    //  管理者
+    //-----------------------------------------------------------------------------
+    AgentManager *am_;          /* 管理者を登録 */
+    VirusManager *vm_;          /* 管理者を登録 */
 
 };
 

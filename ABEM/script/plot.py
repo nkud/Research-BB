@@ -14,7 +14,8 @@ FONT = 'times new roman,13'
 
 IMG_DIR = 'image/'
 TXT_DIR = ''
-CONFIG_PATH = '../include/Config.h'
+CONFIG_FNAME = '../include/Config.h'
+INFO_FNAME = 'INFO.txt'
 ###############################################################################
 
 def IMG(img):
@@ -158,6 +159,15 @@ def read_config( config_fname, SEP0='', SEP1=': ', SEP2='\n' ):
         body += '%s%s%s%s%s' % (SEP0, ll[2], SEP1, ll[4], SEP2)
   return body
 
+def read_info( info_fname, SEP0='', SEP1=': ', SEP2='\n' ):
+  body = ""
+  f = open(info_fname, 'r')
+  for l in f:
+    ll = l.split(',')
+    if len(ll) == 3:
+      body += '%s%s%s%s%s' % (SEP0, ll[2], SEP1, ll[1], SEP2)
+  return body
+
 class HtmlFactory(object):
     """ 結果表示用のHTMLを出力する """
     def __init__(self, filename):
@@ -174,8 +184,8 @@ class HtmlFactory(object):
         # 初期設定を表示
         outputHeader(self.file, 'Config', 2)
         config = '<table>'
-        config += '%s' % read_config(
-            CONFIG_PATH, '<tr><td>', '</td><td>', '</td></tr>'
+        config += '%s' % read_info(
+            INFO_FNAME, '<tr><td>', '</td><td>', '</td></tr>'
             )
         config += '</table>'
         outputLine( self.file, config )

@@ -216,7 +216,7 @@ int main()
       stringstream str_a, str_v;
       str_a << "AgentDataBase/" << term.getTerm() << "_AgentGeneDistribution.txt";
       str_v << "VirusDataBase/" << term.getTerm() << "_VirusGeneDistribution.txt";
-      fFactory.outputFile_LastVirusDataBase(str_v.str().c_str());
+      fFactory.outputFile_VirusDataBase(str_v.str().c_str());
       fFactory.outputFile_AgentDataBase(str_a.str().c_str());
     }
 
@@ -249,9 +249,8 @@ int main()
   Benchmark::Instance().printTime();                                 /* 計測時間表示 */
 #endif
 
-  fFactory.outputFile_Info( "info.txt" );                            /* プログラムの初期設定など出力 */
-  fFactory.outputFile_LastLog( "last_log.txt");
-  fFactory.outputFile_LastVirusDataBase( "LastVirusDataBase.txt");
+  fFactory.outputFile_appendLastInfo( "INFO.txt" );                            /* プログラムの初期設定など出力 */
+  // fFactory.outputFile_VirusDataBase( "LastVirusDataBase.txt");
   aManager.printInitInfo();                                          /* 初期状態を表示 */
   vManager.printInitInfo();                                          /* 初期状態を表示 */
 

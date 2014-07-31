@@ -72,6 +72,7 @@ run:
 gene:
 	@$(PRINT) '>>> Generating...'
 
+	@-cd $(BINDIR); python ../script/info.py
 	@-cd $(BINDIR); python ../script/gene.py
 	@-cd $(BINDIR); gnuplot auto.plt 1>/dev/null
 	# @cd $(BINDIR)/$(VIRUSDIR); gnuplot vvd.plt 1>/dev/null

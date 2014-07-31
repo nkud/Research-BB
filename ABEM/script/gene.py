@@ -25,7 +25,7 @@ def main():
         Generate a script for plotting.
         Generate a html for gathering images and listing up information.
     """
-    info_dict = read_data('info.txt')
+    info_dict = read_data('INFO.txt')
     pf = PlotFactory('auto.plt')
     hf = HtmlFactory('index.html')
     pf.generate()
