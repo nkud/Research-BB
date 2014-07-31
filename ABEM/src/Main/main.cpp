@@ -29,40 +29,15 @@
  * @file メイン関数 
  */
 
-#include <cstdlib>
-#include <cstdio>
-#include <iostream>
-#include <cstring>
-#include <string>
-#include <fstream>
-#include <ctime>
 #include <sstream>
+
 using namespace std;
 
-#include "Config.h"
-#include "Function.h"
-#include "Agent.h"
-#include "AgentManager.h"
-#include "VirusInterface.hpp"
-#include "NormalVirus.hpp"
-#include "VirusManager.h"
-#include "Landscape.h"
-#include "FileFactory.h"
-#include "Term.h"
+#include "ABEMFramework.hpp"    // ABEMのフレームワーク
 
-#include "VirusCounter.h"
-#include "AgentCounter.h"
-
-#ifdef BENCHMARK
-#include "Benchmark.h"
-#endif
-
-/*-----------------------------------------------------------------------------
- *
- *  メインルーチン
- *
- *-----------------------------------------------------------------------------*/
-/// メインルーチン
+/**
+ * @brief メインルーチン
+ */
 int main()
 {
 #ifdef BENCHMARK
