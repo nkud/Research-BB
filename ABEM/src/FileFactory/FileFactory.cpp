@@ -58,7 +58,7 @@ void FileFactory :: setManager( AgentManager &am, VirusManager &vm ) {
  * @detail 出力間隔を指定可能。デフォルトは１。
  */
 void FileFactory :: outputValueWithTerm( const char *fname, int value, int interval ) const {
-  if( Term::Instance().isInterval(interval) ) { // 指定された間隔ごとに
+  if( Term::Instance().doAtInterval(interval) ) { // 指定された間隔ごとに
     std::ofstream ofs(fname, std::ios_base::out | std::ios_base::app);
     ofs << Term::Instance().getTerm() << SEPARATOR; // 期間と
     ofs << value << ENDL;                           // 数値を出力

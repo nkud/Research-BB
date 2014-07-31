@@ -38,7 +38,7 @@ class Term {
 
     void setMaxTerm( int max_term ) { max_term_ = max_term; }
 
-    bool isInterval( int interval ) {
+    bool doAtInterval( int interval ) {
       if( getTerm() % interval == 0 ) return true; else return false;
     }
     int getRemainingTerm() { return getMaxTerm() - getTerm(); }
@@ -48,7 +48,7 @@ class Term {
       static double estimated_time = -1;
       double now_time;
       int interval = 100;
-      if( isInterval( interval ) ) {
+      if( doAtInterval( interval ) ) {
         now_time = Benchmark::Instance().getElapsedTime();
         estimated_time = (now_time - prev_time) / interval * getRemainingTerm();
         prev_time = now_time; 
@@ -61,7 +61,7 @@ class Term {
       return ret;
     }
 
-    void printStatusBar() {
+    void printProgressBar() {
       int n = (int)progressRate();
       std::cout << "\n";
       FOR( i, n ) {
