@@ -37,8 +37,8 @@ class FileFactory {
     //-----------------------------------------------------------------------------
     //  景観結果出力
     //-----------------------------------------------------------------------------
-    void outputFile_VirusDataBase( const char * ) const; // ウイルスデータベースを出力
-    void outputFile_AgentDataBase( const char *) const;  // エージェントデータベースを出力
+    void outputFile_VirusDataBase( const char *fname, const char *dirname, int interval ) const; // ウイルスデータベースを出力
+    void outputFile_AgentDataBase( const char *fname, const char *dirname, int interval ) const;  // エージェントデータベースを出力
 
     void outputFile_appendLastInfo( const char * ) const; /* パラメータ情報を出力 */
 

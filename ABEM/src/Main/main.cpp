@@ -110,13 +110,13 @@ int main()
     CURSOR_CLEAR;
     //-----------------------------------------------------------------------------
     //  カウンターのリセット
-    //-----------------------------------------------------------------------------
+    //
     aCounter.reset();
     vCounter.reset();
 
     //-----------------------------------------------------------------------------
     //  移動
-    //-----------------------------------------------------------------------------
+    //
     landscape.clearAgentMap();                                       /* エージェントの登録を初期化する */
     EACH( it_a, agents ) {                                           /* エージェントに対して */
       (*it_a)->move();                                               /* 移動させる */
@@ -126,7 +126,7 @@ int main()
 
     //-----------------------------------------------------------------------------
     //  接触
-    //-----------------------------------------------------------------------------
+    //
     EACH( it_a, agents ) {                                           /* エージェントに対して */
       VECTOR(Agent *) neighbors = landscape.getNeighbors( **it_a );  /* 近隣を取得する */
       if( neighbors.size() <= 0 ) continue;                          /* 近隣がいなければ次のエージェントへ */
@@ -137,7 +137,7 @@ int main()
     }
     //-----------------------------------------------------------------------------
     //  感染
-    //-----------------------------------------------------------------------------
+    //
     ITERATOR(__VirusInterface *) itt;
     __VirusInterface *v;
     int n;
@@ -168,7 +168,7 @@ int main()
     }
     //-----------------------------------------------------------------------------
     //  症状進行
-    //-----------------------------------------------------------------------------
+    //
     EACH( it_a, agents )
     {
       EACH( it_v, (**it_a).getImmuneSystem().getVirusList() ) {      /* エージェントの保持ウイルス全てに対して */
@@ -181,7 +181,7 @@ int main()
     }
     //-----------------------------------------------------------------------------
     //  免疫応答
-    //-----------------------------------------------------------------------------
+    //
     EACH( it_a, agents )
     { 
       (*it_a)->response();                                           /* 免疫応答させる */
@@ -193,16 +193,16 @@ int main()
       }
     }
 
-    //-----------------------------------------------------------------------------
+
     //  ウイルスデータベース処理
-    //-----------------------------------------------------------------------------
     EACH( it_a, agents ) {                                           /* 全エージェントの */
       EACH( it_v, (**it_a).getImmuneSystem().getVirusList() ) {      /* 全保持ウイルスに対して */
         VirusCounter::Instance().pushNewVirus(**it_v);               /* 新しいウイルスをデータベースに保存 */
       }
     }
 
-    /*  途中経過出力 */
+    //-----------------------------------------------------------------------------
+    //  途中経過出力
     fFactory.outputValueWithTerm( "A_population.txt", aManager.getAgentSize() );
     fFactory.outputValueWithTerm( "V_virusVariaty.txt", vCounter.getVirusVariaty() );
     fFactory.outputValueWithTerm( "A_isIncubation.txt", aManager.numIsIncubation() );
@@ -211,16 +211,10 @@ int main()
     fFactory.outputValueWithTerm( "A_removed.txt", aCounter.getCountRemoved() );
     fFactory.outputValueWithTerm( "V_aveValue.txt", vCounter.calcAveValue() );
     fFactory.outputValueWithTerm( "A_aveValue.txt", aCounter.calcAveValue(agents) );
-
-    if ( term.doAtInterval(DATABASE_INTERVAL) )
-    {
-      stringstream str_a, str_v;
-      str_a << "AgentDataBase/" << term.getTerm() << "_AgentGeneDistribution.txt";
-      str_v << "VirusDataBase/" << term.getTerm() << "_VirusGeneDistribution.txt";
-      fFactory.outputFile_VirusDataBase(str_v.str().c_str());
-      fFactory.outputFile_AgentDataBase(str_a.str().c_str());
-    }
-
+    
+    fFactory.outputFile_VirusDataBase("AgentGeneDistribution.txt", "AgentDataBase", DATABASE_INTERVAL);
+    fFactory.outputFile_AgentDataBase("VirusGeneDistribution.txt", "VirusDataBase", DATABASE_INTERVAL);    
+    
     //-----------------------------------------------------------------------------
     // 途中経過表示
     // LOG( term.getTerm() << TERM );
@@ -236,7 +230,7 @@ int main()
     LOG( VirusCounter::Instance().getCountMutation() );
     LOG( VirusCounter::Instance().getVirusVariaty() );
     term.printProgressBar();
-    //-----------------------------------------------------------------------------    
+    
 
     /* 強制終了 */
     if( AgentCounter::Instance().getCountContact()==0 ) zero_count++; /* １０回以上接触感染がなければ */

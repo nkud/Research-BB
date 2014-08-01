@@ -15,6 +15,7 @@
 #include <ios>
 #include <string>
 #include <cstring>
+#include <sstream>
 
 #include "FileFactory.h"
 #include "Agent.h"
@@ -85,32 +86,47 @@ void FileFactory :: outputFile_appendLastInfo( const char *fname ) const {
 
 /**
  * @brief ウイルスのデータベースを出力
+ *
+ * @param fname ファイル名
+ * @param dirname ディレクトリ名
+ * @param interval 出力間隔
  */
-void FileFactory :: outputFile_VirusDataBase( const char *fname ) const {
-    std::ofstream ofs(fname);
+void FileFactory ::
+outputFile_VirusDataBase( const char *fname, const char *dirname, int interval ) const {
+  if( Term::Instance().doAtInterval(interval) ) { // 指定の間隔で
+    std::stringstream fstr;
+    fstr << dirname << "/" << Term::Instance().getTerm() << "_" << fname; // ファイル名を作成
+    std::ofstream ofs(fstr.str().c_str());
+    
     int i = 0;
     EACH( it_v, VirusCounter::Instance().getVirusDataBase() ) {
-        FOR(j, (*it_v)->getLen()) {
-            ofs<<(*it_v)->tagAt(j);                                  /* エージェントのタグ */
-        }
-        ofs << SEPARATOR << VirusCounter::Instance().getNumVirus(i++);
-        ofs<<ENDL;
+      FOR(j, (*it_v)->getLen()) {
+        ofs<<(*it_v)->tagAt(j);                                  /* ウイルスのタグ */
+      }
+      ofs << SEPARATOR << VirusCounter::Instance().getNumVirus(i++);
+      ofs<<ENDL;
     }
     ofs.close();
+  }
 }
 
 /**
  * @brief エージェントのデータベースを出力
  */
-void FileFactory :: outputFile_AgentDataBase( const char *fname ) const {
-    std::ofstream ofs(fname);
+void FileFactory ::
+outputFile_AgentDataBase( const char *fname, const char *dirname, int interval ) const {  
+  if( Term::Instance().doAtInterval(interval) ) { // 指定の間隔で
+    std::stringstream fstr;
+    fstr << dirname << "/" << Term::Instance().getTerm() << "_" << fname; // ファイル名を作成
+    std::ofstream ofs(fstr.str().c_str());
     EACH( it_a, am_->getAgentList() )
-    {
+      {
         FOR(j, (*it_a)->getLen()) {
-            ofs<<(*it_a)->tagAt(j);                                  /* エージェントのタグ */
+          ofs<<(*it_a)->tagAt(j);                                  /* エージェントのタグ */
         }
         ofs << SEPARATOR << (*it_a)->numHoldingVirus();                        /* エージェントの保持ウイルス数 */
         ofs << ENDL;
-    }
+      }
     ofs.close();
+  }
 }
