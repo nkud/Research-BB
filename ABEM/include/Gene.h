@@ -65,7 +65,7 @@ class Gene
       int ret = 0;
       to = std::max( getLen()+1, to );
       REP( i, from, to-1 ) {
-        ret += abs( tagAt(i) - BASE_TAG );
+        ret += std::abs( tagAt(i) - BASE_TAG );
       }
       return ret;
     }
