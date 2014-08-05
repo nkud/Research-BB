@@ -1,6 +1,8 @@
 #! /usr/bin/python
 # coding=utf-8
 
+import random
+
 def probability(prob):
   """ 確率 """
   if prob > random.uniform(0,100): return True

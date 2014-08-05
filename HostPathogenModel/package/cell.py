@@ -21,6 +21,7 @@ class Cell(object):
     """ ウイルスを追加する """
     self.getInfectedVirus().append(v)
 
+### 細胞マップ
 class CellMap(object):
   def __init__(self, width):
     """ 初期化 """
@@ -53,6 +54,7 @@ class CellMap(object):
     """ 感染する """
     self.getCell(x,y).pushVirus(v)
   def printState(self):
+    """ 状態を表示 """
     for h in range(self.getWidth()):
       for w in range(self.getWidth()):
         print self.getCell(h,w).isInfected(),
