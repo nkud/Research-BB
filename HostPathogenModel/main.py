@@ -13,6 +13,7 @@ import random
 from package.gene import *
 from package.function import *
 from package.cell import *
+from package.virus import *
 
 
 ### T細胞
@@ -21,15 +22,6 @@ class Tcell(Gene):
     """ 初期化 """
     super(Tcell, self).__init__(length)
 
-### ウイルス
-class Virus(Gene):
-  def __init__(self, length, rate):
-    """ 初期化 """
-    super(Virus, self).__init__(length)
-    self.infection_rate_ = rate
-  def getRate(self):
-    """ 感染率 """
-    return self.infection_rate_
 ### メインルーチン
 def main():
   print '--- Host-Pathogen Model'
