@@ -85,11 +85,6 @@ class RingGene : public Gene {
   int flipToGeneAtPosition( const Gene &other, int pos ) const;
 };
 
-// class RingGene : public Gene {
-// public:
-//     int pointOfMinHamDistance( const Gene &other ) const;
-// };
-
 /*
  * =====================================================================================
  *        Class:  Life
