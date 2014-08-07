@@ -3,10 +3,11 @@
 
 from gene import *
 from function import *
+from virus import *
 
 ### T細胞
 class Tcell(Gene):
-  def __init__(self,length):
+  def __init__(self, length):
     super(Tcell, self).__init__(length)
     self.x = 0
     self.y = 0
@@ -25,14 +26,19 @@ class Tcell(Gene):
       self.setX(X)
       self.setY(Y)
 
-  def setX(self,x):
+  def setX(self, x):
     self.x = x
-  def setY(self,y):
+  def setY(self, y):
     self.y = y
   def getX(self):
     return self.x
   def getY(self):
     return self.y
+  def hasReceptorMatch(self, v):
+    if self.getLen() < v.getLen(): return False
+    if v.getTagString() in self.getTagString(): return True
+    return False
+
 
 class TcellManager(object):
   def __init__(self):
@@ -50,13 +56,14 @@ class TcellManager(object):
 ### テスト
 def check():
   tm = TcellManager()
+  tm.pushTcell(Tcell(10))
   tm.printTcellArray()
-  tm.pushTcell(Tcell(5))
-  tm.pushTcell(Tcell(5))
-  tm.pushTcell(Tcell(5))
-  tm.pushTcell(Tcell(5))
-  tm.pushTcell(Tcell(5))
-  tm.printTcellArray()
+
+  tc = Tcell(6)
+  v = Virus(7,100)
+  print tc.getTag(), v.getTag()
+  print tc.hasReceptorMatch(v)
+
 
 if __name__ == '__main__':
   print '( test program )'

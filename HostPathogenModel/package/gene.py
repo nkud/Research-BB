@@ -17,6 +17,11 @@ class Gene(object):
   def getTag(self):
     """ タグ """
     return self.tag_
+  def getTagString(self):
+    tagstr = ''
+    for i in self.getTag():
+      tagstr += str(i)
+    return tagstr
   def getTagAt(self,i):
     return self.tag_[i]
   def isEqualTagTo(self,other):
@@ -30,6 +35,7 @@ class Gene(object):
 def check():
   g = Gene(10)
   print g.getTag()
+  print g.getTagString()
 
 if __name__ == '__main__':
   print '( test program )'
