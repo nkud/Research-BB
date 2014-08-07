@@ -1,10 +1,15 @@
 #! /usr/bin/python
 # coding=utf-8
 
+from matplotlib import pyplot as plt
+from matplotlib import animation
+import numpy as np
+
 from function import *
 from virus import *
 from cell import *
 from leukocyte import *
+from view import *
 
 ### 細胞マップ
 class Landscape(object):
@@ -33,10 +38,13 @@ class Landscape(object):
       for w in range(self.getWidth()):
           t.append([])
       self.t_cell_map_.append(t)
+
   def resistTcell(self,tcell):
     """ T細胞を登録する """
     self.t_cell_map_[tcell.getY()][tcell.getX()].append(tcell)
+
   def getTcellMap(self):
+    """ T細胞マップ """
     return self.t_cell_map_
 
   def getWidth(self):
@@ -100,38 +108,11 @@ class Landscape(object):
     for i in range(self.getWidth()):
       print '-',
     print
-  def printState(self,func):
-    """ 状態を表示 """
-    for h in range(self.getWidth()):
-      for w in range(self.getWidth()):
-        print '%3d\t ' % len(self.getCell(h,w).func()),
-      print
-    for i in range(self.getWidth()):
-      print '-',
-    print
 
 ### テスト
-def check():
-  w = 20
-  land = Landscape(w)
-  tm = TcellManager()
-  for i in range(10):
-    tcell = Tcell(length=10)
-    tcell.setX(random_int(0,w-1))
-    tcell.setY(random_int(0,w-1))
-    tm.pushTcell(tcell)
-    land.resistTcell(tcell)
-  land.printNumOfTcell()
-  land.resetTcellMap()
-
-  for i in range(10000):
-    raw_input()
-    for tc in tm.getTcellArray():
-      tc.move(land)
-      land.resistTcell(tc)
-    land.printNumOfTcell()
-    land.resetTcellMap()
+def test():
+  pass
 
 if __name__ == '__main__':
   print '( test program )'
-  check()
+  test()

@@ -32,7 +32,8 @@ class Cell(object):
     """ ウイルスを追加する """
     for iv in self.getInfectedVirus():
       if iv.isEqualTagTo(v): return False
-    self.getInfectedVirus().append(v)
+    newv = v.clone()
+    self.getInfectedVirus().append(newv)
     return True
   def pushStandByVirus(self,v):
     """ 待機ウイルスを追加 """
@@ -49,3 +50,27 @@ class Cell(object):
     for v in self.getStandByVirus():
       self.pushNewVirus(v)
     self.clearStandByVirus()
+
+  def eraseVirus(self,v):
+    """ ウイルスを削除 """
+    self.getInfectedVirus().remove(v)
+
+### テスト
+def test():
+  c = Cell()
+  va = Virus(5,5)
+  vb = Virus(5,5,100)
+  vb.mutationDrift()
+  c.pushNewVirus(va)
+  print c.getInfectedVirus()
+  c.pushNewVirus(vb)
+  print c.getInfectedVirus()
+  vb.mutationDrift()
+  c.pushNewVirus(vb)
+  va = Virus(5,5)
+  c.pushNewVirus(va)
+  print c.getInfectedVirus()
+
+if __name__ == '__main__':
+  print '( test program )'
+  test()

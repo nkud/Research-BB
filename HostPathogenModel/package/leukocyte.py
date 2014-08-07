@@ -4,6 +4,7 @@
 from gene import *
 from function import *
 from virus import *
+from landscape import *
 
 ### T細胞
 class Tcell(Gene):
@@ -38,7 +39,12 @@ class Tcell(Gene):
     if self.getLen() < v.getLen(): return False
     if v.getTagString() in self.getTagString(): return True
     return False
-
+  def clone(self):
+    """ クローンを作成する """
+    tcell = Tcell(self.getLen())
+    tcell.setX(self.getX())
+    tcell.setY(self.getY())
+    return tcell
 
 class TcellManager(object):
   def __init__(self):
@@ -52,6 +58,8 @@ class TcellManager(object):
     for tc in self.getTcellArray():
       print '%d:' % n, tc
       n += 1
+  def removeTcell(self, tcell):
+    self.t_cell_array.remove(tcell)
 
 ### テスト
 def check():
@@ -64,6 +72,11 @@ def check():
   print tc.getTag(), v.getTag()
   print tc.hasReceptorMatch(v)
 
+  a = Tcell(5)
+  b = a.clone()
+  for i in range(10):
+    a.move(Landscape(10))
+    print a,a.getX(),a.getY(), b,b.getX(),b.getY()
 
 if __name__ == '__main__':
   print '( test program )'
