@@ -17,10 +17,10 @@ class Tcell(Gene):
     X = self.getX()
     Y = self.getY()
     if probability(50):
-      if probability(50): self.x += 1
+      if probability(50): X += 1
       else: X -= 1
     if probability(50):
-      if probability(50): self.y += 1
+      if probability(50): Y += 1
       else: Y -= 1
     if land.isOnMap(X,Y):
       self.setX(X)
