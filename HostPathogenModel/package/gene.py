@@ -17,4 +17,19 @@ class Gene(object):
   def getTag(self):
     """ タグ """
     return self.tag_
+  def getTagAt(self,i):
+    return self.tag_[i]
+  def isEqualTagTo(self,other):
+    """ タグが等しい """
+    if self.getLen() != other.getLen(): return False
+    for i in range(self.getLen()):
+      if self.getTagAt(i) != other.getTagAt(i): return False
+    return True
 
+### check
+a = Gene(2)
+b = Gene(2)
+b.tag_ = [0,0]
+print a.getTag()
+print b.getTag()
+print a.isEqualTagTo(b)

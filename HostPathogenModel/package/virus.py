@@ -12,4 +12,3 @@ class Virus(Gene):
   def getRate(self):
     """ 感染率 """
     return self.infection_rate_
-

@@ -36,7 +36,7 @@ def main():
       t.append(cm.getCell(h,w).isInfected())
     mp.append(t)
   print mp
-  output(cm.getWidth(),mp)
+  # output(cm.getWidth(),mp)
 
 ### プログラム実行
 if __name__ == '__main__':
