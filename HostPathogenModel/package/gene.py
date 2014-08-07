@@ -26,10 +26,11 @@ class Gene(object):
       if self.getTagAt(i) != other.getTagAt(i): return False
     return True
 
-### check
-a = Gene(2)
-b = Gene(2)
-b.tag_ = [0,0]
-print a.getTag()
-print b.getTag()
-print a.isEqualTagTo(b)
+### テスト
+def check():
+  g = Gene(10)
+  print g.getTag()
+
+if __name__ == '__main__':
+  print '( test program )'
+  check()
