@@ -11,7 +11,7 @@ from cell import *
 from leukocyte import *
 from view import *
 
-### 細胞マップ
+## ランドスケープ
 class Landscape(object):
   """ ランドスケープ
   """
@@ -94,6 +94,9 @@ class Landscape(object):
 
   def printNumOfVirus(self):
     """ 状態を表示 """
+    for i in range(self.getWidth()):
+      print '-',
+    print
     for h in range(self.getWidth()):
       for w in range(self.getWidth()):
         print len(self.getCell(h,w).getInfectedVirus()),
@@ -103,6 +106,9 @@ class Landscape(object):
     print
   def printNumOfTcell(self):
     """ 状態を表示 """
+    for i in range(self.getWidth()):
+      print '-',
+    print
     for h in range(self.getWidth()):
       for w in range(self.getWidth()):
         print len(self.getTcellMap()[w][h]),
@@ -111,7 +117,7 @@ class Landscape(object):
       print '-',
     print
 
-### テスト
+## テスト
 def test():
   pass
 
