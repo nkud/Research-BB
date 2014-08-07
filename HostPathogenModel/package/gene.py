@@ -1,28 +1,33 @@
 #! /usr/bin/python
-# coding=utf-8
+# coding:utf-8
 
-### Config ###################
+# 
+# Configure
+# 
 BASE_TAG = 0
-##############################
 
-### 遺伝子
 class Gene(object):
+  """ 遺伝子
+  遺伝子タグを持つ。
+  """
   def __init__(self, length, base=BASE_TAG):
     """ 初期化 """
     self.tag_ = []
     for i in range(length): self.tag_.append(base)
   def getLen(self):
-    """ タグの長さ """
+    """ タグの長さを返す """
     return len(self.tag_)
   def getTag(self):
-    """ タグ """
+    """ タグを返す """
     return self.tag_
   def getTagString(self):
+    """ タグを文字列化して返す """
     tagstr = ''
     for i in self.getTag():
       tagstr += str(i)
     return tagstr
   def getTagAt(self,i):
+    """ 指定された位置のタグを返す """
     return self.tag_[i]
   def isEqualTagTo(self,other):
     """ タグが等しい """
@@ -31,7 +36,7 @@ class Gene(object):
       if self.getTagAt(i) != other.getTagAt(i): return False
     return True
 
-### テスト
+# テスト
 def check():
   g = Gene(10)
   print g.getTag()

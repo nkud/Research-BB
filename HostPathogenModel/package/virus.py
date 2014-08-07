@@ -6,6 +6,8 @@ from function import *
 
 ### ウイルス
 class Virus(Gene):
+  """ ウイルス
+  """
   def __init__(self, length, rate, mutation_rate=5):
     """ 初期化 """
     super(Virus, self).__init__(length)
@@ -26,6 +28,7 @@ class Virus(Gene):
     """ 抗原不連続変異 """
     pass
   def clone(self):
+    """ クローン """
     v = Virus(self.getLen(), self.getRate())
     v.tag_[0] = self.getTagAt(0)
     return v

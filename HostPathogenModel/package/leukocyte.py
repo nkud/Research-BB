@@ -8,7 +8,10 @@ from landscape import *
 
 ### T細胞
 class Tcell(Gene):
+  """ T細胞
+  """
   def __init__(self, length):
+    """ 初期化 """
     super(Tcell, self).__init__(length)
     self.x = 0
     self.y = 0
@@ -35,7 +38,9 @@ class Tcell(Gene):
     return self.x
   def getY(self):
     return self.y
+    
   def hasReceptorMatch(self, v):
+    """ 受容体を持っているかどうか """
     if self.getLen() < v.getLen(): return False
     if v.getTagString() in self.getTagString(): return True
     return False
@@ -46,12 +51,19 @@ class Tcell(Gene):
     tcell.setY(self.getY())
     return tcell
 
+
 class TcellManager(object):
+  """ T細胞マネージャー
+  T細胞の集合体を扱う。
+  """
   def __init__(self):
+    """ 初期化 """
     self.t_cell_array = []
   def pushTcell(self, tcell):
+    """ T細胞を追加 """
     self.t_cell_array.append(tcell)
   def getTcellArray(self):
+    """ T細胞の配列を取得 """
     return self.t_cell_array
   def printTcellArray(self):
     n = 0
@@ -59,6 +71,7 @@ class TcellManager(object):
       print '%d:' % n, tc
       n += 1
   def removeTcell(self, tcell):
+    """ 指定したT細胞を配列から削除 """
     self.t_cell_array.remove(tcell)
 
 ### テスト

@@ -13,6 +13,8 @@ from view import *
 
 ### 細胞マップ
 class Landscape(object):
+  """ ランドスケープ
+  """
   def __init__(self, width):
     """ 初期化 """
     self.width_ = width         # 細胞マップの幅
