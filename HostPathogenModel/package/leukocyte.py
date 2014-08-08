@@ -6,6 +6,8 @@ from function import *
 from virus import *
 from landscape import *
 
+import unittest
+
 ## T細胞
 class Tcell(Gene):
   """ T細胞
@@ -69,7 +71,7 @@ class Tcell(Gene):
     return tcell
 
 
-class TcellManager(object):
+class TcellList(object):
   """ T細胞マネージャー
   T細胞の集合体を扱う。
   """
@@ -95,23 +97,19 @@ class TcellManager(object):
     """ 指定したT細胞を配列から削除 """
     self.t_cell_array.remove(tcell)
 
-## テスト
-def check():
-  tm = TcellManager()
-  tm.pushTcell(Tcell(10))
-  tm.printTcellArray()
+  def getTcellListSize(self):
+    return len(self.getTcellArray())
 
-  tc = Tcell(6)
-  v = Virus(7,100)
-  print tc.getTag(), v.getTag()
-  print tc.hasReceptorMatch(v)
+## T細胞テスト
+class TestTcellManager(unittest.TestCase):
+  def setUp(self):
+    self.tclist = TcellList()
 
-  a = Tcell(5)
-  b = a.clone()
-  for i in range(10):
-    a.move(Landscape(10))
-    print a,a.getX(),a.getY(), b,b.getX(),b.getY()
+  def test_push(self):
+    num = 1000
+    for i in range(num):
+      self.tclist.pushTcell(Tcell(100))
+    self.assertTrue( self.tclist.getTcellListSize() == num )
 
 if __name__ == '__main__':
-  print '( test program )'
-  check()
+  unittest.main()

@@ -51,7 +51,7 @@ class Cell(object):
       
   def enablePushVirus(self):
     """ ウイルスを追加できるかどうか """
-    max_virus = 2
+    max_virus = 3
     if len(self.getInfectedVirus()) < max_virus: return True # 最大保持ウイルス未満なら真
     else: return False                                       # そうでなければ偽
     

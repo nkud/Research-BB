@@ -2,6 +2,7 @@
 # coding:utf-8
 
 import random
+import unittest
 
 def probability(prob):
   """ 確率
@@ -23,18 +24,16 @@ def random_int(minimum, maximum):
   """
   return random.randint(minimum, maximum)
 
-### テスト
-def test():
-  """ テストプログラム """
-  m = [0,0,0,0,0,0,0,0]
-  for i in range(500):
-    m[random_int(0,7)] += 1
-  for i in m:
-    print i,
-    for j in range(i):
-      print '*',
-    print 
+## 関数テスト
+class TestRandom(unittest.TestCase):
+  def test_probability(self):
+    for i in range(1000):
+      self.assertTrue(probability(100))
+      self.assertFalse(probability(0))
+  def test_random_int(self):
+    for i in range(1000):
+      self.assertTrue(random_int(0,1) in [0,1])
+      self.assertTrue(random_int(0,99) in range(100))
 
 if __name__ == '__main__':
-  print '( test program )'
-  test()
+  unittest.main()
