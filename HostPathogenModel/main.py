@@ -14,17 +14,20 @@ from package.virus import *
 from package.leukocyte import *
 from package.view import *
 from package.terminal import *
+from package.term import *
 
 ## メインルーチン
 def main():
   width     = 20 # 幅
   vlen      = 3
   vrate     = 50
-  vmrate    = 5
-  tlen      = 5
+  vmrate    = 30
+  tlen      = 10
   lifespan  = 5
-  tcell_num = 20 # T細胞の数
-  term      = 1000                           # 実行する期間
+  tcell_num = 10 # T細胞の数
+  maxterm   = 500                           # 実行する期間
+
+  term = Term(maxterm)
 
   fo = open('tcell.dat','w')
 
@@ -41,9 +44,9 @@ def main():
     land.resistTcell(tcell)         # 土地にT細胞の位置を登録する
 
   clear_screen()
-  for t in range(term):                # 計算開始
+  while term.progress():
     put_cursor_at(0,0)
-    print 'TERM: %d' % t               # 現在の期間
+    print 'TERM: %d' % term.getTerm()               # 現在の期間
     print 'Tcell: %d' % len(tcell_list.getTcellArray())               # 現在の期間
 
 # ウイルスの増殖
@@ -68,12 +71,13 @@ def main():
       c = land.getCell(tc.getX(),tc.getY()) # 同じ位置にある細胞に
       for v in c.getInfectedVirus(): # 感染しているウイルス全てに対して
         if tc.hasReceptorMatch(v):   # 受容体を持っていれば
-          #c.eraseVirus(v)
-          c.clearInfectedVirus() # その細胞からウイルスを除去する
+          c.eraseVirus(v)
+          #c.clearInfectedVirus() # その細胞からウイルスを除去する
           if probability(100):   # ある確率で
             new_tcell.append(tc.clone()) # そのT細胞のクローンを作成する
     for tc in new_tcell:                 # 新しく作成されたT細胞を
       tcell_list.pushTcell(tc)                   # 集合に加える
+      land.resistTcell(tc)
 
 # ウイルスの突然変異
     for i in range(land.getWidth()):   # 全ての土地の
@@ -85,20 +89,22 @@ def main():
 # T細胞の寿命
     for tc in tcell_list.getTcellArray():
       tc.aging()
-      if probability(50):
-        tc.mutation()
+      tc.mutation(rate=10)
       if tc.getAge() > lifespan:
         tcell_list.removeTcell(tc)
 
-    tcell_list.complementTcell(10)
+    tcell_list.complementTcell(land, 10)
 
     land.printNumOfVirus()      # ウイルス数マップを表示する
+    land.printNumOfTcell()
+
     land.resetTcellMap()        # T細胞のマップをリセットする
 
+    print '\033[0K',
     for v in land.getCell(0,0).getInfectedVirus():
-      print v.getTagString()
+      print v.getTag(),
 
-    fo.write('%d %d\n' % (t, tcell_list.getTcellListSize()))
+    fo.write('%d %d\n' % (term.getTerm(), tcell_list.getTcellListSize()))
     fo.flush()
 
 

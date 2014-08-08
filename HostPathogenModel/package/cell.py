@@ -4,13 +4,16 @@
 from function import *
 from virus import *
 
+import unittest
+
+## 細胞
 class Cell(object):
   """ 細胞
   """
   def __init__(self):
     """ 初期化 """
-    self.infected_virus_ = []   # 保持ウイルスの配列
-    self.stand_by_virus_ = []   # 待機ウイルスの配列
+    self.infected_virus_list_ = []   # 保持ウイルスの配列
+    self.stand_by_virus_list_ = []   # 待機ウイルスの配列
     
   def isInfected(self):
     """ 感染しているかどうか """
@@ -24,19 +27,19 @@ class Cell(object):
     
   def getInfectedVirus(self):
     """ 感染ウイルスを返す """
-    return self.infected_virus_
+    return self.infected_virus_list_
     
   def clearInfectedVirus(self):
-    self.infected_virus_ = []   # 保持ウイルスに空のリストを設定
+    self.infected_virus_list_ = []   # 保持ウイルスに空のリストを設定
     """ 感染ウイルスをクリアする """
     
   def getStandByVirus(self):
     """ 待機ウイルス """
-    return self.stand_by_virus_
+    return self.stand_by_virus_list_
     
   def clearStandByVirus(self):
     """ 待機ウイルスをクリアする """
-    self.stand_by_virus_ = []   # 待機ウイルスに空のリストを設定
+    self.stand_by_virus_list_ = []   # 待機ウイルスに空のリストを設定
     
   def pushNewVirus(self,v):
     """ ウイルスを追加する """
@@ -76,21 +79,10 @@ class Cell(object):
     """ ウイルスを削除 """
     self.getInfectedVirus().remove(v) # 保持ウイルスの配列から指定されたウイルスを削除
 
-def test():
-  c = Cell()
-  va = Virus(5,5)
-  vb = Virus(5,5,100)
-  vb.mutationDrift()
-  c.pushNewVirus(va)
-  print c.getInfectedVirus()
-  c.pushNewVirus(vb)
-  print c.getInfectedVirus()
-  vb.mutationDrift()
-  c.pushNewVirus(vb)
-  va = Virus(5,5)
-  c.pushNewVirus(va)
-  print c.getInfectedVirus()
+## 細胞テスト
+class TestCell(unittest.TestCase):
+  pass
 
 if __name__ == '__main__':
-  print '( test program )'
-  test()
+  unittest.main()
+

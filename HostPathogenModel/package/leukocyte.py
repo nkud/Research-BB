@@ -12,9 +12,9 @@ import unittest
 class Tcell(Gene):
   """ T細胞
   """
-  def __init__(self, length):
+  def __init__(self, length, tag=''):
     """ 初期化 """
-    super(Tcell, self).__init__(length)
+    super(Tcell, self).__init__(length, tag)
     self.x_ = 0
     self.y_ = 0
     self.age_ = 0
@@ -60,12 +60,12 @@ class Tcell(Gene):
   def hasReceptorMatch(self, v):
     """ 受容体を持っているかどうか """
     if self.getLen() < v.getLen(): return False
-    if v.getTagString() in self.getTagString(): return True
+    if v.getTag() in self.getTag(): return True
     return False
 
   def clone(self):
     """ クローンを作成する """
-    tcell = Tcell(self.getLen())
+    tcell = Tcell(self.getLen(), self.getTag())
     tcell.setX(self.getX())
     tcell.setY(self.getY())
     return tcell
@@ -101,11 +101,13 @@ class TcellList(object):
     """ T細胞集合のサイズを返す """
     return len(self.getTcellArray())
 
-  def complementTcell(self, min_tcell):
+  def complementTcell(self, land, min_tcell):
     """ T細胞を保管する """
     tlen = self.getTcellArray()[0].getLen()
     while self.getTcellListSize() < min_tcell:
-      self.pushTcell( Tcell(length=tlen) )
+      tc = Tcell(length=tlen)
+      self.pushTcell( tc )
+      land.resistTcell( tc )
 
 ## T細胞テスト
 class TestTcellManager(unittest.TestCase):

@@ -35,7 +35,7 @@ class Virus(Gene):
     """ クローン """
     v = Virus(self.getLen(), self.getRate(), self.getMutationRate())
     for i in range(self.getLen()):
-      v.tag_[i] = self.getTagAt(i)
+      v.setTagAt(self.getNumAt(i), i)
     return v
 
 class VirusManager(object):

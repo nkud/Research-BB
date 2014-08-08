@@ -1,15 +1,13 @@
 #! /usr/bin/python
 # coding=utf-8
 
-from matplotlib import pyplot as plt
-from matplotlib import animation
-import numpy as np
-
 from function import *
 from virus import *
 from cell import *
 from leukocyte import *
 from view import *
+
+import unittest
 
 ## ランドスケープ
 class Landscape(object):
@@ -94,35 +92,41 @@ class Landscape(object):
 
   def printNumOfVirus(self):
     """ 状態を表示 """
+    print ' ',
     for i in range(self.getWidth()):
       print '-',
     print
     for h in range(self.getWidth()):
       print '|',
       for w in range(self.getWidth()):
-        n = len(self.getCell(h,w).getInfectedVirus())
+        n = len(self.getCell(w,h).getInfectedVirus())
         print n if n>0 else ' ',
       print '|'
+    print ' ',
     for i in range(self.getWidth()):
       print '-',
     print
+
   def printNumOfTcell(self):
     """ 状態を表示 """
+    print ' ',
     for i in range(self.getWidth()):
       print '-',
     print
     for h in range(self.getWidth()):
+      print '|',
       for w in range(self.getWidth()):
-        print len(self.getTcellMap()[w][h]),
-      print
+        n = len(self.getTcellMap()[h][w])
+        print n if n>0 else ' ',
+      print '|'
+    print ' ',
     for i in range(self.getWidth()):
       print '-',
     print
 
-## テスト
-def test():
+## ランドスケープテスト
+class TestLandscape(unittest.TestCase):
   pass
 
 if __name__ == '__main__':
-  print '( test program )'
-  test()
+  unittest.main()
