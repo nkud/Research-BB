@@ -98,9 +98,11 @@ class Landscape(object):
       print '-',
     print
     for h in range(self.getWidth()):
+      print '|',
       for w in range(self.getWidth()):
-        print len(self.getCell(h,w).getInfectedVirus()),
-      print
+        n = len(self.getCell(h,w).getInfectedVirus())
+        print n if n>0 else ' ',
+      print '|'
     for i in range(self.getWidth()):
       print '-',
     print

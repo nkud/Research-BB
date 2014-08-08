@@ -17,13 +17,14 @@ from package.terminal import *
 
 ## メインルーチン
 def main():
-  width     = 30 # 幅
+  width     = 20 # 幅
   vlen      = 3
   vrate     = 50
   vmrate    = 20
-  tlen      = 10
-  tcell_num = 10 # T細胞の数
-  term = 500                           # 実行する期間
+  tlen      = 5
+  lifespan = 3
+  tcell_num = 20 # T細胞の数
+  term = 1000                           # 実行する期間
   fo = open('tcell.dat','w')
 
   land = Landscape(width)               # 土地を初期化
@@ -68,7 +69,7 @@ def main():
         if tc.hasReceptorMatch(v):   # 受容体を持っていれば
           #c.eraseVirus(v)
           c.clearInfectedVirus() # その細胞からウイルスを除去する
-          if probability(80):   # ある確率で
+          if probability(100):   # ある確率で
             new_tcell.append(tc.clone()) # そのT細胞のクローンを作成する
     for tc in new_tcell:                 # 新しく作成されたT細胞を
       tcell_list.pushTcell(tc)                   # 集合に加える
@@ -81,7 +82,6 @@ def main():
           v.mutationDrift()            # 連続変異をさせる
 
 # T細胞の寿命
-    lifespan = 5
     for tc in tcell_list.getTcellArray():
       tc.aging()
       if probability(0):

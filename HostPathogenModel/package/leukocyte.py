@@ -98,6 +98,7 @@ class TcellList(object):
     self.t_cell_array.remove(tcell)
 
   def getTcellListSize(self):
+    """ T細胞集合のサイズを返す """
     return len(self.getTcellArray())
 
 ## T細胞テスト

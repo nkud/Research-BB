@@ -33,7 +33,7 @@ class Virus(Gene):
 
   def clone(self):
     """ クローン """
-    v = Virus(self.getLen(), self.getRate())
+    v = Virus(self.getLen(), self.getRate(), self.getMutationRate())
     for i in range(self.getLen()):
       v.tag_[i] = self.getTagAt(i)
     return v
@@ -61,7 +61,7 @@ class TestVirus(unittest.TestCase):
       b = a.clone()
       self.assertTrue(a.isEqualTagTo(b))
   def test_mutation_drift(self):
-    for i in range(100):
+    for i in range(1000):
       a = Virus(100,100,100)
       b = a.clone()
       a.mutationDrift()
