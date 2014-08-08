@@ -101,6 +101,12 @@ class TcellList(object):
     """ T細胞集合のサイズを返す """
     return len(self.getTcellArray())
 
+  def complementTcell(self, min_tcell):
+    """ T細胞を保管する """
+    tlen = self.getTcellArray()[0].getLen()
+    while self.getTcellListSize() < min_tcell:
+      self.pushTcell( Tcell(length=tlen) )
+
 ## T細胞テスト
 class TestTcellManager(unittest.TestCase):
   def setUp(self):

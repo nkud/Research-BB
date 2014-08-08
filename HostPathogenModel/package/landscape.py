@@ -59,7 +59,7 @@ class Landscape(object):
 
   def getCell(self, x, y):
     """ 細胞 """
-    return self.getCellMap()[x][y]
+    return self.getCellMap()[y][x]
 
   def isInfected(self, x, y):
     """ 感染細胞 """

@@ -20,11 +20,12 @@ def main():
   width     = 20 # 幅
   vlen      = 3
   vrate     = 50
-  vmrate    = 20
+  vmrate    = 5
   tlen      = 5
-  lifespan = 3
+  lifespan  = 5
   tcell_num = 20 # T細胞の数
-  term = 1000                           # 実行する期間
+  term      = 1000                           # 実行する期間
+
   fo = open('tcell.dat','w')
 
   land = Landscape(width)               # 土地を初期化
@@ -84,17 +85,22 @@ def main():
 # T細胞の寿命
     for tc in tcell_list.getTcellArray():
       tc.aging()
-      if probability(0):
+      if probability(50):
         tc.mutation()
       if tc.getAge() > lifespan:
         tcell_list.removeTcell(tc)
 
+    tcell_list.complementTcell(10)
+
     land.printNumOfVirus()      # ウイルス数マップを表示する
     land.resetTcellMap()        # T細胞のマップをリセットする
 
+    for v in land.getCell(0,0).getInfectedVirus():
+      print v.getTagString()
+
     fo.write('%d %d\n' % (t, tcell_list.getTcellListSize()))
     fo.flush()
-    
+
 
 ## プログラム実行
 if __name__ == '__main__':
