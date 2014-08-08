@@ -28,19 +28,19 @@ class Cell(object):
   def getInfectedVirus(self):
     """ 感染ウイルスを返す """
     return self.infected_virus_list_
-    
+
   def clearInfectedVirus(self):
     self.infected_virus_list_ = []   # 保持ウイルスに空のリストを設定
     """ 感染ウイルスをクリアする """
-    
+
   def getStandByVirus(self):
     """ 待機ウイルス """
     return self.stand_by_virus_list_
-    
+
   def clearStandByVirus(self):
     """ 待機ウイルスをクリアする """
     self.stand_by_virus_list_ = []   # 待機ウイルスに空のリストを設定
-    
+
   def pushNewVirus(self,v):
     """ ウイルスを追加する """
     if self.enablePushVirus():  # 新しいウイルスを追加できる状態で
@@ -51,23 +51,23 @@ class Cell(object):
       return True                           # 真を返す
     else:                                   # そうでなければ
       return False                          # 偽を返す
-      
+
   def enablePushVirus(self):
     """ ウイルスを追加できるかどうか """
     max_virus = 3
     if len(self.getInfectedVirus()) < max_virus: return True # 最大保持ウイルス未満なら真
     else: return False                                       # そうでなければ偽
-    
+
   def pushStandByVirus(self,v):
     """ 待機ウイルスを追加 """
     self.getStandByVirus().append(v)
     
-  def contact(self,neighbors):
+  def contact(self, neighbors):
     """ 接触する """
-    for c in neighbors:         # 各近隣の細胞に対して
-      for v in c.getInfectedVirus(): # その細胞の各保持ウイルスのに対して
-        if probability(v.getRate()): # そのウイルス固有の感染確率で
-          self.pushStandByVirus(v)   # 自分の待機ウイルスに加える
+    for cell in neighbors:         # 各近隣の細胞に対して
+      for virus in cell.getInfectedVirus(): # その細胞の各保持ウイルスのに対して
+        if probability(virus.getRate()): # そのウイルス固有の感染確率で
+          self.pushStandByVirus(virus)   # 自分の待機ウイルスに加える
           
   def infection(self):
     """ 待機ウイルスを感染させる """

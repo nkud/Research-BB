@@ -34,7 +34,7 @@ def main():
   land = Landscape(width)               # 土地を初期化
   tcell_list = TcellList()               # T細胞の集合
   v = Virus(vlen,vrate,vmrate)                # ウイルスを一つ用意する
-  land.getCell(0,0).pushNewVirus(v) # 土地の０，０番目の細胞に、ウイルスを感染させる
+  land.getCellAt(0,0).pushNewVirus(v) # 土地の０，０番目の細胞に、ウイルスを感染させる
 
   for i in range(tcell_num):
     tcell = Tcell(length=tlen)         # T細胞を用意する
@@ -52,23 +52,23 @@ def main():
 # ウイルスの増殖
     for i in range(land.getWidth()):   # 土地の上の
       for j in range(land.getWidth()): # 全ての細胞に対して
-        c = land.getCell(i,j)          # その場所の細胞を
+        c = land.getCellAt(i,j)          # その場所の細胞を
         c.contact(land.neighbors(i,j)) # その近隣に対して接触させる
     for i in range(land.getWidth()):   # 土地の上の
       for j in range(land.getWidth()): # 全ての細胞に対して
-        c = land.getCell(i,j)          # その細胞を
+        c = land.getCellAt(i,j)          # その細胞を
         c.infection()                  # 感染させる
 
 # T細胞の移動
     for tc in tcell_list.getTcellArray(): # 全てのT細胞を
-      land.resetTcellMap()
+      land.clearTcellMap()
       tc.move(land)               # 移動させて
       land.resistTcell(tc)        # 土地に位置を登録する
 
 # T細胞のウイルス殺傷
     new_tcell = []                # 新しいT細胞の配列を用意する
     for tc in tcell_list.getTcellArray(): # 全てのT細胞に対して
-      c = land.getCell(tc.getX(),tc.getY()) # 同じ位置にある細胞に
+      c = land.getCellAt(tc.getX(),tc.getY()) # 同じ位置にある細胞に
       for v in c.getInfectedVirus(): # 感染しているウイルス全てに対して
         if tc.hasReceptorMatch(v):   # 受容体を持っていれば
           c.eraseVirus(v)
@@ -82,7 +82,7 @@ def main():
 # ウイルスの突然変異
     for i in range(land.getWidth()):   # 全ての土地の
       for j in range(land.getWidth()): # 上にある
-        c = land.getCell(i,j)          # 細胞に対して
+        c = land.getCellAt(i,j)          # 細胞に対して
         for v in c.getInfectedVirus(): # その細胞に感染している全てのウイルスに対して
           v.mutationDrift()            # 連続変異をさせる
 
@@ -92,16 +92,17 @@ def main():
       tc.mutation(rate=10)
       if tc.getAge() > lifespan:
         tcell_list.removeTcell(tc)
+        land.removeTcell(tc)
 
     tcell_list.complementTcell(land, 10)
 
     land.printNumOfVirus()      # ウイルス数マップを表示する
     land.printNumOfTcell()
 
-    land.resetTcellMap()        # T細胞のマップをリセットする
+    land.clearTcellMap()        # T細胞のマップをリセットする
 
     print '\033[0K',
-    for v in land.getCell(0,0).getInfectedVirus():
+    for v in land.getCellAt(0,0).getInfectedVirus():
       print v.getTag(),
 
     fo.write('%d %d\n' % (term.getTerm(), tcell_list.getTcellListSize()))
