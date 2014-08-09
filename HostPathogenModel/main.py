@@ -19,7 +19,7 @@ from package.term import *
 ## メインルーチン
 def main():
   width     = 20 # 幅
-  vlen      = 3
+  vlen      = 5
   vrate     = 50
   vmrate    = 30
   tlen      = 10
@@ -71,20 +71,13 @@ def main():
       c = land.getCellAt(tc.getX(),tc.getY()) # 同じ位置にある細胞に
       for v in c.getInfectedVirus(): # 感染しているウイルス全てに対して
         if tc.hasReceptorMatch(v):   # 受容体を持っていれば
-          c.eraseVirus(v)
-          #c.clearInfectedVirus() # その細胞からウイルスを除去する
+          #c.eraseVirus(v)
+          c.clearInfectedVirus() # その細胞からウイルスを除去する
           if probability(100):   # ある確率で
             new_tcell.append(tc.clone()) # そのT細胞のクローンを作成する
     for tc in new_tcell:                 # 新しく作成されたT細胞を
       tcell_list.pushTcell(tc)                   # 集合に加える
       land.resistTcell(tc)
-
-# ウイルスの突然変異
-    for i in range(land.getWidth()):   # 全ての土地の
-      for j in range(land.getWidth()): # 上にある
-        c = land.getCellAt(i,j)          # 細胞に対して
-        for v in c.getInfectedVirus(): # その細胞に感染している全てのウイルスに対して
-          v.mutationDrift()            # 連続変異をさせる
 
 # T細胞の寿命
     for tc in tcell_list.getTcellArray():

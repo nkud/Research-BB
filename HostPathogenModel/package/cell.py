@@ -61,19 +61,29 @@ class Cell(object):
   def pushStandByVirus(self,v):
     """ 待機ウイルスを追加 """
     self.getStandByVirus().append(v)
-    
+
   def contact(self, neighbors):
     """ 接触する """
     for cell in neighbors:         # 各近隣の細胞に対して
       for virus in cell.getInfectedVirus(): # その細胞の各保持ウイルスのに対して
         if probability(virus.getRate()): # そのウイルス固有の感染確率で
-          self.pushStandByVirus(virus)   # 自分の待機ウイルスに加える
-          
+          newv = virus.clone()
+          newv.mutationDrift()
+          self.pushStandByVirus(newv)   # 自分の待機ウイルスに加える
+
   def infection(self):
     """ 待機ウイルスを感染させる """
-    for v in self.getStandByVirus(): # 自分の各待機ウイルスに対して
-      self.pushNewVirus(v)           # 保持ウイルスに加える処理をして
-    self.clearStandByVirus()         # 待機ウイルスの配列をクリアする
+    while len(self.getStandByVirus()) > 0:
+      v = random_choose(self.getStandByVirus())
+      if self.pushNewVirus(v):
+        self.clearStandByVirus()
+        return True
+      else: self.stand_by_virus_list_.remove(v)
+    return False
+
+   # for v in self.getStandByVirus(): # 自分の各待機ウイルスに対して
+   #   self.pushNewVirus(v)           # 保持ウイルスに加える処理をして
+   # self.clearStandByVirus()         # 待機ウイルスの配列をクリアする
     
   def eraseVirus(self,v):
     """ ウイルスを削除 """
