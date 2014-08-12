@@ -6,9 +6,17 @@ from matplotlib import animation
 import numpy as np
 from pylab import *
 
+import Tkinter
+
 class View(object):
   def __init__(self):
     pass
+
+## コンフィグ画面
+class Configure(Tkinter.Frame):
+  """ コンフィグ画面
+  """
+  pass
 
 def output(width, cell_map):
   x = arange(width+1)
@@ -76,4 +84,6 @@ def test():
 
 if __name__ == '__main__':
   print '( test program )'
-  test()
+
+  c = Configure()
+  c.mainloop()

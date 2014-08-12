@@ -6,7 +6,9 @@ from function import *
 
 import unittest
 
-### ウイルス
+## ウイルス
+#
+# 遺伝子、感染率、突然変異率
 class Virus(Gene):
   """ ウイルス
   """
@@ -38,19 +40,24 @@ class Virus(Gene):
       v.setTagAt(self.getNumAt(i), i)
     return v
 
+## ウイルスマネージャー
 class VirusManager(object):
   """ ウイルスの集合を管理する
   """
   def __init__(self):
+    """ 初期化 """
     self.virus_list_ = []
   
   def pushVirus(self, v):
+    """ ウイルスを追加する """
     self.virus_list_.append(v)
   
   def getVirusList(self):
+    """ ウイルスリストを取得する """
     return self.virus_list_
 
   def getVirusListSize(self):
+    """ ウイルス数を取得する """
     return len( slef.getVirusList() )
 
 ## ウイルステスト

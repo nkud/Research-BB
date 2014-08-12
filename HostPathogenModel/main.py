@@ -19,17 +19,17 @@ from package.term import *
 ## メインルーチン
 def main():
   width     = 20 # 幅
-  vlen      = 5
+  vlen      = 2
   vrate     = 50
   vmrate    = 30
-  tlen      = 10
+  tlen      = 5
   lifespan  = 5
   tcell_num = 10 # T細胞の数
   maxterm   = 500                           # 実行する期間
 
   term = Term(maxterm)
 
-  fo = open('tcell.dat','w')
+  fo = open('out.dat','w')
 
   land = Landscape(width)               # 土地を初期化
   tcell_list = TcellList()               # T細胞の集合
