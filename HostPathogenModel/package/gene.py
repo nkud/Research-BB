@@ -25,6 +25,10 @@ class Gene(object):
       for i in range(length):
         self.tag_ += str(random_int(0,MAX_TAG))
 
+  def setTag(self, tag):
+    """ タグを直接設定する """
+    self.tag_ = tag
+
   def getLen(self):
     """ タグの長さを返す """
     return len(self.tag_)
@@ -33,25 +37,25 @@ class Gene(object):
     """ タグを返す """
     return self.tag_
 
-  def makeTagArray(self):
+  def createTagArray(self):
     """ タグをリスト化して返す """
     ret = []
     for i in range(getLen()):
-      ret.append( getNumAt(i) )
+      ret.append( getTagNumAt(i) )
     return ret
 
-  def getNumAt(self, pos):
+  def getTagNumAt(self, pos):
     """ 指定された位置のタグを返す """
     return int(self.tag_[pos])
 
   def getStrAt(self, pos):
     return self.tag_[pos]
 
-  def setTagAt(self, num, pos):
+  def setTagNumAt(self, num, pos):
     s = self.getTag()
     self.tag_ = '%s%d%s' % (s[0:pos], num, s[pos+1:])
 
-  def isEqualTagTo(self, other):
+  def hasEqualTagTo(self, other):
     """ タグが等しい """
     if self.getTag() == other.getTag():
       return True
@@ -62,11 +66,11 @@ class Gene(object):
     """ 突然変異させる """
     if probability(rate):
       n = random_int(0, self.getLen()-1)
-      t = self.getNumAt(n)
+      t = self.getTagNumAt(n)
       t += 1 if probability(50) else -1
       while(t>MAX_TAG): t -= MAX_TAG+1
       while(t<0): t += MAX_TAG+1
-      self.setTagAt(t,n)
+      self.setTagNumAt(t,n)
 
 ## 遺伝子テスト
 class TestGene(unittest.TestCase):
@@ -87,13 +91,14 @@ class TestGene(unittest.TestCase):
       a = Gene(length, t)
       self.assertTrue( a.getTag() == t )
 
-# テスト
-def test():
-  g = Gene(10)
-  print g.getTag()
-  print g.getTagString()
-  g.mutation()
-  print g.getTagString()
+  def test_settag(self):
+    t = 1000
+    for i in range(t):
+      tag = '11111'
+      a = Gene(100)
+      self.assertFalse( a.getTag() == tag )
+      a.setTag(tag)
+      self.assertTrue( a.getTag() == tag )
 
 if __name__ == '__main__':
   unittest.main()

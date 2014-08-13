@@ -57,7 +57,7 @@ class Tcell(Gene):
     """ 年をとる """
     self.age_ += 1
 
-  def hasReceptorMatch(self, v):
+  def hasReceptorMatching(self, v):
     """ 受容体を持っているかどうか """
     if self.getLen() < v.getLen(): return False
     if v.getTag() in self.getTag(): return True
@@ -71,7 +71,7 @@ class Tcell(Gene):
     return tcell
 
 
-class TcellList(object):
+class TcellManager(object):
   """ T細胞マネージャー
   T細胞の集合体を扱う。
   """
@@ -106,19 +106,30 @@ class TcellList(object):
     tlen = self.getTcellArray()[0].getLen()
     while self.getTcellListSize() < min_tcell:
       tc = Tcell(length=tlen)
+      tc.setX( random_int( 0, land.getWidth()-1 ) )
+      tc.setY( random_int( 0, land.getWidth()-1 ) )
       self.pushTcell( tc )
       land.resistTcell( tc )
 
 ## T細胞テスト
 class TestTcellManager(unittest.TestCase):
   def setUp(self):
-    self.tclist = TcellList()
+    self.tclist = TcellManager()
 
   def test_push(self):
     num = 1000
     for i in range(num):
       self.tclist.pushTcell(Tcell(100))
     self.assertTrue( self.tclist.getTcellListSize() == num )
+
+  def test_clone(self):
+    for i in range(1000):
+      a = Tcell(10)
+      b = a.clone()
+      self.assertTrue( a.hasEqualTagTo(b) )
+      self.assertTrue( a.getX() == b.getX() )
+      self.assertTrue( a.getY() == b.getY() )
+      self.assertTrue( b.getAge() == 0 )
 
 if __name__ == '__main__':
   unittest.main()

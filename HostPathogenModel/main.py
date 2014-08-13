@@ -18,11 +18,11 @@ from package.term import *
 
 ## メインルーチン
 def main():
-  width     = 20 # 幅
-  vlen      = 2
+  width     = 30 # 幅
+  vlen      = 3
   vrate     = 50
   vmrate    = 30
-  tlen      = 5
+  tlen      = 30
   lifespan  = 5
   tcell_num = 10 # T細胞の数
   maxterm   = 500                           # 実行する期間
@@ -32,7 +32,7 @@ def main():
   fo = open('out.dat','w')
 
   land = Landscape(width)               # 土地を初期化
-  tcell_list = TcellList()               # T細胞の集合
+  tcell_list = TcellManager()               # T細胞の集合
   v = Virus(vlen,vrate,vmrate)                # ウイルスを一つ用意する
   land.getCellAt(0,0).pushNewVirus(v) # 土地の０，０番目の細胞に、ウイルスを感染させる
 
@@ -70,7 +70,7 @@ def main():
     for tc in tcell_list.getTcellArray(): # 全てのT細胞に対して
       c = land.getCellAt(tc.getX(),tc.getY()) # 同じ位置にある細胞に
       for v in c.getInfectedVirus(): # 感染しているウイルス全てに対して
-        if tc.hasReceptorMatch(v):   # 受容体を持っていれば
+        if tc.hasReceptorMatching(v):   # 受容体を持っていれば
           #c.eraseVirus(v)
           c.clearInfectedVirus() # その細胞からウイルスを除去する
           if probability(100):   # ある確率で
@@ -90,7 +90,7 @@ def main():
     tcell_list.complementTcell(land, 10)
 
     land.printNumOfVirus()      # ウイルス数マップを表示する
-    land.printNumOfTcell()
+#    land.printNumOfTcell()
 
     land.clearTcellMap()        # T細胞のマップをリセットする
 

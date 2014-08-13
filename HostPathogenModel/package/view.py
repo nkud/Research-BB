@@ -16,7 +16,15 @@ class View(object):
 class Configure(Tkinter.Frame):
   """ コンフィグ画面
   """
-  pass
+  def __init__(self, master=None):
+    Tkinter.Frame.__init__(self, master)
+    self.master.title('Host-Pathogen Model Confiture')
+
+    width_label = Tkinter.Label(self, text='width', bg='orange', relief=Tkinter.RIDGE, bd=2)
+    width_label.grid(row=0,column=0,columnspan=2,padx=5,pady=5)
+
+    virus_label = Tkinter.Label(self, text='virus', bg='blue', relief=Tkinter.RIDGE, bd=2)
+    virus_label.grid(row=1,column=1,padx=5,pady=5)
 
 def output(width, cell_map):
   x = arange(width+1)
@@ -83,7 +91,6 @@ def test():
   plt.show()
 
 if __name__ == '__main__':
-  print '( test program )'
-
   c = Configure()
+  c.pack()
   c.mainloop()

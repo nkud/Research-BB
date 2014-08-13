@@ -17,7 +17,7 @@ def test():
   tc = Tcell(6)
   v = Virus(7,100)
   print tc.getTag(), v.getTag()
-  print tc.hasReceptorMatch(v)
+  print tc.hasReceptorMatching(v)
 
   a = Tcell(5)
   b = a.clone()
