@@ -6,13 +6,13 @@ import Tkinter
 
 def create_spinbox(master, values):
   """ スピンボックスを作成する """
-  spinbox = Tkinter.Spinbox(master, values=values)
+  spinbox = Tkinter.Spinbox(master, values=values, width=10)
   return spinbox
 
 def create_label(master, text):
   """ ラベルを作成する """
   border = 0
-  label = Tkinter.Label(master, text=text, bg='white', relief=Tkinter.RIDGE, bd=border)
+  label = Tkinter.Label(master, text=text, bg='white', relief=Tkinter.RIDGE, bd=border, width=10)
   return label
 
 def put_widget(widget, row, column, padx=5, pady=5):
@@ -31,6 +31,21 @@ def create_button(master, font, text, command, row, column, padx=5, pady=5):
   button.grid(row=row, column=column, padx=padx, pady=pady)
   return button
 
+class ParameterField(Tkinter.Frame):
+  """パラメータフィールド 
+  """
+  def __init__(self, master, text, values):
+    font = ('helvetica', '12')
+    Tkinter.Frame.__init__(self, master)
+    self.label = create_label(self, text)
+    self.spinbox = create_spinbox(self, values)
+    put_widget(self.label, 0, 0)
+    put_widget(self.spinbox, 0, 1)
+
+  def getValue(self):
+    """ スピンボックスの値を取得 """
+    return self.spinbox.get()
+
 ## コンフィグ画面
 class Configure(Tkinter.Frame):
   """ コンフィグ画面
@@ -41,14 +56,23 @@ class Configure(Tkinter.Frame):
     # self.master.title('Host-Pathogen Model Confiture')
 
     # landscape
-    width_label, self.width_spin = create_field(self, '幅', range(100), 0)
+    self.width = ParameterField(self, '幅', range(100))
+    put_widget(self.width, 0, 0)
 
     # virus
-    rate_label, self.rate_spin = create_field(self, '感染率', range(100), 1)
-    
+    self.rate = ParameterField(self, '感染率', range(100))
+    put_widget(self.rate, 1, 0)
+
     # Tcell
-    age_label, self.age_spin = create_field(self, '寿命', range(100), 2)
-    tlen_label, self.tlen_spin = create_field(self, 'Ｔ細胞の遺伝子長', range(100), 3)
+    self.age = ParameterField(self, '寿命', range(100))
+    put_widget(self.age, 2, 0)
+
+    self.tlen = ParameterField(self, 'Ｔ細胞の遺伝子長', range(100)) 
+    put_widget(self.tlen, 3, 0)
+
+
+    self.p = ParameterField(self, 'test', range(10))
+    put_widget(self.p, 5, 0)
 
     execute_button = create_button(self, font, '実行', self.execute, 4, 0)
     stop_button = create_button(self, font, '停止', self.stop, 4, 1)
@@ -56,6 +80,7 @@ class Configure(Tkinter.Frame):
 
   def end(self):
     print 'end'
+    print self.p.getValue()
 
   def stop(self):
     print 'stop'

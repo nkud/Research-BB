@@ -116,7 +116,8 @@ if __name__ == '__main__':
   # virusMapView.animation()
   # virusMapView.mainloop()
 
-  v = View()
-  v.setModel(HostPathogenModel())
-  v.pack()
-  v.mainloop()
+  mainView = MainView()
+  mainView.pack()
+  mainView.setModel(hpm)
+  print mainView.vmv.model
+  mainView.mainloop()

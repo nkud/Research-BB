@@ -11,7 +11,7 @@ class VirusMapView(Tkinter.Canvas):
   model = None
   def __init__(self, master=None):
     """ 初期化する """
-    Tkinter.Canvas.__init__(self, master, width=600, height=600)
+    Tkinter.Canvas.__init__(self, master, width=400, height=400)
 
     self.cell_list_ = []
     self.cell_width_ = 10
@@ -33,22 +33,20 @@ class VirusMapView(Tkinter.Canvas):
       self.delete(cell)
     self.cell_list_ = []
 
-  def updateView(self, model):
+  def updateModel(self):
     """ 更新 """
     self.clearView()
 
-    model.loop()
-    cell_map = model.land.getCellMap()
+    self.model.loop()
+    cell_map = self.model.land.getCellMap()
 
     for cell in cell_map:
       if cell.isInfected():
         self.appendNewCell(cell.getX()*10, cell.getY()*10, self.cell_list_)
 
-    self.pack()
-
   def animation(self):
     """ アニメーションを開始 """
-    self.updateView(self.model)
+    self.updateModel()
     self.after(1, self.animation)
 
   def setModel(self, model):
@@ -63,25 +61,27 @@ class test(object):
   def loop(self):
     print 'loop'
 
-class View(Tkinter.Frame):
+## メインビュー
+class MainView(Tkinter.Frame):
   def __init__(self, master=None):
     Tkinter.Frame.__init__(self, master)
-    self.v = VirusMapView()
-    self.v.grid(row=0, column=0)
-    c = configure.Configure(self)
-    c.grid(row=0, column=1)
-    self.v.pack()
-    c.pack()
+    self.title = 'Host-Pathogen Model'
+
+    self.vmv = VirusMapView(self)
+    self.vmv.grid(row=0, column=0, padx=5, pady=5)
+
+    self.cv = configure.Configure(self)
+    self.cv.grid(row=0, column=1, padx=5, pady=5)
 
   def setModel(self, model):
-    self.v.setModel(model)
+    self.vmv.setModel(model)
 
   def animation(self):
-    self.v.animation()
+    self.vmv.animation()
   
 
 def test_virusmapview():
-  v = View()
+  v = MainView()
   v.pack()
   v.mainloop()
 
