@@ -24,10 +24,10 @@ class HostPathogenModel(object):
     self.width     = 20 # 幅
     self.vlen      = 3
     self.vrate     = 50
-    self.vmrate    = 30
-    self.tlen      = 10
+    self.vmrate    = 20
+    self.tlen      = 12
     self.lifespan  = 5
-    self.tcell_num = 5 # T細胞の数
+    self.tcell_num = 10 # T細胞の数
     self.maxterm   = 500                           # 実行する期間
 
     self.term = Term(self.maxterm)
@@ -61,12 +61,12 @@ class HostPathogenModel(object):
 # ウイルスの増殖
     for i in range(self.land.getWidth()):   # 土地の上の
       for j in range(self.land.getWidth()): # 全ての細胞に対して
-        c = self.land.getCellAt(i,j)          # その場所の細胞を
+        c = self.land.getCellAt(i,j)        # その場所の細胞を
         c.contact(self.land.neighbors(i,j)) # その近隣に対して接触させる
     for i in range(self.land.getWidth()):   # 土地の上の
       for j in range(self.land.getWidth()): # 全ての細胞に対して
-        c = self.land.getCellAt(i,j)          # その細胞を
-        c.infection()                  # 感染させる
+        c = self.land.getCellAt(i,j)        # その細胞を
+        c.infection()                       # 感染させる
 
 # T細胞の移動
     for tc in self.tcell_list.getTcellArray(): # 全てのT細胞を
@@ -98,7 +98,7 @@ class HostPathogenModel(object):
 
     self.tcell_list.complementTcell(self.land, 10)
 
-    self.land.printNumOfVirus()      # ウイルス数マップを表示する
+#    self.land.printNumOfVirus()      # ウイルス数マップを表示する
 #    land.printNumOfTcell()
 
     self.land.clearTcellMap()        # T細胞のマップをリセットする
@@ -115,7 +115,11 @@ if __name__ == '__main__':
   print 'Host-Pathogen Model'
   print 'author: Naoki Ueda'
   print 'version: 0.1'
-  #main()
-  h = HostPathogenModel()
-  h.execute()
+  hpm = HostPathogenModel()
+
+  virusMapView = VirusMapView()
+  virusMapView.pack()
+  virusMapView.setModel(hpm)
+  virusMapView.animation()
+  virusMapView.mainloop()
 

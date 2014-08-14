@@ -28,7 +28,10 @@ class Landscape(object):
 
   def initCellMap(self):
     for i in range( self.getWidth() * self.getWidth() ):
-      self.cell_map_[i] = Cell()
+      newc = Cell()
+      newc.setX( i%self.getWidth() )
+      newc.setY( i/self.getWidth() )
+      self.cell_map_[i] = newc
 
   def clearTcellMap(self):
     self.t_cell_map_ = []
@@ -149,6 +152,14 @@ class TestLandscape(unittest.TestCase):
     for c in land.getCellMap():
       if c.isInfected(): n+=1
     self.assertTrue( n == 2 )
+
+  def test_initcellmap(self):
+    land = Landscape(100)
+    for i in range(land.getWidth()):
+      for j in range(land.getWidth()):
+        c = land.getCellAt(i, j)
+        self.assertTrue( c.getX() == j )
+        self.assertTrue( c.getY() == i )
 
 if __name__ == '__main__':
   unittest.main()

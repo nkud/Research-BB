@@ -7,7 +7,7 @@ import Tkinter
 ## ウイルスマップビュー
 class VirusMapView(Tkinter.Frame):
   canvas = None
-  loop = None
+  model = None
   def __init__(self, master=None):
     """ 初期化する """
     Tkinter.Frame.__init__(self, master)
@@ -17,13 +17,15 @@ class VirusMapView(Tkinter.Frame):
     self.cell_width_ = 10
 
     self.canvas = Tkinter.Canvas(self, width=600, height=600)
+    self.width_ = None
 
-  def createCell(self, x, y):
+  def appendNewCell(self, x, y):
     """ セルを作成 """
     x += 10
     y += 10
-    return self.canvas.create_rectangle(x, y, x+self.cell_width_, y+self.cell_width_
+    c = self.canvas.create_rectangle(x, y, x+self.cell_width_, y+self.cell_width_
         , fill='blue', width=0)
+    self.cell_list_.append(c)
 
   def clearView(self):
     """ 画面をクリア """
@@ -31,24 +33,26 @@ class VirusMapView(Tkinter.Frame):
       self.canvas.delete(cell)
     self.cell_list_ = []
 
-  def updateView(self, loop):
+  def updateView(self, model):
     self.clearView()
 
-    loop()
+    model.loop()
+    cell_map = model.land.getCellMap()
 
-    for i in range(6):
-      c = self.createCell(function.random_int(0,10)*10, function.random_int(0,10)*10)
-      self.cell_list_.append( c )
+    for cell in cell_map:
+      if cell.isInfected():
+        self.appendNewCell(cell.getX()*10, cell.getY()*10)
+
     self.canvas.pack()
 
   def animation(self):
     """ アニメーションを開始 """
-    self.updateView(self.loop)
+    self.updateView(self.model)
     self.after(1, self.animation)
 
-  def setLoop(self, loop):
+  def setModel(self, model):
     """ データを設定する """
-    self.loop = loop
+    self.model = model
 
 ## コンフィグ画面
 class Configure(Tkinter.Frame):
@@ -101,12 +105,14 @@ class Configure(Tkinter.Frame):
     print 'button'
     print self.width_spin.get()
 
-def hello():
-  print 'hello'
+class hello():
+  def loop(self):
+    print 'hello'
 
 if __name__ == '__main__':
+  h = hello()
   v = VirusMapView()
   v.pack()
-  v.setLoop(hello)
+  v.setModel(h)
   v.animation()
   v.mainloop()

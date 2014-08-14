@@ -76,7 +76,7 @@ class Gene(object):
 class TestGene(unittest.TestCase):
   def test_mutation(self):
     for i in range(1000):
-      a = Gene(100)
+      a = Gene(10)
       sa = a.getTag()
       a.mutation()
       sb = a.getTag()

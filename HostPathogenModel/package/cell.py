@@ -14,6 +14,18 @@ class Cell(object):
     """ 初期化 """
     self.infected_virus_list_ = []   # 保持ウイルスの配列
     self.stand_by_virus_list_ = []   # 待機ウイルスの配列
+    self.x_ = None
+    self.y_ = None
+
+  def getX(self):
+    return self.x_
+  def getY(self):
+    return self.y_
+  def setX(self, x):
+    self.x_ = x
+  def setY(self, y):
+    self.y_ = y
+
 
   def isInfected(self):
     """ 感染しているかどうか """
