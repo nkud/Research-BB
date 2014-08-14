@@ -37,7 +37,7 @@ class VirusMapView(Tkinter.Canvas):
     Tkinter.Canvas.__init__(self, master, width=400, height=400)
 
     self.cell_list_ = []
-    self.cell_width_ = 10
+    self.cell_width_ = 5
 
     # self.canvas = Tkinter.Canvas(self, width=600, height=600)
     self.width_ = None
@@ -65,7 +65,7 @@ class VirusMapView(Tkinter.Canvas):
 
     for cell in cell_map:
       if cell.isInfected():
-        self.appendNewCell(cell.getX()*10, cell.getY()*10, self.cell_list_)
+        self.appendNewCell(cell.getX()*self.cell_width_, cell.getY()*self.cell_width_, self.cell_list_)
 
   def animation(self):
     """ アニメーションを開始 """
