@@ -15,15 +15,15 @@ def create_label(master, text):
   label = Tkinter.Label(master, text=text, bg='white', relief=Tkinter.RIDGE, bd=border)
   return label
 
-def align(widget, row, column, padx=5, pady=5):
+def put_widget(widget, row, column, padx=5, pady=5):
   """ ウィジェットを配置する """
   widget.grid(row=row, column=column, padx=padx, pady=pady)
 
 def create_field(master, text, values, pos):
   label = create_label(master, text)
   spinbox = create_spinbox(master, values)
-  align(label, pos, 0)
-  align(spinbox, pos, 1)
+  put_widget(label, pos, 0)
+  put_widget(spinbox, pos, 1)
   return label, spinbox
 
 def create_button(master, font, text, command, row, column, padx=5, pady=5):
@@ -38,7 +38,7 @@ class Configure(Tkinter.Frame):
   def __init__(self, master=None):
     font = ('verdana', '12')
     Tkinter.Frame.__init__(self, master)
-    self.master.title('Host-Pathogen Model Confiture')
+    # self.master.title('Host-Pathogen Model Confiture')
 
     # landscape
     width_label, self.width_spin = create_field(self, '幅', range(100), 0)
@@ -56,13 +56,14 @@ class Configure(Tkinter.Frame):
 
   def end(self):
     print 'end'
-    
+
   def stop(self):
     print 'stop'
 
   def execute(self):
     """ 計算を実行する """
     print 'execute'
+    self.master.animation()
     
 ## テスト
 def test_configure():

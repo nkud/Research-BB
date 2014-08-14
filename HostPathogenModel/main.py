@@ -45,7 +45,7 @@ class HostPathogenModel(object):
       tcell.setY(random_int(0,self.width-1))   # y座標をランダムに設定して
       self.tcell_list.pushTcell(tcell)             # 集合に加える
       self.land.resistTcell(tcell)         # 土地にT細胞の位置を登録する
-    clear_screen()
+    # clear_screen()
 
   def execute(self):
     """ 計算実行 """
@@ -54,9 +54,9 @@ class HostPathogenModel(object):
 
   def loop(self):
     """ メインループ """
-    put_cursor_at(0,0)
-    print 'TERM: %d' % self.term.getTerm()               # 現在の期間
-    print 'Tcell: %d' % len(self.tcell_list.getTcellArray())               # 現在の期間
+    # put_cursor_at(0,0)
+    # print 'TERM: %d' % self.term.getTerm()               # 現在の期間
+    # print 'Tcell: %d' % len(self.tcell_list.getTcellArray())               # 現在の期間
 
 # ウイルスの増殖
     for i in range(self.land.getWidth()):   # 土地の上の
@@ -110,9 +110,13 @@ if __name__ == '__main__':
   print 'version: 0.1'
   hpm = HostPathogenModel()
 
-  virusMapView = VirusMapView()
-  virusMapView.pack()
-  virusMapView.setModel(hpm)
-  virusMapView.animation()
-  virusMapView.mainloop()
+  # virusMapView = VirusMapView()
+  # virusMapView.pack()
+  # virusMapView.setModel(hpm)
+  # virusMapView.animation()
+  # virusMapView.mainloop()
 
+  v = View()
+  v.setModel(HostPathogenModel())
+  v.pack()
+  v.mainloop()
