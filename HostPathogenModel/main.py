@@ -98,14 +98,7 @@ class HostPathogenModel(object):
 
     self.tcell_list.complementTcell(self.land, 10)
 
-#    self.land.printNumOfVirus()      # ウイルス数マップを表示する
-#    land.printNumOfTcell()
-
     self.land.clearTcellMap()        # T細胞のマップをリセットする
-
-    print '\033[0K',
-    for v in self.land.getCellAt(0,0).getInfectedVirus():
-      print v.getTag(),
 
     self.fo.write('%d %d\n' % (self.term.getTerm(), self.tcell_list.getTcellListSize()))
     self.fo.flush()
