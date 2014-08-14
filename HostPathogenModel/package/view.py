@@ -1,16 +1,54 @@
 #! /usr/bin/python
 # coding=utf-8
 
-from matplotlib import pyplot as plt
-from matplotlib import animation
-import numpy as np
-from pylab import *
-
+import function
 import Tkinter
 
-class View(object):
-  def __init__(self):
-    pass
+## ウイルスマップビュー
+class VirusMapView(Tkinter.Frame):
+  canvas = None
+  loop = None
+  def __init__(self, master=None):
+    """ 初期化する """
+    Tkinter.Frame.__init__(self, master)
+    self.master.title('Virus Map View')
+
+    self.cell_list_ = []
+    self.cell_width_ = 10
+
+    self.canvas = Tkinter.Canvas(self, width=600, height=600)
+
+  def createCell(self, x, y):
+    """ セルを作成 """
+    x += 10
+    y += 10
+    return self.canvas.create_rectangle(x, y, x+self.cell_width_, y+self.cell_width_
+        , fill='blue', width=0)
+
+  def clearView(self):
+    """ 画面をクリア """
+    for cell in self.cell_list_:
+      self.canvas.delete(cell)
+    self.cell_list_ = []
+
+  def updateView(self, loop):
+    self.clearView()
+
+    loop()
+
+    for i in range(6):
+      c = self.createCell(function.random_int(0,10)*10, function.random_int(0,10)*10)
+      self.cell_list_.append( c )
+    self.canvas.pack()
+
+  def animation(self):
+    """ アニメーションを開始 """
+    self.updateView(self.loop)
+    self.after(1, self.animation)
+
+  def setLoop(self, loop):
+    """ データを設定する """
+    self.loop = loop
 
 ## コンフィグ画面
 class Configure(Tkinter.Frame):
@@ -20,77 +58,55 @@ class Configure(Tkinter.Frame):
     Tkinter.Frame.__init__(self, master)
     self.master.title('Host-Pathogen Model Confiture')
 
-    width_label = Tkinter.Label(self, text='width', bg='orange', relief=Tkinter.RIDGE, bd=2)
-    width_label.grid(row=0,column=0,columnspan=2,padx=5,pady=5)
+    # landscape
+    width_label = self.createLabel('幅')
+    self.width_spin = self.createSpinbox(range(100))
+    self.align(width_label, 0, 0)
+    self.align(self.width_spin, 0, 1)
 
-    virus_label = Tkinter.Label(self, text='virus', bg='blue', relief=Tkinter.RIDGE, bd=2)
-    virus_label.grid(row=1,column=1,padx=5,pady=5)
+    # virus
+    rate_label= self.createLabel('感染確率')
+    self.rate_spin = self.createSpinbox(range(100))
+    self.align(rate_label, 1, 0)
+    self.align(self.rate_spin, 1, 1)
 
-def output(width, cell_map):
-  x = arange(width+1)
-  y = arange(width+1)
-  X, Y = meshgrid(x, y)
+    # Tcell
+    age_label = self.createLabel('寿命')
+    age_spin = self.createSpinbox(range(10))
+    self.align(age_label, 2, 0)
+    self.align(age_spin, 2, 1)
 
-  Z = array(cell_map)
+    b = Tkinter.Button(self, font=('verdana','12'), text='実行', command=self.execute)
+    b.grid(row=3,column=0,padx=5,pady=5)
 
-  pcolor(X, Y, Z)
-  colorbar
 
-  show()
+  def createSpinbox(self, values):
+    """ スピンボックスを作成する """
+    spinbox = Tkinter.Spinbox(self, values=values)
+    return spinbox
 
-def animate(width, ar):
-  fig = plt.figure()
-  x = arange(width+1)
-  y = arange(width+1)
-  X, Y = meshgrid(x, y)
-  Z = array(ar)
+  def createLabel(self, text):
+    """ ラベルを作成する """
+    border = 0
+    label = Tkinter.Label(self, text=text, bg='white', relief=Tkinter.RIDGE, bd=border)
+    return label 
 
-  ims = []
-  for add in np.arange(15):
-    ims.append((plt.pcolor(X, Y, Z),))
+  def align(self, widget, r, c):
+    """ ウィジェットを配置する """
+    padding_x = 5
+    padding_y = 5
+    widget.grid(row=r, column=c, padx=padding_x, pady=padding_y)
 
-  im_ani = animation.ArtistAnimation(fig, ims, interval=50,
-      repeat_delay=100, blit=False)
-#ani.save("cycloid.mp4")
-  plt.show()
+  def execute(self):
+    print 'button'
+    print self.width_spin.get()
 
-### テスト #############################
-def test():
-  t = [[24, 32, 12, 16, 21],
-    [23, 24, 25, 26, 27],
-    [43, 36, 32, 26, 25],
-    [30, 32, 25, 21, 20],
-    [20, 32, 23, 20, 14]]
-
-  print t
-
-  Z = array([[0, 32, 12, 16, 21],
-    [23, 0, 0, 26, 27],
-    [43, 0, 32, 26, 25],
-    [30, 0, 25, 21, 20],
-    [20, 0, 23, 20, 14]])
-
-  print Z
-
-  fig = plt.figure()
-
-  width = 5
-
-  x = arange(width+1)
-  y = arange(width+1)
-  X, Y = meshgrid(x, y)
-
-  ims = []
-  for i in range(20):
-    t[0][0] += 1
-    Z = array(t)
-    ims.append((plt.pcolor(X, Y, Z),))
-
-  im_ani = animation.ArtistAnimation(fig, ims, interval=50, repeat_delay=100, blit=False)
-#ani.save("cycloid.mp4")
-  plt.show()
+def hello():
+  print 'hello'
 
 if __name__ == '__main__':
-  c = Configure()
-  c.pack()
-  c.mainloop()
+  v = VirusMapView()
+  v.pack()
+  v.setLoop(hello)
+  v.animation()
+  v.mainloop()

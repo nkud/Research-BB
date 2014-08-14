@@ -4,7 +4,6 @@
 from function import *
 from cell import *
 from leukocyte import *
-from view import *
 
 import unittest
 
