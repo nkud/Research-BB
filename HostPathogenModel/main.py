@@ -30,6 +30,14 @@ class HostPathogenModel(object):
     self.tcell_num = 10 # T細胞の数
     self.maxterm   = 500                           # 実行する期間
 
+  def execute(self):
+    """ 計算実行 """
+    self.initialize()
+    while self.term.progress():
+      self.loop()
+
+  def initialize(self):
+    print '- Initialize Model'
     self.term = Term(self.maxterm)
 
     self.fo = open('out.dat','w')
@@ -46,11 +54,6 @@ class HostPathogenModel(object):
       self.tcell_list.pushTcell(tcell)             # 集合に加える
       self.land.resistTcell(tcell)         # 土地にT細胞の位置を登録する
     # clear_screen()
-
-  def execute(self):
-    """ 計算実行 """
-    while self.term.progress():
-      self.loop()
 
   def loop(self):
     """ メインループ """
@@ -110,14 +113,7 @@ if __name__ == '__main__':
   print 'version: 0.1'
   hpm = HostPathogenModel()
 
-  # virusMapView = VirusMapView()
-  # virusMapView.pack()
-  # virusMapView.setModel(hpm)
-  # virusMapView.animation()
-  # virusMapView.mainloop()
-
   mainView = MainView()
   mainView.pack()
   mainView.setModel(hpm)
-  print mainView.vmv.model
   mainView.mainloop()

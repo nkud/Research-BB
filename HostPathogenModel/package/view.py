@@ -5,6 +5,29 @@ import function
 import Tkinter
 import configure
 
+## メインビュー
+class MainView(Tkinter.Frame):
+  def __init__(self, master=None):
+    Tkinter.Frame.__init__(self, master)
+    self.title = 'Host-Pathogen Model'
+
+    self.vmv = VirusMapView(self)
+    self.vmv.grid(row=0, column=0, padx=5, pady=5)
+
+    self.cv = configure.Configure(self)
+    self.cv.grid(row=0, column=1, padx=5, pady=5)
+
+  def setModel(self, model):
+    self.vmv.setModel(model)
+
+  def animation(self):
+    self.initialize()
+    self.vmv.animation()
+
+  def initialize(self):
+    self.vmv.model.width = self.cv.width.getValue()
+    self.vmv.model.initialize()
+  
 
 ## ウイルスマップビュー
 class VirusMapView(Tkinter.Canvas):
@@ -61,24 +84,6 @@ class test(object):
   def loop(self):
     print 'loop'
 
-## メインビュー
-class MainView(Tkinter.Frame):
-  def __init__(self, master=None):
-    Tkinter.Frame.__init__(self, master)
-    self.title = 'Host-Pathogen Model'
-
-    self.vmv = VirusMapView(self)
-    self.vmv.grid(row=0, column=0, padx=5, pady=5)
-
-    self.cv = configure.Configure(self)
-    self.cv.grid(row=0, column=1, padx=5, pady=5)
-
-  def setModel(self, model):
-    self.vmv.setModel(model)
-
-  def animation(self):
-    self.vmv.animation()
-  
 
 def test_virusmapview():
   v = MainView()
