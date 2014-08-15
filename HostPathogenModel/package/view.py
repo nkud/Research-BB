@@ -26,8 +26,15 @@ class MainView(Tkinter.Frame):
 
   def initialize(self):
     self.vmv.model.width = self.cv.width.getValue()
+    self.vmv.model.vlen = self.cv.vlen.getValue()
+    self.vmv.model.vrate = self.cv.vrate.getValue()
+    self.vmv.model.vmrate = self.cv.vmrate.getValue()
+    self.vmv.model.tlen = self.cv.tlen.getValue()
+    self.vmv.model.lifespan = self.cv.lifespan.getValue()
+    self.vmv.model.tcell_num = self.cv.tcell_num.getValue()
+    self.vmv.model.maxterm = self.cv.maxterm.getValue()
+
     self.vmv.model.initialize()
-  
 
 ## ウイルスマップビュー
 class VirusMapView(Tkinter.Canvas):
@@ -37,7 +44,7 @@ class VirusMapView(Tkinter.Canvas):
     Tkinter.Canvas.__init__(self, master, width=400, height=400)
 
     self.cell_list_ = []
-    self.cell_width_ = 5
+    self.cell_width_ = 3
 
     # self.canvas = Tkinter.Canvas(self, width=600, height=600)
     self.width_ = None

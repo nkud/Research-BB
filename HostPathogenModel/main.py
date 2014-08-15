@@ -16,6 +16,8 @@ from package.terminal import *
 from package.term import *
 from package.view import *
 
+import unittest
+
 class HostPathogenModel(object):
   """宿主内動態モデル
   """
@@ -28,7 +30,7 @@ class HostPathogenModel(object):
     self.tlen      = 12
     self.lifespan  = 5
     self.tcell_num = 10 # T細胞の数
-    self.maxterm   = 500                           # 実行する期間
+    self.maxterm   = 200                           # 実行する期間
 
   def execute(self):
     """ 計算実行 """
@@ -106,14 +108,22 @@ class HostPathogenModel(object):
     self.fo.write('%d %d\n' % (self.term.getTerm(), self.tcell_list.getTcellListSize()))
     self.fo.flush()
 
-## プログラム実行
-if __name__ == '__main__':
-  print 'Host-Pathogen Model'
-  print 'author: Naoki Ueda'
-  print 'version: 0.1'
+class TestHostPathogenModel(unittest.TestCase):
+  def test_run(self):
+    hpm = HostPathogenModel()
+    hpm.execute()
+
+def main():
   hpm = HostPathogenModel()
 
   mainView = MainView()
   mainView.pack()
   mainView.setModel(hpm)
   mainView.mainloop()
+
+## プログラム実行
+if __name__ == '__main__':
+  print 'Host-Pathogen Model'
+  print 'author: Naoki Ueda'
+  print 'version: 0.1'
+  unittest.main()

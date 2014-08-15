@@ -16,6 +16,7 @@ class Cell(object):
     self.stand_by_virus_list_ = []   # 待機ウイルスの配列
     self.x_ = None
     self.y_ = None
+    self.max_virus_ = 1
 
   def getX(self):
     return self.x_
@@ -65,8 +66,7 @@ class Cell(object):
 
   def capPushVirus(self):
     """ ウイルスを追加できるかどうか """
-    max_virus = 3
-    if len(self.getInfectedVirus()) < max_virus: return True # 最大保持ウイルス未満なら真
+    if len(self.getInfectedVirus()) < self.max_virus_: return True # 最大保持ウイルス未満なら真
     else: return False                                       # そうでなければ偽
 
   def pushStandByVirusClone(self,v):

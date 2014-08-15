@@ -63,8 +63,8 @@ class Configure(Tkinter.Frame):
     put_widget(self.vlen, 2, 0)
     self.vrate = ParameterField(self, '感染率', 50, 100)
     put_widget(self.vrate, 3, 0)
-    self.vrate = ParameterField(self, '突然変異率', 30, 100)
-    put_widget(self.vrate, 4, 0)
+    self.vmrate = ParameterField(self, '突然変異率', 30, 100)
+    put_widget(self.vmrate, 4, 0)
     self.lifespan = ParameterField(self, '寿命', 5, 100)
     put_widget(self.lifespan, 5, 0)
     self.tcell_num = ParameterField(self, '初期Ｔ細胞数', 10, 100)
@@ -87,7 +87,7 @@ class Configure(Tkinter.Frame):
     """ 計算を実行する """
     print 'execute'
     self.master.animation()
-    
+
 ## テスト
 def test_configure():
   c = Configure()
