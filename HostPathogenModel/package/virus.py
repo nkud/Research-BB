@@ -12,13 +12,13 @@ import unittest
 class Virus(Gene):
   """ ウイルス
   """
-  def __init__(self, length, rate=100, mutation_rate=100):
+  def __init__(self, length, irate, mrate):
     """ 初期化 """
     super(Virus, self).__init__(length)
-    self.infection_rate_ = rate
-    self.mutation_rate_ = mutation_rate
+    self.infection_rate_ = irate
+    self.mutation_rate_ = mrate
 
-  def getRate(self):
+  def getInfectionRate(self):
     """ 感染率 """
     return self.infection_rate_
 
@@ -27,7 +27,7 @@ class Virus(Gene):
 
   def mutationDrift(self):
     """ 抗原連続変異 """
-    self.mutation(self.getMutationRate())
+    self.mutation(prob=self.getMutationRate())
 
   def mutationShift(self):
     """ 抗原不連続変異 """
@@ -35,7 +35,7 @@ class Virus(Gene):
 
   def clone(self):
     """ クローン """
-    v = Virus(self.getLen(), self.getRate(), self.getMutationRate())
+    v = Virus(self.getLen(), self.getInfectionRate(), self.getMutationRate())
     v.setTag( self.getTag() )
     return v
 

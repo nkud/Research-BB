@@ -78,7 +78,7 @@ class Cell(object):
     """ 接触する """
     for cell in neighbors:         # 各近隣の細胞に対して
       for virus in cell.getInfectedVirus(): # その細胞の各保持ウイルスのに対して
-        if probability(virus.getRate()): # そのウイルス固有の感染確率で
+        if probability(virus.getInfectionRate()): # そのウイルス固有の感染確率で
           virus.mutationDrift() # 固有の確率で突然変異させて
           self.pushStandByVirusClone(virus)   # 自分の待機ウイルスに加える
 

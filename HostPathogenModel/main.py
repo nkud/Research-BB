@@ -30,22 +30,25 @@ class HostPathogenModel(object):
     self.tlen      = 12
     self.lifespan  = 5
     self.tcell_num = 10 # T細胞の数
-    self.maxterm   = 200                           # 実行する期間
+    self.maxterm   = 500                           # 実行する期間
 
   def execute(self):
     """ 計算実行 """
     self.initialize()
     while self.term.progress():
       self.loop()
+    self.fo.write('%d %d\n' % (self.term.getTerm(), len(self.tcell_list)))
+    self.fo.flush()
 
   def initialize(self):
-    print '- Initialize Model'
+    """ 初期条件設定 """
     self.term = Term(self.maxterm)
 
     self.fo = open('out.dat','w')
 
     self.land = Landscape(self.width)               # 土地を初期化
-    self.tcell_list = TcellManager()               # T細胞の集合
+    # self.tcell_list = TcellManager()               # T細胞の集合
+    self.tcell_list = []
     v = Virus(self.vlen,self.vrate,self.vmrate)                # ウイルスを一つ用意する
     self.land.getCellAt(0,0).pushNewVirus(v) # 土地の０，０番目の細胞に、ウイルスを感染させる
 
@@ -53,16 +56,11 @@ class HostPathogenModel(object):
       tcell = Tcell(length=self.tlen)         # T細胞を用意する
       tcell.setX(random_int(0,self.width-1))   # x座標と
       tcell.setY(random_int(0,self.width-1))   # y座標をランダムに設定して
-      self.tcell_list.pushTcell(tcell)             # 集合に加える
-      self.land.resistTcell(tcell)         # 土地にT細胞の位置を登録する
-    # clear_screen()
+      # self.tcell_list.pushTcell(tcell)             # 集合に加える
+      self.tcell_list.append(tcell)
 
   def loop(self):
     """ メインループ """
-    # put_cursor_at(0,0)
-    # print 'TERM: %d' % self.term.getTerm()               # 現在の期間
-    # print 'Tcell: %d' % len(self.tcell_list.getTcellArray())               # 現在の期間
-
 # ウイルスの増殖
     for i in range(self.land.getWidth()):   # 土地の上の
       for j in range(self.land.getWidth()): # 全ての細胞に対して
@@ -74,14 +72,12 @@ class HostPathogenModel(object):
         c.infection()                       # 感染させる
 
 # T細胞の移動
-    for tc in self.tcell_list.getTcellArray(): # 全てのT細胞を
-      self.land.clearTcellMap()
+    for tc in self.tcell_list: # 全てのT細胞を
       tc.move(self.land)               # 移動させて
-      self.land.resistTcell(tc)        # 土地に位置を登録する
 
 # T細胞のウイルス殺傷
     new_tcell = []                # 新しいT細胞の配列を用意する
-    for tc in self.tcell_list.getTcellArray(): # 全てのT細胞に対して
+    for tc in self.tcell_list: # 全てのT細胞に対して
       c = self.land.getCellAt(tc.getX(),tc.getY()) # 同じ位置にある細胞に
       for v in c.getInfectedVirus(): # 感染しているウイルス全てに対して
         if tc.hasReceptorMatching(v):   # 受容体を持っていれば
@@ -90,23 +86,31 @@ class HostPathogenModel(object):
           if probability(100):   # ある確率で
             new_tcell.append(tc.clone()) # そのT細胞のクローンを作成する
     for tc in new_tcell:                 # 新しく作成されたT細胞を
-      self.tcell_list.pushTcell(tc)                   # 集合に加える
-      self.land.resistTcell(tc)
+      self.tcell_list.append(tc)                   # 集合に加える
 
 # T細胞の寿命
-    for tc in self.tcell_list.getTcellArray():
+    temp = []
+    for tc in self.tcell_list:
       tc.aging()
-      tc.mutation(rate=10)
-      if tc.getAge() > self.lifespan:
-        self.tcell_list.removeTcell(tc)
-        self.land.removeTcell(tc)
+      # if tc.willDie(self.lifespan):
+      #   pass
+      # else:
+      #   tc.mutation(prob=10)
+      #   temp.append(tc)
+      if tc.willDie(self.lifespan):
+        self.tcell_list.remove(tc)
+      else:
+        tc.mutation(prob=10)
+    # tcell_list = temp
 
-    self.tcell_list.complementTcell(self.land, 10)
+# T細胞を補完する
+    tcell_min = 10
+    while len(self.tcell_list) < tcell_min:
+      tcell = Tcell(length=self.tlen)
+      tcell.setX( random_int( 0, self.land.getWidth()-1 ) )
+      tcell.setY( random_int( 0, self.land.getWidth()-1 ) )
+      self.tcell_list.append(tcell)
 
-    self.land.clearTcellMap()        # T細胞のマップをリセットする
-
-    self.fo.write('%d %d\n' % (self.term.getTerm(), self.tcell_list.getTcellListSize()))
-    self.fo.flush()
 
 class TestHostPathogenModel(unittest.TestCase):
   def test_run(self):
@@ -126,4 +130,5 @@ if __name__ == '__main__':
   print 'Host-Pathogen Model'
   print 'author: Naoki Ueda'
   print 'version: 0.1'
-  unittest.main()
+  # unittest.main()
+  main()

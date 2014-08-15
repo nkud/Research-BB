@@ -18,9 +18,6 @@ class Landscape(object):
     self.clearCellMap()         # 細胞マップを初期化する
     self.initCellMap()
 
-    self.t_cell_map_ = []
-    self.clearTcellMap()
-
   def clearCellMap(self):
     """ 細胞マップをクリアする """
     for i in range( self.getWidth() * self.getWidth() ):
@@ -32,30 +29,6 @@ class Landscape(object):
       newc.setX( i%self.getWidth() )
       newc.setY( i/self.getWidth() )
       self.cell_map_[i] = newc
-
-  def clearTcellMap(self):
-    self.t_cell_map_ = []
-    """ T細胞マップをクリアする """
-    for i in range( self.getWidth() * self.getWidth() ):
-      self.t_cell_map_.append([])
-
-  def resistTcell(self, tcell):
-    """ T細胞を登録する """
-    x = tcell.getX()
-    y = tcell.getY()
-    n = self.getWidth()*y + x
-    self.t_cell_map_[n].append(tcell)
-
-  def removeTcell(self, tcell):
-    """ T細胞を削除する。要修正 """
-    for tc in self.getTcellMap():
-      if tcell in tc:
-        tc.remove(tcell)
-        return
-
-  def getTcellMap(self):
-    """ T細胞マップ """
-    return self.t_cell_map_
 
   def getWidth(self):
     """ 幅 """
@@ -69,11 +42,6 @@ class Landscape(object):
     """ 細胞 """
     n = self.getWidth()*i + j
     return self.cell_map_[n]
-
-  def getTcellAt(self, i, j):
-    """ T細胞 """
-    n = self.getWidth()*i + j
-    return self.t_cell_map_[n]
 
   def isInfected(self, i, j):
     """ 感染細胞 """
@@ -116,23 +84,6 @@ class Landscape(object):
       print '|',
       for j in range(self.getWidth()):
         n = len(self.getCellAt(i,j).getInfectedVirus())
-        print n if n>0 else ' ',
-      print '|'
-    print ' ',
-    for i in range(self.getWidth()):
-      print '-',
-    print
-
-  def printNumOfTcell(self):
-    """ 状態を表示 """
-    print ' ',
-    for i in range(self.getWidth()):
-      print '-',
-    print
-    for i in range(self.getWidth()):
-      print '|',
-      for j in range(self.getWidth()):
-        n = len(self.getTcellAt(i,j))
         print n if n>0 else ' ',
       print '|'
     print ' ',

@@ -70,58 +70,14 @@ class Tcell(Gene):
     tcell.setY(self.getY())
     return tcell
 
-
-class TcellManager(object):
-  """ T細胞マネージャー
-  T細胞の集合体を扱う。
-  """
-  def __init__(self):
-    """ 初期化 """
-    self.t_cell_array = []
-
-  def pushTcell(self, tcell):
-    """ T細胞を追加 """
-    self.t_cell_array.append(tcell)
-
-  def getTcellArray(self):
-    """ T細胞の配列を取得 """
-    return self.t_cell_array
-
-  def printTcellArray(self):
-    n = 0
-    for tc in self.getTcellArray():
-      print '%d:' % n, tc
-      n += 1
-
-  def removeTcell(self, tcell):
-    """ 指定したT細胞を配列から削除 """
-    self.t_cell_array.remove(tcell)
-
-  def getTcellListSize(self):
-    """ T細胞集合のサイズを返す """
-    return len(self.getTcellArray())
-
-  def complementTcell(self, land, min_tcell):
-    """ T細胞を保管する """
-    tlen = self.getTcellArray()[0].getLen()
-    while self.getTcellListSize() < min_tcell:
-      tc = Tcell(length=tlen)
-      tc.setX( random_int( 0, land.getWidth()-1 ) )
-      tc.setY( random_int( 0, land.getWidth()-1 ) )
-      self.pushTcell( tc )
-      land.resistTcell( tc )
+  def willDie(self, maxage):
+    if self.getAge() > maxage:
+      return True
+    else:
+      return False
 
 ## T細胞テスト
 class TestTcellManager(unittest.TestCase):
-  def setUp(self):
-    self.tclist = TcellManager()
-
-  def test_push(self):
-    num = 1000
-    for i in range(num):
-      self.tclist.pushTcell(Tcell(100))
-    self.assertTrue( self.tclist.getTcellListSize() == num )
-
   def test_clone(self):
     for i in range(1000):
       a = Tcell(10)
@@ -130,6 +86,17 @@ class TestTcellManager(unittest.TestCase):
       self.assertTrue( a.getX() == b.getX() )
       self.assertTrue( a.getY() == b.getY() )
       self.assertTrue( b.getAge() == 0 )
+
+  def test_age(self):
+    term = 1000
+    for i in range(term):
+      a = Tcell(10)
+      a.age_ = random_int(0,100)
+      while True:
+        a.aging()
+        if a.willDie(maxage=200):
+          self.assertTrue( a.getAge() == 201 )
+          break
 
 if __name__ == '__main__':
   unittest.main()

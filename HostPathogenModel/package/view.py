@@ -11,17 +11,21 @@ class MainView(Tkinter.Frame):
     Tkinter.Frame.__init__(self, master)
     self.title = 'Host-Pathogen Model'
 
-    self.vmv = VirusMapView(self)
+    self.vmv = VirusMapView(self, relief=Tkinter.RIDGE, bd=1)
     self.vmv.grid(row=0, column=0, padx=5, pady=5)
 
-    self.cv = configure.Configure(self)
+    self.cv = configure.Configure(self, relief=Tkinter.SUNKEN, bd=0)
     self.cv.grid(row=0, column=1, padx=5, pady=5)
 
   def setModel(self, model):
     self.vmv.setModel(model)
 
+  def stop(self):
+    self.vmv.after_cansel()
+
   def animation(self):
     self.initialize()
+    self.vmv.cell_width_ = 400/self.vmv.model.land.getWidth()
     self.vmv.animation()
 
   def initialize(self):
@@ -39,20 +43,18 @@ class MainView(Tkinter.Frame):
 ## ウイルスマップビュー
 class VirusMapView(Tkinter.Canvas):
   model = None
-  def __init__(self, master=None):
+  def __init__(self, master=None, **options):
     """ 初期化する """
-    Tkinter.Canvas.__init__(self, master, width=400, height=400)
+    Tkinter.Canvas.__init__(self, master, width=400, height=400, **options)
 
     self.cell_list_ = []
-    self.cell_width_ = 3
+    self.cell_width_ = 6
 
     # self.canvas = Tkinter.Canvas(self, width=600, height=600)
     self.width_ = None
 
   def appendNewCell(self, x, y, clist):
     """ セルを作成して追加 """
-    x += 10
-    y += 10
     c = self.create_rectangle(x, y, x+self.cell_width_, y+self.cell_width_
         , fill='blue', width=0)
     clist.append(c)
@@ -63,7 +65,7 @@ class VirusMapView(Tkinter.Canvas):
       self.delete(cell)
     self.cell_list_ = []
 
-  def updateModel(self):
+  def loopModel(self):
     """ 更新 """
     self.clearView()
 
@@ -76,8 +78,9 @@ class VirusMapView(Tkinter.Canvas):
 
   def animation(self):
     """ アニメーションを開始 """
-    self.updateModel()
-    self.after(1, self.animation)
+    self.loopModel()
+    if self.model.term.progress():
+      self.after(1, self.animation)
 
   def setModel(self, model):
     """ データを設定する """

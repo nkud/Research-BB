@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # coding:utf-8
 
-from function import *
+import function
 
 import unittest
 
@@ -15,7 +15,7 @@ class Gene(object):
   """ 遺伝子
   遺伝子タグを持つ。
   """
-  def __init__(self, length, tag='', base=0):
+  def __init__(self, length, tag=''):
     """ 初期化 """
     self.tag_ = tag
     self.initTag(length)
@@ -23,7 +23,7 @@ class Gene(object):
   def initTag(self, length):
     if self.tag_ == '':
       for i in range(length):
-        self.tag_ += str(random_int(0,MAX_TAG))
+        self.tag_ += str(function.random_int(0,MAX_TAG))
 
   def setTag(self, tag):
     """ タグを直接設定する """
@@ -62,15 +62,15 @@ class Gene(object):
     else:
       return False
 
-  def mutation(self,rate=100):
+  def mutation(self, prob):
     """ 突然変異させる """
-    if probability(rate):
-      n = random_int(0, self.getLen()-1)
-      t = self.getTagNumAt(n)
-      t += 1 if probability(50) else -1
-      while(t>MAX_TAG): t -= MAX_TAG+1
-      while(t<0): t += MAX_TAG+1
-      self.setTagNumAt(t,n)
+    if function.probability(prob):
+      pos = function.random_int(0, self.getLen()-1)
+      num = self.getTagNumAt(pos)
+      num += 1 if function.probability(50) else -1
+      while(num>MAX_TAG): num -= MAX_TAG+1
+      while(num<0): num += MAX_TAG+1
+      self.setTagNumAt(num, pos)
 
 ## 遺伝子テスト
 class TestGene(unittest.TestCase):
@@ -78,7 +78,7 @@ class TestGene(unittest.TestCase):
     for i in range(1000):
       a = Gene(10)
       sa = a.getTag()
-      a.mutation()
+      a.mutation(100)
       sb = a.getTag()
       self.assertTrue( sa != sb )
 
@@ -87,7 +87,7 @@ class TestGene(unittest.TestCase):
       length = 5
       t = ''
       for j in range(length):
-        t += str(random_int(0,9))
+        t += str(function.random_int(0,9))
       a = Gene(length, t)
       self.assertTrue( a.getTag() == t )
 
