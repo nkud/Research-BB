@@ -120,7 +120,7 @@ class TestHostPathogenModel(unittest.TestCase):
 def main():
   hpm = HostPathogenModel()
 
-  mainView = MainView()
+  mainView = MainViewController()
   mainView.pack()
   mainView.setModel(hpm)
   mainView.mainloop()

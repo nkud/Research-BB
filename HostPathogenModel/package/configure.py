@@ -2,6 +2,8 @@
 # coding=utf-8
 
 import Tkinter
+import tkMessageBox
+import sys
 
 def create_spinbox(master, f, t):
   """ スピンボックスを作成する """
@@ -53,41 +55,48 @@ class ConfigurePanel(Tkinter.Frame):
     Tkinter.Frame.__init__(self, master, **options)
     # self.master.title('Host-Pathogen Model Confiture')
 
+    default_color = 'white'
+    landscape_color = 'white'
+    virus_color = 'skyblue'
+    tcell_color = 'yellow'
+
     # landscape
-    self.width = ParameterField(self, '幅', 20, 100, bg='white')
+    self.width = ParameterField(self, '幅', 30, 100, bg=landscape_color)
     put_widget(self.width, 0, 0)
-    self.vlen = ParameterField(self, 'ウイルスの遺伝子長', 3, 100, bg='skyblue')
+    self.vlen = ParameterField(self, 'ウイルスの遺伝子長', 3, 100, bg=virus_color)
     put_widget(self.vlen, 1, 0)
-    self.vrate = ParameterField(self, '感染率', 50, 100, bg='skyblue')
+    self.vrate = ParameterField(self, '感染率', 50, 100, bg=virus_color)
     put_widget(self.vrate, 2, 0)
-    self.vmrate = ParameterField(self, '突然変異率', 30, 100, bg='skyblue')
+    self.vmrate = ParameterField(self, '突然変異率', 30, 100, bg=virus_color)
     put_widget(self.vmrate, 3, 0)
-    self.tlen = ParameterField(self, 'Ｔ細胞の遺伝子長', 10, 100, bg='yellow') 
+    self.tlen = ParameterField(self, 'Ｔ細胞の遺伝子長', 10, 100, bg=tcell_color) 
     put_widget(self.tlen, 4, 0)
-    self.lifespan = ParameterField(self, '寿命', 5, 100, bg='yellow')
+    self.lifespan = ParameterField(self, '寿命', 5, 100, bg=tcell_color)
     put_widget(self.lifespan, 5, 0)
-    self.tcell_num = ParameterField(self, '初期Ｔ細胞数', 10, 100, bg='yellow')
+    self.tcell_num = ParameterField(self, '初期Ｔ細胞数', 10, 100, bg=tcell_color)
     put_widget(self.tcell_num, 6, 0)
-    self.maxterm = ParameterField(self, '最大実行期間', 500, 100000, bg='white')
+    self.maxterm = ParameterField(self, '最大実行期間', 500, 100000, bg=default_color)
     put_widget(self.maxterm, 7, 0)
 
     button_panel = Tkinter.Frame(self)
 
     execute_button = create_button(button_panel, font, '実行', self.execute, 0, 0)
-    stop_button = create_button(button_panel, font, '停止', self.stop, 0, 1)
-    end_button = create_button(button_panel, font, '終了', self.end, 0, 2)
+    # stop_button = create_button(button_panel, font, '停止', self.stop, 0, 1)
+    # end_button = create_button(button_panel, font, '終了', self.end, 0, 2)
     put_widget(button_panel, 8, 0)
 
   def end(self):
-    print 'end'
-    print self.p.getValue()
+    """ プログラムを終了する """
+    # if tkMessageBox.askokcancel(title='確認', message='プログラムを終了します。'):
+    sys.exit()
 
   def stop(self):
+    """ プログラムを停止する """
     print 'stop'
     self.master.stop()
 
   def execute(self):
-    """ 計算を実行する """
+    """ プログラムを実行する """
     print 'execute'
     self.master.animation()
 
