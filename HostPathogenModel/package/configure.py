@@ -45,7 +45,7 @@ class ParameterField(Tkinter.Frame):
     return int(self.spinbox.get())
 
 ## コンフィグ画面
-class Configure(Tkinter.Frame):
+class ConfigurePanel(Tkinter.Frame):
   """ コンフィグ画面
   """
   def __init__(self, master=None, **options):
@@ -93,7 +93,7 @@ class Configure(Tkinter.Frame):
 
 ## テスト
 def test_configure():
-  c = Configure()
+  c = ConfigurePanel()
   c.pack()
   c.mainloop()
 

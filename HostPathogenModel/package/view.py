@@ -5,6 +5,12 @@ import function
 import Tkinter
 import configure
 
+class InfoPanel(Tkinter.Frame):
+  def __init__(self, master=None, **options):
+    Tkinter.Frame.__init__(self, master, **options)
+    self.term_panel = Tkinter.Label(self, text='info')
+    self.term_panel.pack()
+
 ## メインビュー
 class MainView(Tkinter.Frame):
   def __init__(self, master=None):
@@ -12,10 +18,13 @@ class MainView(Tkinter.Frame):
     self.title = 'Host-Pathogen Model'
 
     self.vmv = VirusMapView(self, relief=Tkinter.RIDGE, bd=1)
-    self.vmv.grid(row=0, column=0, padx=5, pady=5)
+    self.vmv.grid(row=1, column=0, padx=5, pady=5)
 
-    self.cv = configure.Configure(self, relief=Tkinter.SUNKEN, bd=0)
-    self.cv.grid(row=0, column=1, padx=5, pady=5)
+    self.info_panel = InfoPanel(self, relief=Tkinter.GROOVE, bd=1)
+    self.info_panel.grid(row=0, column=0, columnspan=2, sticky=Tkinter.W+Tkinter.E)
+
+    self.cv = configure.ConfigurePanel(self, relief=Tkinter.SUNKEN, bd=0)
+    self.cv.grid(row=1, column=1, padx=5, pady=5)
 
   def setModel(self, model):
     self.vmv.setModel(model)
