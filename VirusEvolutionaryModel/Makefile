@@ -9,7 +9,7 @@
 HOME              = ~/workspace/AgentBasedEpidemicModel/VirusEvolutionaryModel
 
 ## Command
-CC                = /usr/bin/g++ -Wall -g -O0
+CC                = /usr/bin/g++ -Wall -g -O0 -std=c++11
 PRINT             = /bin/echo
 MKDIR             = mkdir -vp
 MAKE              = make --no-print-directory -s
@@ -47,28 +47,44 @@ vpath %.hpp include
 vpath %.o	obj
 
 ## Target
-OUTPUT := VEM.exe
-TARGET := $(BINDIR)/$(OUTPUT)
-OBJS   = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(notdir $(basename $(INCLUDE)))))
-
+EXE := VEM.exe
+TARGET := $(BINDIR)/$(EXE)
+#OUTOBJ   = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(notdir $(basename $(INCLUDE)))))
+OUTOBJ = $(addprefix $(OBJDIR)/, $(OBJS))
 
 .PHONY: all run gene clean
 
 
 all: $(TARGET)
 
-## dependency
-$(OBJDIR)/Agent.o: Agent.hpp
+## CONFIGURE ###################################################################
+# Objects
+OBJS = Human.o Gene.o Virus.o Cell.o Tcell.o Term.o
+OBJS += Term.o FileFactory.o Random.o
+OBJS += HumanCounter.o VirusCounter.o
+
+# dependency
+$(OBJDIR)/Human.o: Human.hpp Gene.hpp
 $(OBJDIR)/Config.o: Config.hpp
 $(OBJDIR)/Gene.o: Gene.hpp
+$(OBJDIR)/Cell.o: Cell.hpp Function.hpp
+$(OBJDIR)/Virus.o: Virus.hpp Gene.hpp
+$(OBJDIR)/Tcell.o: Gene.hpp
+
+$(OBJDIR)/HumanCounter.o: HumanCounter.hpp
+$(OBJDIR)/VirusCounter.o: VirusCounter.hpp
+
+$(OBJDIR)/Term.o: Term.hpp
+$(OBJDIR)/FileFactory.o: FileFactory.hpp
+################################################################################
 
 ## Make Program
-$(TARGET): main.cpp $(OBJS)
+$(TARGET): main.cpp $(OUTOBJ)
 	@$(COLORECHO)
 	@$(PRINT) '==> Creating $@...'
 	@$(CLRECHO)
 	@[ -d $(BINDIR) ] || $(MKDIR) $(BINDIR)
-	$(CC) $< -o $@ $(CPPFLAGS)
+	$(CC) $^ -o $@ $(CPPFLAGS)
 
 $(OBJDIR)/%.o: %.cpp
 	@$(COLORECHO)
@@ -77,7 +93,7 @@ $(OBJDIR)/%.o: %.cpp
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
 	$(CC) -c $< -o $@ $(CPPFLAGS)
 
-## Optioins
+## Other Actions
 run: $(TARGET)
 	@./$<
 
@@ -92,3 +108,7 @@ zip:
 	@$(PRINT) '==> Zipping...'
 	@$(CLRECHO)
 
+tree:
+	tree $(INCDIR) $(SRCDIR) $(OBJDIR) $(BINDIR)
+
+build: clean $(TARGET)
