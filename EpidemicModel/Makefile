@@ -1,4 +1,4 @@
-HOME	 = ~/workspace/AgentBasedEpidemicModel/ABEM
+HOME	 = ~/workspace/AgentBasedEpidemicModel/EpidemicModel
 
 CC       = g++ -Wall -g -O0 -std=c++11
 PRINT    = /bin/echo
