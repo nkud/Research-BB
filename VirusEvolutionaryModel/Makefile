@@ -23,6 +23,7 @@ REDECHO  = printf '\033[31m'
 GREENECHO  = printf '\033[32m'
 BLUEECHO  = printf '\033[34m'
 CLRECHO	 = printf '\033[0m\033[39m'
+COLORECHO = $(BOLDECHO); $(BLUEECHO)
 
 ## Directory Names
 SRC		 = $(shell find src -name '*.cpp')
@@ -46,7 +47,7 @@ vpath %.hpp include
 vpath %.o 	obj
 
 ## Target
-OUTPUT := VEM
+OUTPUT := VEM.exe
 TARGET := $(BINDIR)/$(OUTPUT)
 OBJS   = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(notdir $(basename $(INCLUDE)))))
 
@@ -54,8 +55,7 @@ OBJS   = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(notdir $(basename $(INCLUDE))
 .PHONY: all run gene clean
 
 $(TARGET): main.cpp $(OBJS)
-	@$(BOLDECHO)
-	@$(BLUEECHO)
+	@$(COLORECHO)
 	@$(PRINT) '==> Creating $@...'
 	@$(CLRECHO)
 	@[ -d $(BINDIR) ] || $(MKDIR) $(BINDIR)
@@ -63,8 +63,7 @@ $(TARGET): main.cpp $(OBJS)
 
 
 $(OBJDIR)/%.o: %.cpp
-	@$(BOLDECHO)
-	@$(BLUEECHO)
+	@$(COLORECHO)
 	@$(PRINT) '==> Creating $@...'
 	@$(CLRECHO)
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
@@ -74,11 +73,15 @@ run: $(TARGET)
 	@./$<
 
 clean:
-	@$(BOLDECHO)
-	@$(BLUEECHO)
+	@$(COLORECHO)
 	@$(PRINT) '==> Cleanning...'
 	@$(CLRECHO)
 	@$(RM) $(BINDIR) $(OBJDIR)
+
+zip:
+	@$(COLORECHO)
+	@$(PRINT) '==> Zipping...'
+	@$(CLRECHO)
 
 all: clean $(TARGET)
 
