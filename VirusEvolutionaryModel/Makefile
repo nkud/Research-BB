@@ -32,6 +32,7 @@ INCLUDE  = $(shell find include -name '*.h' -or -name '*.hpp')
 OBJDIR	 = obj
 SRCDIR	 = src
 INCDIR   = include
+SCRDIR	 = script
 BINDIR	 = bin
 PRGDIR	 = program
 MSTDIR	 = master
@@ -61,6 +62,7 @@ all: $(TARGET)
 # objects
 OBJS += main.o
 OBJS += Human.o Gene.o Virus.o Cell.o Tcell.o Term.o
+OBJS += ImmuneSystem.o
 OBJS += Term.o FileFactory.o
 OBJS += HumanCounter.o VirusCounter.o
 OBJS += Function.o
@@ -68,10 +70,10 @@ OBJS += Function.o
 # dependency
 $(OBJDIR)/main.o: Human.hpp Virus.hpp Config.hpp
 
-$(OBJDIR)/Human.o: Human.hpp Gene.hpp
+$(OBJDIR)/Human.o: Human.hpp Gene.hpp Virus.hpp ImmuneSystem.hpp
 $(OBJDIR)/Config.o: Config.hpp
 $(OBJDIR)/Gene.o: Gene.hpp
-$(OBJDIR)/Cell.o: Cell.hpp Function.hpp
+$(OBJDIR)/Cell.o: Cell.hpp Function.hpp Virus.hpp
 $(OBJDIR)/Virus.o: Virus.hpp Gene.hpp
 $(OBJDIR)/Tcell.o: Gene.hpp
 
@@ -89,14 +91,14 @@ $(TARGET): $(OUTOBJ)
 	@$(PRINT) '==> Linking $(notdir $@)'
 	@$(CLRECHO)
 	@[ -d $(BINDIR) ] || $(MKDIR) $(BINDIR)
-	$(CC) $^ -o $@ $(CPPFLAGS)
+	@$(CC) $^ -o $@ $(CPPFLAGS)
 
 $(OBJDIR)/%.o: %.cpp
 	@$(COLORECHO)
 	@$(PRINT) '==> Compiling $(notdir $@)'
 	@$(CLRECHO)
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
-	$(CC) -c $< -o $@ $(CPPFLAGS)
+	@$(CC) -c $< -o $@ $(CPPFLAGS)
 
 ## Other Actions
 run: $(TARGET)
@@ -114,7 +116,7 @@ zip:
 	@$(CLRECHO)
 
 tree:
-	tree $(INCDIR) $(SRCDIR) $(OBJDIR) $(BINDIR)
+	tree $(INCDIR) $(SRCDIR) $(OBJDIR) $(BINDIR) $(SCRDIR)
 
 time:
 	@$(COLORECHO)

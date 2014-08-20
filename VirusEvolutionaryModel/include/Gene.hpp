@@ -9,12 +9,13 @@
 class Gene
 {
   public:
-    std::string getTagString();     // タグの文字列を取得する
-    int getTagNumAt( int pos );     // 指定された位置のタグを取得する
-    int getLen();                                   // タグの長さを取得する
-    int mutation( int prob );           // 確率
+    std::string getTagString();                                      // タグの文字列を取得する
+    int getTagNumAt( int pos );                                      // 指定された位置のタグを取得する
+    int getLen();                                                    // タグの長さを取得する
+    int mutation( int prob );                                        // 確率
+    bool hasEqualTagTo( Gene& other );
   private:
-    std::string tag_;                           // タグ
+    std::string tag_;                                                // タグ
 };
 
 /**
