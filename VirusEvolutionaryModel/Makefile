@@ -29,18 +29,18 @@ COLORECHO         = $(BOLDECHO); $(BLUEECHO)
 SRC		 = $(shell find src -name '*.cpp')
 INCLUDE  = $(shell find include -name '*.h' -or -name '*.hpp')
 
-OBJDIR	 = ./obj
-SRCDIR	 = ./src
-INCDIR   = ./include
-BINDIR	 = ./bin
-PRGDIR	 = ./program
-MSTDIR	 = ./master
+OBJDIR	 = obj
+SRCDIR	 = src
+INCDIR   = include
+BINDIR	 = bin
+PRGDIR	 = program
+MSTDIR	 = master
 
 NOW		 := $(shell date +%y%m%d-%H%M%S)
 RSTDIR   = result-$(NOW)
 PRGNAME  = program-$(NOW)
 
-CPPFLAGS = $(addprefix -I, $(INCDIR))
+CPPFLAGS = $(addprefix -I , $(INCDIR))
 
 vpath %.cpp src
 vpath %.hpp include
@@ -58,12 +58,16 @@ OUTOBJ = $(addprefix $(OBJDIR)/, $(OBJS))
 all: $(TARGET)
 
 ## CONFIGURE ###################################################################
-# Objects
-OBJS = Human.o Gene.o Virus.o Cell.o Tcell.o Term.o
-OBJS += Term.o FileFactory.o Random.o
+# objects
+OBJS += main.o
+OBJS += Human.o Gene.o Virus.o Cell.o Tcell.o Term.o
+OBJS += Term.o FileFactory.o
 OBJS += HumanCounter.o VirusCounter.o
+OBJS += Function.o
 
 # dependency
+$(OBJDIR)/main.o: Human.hpp Virus.hpp Config.hpp
+
 $(OBJDIR)/Human.o: Human.hpp Gene.hpp
 $(OBJDIR)/Config.o: Config.hpp
 $(OBJDIR)/Gene.o: Gene.hpp
@@ -76,19 +80,20 @@ $(OBJDIR)/VirusCounter.o: VirusCounter.hpp
 
 $(OBJDIR)/Term.o: Term.hpp
 $(OBJDIR)/FileFactory.o: FileFactory.hpp
+$(OBJDIR)/Function.o: Function.hpp Random.hpp
 ################################################################################
 
 ## Make Program
-$(TARGET): main.cpp $(OUTOBJ)
+$(TARGET): $(OUTOBJ)
 	@$(COLORECHO)
-	@$(PRINT) '==> Creating $@...'
+	@$(PRINT) '==> Linking $(notdir $@)'
 	@$(CLRECHO)
 	@[ -d $(BINDIR) ] || $(MKDIR) $(BINDIR)
 	$(CC) $^ -o $@ $(CPPFLAGS)
 
 $(OBJDIR)/%.o: %.cpp
 	@$(COLORECHO)
-	@$(PRINT) '==> Creating $@...'
+	@$(PRINT) '==> Compiling $(notdir $@)'
 	@$(CLRECHO)
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
 	$(CC) -c $< -o $@ $(CPPFLAGS)

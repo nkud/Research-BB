@@ -6,7 +6,7 @@
 #ifndef ___RANDOM_HPP
 #define ___RANDOM_HPP
 
-#include "Function.h"
+#include "Function.hpp"
 
 #include <random>
 #include <string>
