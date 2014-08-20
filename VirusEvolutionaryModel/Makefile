@@ -116,4 +116,10 @@ zip:
 tree:
 	tree $(INCDIR) $(SRCDIR) $(OBJDIR) $(BINDIR)
 
+time:
+	@$(COLORECHO)
+	@$(PRINT) '==> $(NOW)'
+	@$(CLRECHO)
+
+
 build: clean $(TARGET)
