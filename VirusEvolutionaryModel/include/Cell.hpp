@@ -14,17 +14,19 @@ class Cell : public __Location
     bool isInfected();
     bool isNotInfected();
 
+    int getInfectedVirusListSize() { return infected_virus_list_.size(); }
+
     void clearInfectedViruses();
     void clearStandByViruses();
     VECTOR(Virus *)& getInfectedVirusList();
     VECTOR(Virus *)& getStandByVirusList();
 
-    void pushToStandByVirusList( Virus& v );
-    void pushNewVirusCloneToInfectedVirusList( Virus& v );
+    void pushCloneToStandByVirusList( Virus& v );
+    void pushNewVirusToInfectedVirusList( Virus& v );
     bool canPushNewVirus();
 
     void contact( VECTOR(Cell *)& neighbors );
-    void infection();
+    bool infection();
   private:
     VECTOR(Virus *) infected_virus_list_;
     VECTOR(Virus *) stand_by_virus_list_;

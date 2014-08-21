@@ -27,10 +27,15 @@ HumanLand :: ~HumanLand()
   SAFE_DELETE_ARRAY( human_list_ );
 }
 
-bool Human :: infection( Virus& v )
+bool Human :: infection()
 {
-  bool can_infect = immune_system_->infection( v );
-  return can_infect;
+//  bool can_infect = immune_system_->infection( v );
+//  return can_infect;
+  return true;
+}
+void Human :: contact()
+{
+
 }
 
 ImmuneSystem& Human :: getImmuneSystem()

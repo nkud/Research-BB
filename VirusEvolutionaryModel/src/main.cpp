@@ -13,14 +13,16 @@ using namespace std;
 /*-----------------------------------------------------------------------------
  *  configure
  *-----------------------------------------------------------------------------*/
+const int TERM = 30;
+const int HUMAN_INTERVAL = 5;
+const int IMMUNE_INTERVAL = 1;
+
 const int WIDTH = 30;
 const int HEIGHT = WIDTH;
 
-const int CELL_LAND_WIDTH = 30;
-const int CELL_LAND_HEIGHT = CELL_LAND_WIDTH;
+//const int CELL_LAND_WIDTH = 30;
+//const int CELL_LAND_HEIGHT = CELL_LAND_WIDTH;
 
-const int HUMAN_INTERVAL = 5;
-const int IMMUNE_INTERVAL = 1;
 const int HUMAN_NUM = 10;
 
 
@@ -32,13 +34,37 @@ const int HUMAN_NUM = 10;
 void run_host_pathogen_model( Human& human )
 {
   ImmuneSystem& IS = human.getImmuneSystem();                        /* 免疫機構を取得 */
-  EACH( it_tc, IS.getTcellList() )                                   /* T細胞の移動 */
+
+  /*-----------------------------------------------------------------------------
+   *  T細胞の移動
+   *-----------------------------------------------------------------------------*/
+  EACH( it_tc, IS.getTcellList() )
   {
     (*it_tc)->move(IS.getCellLand());
   }
+  /*-----------------------------------------------------------------------------
+   *  細胞の接触
+   *-----------------------------------------------------------------------------*/
   EACH( it_cell, IS.getCellLand().getCellList() ) {
     VECTOR(Cell *) neighbors = IS.getCellLand().getNeighborsAt( **it_cell );
     (*it_cell)->contact( neighbors );
+  }
+  /*-----------------------------------------------------------------------------
+   *  細胞の感染
+   *-----------------------------------------------------------------------------*/
+  EACH( it_cell, IS.getCellLand().getCellList() ) {
+    (*it_cell)->infection();
+    (*it_cell)->getInfectedVirusListSize();
+  }
+  /*-----------------------------------------------------------------------------
+   *  T細胞の殺傷
+   *-----------------------------------------------------------------------------*/
+  EACH( it_tc, IS.getTcellList() )
+  {
+    int x = (*it_tc)->getX();
+    int y = (*it_tc)->getY();
+    Cell& cell = IS.getCellLand().getCellAt(x, y);
+    cell.clearInfectedViruses();
   }
 }
 /*-----------------------------------------------------------------------------
@@ -53,24 +79,19 @@ int main()
   /*-----------------------------------------------------------------------------
    *  初期化
    *-----------------------------------------------------------------------------*/
-  ECHO("Initialize");
+  ECHO("Initialize Term");
+  Term &term = Term::Instance();
+  term.setMaxTerm(TERM);
+  term.setHumanInterval( HUMAN_INTERVAL );
+  term.setImmuneInterval( IMMUNE_INTERVAL );
+
   ECHO("Initialize Human");
   VECTOR(Human *) humans;
   FOR( i, HUMAN_NUM ) {
     humans.push_back( new Human() );
   }
-  ECHO("Initialize Term");
-  Term &term = Term::Instance();
-  term.setMaxTerm(20);
-  term.setHumanInterval( HUMAN_INTERVAL );
-  term.setImmuneInterval( IMMUNE_INTERVAL );
-  HumanLand* humanLand = new HumanLand(WIDTH, HEIGHT);
-
-  // ウイルスの増殖
-  // T細胞の移動
-  // T細胞のウイルス殺傷
-  // T細胞の寿命
-  // T細胞を補完する
+  ECHO("Initialize HumanLand");
+  HumanLand *humanLand = new HumanLand(WIDTH, HEIGHT);
 
   ECHO("Loop");
   while( term.loop() )
@@ -86,7 +107,24 @@ int main()
     // ヒト
     if( term.isHumanInterval() )
     {
-      cout << humans.size() << endl;
+      /*-----------------------------------------------------------------------------
+       *  移動
+       *-----------------------------------------------------------------------------*/
+      EACH( it_human, humans ) {
+        (*it_human)->move( *humanLand );
+      }
+      /*-----------------------------------------------------------------------------
+       *  接触
+       *-----------------------------------------------------------------------------*/
+      EACH( it_human, humans ) {
+        (*it_human)->contact();
+      }
+      /*-----------------------------------------------------------------------------
+       *  感染
+       *-----------------------------------------------------------------------------*/
+      EACH( it_human, humans ) {
+        (*it_human)->infection();
+      }
     }
   }
 

@@ -75,24 +75,57 @@ VECTOR(Cell *) CellLand :: getNeighborsAt( Cell& cell )
 
 bool Cell :: canPushNewVirus()
 {
-  return true;
+  // 保持ウイルスの最大値があれば、ここで処理
+  int max_virus = 1;
+  if( getInfectedVirusListSize() < max_virus )
+    return true;
+  else
+    return false;
 }
 
-void Cell :: pushNewVirusCloneToInfectedVirusList( Virus& v )
+void Cell :: pushNewVirusToInfectedVirusList( Virus& v )
 {
   infected_virus_list_.push_back( new Virus() );
 }
 
 void Cell :: contact( VECTOR(Cell *)& neighbors )
 {
+  // 接触する
   EACH( it_neighbor, neighbors )
   {
     EACH( it_v, (*it_neighbor)->getInfectedVirusList() )
     {
-      if( canPushNewVirus() )
-      {
-        pushNewVirusCloneToInfectedVirusList( **it_v );
-      }
+      pushCloneToStandByVirusList( **it_v );
     }
   }
+}
+
+void Cell :: pushCloneToStandByVirusList( Virus& v )
+{
+  stand_by_virus_list_.push_back( new Virus() );
+}
+
+bool Cell :: infection()
+{
+  // 待機ウイルスからランダムに選び、感染させる
+  /// @todo 要変更
+  if( canPushNewVirus() ) {
+    EACH( it_v, getStandByVirusList() )
+    {
+      pushNewVirusToInfectedVirusList( **it_v );
+    }
+  }
+  return false;
+}
+
+void Cell :: clearInfectedViruses()
+{
+
+}
+void Cell :: clearStandByViruses()
+{
+  EACH( it_v, getStandByVirusList() ) {
+    SAFE_DELETE( *it_v );
+  }
+  stand_by_virus_list_.clear();
 }

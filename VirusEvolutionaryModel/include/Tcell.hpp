@@ -13,9 +13,6 @@ class Tcell : public Gene, public __Mobile
     Tcell();
     ~Tcell();
 
-    void move( __Landscape& land );
-    void randomLocate( __Landscape& land );
-
     Tcell& clone();
 
     bool hasReceptorMatching( Virus &v );

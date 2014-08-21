@@ -17,9 +17,8 @@ class Human : public Gene, public __Mobile
   public:
     Human();
 
-    void move();
-
-    bool infection( Virus& v );
+    bool infection();
+    void contact();
 
     void reborn();                // 初期化される
     ImmuneSystem& getImmuneSystem();
