@@ -12,7 +12,7 @@ using namespace std;
 //----------------------------------------------------------------------
 //  configure
 //----------------------------------------------------------------------
-const int TERM = 100;
+const int TERM = 10;
 const int HUMAN_INTERVAL = 2;
 const int IMMUNE_INTERVAL = 1;
 
@@ -22,7 +22,7 @@ const int HEIGHT = WIDTH;
 //const int CELL_LAND_WIDTH = 30;
 //const int CELL_LAND_HEIGHT = CELL_LAND_WIDTH;
 
-const int HUMAN_NUM = 30;
+const int HUMAN_NUM = 20;
 
 
 //----------------------------------------------------------------------
