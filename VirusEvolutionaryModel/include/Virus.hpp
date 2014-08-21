@@ -8,11 +8,11 @@
  */
 class Virus : public Gene
 {
-public:
+ public:
   int getInfectionRate();
   int getMutationRate();
-  Virus& clone();               // クローンを作成する
-private:
+  Virus& clone();  // クローンを作成する
+ private:
 };
 
 #endif
