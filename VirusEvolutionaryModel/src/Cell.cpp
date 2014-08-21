@@ -2,7 +2,8 @@
 #include "Virus.hpp"
 #include "Function.hpp"
 
-Cell :: Cell() :
+Cell :: Cell(int x, int y) :
+  __Location(x,y),
   infected_virus_list_( 0 ),
   stand_by_virus_list_( 0 )
 {
@@ -44,14 +45,35 @@ int CellLand :: getCellListSize() const
 {
   return (int)cell_list_.size();
 }
-int CellLand :: getHeight()
-{
-  return height_;
-}
 
 CellLand :: CellLand( int width, int height ) :
-  width_( width ),
-  height_( height )
+  __Landscape( width, height )
+{
+  // 新しい細胞を追加
+  FOR( i, height ) {
+    FOR( j, width ) {
+      Cell *newc = new Cell(j, i);
+      cell_list_.push_back( newc );
+    }
+  }
+}
+
+VECTOR(Cell *)& CellLand :: getNeighborsAt( Cell& cell )
+{
+  VECTOR(Cell *) neighbors;
+  int x = cell.getX();
+  int y = cell.getY();
+  REP( i, -1, 1 ) {
+    REP( j, -1, 1 ) {
+      Cell &cell = getCellAt(x,y);
+      if( &cell == &cell ) continue;
+      neighbors.push_back( &cell );
+    }
+  }
+  return neighbors;
+}
+
+void Cell :: contact( VECTOR(Cell *)& neighbors )
 {
 
 }

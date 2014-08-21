@@ -2,13 +2,15 @@
 #define ___CELL_HPP
 
 #include "Function.hpp"
+#include "Landscape.hpp"
+#include "Mobile.hpp"
 
 class Virus;
 
-class Cell
+class Cell : public __Location
 {
   public:
-    Cell();
+    Cell( int x, int y);
     bool isInfected();
     bool isNotInfected();
 
@@ -27,22 +29,17 @@ class Cell
     VECTOR(Virus *) stand_by_virus_list_;
 };
 
-class CellLand
+class CellLand : public __Landscape
 {
   public:
     CellLand( int width, int height );
     Cell& getCellAt( int x, int y );
-    VECTOR(Cell *)& getNeighborsAt( Cell& cell ) const;
+    VECTOR(Cell *)& getNeighborsAt( Cell& cell );
     VECTOR(Cell *)& getCellList(){ return cell_list_; }
     int getCellListSize() const;
-
-    int getWidth();
-    int getHeight();
   private:
     CellLand();
     VECTOR(Cell *) cell_list_;
-    int width_;
-    int height_;
 };
 
 #endif

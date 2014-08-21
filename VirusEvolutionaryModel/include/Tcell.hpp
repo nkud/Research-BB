@@ -2,15 +2,19 @@
 #define ___TCELL_HPP
 
 #include "Gene.hpp"
+#include "Mobile.hpp"
 
-class Tcell : public Gene
+class Virus;
+class __Landscape;
+
+class Tcell : public Gene, public __Mobile
 {
   public:
-    int getX();
-    int getY();
-    void setX();
-    void setY();
-    void move();
+    Tcell();
+    ~Tcell();
+
+    void move( __Landscape& land );
+    void randomLocate( __Landscape& land );
 
     Tcell& clone();
 
@@ -19,7 +23,6 @@ class Tcell : public Gene
     void reborn();
 
   private:
-    int x_, y_;
-}
+};
 
 #endif

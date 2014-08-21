@@ -69,14 +69,14 @@ OBJS += HumanCounter.o VirusCounter.o
 OBJS += Function.o
 
 # Dependency
-$(OBJDIR)/main.o: Human.hpp Virus.hpp Config.hpp ImmuneSystem.hpp Function.hpp
+$(OBJDIR)/main.o: Human.hpp Virus.hpp Config.hpp ImmuneSystem.hpp Function.hpp Tcell.hpp
 
-$(OBJDIR)/Human.o: Human.hpp Gene.hpp Virus.hpp ImmuneSystem.hpp Cell.hpp
+$(OBJDIR)/Human.o: Human.hpp Gene.hpp Virus.hpp ImmuneSystem.hpp Cell.hpp Mobile.hpp Landscape.hpp
 $(OBJDIR)/Config.o: Config.hpp
 $(OBJDIR)/Gene.o: Gene.hpp
 $(OBJDIR)/Cell.o: Cell.hpp Function.hpp Virus.hpp
 $(OBJDIR)/Virus.o: Virus.hpp Gene.hpp
-$(OBJDIR)/Tcell.o: Gene.hpp
+$(OBJDIR)/Tcell.o: Tcell.hpp Gene.hpp Mobile.hpp
 $(OBJDIR)/ImmuneSystem.o: ImmuneSystem.hpp Virus.hpp Cell.hpp
 
 $(OBJDIR)/HumanCounter.o: HumanCounter.hpp
@@ -93,14 +93,14 @@ $(TARGET): $(OUTOBJ)
 	@$(PRINT) '==> Linking $(notdir $@)'
 	@$(CLRECHO)
 	@[ -d $(BINDIR) ] || $(MKDIR) $(BINDIR)
-	$(CC) $^ -o $@ $(CPPFLAGS)
+	@$(CC) $^ -o $@ $(CPPFLAGS)
 
 $(OBJDIR)/%.o: %.cpp
 	@$(COLORECHO)
 	@$(PRINT) '==> Compiling $(notdir $@)'
 	@$(CLRECHO)
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
-	$(CC) -c $< -o $@ $(CPPFLAGS)
+	@$(CC) -c $< -o $@ $(CPPFLAGS)
 
 ## Other Actions
 run: $(TARGET)

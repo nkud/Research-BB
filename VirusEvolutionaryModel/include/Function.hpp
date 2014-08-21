@@ -6,6 +6,8 @@
 #include <cassert>
 #include <cstdlib>
 
+#include "Terminal.hpp"
+
 /*-----------------------------------------------------------------------------
  *  汎用マクロ
  *-----------------------------------------------------------------------------*/
@@ -14,7 +16,8 @@
 
 #define LOG(x)              do { std::cout<< CLEAR_RIGHT << "["<<CYAN<<#x<<CLR_ST<<"]: "<<x<<std::endl; }while(0);
 
-#define DEBUG(x)            do { std::cerr<<">>> "<<#x<<" = "<<(x)<<" (L"<<__LINE__<<")"<<" "<<__FILE__<<std::endl; }while(0);
+#define DEBUG(x)            do { std::cerr<<BOLD<<BLUE<<"[ DEBUG ] "<<CLR_ST<<STANDARD<<#x<<" = "<<(x)<<" (L"<<__LINE__<<")" \
+                            <<" "<<__FILE__<<std::endl; }while(0);
 
 #define ALL(a)              (a).begin(),(a).end()
 #define EACH(i,c)           for(typeof((c).begin()) i=(c).begin(); i!=(c).end(); ++i)
@@ -31,8 +34,9 @@
 /*-----------------------------------------------------------------------------
  *  乱数用関数セット
  *-----------------------------------------------------------------------------*/
-bool probability( double prob );
 int uniform_int( int a, int b );
+double uniform_double( double a, double b );
+bool probability( double prob );
 bool rand_bool();
 
 #endif

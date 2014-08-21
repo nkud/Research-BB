@@ -5,6 +5,7 @@
 #include "Human.hpp"
 #include "Term.hpp"
 #include "Cell.hpp"
+#include "Tcell.hpp"
 #include "ImmuneSystem.hpp"
 #include "Function.hpp"
 
@@ -12,36 +13,42 @@ using namespace std;
 
 // configure
 const int WIDTH = 30;
+const int HEIGHT = WIDTH;
+
+const int CELL_LAND_WIDTH = 30;
+const int CELL_LAND_HEIGHT = CELL_LAND_WIDTH;
+
 const int HUMAN_INTERVAL = 5;
 const int IMMUNE_INTERVAL = 1;
-
 const int HUMAN_NUM = 10;
 // ---------
 
 // 宿主内動態モデルの処理
 void host_pathogen_model( Human& human )
 {
-  ImmuneSystem& IS = human.getImmuneSystem();                        // 免疫機構を取得 
+  ImmuneSystem& IS = human.getImmuneSystem();                        /* 免疫機構を取得 */
+  EACH( it_tc, IS.getTcellList() )                                   /* T細胞の移動 */
+  {
+    (*it_tc)->move(IS.getCellLand());
+    DEBUG( (*it_tc)->getX() );
+  }
   EACH( it_cell, IS.getCellLand().getCellList() ) {
-    cout << (*it_cell)->isInfected() << endl;
+    (*it_cell)->contact( IS.getCellLand().getNeighborsAt(**it_cell) );
   }
 }
 
 int main()
 {
-  cout << "Virus Evolutionary Model" << endl;
-  cout << "version 1.0" << endl;
-
   // 初期化
-  VECTOR(Human *) human;
+  VECTOR(Human *) humans;
   FOR( i, HUMAN_NUM ) {
-    human.push_back( new Human() );
+    humans.push_back( new Human() );
   }
   Term &term = Term::Instance();
   term.setMaxTerm(20);
   term.setHumanInterval( HUMAN_INTERVAL );
   term.setImmuneInterval( IMMUNE_INTERVAL );
-//  HumanLand* humanLand = new HumanLand(WIDTH, WIDTH);
+  HumanLand* humanLand = new HumanLand(WIDTH, HEIGHT);
 
   // ウイルスの増殖
   // T細胞の移動
@@ -56,12 +63,16 @@ int main()
     if( term.isImmuneInterval() )
     {
       cout << "Immune Interval" << endl;
+      EACH( it_human, humans )
+      {
+        host_pathogen_model(**it_human);
+      }
     }
     // ヒト
     if( term.isHumanInterval() )
     {
       cout << "Human Interval" << endl;
-      cout << human.size() << endl;
+      cout << humans.size() << endl;
     }
   }
 

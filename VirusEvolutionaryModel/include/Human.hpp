@@ -2,7 +2,9 @@
 #define ___AGENT_HPP
 
 #include "Gene.hpp"
+#include "Mobile.hpp"
 #include "Function.hpp"
+#include "Landscape.hpp"
 
 class Virus;
 class ImmuneSystem;
@@ -10,14 +12,11 @@ class ImmuneSystem;
 /**
  * @brief ヒト
  */
-class Human : public Gene
+class Human : public Gene, public __Mobile
 {
   public:
     Human();
-    int getX() const;
-    int getY() const;
-    void setX( int x );
-    void setY( int y );
+
     void move();
 
     bool infection( Virus& v );
@@ -25,11 +24,10 @@ class Human : public Gene
     void reborn();                // 初期化される
     ImmuneSystem& getImmuneSystem();
   private:
-    int x_, y_;
     ImmuneSystem *immune_system_;
 };
 
-class HumanLand
+class HumanLand : public __Landscape
 {
   public:
 //    VECTOR(Human *)& getHumanAt( int x, int y );
@@ -38,13 +36,9 @@ class HumanLand
     VECTOR(Human *) getHumanList();
     int getHumanListSize();
 
-    int getWidth() const;
-    int getHeight() const;
     HumanLand( int width, int height );
     ~HumanLand();
   private:
-    int width_;
-    int height_;
     VECTOR(Human *) *human_list_;
 };
 
