@@ -2,6 +2,7 @@
 #include "Virus.hpp"
 #include "Cell.hpp"
 #include "Tcell.hpp"
+#include "Function.hpp"
 
 bool ImmuneSystem :: infection( Virus& v )
 {

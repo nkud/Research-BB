@@ -56,7 +56,6 @@ class __MersenneTwister : public __RandomStrategy {
     std::mt19937 *mt;
 };
 
-////////////////////////////////////////////////////////////////////////////////
 /// @brief 自作線形合同法を使用した乱数生成戦略クラス
 /// @todo 動作確認
 class __LinearCongruentialGenerator : public __RandomStrategy {
@@ -70,7 +69,6 @@ public:
 private:
 };
 
-////////////////////////////////////////////////////////////////////////////////
 /// @brief srand()を用いた標準の乱数生成戦略クラス
 /// @todo 動作確認
 /// @note randomInt()は使用していない。
@@ -93,7 +91,6 @@ public:
 private:
 };
 
-////////////////////////////////////////////////////////////////////////////////
 /// @brief 乱数生成クラス
 class Random {
   public:
@@ -103,7 +100,8 @@ class Random {
       return random_strategy_->uniformInt( min, max );
     }
     double uniformDouble( double min, double max ) {
-      return random_strategy_->uniformDouble( min, max );
+      double ret = random_strategy_->uniformDouble( min, max );
+      return ret;
     }
 
     const __RandomStrategy* getRandomStrategy() const { return random_strategy_; }
@@ -112,7 +110,8 @@ class Random {
     static Random& Instance() { 
       static Random singleton;
       if ( singleton.getRandomStrategy() == NULL ) {
-        singleton.setRandomStrategy( new __MersenneTwister );        /* メルセンヌ・ツイスタを使用 */
+//        singleton.setRandomStrategy( new __MersenneTwister );        /* メルセンヌ・ツイスタを使用 */
+        singleton.setRandomStrategy( new __Standard );               /* 標準の乱数生成器 */
       }
       return singleton;
     }

@@ -54,10 +54,12 @@ TARGET := $(BINDIR)/$(EXE)
 #OUTOBJ   = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(notdir $(basename $(INCLUDE)))))
 OUTOBJ = $(addprefix $(OBJDIR)/, $(OBJS))
 
-.PHONY: all run gene clean
+.PHONY: exe all run gene clean
 
 
-all: $(TARGET)
+exe: $(TARGET)
+
+all: build run
 
 ## CONFIGURE ###################################################################
 # Object Files
@@ -77,7 +79,7 @@ $(OBJDIR)/Gene.o: Gene.hpp
 $(OBJDIR)/Cell.o: Cell.hpp Function.hpp Virus.hpp
 $(OBJDIR)/Virus.o: Virus.hpp Gene.hpp
 $(OBJDIR)/Tcell.o: Tcell.hpp Gene.hpp Mobile.hpp
-$(OBJDIR)/ImmuneSystem.o: ImmuneSystem.hpp Virus.hpp Cell.hpp
+$(OBJDIR)/ImmuneSystem.o: ImmuneSystem.hpp Virus.hpp Cell.hpp Function.hpp
 
 $(OBJDIR)/HumanCounter.o: HumanCounter.hpp
 $(OBJDIR)/VirusCounter.o: VirusCounter.hpp

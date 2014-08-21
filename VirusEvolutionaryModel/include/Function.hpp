@@ -14,8 +14,9 @@
 #define FOR(i, m)           for(int (i)=0; (i)<(m); (i)++)  /* i: 0 ~ (m-1) */
 #define REP(i, min, max)    for(int (i)=(min); (i)<=(max); (i)++)
 
-#define LOG(x)              do { std::cout<< CLEAR_RIGHT << "["<<CYAN<<#x<<CLR_ST<<"]: "<<x<<std::endl; }while(0);
-
+#define ECHO(x)             do { std::cout<< CLEAR_RIGHT << "----> "<<GREEN<<BOLD<<x<<STANDARD<<CLR_ST<<""<<std::endl; }while(0);
+#define LOG(x)              do { std::cout<< CLEAR_RIGHT << "["<<BLUE<<BOLD<<#x<<STANDARD<<CLR_ST<<"]: "<<x<<std::endl; }while(0);
+#define POINT               do { std::cerr<<BOLD<<RED<<"[ POINT ] "<<CLR_ST<<STANDARD<<"(L"<<__LINE__<<")"<<" "<<__FILE__<<std::endl; }while(0);
 #define DEBUG(x)            do { std::cerr<<BOLD<<BLUE<<"[ DEBUG ] "<<CLR_ST<<STANDARD<<#x<<" = "<<(x)<<" (L"<<__LINE__<<")" \
                             <<" "<<__FILE__<<std::endl; }while(0);
 

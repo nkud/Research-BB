@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "Config.hpp"
 #include "Virus.hpp"
 #include "Human.hpp"
@@ -11,7 +9,10 @@
 
 using namespace std;
 
-// configure
+
+/*-----------------------------------------------------------------------------
+ *  configure
+ *-----------------------------------------------------------------------------*/
 const int WIDTH = 30;
 const int HEIGHT = WIDTH;
 
@@ -21,29 +22,44 @@ const int CELL_LAND_HEIGHT = CELL_LAND_WIDTH;
 const int HUMAN_INTERVAL = 5;
 const int IMMUNE_INTERVAL = 1;
 const int HUMAN_NUM = 10;
-// ---------
 
-// 宿主内動態モデルの処理
-void host_pathogen_model( Human& human )
+
+/*-----------------------------------------------------------------------------
+ *
+ *  宿主内の動態モデルを処理
+ *
+ *-----------------------------------------------------------------------------*/
+void run_host_pathogen_model( Human& human )
 {
   ImmuneSystem& IS = human.getImmuneSystem();                        /* 免疫機構を取得 */
   EACH( it_tc, IS.getTcellList() )                                   /* T細胞の移動 */
   {
     (*it_tc)->move(IS.getCellLand());
-    DEBUG( (*it_tc)->getX() );
   }
   EACH( it_cell, IS.getCellLand().getCellList() ) {
-    (*it_cell)->contact( IS.getCellLand().getNeighborsAt(**it_cell) );
+    VECTOR(Cell *) neighbors = IS.getCellLand().getNeighborsAt( **it_cell );
+    (*it_cell)->contact( neighbors );
   }
 }
-
+/*-----------------------------------------------------------------------------
+ *
+ *  エントリーポイント
+ *
+ *-----------------------------------------------------------------------------*/
 int main()
 {
-  // 初期化
+  ECHO("Started Virus Evolutionary Model");
+  ECHO("version 1.0");
+  /*-----------------------------------------------------------------------------
+   *  初期化
+   *-----------------------------------------------------------------------------*/
+  ECHO("Initialize");
+  ECHO("Initialize Human");
   VECTOR(Human *) humans;
   FOR( i, HUMAN_NUM ) {
     humans.push_back( new Human() );
   }
+  ECHO("Initialize Term");
   Term &term = Term::Instance();
   term.setMaxTerm(20);
   term.setHumanInterval( HUMAN_INTERVAL );
@@ -56,26 +72,24 @@ int main()
   // T細胞の寿命
   // T細胞を補完する
 
+  ECHO("Loop");
   while( term.loop() )
   {
-    cout << term.getTerm() << endl;
     // 免疫機構
     if( term.isImmuneInterval() )
     {
-      cout << "Immune Interval" << endl;
       EACH( it_human, humans )
       {
-        host_pathogen_model(**it_human);
+        run_host_pathogen_model(**it_human);
       }
     }
     // ヒト
     if( term.isHumanInterval() )
     {
-      cout << "Human Interval" << endl;
       cout << humans.size() << endl;
     }
   }
 
-  cout << "Finished." << endl;
+  ECHO("Finished.");
   return 0;
 }

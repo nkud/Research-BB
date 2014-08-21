@@ -19,8 +19,9 @@ class Cell : public __Location
     VECTOR(Virus *)& getInfectedVirusList();
     VECTOR(Virus *)& getStandByVirusList();
 
-    void pushNewVirus( Virus *v );
-    bool canPushNewVirus( Virus *v ) const;
+    void pushToStandByVirusList( Virus& v );
+    void pushNewVirusCloneToInfectedVirusList( Virus& v );
+    bool canPushNewVirus();
 
     void contact( VECTOR(Cell *)& neighbors );
     void infection();
@@ -34,7 +35,7 @@ class CellLand : public __Landscape
   public:
     CellLand( int width, int height );
     Cell& getCellAt( int x, int y );
-    VECTOR(Cell *)& getNeighborsAt( Cell& cell );
+    VECTOR(Cell *) getNeighborsAt( Cell& cell );
     VECTOR(Cell *)& getCellList(){ return cell_list_; }
     int getCellListSize() const;
   private:

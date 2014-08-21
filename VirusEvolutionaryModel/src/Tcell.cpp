@@ -11,8 +11,8 @@ void Tcell :: randomLocate( __Landscape& land )
 {
   int w = land.getWidth();
   int h = land.getHeight();
-  setX( uniform_double(0,w) );
-  setY( uniform_double(0,h) );
+  setX( uniform_int(0,1) );
+  setY( uniform_int(0,h-1) );
 }
 
 void Tcell :: move( __Landscape& land )
