@@ -32,7 +32,8 @@ class Human : public Gene
 class HumanLand
 {
   public:
-    Human& getHumanAt( int x, int y );
+//    VECTOR(Human *)& getHumanAt( int x, int y );
+    VECTOR(Human *)& getHumanAt( Human& human );
     const VECTOR(Human *) getNeighborsAt( int x, int y ) const;
     VECTOR(Human *) getHumanList();
     int getHumanListSize();
@@ -40,10 +41,11 @@ class HumanLand
     int getWidth() const;
     int getHeight() const;
     HumanLand( int width, int height );
+    ~HumanLand();
   private:
-    VECTOR(Human *) human_list_;
     int width_;
     int height_;
+    VECTOR(Human *) *human_list_;
 };
 
 #endif

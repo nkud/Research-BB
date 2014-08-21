@@ -9,7 +9,7 @@
 HOME              = ~/workspace/AgentBasedEpidemicModel/VirusEvolutionaryModel
 
 ## Command
-CC                = /usr/bin/g++ -Wall -g -O0 -std=c++11
+CC                = /usr/bin/g++ -Wall -g -O0 # -std=c++11
 PRINT             = /bin/echo
 MKDIR             = mkdir -vp
 MAKE              = make --no-print-directory -s
@@ -36,6 +36,7 @@ SCRDIR	 = script
 BINDIR	 = bin
 PRGDIR	 = program
 MSTDIR	 = master
+clean_directory = $(BINDIR) $(OBJDIR)
 
 NOW		 := $(shell date +%y%m%d-%H%M%S)
 RSTDIR   = result-$(NOW)
@@ -59,7 +60,7 @@ OUTOBJ = $(addprefix $(OBJDIR)/, $(OBJS))
 all: $(TARGET)
 
 ## CONFIGURE ###################################################################
-# objects
+# Object Files
 OBJS += main.o
 OBJS += Human.o Gene.o Virus.o Cell.o Tcell.o Term.o
 OBJS += ImmuneSystem.o
@@ -67,15 +68,16 @@ OBJS += Term.o FileFactory.o
 OBJS += HumanCounter.o VirusCounter.o
 OBJS += Function.o
 
-# dependency
-$(OBJDIR)/main.o: Human.hpp Virus.hpp Config.hpp ImmuneSystem.hpp
+# Dependency
+$(OBJDIR)/main.o: Human.hpp Virus.hpp Config.hpp ImmuneSystem.hpp Function.hpp
 
-$(OBJDIR)/Human.o: Human.hpp Gene.hpp Virus.hpp ImmuneSystem.hpp
+$(OBJDIR)/Human.o: Human.hpp Gene.hpp Virus.hpp ImmuneSystem.hpp Cell.hpp
 $(OBJDIR)/Config.o: Config.hpp
 $(OBJDIR)/Gene.o: Gene.hpp
 $(OBJDIR)/Cell.o: Cell.hpp Function.hpp Virus.hpp
 $(OBJDIR)/Virus.o: Virus.hpp Gene.hpp
 $(OBJDIR)/Tcell.o: Gene.hpp
+$(OBJDIR)/ImmuneSystem.o: ImmuneSystem.hpp Virus.hpp Cell.hpp
 
 $(OBJDIR)/HumanCounter.o: HumanCounter.hpp
 $(OBJDIR)/VirusCounter.o: VirusCounter.hpp
@@ -91,14 +93,14 @@ $(TARGET): $(OUTOBJ)
 	@$(PRINT) '==> Linking $(notdir $@)'
 	@$(CLRECHO)
 	@[ -d $(BINDIR) ] || $(MKDIR) $(BINDIR)
-	@$(CC) $^ -o $@ $(CPPFLAGS)
+	$(CC) $^ -o $@ $(CPPFLAGS)
 
 $(OBJDIR)/%.o: %.cpp
 	@$(COLORECHO)
 	@$(PRINT) '==> Compiling $(notdir $@)'
 	@$(CLRECHO)
 	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
-	@$(CC) -c $< -o $@ $(CPPFLAGS)
+	$(CC) -c $< -o $@ $(CPPFLAGS)
 
 ## Other Actions
 run: $(TARGET)
@@ -106,9 +108,9 @@ run: $(TARGET)
 
 clean:
 	@$(COLORECHO)
-	@$(PRINT) '==> Cleanning...'
+	@$(PRINT) '==> Cleanning $(clean_directory)'
 	@$(CLRECHO)
-	@$(RM) $(BINDIR) $(OBJDIR)
+	@$(RM) $(clean_directory)
 
 zip:
 	@$(COLORECHO)

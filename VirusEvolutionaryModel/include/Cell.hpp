@@ -27,14 +27,13 @@ class Cell
     VECTOR(Virus *) stand_by_virus_list_;
 };
 
-
 class CellLand
 {
   public:
     CellLand( int width, int height );
     Cell& getCellAt( int x, int y );
-    VECTOR(Cell *) getNeighborsAt( int x, int y ) const;
-    VECTOR(Cell *) getCellList() const;
+    VECTOR(Cell *)& getNeighborsAt( Cell& cell ) const;
+    VECTOR(Cell *)& getCellList(){ return cell_list_; }
     int getCellListSize() const;
 
     int getWidth();

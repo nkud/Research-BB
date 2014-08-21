@@ -5,8 +5,8 @@
 Term :: Term() :
   term_( 0 ),
   max_term_( 0 ),
-  human_interval_( 0 ),
-  immune_interval_( 0 )
+  human_interval_( 1 ),
+  immune_interval_( 1 )
 {
 
 }

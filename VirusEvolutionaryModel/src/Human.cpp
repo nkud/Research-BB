@@ -1,12 +1,13 @@
 #include "Human.hpp"
 #include "Virus.hpp"
 #include "ImmuneSystem.hpp"
+#include "Cell.hpp"
 
 Human :: Human() :
   x_( 0 ),
   y_( 0 )
 {
-
+  immune_system_ = new ImmuneSystem();
 }
 
 int Human :: getX() const
@@ -26,16 +27,23 @@ void Human :: setY( int y )
   y_ = y;
 }
 
-Human& HumanLand :: getHumanAt( int x, int y )
+VECTOR(Human *)& HumanLand :: getHumanAt( Human& human )
 {
+  int x = human.getX();
+  int y = human.getY();
   int n = getHeight()*y + x;
-  return *human_list_[ n ];
+  return human_list_[ n ];
 }
 
 HumanLand :: HumanLand( int width, int height ) :
   width_( width ),
   height_( height )
 {
+  human_list_ = new VECTOR(Human *)[ height * width ];
+}
+HumanLand :: ~HumanLand()
+{
+  SAFE_DELETE_ARRAY( human_list_ );
 }
 int HumanLand :: getWidth() const
 {
