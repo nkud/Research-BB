@@ -25,7 +25,9 @@ class Cell : public __Location
     void pushNewVirusToInfectedVirusList( Virus& v );
     bool canPushNewVirus();
 
-    void contact( VECTOR(Cell *)& neighbors );
+    double calcVirusDensity();                                       /* ウイルスの体内密度を計算する */
+
+    void contact( VECTOR(Cell *)& neighbors );                       /* 接触する */
     bool infection();
   private:
     VECTOR(Virus *) infected_virus_list_;

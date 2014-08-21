@@ -15,6 +15,7 @@ class ImmuneSystem
 
     CellLand& getCellLand() { return *cell_land_; }
     VECTOR(Tcell *)& getTcellList() { return tcell_list; }
+
   private:
     CellLand *cell_land_;
     VECTOR(Tcell *) tcell_list;

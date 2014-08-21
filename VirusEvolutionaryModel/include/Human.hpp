@@ -17,21 +17,20 @@ class Human : public Gene, public __Mobile
   public:
     Human();
 
-    bool infection();
-    void contact();
+    bool infection();                            // 観戦する
+    void contact();                              // 接触する
 
-    void reborn();                // 初期化される
+    void reborn();                               // 初期化される
     ImmuneSystem& getImmuneSystem();
   private:
-    ImmuneSystem *immune_system_;
+    ImmuneSystem *immune_system_;                // 免疫機構
 };
 
 class HumanLand : public __Landscape
 {
   public:
-//    VECTOR(Human *)& getHumanAt( int x, int y );
-    VECTOR(Human *)& getHumanAt( Human& human );
-    const VECTOR(Human *) getNeighborsAt( int x, int y ) const;
+    VECTOR(Human *)& getHumanListAt( int x, int y );
+    VECTOR(Human *) getNeighborsAt( Human& human );
     VECTOR(Human *) getHumanList();
     int getHumanListSize();
 

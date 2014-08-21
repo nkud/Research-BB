@@ -65,9 +65,11 @@ VECTOR(Cell *) CellLand :: getNeighborsAt( Cell& cell )
   int y = cell.getY();
   REP( i, -1, 1 ) {
     REP( j, -1, 1 ) {
-      Cell &cell = getCellAt(x+j,y+i);
-      if( &cell == &cell ) continue;
-      neighbors.push_back( &cell );
+      if( isOnMap(x+j, y+i) ) {
+        Cell &neighbor = getCellAt(x+j,y+i);
+        if( &neighbor == &cell ) continue;
+        neighbors.push_back( &neighbor );
+      }
     }
   }
   return neighbors;

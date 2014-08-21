@@ -11,7 +11,13 @@ class __Landscape
     virtual void setWidth( int w ) { width_ = w; }
     virtual void setHeight( int h ) { height_ = h; }
 
-//    bool isOnMap( int x, int y );
+    bool isOnMap( int x, int y ) {
+      if( x < 0 ) { return false; }
+      if( y < 0 ) { return false; }
+      if( x > getWidth()-1 ) { return false; }
+      if( y > getHeight()-1 ) { return false; }
+      return true;
+    }
 //    void returnOnMap( int x, int y );
 
   private:

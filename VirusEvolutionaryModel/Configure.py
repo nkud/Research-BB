@@ -3,8 +3,9 @@
 
 import Tkinter
 import sys
+import os
 
-FONT = ('monospace', '10')
+FONT = ('monospace', '8')
 
 def create_spinbox(master, f, t):
   """ スピンボックスを作成する """
@@ -56,6 +57,7 @@ class Configure(Tkinter.Frame):
     human_num = ParameterField(self, '初期ヒト数', 1, 1000, 'yellow')
     hland_width = ParameterField(self, 'ヒト土地ヨコ', 10, 1000, 'yellow')
     hland_height = ParameterField(self, 'ヒト土地タテ', 10, 1000, 'yellow')
+
     max_term.pack()
     human_num.pack()
     hland_width.pack()
@@ -63,15 +65,20 @@ class Configure(Tkinter.Frame):
 
     button_panel = Tkinter.Frame(self)
     execute_button = create_button(button_panel, FONT, '実行', self.execute, 0, 0)
+    save_button = create_button(button_panel, FONT, '保存', self.saveConfig, 0, 0)
     exit_button = create_button(button_panel, FONT, '終了', self.exitConfig, 0, 0)
     put_widget(button_panel, 0, 0)
-    put_widget(exit_button, 0, 1)
+    put_widget(save_button, 0, 1)
+    put_widget(exit_button, 0, 2)
     button_panel.pack()
 
   def execute(self):
     print 'Run'
+    os.system('make run')
   def exitConfig(self):
     sys.exit()
+  def saveConfig(self):
+    print 'Save'
 
 def main():
   c = Configure()
