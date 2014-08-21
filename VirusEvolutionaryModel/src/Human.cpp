@@ -16,11 +16,6 @@ VECTOR(Human *)& HumanLand :: getHumanListAt( int x, int y )
   return human_list_[ n ];
 }
 
-void Human :: pushCloneToStandByVirusList( Virus& virus )
-{
-  stand_by_virus_list_.push_back( new Virus() );
-}
-
 HumanLand :: HumanLand( int width, int height ) :
   __Landscape( width, height )
 {
@@ -32,26 +27,29 @@ HumanLand :: ~HumanLand()
 }
 
 //XXX
-VECTOR(Virus *) Human :: getInfectedVirusList()
-{
-  VECTOR(Virus *) virus_list;
-  return virus_list;
-}
-//XXX
 bool Human :: infection()
 {
 //  bool can_infect = immune_system_->infection( v );
 //  return can_infect;
-  return true;
+  //if( getImmuneSystem().canPushNewVirus() ) {
+  if( true ) {
+    EACH( it_v, getImmuneSystem().getStandByVirusList() )
+    {
+      //getImmuneSystem().pushNewVirusToInfectedVirusList( **it_v );
+      getImmuneSystem().getCellLand().getCellAt(0,0).pushNewVirusToInfectedVirusList(**it_v);
+    }
+    return true;
+  }
+  return false;
 }
 //XXX
 void Human :: contact( VECTOR(Human *)& neighbors )
 {
   EACH( it_neighbor, neighbors )
   {
-    EACH( it_virus, (*it_neighbor)->getInfectedVirusList() )
+    EACH( it_virus, (*it_neighbor)->getImmuneSystem().getInfectedVirusList() )
     {
-      pushCloneToStandByVirusList( **it_virus );
+      getImmuneSystem().pushCloneToStandByVirusList( **it_virus );
     }
   }
 }

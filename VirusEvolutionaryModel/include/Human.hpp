@@ -23,11 +23,7 @@ class Human : public Gene, public __Mobile
     void reborn();                               // 初期化される
     ImmuneSystem& getImmuneSystem();
 
-    VECTOR(Virus *)& getStandByVirusList() { return stand_by_virus_list_; }
-    void pushCloneToStandByVirusList( Virus& virus );
-    VECTOR(Virus *) getInfectedVirusList();     // XXX
   private:
-    VECTOR(Virus *) stand_by_virus_list_;
     ImmuneSystem *immune_system_;                // 免疫機構
 };
 

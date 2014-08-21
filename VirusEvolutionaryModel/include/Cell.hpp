@@ -26,7 +26,7 @@ class Cell : public __Location
     bool canPushNewVirus();
 
     // XXX
-    double calcVirusDensity();                                       /* ウイルスの体内密度を計算する */
+    //double calcVirusDensity();                                       [> ウイルスの体内密度を計算する <]
 
     void contact( VECTOR(Cell *)& neighbors );                       /* 接触する */
     bool infection();
