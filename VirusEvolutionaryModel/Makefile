@@ -98,9 +98,7 @@ $(TARGET): $(OUTOBJ)
 	@$(CLRECHO)
 	@[ -d $(BINDIR) ] || $(MKDIR) $(BINDIR)
 	@$(CC) $^ -o $@ $(CPPFLAGS)
-	@$(BOLDECHO); $(REDECHO)
-	@$(PRINT) 'Done'
-	@$(CLRECHO)
+	@$(PRINT) 'ok'
 
 $(object_dir)/%.o: %.cpp
 	@$(COLORECHO)
@@ -108,9 +106,7 @@ $(object_dir)/%.o: %.cpp
 	@$(CLRECHO)
 	@[ -d $(object_dir) ] || $(MKDIR) $(object_dir)
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
-	@$(BOLDECHO); $(BLUEECHO)
-	@$(PRINT) 'OK'
-	@$(CLRECHO)
+	@$(PRINT) 'ok'
 
 ## Other Actions
 run: $(TARGET)

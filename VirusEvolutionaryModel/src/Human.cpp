@@ -16,6 +16,11 @@ VECTOR(Human *)& HumanLand :: getHumanListAt( int x, int y )
   return human_list_[ n ];
 }
 
+void Human :: pushCloneToStandByVirusList( Virus& virus )
+{
+  stand_by_virus_list_.push_back( new Virus() );
+}
+
 HumanLand :: HumanLand( int width, int height ) :
   __Landscape( width, height )
 {
@@ -26,20 +31,43 @@ HumanLand :: ~HumanLand()
   SAFE_DELETE_ARRAY( human_list_ );
 }
 
+//XXX
+VECTOR(Virus *) Human :: getInfectedVirusList()
+{
+  VECTOR(Virus *) virus_list;
+  return virus_list;
+}
+//XXX
 bool Human :: infection()
 {
 //  bool can_infect = immune_system_->infection( v );
 //  return can_infect;
   return true;
 }
-void Human :: contact()
+//XXX
+void Human :: contact( VECTOR(Human *)& neighbors )
 {
-
+  EACH( it_neighbor, neighbors )
+  {
+    EACH( it_virus, (*it_neighbor)->getInfectedVirusList() )
+    {
+      pushCloneToStandByVirusList( **it_virus );
+    }
+  }
 }
 
 ImmuneSystem& Human :: getImmuneSystem()
 {
   return *immune_system_;
+}
+
+void HumanLand :: clearMap()
+{
+  int n = getWidth()*getHeight();
+  FOR( i, n )
+  {
+    human_list_[i].clear();
+  }
 }
 
 VECTOR(Human *) HumanLand :: getNeighborsAt( Human& human )
@@ -60,3 +88,12 @@ VECTOR(Human *) HumanLand :: getNeighborsAt( Human& human )
   }
   return neighbors;                              // 近隣リストを返す
 }
+
+void HumanLand :: resistHuman( Human& human )
+{
+  int x = human.getX();
+  int y = human.getY();
+  int n = getHeight()*y + x;
+  human_list_[ n ].push_back( &human );
+}
+
