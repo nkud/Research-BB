@@ -68,7 +68,7 @@ OBJS += HumanCounter.o VirusCounter.o
 OBJS += Function.o
 
 # dependency
-$(OBJDIR)/main.o: Human.hpp Virus.hpp Config.hpp
+$(OBJDIR)/main.o: Human.hpp Virus.hpp Config.hpp ImmuneSystem.hpp
 
 $(OBJDIR)/Human.o: Human.hpp Gene.hpp Virus.hpp ImmuneSystem.hpp
 $(OBJDIR)/Config.o: Config.hpp

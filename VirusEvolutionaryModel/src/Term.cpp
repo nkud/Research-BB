@@ -1,5 +1,7 @@
 #include "Term.hpp"
 
+#include <cassert>
+
 Term :: Term() :
   term_( 0 ),
   max_term_( 0 ),
@@ -40,4 +42,27 @@ bool Term :: loop() {
     return true;
   else
     return false;
+}
+
+bool Term :: isHumanInterval() 
+{
+  if( getTerm()%human_interval_ == 0 )
+    return true;
+  else
+    return false;
+}
+bool Term :: isImmuneInterval()
+{
+  if( getTerm()%immune_interval_ == 0 )
+    return true;
+  else
+    return false;
+}
+void Term :: setHumanInterval( int t )
+{
+  human_interval_ = t;
+}
+void Term :: setImmuneInterval( int t )
+{
+  immune_interval_ = t;
 }

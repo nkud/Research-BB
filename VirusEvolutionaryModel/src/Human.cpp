@@ -51,3 +51,8 @@ bool Human :: infection( Virus& v )
   bool can_infect = immune_system_->infection( v );
   return can_infect;
 }
+
+ImmuneSystem& Human :: getImmuneSystem()
+{
+  return *immune_system_;
+}

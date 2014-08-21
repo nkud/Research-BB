@@ -23,6 +23,7 @@ class Human : public Gene
     bool infection( Virus& v );
 
     void reborn();                // 初期化される
+    ImmuneSystem& getImmuneSystem();
   private:
     int x_, y_;
     ImmuneSystem *immune_system_;
