@@ -7,6 +7,11 @@ class Virus;
 class CellLand;
 class Tcell;
 
+/**
+ * @brief 免疫機構
+ *
+ * @todo もしかしたらいらないかも
+ */
 class ImmuneSystem
 {
   public:

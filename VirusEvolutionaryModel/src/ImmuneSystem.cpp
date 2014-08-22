@@ -11,10 +11,11 @@ bool ImmuneSystem :: infection( Virus& v )
 
 ImmuneSystem :: ImmuneSystem()
 {
-  int w = 30;
-  int h = 30;
+  int w = 20;
+  int h = 20;
   cell_land_ = new CellLand(w, h);
-  FOR( i, 10 )
+
+  FOR( i, 100 )
   {
     Tcell *newt = new Tcell();
     newt->randomLocate( getCellLand() );

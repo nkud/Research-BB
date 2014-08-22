@@ -6,8 +6,8 @@ class __Landscape
   public:
     __Landscape( int w, int h ) { width_ = w; height_ = h; }
 
-    virtual int getWidth() { return width_; }
-    virtual int getHeight() { return height_; }
+    virtual int getWidth() const { return width_; }
+    virtual int getHeight() const { return height_; }
     virtual void setWidth( int w ) { width_ = w; }
     virtual void setHeight( int h ) { height_ = h; }
 

@@ -6,12 +6,12 @@
 /**
  * @brief ウイルス
  */
-class Virus : public Gene
+class Virus : public __Life
 {
  public:
-  int getInfectionRate();
-  int getMutationRate();
-  Virus& clone();  // クローンを作成する
+  int getInfectionRate();                        /// 感染確率
+  int getMutationRate();                         /// 突然変異確率
+  Virus& clone();                                /// クローンを作成する
  private:
 };
 

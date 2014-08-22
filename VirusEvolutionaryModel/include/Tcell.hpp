@@ -7,18 +7,21 @@
 class Virus;
 class __Landscape;
 
-class Tcell : public Gene, public __Mobile
+/**
+ * @brief T細胞
+ *
+ * 遺伝子を持ち、移動できる
+ */
+class Tcell : public __Life, public __Mobile
 {
   public:
     Tcell();
     ~Tcell();
 
-    Tcell& clone();
+    Tcell& clone();                              ///< クローンを作成
+    void reborn();                               ///< 再生成
 
-    bool hasReceptorMatching( Virus &v );
-
-    void reborn();
-
+    bool hasReceptorMatching( Virus &v );        ///< ウイルスに対する受容体所持の真偽
   private:
 };
 

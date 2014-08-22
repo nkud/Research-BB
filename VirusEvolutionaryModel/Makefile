@@ -75,10 +75,10 @@ OBJS += Function.o
 # Dependency
 $(object_dir)/main.o: Human.hpp Virus.hpp Config.hpp ImmuneSystem.hpp Function.hpp Tcell.hpp
 
-$(object_dir)/Human.o: Human.hpp Gene.hpp Virus.hpp ImmuneSystem.hpp Cell.hpp Mobile.hpp Landscape.hpp
+$(object_dir)/Human.o: Human.hpp Gene.hpp Virus.hpp ImmuneSystem.hpp Cell.hpp Mobile.hpp Landscape.hpp Host.hpp
 $(object_dir)/Config.o: Config.hpp
 $(object_dir)/Gene.o: Gene.hpp
-$(object_dir)/Cell.o: Cell.hpp Function.hpp Virus.hpp
+$(object_dir)/Cell.o: Cell.hpp Function.hpp Virus.hpp Host.hpp
 $(object_dir)/Virus.o: Virus.hpp Gene.hpp
 $(object_dir)/Tcell.o: Tcell.hpp Gene.hpp Mobile.hpp
 $(object_dir)/ImmuneSystem.o: ImmuneSystem.hpp Virus.hpp Cell.hpp Function.hpp
@@ -110,6 +110,7 @@ $(object_dir)/%.o: %.cpp
 
 ## Other Actions
 run: $(TARGET)
+	@echo run > log
 	@./$<
 	@$(COLORECHO)
 	@$(PRINT) '==> Program Terminated $(now)'

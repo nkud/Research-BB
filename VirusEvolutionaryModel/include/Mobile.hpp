@@ -37,8 +37,11 @@ class __Mobile : public __Location
         x += rand_bool() ? 1 : -1;
       if( rand_bool() )
         y += rand_bool() ? 1 : -1;
-      x += land.getWidth();
-      y += land.getHeight();
+      //x += land.getWidth();
+      //y += land.getHeight();
+      //setX( x%land.getWidth() );
+      //setY( y%land.getHeight() );
+      x = std::max( x, 0 );
       setX( x%land.getWidth() );
       setY( y%land.getHeight() );
     }
