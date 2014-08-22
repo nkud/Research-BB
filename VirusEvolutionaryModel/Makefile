@@ -21,6 +21,7 @@ BOLDECHO          = printf '\033[1m'
 REVERSEECHO       = printf '\033[7m'
 REDECHO           = printf '\033[31m'
 GREENECHO         = printf '\033[32m'
+YELLOWECHO        = printf '\033[33m'
 BLUEECHO          = printf '\033[34m'
 CLRECHO           = printf '\033[0m\033[39m'
 COLORECHO         = $(BOLDECHO); $(BLUEECHO)
@@ -29,18 +30,19 @@ COLORECHO         = $(BOLDECHO); $(BLUEECHO)
 SRC		 = $(shell find src -name '*.cpp')
 INCLUDE  = $(shell find include -name '*.h' -or -name '*.hpp')
 
-OBJDIR	 = obj
+object_dir	 = obj
 SRCDIR	 = src
 INCDIR   = include
 SCRDIR	 = script
 BINDIR	 = bin
 PRGDIR	 = program
 MSTDIR	 = master
-clean_directory = $(BINDIR) $(OBJDIR)
+clean_directory = $(BINDIR) $(object_dir)
 
-NOW		 := $(shell date +%y%m%d-%H%M%S)
-RSTDIR   = result-$(NOW)
-PRGNAME  = program-$(NOW)
+now		 = $(shell date +%y%m%d-%H%M%S)
+TIME	 := $(shell date +%y%m%d-%H%M%S)
+RSTDIR   = result-$(now)
+PRGNAME  = program-$(now)
 
 CPPFLAGS = $(addprefix -I , $(INCDIR))
 
@@ -51,13 +53,13 @@ vpath %.o	obj
 ## Target
 EXE := VEM.exe
 TARGET := $(BINDIR)/$(EXE)
-#OUTOBJ   = $(addprefix $(OBJDIR)/, $(addsuffix .o, $(notdir $(basename $(INCLUDE)))))
-OUTOBJ = $(addprefix $(OBJDIR)/, $(OBJS))
+#OUTOBJ   = $(addprefix $(object_dir)/, $(addsuffix .o, $(notdir $(basename $(INCLUDE)))))
+OUTOBJ = $(addprefix $(object_dir)/, $(OBJS))
 
-.PHONY: exe all run gene clean
+.PHONY: target all run gene clean
 
 
-exe: $(TARGET)
+target: $(TARGET)
 
 all: build run
 
@@ -71,42 +73,48 @@ OBJS += HumanCounter.o VirusCounter.o
 OBJS += Function.o
 
 # Dependency
-$(OBJDIR)/main.o: Human.hpp Virus.hpp Config.hpp ImmuneSystem.hpp Function.hpp Tcell.hpp
+$(object_dir)/main.o: Human.hpp Virus.hpp Config.hpp ImmuneSystem.hpp Function.hpp Tcell.hpp
 
-$(OBJDIR)/Human.o: Human.hpp Gene.hpp Virus.hpp ImmuneSystem.hpp Cell.hpp Mobile.hpp Landscape.hpp
-$(OBJDIR)/Config.o: Config.hpp
-$(OBJDIR)/Gene.o: Gene.hpp
-$(OBJDIR)/Cell.o: Cell.hpp Function.hpp Virus.hpp
-$(OBJDIR)/Virus.o: Virus.hpp Gene.hpp
-$(OBJDIR)/Tcell.o: Tcell.hpp Gene.hpp Mobile.hpp
-$(OBJDIR)/ImmuneSystem.o: ImmuneSystem.hpp Virus.hpp Cell.hpp Function.hpp
+$(object_dir)/Human.o: Human.hpp Gene.hpp Virus.hpp ImmuneSystem.hpp Cell.hpp Mobile.hpp Landscape.hpp Host.hpp
+$(object_dir)/Config.o: Config.hpp
+$(object_dir)/Gene.o: Gene.hpp
+$(object_dir)/Cell.o: Cell.hpp Function.hpp Virus.hpp Host.hpp
+$(object_dir)/Virus.o: Virus.hpp Gene.hpp
+$(object_dir)/Tcell.o: Tcell.hpp Gene.hpp Mobile.hpp
+$(object_dir)/ImmuneSystem.o: ImmuneSystem.hpp Virus.hpp Cell.hpp Function.hpp
 
-$(OBJDIR)/HumanCounter.o: HumanCounter.hpp
-$(OBJDIR)/VirusCounter.o: VirusCounter.hpp
+$(object_dir)/HumanCounter.o: HumanCounter.hpp
+$(object_dir)/VirusCounter.o: VirusCounter.hpp
 
-$(OBJDIR)/Term.o: Term.hpp
-$(OBJDIR)/FileFactory.o: FileFactory.hpp
-$(OBJDIR)/Function.o: Function.hpp Random.hpp
+$(object_dir)/Term.o: Term.hpp
+$(object_dir)/FileFactory.o: FileFactory.hpp
+$(object_dir)/Function.o: Function.hpp Random.hpp
 ################################################################################
 
 ## Make Program
 $(TARGET): $(OUTOBJ)
 	@$(COLORECHO)
-	@$(PRINT) '==> Linking $(notdir $@)'
+	@$(PRINT) -n '==> Linking $(notdir $@)...'
 	@$(CLRECHO)
 	@[ -d $(BINDIR) ] || $(MKDIR) $(BINDIR)
 	@$(CC) $^ -o $@ $(CPPFLAGS)
+	@$(PRINT) 'ok'
 
-$(OBJDIR)/%.o: %.cpp
+$(object_dir)/%.o: %.cpp
 	@$(COLORECHO)
-	@$(PRINT) '==> Compiling $(notdir $@)'
+	@$(PRINT) -n '==> Compiling $(notdir $@)...'
 	@$(CLRECHO)
-	@[ -d $(OBJDIR) ] || $(MKDIR) $(OBJDIR)
+	@[ -d $(object_dir) ] || $(MKDIR) $(object_dir)
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
+	@$(PRINT) 'ok'
 
 ## Other Actions
 run: $(TARGET)
+	@echo run > log
 	@./$<
+	@$(COLORECHO)
+	@$(PRINT) '==> Program Terminated $(now)'
+	@$(CLRECHO)
 
 clean:
 	@$(COLORECHO)
@@ -120,11 +128,11 @@ zip:
 	@$(CLRECHO)
 
 tree:
-	tree $(INCDIR) $(SRCDIR) $(OBJDIR) $(BINDIR) $(SCRDIR)
+	tree $(INCDIR) $(SRCDIR) $(object_dir) $(BINDIR) $(SCRDIR)
 
 time:
 	@$(COLORECHO)
-	@$(PRINT) '==> $(NOW)'
+	@$(PRINT) '==> $(now)'
 	@$(CLRECHO)
 
 

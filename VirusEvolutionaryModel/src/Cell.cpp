@@ -36,43 +36,6 @@ VECTOR(Virus *)& Cell :: getStandByVirusList()
   return stand_by_virus_list_;
 }
 
-Cell& CellLand :: getCellAt( int x, int y )
-{
-  int n = getHeight()*y + x;
-  return *cell_list_[ n ];
-}
-int CellLand :: getCellListSize() const
-{
-  return (int)cell_list_.size();
-}
-
-CellLand :: CellLand( int width, int height ) :
-  __Landscape( width, height )
-{
-  // 新しい細胞を追加
-  FOR( i, height ) {
-    FOR( j, width ) {
-      Cell *newc = new Cell(j, i);
-      cell_list_.push_back( newc );
-    }
-  }
-}
-
-VECTOR(Cell *) CellLand :: getNeighborsAt( Cell& cell )
-{
-  VECTOR(Cell *) neighbors;
-  int x = cell.getX();
-  int y = cell.getY();
-  REP( i, -1, 1 ) {
-    REP( j, -1, 1 ) {
-      Cell &cell = getCellAt(x+j,y+i);
-      if( &cell == &cell ) continue;
-      neighbors.push_back( &cell );
-    }
-  }
-  return neighbors;
-}
-
 bool Cell :: canPushNewVirus()
 {
   // 保持ウイルスの最大値があれば、ここで処理
@@ -113,14 +76,19 @@ bool Cell :: infection()
     EACH( it_v, getStandByVirusList() )
     {
       pushNewVirusToInfectedVirusList( **it_v );
+      return true;
     }
   }
+  clearStandByViruses();
   return false;
 }
 
 void Cell :: clearInfectedViruses()
 {
-
+  EACH( it_v, getInfectedVirusList() ) {
+    SAFE_DELETE( *it_v );
+  }
+  infected_virus_list_.clear();
 }
 void Cell :: clearStandByViruses()
 {
@@ -128,4 +96,66 @@ void Cell :: clearStandByViruses()
     SAFE_DELETE( *it_v );
   }
   stand_by_virus_list_.clear();
+}
+
+//----------------------------------------------------------------------
+//
+//  CellLand
+//
+//----------------------------------------------------------------------
+CellLand :: CellLand( int width, int height ) :
+  __Landscape( width, height )                   // 土地を初期化
+{
+  // 新しい細胞を追加
+  FOR( h, height ) {
+    FOR( w, width ) {
+      cell_list_.push_back( new Cell(w, h) );
+    }
+  }
+}
+
+int CellLand :: countInfectedCell() const
+{
+  int num = 0;
+  EACH( it_cell, getCellList() ) {               // 各細胞に対して
+    if( (*it_cell)->isInfected() ) {             // 感染していれば
+      num++;                                     // カウントする
+    }
+  }
+  return num;
+}
+
+Cell& CellLand :: getCellAt( int x, int y )
+{
+  int n = getHeight()*y + x;
+  return *cell_list_[ n ];
+}
+int CellLand :: getCellListSize() const
+{
+  return getWidth()*getHeight();
+  //return (int)cell_list_.size();
+}
+
+VECTOR(Cell *) CellLand :: getNeighborsAt( Cell& cell )
+{
+  VECTOR(Cell *) neighbors;
+  int x = cell.getX();
+  int y = cell.getY();
+  REP( i, -1, 1 ) {
+    REP( j, -1, 1 ) {
+      if( isOnMap(x+j, y+i) ) {                  // 土地の上なら
+        Cell &neighbor = getCellAt(x+j,y+i);
+        if( &neighbor == &cell ) continue;
+        neighbors.push_back( &neighbor );
+      }
+    }
+  }
+  return neighbors;
+}
+
+double CellLand :: calcInfectedCellDensity() const
+{
+  double dense = 0;
+  dense = (double)countInfectedCell() / getCellListSize();
+  return dense;
 }

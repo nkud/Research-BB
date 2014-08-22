@@ -21,10 +21,10 @@ class Gene
 /**
  * @brief 遺伝子を持つ生命体
  */
-class Life
+class __Life 
 {
  public:
-  Life& clone();
+  __Life& clone();
   Gene& getGene() { return *gene_; }
  private:
   Gene *gene_;

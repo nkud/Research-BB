@@ -11,13 +11,29 @@ bool ImmuneSystem :: infection( Virus& v )
 
 ImmuneSystem :: ImmuneSystem()
 {
-  int w = 30;
-  int h = 30;
+  int w = 20;
+  int h = 20;
   cell_land_ = new CellLand(w, h);
-  FOR( i, 10 )
+
+  FOR( i, 100 )
   {
     Tcell *newt = new Tcell();
     newt->randomLocate( getCellLand() );
     tcell_list.push_back( newt );
   }
+}
+void ImmuneSystem :: pushCloneToStandByVirusList( Virus& virus )
+{
+  stand_by_virus_list_.push_back( new Virus() );
+}
+
+//XXX
+VECTOR(Virus *) ImmuneSystem :: getInfectedVirusList()
+{
+  VECTOR(Virus *) virus_list;
+  VECTOR(Virus *) infected = getCellLand().getCellAt(0,0).getInfectedVirusList();
+  if( infected.size() > 0 ) {
+    virus_list.push_back(infected[0]);
+  }
+  return virus_list;
 }
