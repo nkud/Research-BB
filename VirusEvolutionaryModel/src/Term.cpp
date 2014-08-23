@@ -4,9 +4,7 @@
 
 Term :: Term() :
   term_( 0 ),
-  max_term_( 0 ),
-  human_interval_( 1 ),
-  immune_interval_( 1 )
+  max_term_( 0 )
 {
 
 }
@@ -21,11 +19,11 @@ void Term :: setMaxTerm( int t )
 {
   max_term_ = t;
 }
-int Term :: getMaxTerm()
+int Term :: getMaxTerm() const
 {
   return max_term_;
 }
-int Term :: getTerm()
+int Term :: getTerm() const
 {
   return term_;
 }
@@ -44,25 +42,10 @@ bool Term :: loop() {
     return false;
 }
 
-bool Term :: isHumanInterval() 
+bool Term :: isInterval( int t ) const 
 {
-  if( getTerm()%human_interval_ == 0 )
+  if( getTerm()%t == 0 )
     return true;
   else
     return false;
-}
-bool Term :: isImmuneInterval()
-{
-  if( getTerm()%immune_interval_ == 0 )
-    return true;
-  else
-    return false;
-}
-void Term :: setHumanInterval( int t )
-{
-  human_interval_ = t;
-}
-void Term :: setImmuneInterval( int t )
-{
-  immune_interval_ = t;
 }

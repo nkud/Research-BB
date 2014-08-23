@@ -1,31 +1,25 @@
 #ifndef ___TERM_HPP
 #define ___TERM_HPP
 
+/**
+ * @brief 期間管理
+ */
 class Term
 {
   public:
-    static Term& Instance();                                         /* インスタンス */
+    static Term& Instance();                     ///< インスタンス 
 
-    int getMaxTerm();                                                /* 最大実行期間 */
-    void setMaxTerm( int t );
-    int getTerm();
-
-    bool isHumanInterval();                                          // ヒト期間 
-    bool isImmuneInterval();                                         // 免疫機構期間 
-    void setHumanInterval( int t );
-    void setImmuneInterval( int t );
-//    void setInterval( int it, int ht );
-
+    int getMaxTerm() const;                      ///< 最大実行期間を取得する
+    void setMaxTerm( int t );                    ///< 最大実行期間を設定する
+    int getTerm() const;                         ///< 現在期間を取得する
 
     int incrementTerm();
+    bool isInterval( int t ) const;
 
-    bool loop();
+    bool loop();                                 ///< 期間を進めて、真偽値を返す
   private:
     Term();
     int term_;
     int max_term_;
-
-    int human_interval_;                                             // ヒトの間隔 
-    int immune_interval_;                                            // 免疫機構の間隔 
 };
 #endif
