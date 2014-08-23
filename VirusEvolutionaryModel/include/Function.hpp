@@ -15,6 +15,7 @@
 #define FOR(i, m)           for(int (i)=0; (i)<(m); (i)++)  /* i: 0 ~ (m-1) */
 #define REP(i, min, max)    for(int (i)=(min); (i)<=(max); (i)++)
 
+#define ASSERT
 #define ECHO(x)             do { std::cout<< CLEAR_RIGHT << "----> "<<GREEN<<BOLD<<x<<STANDARD<<CLR_ST<<""<<std::endl; }while(0);
 #define LOG(x)              do { output_log(#x, x); }while(0);
 #define LLOG(x)             do { std::cout<< CLEAR_RIGHT << "[ "<<GREEN<<BOLD<<#x<<STANDARD<<CLR_ST<<" ] "<<x<<std::endl; output_log(#x, x); }while(0);

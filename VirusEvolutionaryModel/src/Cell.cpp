@@ -20,10 +20,10 @@ bool Cell :: isInfected()
 
 bool Cell :: isNotInfected()
 {
-  if( getInfectedVirusList().size() > 0 )
-    return true;
-  else
+  if( isInfected() )
     return false;
+  else
+    return true;
 }
 
 VECTOR(Virus *)& Cell :: getInfectedVirusList()
@@ -46,7 +46,7 @@ bool Cell :: canPushNewVirus()
     return false;
 }
 
-void Cell :: pushNewVirusToInfectedVirusList( Virus& v )
+void Cell :: pushNewVirusCloneToInfectedVirusList( Virus& v )
 {
   infected_virus_list_.push_back( new Virus() );
 }
@@ -55,13 +55,12 @@ void Cell :: contact( VECTOR(Cell *)& neighbors )
 {
   EACH( it_neighbor, neighbors ) {               // 各近隣細胞に対して
     EACH( it_v, (*it_neighbor)->getInfectedVirusList() ) { // 感染ウイルスを取得し
-      //XXX
-      pushCloneToStandByVirusList( **it_v );
+      pushToStandByVirusList( **it_v );          // 待機ウイルスに追加（クローンではない）
     }
   }
 }
 
-void Cell :: pushCloneToStandByVirusList( Virus& v )
+void Cell :: pushToStandByVirusList( Virus& v )
 {
   stand_by_virus_list_.push_back( new Virus() );
 }
@@ -70,14 +69,14 @@ bool Cell :: infection()
 {
   // 待機ウイルスからランダムに選び、感染させる
   /// @todo 要変更
-  if( canPushNewVirus() ) {
-    EACH( it_v, getStandByVirusList() )
-    {
-      pushNewVirusToInfectedVirusList( **it_v );
-      return true;
+  if( canPushNewVirus() ) {                      // ウイルスに感染できる状態なら
+    EACH( it_v, getStandByVirusList() ) {        // 待機ウイルスの中から
+      pushNewVirusCloneToInfectedVirusList( *(*it_v)->clone() ); // 感染させる
+      clearStandByViruses();                     // 待機ウイルスをクリア
+      return true;                               // 終了
     }
   }
-  clearStandByViruses();
+  clearStandByViruses();                         // 待機ウイルスをクリア
   return false;
 }
 

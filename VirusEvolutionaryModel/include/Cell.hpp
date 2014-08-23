@@ -22,8 +22,8 @@ class Cell : public __Location, public __Host
     VECTOR(Virus *)& getInfectedVirusList();
     VECTOR(Virus *)& getStandByVirusList();
 
-    void pushCloneToStandByVirusList( Virus& v );
-    void pushNewVirusToInfectedVirusList( Virus& v );
+    void pushToStandByVirusList( Virus& v );
+    void pushNewVirusCloneToInfectedVirusList( Virus& v );
     bool canPushNewVirus();                      ///< 新しいウイルスを追加できるかの真偽
 
     void contact( VECTOR(Cell *)& neighbors );   ///< 接触する 

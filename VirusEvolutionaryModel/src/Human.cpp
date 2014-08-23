@@ -36,7 +36,7 @@ bool Human :: infection()
     EACH( it_v, getImmuneSystem().getStandByVirusList() )
     {
       //getImmuneSystem().pushNewVirusToInfectedVirusList( **it_v );
-      getImmuneSystem().getCellLand().getCellAt(0,0).pushNewVirusToInfectedVirusList(**it_v);
+      getImmuneSystem().getCellLand().getCellAt(0,0).pushNewVirusCloneToInfectedVirusList(**it_v);
     }
     return true;
   }

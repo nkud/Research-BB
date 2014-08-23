@@ -30,6 +30,7 @@ class __Mobile : public __Location
 {
   public:
     __Mobile( int x, int y ) : __Location(x, y) { }
+
     virtual void move( __Landscape& land ) {
       int x = getX();
       int y = getY();
@@ -42,6 +43,9 @@ class __Mobile : public __Location
       //setX( x%land.getWidth() );
       //setY( y%land.getHeight() );
       x = std::max( x, 0 );
+      x = std::min( x, land.getWidth()-1 );
+      y = std::max( y, 0 );
+      y = std::min( y, land.getHeight()-1 );
       setX( x%land.getWidth() );
       setY( y%land.getHeight() );
     }

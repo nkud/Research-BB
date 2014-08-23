@@ -15,7 +15,7 @@ using namespace std;
 //----------------------------------------------------------------------
 //  configure
 //----------------------------------------------------------------------
-const int TERM = 100;
+const int TERM = 10000;
 const int HUMAN_INTERVAL = 2;
 const int IMMUNE_INTERVAL = 1;
 
@@ -62,14 +62,14 @@ int main()
   }
 
   Virus *virus = new Virus();                    // 新しいウイルスを初期化
-  humans[0]->getImmuneSystem().getCellLand().getCellAt(0,0).pushNewVirusToInfectedVirusList(*virus);
+  humans[0]->getImmuneSystem().getCellLand().getCellAt(0,0).pushNewVirusCloneToInfectedVirusList(*virus);
   //----------------------------------------------------------------------
   //  計算開始
   //----------------------------------------------------------------------
   Benchmark::Instance().startTimer();
+  ECHO("計算開始");
   while( term.loop() )                           // 最大実行期間までループする
   {
-
     // デバッグログ ------------------------------------------------------
     LOG( term.getTerm() );
     LOG( humans[0]->getImmuneSystem().getCellLand().calcInfectedCellDensity() );
@@ -125,19 +125,20 @@ void run_host_pathogen_model( Human& human )
 {
   ImmuneSystem& IS = human.getImmuneSystem();    // 免疫機構を取得
   CellLand& cell_land = IS.getCellLand();        // 細胞土地を取得
+  VECTOR(Cell *) cell_list = cell_land.getCellList(); // 細胞リストを取得
   VECTOR(Tcell *) tcell_list = IS.getTcellList(); // T細胞リストを取得
   //----------------------------------------------------------------------
   //  T細胞の移動
   //----------------------------------------------------------------------
   LOG("T細胞の移動")
-  EACH( it_tc, tcell_list ) {             // 各T細胞に対して
+  EACH( it_tc, tcell_list ) {                    // 各T細胞に対して
     (*it_tc)->move(cell_land);                   // 移動させる
   }
   //----------------------------------------------------------------------
   //  細胞の接触
   //----------------------------------------------------------------------
   LOG("細胞の接触")
-  EACH( it_cell, cell_land.getCellList() ) {      // 各細胞に対して
+  EACH( it_cell, cell_list ) {                   // 各細胞に対して
     VECTOR(Cell *) neighbors = cell_land.getNeighborsAt( **it_cell ); // 近隣の細胞を取得し
     (*it_cell)->contact( neighbors );            // 接触させる
   }
@@ -145,7 +146,7 @@ void run_host_pathogen_model( Human& human )
   //  細胞の感染
   //----------------------------------------------------------------------
   LOG("細胞の移動")
-  EACH( it_cell, cell_land.getCellList() ) {      // 各細胞に対して
+  EACH( it_cell, cell_list ) {                   // 各細胞に対して
     (*it_cell)->infection();                     // 感染させる
   }
   //----------------------------------------------------------------------
@@ -165,7 +166,7 @@ void run_host_pathogen_model( Human& human )
   LOG("新しいT細胞を追加")
   LOG( new_tcell.size() );
   LOG( tcell_list.size() );
-  EACH( it_new, new_tcell ) {                    // 新しいT細胞を
-    tcell_list.push_back( *it_new );             // 追加する
+  EACH( it_tcell, new_tcell ) {                  // 新しいT細胞を
+    tcell_list.push_back( *it_tcell );           // 追加する
   }
 }
