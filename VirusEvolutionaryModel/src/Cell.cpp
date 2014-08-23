@@ -53,11 +53,9 @@ void Cell :: pushNewVirusToInfectedVirusList( Virus& v )
 
 void Cell :: contact( VECTOR(Cell *)& neighbors )
 {
-  // 接触する
-  EACH( it_neighbor, neighbors )
-  {
-    EACH( it_v, (*it_neighbor)->getInfectedVirusList() )
-    {
+  EACH( it_neighbor, neighbors ) {               // 各近隣細胞に対して
+    EACH( it_v, (*it_neighbor)->getInfectedVirusList() ) { // 感染ウイルスを取得し
+      //XXX
       pushCloneToStandByVirusList( **it_v );
     }
   }

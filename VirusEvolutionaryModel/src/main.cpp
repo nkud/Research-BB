@@ -45,14 +45,14 @@ int main()
   //----------------------------------------------------------------------
   //  宣言・初期化
   //----------------------------------------------------------------------
-  ECHO("Initialize Term");
+  ECHO("期間初期化");
   Term &term = Term::Instance();
   term.setMaxTerm(TERM);                         // 最大実行期間を設定
 
-  ECHO("Initialize HumanLand");
+  ECHO("ヒト土地初期化");
   HumanLand *humanLand = new HumanLand(WIDTH, HEIGHT); // ヒト土地を初期化
 
-  ECHO("Initialize Human");
+  ECHO("ヒト初期化");
   VECTOR(Human *) humans;
   Human *temp;
   FOR( i, HUMAN_NUM ) {                          // 初期設定の数だけ
@@ -110,7 +110,7 @@ int main()
   //----------------------------------------------------------------------
   //  計算終了
   //----------------------------------------------------------------------
-  ECHO("Finished.");
+  ECHO("計算終了");
   Benchmark::Instance().stopTimer();
   LOG( Benchmark::Instance().getTime() );
   return 0;
@@ -131,7 +131,7 @@ void run_host_pathogen_model( Human& human )
   //----------------------------------------------------------------------
   LOG("T細胞の移動")
   EACH( it_tc, tcell_list ) {             // 各T細胞に対して
-    (*it_tc)->move(cell_land);                    // 移動させる
+    (*it_tc)->move(cell_land);                   // 移動させる
   }
   //----------------------------------------------------------------------
   //  細胞の接触
