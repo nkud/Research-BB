@@ -19,14 +19,14 @@ class Human : public __Life, public __Mobile, public __Host
     Human( const char *tag );
     Human( int len );
 
-    bool infection();                            // 観戦する
-    void contact( VECTOR(Human *)& neighbors );  // 接触する
+    bool infection();                            ///< 観戦する
+    void contact( VECTOR(Human *)& neighbors );  ///< 接触する
 
-    void reborn();                               // 初期化される
+    void reborn();                               ///< 初期化される
     ImmuneSystem& getImmuneSystem();
 
   private:
-    ImmuneSystem *immune_system_;                // 免疫機構
+    ImmuneSystem *immune_system_;                ///< 免疫機構
 };
 
 /**
@@ -35,12 +35,12 @@ class Human : public __Life, public __Mobile, public __Host
 class HumanLand : public __Landscape
 {
   public:
-    VECTOR(Human *)& getHumanListAt( int x, int y ); // ヒトを取得する
-    VECTOR(Human *) getNeighborsAt( Human& human ); // 近隣を取得する
-    VECTOR(Human *)& getHumanList() { return *human_list_; } // ヒト配列を取得する
+    VECTOR(Human *)& getHumanListAt( int x, int y ); ///< ヒトを取得する
+    VECTOR(Human *) getNeighborsAt( Human& human ); ///< 近隣を取得する
+    VECTOR(Human *)& getHumanList() { return *human_list_; } ///< ヒト配列を取得する
 
-    void clearMap();                             // 土地の登録をクリア
-    void resistHuman( Human& human );            // 土地にヒトを登録する
+    void clearMap();                             ///< 土地の登録をクリア
+    void resistHuman( Human& human );            ///< 土地にヒトを登録する
 
     HumanLand( int width, int height );
     ~HumanLand();
