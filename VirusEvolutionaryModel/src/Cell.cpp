@@ -48,7 +48,7 @@ bool Cell :: canPushNewVirus()
 
 void Cell :: pushNewVirusCloneToInfectedVirusList( Virus& v )
 {
-  infected_virus_list_.push_back( new Virus() );
+  infected_virus_list_.push_back( v.clone() );
 }
 
 void Cell :: contact( VECTOR(Cell *)& neighbors )
@@ -62,7 +62,7 @@ void Cell :: contact( VECTOR(Cell *)& neighbors )
 
 void Cell :: pushToStandByVirusList( Virus& v )
 {
-  stand_by_virus_list_.push_back( new Virus() );
+  stand_by_virus_list_.push_back( v.clone() );
 }
 
 bool Cell :: infection()

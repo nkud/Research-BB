@@ -4,7 +4,14 @@
 #include "Cell.hpp"
 #include "Function.hpp"
 
-Human :: Human() :
+Human :: Human( const char *tag ) :
+  __Life( tag ),
+  __Mobile(0, 0)
+{
+  immune_system_ = new ImmuneSystem();
+}
+Human :: Human( int len ) :
+  __Life( len ),
   __Mobile(0, 0)
 {
   immune_system_ = new ImmuneSystem();
@@ -45,10 +52,8 @@ bool Human :: infection()
 //XXX
 void Human :: contact( VECTOR(Human *)& neighbors )
 {
-  EACH( it_neighbor, neighbors )
-  {
-    EACH( it_virus, (*it_neighbor)->getImmuneSystem().getInfectedVirusList() )
-    {
+  EACH( it_neighbor, neighbors ) {               // 各近隣に対して
+    EACH( it_virus, (*it_neighbor)->getImmuneSystem().getInfectedVirusList() ) { // 感染ウイルスを取得して
       getImmuneSystem().pushCloneToStandByVirusList( **it_virus );
     }
   }

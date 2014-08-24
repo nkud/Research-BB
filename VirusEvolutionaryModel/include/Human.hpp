@@ -16,7 +16,8 @@ class ImmuneSystem;
 class Human : public __Life, public __Mobile, public __Host
 {
   public:
-    Human();
+    Human( const char *tag );
+    Human( int len );
 
     bool infection();                            // 観戦する
     void contact( VECTOR(Human *)& neighbors );  // 接触する

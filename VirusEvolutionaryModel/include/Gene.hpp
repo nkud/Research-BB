@@ -9,14 +9,19 @@
 class Gene
 {
   public:
-    Gene();
-    std::string getTagString();                  ///< タグの文字列を取得する
-    int getTagNumAt( int pos );                  ///< 指定された位置のタグを取得する
-    int getLen();                                ///< タグの長さを取得する
-    int mutation( int prob );                    ///< 突然変異する
+    Gene( const char *tag );                     ///< タグを指定して初期化
+    Gene( int len );                             ///< タグの長さを指定して初期化
+
+    bool isInclude( Gene& other );               ///< タグを含んでいるか評価
     bool hasEqualTagTo( Gene& other );           ///< タグが等しいか評価
+
+    //std::string getTagString();                  ///< タグの文字列を取得する
+    int getTagNumAt( int pos );                  ///< 指定された位置のタグを取得する
+    int getLen() const;                          ///< タグの長さを取得する
+    int mutation( int prob );                    ///< 突然変異する
+    const char *getCString() { return tag_.c_str(); }
   private:
-    std::string tag_;  // タグ
+    std::string tag_;                            // タグ
 };
 
 /**
@@ -25,10 +30,13 @@ class Gene
 class __Life 
 {
  public:
-  __Life& clone();                               ///< クローンを作成する
-  Gene& getGene() { return *gene_; }             ///< 遺伝子を取得する
+   __Life( const char *tag );
+   __Life( int len );
+
+   __Life& clone();                               ///< クローンを作成する
+   Gene& getGene() { return *gene_; }             ///< 遺伝子を取得する
  private:
-  Gene *gene_;
+   Gene *gene_;
 };
 
 #endif

@@ -6,6 +6,7 @@
 #include "Tcell.hpp"
 #include "ImmuneSystem.hpp"
 #include "Function.hpp"
+#include "FileFactory.hpp"
 #include "Benchmark.hpp"
 
 using namespace std;
@@ -15,7 +16,7 @@ using namespace std;
 //----------------------------------------------------------------------
 //  configure
 //----------------------------------------------------------------------
-const int TERM = 10000;
+const int TERM = 3000;
 const int HUMAN_INTERVAL = 2;
 const int IMMUNE_INTERVAL = 1;
 
@@ -56,12 +57,12 @@ int main()
   VECTOR(Human *) humans;
   Human *temp;
   FOR( i, HUMAN_NUM ) {                          // 初期設定の数だけ
-    temp = new Human();                          // 新しくヒトを初期化
+    temp = new Human( 10 );                      // 新しくヒトを初期化
     temp->randomLocate(*humanLand);              // ランダムに土地に配置して
     humans.push_back( temp );                    // 配列に追加していく
   }
 
-  Virus *virus = new Virus();                    // 新しいウイルスを初期化
+  Virus *virus = new Virus( 10 );                // 新しいウイルスを初期化
   humans[0]->getImmuneSystem().getCellLand().getCellAt(0,0).pushNewVirusCloneToInfectedVirusList(*virus);
   //----------------------------------------------------------------------
   //  計算開始
@@ -106,6 +107,7 @@ int main()
         (*it_human)->infection();                // 感染させる
       }
     }
+    output_value_with_term("test.dat", humans[0]->getImmuneSystem().getTcellList().size() );
   }
   //----------------------------------------------------------------------
   //  計算終了

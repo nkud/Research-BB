@@ -17,14 +17,14 @@ ImmuneSystem :: ImmuneSystem()
 
   FOR( i, 100 )
   {
-    Tcell *newt = new Tcell();
+    Tcell *newt = new Tcell( 10 );
     newt->randomLocate( getCellLand() );
     tcell_list.push_back( newt );
   }
 }
 void ImmuneSystem :: pushCloneToStandByVirusList( Virus& virus )
 {
-  stand_by_virus_list_.push_back( new Virus() );
+  stand_by_virus_list_.push_back( virus.clone() );
 }
 
 //XXX

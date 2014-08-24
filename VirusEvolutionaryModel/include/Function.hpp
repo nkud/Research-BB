@@ -35,6 +35,7 @@ static int point = 0;
 #define SAFE_DELETE_ARRAY(p)    delete[] p; p = NULL;
 
 #define SEPARATOR           " "                                      /* 出力データを分割する文字 */
+#define ENDL                std::endl
 #define LOG_FNAME           "log"
 
 static std::ofstream ofs(LOG_FNAME, std::ios_base::out | std::ios_base::app);

@@ -5,16 +5,29 @@
 # Organization: OPU
 #
 
+## CONFIGURE ###################################################################
+# Object Files
+OBJS += main.o
+OBJS += Human.o Gene.o Virus.o Cell.o Tcell.o Term.o
+OBJS += ImmuneSystem.o
+OBJS += Term.o FileFactory.o
+OBJS += HumanCounter.o VirusCounter.o
+OBJS += Function.o
+
+output_files = log *.dat
+################################################################################
+
 ## Home Directory
 HOME              = ~/workspace/AgentBasedEpidemicModel/VirusEvolutionaryModel
 
 ## Command
-CC                = /usr/bin/g++ -Wall -g -O0 # -std=c++11
-PRINT             = /bin/echo
+CC                = g++ -Wall -g -O0 #-std=c++11
+PRINT             = echo
 MKDIR             = mkdir -vp
 MAKE              = make --no-print-directory -s
 COPY              = cp
 RM                = rm -rfv
+TAIL              = tail
 
 ## Colors
 BOLDECHO          = printf '\033[1m'
@@ -38,11 +51,13 @@ BINDIR	 = bin
 PRGDIR	 = program
 MSTDIR	 = master
 clean_directory = $(BINDIR) $(object_dir)
+bin_clean_files = $(output_files)
 
-now		 = $(shell date +%y%m%d-%H%M%S)
-TIME	 := $(shell date +%y%m%d-%H%M%S)
-RSTDIR   = result-$(now)
-PRGNAME  = program-$(now)
+now			= $(shell date +%y%m%d-%H%M%S)
+timestamp	:= $(shell date '+< %y/%m/%d %H:%M:%S >')
+TIME		:= $(shell date +%y%m%d-%H%M%S)
+RSTDIR		= result-$(now)
+PRGNAME		= program-$(now)
 
 CPPFLAGS = $(addprefix -I , $(INCDIR))
 
@@ -61,18 +76,9 @@ OUTOBJ = $(addprefix $(object_dir)/, $(OBJS))
 
 target: $(TARGET)
 
-all: build run
+all: $(TARGET) run tail
 
-## CONFIGURE ###################################################################
-# Object Files
-OBJS += main.o
-OBJS += Human.o Gene.o Virus.o Cell.o Tcell.o Term.o
-OBJS += ImmuneSystem.o
-OBJS += Term.o FileFactory.o
-OBJS += HumanCounter.o VirusCounter.o
-OBJS += Function.o
-
-# Dependency
+# Dependency ###################################################################
 $(object_dir)/main.o: Human.hpp Virus.hpp Config.hpp ImmuneSystem.hpp Function.hpp Tcell.hpp
 
 $(object_dir)/Human.o: Human.hpp Gene.hpp Virus.hpp ImmuneSystem.hpp Cell.hpp Mobile.hpp Landscape.hpp Host.hpp
@@ -87,7 +93,7 @@ $(object_dir)/HumanCounter.o: HumanCounter.hpp
 $(object_dir)/VirusCounter.o: VirusCounter.hpp
 
 $(object_dir)/Term.o: Term.hpp
-$(object_dir)/FileFactory.o: FileFactory.hpp
+$(object_dir)/FileFactory.o: FileFactory.hpp Term.hpp Function.hpp
 $(object_dir)/Function.o: Function.hpp Random.hpp
 ################################################################################
 
@@ -109,11 +115,14 @@ $(object_dir)/%.o: %.cpp
 	@$(PRINT) 'ok'
 
 ## Other Actions
-run: $(TARGET)
-	@echo run > log
-	@./$<
+run: bclean
 	@$(COLORECHO)
-	@$(PRINT) '==> Program Terminated $(now)'
+	@$(PRINT) '==> Program is started $(timestamp)'
+	@$(CLRECHO)
+	@echo run > log
+	@cd $(BINDIR); ./$(EXE)
+	@$(COLORECHO)
+	@$(PRINT) '==> Terminated $(timestamp)'
 	@$(CLRECHO)
 
 clean:
@@ -135,5 +144,16 @@ time:
 	@$(PRINT) '==> $(now)'
 	@$(CLRECHO)
 
+bclean:
+	@$(COLORECHO)
+	@$(PRINT) '==> Cleanning bin/ $(bin_clean_files)'
+	@$(CLRECHO)
+	@cd $(BINDIR); $(RM) $(bin_clean_files)
 
-build: clean $(TARGET)
+tail:
+	@$(COLORECHO)
+	@$(PRINT) '==> Log tail'
+	@$(CLRECHO)
+	@cd $(BINDIR); $(TAIL) log
+
+re: clean $(TARGET)
