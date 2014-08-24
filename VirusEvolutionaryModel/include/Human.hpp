@@ -19,11 +19,14 @@ class Human : public __Life, public __Mobile, public __Host
     Human( const char *tag );
     Human( int len );
 
-    bool infection();                            ///< 観戦する
-    void contact( VECTOR(Human *)& neighbors );  ///< 接触する
-
     void reborn();                               ///< 初期化される
     ImmuneSystem& getImmuneSystem();
+    //----------------------------------------------------------------------
+    //  宿主関数
+    //----------------------------------------------------------------------
+    //VECTOR(Virus *)& getInfectedVirusList();
+    void contact( __Host& neighbor );           ///< ホストと接触
+    bool infection();                            ///< 待機ウイルスを感染させる
 
   private:
     ImmuneSystem *immune_system_;                ///< 免疫機構

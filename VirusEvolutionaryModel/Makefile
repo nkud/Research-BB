@@ -13,6 +13,7 @@ OBJS += ImmuneSystem.o
 OBJS += Term.o FileFactory.o
 OBJS += HumanCounter.o VirusCounter.o
 OBJS += Function.o
+OBJS += Host.o
 
 output_files = log *.txt
 ################################################################################
@@ -92,6 +93,8 @@ $(object_dir)/Cell.o: Cell.hpp Function.hpp Virus.hpp Host.hpp
 $(object_dir)/Virus.o: Virus.hpp Gene.hpp
 $(object_dir)/Tcell.o: Tcell.hpp Gene.hpp Mobile.hpp
 $(object_dir)/ImmuneSystem.o: ImmuneSystem.hpp Virus.hpp Cell.hpp Function.hpp
+
+$(object_dir)/Host.o: Host.hpp Virus.hpp
 
 $(object_dir)/HumanCounter.o: HumanCounter.hpp
 $(object_dir)/VirusCounter.o: VirusCounter.hpp

@@ -101,7 +101,9 @@ int main()
       LOG("ヒトの接触")
       EACH( it_human, humans ) {                 // 各ヒトに対して
         VECTOR(Human *) neighbors = humanLand->getNeighborsAt( **it_human );
-        (*it_human)->contact( neighbors );       // 接触させる
+        EACH( it_neighbor, neighbors ) {
+          (*it_human)->contact( **it_neighbor ); // 接触させる
+        }
       }
       LOG("ヒトの感染")
       EACH( it_human, humans ) {                 // 各ヒトに対して
@@ -143,7 +145,9 @@ void run_host_pathogen_model( Human& human )
   LOG("細胞の接触")
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
     VECTOR(Cell *) neighbors = cell_land.getNeighborsAt( **it_cell ); // 近隣の細胞を取得し
-    (*it_cell)->contact( neighbors );            // 接触させる
+    EACH( it_neighbor, neighbors ) {
+      (*it_cell)->contact( **it_neighbor );            // 接触させる
+    }
   }
   //----------------------------------------------------------------------
   //  細胞の感染

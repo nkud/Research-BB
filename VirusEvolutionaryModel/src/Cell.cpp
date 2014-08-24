@@ -3,9 +3,7 @@
 #include "Function.hpp"
 
 Cell :: Cell(int x, int y) :
-  __Location(x,y),
-  infected_virus_list_( 0 ),
-  stand_by_virus_list_( 0 )
+  __Location(x,y)
 {
 
 }
@@ -26,43 +24,13 @@ bool Cell :: isNotInfected()
     return true;
 }
 
-VECTOR(Virus *)& Cell :: getInfectedVirusList()
-{
-  return infected_virus_list_;
-}
 
-VECTOR(Virus *)& Cell :: getStandByVirusList()
-{
-  return stand_by_virus_list_;
-}
 
-bool Cell :: canPushNewVirus()
+void Cell :: contact( __Host& neighbor )
 {
-  // 保持ウイルスの最大値があれば、ここで処理
-  int max_virus = 1;
-  if( getInfectedVirusListSize() < max_virus )
-    return true;
-  else
-    return false;
-}
-
-void Cell :: pushNewVirusCloneToInfectedVirusList( Virus& v )
-{
-  infected_virus_list_.push_back( v.clone() );
-}
-
-void Cell :: contact( VECTOR(Cell *)& neighbors )
-{
-  EACH( it_neighbor, neighbors ) {               // 各近隣細胞に対して
-    EACH( it_v, (*it_neighbor)->getInfectedVirusList() ) { // 感染ウイルスを取得し
-      pushToStandByVirusList( **it_v );          // 待機ウイルスに追加（クローンではない）
+    EACH( it_v, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得し
+      pushVirusToStandByVirusList( **it_v );     // 待機ウイルスに追加（クローンではない）
     }
-  }
-}
-
-void Cell :: pushToStandByVirusList( Virus& v )
-{
-  stand_by_virus_list_.push_back( v.clone() );
 }
 
 bool Cell :: infection()
@@ -78,21 +46,6 @@ bool Cell :: infection()
   }
   clearStandByViruses();                         // 待機ウイルスをクリア
   return false;
-}
-
-void Cell :: clearInfectedViruses()
-{
-  EACH( it_v, getInfectedVirusList() ) {
-    SAFE_DELETE( *it_v );
-  }
-  infected_virus_list_.clear();
-}
-void Cell :: clearStandByViruses()
-{
-  EACH( it_v, getStandByVirusList() ) {
-    SAFE_DELETE( *it_v );
-  }
-  stand_by_virus_list_.clear();
 }
 
 //----------------------------------------------------------------------

@@ -15,22 +15,9 @@ class Cell : public __Location, public __Host
     bool isInfected();                           ///< 感染の真偽
     bool isNotInfected();                        ///< 未感染の真偽
 
-    int getInfectedVirusListSize() { return infected_virus_list_.size(); }
-
-    void clearInfectedViruses();
-    void clearStandByViruses();
-    VECTOR(Virus *)& getInfectedVirusList();
-    VECTOR(Virus *)& getStandByVirusList();
-
-    void pushToStandByVirusList( Virus& v );
-    void pushNewVirusCloneToInfectedVirusList( Virus& v );
-    bool canPushNewVirus();                      ///< 新しいウイルスを追加できるかの真偽
-
-    void contact( VECTOR(Cell *)& neighbors );   ///< 接触する 
+    void contact( __Host& neighbor );            ///< 接触する 
     bool infection();
   private:
-    VECTOR(Virus *) infected_virus_list_;
-    VECTOR(Virus *) stand_by_virus_list_;
 };
 
 /**

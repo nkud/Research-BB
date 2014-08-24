@@ -40,7 +40,7 @@ bool Human :: infection()
 //  return can_infect;
   //if( getImmuneSystem().canPushNewVirus() ) {
   if( true ) {
-    EACH( it_v, getImmuneSystem().getStandByVirusList() )
+    EACH( it_v, getStandByVirusList() )
     {
       //getImmuneSystem().pushNewVirusToInfectedVirusList( **it_v );
       getImmuneSystem().getCellLand().getCellAt(0,0).pushNewVirusCloneToInfectedVirusList(**it_v);
@@ -50,12 +50,10 @@ bool Human :: infection()
   return false;
 }
 //XXX
-void Human :: contact( VECTOR(Human *)& neighbors )
+void Human :: contact( __Host & neighbor )
 {
-  EACH( it_neighbor, neighbors ) {               // 各近隣に対して
-    EACH( it_virus, (*it_neighbor)->getImmuneSystem().getInfectedVirusList() ) { // 感染ウイルスを取得して
-      getImmuneSystem().pushToStandByVirusList( **it_virus );
-    }
+  EACH( it_virus, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得して
+    pushVirusToStandByVirusList( **it_virus );
   }
 }
 
@@ -100,3 +98,17 @@ void HumanLand :: resistHuman( Human& human )
   human_list_[ n ].push_back( &human );
 }
 
+
+//----------------------------------------------------------------------
+//  ホスト
+//----------------------------------------------------------------------
+//XXX
+//VECTOR(Virus *)& Human :: getInfectedVirusList()
+//{
+  //VECTOR(Virus *) virus_list;
+  //VECTOR(Virus *) infected = getImmuneSystem().getCellLand().getCellAt(0,0).getInfectedVirusList();
+  //if( infected.size() > 0 ) {
+    //virus_list.push_back(infected[0]);
+  //}
+  //return virus_list;
+//}
