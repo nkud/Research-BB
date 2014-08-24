@@ -12,8 +12,8 @@ class Cell : public __Location, public __Host
 {
   public:
     Cell( int x, int y);
-    bool isInfected();                     ///< 感染の真偽
-    bool isNotInfected();                  ///< 未感染の真偽
+    bool isInfected();                           ///< 感染の真偽
+    bool isNotInfected();                        ///< 未感染の真偽
 
     int getInfectedVirusListSize() { return infected_virus_list_.size(); }
 
@@ -42,11 +42,11 @@ class CellLand : public __Landscape
     CellLand( int width, int height );
     Cell& getCellAt( int x, int y );
     VECTOR(Cell *) getNeighborsAt( Cell& cell ); ///< 近隣を取得する
-    const VECTOR(Cell *)& getCellList() const { return cell_list_; }
+    VECTOR(Cell *)& getCellList() { return cell_list_; }
     int getCellListSize() const;                 ///< 細胞数を取得する
 
-    double calcInfectedCellDensity() const;      ///< 感染細胞の密度を計算する
-    int countInfectedCell() const;               ///< 感染細胞の数を数える
+    double calcInfectedCellDensity();            ///< 感染細胞の密度を計算する
+    int countInfectedCell();                     ///< 感染細胞の数を数える
   private:
     CellLand();
     VECTOR(Cell *) cell_list_;

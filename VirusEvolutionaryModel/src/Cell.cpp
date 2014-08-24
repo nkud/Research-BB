@@ -111,7 +111,7 @@ CellLand :: CellLand( int width, int height ) :
   }
 }
 
-int CellLand :: countInfectedCell() const
+int CellLand :: countInfectedCell()
 {
   int num = 0;
   EACH( it_cell, getCellList() ) {               // 各細胞に対して
@@ -150,7 +150,7 @@ VECTOR(Cell *) CellLand :: getNeighborsAt( Cell& cell )
   return neighbors;
 }
 
-double CellLand :: calcInfectedCellDensity() const
+double CellLand :: calcInfectedCellDensity()
 {
   double dense = 0;
   dense = (double)countInfectedCell() / getCellListSize();

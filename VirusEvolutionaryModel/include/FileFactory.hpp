@@ -5,7 +5,8 @@
 #include "Term.hpp"
 #include <fstream>
 
-void output_value_with_term( const char *fname, int value ) {
+template < typename T >
+void output_value_with_term( const char *fname, T value ) {
   int term = Term::Instance().getTerm();
   std::ofstream ofs(fname, std::ios_base::out | std::ios_base::app);
   ofs << term << SEPARATOR;                      // 期間と

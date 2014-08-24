@@ -3,6 +3,7 @@
 
 #include "Gene.hpp"
 #include "Mobile.hpp"
+#include "Function.hpp"
 
 class Virus;
 class __Landscape;
@@ -17,7 +18,6 @@ class Tcell : public __Life, public __Mobile
   public:
     Tcell( const char *tag );
     Tcell( int len );
-    ~Tcell();
 
     Tcell& clone();                              ///< クローンを作成
     void reborn();                               ///< 再生成

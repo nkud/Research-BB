@@ -74,6 +74,7 @@ int main()
     // デバッグログ ------------------------------------------------------
     LOG( term.getTerm() );
     LOG( humans[0]->getImmuneSystem().getCellLand().calcInfectedCellDensity() );
+    output_value_with_term("dense.txt", humans[0]->getImmuneSystem().getCellLand().calcInfectedCellDensity() );
 
     //----------------------------------------------------------------------
     //  宿主内の動態を処理
@@ -127,8 +128,8 @@ void run_host_pathogen_model( Human& human )
 {
   ImmuneSystem& IS = human.getImmuneSystem();    // 免疫機構を取得
   CellLand& cell_land = IS.getCellLand();        // 細胞土地を取得
-  VECTOR(Cell *) cell_list = cell_land.getCellList(); // 細胞リストを取得
-  VECTOR(Tcell *) tcell_list = IS.getTcellList(); // T細胞リストを取得
+  VECTOR(Cell *)& cell_list = cell_land.getCellList(); // 細胞リストを取得
+  VECTOR(Tcell *)& tcell_list = IS.getTcellList(); // T細胞リストを取得
   //----------------------------------------------------------------------
   //  T細胞の移動
   //----------------------------------------------------------------------
@@ -171,5 +172,5 @@ void run_host_pathogen_model( Human& human )
   EACH( it_tcell, new_tcell ) {                  // 新しいT細胞を
     tcell_list.push_back( *it_tcell );           // 追加する
   }
-  output_value_with_term("new-tcell.txt", tcell_list.size() );
+  output_value_with_term("tcell-size.txt", tcell_list.size() );
 }
