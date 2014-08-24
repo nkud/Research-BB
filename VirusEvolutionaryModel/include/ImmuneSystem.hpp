@@ -21,7 +21,7 @@ class ImmuneSystem
     CellLand& getCellLand() { return *cell_land_; }
     VECTOR(Tcell *)& getTcellList() { return tcell_list; }
 
-    void pushCloneToStandByVirusList( Virus& virus );
+    void pushToStandByVirusList( Virus& virus );
     VECTOR(Virus *) getInfectedVirusList();     // XXX
     VECTOR(Virus *)& getStandByVirusList() { return stand_by_virus_list_; }
 

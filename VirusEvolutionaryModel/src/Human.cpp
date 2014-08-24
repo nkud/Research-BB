@@ -54,7 +54,7 @@ void Human :: contact( VECTOR(Human *)& neighbors )
 {
   EACH( it_neighbor, neighbors ) {               // 各近隣に対して
     EACH( it_virus, (*it_neighbor)->getImmuneSystem().getInfectedVirusList() ) { // 感染ウイルスを取得して
-      getImmuneSystem().pushCloneToStandByVirusList( **it_virus );
+      getImmuneSystem().pushToStandByVirusList( **it_virus );
     }
   }
 }

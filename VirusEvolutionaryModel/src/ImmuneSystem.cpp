@@ -22,7 +22,7 @@ ImmuneSystem :: ImmuneSystem()
     tcell_list.push_back( newt );
   }
 }
-void ImmuneSystem :: pushCloneToStandByVirusList( Virus& virus )
+void ImmuneSystem :: pushToStandByVirusList( Virus& virus )
 {
   stand_by_virus_list_.push_back( virus.clone() );
 }
