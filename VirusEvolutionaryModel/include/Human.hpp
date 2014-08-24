@@ -8,7 +8,8 @@
 #include "Host.hpp"
 
 class Virus;
-class ImmuneSystem;
+class CellLand;
+class Tcell;
 
 /**
  * @brief ヒト
@@ -20,7 +21,6 @@ class Human : public __Life, public __Mobile, public __Host
     Human( int len );
 
     void reborn();                               ///< 初期化される
-    ImmuneSystem& getImmuneSystem();
     //----------------------------------------------------------------------
     //  宿主関数
     //----------------------------------------------------------------------
@@ -28,8 +28,13 @@ class Human : public __Life, public __Mobile, public __Host
     void contact( __Host& neighbor );           ///< ホストと接触
     bool infection();                            ///< 待機ウイルスを感染させる
 
+
+    CellLand& getCellLand() { return *cell_land_; }
+    VECTOR(Tcell *)& getTcellList() { return tcell_list; }
+
   private:
-    ImmuneSystem *immune_system_;                ///< 免疫機構
+    CellLand *cell_land_;
+    VECTOR(Tcell *) tcell_list;
 };
 
 /**

@@ -9,7 +9,6 @@
 # Object Files
 OBJS += main.o
 OBJS += Human.o Gene.o Virus.o Cell.o Tcell.o Term.o
-OBJS += ImmuneSystem.o
 OBJS += Term.o FileFactory.o
 OBJS += HumanCounter.o VirusCounter.o
 OBJS += Function.o
@@ -84,15 +83,14 @@ target: $(TARGET)
 all: $(TARGET) run tail
 
 # Dependency ###################################################################
-$(object_dir)/main.o: Human.hpp Virus.hpp Config.hpp ImmuneSystem.hpp Function.hpp Tcell.hpp
+$(object_dir)/main.o: Human.hpp Virus.hpp Config.hpp Function.hpp Tcell.hpp
 
-$(object_dir)/Human.o: Human.hpp Gene.hpp Virus.hpp ImmuneSystem.hpp Cell.hpp Mobile.hpp Landscape.hpp Host.hpp
+$(object_dir)/Human.o: Human.hpp Gene.hpp Virus.hpp Cell.hpp Mobile.hpp Landscape.hpp Host.hpp Tcell.hpp
 $(object_dir)/Config.o: Config.hpp
 $(object_dir)/Gene.o: Gene.hpp
 $(object_dir)/Cell.o: Cell.hpp Function.hpp Virus.hpp Host.hpp
 $(object_dir)/Virus.o: Virus.hpp Gene.hpp
 $(object_dir)/Tcell.o: Tcell.hpp Gene.hpp Mobile.hpp
-$(object_dir)/ImmuneSystem.o: ImmuneSystem.hpp Virus.hpp Cell.hpp Function.hpp
 
 $(object_dir)/Host.o: Host.hpp Virus.hpp
 

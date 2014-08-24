@@ -4,7 +4,6 @@
 #include "Term.hpp"
 #include "Cell.hpp"
 #include "Tcell.hpp"
-#include "ImmuneSystem.hpp"
 #include "Function.hpp"
 #include "FileFactory.hpp"
 #include "Benchmark.hpp"
@@ -63,7 +62,7 @@ int main()
   }
 
   Virus *virus = new Virus( 10 );                // 新しいウイルスを初期化
-  humans[0]->getImmuneSystem().getCellLand().getCellAt(0,0).pushNewVirusCloneToInfectedVirusList(*virus);
+  humans[0]->getCellLand().getCellAt(0,0).pushNewVirusCloneToInfectedVirusList(*virus);
   //----------------------------------------------------------------------
   //  計算開始
   //----------------------------------------------------------------------
@@ -73,8 +72,8 @@ int main()
   {
     // デバッグログ ------------------------------------------------------
     LOG( term.getTerm() );
-    LOG( humans[0]->getImmuneSystem().getCellLand().calcInfectedCellDensity() );
-    output_value_with_term("dense.txt", humans[0]->getImmuneSystem().getCellLand().calcInfectedCellDensity() );
+    LOG( humans[0]->getCellLand().calcInfectedCellDensity() );
+    output_value_with_term("dense.txt", humans[0]->getCellLand().calcInfectedCellDensity() );
 
     //----------------------------------------------------------------------
     //  宿主内の動態を処理
@@ -110,7 +109,7 @@ int main()
         (*it_human)->infection();                // 感染させる
       }
     }
-    output_value_with_term("test.txt", humans[0]->getImmuneSystem().getTcellList().size() );
+    output_value_with_term("test.txt", humans[0]->getTcellList().size() );
   }
   //----------------------------------------------------------------------
   //  計算終了
@@ -128,10 +127,9 @@ int main()
 //----------------------------------------------------------------------
 void run_host_pathogen_model( Human& human )
 {
-  ImmuneSystem& IS = human.getImmuneSystem();    // 免疫機構を取得
-  CellLand& cell_land = IS.getCellLand();        // 細胞土地を取得
+  CellLand& cell_land = human.getCellLand();        // 細胞土地を取得
   VECTOR(Cell *)& cell_list = cell_land.getCellList(); // 細胞リストを取得
-  VECTOR(Tcell *)& tcell_list = IS.getTcellList(); // T細胞リストを取得
+  VECTOR(Tcell *)& tcell_list = human.getTcellList(); // T細胞リストを取得
   //----------------------------------------------------------------------
   //  T細胞の移動
   //----------------------------------------------------------------------

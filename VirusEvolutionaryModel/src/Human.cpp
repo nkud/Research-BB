@@ -1,20 +1,38 @@
 #include "Human.hpp"
 #include "Virus.hpp"
-#include "ImmuneSystem.hpp"
 #include "Cell.hpp"
+#include "Tcell.hpp"
 #include "Function.hpp"
 
 Human :: Human( const char *tag ) :
   __Life( tag ),
   __Mobile(0, 0)
 {
-  immune_system_ = new ImmuneSystem();
+  int w = 20;
+  int h = 20;
+  cell_land_ = new CellLand(w, h);
+
+  FOR( i, 100 )
+  {
+    Tcell *newt = new Tcell( 10 );
+    newt->randomLocate( getCellLand() );
+    tcell_list.push_back( newt );
+  }
 }
 Human :: Human( int len ) :
   __Life( len ),
   __Mobile(0, 0)
 {
-  immune_system_ = new ImmuneSystem();
+  int w = 20;
+  int h = 20;
+  cell_land_ = new CellLand(w, h);
+
+  FOR( i, 100 )
+  {
+    Tcell *newt = new Tcell( 10 );
+    newt->randomLocate( getCellLand() );
+    tcell_list.push_back( newt );
+  }
 }
 
 VECTOR(Human *)& HumanLand :: getHumanListAt( int x, int y )
@@ -36,14 +54,11 @@ HumanLand :: ~HumanLand()
 //XXX
 bool Human :: infection()
 {
-//  bool can_infect = immune_system_->infection( v );
 //  return can_infect;
-  //if( getImmuneSystem().canPushNewVirus() ) {
   if( true ) {
     EACH( it_v, getStandByVirusList() )
     {
-      //getImmuneSystem().pushNewVirusToInfectedVirusList( **it_v );
-      getImmuneSystem().getCellLand().getCellAt(0,0).pushNewVirusCloneToInfectedVirusList(**it_v);
+      getCellLand().getCellAt(0,0).pushNewVirusCloneToInfectedVirusList(**it_v);
     }
     return true;
   }
@@ -55,11 +70,6 @@ void Human :: contact( __Host & neighbor )
   EACH( it_virus, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得して
     pushVirusToStandByVirusList( **it_virus );
   }
-}
-
-ImmuneSystem& Human :: getImmuneSystem()
-{
-  return *immune_system_;
 }
 
 void HumanLand :: clearMap()
