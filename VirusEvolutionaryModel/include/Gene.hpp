@@ -2,6 +2,7 @@
 #define ___GENE_HPP
 
 #include <string>
+#include "Function.hpp"
 
 /**
  * @brief 遺伝子
@@ -32,6 +33,7 @@ class __Life
  public:
    __Life( const char *tag );
    __Life( int len );
+   ~__Life() { delete gene_; }
 
    __Life& clone();                               ///< クローンを作成する
    Gene& getGene() { return *gene_; }             ///< 遺伝子を取得する

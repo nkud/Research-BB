@@ -30,6 +30,7 @@ class __Mobile : public __Location
 {
   public:
     __Mobile( int x, int y ) : __Location(x, y) { }
+    ~__Mobile() { }
 
     virtual void move( __Landscape& land ) {
       int x = getX();

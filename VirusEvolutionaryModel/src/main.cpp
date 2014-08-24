@@ -22,6 +22,9 @@ const int IMMUNE_INTERVAL = 1;
 const int WIDTH = 20;
 const int HEIGHT = WIDTH;
 
+const int TCELL_MINIMUM_SIZE = 10;
+const int TCELL_LIFESPAN = 3;
+
 //const int CELL_LAND_WIDTH = 30;
 //const int CELL_LAND_HEIGHT = CELL_LAND_WIDTH;
 
@@ -89,6 +92,7 @@ int main()
     //----------------------------------------------------------------------
     //  ヒト集団の処理
     //----------------------------------------------------------------------
+#ifdef HUMAN_PROCESS
     if( term.isInterval(HUMAN_INTERVAL) )        // ヒトの実行期間なら
     {
       LOG("ヒトの移動")
@@ -109,6 +113,7 @@ int main()
         (*it_human)->infection();                // 感染させる
       }
     }
+#endif
     output_value_with_term("test.txt", humans[0]->getTcellList().size() );
   }
   //----------------------------------------------------------------------
@@ -150,14 +155,14 @@ void run_host_pathogen_model( Human& human )
   //----------------------------------------------------------------------
   //  細胞の感染
   //----------------------------------------------------------------------
-  LOG("細胞の移動")
+  LOG("細胞の感染")
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
     (*it_cell)->infection();                     // 感染させる
   }
   //----------------------------------------------------------------------
   //  T細胞の殺傷
   //----------------------------------------------------------------------
-  LOG("T細胞の移動")
+  LOG("T細胞の殺傷")
   VECTOR(Tcell *) new_tcell;
   EACH( it_tc, tcell_list ) {                    // 各T細胞に対して
     int x = (*it_tc)->getX();                    // 座標を
@@ -174,5 +179,29 @@ void run_host_pathogen_model( Human& human )
   EACH( it_tcell, new_tcell ) {                  // 新しいT細胞を
     tcell_list.push_back( *it_tcell );           // 追加する
   }
+
+  //----------------------------------------------------------------------
+  //  T細胞の寿命
+  //----------------------------------------------------------------------
+  for(ITERATOR(Tcell *)it=tcell_list.begin(); it!=tcell_list.end(); ) {
+    (*it)->aging();
+    if (human.enoughNumberOfTcellToRemove( TCELL_MINIMUM_SIZE )) {
+      if ((*it)->willDie( TCELL_LIFESPAN )) {
+        human.eraseTcell( it );
+      } else {
+        it++;
+      }
+    } else {
+      it++;
+    }
+  }
+  // EACH( it_tcell, tcell_list ) {                 // 各T細胞に対して
+  //   (*it_tcell)->aging();
+  //   if( human.enoughNumberOfTcellToRemove(10) ) { // ヒトが十分T細胞を所持していれば
+  //     if( (*it_tcell)->willDie( 0 ) ) {          // T細胞が寿命のとき
+  //       human.eraseTcell( it_tcell );            // T細胞を削除
+  //     }
+  //   }
+  // }
   output_value_with_term("tcell-size.txt", tcell_list.size() );
 }

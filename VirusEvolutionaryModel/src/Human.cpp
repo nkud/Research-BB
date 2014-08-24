@@ -100,6 +100,12 @@ VECTOR(Human *) HumanLand :: getNeighborsAt( Human& human )
   return neighbors;                              // 近隣リストを返す
 }
 
+ITERATOR(Tcell *) Human :: eraseTcell( ITERATOR(Tcell *)& it_tcell ) {
+  SAFE_DELETE( *it_tcell );
+  ITERATOR(Tcell *) it_next = it_tcell;
+  tcell_list.erase( it_tcell );
+  return it_next;
+}
 void HumanLand :: resistHuman( Human& human )
 {
   int x = human.getX();
@@ -108,6 +114,13 @@ void HumanLand :: resistHuman( Human& human )
   human_list_[ n ].push_back( &human );
 }
 
+bool Human :: enoughNumberOfTcellToRemove( int min_tcell )
+{
+  if( getTcellListSize() > min_tcell )
+    return true;
+  else
+    return false;
+}
 
 //----------------------------------------------------------------------
 //  ホスト

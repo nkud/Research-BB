@@ -31,7 +31,10 @@ class Human : public __Life, public __Mobile, public __Host
 
     CellLand& getCellLand() { return *cell_land_; }
     VECTOR(Tcell *)& getTcellList() { return tcell_list; }
+    int getTcellListSize() const { return tcell_list.size(); }
 
+    bool enoughNumberOfTcellToRemove( int min_tcell );
+    ITERATOR(Tcell *) eraseTcell( ITERATOR(Tcell *)& it_tcell );
   private:
     CellLand *cell_land_;
     VECTOR(Tcell *) tcell_list;
