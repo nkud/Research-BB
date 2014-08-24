@@ -107,7 +107,7 @@ int main()
         (*it_human)->infection();                // 感染させる
       }
     }
-    output_value_with_term("test.dat", humans[0]->getImmuneSystem().getTcellList().size() );
+    output_value_with_term("test.txt", humans[0]->getImmuneSystem().getTcellList().size() );
   }
   //----------------------------------------------------------------------
   //  計算終了
@@ -171,4 +171,5 @@ void run_host_pathogen_model( Human& human )
   EACH( it_tcell, new_tcell ) {                  // 新しいT細胞を
     tcell_list.push_back( *it_tcell );           // 追加する
   }
+  output_value_with_term("new-tcell.txt", tcell_list.size() );
 }

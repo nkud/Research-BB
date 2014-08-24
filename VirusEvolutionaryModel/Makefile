@@ -14,7 +14,7 @@ OBJS += Term.o FileFactory.o
 OBJS += HumanCounter.o VirusCounter.o
 OBJS += Function.o
 
-output_files = log *.dat
+output_files = log *.txt
 ################################################################################
 
 ## Home Directory
@@ -50,8 +50,12 @@ SCRDIR	 = script
 BINDIR	 = bin
 PRGDIR	 = program
 MSTDIR	 = master
+test_dir = test
+test_make_name	= test.mk
+
 clean_directory = $(BINDIR) $(object_dir)
 bin_clean_files = $(output_files)
+test_make_file	= $(test_dir)/$(test_make_name)
 
 now			= $(shell date +%y%m%d-%H%M%S)
 timestamp	:= $(shell date '+< %y/%m/%d %H:%M:%S >')
@@ -71,7 +75,7 @@ TARGET := $(BINDIR)/$(EXE)
 #OUTOBJ   = $(addprefix $(object_dir)/, $(addsuffix .o, $(notdir $(basename $(INCLUDE)))))
 OUTOBJ = $(addprefix $(object_dir)/, $(OBJS))
 
-.PHONY: target all run gene clean
+.PHONY: target all run gene clean test
 
 
 target: $(TARGET)
@@ -119,7 +123,6 @@ run: bclean
 	@$(COLORECHO)
 	@$(PRINT) '==> Program is started $(timestamp)'
 	@$(CLRECHO)
-	@echo run > log
 	@cd $(BINDIR); ./$(EXE)
 	@$(COLORECHO)
 	@$(PRINT) '==> Terminated $(timestamp)'
@@ -157,3 +160,6 @@ tail:
 	@cd $(BINDIR); $(TAIL) log
 
 re: clean $(TARGET)
+
+test:
+	@cd $(test_dir); $(MAKE) -f $(test_make_name)
