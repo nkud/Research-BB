@@ -28,6 +28,7 @@ MAKE              = make --no-print-directory -s
 COPY              = cp
 RM                = rm -rfv
 TAIL              = tail
+PLOT			  = gnuplot
 
 ## Colors
 BOLDECHO          = printf '\033[1m'
@@ -81,26 +82,6 @@ OUTOBJ = $(addprefix $(object_dir)/, $(OBJS))
 target: $(TARGET)
 
 all: $(TARGET) run tail
-
-# Dependency ###################################################################
-$(object_dir)/main.o: Human.hpp Virus.hpp Config.hpp Function.hpp Tcell.hpp
-
-$(object_dir)/Human.o: Human.hpp Gene.hpp Virus.hpp Cell.hpp Mobile.hpp Landscape.hpp Host.hpp Tcell.hpp
-$(object_dir)/Config.o: Config.hpp
-$(object_dir)/Gene.o: Gene.hpp
-$(object_dir)/Cell.o: Cell.hpp Function.hpp Virus.hpp Host.hpp
-$(object_dir)/Virus.o: Virus.hpp Gene.hpp
-$(object_dir)/Tcell.o: Tcell.hpp Gene.hpp Mobile.hpp
-
-$(object_dir)/Host.o: Host.hpp Virus.hpp
-
-$(object_dir)/HumanCounter.o: HumanCounter.hpp
-$(object_dir)/VirusCounter.o: VirusCounter.hpp
-
-$(object_dir)/Term.o: Term.hpp
-$(object_dir)/FileFactory.o: FileFactory.hpp Term.hpp Function.hpp
-$(object_dir)/Function.o: Function.hpp Random.hpp
-################################################################################
 
 ## Make Program
 $(TARGET): $(OUTOBJ)
@@ -162,5 +143,30 @@ tail:
 
 re: clean $(TARGET)
 
+stat:
+	@$(COLORECHO)
+	@$(PRINT) '==> Generating...'
+	@$(CLRECHO)
+
 test:
 	@cd $(test_dir); $(MAKE) -f $(test_make_name)
+
+# Dependencies #################################################################
+$(object_dir)/main.o: Human.hpp Virus.hpp Config.hpp Function.hpp Tcell.hpp
+
+$(object_dir)/Human.o: Human.hpp Gene.hpp Virus.hpp Cell.hpp Mobile.hpp Landscape.hpp Host.hpp Tcell.hpp
+$(object_dir)/Config.o: Config.hpp
+$(object_dir)/Gene.o: Gene.hpp
+$(object_dir)/Cell.o: Cell.hpp Function.hpp Virus.hpp Host.hpp
+$(object_dir)/Virus.o: Virus.hpp Gene.hpp
+$(object_dir)/Tcell.o: Tcell.hpp Gene.hpp Mobile.hpp
+
+$(object_dir)/Host.o: Host.hpp Virus.hpp
+
+$(object_dir)/HumanCounter.o: HumanCounter.hpp
+$(object_dir)/VirusCounter.o: VirusCounter.hpp
+
+$(object_dir)/Term.o: Term.hpp
+$(object_dir)/FileFactory.o: FileFactory.hpp Term.hpp Function.hpp
+$(object_dir)/Function.o: Function.hpp Random.hpp
+################################################################################
