@@ -12,6 +12,7 @@ class __Location
 {
   public:
     __Location( int x, int y ) : x_(x), y_(y) { }
+    ~__Location() { }
     virtual int getX() { return x_; }
     virtual int getY() { return y_; }
     virtual void setX( int x ) { x_ = x; }

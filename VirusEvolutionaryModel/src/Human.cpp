@@ -102,7 +102,7 @@ VECTOR(Human *) HumanLand :: getNeighborsAt( Human& human )
 
 ITERATOR(Tcell *) Human :: eraseTcell( ITERATOR(Tcell *)& it_tcell ) {
   SAFE_DELETE( *it_tcell );
-  ITERATOR(Tcell *) it_next = it_tcell;
+  ITERATOR(Tcell *)& it_next = it_tcell;
   tcell_list.erase( it_tcell );
   return it_next;
 }

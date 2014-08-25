@@ -92,9 +92,9 @@ int main()
     //----------------------------------------------------------------------
     //  ヒト集団の処理
     //----------------------------------------------------------------------
-#ifdef HUMAN_PROCESS
     if( term.isInterval(HUMAN_INTERVAL) )        // ヒトの実行期間なら
     {
+#ifdef HUMAN_PROCESS
       LOG("ヒトの移動")
       humanLand->clearMap();                     // 土地の登録をクリア
       EACH( it_human, humans ) {                 // 各ヒトに対して
@@ -112,8 +112,8 @@ int main()
       EACH( it_human, humans ) {                 // 各ヒトに対して
         (*it_human)->infection();                // 感染させる
       }
-    }
 #endif
+    }
     output_value_with_term("test.txt", humans[0]->getTcellList().size() );
   }
   //----------------------------------------------------------------------

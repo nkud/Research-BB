@@ -18,7 +18,7 @@ class Tcell : public __Life, public __Mobile
   public:
     Tcell( const char *tag );
     Tcell( int len );
-    ~Tcell() { }
+    virtual ~Tcell() { }
 
     Tcell& clone();                              ///< クローンを作成
     void reborn();                               ///< 再生成

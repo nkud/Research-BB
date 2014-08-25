@@ -12,6 +12,7 @@ class Gene
   public:
     Gene( const char *tag );                     ///< タグを指定して初期化
     Gene( int len );                             ///< タグの長さを指定して初期化
+    ~Gene() { }
 
     bool isInclude( Gene& other );               ///< タグを含んでいるか評価
     bool hasEqualTagTo( Gene& other );           ///< タグが等しいか評価
