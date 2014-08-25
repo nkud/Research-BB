@@ -95,7 +95,8 @@ int main()
     //----------------------------------------------------------------------
     if( term.isInterval(HUMAN_INTERVAL) )        // ヒトの実行期間なら
     {
-#ifdef HUMAN_PROCESS
+      POINT;
+      #ifdef HUMAN_PROCESS
       LOG("ヒトの移動")
       humanLand->clearMap();                     // 土地の登録をクリア
       EACH( it_human, humans ) {                 // 各ヒトに対して

@@ -19,8 +19,8 @@
 #define ECHO(x)             do { std::cout<< CLEAR_RIGHT << "----> "<<GREEN<<BOLD<<x<<STANDARD<<CLR_ST<<""<<std::endl; }while(0);
 #define LOG(x)              do { output_log(#x, x); }while(0);
 #define LLOG(x)             do { std::cout<< CLEAR_RIGHT << "[ "<<GREEN<<BOLD<<#x<<STANDARD<<CLR_ST<<" ] "<<x<<std::endl; output_log(#x, x); }while(0);
-static int point = 0;
-#define POINT               do { std::cerr<<BOLD<<RED<<"[ POINT ] "<<CLR_ST<<STANDARD<<"(L"<<__LINE__<<")"<<" "<<__FILE__<<" - "<<point++<<std::endl; }while(0);
+
+#define POINT               do { static int point = 0; std::cerr<<BOLD<<RED<<"[ POINT ] "<<CLR_ST<<STANDARD<<"(L"<<__LINE__<<")"<<" "<<__FILE__<<" - "<<point++<<std::endl; }while(0);
 #define DEBUG(x)            do { std::cerr<<BOLD<<"[ DEBUG ] "<<CLR_ST<<STANDARD<<#x<<": "<<BOLD<<(x)<<STANDARD<<" (L"<<__LINE__<<")" \
                             <<" "<<__FILE__<<std::endl; }while(0);
 
@@ -44,9 +44,7 @@ static int point = 0;
 #define LOG_FNAME           "log"
 
 static std::ofstream ofs(LOG_FNAME, std::ios_base::out | std::ios_base::app);
-template < typename T >
-void output_log( const char *title, T value )
-{
+template < typename T > void output_log( const char *title, T value ) {
   ofs << "[ " << title << " ] " << value << " (L"<<__LINE__<<") "<<__FILE__ << std::endl;
 }
 /*-----------------------------------------------------------------------------
