@@ -12,7 +12,7 @@
 /*-----------------------------------------------------------------------------
  *  汎用マクロ
  *-----------------------------------------------------------------------------*/
-#define FOR(i, m)           for(int (i)=0; (i)<(m); (i)++)  /* i: 0 ~ (m-1) */
+#define FOR(i, m)           for(int (i)=0; (i)<(m); (i)++)  // i: 0 ~ (m-1) 
 #define REP(i, min, max)    for(int (i)=(min); (i)<=(max); (i)++)
 
 #define ASSERT(x)           do { assert(x); }while(0);
@@ -25,7 +25,12 @@ static int point = 0;
                             <<" "<<__FILE__<<std::endl; }while(0);
 
 #define ALL(a)              (a).begin(),(a).end()
+
+#if (__cplusplus == 199711)
 #define EACH(i,c)           for(typeof((c).begin()) i=(c).begin(); i!=(c).end(); ++i)
+#elif (__cplusplus == 201103)
+#define EACH(i,c)           for(auto i=(c).begin(); i!=(c).end(); ++i)
+#endif
 
 #define VECTOR(type)        std::vector< type >
 #define ITERATOR(type)      std::vector< type >::iterator
@@ -34,7 +39,7 @@ static int point = 0;
 #define SAFE_DELETE(p)          delete p; p = NULL;
 #define SAFE_DELETE_ARRAY(p)    delete[] p; p = NULL;
 
-#define SEPARATOR           " "                                      /* 出力データを分割する文字 */
+#define SEPARATOR           " "                  // 出力データを分割する文字 
 #define ENDL                std::endl
 #define LOG_FNAME           "log"
 

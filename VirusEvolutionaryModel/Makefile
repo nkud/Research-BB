@@ -21,7 +21,7 @@ output_files = log *.txt
 HOME              = ~/workspace/AgentBasedEpidemicModel/VirusEvolutionaryModel
 
 ## Command
-CC                = g++ -Wall -g -O0 #-std=c++11
+CC                = g++ -Wall -g -O0 -std=c++11
 PRINT             = echo
 MKDIR             = mkdir -vp
 MAKE              = make --no-print-directory -s
