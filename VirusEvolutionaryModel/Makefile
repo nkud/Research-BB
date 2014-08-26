@@ -18,41 +18,43 @@ output_files = log *.txt
 ################################################################################
 
 ## Home Directory
-HOME              = ~/workspace/AgentBasedEpidemicModel/VirusEvolutionaryModel
+HOME = ~/workspace/AgentBasedEpidemicModel/VirusEvolutionaryModel
 
 ## Command
-CC                = g++ -Wall -g -O0 -std=c++11
-PRINT             = echo
-MKDIR             = mkdir -vp
-MAKE              = make --no-print-directory -s
-COPY              = cp
-RM                = rm -rfv
-TAIL              = tail
-PLOT			  = gnuplot
+CC    = g++ -Wall -g -O0 -std=c++11
+PRINT = echo
+MKDIR = mkdir -vp
+MAKE  = make --no-print-directory -s
+COPY  = cp
+RM    = rm -rfv
+TAIL  = tail
+PLOT  = gnuplot
+PY    = python
+DISPLAY = feh
 
 ## Colors
-BOLDECHO          = printf '\033[1m'
-REVERSEECHO       = printf '\033[7m'
-REDECHO           = printf '\033[31m'
-GREENECHO         = printf '\033[32m'
-YELLOWECHO        = printf '\033[33m'
-BLUEECHO          = printf '\033[34m'
-CLRECHO           = printf '\033[0m\033[39m'
-COLORECHO         = $(BOLDECHO); $(BLUEECHO)
+BOLDECHO    = printf '\033[1m'
+REVERSEECHO = printf '\033[7m'
+REDECHO     = printf '\033[31m'
+GREENECHO   = printf '\033[32m'
+YELLOWECHO  = printf '\033[33m'
+BLUEECHO    = printf '\033[34m'
+CLRECHO     = printf '\033[0m\033[39m'
+COLORECHO   = $(BOLDECHO); $(BLUEECHO)
 
 ## Directory Names
-SRC		 = $(shell find src -name '*.cpp')
-INCLUDE  = $(shell find include -name '*.h' -or -name '*.hpp')
+SRC            = $(shell find src -name '*.cpp')
+INCLUDE        = $(shell find include -name '*.h' -or -name '*.hpp')
 
-object_dir	 = obj
-SRCDIR	 = src
-INCDIR   = include
-SCRDIR	 = script
-BINDIR	 = bin
-PRGDIR	 = program
-MSTDIR	 = master
-test_dir = test
-test_make_name	= test.mk
+object_dir     = obj
+SRCDIR         = src
+INCDIR         = include
+SCRDIR         = script
+BINDIR         = bin
+PRGDIR         = program
+MSTDIR         = master
+test_dir       = test
+test_make_name = test.mk
 
 clean_directory = $(BINDIR) $(object_dir)
 bin_clean_files = $(output_files)
@@ -76,12 +78,7 @@ TARGET := $(BINDIR)/$(EXE)
 #OUTOBJ   = $(addprefix $(object_dir)/, $(addsuffix .o, $(notdir $(basename $(INCLUDE)))))
 OUTOBJ = $(addprefix $(object_dir)/, $(OBJS))
 
-.PHONY: target all run gene clean test
-
-
-target: $(TARGET)
-
-all: $(TARGET) run tail
+.PHONY: target all run gene clean test stat open
 
 ## Make Program
 $(TARGET): $(OUTOBJ)
@@ -145,11 +142,19 @@ re: clean $(TARGET)
 
 stat:
 	@$(COLORECHO)
-	@$(PRINT) '==> Generating...'
+	@$(PRINT) -n '==> Generating...'
 	@$(CLRECHO)
+	@cd $(BINDIR); $(PY) ../script/stat.py
+	@cd $(BINDIR); $(PLOT) auto.plt 1>/dev/null 2>/dev/null
+	@$(PRINT) 'done'
+
+open:
+	$(DISPLAY) bin/density.png
 
 test:
 	@cd $(test_dir); $(MAKE) -f $(test_make_name)
+
+all: $(TARGET) run stat tail
 
 # Dependencies #################################################################
 $(object_dir)/main.o: Human.hpp Virus.hpp Config.hpp Function.hpp Tcell.hpp

@@ -15,7 +15,7 @@ using namespace std;
 //----------------------------------------------------------------------
 //  configure
 //----------------------------------------------------------------------
-const int TERM = 3000;
+const int TERM = 10000;
 const int HUMAN_INTERVAL = 2;
 const int IMMUNE_INTERVAL = 1;
 
@@ -23,7 +23,7 @@ const int WIDTH = 20;
 const int HEIGHT = WIDTH;
 
 const int TCELL_MINIMUM_SIZE = 10;
-const int TCELL_LIFESPAN = 3;
+const int TCELL_LIFESPAN = 5;
 
 //const int CELL_LAND_WIDTH = 30;
 //const int CELL_LAND_HEIGHT = CELL_LAND_WIDTH;
@@ -74,6 +74,7 @@ int main()
   ECHO("計算開始");
   while( term.loop() )                           // 最大実行期間までループする
   {
+    if(term.isInterval(1000)) ECHO(term.getTerm()); // 途中経過をログ
     // デバッグログ ------------------------------------------------------
     LOG( term.getTerm() );
     LOG( humans[0]->getCellLand().calcInfectedCellDensity() );
@@ -95,7 +96,6 @@ int main()
     //----------------------------------------------------------------------
     if( term.isInterval(HUMAN_INTERVAL) )        // ヒトの実行期間なら
     {
-      POINT;
       #ifdef HUMAN_PROCESS
       LOG("ヒトの移動")
       humanLand->clearMap();                     // 土地の登録をクリア
