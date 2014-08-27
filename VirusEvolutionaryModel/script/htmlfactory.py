@@ -1,24 +1,63 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-### HtmlFactory
-def setImage(f, width, *imgnames):
-    """ 画像をセットする """
-    outputLine(f, '<!-- IMAGE -->')
-    outputLine(f, '<table class="graph">')
-    for name in imgnames:
-        outputLine(f, '    <tr><td><img src="%s" width="%d"/></td></tr>' % (name, width))
-    outputLine(f, '</table>')
+### CONFIGURE #################################################################
+INIT_LINE_STYLE = 'set style line 1 lw 2'
+LINE_STYLE = 'w l'
+IMG_SIZE = '1200,300'
+RESULT_WIDTH = 1000
+CSS_DIR = '../template/result.css'
+IMG_EXT = 'png'
+FONT = 'times new roman,13'
 
-def outputHeader(f, htext, h):
+IMG_DIR = ''
+TXT_DIR = ''
+CONFIG_FNAME = '../include/Config.h'
+INFO_FNAME = 'INFO.txt'
+###############################################################################
+
+""" HTML生成関数
+"""
+
+def IMG(img):
+    """ 画像の拡張子を設定
+    Args:
+        img 画像の名前
+    Returns:
+        拡張子付きのファイル名
+    """
+    return '%s%s.%s' % (IMG_DIR, img, IMG_EXT)
+
+def output_line(f, line):
+    """ １行出力するして開業
+    Args:
+        f ファイルオブジェクト
+        line 出力する文字列
+    """
+    f.write(line+'\n')
+
+def output_img(f, width, *imgfnames):
+    """ 画像を設定する
+    Args:
+        f ファイルオブジェクト
+        width 画像の幅
+        imgfnames 画像ファイル名
+    """
+    output_line(f, '<!-- IMAGE -->')
+    output_line(f, '<table class="graph">')
+    for fname in imgfnames:
+        output_line(f, '\t<tr><td><img src="%s" width="%d"/></td></tr>' % (fname, width))
+    output_line(f, '</table>')
+
+def output_header(f, htext, h):
     """ 見出しを設定する """
-    outputLine(f, '<h%d>%s</h%d>' % (h, htext, h))
+    output_line(f, '<h%d>%s</h%d>' % (h, htext, h))
 
-def outputSection(f, htext, h, *imgs):
+def output_section(f, htext, h, *imgs):
     """ 見出し、画像をセットし、セクションを作る """
-    outputHeader(f, htext, h)
+    output_header(f, htext, h)
     for img in imgs:
-        setImage(f, RESULT_WIDTH, img)
+        output_img(f, RESULT_WIDTH, img)
 
 def read_config( config_fname, SEP0='', SEP1=': ', SEP2='\n' ):
   body = ""
@@ -50,28 +89,23 @@ class HtmlFactory(object):
         self.file.close()
     def generate(self):
         # Init
-        outputLine(self.file,
+        output_line(self.file,
             '<html><link rel="stylesheet" href="%s">' % CSS_DIR +
             '<body><font color=gray><code>')
-        outputHeader(self.file, '<font color=black># RESULT</font>', 1)
+        output_header(self.file, '<font color=black># RESULT</font>', 1)
 
         # 初期設定を表示
-        outputHeader(self.file, 'Config', 2)
+        output_header(self.file, 'Config', 2)
         config = '<table>'
         config += '%s' % read_info(
             INFO_FNAME, '<tr><td>', '</td><td>', '</td></tr>'
             )
         config += '</table>'
-        outputLine( self.file, config )
+        output_line( self.file, config )
 
         # Image Section
-        outputSection(self.file, 'Population', 2, IMG('Population'))
-        outputSection(self.file, 'HasViruses', 2, IMG('HasViruses'))
-        outputSection(self.file, 'VirusVariaty', 2, IMG('VirusVariaty'))
-        outputSection(self.file, 'Incubation/Crisis', 2, IMG('IsIncubation'), IMG('IsCrisis'))
-        outputSection(self.file, 'Removed', 2, IMG('Removed'))
-        outputSection(self.file, 'Value', 2, IMG('VirusValue'), IMG('AgentValue'))
+        output_section(self.file, 'density', 2, IMG('IsIncubation'), IMG('IsCrisis'))
 
         # End
-        outputLine(self.file, '</code></body></html>')
+        output_line(self.file, '</code></body></html>')
 

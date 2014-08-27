@@ -15,7 +15,7 @@ using namespace std;
 //----------------------------------------------------------------------
 //  configure
 //----------------------------------------------------------------------
-const int TERM = 10000;
+const int TERM = 1000;
 const int HUMAN_INTERVAL = 2;
 const int IMMUNE_INTERVAL = 1;
 

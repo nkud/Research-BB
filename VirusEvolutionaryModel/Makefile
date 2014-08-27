@@ -54,9 +54,10 @@ BINDIR         = bin
 PRGDIR         = program
 MSTDIR         = master
 test_dir       = test
+stat_dir       = stat
 test_make_name = test.mk
 
-clean_directory = $(BINDIR) $(object_dir)
+clean_directory = $(BINDIR) $(object_dir) $(stat_dir)
 bin_clean_files = $(output_files)
 test_make_file	= $(test_dir)/$(test_make_name)
 
@@ -144,12 +145,16 @@ stat:
 	@$(COLORECHO)
 	@$(PRINT) -n '==> Generating...'
 	@$(CLRECHO)
+	@[ -d $(stat_dir) ] || $(MKDIR) $(stat_dir)
 	@cd $(BINDIR); $(PY) ../script/stat.py
-	@cd $(BINDIR); $(PLOT) auto.plt 1>/dev/null 2>/dev/null
+	@cd $(stat_dir); $(PLOT) auto.plt 1>/dev/null 2>/dev/null
 	@$(PRINT) 'done'
 
 open:
-	$(DISPLAY) bin/density.png
+	@$(COLORECHO)
+	@$(PRINT) '==> Open'
+	@$(CLRECHO)
+	@open stat/index.html
 
 test:
 	@cd $(test_dir); $(MAKE) -f $(test_make_name)

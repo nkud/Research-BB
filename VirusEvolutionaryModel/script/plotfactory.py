@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-""" gnuplot用出力関数・クラス / HTML生成クラス
+""" gnuplot用出力関数
 CONFIGUREを無くしたい
 """
 
@@ -139,21 +139,4 @@ def make_dir(dir_name):
         return False
     os.mkdir(dir_name)
     return True;
-
-### PlotFactory
-class PlotFactory(object):
-    """ Gnuplot用のファイルを出力する
-    """
-    def __init__(self, filename):
-        """ 初期化する """
-        self.file = open(filename, 'w')
-    def close(self):
-        """ ファイルを閉じる """
-        self.file.close()
-    def generate(self):
-        """ gnuplot用スクリプトを生成 """
-        #make_dir(IMG_DIR)
-        initialize_for_plot(self.file)
-        set_terminal(self.file)
-        output_img(self.file, 'Denity', 'Term', 'Rate', 'density', (TXT('dense'), 'density'))
 
