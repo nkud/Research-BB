@@ -4,13 +4,11 @@
 #include "Tcell.hpp"
 #include "Function.hpp"
 
-Human :: Human( const char *tag ) :
+Human :: Human( const char *tag, CellLand *land ) :
   __Life( tag ),
   __Mobile(0, 0)
 {
-  int w = 20;
-  int h = 20;
-  cell_land_ = new CellLand(w, h);
+  cell_land_ = land;
 
   FOR( i, 100 )
   {
@@ -19,13 +17,11 @@ Human :: Human( const char *tag ) :
     tcell_list.push_back( newt );
   }
 }
-Human :: Human( int len ) :
+Human :: Human( int len, CellLand *land ) :
   __Life( len ),
   __Mobile(0, 0)
 {
-  int w = 20;
-  int h = 20;
-  cell_land_ = new CellLand(w, h);
+  cell_land_ = land;
 
   FOR( i, 100 )
   {

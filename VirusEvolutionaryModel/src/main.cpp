@@ -19,11 +19,11 @@ const int TERM = 1000;
 const int HUMAN_INTERVAL = 2;
 const int IMMUNE_INTERVAL = 1;
 
-const int WIDTH = 20;
+const int WIDTH = 50;
 const int HEIGHT = WIDTH;
 
 const int TCELL_MINIMUM_SIZE = 10;
-const int TCELL_LIFESPAN = 5;
+const int TCELL_LIFESPAN = 8;
 
 //const int CELL_LAND_WIDTH = 30;
 //const int CELL_LAND_HEIGHT = CELL_LAND_WIDTH;
@@ -60,7 +60,7 @@ int main()
   VECTOR(Human *) humans;
   Human *temp;
   FOR( i, HUMAN_NUM ) {                          // 初期設定の数だけ
-    temp = new Human( 10 );                      // 新しくヒトを初期化
+    temp = new Human( 10, new CellLand(WIDTH, HEIGHT) );                      // 新しくヒトを初期化
     temp->randomLocate(*humanLand);              // ランダムに土地に配置して
     humans.push_back( temp );                    // 配列に追加していく
   }

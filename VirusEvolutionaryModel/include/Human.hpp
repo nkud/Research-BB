@@ -17,8 +17,8 @@ class Tcell;
 class Human : public __Life, public __Mobile, public __Host
 {
   public:
-    Human( const char *tag );
-    Human( int len );
+    Human( const char *tag, CellLand *land );
+    Human( int len, CellLand *land );
 
     void reborn();                               ///< 初期化される
     //----------------------------------------------------------------------
