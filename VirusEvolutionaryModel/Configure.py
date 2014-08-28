@@ -64,7 +64,7 @@ class Configure(Tkinter.Frame):
     hland_height.pack()
 
     button_panel = Tkinter.Frame(self)
-    execute_button = create_button(button_panel, FONT, '実行', self.execute, 0, 0)
+    #execute_button = create_button(button_panel, FONT, '実行', self.execute, 0, 0)
     save_button = create_button(button_panel, FONT, '保存', self.saveConfig, 0, 0)
     exit_button = create_button(button_panel, FONT, '終了', self.exitConfig, 0, 0)
     put_widget(button_panel, 0, 0)

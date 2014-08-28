@@ -15,7 +15,7 @@ using namespace std;
 //----------------------------------------------------------------------
 //  configure
 //----------------------------------------------------------------------
-const int TERM = 1000;
+const int TERM = 3000;
 const int HUMAN_INTERVAL = 2;
 const int IMMUNE_INTERVAL = 1;
 
@@ -74,10 +74,12 @@ int main()
   ECHO("計算開始");
   while( term.loop() )                           // 最大実行期間までループする
   {
-    if(term.isInterval(1000)) ECHO(term.getTerm()); // 途中経過をログ
+    if(term.isInterval(100)) {                   // 途中経過を表示
+      ECHO( term.getTerm() << " ( elapsed-time: " << Benchmark::Instance().getElapsedTime() << " )");
+    }
     // デバッグログ ------------------------------------------------------
     LOG( term.getTerm() );
-    LOG( humans[0]->getCellLand().calcInfectedCellDensity() );
+    //LOG( humans[0]->getCellLand().calcInfectedCellDensity() );
     output_value_with_term("dense.txt", humans[0]->getCellLand().calcInfectedCellDensity() );
 
     //----------------------------------------------------------------------
