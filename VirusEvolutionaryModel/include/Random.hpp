@@ -1,4 +1,6 @@
 /*
+ * Random Class
+ *
  * version: 1.00
  * author: Naoki Ueda
  * update: 08/20/2014 02:51:48
@@ -17,6 +19,8 @@
 class Random;
 class __RandomStrategy;
 class __MersenneTwister;
+class __LinearCongruentialGenerator;
+class __Standard;
 
 /// @brief 乱数生成器の戦略
 /// @note  純粋仮想数
@@ -33,22 +37,22 @@ class __RandomStrategy {
 /// @todo 動作確認
 class __MersenneTwister : public __RandomStrategy {
   public:
-    std::mt19937& getMT() {                                          /* 乱数生成関数を作成 */
+    std::mt19937& getMT() {                                          // 乱数生成関数を作成 
       if ( mt == NULL ) {
         std::random_device rd;
         mt = new std::mt19937(rd());
       }
       return *mt;
     }
-    int randomInt() { return (getMT())(); }                          /* 乱数生成 */
-  
+
+    int randomInt() { return (getMT())(); }                          // 乱数生成 
 
     // double randomDouble();
-    int uniformInt( int min, int max ) {                             /* min~maxの乱数を生成 */
+    int uniformInt( int min, int max ) {                             // min~maxの乱数を生成 
       std::uniform_int_distribution<int> _random(min,max);
       return _random(getMT());
     }
-    double uniformDouble( double min, double max ) {                 /* min~maxの乱数を生成 */
+    double uniformDouble( double min, double max ) {                 // min~maxの乱数を生成 
       std::uniform_real_distribution<double> _random(min,max);
       return _random(getMT());
     }
@@ -94,11 +98,12 @@ private:
 /// @brief 乱数生成クラス
 class Random {
   public:
-    int randomInt() { return random_strategy_->randomInt(); }        /* 乱数を生成 */
+    int randomInt() { return random_strategy_->randomInt(); }        // 乱数を生成 
     // double randomDouble() { return random_strategy_->randomDouble(); }
     int uniformInt( int min, int max ) {
       return random_strategy_->uniformInt( min, max );
     }
+
     double uniformDouble( double min, double max ) {
       double ret = random_strategy_->uniformDouble( min, max );
       return ret;
@@ -111,7 +116,7 @@ class Random {
       static Random singleton;
       if ( singleton.getRandomStrategy() == NULL ) {
 //        singleton.setRandomStrategy( new __MersenneTwister );        /* メルセンヌ・ツイスタを使用 */
-        singleton.setRandomStrategy( new __Standard );               /* 標準の乱数生成器 */
+        singleton.setRandomStrategy( new __Standard );               // 標準の乱数生成器 
       }
       return singleton;
     }

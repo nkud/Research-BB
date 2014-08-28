@@ -27,8 +27,10 @@
 #define ALL(a)              (a).begin(),(a).end()
 
 #if (__cplusplus == 199711)
+// for c98
 #define EACH(i,c)           for(typeof((c).begin()) i=(c).begin(); i!=(c).end(); ++i)
 #elif (__cplusplus == 201103)
+// for c11
 #define EACH(i,c)           for(auto i=(c).begin(); i!=(c).end(); ++i)
 #endif
 
@@ -41,9 +43,9 @@
 
 #define SEPARATOR           " "                  // 出力データを分割する文字 
 #define ENDL                std::endl
-#define LOG_FNAME           "log"
+#define LOG_FNAME           "log"                // ログファイル名
 
-static std::ofstream ofs(LOG_FNAME, std::ios_base::out | std::ios_base::app);
+static std::ofstream ofs( LOG_FNAME, std::ios_base::out | std::ios_base::app );
 template < typename T > void output_log( const char *title, T value ) {
   ofs << "[ " << title << " ] " << value << " (L"<<__LINE__<<") "<<__FILE__ << std::endl;
 }

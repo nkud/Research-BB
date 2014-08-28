@@ -8,6 +8,7 @@ class __Landscape;
 class __Location;
 class __Mobile;
 
+/// 位置インターフェイス
 class __Location
 {
   public:
@@ -27,6 +28,7 @@ class __Location
     int x_, y_;
 };
 
+/// 可動インターフェイス
 class __Mobile : public __Location
 {
   public:

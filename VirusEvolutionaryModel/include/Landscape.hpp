@@ -1,6 +1,7 @@
 #ifndef ___LANDSCAPE_HPP
 #define ___LANDSCAPE_HPP
 
+/// 土地インターフェイス
 class __Landscape
 {
   public:

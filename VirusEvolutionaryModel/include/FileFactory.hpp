@@ -13,6 +13,7 @@ void output_value_with_term( const char *fname, T value ) {
   ofs << value << ENDL;                          // 数値を出力
 };
 
+/// ファイル生成クラス
 class FileFactory
 {
   public:

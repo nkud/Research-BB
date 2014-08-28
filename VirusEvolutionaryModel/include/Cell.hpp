@@ -8,6 +8,7 @@
 
 class Virus;
 
+/// 細胞
 class Cell : public __Location, public __Host
 {
   public:
