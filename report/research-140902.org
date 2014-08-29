@@ -1,9 +1,45 @@
 #+TITLE: 研究ノート
-#+AUTHOR: Naoki Ueda
-#+OPTIONS: \n:t H:1 toc:t creator:nil num:t
+#+AUTHOR:
+#+OPTIONS: \n:t H:1 toc:t creator:nil num:nil
 #+LANGUAGE: ja
 #+LaTeX_CLASS: normal
 #+STARTUP: content
 #+HTML_HEAD: <style type="text/css">body {font-family:"helvetica";font-size:0.7em;}</style>
 
-* 
+* 宿主内動態組込型ABM
+
+** 前回に作成した宿主内動態モデルを、ヒトに組み込み、ABMとした。
+
+* モデルの説明
+
+** 概略
+
+** 登場するエージェント
+
+*** 細胞
+
+*** 細胞土地
+*** T細胞
+
+*** ヒト
+
+*** ヒト土地
+*** ウイルス
+** 計算の流れ
+
+** プログラムの説明
+
+*** 宿主内の動態を処理
+
+**** T細胞の移動
+
+***** T細胞が、細胞土地の上を移動する。
+**** 細胞の接触
+
+**** 細胞の感染
+
+**** T細胞の殺傷
+
+**** T細胞の寿命
+*** ヒト集団の処理
+* 実験結果
