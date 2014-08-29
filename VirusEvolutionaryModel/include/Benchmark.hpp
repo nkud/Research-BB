@@ -19,7 +19,7 @@ class Benchmark {
     void stopTimer()                             /// 計測終了する 
     { gettimeofday(&tv_, NULL); end_ = tv_.tv_sec + tv_.tv_usec * 1e-6; }
 
-    double getTime() const                       /// 計測時間を返す 
+    double getTime() const                       /// 計測時間を返す
     { return end_-start_; }
 
     void printTime() const                       /// 計測時間を表示 

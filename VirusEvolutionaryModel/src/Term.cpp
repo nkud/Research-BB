@@ -2,13 +2,6 @@
 
 #include <cassert>
 
-Term :: Term() :
-  term_( 0 ),
-  max_term_( 0 )
-{
-
-}
-
 Term& Term :: Instance()
 {
   static Term singleton;

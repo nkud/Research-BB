@@ -19,17 +19,16 @@ const int TERM = 3000;
 const int HUMAN_INTERVAL = 2;
 const int IMMUNE_INTERVAL = 1;
 
-const int WIDTH = 50;
-const int HEIGHT = WIDTH;
+const int HUMAN_LAND_WIDTH = 20;
+const int HUMAN_LAND_HEIGHT = HUMAN_LAND_WIDTH;
 
 const int TCELL_MINIMUM_SIZE = 10;
 const int TCELL_LIFESPAN = 8;
 
-//const int CELL_LAND_WIDTH = 30;
-//const int CELL_LAND_HEIGHT = CELL_LAND_WIDTH;
+const int CELL_LAND_WIDTH = 50;
+const int CELL_LAND_HEIGHT = CELL_LAND_WIDTH;
 
 const int HUMAN_NUM = 1;
-
 
 //----------------------------------------------------------------------
 //  宿主内動態モデルの宣言（ main関数より下に実装あり ）
@@ -54,13 +53,13 @@ int main()
   term.setMaxTerm(TERM);                         // 最大実行期間を設定
 
   ECHO("ヒト土地初期化");
-  HumanLand *humanLand = new HumanLand(WIDTH, HEIGHT); // ヒト土地を初期化
+  HumanLand *humanLand = new HumanLand(HUMAN_LAND_WIDTH, HUMAN_LAND_HEIGHT); // ヒト土地を初期化
 
   ECHO("ヒト初期化");
   VECTOR(Human *) humans;
   Human *temp;
   FOR( i, HUMAN_NUM ) {                          // 初期設定の数だけ
-    temp = new Human( 10, new CellLand(WIDTH, HEIGHT) );                      // 新しくヒトを初期化
+    temp = new Human( 10, new CellLand(CELL_LAND_WIDTH, CELL_LAND_HEIGHT) ); // 新しくヒトを初期化
     temp->randomLocate(*humanLand);              // ランダムに土地に配置して
     humans.push_back( temp );                    // 配列に追加していく
   }
@@ -74,8 +73,8 @@ int main()
   ECHO("計算開始");
   while( term.loop() )                           // 最大実行期間までループする
   {
-    if(term.isInterval(100)) {                   // 途中経過を表示
-      ECHO( term.getTerm() << " ( elapsed-time: " << Benchmark::Instance().getElapsedTime() << " )");
+    if(term.isInterval(1000)) {                   // 途中経過を表示
+      ECHO( term.getTerm() << ", " << term.calcEstimatedRemainingTime());
     }
     // デバッグログ ------------------------------------------------------
     LOG( term.getTerm() );
