@@ -1,0 +1,9 @@
+#+TITLE: 研究ノート
+#+AUTHOR: Naoki Ueda
+#+OPTIONS: \n:t H:1 toc:t creator:nil num:t
+#+LANGUAGE: ja
+#+LaTeX_CLASS: normal
+#+STARTUP: content
+#+HTML_HEAD: <style type="text/css">body {font-family:"helvetica";font-size:0.7em;}</style>
+
+* 
