@@ -15,7 +15,7 @@ using namespace std;
 //----------------------------------------------------------------------
 //  configure
 //----------------------------------------------------------------------
-const int TERM = 3000;
+const int TERM = 2000;
 const int HUMAN_INTERVAL = 2;
 const int IMMUNE_INTERVAL = 1;
 
@@ -73,13 +73,12 @@ int main()
   ECHO("計算開始");
   while( term.loop() )                           // 最大実行期間までループする
   {
-    if(term.isInterval(1000)) {                   // 途中経過を表示
+    if(term.isInterval(100)) {                   // 途中経過を表示
       ECHO( term.getTerm() << ", " << term.calcEstimatedRemainingTime());
     }
     // デバッグログ ------------------------------------------------------
     LOG( term.getTerm() );
     //LOG( humans[0]->getCellLand().calcInfectedCellDensity() );
-    output_value_with_term("dense.txt", humans[0]->getCellLand().calcInfectedCellDensity() );
 
     //----------------------------------------------------------------------
     //  宿主内の動態を処理
@@ -117,7 +116,12 @@ int main()
       }
 #endif
     }
-    output_value_with_term("test.txt", humans[0]->getTcellList().size() );
+
+    //----------------------------------------------------------------------
+    //  ファイル出力
+    //----------------------------------------------------------------------
+    output_value_with_term("tcell-size.txt", humans[0]->getTcellList().size() );
+    output_value_with_term("dense.txt", humans[0]->getCellLand().calcInfectedCellDensity() );
   }
   //----------------------------------------------------------------------
   //  計算終了
@@ -152,7 +156,7 @@ void run_host_pathogen_model( Human& human )
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
     VECTOR(Cell *) neighbors = cell_land.getNeighborsAt( **it_cell ); // 近隣の細胞を取得し
     EACH( it_neighbor, neighbors ) {
-      (*it_cell)->contact( **it_neighbor );            // 接触させる
+      (*it_cell)->contact( **it_neighbor );      // 接触させる
     }
   }
   //----------------------------------------------------------------------
@@ -177,8 +181,6 @@ void run_host_pathogen_model( Human& human )
     }
   }
   LOG("新しいT細胞を追加")
-  LOG( new_tcell.size() );
-  LOG( tcell_list.size() );
   EACH( it_tcell, new_tcell ) {                  // 新しいT細胞を
     tcell_list.push_back( *it_tcell );           // 追加する
   }
@@ -198,13 +200,4 @@ void run_host_pathogen_model( Human& human )
       it++;
     }
   }
-  // EACH( it_tcell, tcell_list ) {                 // 各T細胞に対して
-  //   (*it_tcell)->aging();
-  //   if( human.enoughNumberOfTcellToRemove(10) ) { // ヒトが十分T細胞を所持していれば
-  //     if( (*it_tcell)->willDie( 0 ) ) {          // T細胞が寿命のとき
-  //       human.eraseTcell( it_tcell );            // T細胞を削除
-  //     }
-  //   }
-  // }
-  output_value_with_term("tcell-size.txt", tcell_list.size() );
 }

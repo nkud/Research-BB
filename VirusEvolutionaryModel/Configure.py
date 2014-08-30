@@ -54,12 +54,12 @@ class Configure(Tkinter.Frame):
     self.master.title('VEM Configure')
 
     max_term = ParameterField(self, '最大実効期間', 100, 10000, 'white')
-    human_num = ParameterField(self, '初期ヒト数', 1, 1000, 'yellow')
+    human_size = ParameterField(self, '初期ヒト数', 1, 1000, 'yellow')
     hland_width = ParameterField(self, 'ヒト土地ヨコ', 10, 1000, 'yellow')
     hland_height = ParameterField(self, 'ヒト土地タテ', 10, 1000, 'yellow')
 
     max_term.pack()
-    human_num.pack()
+    human_size.pack()
     hland_width.pack()
     hland_height.pack()
 

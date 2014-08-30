@@ -7,6 +7,8 @@ class Virus;
 
 /**
  * @brief 宿主
+ *
+ * 遺伝子を持つとは限らない
  */
 class __Host
 {
