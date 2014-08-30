@@ -122,6 +122,7 @@ int main()
     //----------------------------------------------------------------------
     output_value_with_term("tcell-size.txt", humans[0]->getTcellList().size() );
     output_value_with_term("dense.txt", humans[0]->getCellLand().calcInfectedCellDensity() );
+    output_value_with_term("isInfection.txt", humans[0]->isIncubationPeriod() );
   }
   //----------------------------------------------------------------------
   //  計算終了

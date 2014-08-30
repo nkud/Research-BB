@@ -4,30 +4,19 @@
 #include "Tcell.hpp"
 #include "Function.hpp"
 
-Human :: Human( const char *tag, CellLand *land ) :
-  __Life( tag ),
-  __Mobile(0, 0)
-{
-  cell_land_ = land;
 
-  FOR( i, 100 )
-  {
-    Tcell *newt = new Tcell( 10 );
-    newt->randomLocate( getCellLand() );
-    tcell_list.push_back( newt );
-  }
-}
 Human :: Human( int len, CellLand *land ) :
   __Life( len ),
   __Mobile(0, 0)
 {
+  // 細胞土地を初期化
   cell_land_ = land;
 
-  FOR( i, 100 )
-  {
+  // T細胞を初期化
+  FOR( i, 100 ) {
     Tcell *newt = new Tcell( 10 );
     newt->randomLocate( getCellLand() );
-    tcell_list.push_back( newt );
+    tcell_list_.push_back( newt );
   }
 }
 
@@ -52,15 +41,38 @@ bool Human :: infection()
 {
 //  return can_infect;
   if( true ) {
-    EACH( it_v, getStandByVirusList() )
-    {
+    EACH( it_v, getStandByVirusList() ) {
       getCellLand().getCellAt(0,0).pushNewVirusCloneToInfectedVirusList(**it_v);
     }
     return true;
   }
   return false;
 }
-//XXX
+
+bool Human :: isSusceptible()
+{
+  if( getCellLand().calcInfectedCellDensity() <= 0 )
+    return true;
+  else
+    return false;
+}
+
+bool Human :: isIncubationPeriod() {
+  double threshold = 0.2;
+  if( getCellLand().calcInfectedCellDensity() < threshold )
+    return true;
+  else
+    return false;
+}
+
+bool Human :: isSymptomaticPeriod() {
+  if( isIncubationPeriod() )
+    return false;
+  else
+    return true;
+
+}
+
 void Human :: contact( __Host & neighbor )
 {
   EACH( it_virus, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得して
@@ -99,7 +111,7 @@ VECTOR(Human *) HumanLand :: getNeighborsAt( Human& human )
 ITERATOR(Tcell *) Human :: eraseTcell( ITERATOR(Tcell *)& it_tcell ) {
   SAFE_DELETE( *it_tcell );
   ITERATOR(Tcell *)& it_next = it_tcell;
-  tcell_list.erase( it_tcell );
+  tcell_list_.erase( it_tcell );
   return it_next;
 }
 void HumanLand :: resistHuman( Human& human )
@@ -118,16 +130,3 @@ bool Human :: enoughNumberOfTcellToRemove( int min_tcell )
     return false;
 }
 
-//----------------------------------------------------------------------
-//  ホスト
-//----------------------------------------------------------------------
-//XXX
-//VECTOR(Virus *)& Human :: getInfectedVirusList()
-//{
-  //VECTOR(Virus *) virus_list;
-  //VECTOR(Virus *) infected = getImmuneSystem().getCellLand().getCellAt(0,0).getInfectedVirusList();
-  //if( infected.size() > 0 ) {
-    //virus_list.push_back(infected[0]);
-  //}
-  //return virus_list;
-//}

@@ -17,27 +17,30 @@ class Tcell;
 class Human : public __Life, public __Mobile, public __Host
 {
   public:
-    Human( const char *tag, CellLand *land );
     Human( int len, CellLand *land );
 
     void reborn();                               ///< 初期化される
-    //----------------------------------------------------------------------
-    //  宿主関数
-    //----------------------------------------------------------------------
-    //VECTOR(Virus *)& getInfectedVirusList();
-    void contact( __Host& neighbor );           ///< ホストと接触
+
+    void contact( __Host& neighbor );            ///< ホストと接触
     bool infection();                            ///< 待機ウイルスを感染させる
 
+    bool isSusceptible();                        ///< 未感染者
+    bool isIncubationPeriod();                   ///< 潜伏期間
+    bool isSymptomaticPeriod();                  ///< 症候性期間
 
+    //----------------------------------------------------------------------
+    //  宿主内用関数
+    //----------------------------------------------------------------------
     CellLand& getCellLand() { return *cell_land_; }
-    VECTOR(Tcell *)& getTcellList() { return tcell_list; }
-    int getTcellListSize() const { return tcell_list.size(); }
+    VECTOR(Tcell *)& getTcellList() { return tcell_list_; }
+    int getTcellListSize() const { return tcell_list_.size(); } ///< T細胞数を取得する
 
-    bool enoughNumberOfTcellToRemove( int min_tcell );
-    ITERATOR(Tcell *) eraseTcell( ITERATOR(Tcell *)& it_tcell );
+    bool enoughNumberOfTcellToRemove( int min_tcell ); ///< T細胞が十分数あるか評価する
+    ITERATOR(Tcell *) eraseTcell( ITERATOR(Tcell *)& it_tcell ); ///< T細胞を削除する
+
   private:
-    CellLand *cell_land_;
-    VECTOR(Tcell *) tcell_list;
+    CellLand *cell_land_;                        ///< 細胞土地
+    VECTOR(Tcell *) tcell_list_;                 ///< T細胞リスト
 };
 
 /**
