@@ -35,23 +35,26 @@ DISPLAY = feh
 include colors.mk
 
 ## Directory Names
-SRC            = $(shell find src -name '*.cpp')
-INCLUDE        = $(shell find include -name '*.h' -or -name '*.hpp')
+# src_files            = $(shell find src -name '*.cpp')
+# include_files        = $(shell find include -name '*.h' -or -name '*.hpp')
 
 object_dir     = obj
-SRCDIR         = src
-INCDIR         = include
-include_subdir = $(shell find $(INCDIR) -type d)
-src_subdir = $(shell find $(SRCDIR) -type d)
-SCRDIR         = script
-BINDIR         = bin
+
+src_dir         = src
+include_dir         = include
+include_subdirs = $(shell find $(include_dir) -type d)
+src_subdirs = $(shell find $(src_dir) -type d)
+
+script_dir         = script
+bin_dir         = bin
 PRGDIR         = program
-MSTDIR         = master
+master_dir         = master
+
 test_dir       = test
 stat_dir       = stat
 test_make_name = test.mk
 
-clean_directory = $(BINDIR) $(object_dir) $(stat_dir)
+clean_directory = $(bin_dir) $(object_dir) $(stat_dir)
 bin_clean_files = $(output_files)
 test_make_file	= $(test_dir)/$(test_make_name)
 
@@ -61,15 +64,15 @@ TIME		:= $(shell date +%y%m%d-%H%M%S)
 RSTDIR		= result-$(now)
 PRGNAME		= program-$(now)
 
-CPPFLAGS = $(addprefix -I , $(include_subdir))
+CPPFLAGS = $(addprefix -I , $(include_subdirs))
 # vpath %.cpp src
 # vpath %.hpp include
 # vpath %.o	obj
-VPATH = src include obj $(include_subdir) $(src_subdir)
+VPATH = src include obj $(include_subdirs) $(src_subdirs)
 
 ## Target
 EXE := VEM.exe
-TARGET := $(BINDIR)/$(EXE)
+TARGET := $(bin_dir)/$(EXE)
 #OUTOBJ   = $(addprefix $(object_dir)/, $(addsuffix .o, $(notdir $(basename $(INCLUDE)))))
 OUTOBJ = $(addprefix $(object_dir)/, $(OBJS))
 
@@ -80,7 +83,7 @@ $(TARGET): $(OUTOBJ)
 	@$(COLORECHO)
 	@$(PRINT) -n '==> Linking $(notdir $@)...'
 	@$(CLRECHO)
-	@[ -d $(BINDIR) ] || $(MKDIR) $(BINDIR)
+	@[ -d $(bin_dir) ] || $(MKDIR) $(bin_dir)
 	@$(CC) $^ -o $@ $(CPPFLAGS)
 	@$(PRINT) 'ok'
 
@@ -97,7 +100,7 @@ run: bclean
 	@$(COLORECHO)
 	@$(PRINT) '==> Program is started $(timestamp)'
 	@$(CLRECHO)
-	@cd $(BINDIR); ./$(EXE)
+	@cd $(bin_dir); ./$(EXE)
 	@$(COLORECHO)
 	@$(PRINT) '==> Terminated $(timestamp)'
 	@$(CLRECHO)
@@ -114,7 +117,7 @@ zip:
 	@$(CLRECHO)
 
 tree:
-	tree $(INCDIR) $(SRCDIR) $(object_dir) $(BINDIR) $(SCRDIR)
+	tript_dire $(include_dir) $(src_dir) $(object_dir) $(bin_dir) $(scre)
 
 time:
 	@$(COLORECH)
@@ -125,22 +128,22 @@ bclean:
 	@$(COLORECHO)
 	@$(PRINT) '==> Cleanning bin/ $(bin_clean_files)'
 	@$(CLRECHO)
-	@cd $(BINDIR); $(RM) $(bin_clean_files)
+	@cd $(bin_dir); $(RM) $(bin_clean_files)
 
 tail:
 	@$(COLORECHO)
 	@$(PRINT) '==> Log tail'
 	@$(CLRECHO)
-	@cd $(BINDIR); $(TAIL) log
+	@cd $(bin_dir); $(TAIL) log
 
 re: clean $(TARGET)
 
 stat:
-	@$(COLORECHO) -I$(INCDIR)
+	@$(COLORECHO) -I$(include_dir)
 	@$(PRINT) -n '==> Generating...'
 	@$(CLRECHO)
 	@[ -d $(stat_dir) ] || $(MKDIR) $(stat_dir)
-	@cd $(BINDIR); $(PY) ../script/stat.py
+	@cd $(bin_dir); $(PY) ../script/stat.py
 	@cd $(stat_dir); $(PLOT) auto.plt 1>/dev/null 2>/dev/null
 	@$(PRINT) 'done'
 
