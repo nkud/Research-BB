@@ -21,7 +21,7 @@ Human :: Human( int len, CellLand *land ) :
 }
 
 void Human :: pushVirusToStandByVirusList( Virus &virus ) {
-  stand_by_virus_list_.push_back( virus.clone() );
+  stand_by_virus_list_.push_back( &virus );
 }
 
 VECTOR(Human *)& HumanLand :: getHumanListAt( int x, int y )
@@ -39,7 +39,16 @@ HumanLand :: ~HumanLand()
 {
   SAFE_DELETE_ARRAY( human_list_ );
 }
-
+VECTOR(Virus *)& Human :: getInfectedVirusList() {
+    int w = getCellLand().getWidth();
+    infected_virus_list_.clear();
+    FOR( i, w ) {
+        EACH( it_v, getCellLand().getCellAt(i,0).getInfectedVirusList() ) {
+            infected_virus_list_.push_back(*it_v);
+        }
+    }
+    return infected_virus_list_;
+}
 //XXX
 bool Human :: infection()
 {

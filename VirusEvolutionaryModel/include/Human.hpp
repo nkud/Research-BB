@@ -32,6 +32,7 @@ class Human : public __Life, public __Mobile
     VECTOR(Virus *)& getStandByVirusList() { return stand_by_virus_list_; } // 待機ウイルスリストを取得
     void pushVirusToStandByVirusList( Virus& v ); // 待機ウイルスに追加
 
+    VECTOR(Virus *)& getInfectedVirusList();
 
     //----------------------------------------------------------------------
     //  宿主内用関数
@@ -46,7 +47,9 @@ class Human : public __Life, public __Mobile
   private:
     CellLand *cell_land_;                        ///< 細胞土地
     VECTOR(Tcell *) tcell_list_;                 ///< T細胞リスト
+
     VECTOR(Virus *) stand_by_virus_list_;        ///< 待機ウイルスリスト
+    VECTOR(Virus *) infected_virus_list_;        ///< 待機ウイルスリスト
 };
 
 /**

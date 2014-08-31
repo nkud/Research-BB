@@ -103,6 +103,15 @@ int main()
     //----------------------------------------------------------------------
     //  ファイル出力
     //----------------------------------------------------------------------
+    int infcount = 0;
+    EACH( it_human, humans) {
+      if ((*it_human)->isSusceptible())
+      {
+      } else {
+        infcount++;
+      }
+    }
+    output_value_with_term("inf-human.txt", infcount );
     output_value_with_term("tcell-size.txt", humans[0]->getTcellList().size() );
     output_value_with_term("dense.txt", humans[0]->getCellLand().calcInfectedCellDensity() );
     output_value_with_term("isInfection.txt", humans[0]->isIncubationPeriod() );
