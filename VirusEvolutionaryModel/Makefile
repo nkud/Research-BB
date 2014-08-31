@@ -23,7 +23,7 @@ HOME = ~/workspace/AgentBasedEpidemicModel/VirusEvolutionaryModel
 ## Command
 CC    = g++ -Wall -g -O0 -std=c++11
 PRINT = echo
-MKDIR = mkdir -vp
+MKDIR = mkdir -p
 MAKE  = make --no-print-directory -s
 COPY  = cp
 RM    = rm -rfv
@@ -32,15 +32,7 @@ PLOT  = gnuplot
 PY    = python
 DISPLAY = feh
 
-## Colors
-BOLDECHO    = printf '\033[1m'
-REVERSEECHO = printf '\033[7m'
-REDECHO     = printf '\033[31m'
-GREENECHO   = printf '\033[32m'
-YELLOWECHO  = printf '\033[33m'
-BLUEECHO    = printf '\033[34m'
-CLRECHO     = printf '\033[0m\033[39m'
-COLORECHO   = $(BOLDECHO); $(BLUEECHO)
+include colors.mk
 
 ## Directory Names
 SRC            = $(shell find src -name '*.cpp')
@@ -49,6 +41,8 @@ INCLUDE        = $(shell find include -name '*.h' -or -name '*.hpp')
 object_dir     = obj
 SRCDIR         = src
 INCDIR         = include
+include_subdir = $(shell find $(INCDIR) -type d)
+src_subdir = $(shell find $(SRCDIR) -type d)
 SCRDIR         = script
 BINDIR         = bin
 PRGDIR         = program
@@ -67,11 +61,11 @@ TIME		:= $(shell date +%y%m%d-%H%M%S)
 RSTDIR		= result-$(now)
 PRGNAME		= program-$(now)
 
-CPPFLAGS = $(addprefix -I , $(INCDIR))
-
-vpath %.cpp src
-vpath %.hpp include
-vpath %.o	obj
+CPPFLAGS = $(addprefix -I , $(include_subdir))
+# vpath %.cpp src
+# vpath %.hpp include
+# vpath %.o	obj
+VPATH = src include obj $(include_subdir) $(src_subdir)
 
 ## Target
 EXE := VEM.exe
@@ -123,7 +117,7 @@ tree:
 	tree $(INCDIR) $(SRCDIR) $(object_dir) $(BINDIR) $(SCRDIR)
 
 time:
-	@$(COLORECHO)
+	@$(COLORECH)
 	@$(PRINT) '==> $(now)'
 	@$(CLRECHO)
 
@@ -142,7 +136,7 @@ tail:
 re: clean $(TARGET)
 
 stat:
-	@$(COLORECHO)
+	@$(COLORECHO) -I$(INCDIR)
 	@$(PRINT) -n '==> Generating...'
 	@$(CLRECHO)
 	@[ -d $(stat_dir) ] || $(MKDIR) $(stat_dir)
