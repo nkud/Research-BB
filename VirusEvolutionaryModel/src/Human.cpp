@@ -20,6 +20,10 @@ Human :: Human( int len, CellLand *land ) :
   }
 }
 
+void Human :: pushVirusToStandByVirusList( Virus &virus ) {
+  stand_by_virus_list_.push_back( virus.clone() );
+}
+
 VECTOR(Human *)& HumanLand :: getHumanListAt( int x, int y )
 {
   int n = getHeight()*y + x;
@@ -57,15 +61,17 @@ bool Human :: isSusceptible()
     return false;
 }
 
-bool Human :: isIncubationPeriod() {
-  double threshold = 0.2;
+bool Human :: isIncubationPeriod()
+{
+  double threshold = 0.2; // XXX
   if( getCellLand().calcInfectedCellDensity() < threshold )
     return true;
   else
     return false;
 }
 
-bool Human :: isSymptomaticPeriod() {
+bool Human :: isSymptomaticPeriod()
+{
   if( isIncubationPeriod() )
     return false;
   else
@@ -76,7 +82,7 @@ bool Human :: isSymptomaticPeriod() {
 void Human :: contact( __Host & neighbor )
 {
   EACH( it_virus, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得して
-    pushVirusToStandByVirusList( **it_virus );
+   pushVirusToStandByVirusList( **it_virus );
   }
 }
 

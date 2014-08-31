@@ -1,4 +1,3 @@
-#include "Config.hpp"
 #include "Virus.hpp"
 #include "Human.hpp"
 #include "Term.hpp"
@@ -8,27 +7,11 @@
 #include "FileFactory.hpp"
 #include "Benchmark.hpp"
 
+#include "Config.hpp"
+
 using namespace std;
 
 /// @todo __Host Class: ウイルスに感染する可能性のあるエージェント。免疫機構を持つ.Cell, Human
-
-//----------------------------------------------------------------------
-//  configure
-//----------------------------------------------------------------------
-const int TERM = 2000;
-const int HUMAN_INTERVAL = 2;
-const int IMMUNE_INTERVAL = 1;
-
-const int HUMAN_LAND_WIDTH = 20;
-const int HUMAN_LAND_HEIGHT = HUMAN_LAND_WIDTH;
-
-const int TCELL_MINIMUM_SIZE = 10;
-const int TCELL_LIFESPAN = 8;
-
-const int CELL_LAND_WIDTH = 50;
-const int CELL_LAND_HEIGHT = CELL_LAND_WIDTH;
-
-const int HUMAN_NUM = 1;
 
 //----------------------------------------------------------------------
 //  宿主内動態モデルの宣言（ main関数より下に実装あり ）

@@ -28,7 +28,7 @@ class __Host
 
     virtual void contact( __Host& neighbors ) = 0; // ホストと接触
     virtual bool infection() = 0;                // 待機ウイルスを感染させる
-
+    
     virtual int getInfectedVirusListSize() const { return infected_virus_list_.size(); }
 
   private:

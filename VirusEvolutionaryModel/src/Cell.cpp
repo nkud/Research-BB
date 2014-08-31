@@ -3,7 +3,8 @@
 #include "Function.hpp"
 
 Cell :: Cell(int x, int y) :
-  __Location(x,y)
+  __Location(x,y),
+  max_virus_can_have_( 1 )
 {
 
 }
@@ -26,7 +27,7 @@ bool Cell :: isNotInfected()
 
 
 
-void Cell :: contact( __Host& neighbor )
+void Cell :: contact( Cell& neighbor )
 {
     EACH( it_v, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得し
       pushVirusToStandByVirusList( **it_v );     // 待機ウイルスに追加（クローンではない）
@@ -46,6 +47,48 @@ bool Cell :: infection()
   }
   clearStandByViruses();                         // 待機ウイルスをクリア
   return false;
+}
+VECTOR(Virus *)& Cell :: getInfectedVirusList()
+{
+  return infected_virus_list_;
+}
+
+VECTOR(Virus *)& Cell :: getStandByVirusList()
+{
+  return stand_by_virus_list_;
+}
+
+void Cell :: clearInfectedViruses()
+{
+  EACH( it_v, getInfectedVirusList() ) {
+    SAFE_DELETE( *it_v );
+  }
+  infected_virus_list_.clear();
+}
+void Cell :: clearStandByViruses()
+{
+  EACH( it_v, getStandByVirusList() ) {
+    SAFE_DELETE( *it_v );
+  }
+  stand_by_virus_list_.clear();
+}
+
+void Cell :: pushNewVirusCloneToInfectedVirusList( Virus& v )
+{
+  infected_virus_list_.push_back( v.clone() );
+}
+void Cell :: pushVirusToStandByVirusList( Virus& v )
+{
+  stand_by_virus_list_.push_back( v.clone() );
+}
+
+bool Cell :: canPushNewVirus()
+{
+  // 保持ウイルスの最大値があれば、ここで処理
+  if( getInfectedVirusListSize() < max_virus_can_have_ )
+    return true;
+  else
+    return false;
 }
 
 //----------------------------------------------------------------------

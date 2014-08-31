@@ -14,7 +14,7 @@ class Tcell;
 /**
  * @brief ヒト
  */
-class Human : public __Life, public __Mobile, public __Host
+class Human : public __Life, public __Mobile
 {
   public:
     Human( int len, CellLand *land );
@@ -24,9 +24,14 @@ class Human : public __Life, public __Mobile, public __Host
     void contact( __Host& neighbor );            ///< ホストと接触
     bool infection();                            ///< 待機ウイルスを感染させる
 
+    // 宿主内状態
     bool isSusceptible();                        ///< 未感染者
     bool isIncubationPeriod();                   ///< 潜伏期間
     bool isSymptomaticPeriod();                  ///< 症候性期間
+
+    VECTOR(Virus *)& getStandByVirusList() { return stand_by_virus_list_; } // 待機ウイルスリストを取得
+    void pushVirusToStandByVirusList( Virus& v ); // 待機ウイルスに追加
+
 
     //----------------------------------------------------------------------
     //  宿主内用関数
@@ -41,6 +46,7 @@ class Human : public __Life, public __Mobile, public __Host
   private:
     CellLand *cell_land_;                        ///< 細胞土地
     VECTOR(Tcell *) tcell_list_;                 ///< T細胞リスト
+    VECTOR(Virus *) stand_by_virus_list_;        ///< 待機ウイルスリスト
 };
 
 /**
