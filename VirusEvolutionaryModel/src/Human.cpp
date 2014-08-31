@@ -91,6 +91,7 @@ bool Human :: isSymptomaticPeriod()
 void Human :: contact( __Host & neighbor )
 {
   EACH( it_virus, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得して
+    POINT;
    pushVirusToStandByVirusList( **it_virus );
   }
 }
