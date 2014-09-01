@@ -14,12 +14,15 @@ def main():
     pf.output_img(fplot, 'Denity', 'Term', 'Rate', 'density', (pf.TXT('../bin/dense'), 'density'))
     pf.output_img(fplot, 'TcellSize', 'Term', 'Size', 'tcell-size', (pf.TXT('../bin/tcell-size'), 'size'))
     pf.output_img(fplot, 'IsIncubation', 'Term', 'Count', 'is-infection', (pf.TXT('../bin/isInfection'), 'count'))
+    pf.output_img(fplot, 'IsInfection', 'Term', 'Count', 'inf-human', (pf.TXT('../bin/inf-human'), 'count'))
 
     # html
     fhtml = open('../stat/index.html', 'w')
     hf.output_section(fhtml, 'density', 2, hf.IMG('density'))
     hf.output_section(fhtml, 'tcell-size', 2, hf.IMG('tcell-size'))
+    hf.output_section(fhtml, 'inf-human', 2, hf.IMG('inf-human'))
     hf.output_section(fhtml, 'is-infection', 2, hf.IMG('is-infection'))
+
 
 if __name__ == '__main__':
     main()
