@@ -12,7 +12,7 @@ Human :: Human( CellLand *land ) :
   cell_land_ = land;
 
   // T細胞を初期化
-  FOR( i, 100 ) {
+  FOR( i, 10 ) {
     Tcell *newt = new Tcell( 10 );
     newt->randomLocate( getCellLand() );
     tcell_list_.push_back( newt );
@@ -104,7 +104,7 @@ bool Human :: isSusceptible()
 
 bool Human :: isIncubationPeriod()
 {
-  double threshold = 0.2; // XXX
+  double threshold = 0.6; // XXX
   if( getCellLand().calcInfectedCellDensity() < threshold )
     return true;
   else

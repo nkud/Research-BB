@@ -110,7 +110,7 @@ main()
     output_value_with_term("inf-human.txt", infcount );
     output_value_with_term("tcell-size.txt", humans[0]->getTcellList().size() );
     output_value_with_term("dense.txt", humans[0]->getCellLand().calcInfectedCellDensity() );
-    output_value_with_term("isInfection.txt", humans[0]->isIncubationPeriod() );
+    output_value_with_term("isInfection.txt", humans[0]->isSymptomaticPeriod() );
   }
   //----------------------------------------------------------------------
   //  計算終了
@@ -143,7 +143,8 @@ void run_host_pathogen_model( Human& human )
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
     VECTOR(Cell *) neighbors = cell_land.getNeighborsAt( **it_cell ); // 近隣の細胞を取得し
     EACH( it_neighbor, neighbors ) {
-      (*it_cell)->contact( **it_neighbor );      // 接触させる
+      if( probability(1) )
+        (*it_cell)->contact( **it_neighbor );      // 接触させる
     }
   }
   //----------------------------------------------------------------------

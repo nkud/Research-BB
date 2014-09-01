@@ -46,10 +46,13 @@ void Gene :: setTagNumAt( int num, int pos ) {
 
 bool Gene :: isInclude( Gene& other )
 {
-  if( getTagString().find( other.getTagString() ) == std::string::npos )
+  if( getTagString().find( other.getTagString() ) == std::string::npos ) {
     return false;
-  else
+  } else {
+    //DEBUG( getTagString() );
+    //DEBUG( other.getTagString() );
     return true;
+  }
 }
 
 //----------------------------------------------------------------------

@@ -9,7 +9,7 @@ import os
 
 ### CONFIGURE #################################################################
 INIT_LINE_STYLE = 'set style line 1 lw 2'
-LINE_STYLE = 'w l'
+LINE_STYLE = 'w boxes'
 IMG_SIZE = '1200,280'
 RESULT_WIDTH = 1000
 CSS_DIR = '../template/result.css'
