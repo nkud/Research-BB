@@ -17,25 +17,25 @@ class Cell : public __Location
     bool isNotInfected();                        ///< 未感染の真偽
 
     // ホスト関数
-    void clearInfectedViruses();         // 感染ウイルスをクリア
-    void clearStandByViruses();          // 待機ウイルスをクリア
+    void clearInfectedViruses();                 ///< 感染ウイルスをクリア
+    void clearStandByViruses();                  ///< 待機ウイルスをクリア
 
-    VECTOR(Virus *)& getInfectedVirusList(); // 感染ウイルスリストを取得
-    VECTOR(Virus *)& getStandByVirusList(); // 待機ウイルスリストを取得
+    VECTOR(Virus *)& getInfectedVirusList();     ///< 感染ウイルスリストを取得
+    VECTOR(Virus *)& getStandByVirusList();      ///< 待機ウイルスリストを取得
 
-    void pushVirusToStandByVirusList( Virus& v ); // 待機ウイルスに追加
+    void pushVirusToStandByVirusList( Virus& v ); ///< 待機ウイルスに追加
     void pushNewVirusCloneToInfectedVirusList( Virus& v ); // クローンを感染ウイルスに追加
-    bool canPushNewVirus();              // 新しいウイルスを追加できるか評価
+    bool canPushNewVirus();                      ///< 新しいウイルスを追加できるか評価
 
-    void contact( Cell& neighbors ); // ホストと接触
-    bool infection();                // 待機ウイルスを感染させる
+    void contact( Cell& neighbors );             ///< ホストと接触
+    bool infection();                            ///< 待機ウイルスを感染させる
 
     int getInfectedVirusListSize() const { return infected_virus_list_.size(); }
 
   private:
-    int max_virus_can_have_;                     // 最大感染ウイルス数
-    VECTOR(Virus *) infected_virus_list_;        // 感染ウイルスリスト
-    VECTOR(Virus *) stand_by_virus_list_;        // 待機ウイルスリスト
+    int max_virus_can_have_;                     ///< 最大感染ウイルス数
+    VECTOR(Virus *) infected_virus_list_;        ///< 感染ウイルスリスト
+    VECTOR(Virus *) stand_by_virus_list_;        ///< 待機ウイルスリスト
 };
 
 /**

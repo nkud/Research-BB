@@ -14,10 +14,10 @@ class Tcell;
 /**
  * @brief ヒト
  */
-class Human : public __Life, public __Mobile
+class Human : public __Mobile
 {
   public:
-    Human( int len, CellLand *land );
+    Human( CellLand *land );
 
     void reborn();                               ///< 初期化される
 

@@ -3,6 +3,8 @@
 
 #include "Gene.hpp"
 
+#include <string>
+
 /**
  * @brief ウイルス
  *
@@ -12,6 +14,7 @@ class Virus : public Gene
 {
  public:
    Virus( const char *tag ) : Gene( tag ) { }
+   Virus( std::string& tag ) : Gene( tag ) { }
    Virus( int len ) : Gene( len ) { }
 
   int getInfectionRate();                        ///< 感染確率

@@ -5,8 +5,7 @@
 #include "Function.hpp"
 
 
-Human :: Human( int len, CellLand *land ) :
-  __Life( len ),
+Human :: Human( CellLand *land ) :
   __Mobile(0, 0)
 {
   // 細胞土地を初期化

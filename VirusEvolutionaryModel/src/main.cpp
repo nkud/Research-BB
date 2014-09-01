@@ -23,7 +23,8 @@ void run_host_pathogen_model( Human& human );
 //  エントリーポイント
 //
 //----------------------------------------------------------------------
-int main()
+int
+main()
 {
   ECHO("Started Virus Evolutionary Model");
   ECHO("version 1.0");
@@ -40,14 +41,14 @@ int main()
 
   ECHO("ヒト初期化");
   VECTOR(Human *) humans;
-  Human *temp;
+  Human *h;
   FOR( i, HUMAN_NUM ) {                          // 初期設定の数だけ
-    temp = new Human( 10, new CellLand(CELL_LAND_WIDTH, CELL_LAND_HEIGHT) ); // 新しくヒトを初期化
-    temp->randomLocate(*humanLand);              // ランダムに土地に配置して
-    humans.push_back( temp );                    // 配列に追加していく
+    h = new Human( new CellLand(CELL_LAND_WIDTH, CELL_LAND_HEIGHT) ); // 新しくヒトを初期化
+    h->randomLocate(*humanLand);              // ランダムに土地に配置して
+    humans.push_back( h );                    // 配列に追加していく
   }
 
-  Virus *virus = new Virus( 10 );                // 新しいウイルスを初期化
+  Virus *virus = new Virus( V_TAG );             // 新しいウイルスを初期化
   humans[0]->getCellLand().getCellAt(0,0).pushNewVirusCloneToInfectedVirusList(*virus);
   //----------------------------------------------------------------------
   //  計算開始
@@ -159,9 +160,18 @@ void run_host_pathogen_model( Human& human )
     int x = (*it_tc)->getX();                    // 座標を
     int y = (*it_tc)->getY();                    // 取得して
     Cell& cell = cell_land.getCellAt(x, y);      // その位置の細胞を取得して
-    if( cell.isInfected() ) {                    // 細胞が感染していれば
-      cell.clearInfectedViruses();               // ウイルスを除去して
-      new_tcell.push_back( &( (*it_tc)->clone() ) ); // T細胞を増やす
+    if( cell.isInfected() )
+    {                                            // 細胞が感染していて
+      EACH( it_v, cell.getInfectedVirusList() )
+      {                                          // 各感染ウイルスのどれかに対して
+        if( (*it_tc)->hasReceptorMatching( **it_v ) )
+        {                                        // 受容体を所持していれば
+          cell.clearInfectedViruses();           // ウイルスを除去して
+          LOG( (**it_tc).getGene().getTagString() );
+          new_tcell.push_back( &( (*it_tc)->clone() ) ); // T細胞を増やす
+          break;
+        }
+      }
     }
   }
   EACH( it_tcell, new_tcell ) {                  // 新しいT細胞を

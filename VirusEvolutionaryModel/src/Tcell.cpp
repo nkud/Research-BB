@@ -1,6 +1,7 @@
 #include "Tcell.hpp"
 #include "Function.hpp"
 #include "Landscape.hpp"
+#include "Virus.hpp"
 
 Tcell :: Tcell( const char *tag ) :
   __Life( tag ),
@@ -31,6 +32,20 @@ void Tcell :: aging()
 bool Tcell :: willDie( int max_age ) const
 {
   if( getAge() >= max_age )
+    return true;
+  else
+    return false;
+}
+
+
+//--------------------------------------------------------------------------------------
+//       Class:  Tcell
+//      Method:  hasReceptorMatching
+// Description:  ウイルスに対して、受容体を所持しているか評価
+//--------------------------------------------------------------------------------------
+bool Tcell :: hasReceptorMatching( Virus& v )
+{
+  if( getGene().isInclude( v ) )
     return true;
   else
     return false;
