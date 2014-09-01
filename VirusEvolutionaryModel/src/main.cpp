@@ -143,7 +143,7 @@ void run_host_pathogen_model( Human& human )
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
     VECTOR(Cell *) neighbors = cell_land.getNeighborsAt( **it_cell ); // 近隣の細胞を取得し
     EACH( it_neighbor, neighbors ) {
-      if( probability(1) )
+      if( probability(100) )
         (*it_cell)->contact( **it_neighbor );      // 接触させる
     }
   }
@@ -183,15 +183,16 @@ void run_host_pathogen_model( Human& human )
   //  T細胞の寿命
   //----------------------------------------------------------------------
   for(ITERATOR(Tcell *)it=tcell_list.begin(); it!=tcell_list.end(); ) {
-    (*it)->aging();
-    if (human.enoughNumberOfTcellToRemove( TCELL_MINIMUM_SIZE )) {
-      if ((*it)->willDie( TCELL_LIFESPAN )) {
-        human.eraseTcell( it );
-      } else {
-        it++;
-      }
+    (*it)->aging();                              // 老化する
+    if ((*it)->willDie( TCELL_LIFESPAN )) {      // 寿命を超えれば
+      human.eraseTcell( it );                    // 削除される
     } else {
       it++;
     }
+  }
+  while( ! human.enoughNumberOfTcellToRemove( TCELL_MINIMUM_SIZE ) ) {
+    Tcell *newt = new Tcell( 10 );
+    newt->randomLocate( cell_land );
+    tcell_list.push_back( newt );
   }
 }
