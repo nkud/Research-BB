@@ -32,6 +32,7 @@ class Human : public __Life, public __Mobile
     VECTOR(Virus *)& getStandByVirusList() { return stand_by_virus_list_; } // 待機ウイルスリストを取得
     void pushVirusToStandByVirusList( Virus& v ); // 待機ウイルスに追加
 
+    void clearStandByViruses();
     VECTOR(Virus *)& getInfectedVirusList();
 
     //----------------------------------------------------------------------

@@ -51,7 +51,7 @@ VECTOR(Virus *)& Human :: getInfectedVirusList() {
   infected_virus_list_.clear();
   FOR( i, w ) {
     EACH( it_v, getCellLand().getCellAt(i,0).getInfectedVirusList() ) {
-      infected_virus_list_.push_back(*it_v);
+      infected_virus_list_.push_back(*it_v);     // 感染ウイルスに加える
     }
   }
   return infected_virus_list_;
@@ -66,15 +66,35 @@ VECTOR(Virus *)& Human :: getInfectedVirusList() {
 bool Human :: infection()
 {
 //  return can_infect;
-  if( isSusceptible() ) {
-    EACH( it_v, getStandByVirusList() ) {
-      getCellLand().getCellAt(0,0).pushNewVirusCloneToInfectedVirusList(**it_v);
+  if( isSusceptible() ) {                        // 未感染なら
+    EACH( it_v, getStandByVirusList() ) {        // 各待機ウイルスに対して
+      getCellLand().getCellAt(0,0).pushNewVirusCloneToInfectedVirusList(*((*it_v)->clone())); // 左上に感染させる
     }
+    clearStandByViruses();
     return true;
   }
+  clearStandByViruses();
   return false;
 }
 
+//--------------------------------------------------------------------------------------
+//       Class:  Human
+//      Method:  clearStandByViruses
+// Description:  
+//--------------------------------------------------------------------------------------
+void Human :: clearStandByViruses()
+{
+  //EACH( it_v, getStandByVirusList() ) {
+    //SAFE_DELETE( *it_v );
+  //}
+  stand_by_virus_list_.clear();
+}
+
+//--------------------------------------------------------------------------------------
+//       Class:  Human
+//      Method:  isSusceptible
+// Description:  
+//--------------------------------------------------------------------------------------
 bool Human :: isSusceptible()
 {
   if( getCellLand().calcInfectedCellDensity() <= 0 )
