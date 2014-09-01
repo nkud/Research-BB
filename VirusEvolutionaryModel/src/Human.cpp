@@ -39,21 +39,34 @@ HumanLand :: ~HumanLand()
 {
   SAFE_DELETE_ARRAY( human_list_ );
 }
+
+
+//--------------------------------------------------------------------------------------
+//       Class:  Human
+//      Method:  getInfectedVirusList
+// Description:  
+//--------------------------------------------------------------------------------------
 VECTOR(Virus *)& Human :: getInfectedVirusList() {
-    int w = getCellLand().getWidth();
-    infected_virus_list_.clear();
-    FOR( i, w ) {
-        EACH( it_v, getCellLand().getCellAt(i,0).getInfectedVirusList() ) {
-            infected_virus_list_.push_back(*it_v);
-        }
+  int w = getCellLand().getWidth();
+  infected_virus_list_.clear();
+  FOR( i, w ) {
+    EACH( it_v, getCellLand().getCellAt(i,0).getInfectedVirusList() ) {
+      infected_virus_list_.push_back(*it_v);
     }
-    return infected_virus_list_;
+  }
+  return infected_virus_list_;
 }
+
+//--------------------------------------------------------------------------------------
+//       Class:  Human
+//      Method:  infection
+// Description:  
+//--------------------------------------------------------------------------------------
 //XXX
 bool Human :: infection()
 {
 //  return can_infect;
-  if( true ) {
+  if( isSusceptible() ) {
     EACH( it_v, getStandByVirusList() ) {
       getCellLand().getCellAt(0,0).pushNewVirusCloneToInfectedVirusList(**it_v);
     }
@@ -88,10 +101,9 @@ bool Human :: isSymptomaticPeriod()
 
 }
 
-void Human :: contact( __Host & neighbor )
+void Human :: contact( Human & neighbor )
 {
   EACH( it_virus, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得して
-    POINT;
    pushVirusToStandByVirusList( **it_virus );
   }
 }

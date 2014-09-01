@@ -59,10 +59,6 @@ int main()
     if(term.isInterval(100)) {                   // 途中経過を表示
       ECHO( term.getTerm() << ", " << term.calcEstimatedRemainingTime());
     }
-    // デバッグログ ------------------------------------------------------
-    LOG( term.getTerm() );
-    //LOG( humans[0]->getCellLand().calcInfectedCellDensity() );
-
     //----------------------------------------------------------------------
     //  宿主内の動態を処理
     //----------------------------------------------------------------------
@@ -79,25 +75,24 @@ int main()
     //----------------------------------------------------------------------
     if( term.isInterval(HUMAN_INTERVAL) )        // ヒトの実行期間なら
     {
-      #ifdef HUMAN_PROCESS
-      LOG("ヒトの移動")
+      // ヒトの移動
       humanLand->clearMap();                     // 土地の登録をクリア
       EACH( it_human, humans ) {                 // 各ヒトに対して
+        // XXX: 症候性機関でなければ
         (*it_human)->move( *humanLand );         // 移動させて
         humanLand->resistHuman(**it_human);      // 土地に登録する
       }
-      LOG("ヒトの接触")
+      // ヒトの接触
       EACH( it_human, humans ) {                 // 各ヒトに対して
         VECTOR(Human *) neighbors = humanLand->getNeighborsAt( **it_human );
         EACH( it_neighbor, neighbors ) {
           (*it_human)->contact( **it_neighbor ); // 接触させる
         }
       }
-      LOG("ヒトの感染")
+      // ヒトの感染
       EACH( it_human, humans ) {                 // 各ヒトに対して
         (*it_human)->infection();                // 感染させる
       }
-#endif
     }
 
     //----------------------------------------------------------------------
@@ -138,14 +133,12 @@ void run_host_pathogen_model( Human& human )
   //----------------------------------------------------------------------
   //  T細胞の移動
   //----------------------------------------------------------------------
-  LOG("T細胞の移動")
   EACH( it_tc, tcell_list ) {                    // 各T細胞に対して
     (*it_tc)->move(cell_land);                   // 移動させる
   }
   //----------------------------------------------------------------------
   //  細胞の接触
   //----------------------------------------------------------------------
-  LOG("細胞の接触")
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
     VECTOR(Cell *) neighbors = cell_land.getNeighborsAt( **it_cell ); // 近隣の細胞を取得し
     EACH( it_neighbor, neighbors ) {
@@ -155,14 +148,12 @@ void run_host_pathogen_model( Human& human )
   //----------------------------------------------------------------------
   //  細胞の感染
   //----------------------------------------------------------------------
-  LOG("細胞の感染")
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
     (*it_cell)->infection();                     // 感染させる
   }
   //----------------------------------------------------------------------
   //  T細胞の殺傷
   //----------------------------------------------------------------------
-  LOG("T細胞の殺傷")
   VECTOR(Tcell *) new_tcell;
   EACH( it_tc, tcell_list ) {                    // 各T細胞に対して
     int x = (*it_tc)->getX();                    // 座標を
@@ -173,7 +164,6 @@ void run_host_pathogen_model( Human& human )
       new_tcell.push_back( &( (*it_tc)->clone() ) ); // T細胞を増やす
     }
   }
-  LOG("新しいT細胞を追加")
   EACH( it_tcell, new_tcell ) {                  // 新しいT細胞を
     tcell_list.push_back( *it_tcell );           // 追加する
   }

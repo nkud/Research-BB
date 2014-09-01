@@ -6,7 +6,6 @@
 #
 
 ## CONFIGURE ###################################################################
-output_files = log *.txt
 ################################################################################
 
 ## Home Directory
@@ -28,6 +27,7 @@ SED	  = sed
 ## Directory Names
 src_files            = $(shell find src -name '*.cpp')
 include_files        = $(shell find include -name '*.h' -or -name '*.hpp')
+output_files = $(shell find bin -name '*.txt')
 
 object_dir     = obj
 
@@ -128,15 +128,15 @@ time:
 
 bclean:
 	@$(COLORECHO)
-	@$(PRINT) '==> Cleanning bin/ $(bin_clean_files)'
+	@$(PRINT) '==> Cleanning $(bin_clean_files)'
 	@$(CLRECHO)
-	@cd $(bin_dir); $(RM) $(bin_clean_files)
+	@$(RM) $(bin_clean_files)
 
 tail:
 	@$(COLORECHO)
 	@$(PRINT) '==> Log tail'
 	@$(CLRECHO)
-	@cd $(bin_dir); $(TAIL) log
+	@cd $(bin_dir); $(TAIL) log.txt
 
 re: clean $(TARGET)
 

@@ -18,7 +18,7 @@
 //----------------------------------------------------------------------
 //  configure
 //----------------------------------------------------------------------
-const int TERM = 2000;
+const int TERM = 1000;
 const int HUMAN_INTERVAL = 2;
 const int IMMUNE_INTERVAL = 1;
 
@@ -31,7 +31,6 @@ const int TCELL_LIFESPAN = 8;
 const int CELL_LAND_WIDTH = 40;
 const int CELL_LAND_HEIGHT = CELL_LAND_WIDTH;
 
-const int HUMAN_NUM = 5;
-
+const int HUMAN_NUM = 2;
 
 #endif

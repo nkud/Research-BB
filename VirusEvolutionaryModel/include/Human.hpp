@@ -21,7 +21,7 @@ class Human : public __Life, public __Mobile
 
     void reborn();                               ///< 初期化される
 
-    void contact( __Host& neighbor );            ///< ホストと接触
+    void contact( Human& neighbor );            ///< ホストと接触
     bool infection();                            ///< 待機ウイルスを感染させる
 
     // 宿主内状態

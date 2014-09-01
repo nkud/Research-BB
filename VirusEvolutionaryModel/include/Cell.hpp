@@ -29,9 +29,9 @@ class Cell : public __Location
 
     void contact( Cell& neighbors ); // ホストと接触
     bool infection();                // 待機ウイルスを感染させる
-    
+
     int getInfectedVirusListSize() const { return infected_virus_list_.size(); }
-    
+
   private:
     int max_virus_can_have_;                     // 最大感染ウイルス数
     VECTOR(Virus *) infected_virus_list_;        // 感染ウイルスリスト

@@ -17,7 +17,7 @@
 
 #define ASSERT(x)           do { assert(x); }while(0);
 #define ECHO(x)             do { std::cout<< CLEAR_RIGHT << "----> "<<GREEN<<BOLD<<x<<STANDARD<<CLR_ST<<""<<std::endl; }while(0);
-#define LOG(x)              do { output_log(#x, x); }while(0);
+#define LOG(x)              do { log_ofs << "[ " << #x << " ] " << x << " (L"<<__LINE__<<") "<<__FILE__ << std::endl; }while(0);
 #define LLOG(x)             do { std::cout<< CLEAR_RIGHT << "[ "<<GREEN<<BOLD<<#x<<STANDARD<<CLR_ST<<" ] "<<x<<std::endl; output_log(#x, x); }while(0);
 
 #define POINT               do { static int point = 0; std::cerr<<BOLD<<RED<<"[ POINT ] "<<CLR_ST<<STANDARD<<"(L"<<__LINE__<<")"<<" "<<__FILE__<<" - "<<point++<<std::endl; }while(0);
@@ -43,12 +43,9 @@
 
 #define SEPARATOR           " "                  // 出力データを分割する文字 
 #define ENDL                std::endl
-#define LOG_FNAME           "log"                // ログファイル名
+#define LOG_FNAME           "log.txt"            // ログファイル名
 
-static std::ofstream ofs( LOG_FNAME, std::ios_base::out | std::ios_base::app );
-template < typename T > void output_log( const char *title, T value ) {
-  ofs << "[ " << title << " ] " << value << " (L"<<__LINE__<<") "<<__FILE__ << std::endl;
-}
+static std::ofstream log_ofs( LOG_FNAME, std::ios_base::out | std::ios_base::app );
 /*-----------------------------------------------------------------------------
  *  乱数用関数セット
  *-----------------------------------------------------------------------------*/
