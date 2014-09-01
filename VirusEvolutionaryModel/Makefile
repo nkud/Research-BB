@@ -6,14 +6,6 @@
 #
 
 ## CONFIGURE ###################################################################
-# Object Files
-OBJS += main.o
-OBJS += Human.o Gene.o Virus.o Cell.o Tcell.o Term.o
-OBJS += Term.o FileFactory.o
-OBJS += HumanCounter.o VirusCounter.o
-OBJS += Function.o
-OBJS += Host.o
-
 output_files = log *.txt
 ################################################################################
 
@@ -31,12 +23,11 @@ TAIL  = tail
 PLOT  = gnuplot
 PY    = python
 DISPLAY = feh
-
-include colors.mk
+SED	  = sed
 
 ## Directory Names
-# src_files            = $(shell find src -name '*.cpp')
-# include_files        = $(shell find include -name '*.h' -or -name '*.hpp')
+src_files            = $(shell find src -name '*.cpp')
+include_files        = $(shell find include -name '*.h' -or -name '*.hpp')
 
 object_dir     = obj
 
@@ -44,6 +35,8 @@ src_dir         = src
 include_dir         = include
 include_subdirs = $(shell find $(include_dir) -type d)
 src_subdirs = $(shell find $(src_dir) -type d)
+
+depend = depend
 
 script_dir         = script
 bin_dir         = bin
@@ -68,15 +61,16 @@ CPPFLAGS = $(addprefix -I , $(include_subdirs))
 # vpath %.cpp src
 # vpath %.hpp include
 # vpath %.o	obj
+
 VPATH = src include obj $(include_subdirs) $(src_subdirs)
 
 ## Target
 EXE := VEM.exe
 TARGET := $(bin_dir)/$(EXE)
-#OUTOBJ   = $(addprefix $(object_dir)/, $(addsuffix .o, $(notdir $(basename $(INCLUDE)))))
-OUTOBJ = $(addprefix $(object_dir)/, $(OBJS))
+objects = $(notdir $(subst .cpp,.o,$(src_files)))
+OUTOBJ = $(addprefix $(object_dir)/, $(objects))
 
-.PHONY: target all run gene clean test stat open
+.PHONY: target all run gene clean bclean test stat open
 
 ## Make Program
 $(TARGET): $(OUTOBJ)
@@ -85,6 +79,14 @@ $(TARGET): $(OUTOBJ)
 	@$(CLRECHO)
 	@[ -d $(bin_dir) ] || $(MKDIR) $(bin_dir)
 	@$(CC) $^ -o $@ $(CPPFLAGS)
+	@$(PRINT) 'ok'
+
+depend: $(src_files)
+	@$(COLORECHO)
+	@$(PRINT) -n '==> Generating $(depend)...'
+	@$(CLRECHO)
+	@$(CC) -M $(CPPFLAGS) $^ > $@
+	@$(SED) -i -e 's,\(^.*\.o\),$(object_dir)/\1,g' $(depend)
 	@$(PRINT) 'ok'
 
 $(object_dir)/%.o: %.cpp
@@ -158,22 +160,5 @@ test:
 
 all: $(TARGET) run stat tail
 
-# Dependencies #################################################################
-$(object_dir)/main.o: Human.hpp Virus.hpp Config.hpp Function.hpp Tcell.hpp
-
-$(object_dir)/Human.o: Human.hpp Gene.hpp Virus.hpp Cell.hpp Mobile.hpp Landscape.hpp Host.hpp Tcell.hpp
-$(object_dir)/Config.o: Config.hpp
-$(object_dir)/Gene.o: Gene.hpp
-$(object_dir)/Cell.o: Cell.hpp Function.hpp Virus.hpp Host.hpp
-$(object_dir)/Virus.o: Virus.hpp Gene.hpp
-$(object_dir)/Tcell.o: Tcell.hpp Gene.hpp Mobile.hpp
-
-$(object_dir)/Host.o: Host.hpp Virus.hpp
-
-$(object_dir)/HumanCounter.o: HumanCounter.hpp
-$(object_dir)/VirusCounter.o: VirusCounter.hpp
-
-$(object_dir)/Term.o: Term.hpp
-$(object_dir)/FileFactory.o: FileFactory.hpp Term.hpp Function.hpp
-$(object_dir)/Function.o: Function.hpp Random.hpp
-################################################################################
+-include $(depend)
+-include colors.mk
