@@ -143,8 +143,7 @@ void run_host_pathogen_model( Human& human )
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
     VECTOR(Cell *) neighbors = cell_land.getNeighborsAt( **it_cell ); // 近隣の細胞を取得し
     EACH( it_neighbor, neighbors ) {
-      if( probability(100) )
-        (*it_cell)->contact( **it_neighbor );      // 接触させる
+      (*it_cell)->contact( **it_neighbor );      // 接触させる
     }
   }
   //----------------------------------------------------------------------

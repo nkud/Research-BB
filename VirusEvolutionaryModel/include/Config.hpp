@@ -21,4 +21,6 @@ const int HUMAN_NUM = 1;
 
 #define V_TAG "11111"
 
+const int V_INF_RATE = 1;
+
 #endif
