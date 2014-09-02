@@ -30,8 +30,8 @@ bool Cell :: isNotInfected()
 void Cell :: contact( Cell& neighbor )
 {
     EACH( it_v, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得し
-      if( probability( (*it_v)->getInfectionRate() ) )
-      pushVirusToStandByVirusList( **it_v );     // 待機ウイルスに追加（クローンではない）
+      if( probability( (*it_v)->getInfectionRate() ) ) // ウイルス固有の感染率で
+        pushVirusToStandByVirusList( **it_v );     // 待機ウイルスに追加（クローンではない）
     }
 }
 
