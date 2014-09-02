@@ -51,16 +51,19 @@ def create_button(master, font, text, command, row, column, padx=5, pady=5):
 class ParameterField(Tkinter.Frame):
   """パラメータフィールド 
   """
-  def __init__(self, master, text, f, t, bg='white'):
+  def __init__(self, master, title, name, f, t, bg='white'):
     Tkinter.Frame.__init__(self, master)
-    self.label = create_label(self, text, bg=bg)
+    self.label = create_label(self, title, bg=bg)
     self.spinbox = create_spinbox(self, f, t)
+    self.name = name
     put_widget(self.label, 0, 0)
     put_widget(self.spinbox, 0, 1)
 
   def getValue(self):
     """ スピンボックスの値を取得 """
     return int(self.spinbox.get())
+  def getName(self):
+    return self.name
 
 class Configure(Tkinter.Frame):
   def __init__(self, master=None):
@@ -72,45 +75,34 @@ class Configure(Tkinter.Frame):
     self.info_ = {}
     self.readConfig()
 
+    self.parameter_ = {}
 # 期間
     term_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    self.max_term = ParameterField(term_panel, '最大実効期間', self.info_['TERM'], 10000, 'white')
-    self.human_interval = ParameterField(term_panel, 'ヒト実行間隔', self.info_['HUMAN_INTERVAL'], 100, 'white')
-    self.immune_interval = ParameterField(term_panel, '免疫実行間隔', self.info_['IMMUNE_INTERVAL'], 100, 'white')
-    self.max_term.pack()
-    self.human_interval.pack()
-    self.immune_interval.pack()
+    self.setParameter(term_panel, '最大実行期間', 'TERM')
+    self.setParameter(term_panel, 'ヒト実行間隔', 'HUMAN_INTERVAL')
+    self.setParameter(term_panel, '免疫実行間隔', 'IMMUNE_INTERVAL')
 # ヒト
     human_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    self.human_size = ParameterField(human_panel, '初期ヒト数', self.info_['HUMAN_SIZE'], 1000, 'white')
-    self.hland_width = ParameterField(human_panel, 'ヒト土地ヨコ', self.info_['HUMAN_LAND_WIDTH'], 1000, 'white')
-    self.hland_height = ParameterField(human_panel, 'ヒト土地タテ', self.info_['HUMAN_LAND_HEIGHT'], 1000, 'white')
-    self.human_size.pack()
-    self.hland_width.pack()
-    self.hland_height.pack()
+    self.setParameter(human_panel, '初期ヒト数', 'HUMAN_SIZE')
+    self.setParameter(human_panel, 'ヒト土地ヨコ', 'HUMAN_LAND_WIDTH')
+    self.setParameter(human_panel, 'ヒト土地タテ', 'HUMAN_LAND_HEIGHT')
 
 # 細胞
     cell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    self.cland_width = ParameterField(cell_panel, '細胞土地ヨコ', self.info_['CELL_LAND_WIDTH'], 1000, 'white')
-    self.cland_height = ParameterField(cell_panel, '細胞土地タテ', self.info_['CELL_LAND_HEIGHT'], 1000, 'white')
-    self.max_virus_can_have = ParameterField(cell_panel, '最大保持ウイルス数', self.info_['CELL_MAX_VIRUS_CAN_HAVE'], 100, 'white')
-    self.cland_width.pack()
-    self.cland_height.pack()
-    self.max_virus_can_have.pack()
+    self.setParameter(cell_panel, '細胞土地ヨコ', 'CELL_LAND_WIDTH')
+    self.setParameter(cell_panel, '細胞土地タテ', 'CELL_LAND_HEIGHT')
+    self.setParameter(cell_panel, '最大保持ウイルス数', 'CELL_MAX_VIRUS_CAN_HAVE')
+
 # T細胞
     tcell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    self.tcell_minimum_size = ParameterField(tcell_panel, '最小T細胞数', self.info_['TCELL_MINIMUM_SIZE'], 1000, 'yellow')
-    self.tcell_lifespan = ParameterField(tcell_panel, 'T細胞寿命', self.info_['TCELL_LIFESPAN'], 1000, 'yellow')
-    self.tcell_len = ParameterField(tcell_panel, 'T細胞遺伝子長', self.info_['TCELL_LEN'], 100, 'yellow')
-    self.tcell_minimum_size.pack()
-    self.tcell_lifespan.pack()
-    self.tcell_len.pack()
+    self.setParameter(tcell_panel, '最小T細胞数', 'TCELL_MINIMUM_SIZE', 'yellow')
+    self.setParameter(tcell_panel, 'T細胞寿命', 'TCELL_LIFESPAN', 'yellow')
+    self.setParameter(tcell_panel, 'T細胞遺伝子長', 'TCELL_LEN', 'yellow')
+
 # ウイルス
     virus_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    self.virus_len = ParameterField(virus_panel, 'ウイルス遺伝子長', self.info_['V_TAG'], 100, 'skyblue')
-    self.virus_irate = ParameterField(virus_panel, '感染率', self.info_['V_INF_RATE'], 100, 'skyblue')
-    self.virus_len.pack()
-    self.virus_irate.pack()
+    self.setParameter(virus_panel, 'ウイルス遺伝子長', 'V_TAG', 'skyblue')
+    self.setParameter(virus_panel, '感染率', 'V_INF_RATE', 'skyblue')
 
 # パック
     term_panel.pack( padx=5, pady=5 )
@@ -137,29 +129,20 @@ class Configure(Tkinter.Frame):
     print 'Run'
     # os.system('make')
     subprocess.call('ls', shell=True)
-  def exitConfig(self):
-    sys.exit()
+
   def saveConfig(self):
     print 'Save'
     fo = open('include/Config.hpp', 'w')
     output_line(fo, '// created by Configure.py')
     output_line(fo, '#ifndef ___CONFIG_HPP')
     output_line(fo, '#define ___CONFIG_HPP\n')
-    output_define(fo, 'HUMAN_SIZE', self.human_size.getValue())
-    output_define(fo, 'TERM', self.max_term.getValue())
-    output_define(fo, 'HUMAN_INTERVAL', self.human_interval.getValue())
-    output_define(fo, 'IMMUNE_INTERVAL', self.immune_interval.getValue())
-    output_define(fo, 'HUMAN_LAND_WIDTH', self.hland_width.getValue())
-    output_define(fo, 'HUMAN_LAND_HEIGHT', self.hland_height.getValue())
-    output_define(fo, 'TCELL_MINIMUM_SIZE', self.tcell_minimum_size.getValue())
-    output_define(fo, 'TCELL_LIFESPAN', self.tcell_lifespan.getValue())
-    output_define(fo, 'TCELL_LEN', self.tcell_len.getValue())
-    output_define(fo, 'CELL_LAND_WIDTH', self.cland_width.getValue())
-    output_define(fo, 'CELL_LAND_HEIGHT', self.cland_height.getValue())
-    output_define(fo, 'V_TAG', self.virus_len.getValue())
-    output_define(fo, 'V_INF_RATE', self.virus_irate.getValue())
-    output_define(fo, 'CELL_MAX_VIRUS_CAN_HAVE', self.max_virus_can_have.getValue())
+    for paramname in self.parameter_.keys():
+        output_define(fo, paramname, self.parameter_[paramname].getValue())
     output_line(fo, '\n#endif')
+
+  def setParameter(self, master, title, name, color='white'):
+    self.parameter_[name] = ParameterField(master, title, name, self.info_[name], 10000, color)
+    self.parameter_[name].pack()
 
   def readConfig(self):
     """ コンフィグを読み込む """
@@ -179,6 +162,9 @@ class Configure(Tkinter.Frame):
   def showResult(self):
     print 'Result'
     webbrowser.open('file://' + os.path.realpath('stat/index.html'))
+
+  def exitConfig(self):
+    sys.exit()
 
 def main():
   c = Configure()
