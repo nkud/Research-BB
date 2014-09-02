@@ -154,6 +154,7 @@ class Configure(Tkinter.Frame):
     output_line(fo, '\n#endif')
 
   def readConfig(self):
+    """ コンフィグを読み込む """
     print 'Read'
     fi = open('include/Config.hpp', 'r')
     for line in fi:
@@ -169,7 +170,8 @@ class Configure(Tkinter.Frame):
 
   def showResult(self):
     print 'Result'
-    webbrowser.get('windows-default').open('file://' + os.path.realpath('stat/index.html'))
+    webbrowser.open('file://' + os.path.realpath('stat/index.html'))
+
 def main():
   c = Configure()
   c.pack()
