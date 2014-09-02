@@ -5,6 +5,7 @@ import Tkinter
 import sys
 import os
 import webbrowser
+import subprocess
 
 ## Configure
 FONT = ('monospace', '12')
@@ -66,38 +67,41 @@ class Configure(Tkinter.Frame):
     Tkinter.Frame.__init__(self, master, width=200, height=100)
     self.master.title('VEM Configure')
 
+    self.info_ = {}
+    self.readConfig()
+
 # 期間
     term_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    self.max_term = ParameterField(term_panel, '最大実効期間', 100, 10000, 'white')
-    self.human_interval = ParameterField(term_panel, 'ヒト実行間隔', 1, 100, 'white')
-    self.immune_interval = ParameterField(term_panel, '免疫実行間隔', 1, 100, 'white')
+    self.max_term = ParameterField(term_panel, '最大実効期間', self.info_['TERM'], 10000, 'white')
+    self.human_interval = ParameterField(term_panel, 'ヒト実行間隔', self.info_['HUMAN_INTERVAL'], 100, 'white')
+    self.immune_interval = ParameterField(term_panel, '免疫実行間隔', self.info_['IMMUNE_INTERVAL'], 100, 'white')
     self.max_term.pack()
     self.human_interval.pack()
     self.immune_interval.pack()
 # ヒト
     human_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    self.human_size = ParameterField(human_panel, '初期ヒト数', 1, 1000, 'white')
-    self.hland_width = ParameterField(human_panel, 'ヒト土地ヨコ', 10, 1000, 'white')
-    self.hland_height = ParameterField(human_panel, 'ヒト土地タテ', 10, 1000, 'white')
+    self.human_size = ParameterField(human_panel, '初期ヒト数', self.info_['HUMAN_SIZE'], 1000, 'white')
+    self.hland_width = ParameterField(human_panel, 'ヒト土地ヨコ', self.info_['HUMAN_LAND_WIDTH'], 1000, 'white')
+    self.hland_height = ParameterField(human_panel, 'ヒト土地タテ', self.info_['HUMAN_LAND_HEIGHT'], 1000, 'white')
     self.human_size.pack()
     self.hland_width.pack()
     self.hland_height.pack()
 # T細胞
     tcell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    self.tcell_minimum_size = ParameterField(tcell_panel, '最小T細胞数', 10, 1000, 'white')
-    self.tcell_lifespan = ParameterField(tcell_panel, 'T細胞寿命', 10, 1000, 'white')
+    self.tcell_minimum_size = ParameterField(tcell_panel, '最小T細胞数', self.info_['TCELL_MINIMUM_SIZE'], 1000, 'white')
+    self.tcell_lifespan = ParameterField(tcell_panel, 'T細胞寿命', self.info_['TCELL_LIFESPAN'], 1000, 'white')
     self.tcell_minimum_size.pack()
     self.tcell_lifespan.pack()
 # 細胞
     cell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    self.cland_width = ParameterField(cell_panel, '細胞土地タテ', 10, 1000, 'white')
-    self.cland_height = ParameterField(cell_panel, '細胞土地タテ', 10, 1000, 'white')
+    self.cland_width = ParameterField(cell_panel, '細胞土地タテ', self.info_['CELL_LAND_WIDTH'], 1000, 'white')
+    self.cland_height = ParameterField(cell_panel, '細胞土地タテ', self.info_['CELL_LAND_HEIGHT'], 1000, 'white')
     self.cland_width.pack()
     self.cland_height.pack()
 
 # ウイルス
     virus_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    self.virus_len = ParameterField(virus_panel, 'ウイルス遺伝子長', 1, 100, 'white')
+    self.virus_len = ParameterField(virus_panel, 'ウイルス遺伝子長', self.info_['V_TAG'], 100, 'white')
     self.virus_len.pack()
 
 # パック
@@ -109,19 +113,22 @@ class Configure(Tkinter.Frame):
 
 # Button
     button_panel = Tkinter.Frame(self)
-    #execute_button = create_button(button_panel, FONT, '実行', self.execute, 0, 0)
+    # execute_button = create_button(button_panel, FONT, '実行', self.execute, 0, 0)
     save_button = create_button(button_panel, FONT, '保存', self.saveConfig, 0, 0)
+    read_button = create_button(button_panel, FONT, '読込', self.readConfig, 0, 0)
     exit_button = create_button(button_panel, FONT, '終了', self.exitConfig, 0, 0)
     result_button = create_button(button_panel, FONT, '結果', self.showResult, 0, 0)
-    # put_widget(button_panel, 0, 0)
-    put_widget(save_button, 0, 0)
-    put_widget(result_button, 0, 1)
-    put_widget(exit_button, 0, 2)
+    # put_widget(execute_button, 0, 0)
+    put_widget(save_button, 0, 1)
+    put_widget(read_button, 0, 2)
+    put_widget(result_button, 0, 3)
+    put_widget(exit_button, 0, 4)
     button_panel.pack()
 
   def execute(self):
     print 'Run'
-    os.system('make run')
+    # os.system('make')
+    subprocess.call('ls', shell=True)
   def exitConfig(self):
     sys.exit()
   def saveConfig(self):
@@ -145,6 +152,17 @@ class Configure(Tkinter.Frame):
 
   def readConfig(self):
     print 'Read'
+    fi = open('include/Config.hpp', 'r')
+    for line in fi:
+      ll = line.split()
+      if len(ll) < 3:
+        continue
+      if ll[0] != '#define':
+        continue
+      else:
+        self.info_[ll[1]] = ll[2]
+    for key in self.info_.keys():
+      print '- %s = %s' % (key, self.info_[key])
 
   def showResult(self):
     print 'Result'
