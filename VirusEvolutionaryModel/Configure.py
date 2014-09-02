@@ -5,7 +5,17 @@ import Tkinter
 import sys
 import os
 
+## Configure
 FONT = ('monospace', '12')
+##
+
+def output_define(fo, name, value):
+  """ 定義をファイルに出力する """
+  fo.write('#define %s %d\n' % (name, value))
+
+def output_line(fo, line):
+  """ １行出力する """
+  fo.write('%s\n' % line)
 
 def create_spinbox(master, f, t):
   """ スピンボックスを作成する """
@@ -57,33 +67,44 @@ class Configure(Tkinter.Frame):
 
 # 期間
     term_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    max_term = ParameterField(term_panel, '最大実効期間', 100, 10000, 'white')
-    max_term.pack()
+    self.max_term = ParameterField(term_panel, '最大実効期間', 100, 10000, 'white')
+    self.human_interval = ParameterField(term_panel, 'ヒト実行間隔', 1, 100, 'white')
+    self.immune_interval = ParameterField(term_panel, '免疫実行間隔', 1, 100, 'white')
+    self.max_term.pack()
+    self.human_interval.pack()
+    self.immune_interval.pack()
 # ヒト
     human_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    human_size = ParameterField(human_panel, '初期ヒト数', 1, 1000, 'white')
-    hland_width = ParameterField(human_panel, 'ヒト土地ヨコ', 10, 1000, 'white')
-    hland_height = ParameterField(human_panel, 'ヒト土地タテ', 10, 1000, 'white')
-    human_size.pack()
-    hland_width.pack()
-    hland_height.pack()
+    self.human_size = ParameterField(human_panel, '初期ヒト数', 1, 1000, 'white')
+    self.hland_width = ParameterField(human_panel, 'ヒト土地ヨコ', 10, 1000, 'white')
+    self.hland_height = ParameterField(human_panel, 'ヒト土地タテ', 10, 1000, 'white')
+    self.human_size.pack()
+    self.hland_width.pack()
+    self.hland_height.pack()
 # T細胞
     tcell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    tcell_minimum_size = ParameterField(tcell_panel, '最小T細胞数', 10, 1000, 'white')
-    tcell_lifespan = ParameterField(tcell_panel, 'T細胞寿命', 10, 1000, 'white')
-    tcell_minimum_size.pack()
-    tcell_lifespan.pack()
+    self.tcell_minimum_size = ParameterField(tcell_panel, '最小T細胞数', 10, 1000, 'white')
+    self.tcell_lifespan = ParameterField(tcell_panel, 'T細胞寿命', 10, 1000, 'white')
+    self.tcell_minimum_size.pack()
+    self.tcell_lifespan.pack()
 # 細胞
     cell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    cland_width = ParameterField(cell_panel, '細胞土地タテ', 10, 1000, 'white')
-    cland_height = ParameterField(cell_panel, '細胞土地タテ', 10, 1000, 'white')
-    cland_width.pack()
-    cland_height.pack()
+    self.cland_width = ParameterField(cell_panel, '細胞土地タテ', 10, 1000, 'white')
+    self.cland_height = ParameterField(cell_panel, '細胞土地タテ', 10, 1000, 'white')
+    self.cland_width.pack()
+    self.cland_height.pack()
 
+# ウイルス
+    virus_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
+    self.virus_len = ParameterField(virus_panel, 'ウイルス遺伝子長', 1, 100, 'white')
+    self.virus_len.pack()
+
+# パック
     term_panel.pack( padx=5, pady=5 )
     human_panel.pack( padx=5, pady=5 )
     tcell_panel.pack( padx=5, pady=5 )
     cell_panel.pack( padx=5, pady=5 )
+    virus_panel.pack( padx=5, pady=5 )
 
 # Button
     button_panel = Tkinter.Frame(self)
@@ -102,6 +123,24 @@ class Configure(Tkinter.Frame):
     sys.exit()
   def saveConfig(self):
     print 'Save'
+    fo = open('include/Config.hpp', 'w')
+    output_line(fo, '#ifndef ___CONFIG_HPP')
+    output_line(fo, '#define ___CONFIG_HPP\n')
+    output_define(fo, 'HUMAN_SIZE', self.human_size.getValue())
+    output_define(fo, 'TERM', self.max_term.getValue())
+    output_define(fo, 'HUMAN_INTERVAL', self.human_interval.getValue())
+    output_define(fo, 'IMMUNE_INTERVAL', self.immune_interval.getValue())
+    output_define(fo, 'HUMAN_LAND_WIDTH', self.hland_width.getValue())
+    output_define(fo, 'HUMAN_LAND_HEIGHT', self.hland_height.getValue())
+    output_define(fo, 'TCELL_MINIMUM_SIZE', self.tcell_minimum_size.getValue())
+    output_define(fo, 'TCELL_LIFESPAN', self.tcell_lifespan.getValue())
+    output_define(fo, 'CELL_LAND_WIDTH', self.cland_width.getValue())
+    output_define(fo, 'CELL_LAND_HEIGHT', self.cland_height.getValue())
+    output_define(fo, 'V_TAG', self.virus_len.getValue())
+    output_line(fo, '\n#endif')
+
+  def readConfig(self):
+    print 'Read'
 
 def main():
   c = Configure()
