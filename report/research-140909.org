@@ -1,0 +1,23 @@
+#+TITLE: 研究ノート
+#+AUTHOR: Naoki Ueda
+#+OPTIONS: \n:t H:1 toc:t creator:nil num:nil author:nil email:nil timestamp:nil
+#+LANGUAGE: ja
+#+LaTeX_CLASS: normal
+#+STARTUP: content
+#+HTML_HEAD: <style type="text/css">body {font-family:"andale mono";font-size:0.8em;}</style>
+
+* 備考
+
+** ウイルス感染による、細胞のアポトーシスの誘導は考えない。
+
+*** まだ明確になっていない部分もあるから。
+
+* 変更点
+
+** ウイルスの「増殖」を実装
+
+*** 細胞の「接触」から「感染」だったが、はじめにウイルスの「増殖」を処理する。
+
+*** 細胞の「接触」では、各細胞内に存在するウイルス数に比例した感染率で、近隣の細胞に感染する。
+
+*** ウイルスの増殖数は、各細胞で１期間に、高々１つとする。
