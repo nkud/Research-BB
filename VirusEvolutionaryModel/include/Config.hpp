@@ -13,7 +13,6 @@
 #define CELL_LAND_WIDTH 20
 #define CELL_LAND_HEIGHT 20
 #define V_TAG 5
-
-const int V_INF_RATE = 1;
+#define V_INF_RATE 10
 
 #endif

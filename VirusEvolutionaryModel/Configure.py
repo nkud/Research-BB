@@ -102,7 +102,9 @@ class Configure(Tkinter.Frame):
 # ウイルス
     virus_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
     self.virus_len = ParameterField(virus_panel, 'ウイルス遺伝子長', self.info_['V_TAG'], 100, 'white')
+    self.virus_irate = ParameterField(virus_panel, '感染率', self.info_['V_INF_RATE'], 100, 'white')
     self.virus_len.pack()
+    self.virus_irate.pack()
 
 # パック
     term_panel.pack( padx=5, pady=5 )
@@ -148,6 +150,7 @@ class Configure(Tkinter.Frame):
     output_define(fo, 'CELL_LAND_WIDTH', self.cland_width.getValue())
     output_define(fo, 'CELL_LAND_HEIGHT', self.cland_height.getValue())
     output_define(fo, 'V_TAG', self.virus_len.getValue())
+    output_define(fo, 'V_INF_RATE', self.virus_irate.getValue())
     output_line(fo, '\n#endif')
 
   def readConfig(self):
