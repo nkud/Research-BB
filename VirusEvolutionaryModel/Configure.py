@@ -4,6 +4,7 @@
 import Tkinter
 import sys
 import os
+import webbrowser
 
 ## Configure
 FONT = ('monospace', '12')
@@ -111,8 +112,10 @@ class Configure(Tkinter.Frame):
     #execute_button = create_button(button_panel, FONT, '実行', self.execute, 0, 0)
     save_button = create_button(button_panel, FONT, '保存', self.saveConfig, 0, 0)
     exit_button = create_button(button_panel, FONT, '終了', self.exitConfig, 0, 0)
-    put_widget(button_panel, 0, 0)
-    put_widget(save_button, 0, 1)
+    result_button = create_button(button_panel, FONT, '結果', self.showResult, 0, 0)
+    # put_widget(button_panel, 0, 0)
+    put_widget(save_button, 0, 0)
+    put_widget(result_button, 0, 1)
     put_widget(exit_button, 0, 2)
     button_panel.pack()
 
@@ -124,6 +127,7 @@ class Configure(Tkinter.Frame):
   def saveConfig(self):
     print 'Save'
     fo = open('include/Config.hpp', 'w')
+    output_line(fo, '// created by Configure.py')
     output_line(fo, '#ifndef ___CONFIG_HPP')
     output_line(fo, '#define ___CONFIG_HPP\n')
     output_define(fo, 'HUMAN_SIZE', self.human_size.getValue())
@@ -142,6 +146,9 @@ class Configure(Tkinter.Frame):
   def readConfig(self):
     print 'Read'
 
+  def showResult(self):
+    print 'Result'
+    webbrowser.get('windows-default').open('file://' + os.path.realpath('stat/index.html'))
 def main():
   c = Configure()
   c.pack()
