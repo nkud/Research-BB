@@ -64,8 +64,10 @@ class ParameterField(Tkinter.Frame):
 
 class Configure(Tkinter.Frame):
   def __init__(self, master=None):
-    Tkinter.Frame.__init__(self, master, width=200, height=100)
+    Tkinter.Frame.__init__(self, master, width=500, height=500)
     self.master.title('VEM Configure')
+    # self.master.minsize(width=300, height=600)
+    # self.master.maxsize(width=300, height=600)
 
     self.info_ = {}
     self.readConfig()
@@ -86,12 +88,7 @@ class Configure(Tkinter.Frame):
     self.human_size.pack()
     self.hland_width.pack()
     self.hland_height.pack()
-# T細胞
-    tcell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    self.tcell_minimum_size = ParameterField(tcell_panel, '最小T細胞数', self.info_['TCELL_MINIMUM_SIZE'], 1000, 'white')
-    self.tcell_lifespan = ParameterField(tcell_panel, 'T細胞寿命', self.info_['TCELL_LIFESPAN'], 1000, 'white')
-    self.tcell_minimum_size.pack()
-    self.tcell_lifespan.pack()
+
 # 細胞
     cell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
     self.cland_width = ParameterField(cell_panel, '細胞土地ヨコ', self.info_['CELL_LAND_WIDTH'], 1000, 'white')
@@ -100,22 +97,29 @@ class Configure(Tkinter.Frame):
     self.cland_width.pack()
     self.cland_height.pack()
     self.max_virus_can_have.pack()
-
+# T細胞
+    tcell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
+    self.tcell_minimum_size = ParameterField(tcell_panel, '最小T細胞数', self.info_['TCELL_MINIMUM_SIZE'], 1000, 'yellow')
+    self.tcell_lifespan = ParameterField(tcell_panel, 'T細胞寿命', self.info_['TCELL_LIFESPAN'], 1000, 'yellow')
+    self.tcell_len = ParameterField(tcell_panel, 'T細胞遺伝子長', self.info_['TCELL_LEN'], 100, 'yellow')
+    self.tcell_minimum_size.pack()
+    self.tcell_lifespan.pack()
+    self.tcell_len.pack()
 # ウイルス
     virus_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    self.virus_len = ParameterField(virus_panel, 'ウイルス遺伝子長', self.info_['V_TAG'], 100, 'white')
-    self.virus_irate = ParameterField(virus_panel, '感染率', self.info_['V_INF_RATE'], 100, 'white')
+    self.virus_len = ParameterField(virus_panel, 'ウイルス遺伝子長', self.info_['V_TAG'], 100, 'skyblue')
+    self.virus_irate = ParameterField(virus_panel, '感染率', self.info_['V_INF_RATE'], 100, 'skyblue')
     self.virus_len.pack()
     self.virus_irate.pack()
 
 # パック
     term_panel.pack( padx=5, pady=5 )
     human_panel.pack( padx=5, pady=5 )
+    cell_panel.pack( padx=5, pady=5 )  
     tcell_panel.pack( padx=5, pady=5 )
-    cell_panel.pack( padx=5, pady=5 )
     virus_panel.pack( padx=5, pady=5 )
 
-# Button
+# ボタン
     button_panel = Tkinter.Frame(self)
     # execute_button = create_button(button_panel, FONT, '実行', self.execute, 0, 0)
     save_button = create_button(button_panel, FONT, '保存', self.saveConfig, 0, 0)
@@ -149,6 +153,7 @@ class Configure(Tkinter.Frame):
     output_define(fo, 'HUMAN_LAND_HEIGHT', self.hland_height.getValue())
     output_define(fo, 'TCELL_MINIMUM_SIZE', self.tcell_minimum_size.getValue())
     output_define(fo, 'TCELL_LIFESPAN', self.tcell_lifespan.getValue())
+    output_define(fo, 'TCELL_LEN', self.tcell_len.getValue())
     output_define(fo, 'CELL_LAND_WIDTH', self.cland_width.getValue())
     output_define(fo, 'CELL_LAND_HEIGHT', self.cland_height.getValue())
     output_define(fo, 'V_TAG', self.virus_len.getValue())

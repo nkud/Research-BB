@@ -5,15 +5,15 @@
 #include "Function.hpp"
 
 
-Human :: Human( CellLand *land ) :
+Human :: Human( int tlen, int tsize, CellLand *land ) :
   __Mobile(0, 0)
 {
   // 細胞土地を初期化
   cell_land_ = land;
 
   // T細胞を初期化
-  FOR( i, 10 ) {
-    Tcell *newt = new Tcell( 10 );
+  FOR( i, tsize ) {
+    Tcell *newt = new Tcell( tlen );
     newt->randomLocate( getCellLand() );
     tcell_list_.push_back( newt );
   }

@@ -17,7 +17,7 @@ class Tcell;
 class Human : public __Mobile
 {
   public:
-    Human( CellLand *land );
+    Human( int tlen, int tsize, CellLand *land );
 
     void reborn();                               ///< 初期化される
 
