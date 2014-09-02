@@ -1,10 +1,11 @@
 #include "Cell.hpp"
 #include "Virus.hpp"
 #include "Function.hpp"
+#include "Config.hpp"
 
 Cell :: Cell(int x, int y) :
   __Location(x,y),
-  max_virus_can_have_( 1 )
+  max_virus_can_have_( CELL_MAX_VIRUS_CAN_HAVE )
 {
 
 }

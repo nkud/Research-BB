@@ -94,10 +94,12 @@ class Configure(Tkinter.Frame):
     self.tcell_lifespan.pack()
 # 細胞
     cell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
-    self.cland_width = ParameterField(cell_panel, '細胞土地タテ', self.info_['CELL_LAND_WIDTH'], 1000, 'white')
+    self.cland_width = ParameterField(cell_panel, '細胞土地ヨコ', self.info_['CELL_LAND_WIDTH'], 1000, 'white')
     self.cland_height = ParameterField(cell_panel, '細胞土地タテ', self.info_['CELL_LAND_HEIGHT'], 1000, 'white')
+    self.max_virus_can_have = ParameterField(cell_panel, '最大保持ウイルス数', self.info_['CELL_MAX_VIRUS_CAN_HAVE'], 100, 'white')
     self.cland_width.pack()
     self.cland_height.pack()
+    self.max_virus_can_have.pack()
 
 # ウイルス
     virus_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
@@ -151,6 +153,7 @@ class Configure(Tkinter.Frame):
     output_define(fo, 'CELL_LAND_HEIGHT', self.cland_height.getValue())
     output_define(fo, 'V_TAG', self.virus_len.getValue())
     output_define(fo, 'V_INF_RATE', self.virus_irate.getValue())
+    output_define(fo, 'CELL_MAX_VIRUS_CAN_HAVE', self.max_virus_can_have.getValue())
     output_line(fo, '\n#endif')
 
   def readConfig(self):
