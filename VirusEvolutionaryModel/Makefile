@@ -145,7 +145,7 @@ stat:
 	@$(PRINT) -n '==> Generating...'
 	@$(CLRECHO)
 	@[ -d $(stat_dir) ] || $(MKDIR) $(stat_dir)
-	@cd $(bin_dir); $(PY) ../script/stat.py
+	@cd $(stat_dir); $(PY) ../script/stat.py
 	@cd $(stat_dir); $(PLOT) auto.plt 1>/dev/null 2>/dev/null
 	@$(PRINT) 'done'
 

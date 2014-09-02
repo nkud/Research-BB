@@ -4,11 +4,9 @@
 import plotfactory as pf
 import htmlfactory as hf
 
-STAT_DIR_PATH = '../stat/'
-
 def main():
     # plot
-    fplot = open('../stat/auto.plt', 'w')
+    fplot = open('auto.plt', 'w')
     pf.initialize_for_plot(fplot)
     pf.set_terminal(fplot)
     pf.output_img(fplot, 'Denity', 'Term', 'Rate', 'density', (pf.TXT('../bin/dense'), 'density'))
@@ -17,7 +15,7 @@ def main():
     pf.output_img(fplot, 'IsInfection', 'Term', 'Count', 'inf-human', (pf.TXT('../bin/inf-human'), 'count'))
 
     # html
-    fhtml = open('../stat/index.html', 'w')
+    fhtml = open('index.html', 'w')
     hf.output_section(fhtml, 'density', 2, hf.IMG('density'))
     hf.output_section(fhtml, 'tcell-size', 2, hf.IMG('tcell-size'))
     hf.output_section(fhtml, 'inf-human', 2, hf.IMG('inf-human'))
