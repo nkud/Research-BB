@@ -49,7 +49,7 @@ def create_button(master, font, text, command, row, column, padx=5, pady=5):
   return button
 
 class ParameterField(Tkinter.Frame):
-  """ パラメータフィールド 
+  """ パラメータフィールド
   """
   def __init__(self, master, title, name, f, t, bg='white'):
     Tkinter.Frame.__init__(self, master)
@@ -61,6 +61,7 @@ class ParameterField(Tkinter.Frame):
     # 配置
     put_widget(self.label, 0, 0)
     put_widget(self.spinbox, 0, 1)
+    self.pack()
 
   def getValue(self):
     """ スピンボックスの値を取得 """
@@ -83,6 +84,19 @@ class Configure(Tkinter.Frame):
     # self.master.minsize(width=300, height=600)
     # self.master.maxsize(width=300, height=600)
 
+# メニューバー
+    menubar = Tkinter.Menu(self)
+    menu_file = Tkinter.Menu(menubar)
+    menubar.add_cascade(label=u'メニュー', menu=menu_file)
+    menu_file.add_command(label=u'保存する', command=self.saveConfig)
+    menu_file.add_command(label=u'読込する', command=self.readConfig)
+    menu_file.add_command(label=u'結果を表示する', command=self.showResult)
+    menu_file.add_command(label=u'終了する', command=self.exitConfig)
+    try:
+      self.master.config(menu=menubar)
+    except AttributeError:
+      self.master.Tkinter.call(master, 'config', '-menu', menubar)
+
     self.info_ = {}
     self.readConfig()
 
@@ -97,44 +111,41 @@ class Configure(Tkinter.Frame):
     self.setParameter(human_panel, '初期ヒト数', 'HUMAN_SIZE')
     self.setParameter(human_panel, 'ヒト土地ヨコ', 'HUMAN_LAND_WIDTH')
     self.setParameter(human_panel, 'ヒト土地タテ', 'HUMAN_LAND_HEIGHT')
-
 # 細胞
     cell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)    
     self.setParameter(cell_panel, '最大保持ウイルス数', 'CELL_MAX_VIRUS_CAN_HAVE')
     self.setParameter(cell_panel, '細胞土地ヨコ', 'CELL_LAND_WIDTH')
     self.setParameter(cell_panel, '細胞土地タテ', 'CELL_LAND_HEIGHT')
-
 # T細胞
     tcell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
     self.setParameter(tcell_panel, 'T細胞遺伝子長', 'TCELL_LEN', 'yellow')
     self.setParameter(tcell_panel, '最小T細胞数', 'TCELL_MINIMUM_SIZE', 'yellow')
     self.setParameter(tcell_panel, 'T細胞寿命', 'TCELL_LIFESPAN', 'yellow')
-
 # ウイルス
     virus_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
     self.setParameter(virus_panel, 'ウイルス遺伝子長', 'V_TAG', 'skyblue')
     self.setParameter(virus_panel, '感染率', 'V_INF_RATE', 'skyblue')
-
 # パック
     term_panel.pack( padx=5, pady=5 )
     human_panel.pack( padx=5, pady=5 )
     cell_panel.pack( padx=5, pady=5 )  
     tcell_panel.pack( padx=5, pady=5 )
     virus_panel.pack( padx=5, pady=5 )
-
 # ボタン
     button_panel = Tkinter.Frame(self)
     # execute_button = create_button(button_panel, FONT, '実行', self.execute, 0, 0)
-    save_button = create_button(button_panel, FONT, '保存', self.saveConfig, 0, 0)
-    read_button = create_button(button_panel, FONT, '読込', self.readConfig, 0, 0)
-    exit_button = create_button(button_panel, FONT, '終了', self.exitConfig, 0, 0)
-    result_button = create_button(button_panel, FONT, '結果', self.showResult, 0, 0)
+    save_button = create_button(button_panel, FONT, u'保存', self.saveConfig, 0, 0)
+    read_button = create_button(button_panel, FONT, u'読込', self.readConfig, 0, 0)
+    exit_button = create_button(button_panel, FONT, u'終了', self.exitConfig, 0, 0)
+    result_button = create_button(button_panel, FONT, u'結果', self.showResult, 0, 0)
     # put_widget(execute_button, 0, 0)
     put_widget(save_button, 0, 1)
     put_widget(read_button, 0, 2)
     put_widget(result_button, 0, 3)
     put_widget(exit_button, 0, 4)
     button_panel.pack()
+
+    self.pack()
 
   def saveConfig(self):
     """ コンフィグを保存する """
@@ -152,7 +163,6 @@ class Configure(Tkinter.Frame):
 
   def setParameter(self, master, title, name, color='white'):
     self.parameter_[name] = ParameterField(master, title, name, self.info_[name], 10000, color)
-    self.parameter_[name].pack()
 
   def readConfig(self):
     """ コンフィグを読み込む """
@@ -186,7 +196,7 @@ class Configure(Tkinter.Frame):
 
 def main():
   c = Configure()
-  c.pack()
+  # c.pack()
   c.mainloop()
 
 if __name__=='__main__':
