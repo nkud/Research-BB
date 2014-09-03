@@ -18,12 +18,14 @@ def main():
     pfactory.generate()
 
     # html
-    fhtml = open('index.html', 'w')
-    hf.output_section(fhtml, 'density', 2, hf.IMG('density'))
-    hf.output_section(fhtml, 'tcell-size', 2, hf.IMG('tcell-size'))
-    hf.output_section(fhtml, 'inf-human', 2, hf.IMG('inf-human'))
-    hf.output_section(fhtml, 'is-infection', 2, hf.IMG('is-infection'))
+    # fhtml = open('index.html', 'w')
 
+    hfactory = hf.HtmlFactory('index.html')
+    hfactory.setSection('density', 2, hf.IMG('density'))
+    hfactory.setSection('tcell-size', 2, hf.IMG('tcell-size'))
+    hfactory.setSection('inf-human', 2, hf.IMG('inf-human'))
+    hfactory.setSection('is-infection', 2, hf.IMG('is-infection'))
+    hfactory.generate()
 
 if __name__ == '__main__':
     main()

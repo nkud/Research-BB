@@ -85,27 +85,34 @@ class HtmlFactory(object):
     """ 結果表示用のHTMLを出力する """
     def __init__(self, filename):
         self.file = open(filename, 'w')
-    def close(self):
-        self.file.close()
+        self.section_list_ = []
+
+    def setSection(self, title, hlevel, *imgs):
+        self.section_list_.append( (title, hlevel, imgs) )
+
+    def setConfig(self):
+        pass
+    def setCss(self):
+        pass
     def generate(self):
         # Init
-        output_line(self.file,
-            '<html><link rel="stylesheet" href="%s">' % CSS_DIR +
-            '<body><font color=gray><code>')
+        output_line(self.file, '<html>')
+        output_line(self.file, '<link rel="stylesheet" href="%s"><body>' % CSS_DIR)
         output_header(self.file, '<font color=black># RESULT</font>', 1)
 
         # 初期設定を表示
-        output_header(self.file, 'Config', 2)
-        config = '<table>'
-        config += '%s' % read_info(
-            INFO_FNAME, '<tr><td>', '</td><td>', '</td></tr>'
-            )
-        config += '</table>'
-        output_line( self.file, config )
+        # output_header(self.file, 'Config', 2)
+        # config = '<table>'
+        # config += '%s' % read_info(
+        #     INFO_FNAME, '<tr><td>', '</td><td>', '</td></tr>'
+        #     )
+        # config += '</table>'
+        # output_line( self.file, config )
+        self.setConfig()
 
         # Image Section
-        output_section(self.file, 'density', 2, IMG('IsIncubation'), IMG('IsCrisis'))
+        for s in self.section_list_:
+            output_section(self.file, s[0], s[1], *s[2])
 
         # End
-        output_line(self.file, '</code></body></html>')
-
+        output_line(self.file, '</body></html>')
