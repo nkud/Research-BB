@@ -5,9 +5,6 @@
 # Organization: OPU
 #
 
-## CONFIGURE ###################################################################
-################################################################################
-
 ## Home Directory
 HOME = ~/workspace/AgentBasedEpidemicModel/VirusEvolutionaryModel
 
@@ -85,8 +82,8 @@ depend: $(src_files)
 	@$(COLORECHO)
 	@$(PRINT) -n '==> Generating $(depend)...'
 	@$(CLRECHO)
-	@$(CC) -M $(CPPFLAGS) $^ > $@
-	@$(SED) -i -e 's,\(^.*\.o\),$(object_dir)/\1,g' $(depend)
+	@$(CC) -M $(CPPFLAGS) $^ | \
+	  $(SED) -e 's,\(^.*\.o\),$(object_dir)/\1,g' > $(depend)
 	@$(PRINT) 'ok'
 
 $(object_dir)/%.o: %.cpp
