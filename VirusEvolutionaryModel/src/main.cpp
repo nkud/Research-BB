@@ -142,30 +142,22 @@ void run_host_pathogen_model( Human& human )
   CellLand& cell_land = human.getCellLand();        // 細胞土地を取得
   VECTOR(Cell *)& cell_list = cell_land.getCellList(); // 細胞リストを取得
   VECTOR(Tcell *)& tcell_list = human.getTcellList(); // T細胞リストを取得
-  //----------------------------------------------------------------------
   //  T細胞の移動
-  //----------------------------------------------------------------------
   EACH( it_tc, tcell_list ) {                    // 各T細胞に対して
     (*it_tc)->move(cell_land);                   // 移動させる
   }
-  //----------------------------------------------------------------------
   //  細胞の接触
-  //----------------------------------------------------------------------
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
     VECTOR(Cell *) neighbors = cell_land.getNeighborsAt( **it_cell ); // 近隣の細胞を取得し
     EACH( it_neighbor, neighbors ) {
       (*it_cell)->contact( **it_neighbor );      // 接触させる
     }
   }
-  //----------------------------------------------------------------------
   //  細胞の感染
-  //----------------------------------------------------------------------
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
     (*it_cell)->infection();                     // 感染させる
   }
-  //----------------------------------------------------------------------
   //  T細胞の殺傷
-  //----------------------------------------------------------------------
   VECTOR(Tcell *) new_tcell;
   EACH( it_tc, tcell_list ) {                    // 各T細胞に対して
     int x = (*it_tc)->getX();                    // 座標を
@@ -177,10 +169,11 @@ void run_host_pathogen_model( Human& human )
       {                                          // 各感染ウイルスのどれかに対して
         if( (*it_tc)->hasReceptorMatching( **it_v ) )
         {                                        // 受容体を所持していれば
-          cell.clearInfectedViruses();           // ウイルスを除去して
-          LOG( (**it_tc).getGene().getTagString() );
-          new_tcell.push_back( &( (*it_tc)->clone() ) ); // T細胞を増やす
-          break;
+          if( probability( cell.calcDensityOfVirusSize() ) ) { // 細胞内のウイルス密度に比例して
+            cell.clearInfectedViruses();         // ウイルスを除去して
+            new_tcell.push_back( &( (*it_tc)->clone() ) ); // T細胞を増やす
+            break;
+          }
         }
       }
     }
@@ -188,10 +181,7 @@ void run_host_pathogen_model( Human& human )
   EACH( it_tcell, new_tcell ) {                  // 新しいT細胞を
     tcell_list.push_back( *it_tcell );           // 追加する
   }
-
-  //----------------------------------------------------------------------
   //  T細胞の寿命
-  //----------------------------------------------------------------------
   for(ITERATOR(Tcell *)it=tcell_list.begin(); it!=tcell_list.end(); ) {
     (*it)->aging();                              // 老化する
     if ((*it)->willDie( TCELL_LIFESPAN )) {      // 寿命を超えれば
@@ -204,5 +194,12 @@ void run_host_pathogen_model( Human& human )
     Tcell *newt = new Tcell( 10 );
     newt->randomLocate( cell_land );
     tcell_list.push_back( newt );
+  }
+  // ウイルスの増殖
+  EACH( it_cell, cell_list ) {                   // 各細胞に対して
+    if( (*it_cell)->isInfected() ) {             // 感染細胞ならば
+      Virus *virus = (*it_cell)->getInfectedVirusList()[0]; // 先頭のウイルスを
+      (*it_cell)->pushNewVirusCloneToInfectedVirusList( *virus ); // １つクローンする
+    }
   }
 }

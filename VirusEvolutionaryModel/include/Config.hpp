@@ -7,14 +7,14 @@
 #define HUMAN_LAND_HEIGHT              10        	///< ヒト土地タテ
 #define TCELL_LEN                      10        	///< T細胞遺伝子長
 #define IMMUNE_INTERVAL                1         	///< 免疫実行間隔
-#define TCELL_MINIMUM_SIZE             100       	///< 最小T細胞数
-#define CELL_LAND_WIDTH                40        	///< 細胞土地ヨコ
+#define TCELL_MINIMUM_SIZE             10        	///< 最小T細胞数
+#define CELL_LAND_WIDTH                20        	///< 細胞土地ヨコ
 #define CELL_MAX_VIRUS_CAN_HAVE        10        	///< 最大保持ウイルス数
 #define HUMAN_INTERVAL                 1         	///< ヒト実行間隔
-#define CELL_LAND_HEIGHT               40        	///< 細胞土地タテ
+#define CELL_LAND_HEIGHT               20        	///< 細胞土地タテ
 #define HUMAN_LAND_WIDTH               10        	///< ヒト土地ヨコ
 #define V_INF_RATE                     5         	///< 感染率
-#define V_TAG                          10        	///< ウイルス遺伝子長
-#define TCELL_LIFESPAN                 10        	///< T細胞寿命
+#define V_TAG                          3         	///< ウイルス遺伝子長
+#define TCELL_LIFESPAN                 5         	///< T細胞寿命
 
 #endif
