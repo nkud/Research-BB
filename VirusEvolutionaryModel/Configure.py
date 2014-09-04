@@ -6,6 +6,7 @@ import sys
 import os
 import webbrowser
 import subprocess
+import collections
 
 ## Configure
 FONT = ('monospace', '12')
@@ -13,7 +14,7 @@ FONT = ('monospace', '12')
 
 def output_define(fo, name, value, title='none'):
   """ 定義をファイルに出力する """
-  fo.write('#define %-30s %-10d\t///< %s\n' % (name, value, title))
+  fo.write('#define %-30s %-10d///< %s\n' % (name, value, title))
 
 def output_line(fo, line):
   """ １行出力する """
@@ -100,7 +101,7 @@ class Configure(Tkinter.Frame):
     self.info_ = {}
     self.readConfig()
 
-    self.parameter_ = {}
+    self.parameter_ = collections.OrderedDict()
 # 期間
     term_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
     self.setParameter(term_panel, '最大実行期間', 'TERM')
