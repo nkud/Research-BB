@@ -120,6 +120,8 @@ main()
     output_value_with_term("inf-human.txt", infcount );
     output_value_with_term("tcell-size.txt", humans[0]->getTcellList().size() );
     output_value_with_term("dense.txt", humans[0]->getCellLand().calcDensityOfInfectedVirus() );
+    output_value_with_term("v-dense.txt", humans[0]->getCellLand().getCellAt(0,0).calcDensityOfVirusSize() );
+    output_value_with_term("v-dense2.txt", humans[0]->getCellLand().getCellAt(0,1).calcDensityOfVirusSize() );
     output_value_with_term("isInfection.txt", humans[0]->isSymptomaticPeriod() );
   }
   //----------------------------------------------------------------------
@@ -149,8 +151,15 @@ void run_host_pathogen_model( Human& human )
   //  細胞の接触
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
     VECTOR(Cell *) neighbors = cell_land.getNeighborsAt( **it_cell ); // 近隣の細胞を取得し
-    EACH( it_neighbor, neighbors ) {
-      (*it_cell)->contact( **it_neighbor );      // 接触させる
+    EACH( it_neighbor, neighbors )
+    {                                            // 各近隣に対して
+      double prob = 100 * (*it_neighbor)->calcDensityOfVirusSize();
+      //double prob = V_INF_RATE * (*it_neighbor)->calcDensityOfVirusSize();
+      if( probability( prob ) )                  // その近隣のウイルス密度に比例して
+      //if( prob >= 80 )
+      {
+        (*it_cell)->contact( **it_neighbor );      // 接触させる
+      }
     }
   }
   //  細胞の感染
@@ -169,7 +178,8 @@ void run_host_pathogen_model( Human& human )
       {                                          // 各感染ウイルスのどれかに対して
         if( (*it_tc)->hasReceptorMatching( **it_v ) )
         {                                        // 受容体を所持していれば
-          if( probability( 100 * cell.calcDensityOfVirusSize() ) ) { // 細胞内のウイルス密度に比例して
+          if( probability( 100 * cell.calcDensityOfVirusSize() ) )
+          {                                      // 細胞内のウイルス密度に比例して
             cell.clearInfectedViruses();         // ウイルスを除去して
             new_tcell.push_back( &( (*it_tc)->clone() ) ); // T細胞を増やす
             break;
@@ -191,15 +201,21 @@ void run_host_pathogen_model( Human& human )
     }
   }
   while( ! human.enoughNumberOfTcellToRemove( TCELL_MINIMUM_SIZE ) ) {
-    Tcell *newt = new Tcell( 10 );
+    Tcell *newt = new Tcell( TCELL_LEN );
     newt->randomLocate( cell_land );
     tcell_list.push_back( newt );
   }
   // ウイルスの増殖
-  EACH( it_cell, cell_list ) {                   // 各細胞に対して
-    if( (*it_cell)->canPushNewVirus() and (*it_cell)->isInfected() ) {             // 感染細胞ならば
-      Virus *virus = (*it_cell)->getInfectedVirusList()[0]; // 先頭のウイルスを
-      (*it_cell)->pushNewVirusCloneToInfectedVirusList( *virus ); // １つクローンする
+  EACH( it_cell, cell_list )
+  {                                              // 各細胞に対して
+    Cell& cell = **it_cell;
+    if( probability( V_REPRODUCTIVE_RATE ) )
+    {                                            // 感染細胞かつ余裕があれば
+      if( cell.canPushNewVirus() and cell.isInfected() )
+      {                                          // 増殖率で
+        Virus *virus = cell.getInfectedVirusList()[0]; // 先頭のウイルスを
+        cell.pushNewVirusCloneToInfectedVirusList( *virus ); // １つクローンする
+      }
     }
   }
 }

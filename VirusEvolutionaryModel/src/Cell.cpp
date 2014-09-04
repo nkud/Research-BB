@@ -12,7 +12,7 @@ Cell :: Cell(int x, int y) :
 
 bool Cell :: isInfected()
 {
-  if( getInfectedVirusList().size() > 0 )
+  if( getInfectedVirusListSize() > 0 )
     return true;
   else
     return false;
@@ -35,12 +35,9 @@ double Cell :: calcDensityOfVirusSize() const
 
 void Cell :: contact( Cell& neighbor )
 {
-    EACH( it_v, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得し
-      //if( probability( (*it_v)->getInfectionRate() ) ) { // ウイルス固有の感染率で
-      if( probability( 100 * neighbor.calcDensityOfVirusSize() ) ) {
-        pushVirusToStandByVirusList( **it_v );     // 待機ウイルスに追加（クローンではない）
-      }
-    }
+  EACH( it_v, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得し
+    pushVirusToStandByVirusList( **it_v );       // 待機ウイルスに追加（クローンではない）
+  }
 }
 
 bool Cell :: infection()
@@ -49,9 +46,12 @@ bool Cell :: infection()
   /// @todo 要変更
   if( canPushNewVirus() ) {                      // ウイルスに感染できる状態なら
     EACH( it_v, getStandByVirusList() ) {        // 待機ウイルスの中から
-      pushNewVirusCloneToInfectedVirusList( *(*it_v)->clone() ); // 感染させる
-      clearStandByViruses();                     // 待機ウイルスをクリア
-      return true;                               // 終了
+      if( probability( V_INF_RATE ) )
+      {
+        pushNewVirusCloneToInfectedVirusList( *(*it_v)->clone() ); // 感染させる
+        clearStandByViruses();                     // 待機ウイルスをクリア
+        return true;                               // 終了
+      }
     }
   }
   clearStandByViruses();                         // 待機ウイルスをクリア
