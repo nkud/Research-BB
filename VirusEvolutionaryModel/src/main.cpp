@@ -169,7 +169,7 @@ void run_host_pathogen_model( Human& human )
       {                                          // 各感染ウイルスのどれかに対して
         if( (*it_tc)->hasReceptorMatching( **it_v ) )
         {                                        // 受容体を所持していれば
-          if( probability( cell.calcDensityOfVirusSize() ) ) { // 細胞内のウイルス密度に比例して
+          if( probability( 100 * cell.calcDensityOfVirusSize() ) ) { // 細胞内のウイルス密度に比例して
             cell.clearInfectedViruses();         // ウイルスを除去して
             new_tcell.push_back( &( (*it_tc)->clone() ) ); // T細胞を増やす
             break;
