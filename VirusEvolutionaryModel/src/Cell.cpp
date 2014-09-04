@@ -36,7 +36,7 @@ double Cell :: calcDensityOfVirusSize() const
 void Cell :: contact( Cell& neighbor )
 {
     EACH( it_v, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得し
-      //if( probability( (*it_v)->getInfectionRate() ) ) // ウイルス固有の感染率で
+      //if( probability( (*it_v)->getInfectionRate() ) ) { // ウイルス固有の感染率で
       if( probability( 100 * neighbor.calcDensityOfVirusSize() ) ) {
         pushVirusToStandByVirusList( **it_v );     // 待機ウイルスに追加（クローンではない）
       }

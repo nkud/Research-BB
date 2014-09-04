@@ -197,7 +197,7 @@ void run_host_pathogen_model( Human& human )
   }
   // ウイルスの増殖
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
-    if( (*it_cell)->isInfected() ) {             // 感染細胞ならば
+    if( (*it_cell)->canPushNewVirus() and (*it_cell)->isInfected() ) {             // 感染細胞ならば
       Virus *virus = (*it_cell)->getInfectedVirusList()[0]; // 先頭のウイルスを
       (*it_cell)->pushNewVirusCloneToInfectedVirusList( *virus ); // １つクローンする
     }
