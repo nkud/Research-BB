@@ -28,7 +28,7 @@ Gene :: Gene( int len )
 void Gene :: initTagRandom() {
   int maxtag = 1;
   FOR( pos, getLen() ) {
-    setTagNumAt( '0'+uniform_int( 0, maxtag ), pos );
+    setTagNumAt( uniform_int( 0, maxtag ), pos );
   }
 }
 
@@ -41,7 +41,7 @@ std::string& Gene :: getTagString() {
 }
 
 void Gene :: setTagNumAt( int num, int pos ) {
-  tag_[pos] = num;
+  tag_[pos] = '0' + num;
 }
 
 bool Gene :: isInclude( Gene& other )
