@@ -87,11 +87,11 @@ class Configure(Tkinter.Frame):
 # メニューバー
     menubar = Tkinter.Menu(self)
     menu_file = Tkinter.Menu(menubar)
-    menubar.add_cascade(label=u'メニュー', menu=menu_file)
     menu_file.add_command(label=u'保存する', command=self.saveConfig)
     menu_file.add_command(label=u'読込する', command=self.readConfig)
     menu_file.add_command(label=u'結果を表示する', command=self.showResult)
     menu_file.add_command(label=u'終了する', command=self.exitConfig)
+    menubar.add_cascade(label=u'メニュー', menu=menu_file)
     try:
       self.master.config(menu=menubar)
     except AttributeError:
@@ -113,9 +113,9 @@ class Configure(Tkinter.Frame):
     self.setParameter(human_panel, 'ヒト土地タテ', 'HUMAN_LAND_HEIGHT')
 # 細胞
     cell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)    
-    self.setParameter(cell_panel, '最大保持ウイルス数', 'CELL_MAX_VIRUS_CAN_HAVE')
-    self.setParameter(cell_panel, '細胞土地ヨコ', 'CELL_LAND_WIDTH')
-    self.setParameter(cell_panel, '細胞土地タテ', 'CELL_LAND_HEIGHT')
+    self.setParameter(cell_panel, '最大保持ウイルス数', 'CELL_MAX_VIRUS_CAN_HAVE', 'gray')
+    self.setParameter(cell_panel, '細胞土地ヨコ', 'CELL_LAND_WIDTH', 'gray')
+    self.setParameter(cell_panel, '細胞土地タテ', 'CELL_LAND_HEIGHT', 'gray')
 # T細胞
     tcell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
     self.setParameter(tcell_panel, 'T細胞遺伝子長', 'TCELL_LEN', 'yellow')
@@ -124,6 +124,7 @@ class Configure(Tkinter.Frame):
 # ウイルス
     virus_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
     self.setParameter(virus_panel, 'ウイルス遺伝子長', 'V_TAG', 'skyblue')
+    self.setParameter(virus_panel, '増殖率', 'V_REPRODUCTIVE_RATE', 'skyblue')
     self.setParameter(virus_panel, '感染率', 'V_INF_RATE', 'skyblue')
 # パック
     term_panel.pack( padx=5, pady=5 )
@@ -162,6 +163,8 @@ class Configure(Tkinter.Frame):
     output_line(fo, '\n#endif')
 
   def setParameter(self, master, title, name, color='white'):
+    if name not in self.info_:
+        self.info_[name] = 0
     self.parameter_[name] = ParameterField(master, title, name, self.info_[name], 10000, color)
 
   def readConfig(self):
@@ -196,7 +199,6 @@ class Configure(Tkinter.Frame):
 
 def main():
   c = Configure()
-  # c.pack()
   c.mainloop()
 
 if __name__=='__main__':
