@@ -11,9 +11,9 @@ import subprocess
 FONT = ('monospace', '12')
 ##
 
-def output_define(fo, name, value):
+def output_define(fo, name, value, title='none'):
   """ 定義をファイルに出力する """
-  fo.write('#define %s %d\n' % (name, value))
+  fo.write('#define %-30s %-10d\t///< %s\n' % (name, value, title))
 
 def output_line(fo, line):
   """ １行出力する """
@@ -26,7 +26,7 @@ def create_spinbox(master, f, t):
 
 def create_label(master, text, **options):
   """ ラベルを作成する """
-  border = 0
+  border = 1
   label = Tkinter.Label(master, text=text, relief=Tkinter.GROOVE, bd=border, width=20, **options)
   return label
 
@@ -49,28 +49,53 @@ def create_button(master, font, text, command, row, column, padx=5, pady=5):
   return button
 
 class ParameterField(Tkinter.Frame):
-  """パラメータフィールド 
+  """ パラメータフィールド
   """
   def __init__(self, master, title, name, f, t, bg='white'):
     Tkinter.Frame.__init__(self, master)
+    # 作成
     self.label = create_label(self, title, bg=bg)
     self.spinbox = create_spinbox(self, f, t)
     self.name = name
+    self.title = title
+    # 配置
     put_widget(self.label, 0, 0)
     put_widget(self.spinbox, 0, 1)
+    self.pack()
 
   def getValue(self):
     """ スピンボックスの値を取得 """
     return int(self.spinbox.get())
+
   def getName(self):
+    """ 変数名を取得 """
     return self.name
 
+  def getTitle(self):
+    """ 説明を取得 """
+    return self.title
+
 class Configure(Tkinter.Frame):
+  """ コンフィグ画面
+  """
   def __init__(self, master=None):
     Tkinter.Frame.__init__(self, master, width=500, height=500)
     self.master.title('VEM Configure')
     # self.master.minsize(width=300, height=600)
     # self.master.maxsize(width=300, height=600)
+
+# メニューバー
+    menubar = Tkinter.Menu(self)
+    menu_file = Tkinter.Menu(menubar)
+    menubar.add_cascade(label=u'メニュー', menu=menu_file)
+    menu_file.add_command(label=u'保存する', command=self.saveConfig)
+    menu_file.add_command(label=u'読込する', command=self.readConfig)
+    menu_file.add_command(label=u'結果を表示する', command=self.showResult)
+    menu_file.add_command(label=u'終了する', command=self.exitConfig)
+    try:
+      self.master.config(menu=menubar)
+    except AttributeError:
+      self.master.Tkinter.call(master, 'config', '-menu', menubar)
 
     self.info_ = {}
     self.readConfig()
@@ -86,38 +111,33 @@ class Configure(Tkinter.Frame):
     self.setParameter(human_panel, '初期ヒト数', 'HUMAN_SIZE')
     self.setParameter(human_panel, 'ヒト土地ヨコ', 'HUMAN_LAND_WIDTH')
     self.setParameter(human_panel, 'ヒト土地タテ', 'HUMAN_LAND_HEIGHT')
-
 # 細胞
-    cell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
+    cell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)    
+    self.setParameter(cell_panel, '最大保持ウイルス数', 'CELL_MAX_VIRUS_CAN_HAVE')
     self.setParameter(cell_panel, '細胞土地ヨコ', 'CELL_LAND_WIDTH')
     self.setParameter(cell_panel, '細胞土地タテ', 'CELL_LAND_HEIGHT')
-    self.setParameter(cell_panel, '最大保持ウイルス数', 'CELL_MAX_VIRUS_CAN_HAVE')
-
 # T細胞
     tcell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
+    self.setParameter(tcell_panel, 'T細胞遺伝子長', 'TCELL_LEN', 'yellow')
     self.setParameter(tcell_panel, '最小T細胞数', 'TCELL_MINIMUM_SIZE', 'yellow')
     self.setParameter(tcell_panel, 'T細胞寿命', 'TCELL_LIFESPAN', 'yellow')
-    self.setParameter(tcell_panel, 'T細胞遺伝子長', 'TCELL_LEN', 'yellow')
-
 # ウイルス
     virus_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
     self.setParameter(virus_panel, 'ウイルス遺伝子長', 'V_TAG', 'skyblue')
     self.setParameter(virus_panel, '感染率', 'V_INF_RATE', 'skyblue')
-
 # パック
     term_panel.pack( padx=5, pady=5 )
     human_panel.pack( padx=5, pady=5 )
     cell_panel.pack( padx=5, pady=5 )  
     tcell_panel.pack( padx=5, pady=5 )
     virus_panel.pack( padx=5, pady=5 )
-
 # ボタン
     button_panel = Tkinter.Frame(self)
     # execute_button = create_button(button_panel, FONT, '実行', self.execute, 0, 0)
-    save_button = create_button(button_panel, FONT, '保存', self.saveConfig, 0, 0)
-    read_button = create_button(button_panel, FONT, '読込', self.readConfig, 0, 0)
-    exit_button = create_button(button_panel, FONT, '終了', self.exitConfig, 0, 0)
-    result_button = create_button(button_panel, FONT, '結果', self.showResult, 0, 0)
+    save_button = create_button(button_panel, FONT, u'保存', self.saveConfig, 0, 0)
+    read_button = create_button(button_panel, FONT, u'読込', self.readConfig, 0, 0)
+    exit_button = create_button(button_panel, FONT, u'終了', self.exitConfig, 0, 0)
+    result_button = create_button(button_panel, FONT, u'結果', self.showResult, 0, 0)
     # put_widget(execute_button, 0, 0)
     put_widget(save_button, 0, 1)
     put_widget(read_button, 0, 2)
@@ -125,24 +145,24 @@ class Configure(Tkinter.Frame):
     put_widget(exit_button, 0, 4)
     button_panel.pack()
 
-  def execute(self):
-    print 'Run'
-    # os.system('make')
-    subprocess.call('ls', shell=True)
+    self.pack()
 
   def saveConfig(self):
+    """ コンフィグを保存する """
     print 'Save'
     fo = open('include/Config.hpp', 'w')
     output_line(fo, '// created by Configure.py')
     output_line(fo, '#ifndef ___CONFIG_HPP')
     output_line(fo, '#define ___CONFIG_HPP\n')
     for paramname in self.parameter_.keys():
-        output_define(fo, paramname, self.parameter_[paramname].getValue())
+        output_define(fo, 
+          paramname,
+          self.parameter_[paramname].getValue(), 
+          self.parameter_[paramname].getTitle())
     output_line(fo, '\n#endif')
 
   def setParameter(self, master, title, name, color='white'):
     self.parameter_[name] = ParameterField(master, title, name, self.info_[name], 10000, color)
-    self.parameter_[name].pack()
 
   def readConfig(self):
     """ コンフィグを読み込む """
@@ -160,15 +180,23 @@ class Configure(Tkinter.Frame):
       print '- %s = %s' % (key, self.info_[key])
 
   def showResult(self):
+    """ 結果を表示する """
     print 'Result'
     webbrowser.open('file://' + os.path.realpath('stat/index.html'))
 
+  def execute(self):
+    """ 実行する """
+    print 'Run'
+    # os.system('make')
+    subprocess.call('ls', shell=True)
+
   def exitConfig(self):
+    """ コンフィグを終了する """
     sys.exit()
 
 def main():
   c = Configure()
-  c.pack()
+  # c.pack()
   c.mainloop()
 
 if __name__=='__main__':
