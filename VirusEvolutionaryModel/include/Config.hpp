@@ -5,7 +5,7 @@
 #define TERM                           1000      	///< 最大実行期間
 #define HUMAN_SIZE                     1         	///< 初期ヒト数
 #define HUMAN_LAND_HEIGHT              10        	///< ヒト土地タテ
-#define TCELL_LEN                      100       	///< T細胞遺伝子長
+#define TCELL_LEN                      10        	///< T細胞遺伝子長
 #define IMMUNE_INTERVAL                1         	///< 免疫実行間隔
 #define TCELL_MINIMUM_SIZE             100       	///< 最小T細胞数
 #define CELL_LAND_WIDTH                40        	///< 細胞土地ヨコ

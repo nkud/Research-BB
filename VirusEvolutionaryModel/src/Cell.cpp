@@ -26,12 +26,19 @@ bool Cell :: isNotInfected()
     return true;
 }
 
-
+double Cell :: calcDensityOfVirusSize() const
+{
+  double ret = 0;
+  ret = (double)getInfectedVirusListSize() / getMaxSizeOfInfectedVirus();
+  LOG(ret);
+  return ret;
+}
 
 void Cell :: contact( Cell& neighbor )
 {
     EACH( it_v, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得し
-      if( probability( (*it_v)->getInfectionRate() ) ) // ウイルス固有の感染率で
+      //if( probability( (*it_v)->getInfectionRate() ) ) // ウイルス固有の感染率で
+      if( probability( 100 * calcDensityOfVirusSize() ) )
         pushVirusToStandByVirusList( **it_v );     // 待機ウイルスに追加（クローンではない）
     }
 }
@@ -87,7 +94,7 @@ void Cell :: pushVirusToStandByVirusList( Virus& v )
 bool Cell :: canPushNewVirus()
 {
   // 保持ウイルスの最大値があれば、ここで処理
-  if( getInfectedVirusListSize() < max_virus_can_have_ )
+  if( getInfectedVirusListSize() < getMaxSizeOfInfectedVirus() )
     return true;
   else
     return false;
@@ -148,7 +155,7 @@ VECTOR(Cell *) CellLand :: getNeighborsAt( Cell& cell )
   return neighbors;
 }
 
-double CellLand :: calcInfectedCellDensity()
+double CellLand :: calcDensityOfInfectedVirus()
 {
   double dense = 0;
   dense = (double)countInfectedCell() / getCellListSize();

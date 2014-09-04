@@ -96,7 +96,7 @@ void Human :: clearStandByViruses()
 //--------------------------------------------------------------------------------------
 bool Human :: isSusceptible()
 {
-  if( getCellLand().calcInfectedCellDensity() <= 0 )
+  if( getCellLand().calcDensityOfInfectedVirus() <= 0 )
     return true;
   else
     return false;
@@ -105,7 +105,7 @@ bool Human :: isSusceptible()
 bool Human :: isIncubationPeriod()
 {
   double threshold = 0.6; // XXX
-  if( getCellLand().calcInfectedCellDensity() < threshold )
+  if( getCellLand().calcDensityOfInfectedVirus() < threshold )
     return true;
   else
     return false;

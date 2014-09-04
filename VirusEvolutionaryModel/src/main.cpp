@@ -119,7 +119,7 @@ main()
     }
     output_value_with_term("inf-human.txt", infcount );
     output_value_with_term("tcell-size.txt", humans[0]->getTcellList().size() );
-    output_value_with_term("dense.txt", humans[0]->getCellLand().calcInfectedCellDensity() );
+    output_value_with_term("dense.txt", humans[0]->getCellLand().calcDensityOfInfectedVirus() );
     output_value_with_term("isInfection.txt", humans[0]->isSymptomaticPeriod() );
   }
   //----------------------------------------------------------------------

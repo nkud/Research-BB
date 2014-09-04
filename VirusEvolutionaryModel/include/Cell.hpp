@@ -32,6 +32,9 @@ class Cell : public __Location
 
     int getInfectedVirusListSize() const { return infected_virus_list_.size(); }
 
+    double calcDensityOfVirusSize() const;       ///< 細胞の最大保持ウイルス数に対する現ウイルス密度を計算
+    int getMaxSizeOfInfectedVirus() const { return max_virus_can_have_; }
+
   private:
     int max_virus_can_have_;                     ///< 最大感染ウイルス数
     VECTOR(Virus *) infected_virus_list_;        ///< 感染ウイルスリスト
@@ -50,7 +53,7 @@ class CellLand : public __Landscape
     VECTOR(Cell *)& getCellList() { return cell_list_; }
     int getCellListSize() const;                 ///< 細胞数を取得する
 
-    double calcInfectedCellDensity();            ///< 感染細胞の密度を計算する
+    double calcDensityOfInfectedVirus();            ///< 感染細胞の密度を計算する
     int countInfectedCell();                     ///< 感染細胞の数を数える
   private:
     CellLand();
