@@ -98,7 +98,7 @@ class Configure(Tkinter.Frame):
     except AttributeError:
       self.master.Tkinter.call(master, 'config', '-menu', menubar)
 
-    self.info_ = {}
+    self.info_ = collections.OrderedDict()
     self.readConfig()
 
     self.parameter_ = collections.OrderedDict()
@@ -162,6 +162,7 @@ class Configure(Tkinter.Frame):
           self.parameter_[paramname].getValue(), 
           self.parameter_[paramname].getTitle())
     output_line(fo, '\n#endif')
+    self.displayConfig()
 
   def setParameter(self, master, title, name, color='white'):
     if name not in self.info_:
@@ -180,8 +181,7 @@ class Configure(Tkinter.Frame):
         continue
       else:
         self.info_[ll[1]] = ll[2]
-    for key in self.info_.keys():
-      print '- %s = %s' % (key, self.info_[key])
+    self.displayConfig()
 
   def showResult(self):
     """ 結果を表示する """
@@ -197,6 +197,10 @@ class Configure(Tkinter.Frame):
   def exitConfig(self):
     """ コンフィグを終了する """
     sys.exit()
+
+  def displayConfig(self):
+    for key in self.info_.keys():
+      print '- %s = %s' % (key, self.info_[key])
 
 def main():
   c = Configure()
