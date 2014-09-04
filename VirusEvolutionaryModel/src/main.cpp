@@ -4,6 +4,7 @@
 #include "Cell.hpp"
 #include "Tcell.hpp"
 #include "Function.hpp"
+#include "Random.hpp"
 #include "FileFactory.hpp"
 #include "Benchmark.hpp"
 
@@ -26,6 +27,7 @@ void run_host_pathogen_model( Human& human );
 int
 main()
 {
+  Random::Instance().setRandomStrategy( new __MersenneTwister ); // 乱数生成器をメルセンヌに設定
   ECHO("Started Virus Evolutionary Model");
   ECHO("version 1.0");
   ECHO(__cplusplus);

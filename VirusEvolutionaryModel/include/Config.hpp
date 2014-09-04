@@ -15,6 +15,6 @@
 #define HUMAN_LAND_WIDTH 10
 #define V_INF_RATE 5
 #define V_TAG 10
-#define TCELL_LIFESPAN 10
+#define TCELL_LIFESPAN 3
 
 #endif

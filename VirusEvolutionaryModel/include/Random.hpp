@@ -8,12 +8,8 @@
 #ifndef ___RANDOM_HPP
 #define ___RANDOM_HPP
 
-#include "Function.hpp"
-
 #include <random>
 #include <string>
-
-#include <random>
 #include <cstdlib>
 
 class Random;
@@ -112,16 +108,15 @@ class Random {
     const __RandomStrategy* getRandomStrategy() const { return random_strategy_; }
     void setRandomStrategy( __RandomStrategy *rs ) { random_strategy_ = rs; }
 
-    static Random& Instance() { 
+    static Random& Instance() {
       static Random singleton;
-      if ( singleton.getRandomStrategy() == NULL ) {
-//        singleton.setRandomStrategy( new __MersenneTwister );        /* メルセンヌ・ツイスタを使用 */
+      if ( singleton.getRandomStrategy() == 0 ) {
         singleton.setRandomStrategy( new __Standard );               // 標準の乱数生成器 
       }
       return singleton;
     }
   private:
-     Random() {}
+     Random() : random_strategy_( 0 ) { }
     __RandomStrategy *random_strategy_;
 };
 
