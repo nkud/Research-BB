@@ -192,12 +192,14 @@ void run_host_pathogen_model( Human& human )
     tcell_list.push_back( *it_tcell );           // 追加する
   }
   //  T細胞の寿命
-  for(ITERATOR(Tcell *)it=tcell_list.begin(); it!=tcell_list.end(); ) {
-    (*it)->aging();                              // 老化する
-    if ((*it)->willDie( TCELL_LIFESPAN )) {      // 寿命を超えれば
-      human.eraseTcell( it );                    // 削除される
+  FOREACH( it_tcell, tcell_list )
+  {
+  	Tcell& tcell = **it_tcell;
+    tcell.aging();                              // 老化する
+    if (tcell.willDie( TCELL_LIFESPAN )) {      // 寿命を超えれば
+      human.eraseTcell( it_tcell );                    // 削除される
     } else {
-      it++;
+      it_tcell++;
     }
   }
   while( ! human.enoughNumberOfTcellToRemove( TCELL_MINIMUM_SIZE ) ) {

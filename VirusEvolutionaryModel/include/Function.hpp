@@ -29,9 +29,11 @@
 #if (__cplusplus == 199711)
 // for c98
 #define EACH(i,c)           for(typeof((c).begin()) i=(c).begin(); i!=(c).end(); ++i)
+#define FOREACH(i,c)        for(typeof((c).begin()) i=(c).begin(); i!=(c).end(); )
 #elif (__cplusplus == 201103)
 // for c11
 #define EACH(i,c)           for(auto i=(c).begin(); i!=(c).end(); ++i)
+#define FOREACH(i,c)        for(auto i=(c).begin(); i!=(c).end(); )
 #endif
 
 #define VECTOR(type)        std::vector< type >
