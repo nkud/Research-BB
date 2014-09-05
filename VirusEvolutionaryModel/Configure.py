@@ -135,12 +135,12 @@ class Configure(Tkinter.Frame):
     virus_panel.pack( padx=5, pady=5 )
 # ボタン
     button_panel = Tkinter.Frame(self)
-    # execute_button = create_button(button_panel, FONT, '実行', self.execute, 0, 0)
+    execute_button = create_button(button_panel, FONT, '実行', self.execute, 0, 0)
     save_button = create_button(button_panel, FONT, u'保存', self.saveConfig, 0, 0)
     read_button = create_button(button_panel, FONT, u'読込', self.readConfig, 0, 0)
     exit_button = create_button(button_panel, FONT, u'終了', self.exitConfig, 0, 0)
     result_button = create_button(button_panel, FONT, u'結果', self.showResult, 0, 0)
-    # put_widget(execute_button, 0, 0)
+    put_widget(execute_button, 0, 0)
     put_widget(save_button, 0, 1)
     put_widget(read_button, 0, 2)
     put_widget(result_button, 0, 3)
@@ -191,8 +191,7 @@ class Configure(Tkinter.Frame):
   def execute(self):
     """ 実行する """
     print 'Run'
-    # os.system('make')
-    subprocess.call('ls', shell=True)
+    subprocess.call('make all &', shell=True)
 
   def exitConfig(self):
     """ コンフィグを終了する """
