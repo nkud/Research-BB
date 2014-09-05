@@ -154,9 +154,7 @@ void run_host_pathogen_model( Human& human )
     EACH( it_neighbor, neighbors )
     {                                            // 各近隣に対して
       double prob = 100 * (*it_neighbor)->calcDensityOfVirusSize();
-      //double prob = V_INF_RATE * (*it_neighbor)->calcDensityOfVirusSize();
       if( probability( prob ) )                  // その近隣のウイルス密度に比例して
-      //if( prob >= 80 )
       {
         (*it_cell)->contact( **it_neighbor );      // 接触させる
       }
@@ -168,20 +166,21 @@ void run_host_pathogen_model( Human& human )
   }
   //  T細胞の殺傷
   VECTOR(Tcell *) new_tcell;
-  EACH( it_tc, tcell_list ) {                    // 各T細胞に対して
-    int x = (*it_tc)->getX();                    // 座標を
-    int y = (*it_tc)->getY();                    // 取得して
+  EACH( it_tcell, tcell_list ) {                    // 各T細胞に対して
+  	Tcell& tcell = **it_tcell;
+    int x = tcell.getX();                    // 座標を
+    int y = tcell.getY();                    // 取得して
     Cell& cell = cell_land.getCellAt(x, y);      // その位置の細胞を取得して
     if( cell.isInfected() )
     {                                            // 細胞が感染していて
       EACH( it_v, cell.getInfectedVirusList() )
       {                                          // 各感染ウイルスのどれかに対して
-        if( (*it_tc)->hasReceptorMatching( **it_v ) )
+        if( tcell.hasReceptorMatching( **it_v ) )
         {                                        // 受容体を所持していれば
           if( probability( 100 * cell.calcDensityOfVirusSize() ) )
           {                                      // 細胞内のウイルス密度に比例して
             cell.clearInfectedViruses();         // ウイルスを除去して
-            new_tcell.push_back( &( (*it_tc)->clone() ) ); // T細胞を増やす
+            new_tcell.push_back( &( tcell.clone() ) ); // T細胞を増やす
             break;
           }
         }
