@@ -163,8 +163,8 @@ pack:
 	@$(MKDIR) $(master_dir)
 	@$(MKDIR) $(master_dir)/$(result_dir)
 	@$(MKDIR) $(master_dir)/$(result_dir)/$(program_dir)
-	@$(COPY) src include script $(master_dir)/$(result_dir)/$(program_dir)
-	@$(COPY) bin stat $(master_dir)/$(result_dir)
+	@$(COPY) src include script $(master_dir)/$(result_dir)/$(program_dir)/
+	@$(COPY) bin stat asset $(master_dir)/$(result_dir)/
 	@$(PRINT) '$(master_dir)/$(result_dir)'
 
 test:
