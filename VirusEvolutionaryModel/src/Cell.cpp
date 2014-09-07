@@ -44,11 +44,13 @@ bool Cell :: infection()
 {
   // 待機ウイルスからランダムに選び、感染させる
   /// @todo 要変更
-  if( canPushNewVirus() ) {                      // ウイルスに感染できる状態なら
-    EACH( it_v, getStandByVirusList() ) {        // 待機ウイルスの中から
+  if( canPushNewVirus() ) 
+  {                      // ウイルスに感染できる状態なら
+    EACH( it_v, getStandByVirusList() )
+    {        // 待機ウイルスの中から
       if( probability( V_INF_RATE ) )
       {
-        pushNewVirusCloneToInfectedVirusList( *(*it_v)->clone() ); // 感染させる
+        pushNewVirusCloneToInfectedVirusList( **it_v ); // 先頭だけ感染させる
         clearStandByViruses();                     // 待機ウイルスをクリア
         return true;                               // 終了
       }
@@ -76,19 +78,19 @@ void Cell :: clearInfectedViruses()
 }
 void Cell :: clearStandByViruses()
 {
-  EACH( it_v, getStandByVirusList() ) {
-    SAFE_DELETE( *it_v );
-  }
+  // EACH( it_v, getStandByVirusList() ) {
+  //   SAFE_DELETE( *it_v );
+  // }
   stand_by_virus_list_.clear();
 }
 
 void Cell :: pushNewVirusCloneToInfectedVirusList( Virus& v )
 {
-  infected_virus_list_.push_back( v.clone() );
+  infected_virus_list_.push_back( v.clone() ); // 同じウイルスを作成して追加
 }
 void Cell :: pushVirusToStandByVirusList( Virus& v )
 {
-  stand_by_virus_list_.push_back( v.clone() );
+  stand_by_virus_list_.push_back( &v ); // ウイルスへのポインタを追加
 }
 
 bool Cell :: canPushNewVirus()
