@@ -82,6 +82,7 @@ class Configure(Tkinter.Frame):
   def __init__(self, master=None):
     Tkinter.Frame.__init__(self, master, width=500, height=500)
     self.master.title('VEM Configure')
+    self.config_path_ = 'include/Config.hpp'
     # self.master.minsize(width=300, height=600)
     # self.master.maxsize(width=300, height=600)
 
@@ -135,12 +136,12 @@ class Configure(Tkinter.Frame):
     virus_panel.pack( padx=5, pady=5 )
 # ボタン
     button_panel = Tkinter.Frame(self)
-    execute_button = create_button(button_panel, FONT, '実行', self.execute, 0, 0)
+    # execute_button = create_button(button_panel, FONT, '実行', self.execute, 0, 0)
     save_button = create_button(button_panel, FONT, u'保存', self.saveConfig, 0, 0)
     read_button = create_button(button_panel, FONT, u'読込', self.readConfig, 0, 0)
     exit_button = create_button(button_panel, FONT, u'終了', self.exitConfig, 0, 0)
     result_button = create_button(button_panel, FONT, u'結果', self.showResult, 0, 0)
-    put_widget(execute_button, 0, 0)
+    # put_widget(execute_button, 0, 0)
     put_widget(save_button, 0, 1)
     put_widget(read_button, 0, 2)
     put_widget(result_button, 0, 3)
@@ -152,7 +153,7 @@ class Configure(Tkinter.Frame):
   def saveConfig(self):
     """ コンフィグを保存する """
     print 'Save'
-    fo = open('include/Config.hpp', 'w')
+    fo = open(self.config_path_, 'w')
     output_line(fo, '// created by Configure.py')
     output_line(fo, '#ifndef ___CONFIG_HPP')
     output_line(fo, '#define ___CONFIG_HPP\n')
@@ -200,6 +201,9 @@ class Configure(Tkinter.Frame):
   def displayConfig(self):
     for key in self.info_.keys():
       print '- %s = %s' % (key, self.info_[key])
+
+  def setConfigFile(self, fpath):
+    self.config_path_ = fpath;
 
 def main():
   c = Configure()
