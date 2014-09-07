@@ -21,7 +21,7 @@ class Human : public __Mobile
 
     void reborn();                               ///< 初期化される
 
-    void contact( Human& neighbor );            ///< ホストと接触
+    void contact( Human& neighbor );             ///< ホストと接触
     bool infection();                            ///< 待機ウイルスを感染させる
 
     // 宿主内状態
@@ -44,6 +44,8 @@ class Human : public __Mobile
 
     bool enoughNumberOfTcellToRemove( int min_tcell ); ///< T細胞が十分数あるか評価する
     ITERATOR(Tcell *) eraseTcell( ITERATOR(Tcell *)& it_tcell ); ///< T細胞を削除する
+
+    int sizeOfAllInfectedViruses(); ///< 全保持ウイルス数
 
   private:
     CellLand *cell_land_;                        ///< 細胞土地

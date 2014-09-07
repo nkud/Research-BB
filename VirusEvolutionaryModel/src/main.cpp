@@ -123,6 +123,7 @@ main()
     output_value_with_term("v-dense.txt", humans[0]->getCellLand().getCellAt(0,0).calcDensityOfVirusSize() );
     output_value_with_term("v-dense2.txt", humans[0]->getCellLand().getCellAt(0,1).calcDensityOfVirusSize() );
     output_value_with_term("isInfection.txt", humans[0]->isSymptomaticPeriod() );
+    output_value_with_term("virus-size.txt", humans[0]->sizeOfAllInfectedViruses() );
   }
   //----------------------------------------------------------------------
   //  計算終了

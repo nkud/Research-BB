@@ -16,7 +16,7 @@
 #define TCELL_LIFESPAN                 30        ///< T細胞寿命 yellow
 #define TCELL_MEMORY_RATE              10        ///< 記憶率 yellow
 #define V_TAG                          8         ///< ウイルス遺伝子長 skyblue
-#define V_REPRODUCTIVE_RATE            50        ///< 増殖率 skyblue
+#define V_REPRODUCTIVE_RATE            10        ///< 増殖率 skyblue
 #define V_INF_RATE                     80        ///< 感染率 skyblue
 #define V_ONE_STEP_GROWTH_THRESHOLD    40        ///< 一段階増殖閾値 skyblue
 

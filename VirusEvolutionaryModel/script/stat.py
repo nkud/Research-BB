@@ -17,6 +17,7 @@ def main():
     pfactory.setImage('TcellSize', 'Term', 'Size', 'tcell-size', (pf.TXT('../bin/tcell-size'), 'size'))
     pfactory.setImage('IsIncubation', 'Term', 'Count', 'is-infection', (pf.TXT('../bin/isInfection'), 'count'))
     pfactory.setImage('IsInfection', 'Term', 'Count', 'inf-human', (pf.TXT('../bin/inf-human'), 'count'))
+    pfactory.setImage('VirusSize', 'Term', 'Size', 'virus-size', (pf.TXT('../bin/virus-size'), 'size'))
     pfactory.generate()
 
     # html
@@ -30,6 +31,7 @@ def main():
     hfactory.setSection('v-density', 2, hf.IMG('v-density'))
     hfactory.setSection('v-density2', 2, hf.IMG('v-density2'))
     hfactory.setSection('inf-human', 2, hf.IMG('inf-human'))
+    hfactory.setSection('virus-size', 2, hf.IMG('virus-size'))
     hfactory.setSection('is-infection', 2, hf.IMG('is-infection'))
     hfactory.generate()
 

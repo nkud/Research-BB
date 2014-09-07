@@ -23,6 +23,17 @@ void Human :: pushVirusToStandByVirusList( Virus &virus ) {
   stand_by_virus_list_.push_back( &virus );
 }
 
+int Human :: sizeOfAllInfectedViruses()
+{
+  int ret = 0;
+  EACH( it_cell, getCellLand().getCellList() )
+  {
+    Cell& cell = **it_cell;
+    ret += cell.getInfectedVirusListSize();
+  }
+  return ret;
+}
+
 VECTOR(Human *)& HumanLand :: getHumanListAt( int x, int y )
 {
   int n = getHeight()*y + x;
