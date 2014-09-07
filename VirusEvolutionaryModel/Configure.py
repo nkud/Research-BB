@@ -129,6 +129,7 @@ class Configure(Tkinter.Frame):
     self.setParameter(virus_panel, 'ウイルス遺伝子長', 'V_TAG', 'skyblue')
     self.setParameter(virus_panel, '増殖率', 'V_REPRODUCTIVE_RATE', 'skyblue')
     self.setParameter(virus_panel, '感染率', 'V_INF_RATE', 'skyblue')
+    self.setParameter(virus_panel, '一段階増殖閾値', 'V_ONE_STEP_GROWTH_THRESHOLD', 'skyblue')
 # パック
     term_panel.pack( padx=5, pady=5 )
     human_panel.pack( padx=5, pady=5 )

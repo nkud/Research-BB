@@ -154,7 +154,8 @@ void run_host_pathogen_model( Human& human )
     EACH( it_neighbor, neighbors )
     {                                            // 各近隣に対して
       double prob = 100 * (*it_neighbor)->calcDensityOfVirusSize();
-      if( probability( prob ) )                  // その近隣のウイルス密度に比例して
+      // if( probability( prob ) )                  // その近隣のウイルス密度に比例して
+      if( prob > V_ONE_STEP_GROWTH_THRESHOLD )
       {
         (*it_cell)->contact( **it_neighbor );      // 接触させる
       }
