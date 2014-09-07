@@ -196,7 +196,12 @@ void run_host_pathogen_model( Human& human )
   	Tcell& tcell = **it_tcell;
     tcell.aging();                              // 老化する
     if (tcell.willDie( TCELL_LIFESPAN )) {      // 寿命を超えれば
-      human.eraseTcell( it_tcell );                    // 削除される
+      if( probability( TCELL_MEMORY_RATE ) ) // 指定された確率で
+      {
+        tcell.becomeMemoryTcell(); // 記憶細胞になる
+      } else {
+        human.eraseTcell( it_tcell );                    // 削除される
+      }
     } else {
       it_tcell++;
     }

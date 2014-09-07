@@ -37,6 +37,7 @@ void Cell :: contact( Cell& neighbor )
 {
   EACH( it_v, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得し
     pushVirusToStandByVirusList( **it_v );       // 待機ウイルスに追加（クローンではない）
+    // return;
   }
 }
 
@@ -48,9 +49,10 @@ bool Cell :: infection()
   {                      // ウイルスに感染できる状態なら
     EACH( it_v, getStandByVirusList() )
     {        // 待機ウイルスの中から
-      if( probability( V_INF_RATE ) )
+      Virus& virus = **it_v;
+      if( probability( virus.getInfectionRate() ) )
       {
-        pushNewVirusCloneToInfectedVirusList( **it_v ); // 先頭だけ感染させる
+        pushNewVirusCloneToInfectedVirusList( virus ); // 先頭だけ感染させる
         clearStandByViruses();                     // 待機ウイルスをクリア
         return true;                               // 終了
       }

@@ -123,6 +123,7 @@ class Configure(Tkinter.Frame):
     self.setParameter(tcell_panel, 'T細胞遺伝子長', 'TCELL_LEN', 'yellow')
     self.setParameter(tcell_panel, '最小T細胞数', 'TCELL_MINIMUM_SIZE', 'yellow')
     self.setParameter(tcell_panel, 'T細胞寿命', 'TCELL_LIFESPAN', 'yellow')
+    self.setParameter(tcell_panel, '記憶率', 'TCELL_MEMORY_RATE', 'yellow')
 # ウイルス
     virus_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
     self.setParameter(virus_panel, 'ウイルス遺伝子長', 'V_TAG', 'skyblue')
