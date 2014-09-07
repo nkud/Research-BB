@@ -19,6 +19,7 @@ class Virus : public Gene
 
   int getInfectionRate();                        ///< 感染確率
   int getMutationRate();                         ///< 突然変異確率
+  //  int getReproductiveRate() const; // 増殖率
 
   Virus *clone();                                ///< クローンを作成する
  private:

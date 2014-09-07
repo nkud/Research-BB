@@ -6,13 +6,15 @@
 Tcell :: Tcell( const char *tag ) :
   __Life( tag ),
   __Mobile( 0, 0 ),                               // 座標(0, 0)で初期化
-  age_( 0 )
+  age_( 0 ),
+  is_memory_tcell_flag_( false )
 {
 }
 Tcell :: Tcell( int len ) :
   __Life( len ),
   __Mobile( 0, 0 ),                                 // 座標(0, 0)で初期化
-  age_( 0 )
+  age_( 0 ),
+  is_memory_tcell_flag_( false )
 {
 }
 
@@ -31,6 +33,7 @@ void Tcell :: aging()
 
 bool Tcell :: willDie( int max_age ) const
 {
+  if( isMemoryTcell() ) return false; // 記憶細胞なら除去されない
   if( getAge() >= max_age )
     return true;
   else

@@ -13,7 +13,7 @@ FONT = 'times new roman,13'
 
 IMG_DIR = ''
 TXT_DIR = ''
-CONFIG_FNAME = '../include/Config.h'
+CONFIG_FNAME = '../include/Config.hpp'
 INFO_FNAME = 'INFO.txt'
 ###############################################################################
 
