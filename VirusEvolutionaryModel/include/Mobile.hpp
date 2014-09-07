@@ -50,8 +50,8 @@ class __Mobile : public __Location
       x = std::min( x, land.getWidth()-1 );
       y = std::max( y, 0 );
       y = std::min( y, land.getHeight()-1 );
-      setX( x%land.getWidth() );
-      setY( y%land.getHeight() );
+      setX( x );
+      setY( y );
     }
   private:
 };
