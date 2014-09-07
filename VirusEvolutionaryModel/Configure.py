@@ -12,9 +12,9 @@ import collections
 FONT = ('monospace', '12')
 ##
 
-def output_define(fo, name, value, title='none'):
+def output_define(fo, name, value, title='none', color='white'):
   """ 定義をファイルに出力する """
-  fo.write('#define %-30s %-10d///< %s\n' % (name, value, title))
+  fo.write('#define %-30s %-10d///< %s %s\n' % (name, value, title, color))
 
 def output_line(fo, line):
   """ １行出力する """
@@ -59,6 +59,7 @@ class ParameterField(Tkinter.Frame):
     self.spinbox = create_spinbox(self, f, t)
     self.name = name
     self.title = title
+    self.color_ = bg
     # 配置
     put_widget(self.label, 0, 0)
     put_widget(self.spinbox, 0, 1)
@@ -75,6 +76,9 @@ class ParameterField(Tkinter.Frame):
   def getTitle(self):
     """ 説明を取得 """
     return self.title
+
+  def getColor(self):
+    return self.color_
 
 class Configure(Tkinter.Frame):
   """ コンフィグ画面
@@ -160,7 +164,8 @@ class Configure(Tkinter.Frame):
         output_define(fo, 
           paramname,
           self.parameter_[paramname].getValue(), 
-          self.parameter_[paramname].getTitle())
+          self.parameter_[paramname].getTitle(),
+          self.parameter_[paramname].getColor())
     output_line(fo, '\n#endif')
     self.displayConfig()
 

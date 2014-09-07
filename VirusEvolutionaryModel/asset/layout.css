@@ -1,0 +1,8 @@
+table {
+  font-size: 0.9em;
+  font-family: monospace;
+  border: 1px solid #ccc;
+}
+td {
+  width: 15em;
+}

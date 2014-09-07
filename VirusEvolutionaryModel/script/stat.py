@@ -23,6 +23,8 @@ def main():
     # fhtml = open('index.html', 'w')
 
     hfactory = hf.HtmlFactory('index.html')
+    hfactory.setConfig('../include/Config.hpp')
+    hfactory.setCss('../asset/layout.css')
     hfactory.setSection('density', 2, hf.IMG('density'))
     hfactory.setSection('tcell-size', 2, hf.IMG('tcell-size'))
     hfactory.setSection('v-density', 2, hf.IMG('v-density'))
