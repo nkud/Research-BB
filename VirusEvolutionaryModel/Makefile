@@ -13,18 +13,19 @@ CC    = g++ -Wall -g -O0 -std=c++11
 PRINT = echo
 MKDIR = mkdir -p
 MAKE  = make --no-print-directory -s
-COPY  = cp
+COPY  = cp -r
 RM    = rm -rfv
 TAIL  = tail
 PLOT  = gnuplot
 PY    = python
 DISPLAY = feh
 SED	  = sed
+TREE  = tree
 
 ## Directory Names
 src_files            = $(shell find src -name '*.cpp')
 include_files        = $(shell find include -name '*.h' -or -name '*.hpp')
-output_files = $(shell find bin -name '*.txt')
+output_files 		 = $(shell find bin -name '*.txt')
 
 object_dir     = obj
 
@@ -51,8 +52,11 @@ test_make_file	= $(test_dir)/$(test_make_name)
 now			= $(shell date +%y%m%d-%H%M%S)
 timestamp	:= $(shell date '+< %y/%m/%d %H:%M:%S >')
 TIME		:= $(shell date +%y%m%d-%H%M%S)
-RSTDIR		= result-$(now)
-PRGNAME		= program-$(now)
+
+R = notitle
+result_dir		= result-$(now)-$(R)
+
+program_dir		= program-$(now)
 
 CPPFLAGS = $(addprefix -I , $(include_subdirs))
 # vpath %.cpp src
@@ -67,14 +71,14 @@ TARGET := $(bin_dir)/$(EXE)
 objects = $(notdir $(subst .cpp,.o,$(src_files)))
 OUTOBJ = $(addprefix $(object_dir)/, $(objects))
 
-.PHONY: target all run gene clean bclean test stat open
+.PHONY: target all run gene clean bclean test stat open pack
 
 ## Make Program
 $(TARGET): $(OUTOBJ)
 	@$(COLORECHO)
 	@$(PRINT) -n '==> Linking $(notdir $@)...'
 	@$(CLRECHO)
-	@[ -d $(bin_dir) ] || $(MKDIR) $(bin_dir)
+	@$(MKDIR) $(bin_dir)
 	@$(CC) $^ -o $@ $(CPPFLAGS)
 	@$(PRINT) 'ok'
 
@@ -90,7 +94,7 @@ $(object_dir)/%.o: %.cpp
 	@$(COLORECHO)
 	@$(PRINT) -n '==> Compiling $(notdir $@)...'
 	@$(CLRECHO)
-	@[ -d $(object_dir) ] || $(MKDIR) $(object_dir)
+	@$(MKDIR) $(object_dir)
 	@$(CC) -c $< -o $@ $(CPPFLAGS)
 	@$(PRINT) 'ok'
 
@@ -141,7 +145,7 @@ stat:
 	@$(COLORECHO) -I$(include_dir)
 	@$(PRINT) -n '==> Generating...'
 	@$(CLRECHO)
-	@[ -d $(stat_dir) ] || $(MKDIR) $(stat_dir)
+	@$(MKDIR) $(stat_dir)
 	@cd $(stat_dir); $(PY) ../script/stat.py
 	@cd $(stat_dir); $(PLOT) auto.plt 1>/dev/null 2>/dev/null
 	@$(PRINT) 'done'
@@ -151,6 +155,17 @@ open:
 	@$(PRINT) '==> Open'
 	@$(CLRECHO)
 	@open stat/index.html
+
+pack:
+	@$(COLORECHO)
+	@$(PRINT) -n '==> Pack...'
+	@$(CLRECHO)
+	@$(MKDIR) $(master_dir)
+	@$(MKDIR) $(master_dir)/$(result_dir)
+	@$(MKDIR) $(master_dir)/$(result_dir)/$(program_dir)
+	@$(COPY) src include script $(master_dir)/$(result_dir)/$(program_dir)
+	@$(COPY) bin stat $(master_dir)/$(result_dir)
+	@$(PRINT) '$(master_dir)/$(result_dir)'
 
 test:
 	@cd $(test_dir); $(MAKE) -f $(test_make_name)
