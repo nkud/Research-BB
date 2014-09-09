@@ -1,6 +1,6 @@
 #+TITLE: README
 #+AUTHOR: Naoki Ueda
-#+OPTIONS: \n:t H:1 toc:t author:nil email:nil timestamp:nil creator:nil num:t
+#+OPTIONS: \n:t H:1 toc:t author:nil email:nil timestamp:nil creator:nil num:nil
 #+LANGUAGE: ja
 #+STARTUP: content
 
@@ -10,7 +10,6 @@
 宿主内でのウイルスの進化ゲームを見る。
 
 ** 概要
-
 * モデル
 
 ** 登場するエージェント
@@ -64,3 +63,5 @@
    3) 最大保持ウイルスを超えていなければ、
    4) 指定されたウイルス増殖率で、
    5) *保持しているウイルスをクローンして１つ増やす。*
+
+* ファイル構成
