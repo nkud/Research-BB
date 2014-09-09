@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import collections
+import datetime
 
 ### CONFIGURE #################################################################
 INIT_LINE_STYLE = 'set style line 1 lw 2'
@@ -60,6 +61,12 @@ def output_section(f, htext, h, *imgs):
     for img in imgs:
         output_img(f, RESULT_WIDTH, img)
 
+def get_date_string():
+    """ 日付の文字列を取得する """
+    dstring = ""
+
+    return dstring
+
 #def read_config( config_fname, SEP0='', SEP1=': ', SEP2='\n' ):
   #body = ""
   #f = open(config_fname, 'r')
@@ -112,16 +119,7 @@ class HtmlFactory(object):
         # Init
         output_line(self.file, '<html>')
         output_line(self.file, '<link rel="stylesheet" href="%s"><body>' % self.css_path_)
-        output_header(self.file, '# Result', 1)
-
-        # 初期設定を表示
-        # output_header(self.file, 'Config', 2)
-        # config = '<table>'
-        # config += '%s' % read_info(
-        #     INFO_FNAME, '<tr><td>', '</td><td>', '</td></tr>'
-        #     )
-        # config += '</table>'
-        # output_line( self.file, config )
+        output_header(self.file, '# Result <sub>%s</sub>' % datetime.datetime.now(), 1)
 
         if len(self.config_) > 0:
             output_header(self.file, 'Config', 2)
