@@ -5,11 +5,12 @@
 #include "Landscape.hpp"
 #include "Mobile.hpp"
 #include "Host.hpp"
+#include "Gene.hpp"
 
 class Virus;
 
 /// 細胞
-class Cell : public __Location
+class Cell : public __Location, public __Life
 {
   public:
     Cell( int x, int y);

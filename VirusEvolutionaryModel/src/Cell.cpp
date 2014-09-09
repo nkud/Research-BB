@@ -5,6 +5,7 @@
 
 Cell :: Cell(int x, int y) :
   __Location(x,y),
+  __Life( 10 ),
   max_virus_can_have_( CELL_MAX_VIRUS_CAN_HAVE )
 {
 
