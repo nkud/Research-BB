@@ -5,14 +5,15 @@
 #include "Landscape.hpp"
 #include "Mobile.hpp"
 #include "Host.hpp"
+#include "Gene.hpp"
 
 class Virus;
 
 /// 細胞
-class Cell : public __Location
+class Cell : public __Location, public Gene
 {
   public:
-    Cell( int x, int y);
+    Cell( int x, int y, int clen);
     bool isInfected();                           ///< 感染の真偽
     bool isNotInfected();                        ///< 未感染の真偽
 
@@ -47,7 +48,7 @@ class Cell : public __Location
 class CellLand : public __Landscape
 {
   public:
-    CellLand( int width, int height );
+    CellLand( int width, int height, int clen );
     Cell& getCellAt( int x, int y );
     VECTOR(Cell *) getNeighborsAt( Cell& cell ); ///< 近隣を取得する
     VECTOR(Cell *)& getCellList() { return cell_list_; }

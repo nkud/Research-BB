@@ -50,7 +50,7 @@ main()
   FOR( i, HUMAN_SIZE ) {                          // 初期設定の数だけ
     h = new Human( TCELL_LEN,
       TCELL_MINIMUM_SIZE,
-      new CellLand(CELL_LAND_WIDTH, CELL_LAND_HEIGHT) 
+      new CellLand(CELL_LAND_WIDTH, CELL_LAND_HEIGHT, 10)
       ); // 新しくヒトを初期化
     h->randomLocate(*humanLand);              // ランダムに土地に配置して
     humans.push_back( h );                    // 配列に追加していく
