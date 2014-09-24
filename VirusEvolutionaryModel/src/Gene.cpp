@@ -21,10 +21,12 @@ Gene :: Gene( int len )
 
 // 自身のタグを突然変異させる
 void Gene :: mutation( int prob ) {
-  int maxtag = 1;  // 最大タグ
-  int len = getLen();  // 遺伝子の長さを取得
-  int pos = uniform_int( 0, len-1 );
-  setTagNumAt( uniform_int(0, maxtag), pos );
+  if( probability( prob ) ) {
+    int maxtag = 1;  // 最大タグ
+    int len = getLen();  // 遺伝子の長さを取得
+    int pos = uniform_int( 0, len-1 );
+    setTagNumAt( uniform_int(0, maxtag), pos );
+  }
 }
 
 void Gene :: initTagRandom() {
