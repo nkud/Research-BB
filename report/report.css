@@ -5,6 +5,33 @@ b {
 h2 {
 }
 
-img {
-    width: 400px;
+/* img { */
+/*     width: 600px; */
+/* } */
+
+/* テーブル */
+table {
+    margin: auto;
 }
+thead {
+    color: #000;
+    background-color: #ccc;
+}
+tbody {
+    background-color: #fff;
+}
+table {
+    border: 1px solid black;
+}
+/* th, td { */
+    /* padding: 0.5em; */
+}
+/* th { */
+/*     font-weight: bold; */
+/* } */
+/* caption { */
+/*     color: #c00000; */
+/*     font-weight: bold; */
+/*     font-size: smaller; */
+/*     white-space: nowrap; */
+/* } */
