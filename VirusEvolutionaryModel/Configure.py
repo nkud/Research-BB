@@ -108,28 +108,28 @@ class Configure(Tkinter.Frame):
 
     self.parameter_ = collections.OrderedDict()
 # 期間
-    term_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
+    term_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=0)
     self.setParameter(term_panel, '最大実行期間', 'TERM')
     self.setParameter(term_panel, 'ヒト実行間隔', 'HUMAN_INTERVAL')
     self.setParameter(term_panel, '免疫実行間隔', 'IMMUNE_INTERVAL')
 # ヒト
-    human_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
+    human_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=0)
     self.setParameter(human_panel, '初期ヒト数', 'HUMAN_SIZE')
     self.setParameter(human_panel, 'ヒト土地ヨコ', 'HUMAN_LAND_WIDTH')
     self.setParameter(human_panel, 'ヒト土地タテ', 'HUMAN_LAND_HEIGHT')
 # 細胞
-    cell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)    
+    cell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=0)    
     self.setParameter(cell_panel, '最大保持ウイルス数', 'CELL_MAX_VIRUS_CAN_HAVE', 'gray')
     self.setParameter(cell_panel, '細胞土地ヨコ', 'CELL_LAND_WIDTH', 'gray')
     self.setParameter(cell_panel, '細胞土地タテ', 'CELL_LAND_HEIGHT', 'gray')
 # T細胞
-    tcell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
+    tcell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=0)
     self.setParameter(tcell_panel, 'T細胞遺伝子長', 'TCELL_LEN', 'yellow')
     self.setParameter(tcell_panel, '最小T細胞数', 'TCELL_MINIMUM_SIZE', 'yellow')
     self.setParameter(tcell_panel, 'T細胞寿命', 'TCELL_LIFESPAN', 'yellow')
     self.setParameter(tcell_panel, '記憶率', 'TCELL_MEMORY_RATE', 'yellow')
 # ウイルス
-    virus_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=2)
+    virus_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=0)
     self.setParameter(virus_panel, 'ウイルス遺伝子長', 'V_TAG', 'skyblue')
     self.setParameter(virus_panel, '増殖率', 'V_REPRODUCTIVE_RATE', 'skyblue')
     self.setParameter(virus_panel, '感染率', 'V_INF_RATE', 'skyblue')
