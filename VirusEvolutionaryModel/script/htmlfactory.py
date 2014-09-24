@@ -128,6 +128,8 @@ class HtmlFactory(object):
                 output_line(self.file, line)
             output_line(self.file, '</table>')
 
+        output_line(self.file, '<a href="../bin/log.txt">%s</a>' % '&raquo; log')
+
         # Image Section
         for s in self.section_list_:
             output_section(self.file, s[0], s[1], *s[2])
