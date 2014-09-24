@@ -9,6 +9,7 @@
 Virus *Virus :: clone()
 {
   Virus *newv = new Virus( getCString() );       // タグから初期化
+  newv->mutation(100);
   return newv;
 }
 

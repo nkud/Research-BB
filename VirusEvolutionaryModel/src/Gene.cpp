@@ -19,6 +19,9 @@ Gene :: Gene( int len )
   initTagRandom();
 }
 
+void Gene :: mutation( int prob ) {
+
+}
 
 //--------------------------------------------------------------------------------------
 //       Class:  Gene
