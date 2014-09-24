@@ -15,9 +15,10 @@
 #define TCELL_MINIMUM_SIZE             10        ///< 最小T細胞数 yellow
 #define TCELL_LIFESPAN                 30        ///< T細胞寿命 yellow
 #define TCELL_MEMORY_RATE              10        ///< 記憶率 yellow
-#define V_TAG                          3         ///< ウイルス遺伝子長 skyblue
+#define V_TAG                          5         ///< ウイルス遺伝子長 skyblue
 #define V_REPRODUCTIVE_RATE            10        ///< 増殖率 skyblue
 #define V_INF_RATE                     100       ///< 感染率 skyblue
+#define V_MUTATION_RATE                50        ///< 突然変異率 skyblue
 #define V_ONE_STEP_GROWTH_THRESHOLD    30        ///< 一段階増殖閾値 skyblue
 
 #endif

@@ -31,7 +31,7 @@ def create_label(master, text, **options):
   label = Tkinter.Label(master, text=text, relief=Tkinter.GROOVE, bd=border, width=20, **options)
   return label
 
-def put_widget(widget, row, column, padx=5, pady=5):
+def put_widget(widget, row, column, padx=5, pady=0):
   """ ウィジェットを配置する """
   widget.grid(row=row, column=column, padx=padx, pady=pady)
 
@@ -133,6 +133,7 @@ class Configure(Tkinter.Frame):
     self.setParameter(virus_panel, 'ウイルス遺伝子長', 'V_TAG', 'skyblue')
     self.setParameter(virus_panel, '増殖率', 'V_REPRODUCTIVE_RATE', 'skyblue')
     self.setParameter(virus_panel, '感染率', 'V_INF_RATE', 'skyblue')
+    self.setParameter(virus_panel, '突然変異率', 'V_MUTATION_RATE', 'skyblue')
     self.setParameter(virus_panel, '一段階増殖閾値', 'V_ONE_STEP_GROWTH_THRESHOLD', 'skyblue')
 # パック
     term_panel.pack( padx=5, pady=5 )
