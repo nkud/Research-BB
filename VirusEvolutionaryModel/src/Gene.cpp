@@ -19,15 +19,14 @@ Gene :: Gene( int len )
   initTagRandom();
 }
 
+// 自身のタグを突然変異させる
 void Gene :: mutation( int prob ) {
-
+  int maxtag = 1;  // 最大タグ
+  int len = getLen();  // 遺伝子の長さを取得
+  int pos = uniform_int( 0, len-1 );
+  setTagNumAt( uniform_int(0, maxtag), pos );
 }
 
-//--------------------------------------------------------------------------------------
-//       Class:  Gene
-//      Method:  initTagRandom
-// Description:  
-//--------------------------------------------------------------------------------------
 void Gene :: initTagRandom() {
   int maxtag = 1;
   FOR( pos, getLen() ) {
