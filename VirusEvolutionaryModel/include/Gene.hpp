@@ -24,7 +24,7 @@ class Gene
     int getTagNumAt( int pos );                  ///< 指定された位置のタグを取得する
     void setTagNumAt( int num, int pos );
     int getLen() const;                          ///< タグの長さを取得する
-    int mutation( int prob );                    ///< 突然変異する
+    void mutation( int prob );                    ///< 突然変異する
     const char *getCString() { return tag_.c_str(); }
   private:
     std::string tag_;                            ///< タグ

@@ -3,9 +3,9 @@
 #include "Function.hpp"
 #include "Config.hpp"
 
-Cell :: Cell(int x, int y) :
+Cell :: Cell(int x, int y, int clen) :
   __Location(x,y),
-  __Life( 10 ),
+  __Life( clen ),
   max_virus_can_have_( CELL_MAX_VIRUS_CAN_HAVE )
 {
 
@@ -48,16 +48,24 @@ bool Cell :: infection()
   /// @todo 要変更
   if( canPushNewVirus() ) 
   {                      // ウイルスに感染できる状態なら
-    EACH( it_v, getStandByVirusList() )
-    {        // 待機ウイルスの中から
-      Virus& virus = **it_v;
-      if( probability( virus.getInfectionRate() ) )
-      {
-        pushNewVirusCloneToInfectedVirusList( virus ); // 先頭だけ感染させる
-        clearStandByViruses();                     // 待機ウイルスをクリア
-        return true;                               // 終了
-      }
+    int n = getStandByVirusList().size();
+    if( n <= 0 ) return false;
+    Virus& virus = *(getStandByVirusList().at( uniform_int(0, n-1) ));
+    if( probability( virus.getInfectionRate() ) )
+    {
+      pushNewVirusCloneToInfectedVirusList( virus ); // 先頭だけ感染させる
+      clearStandByViruses();                     // 待機ウイルスをクリア
+      return true;                               // 終了
     }
+    //EACH( it_v, getStandByVirusList() ) {        // 待機ウイルスの中から
+      //Virus& virus = **it_v;
+      //if( probability( virus.getInfectionRate() ) )
+      //{
+        //pushNewVirusCloneToInfectedVirusList( virus ); // 先頭だけ感染させる
+        //clearStandByViruses();                     // 待機ウイルスをクリア
+        //return true;                               // 終了
+      //}
+    //}
   }
   clearStandByViruses();                         // 待機ウイルスをクリア
   return false;
@@ -110,13 +118,13 @@ bool Cell :: canPushNewVirus()
 //  CellLand
 //
 //----------------------------------------------------------------------
-CellLand :: CellLand( int width, int height ) :
+CellLand :: CellLand( int width, int height, int clen ) :
   __Landscape( width, height )                   // 土地を初期化
 {
   // 新しい細胞を追加
   FOR( h, height ) {
     FOR( w, width ) {
-      cell_list_.push_back( new Cell(w, h) );
+      cell_list_.push_back( new Cell(w, h, clen) );
     }
   }
 }
