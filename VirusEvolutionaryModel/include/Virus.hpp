@@ -20,6 +20,7 @@ class Virus : public Gene
    Virus( int len ) : Gene( len ) { }
 
   int getInfectionRate();                        ///< 感染確率
+  int getInfectionRate( Cell& cell);             ///< 感染確率
   int getMutationRate();                         ///< 突然変異確率
   //  int getReproductiveRate() const; // 増殖率
 

@@ -29,10 +29,56 @@ void Gene :: mutation( int prob ) {
   }
 }
 
-int minimumHammingDistanceFor( Gene& ogher ) {
+int Gene :: getTagNumAt( int pos )
+{
+  ASSERT( pos < getLen() );
+  char c = tag_[ pos ];
+  return c - '0';
+}
+
+int Gene :: minimumHammingDistanceFor( Gene& other ) {
   // todo
-  int hd = 0;
-  return hd;
+  int self_len = getLen();
+  int other_len = other.getLen();
+  int diff;
+  int sum = 0;
+  int min = 0;
+  if( self_len > other_len )
+  {  // 自分の遺伝子長の方が長ければ
+    diff = self_len - other_len;
+    min = ++self_len;
+    FOR( i, diff+1 )
+    {
+      sum = 0;
+      FOR( j, other_len )
+      {
+        if( getTagNumAt(i+j) != other.getTagNumAt(j) ) {
+          sum++;
+        }
+      }
+      if( sum < min ) {
+        min = sum;
+      }
+    }
+  }
+  else
+  {  // そうでなければ
+    diff = other_len - self_len;
+    min = ++other_len;
+    FOR( i, diff+1 )
+    {
+      sum = 0;
+      FOR( j, self_len ) {
+        if( getTagNumAt(j) != other.getTagNumAt(i+j) ) {
+          sum++;
+        }
+      }
+      if( sum < min ) {
+        min = sum;
+      }
+    }
+  }
+  return min;
 }
 
 void Gene :: initTagRandom() {

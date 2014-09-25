@@ -18,11 +18,17 @@ int Virus :: getInfectionRate() {
   return V_INF_RATE;
 }
 
+int Virus :: getInfectionRate( Cell& cell ) {
+  return getAdaptationRateForCell( cell );
+}
+
 int Virus :: getMutationRate() {
   return V_MUTATION_RATE;
 }
 
 int Virus :: getAdaptationRateForCell( Cell& cell ) {
   int rate = 0;
+  int ham_dis = minimumHammingDistanceFor( cell.getGene() );
+  rate = ham_dis / getLen() * 100;
   return rate;
 }
