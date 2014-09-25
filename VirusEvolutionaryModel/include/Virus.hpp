@@ -5,6 +5,8 @@
 
 #include <string>
 
+class Cell;
+
 /**
  * @brief ウイルス
  *
@@ -20,6 +22,8 @@ class Virus : public Gene
   int getInfectionRate();                        ///< 感染確率
   int getMutationRate();                         ///< 突然変異確率
   //  int getReproductiveRate() const; // 増殖率
+
+  int getAdaptationRateForCell( Cell& cell ); // 細胞の受容体に対する適合度
 
   Virus *clone();                                ///< クローンを作成する
  private:

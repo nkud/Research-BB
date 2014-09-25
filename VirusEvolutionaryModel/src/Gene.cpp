@@ -29,6 +29,12 @@ void Gene :: mutation( int prob ) {
   }
 }
 
+int minimumHammingDistanceFor( Gene& ogher ) {
+  // todo
+  int hd = 0;
+  return hd;
+}
+
 void Gene :: initTagRandom() {
   int maxtag = 1;
   FOR( pos, getLen() ) {

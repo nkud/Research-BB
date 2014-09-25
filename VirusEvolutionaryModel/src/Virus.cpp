@@ -1,5 +1,6 @@
 #include "Virus.hpp"
 #include "Config.hpp"
+#include "Cell.hpp"
 
 //--------------------------------------------------------------------------------------
 //       Class:  Virus
@@ -19,4 +20,9 @@ int Virus :: getInfectionRate() {
 
 int Virus :: getMutationRate() {
   return V_MUTATION_RATE;
+}
+
+int Virus :: getAdaptationRateForCell( Cell& cell ) {
+  int rate = 0;
+  return rate;
 }

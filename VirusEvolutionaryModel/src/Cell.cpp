@@ -48,14 +48,15 @@ bool Cell :: infection()
   /// @todo 要変更
   if( canPushNewVirus() ) 
   {                      // ウイルスに感染できる状態なら
-    int n = getStandByVirusList().size();
-    if( n <= 0 ) return false;
-    Virus& virus = *(getStandByVirusList().at( uniform_int(0, n-1) ));
-    if( probability( virus.getInfectionRate() ) )
+    int n = getStandByVirusList().size();  // 待機ウイルス数を取得して
+    if( n <= 0 ) return false;             // ０なら終了する
+    int pos = uniform_int( 0, n-1 );       // 配列の中からランダムに１つ選び
+    Virus& virus = *(getStandByVirusList().at( pos )); // そのウイルスを取得する
+    if( probability( virus.getInfectionRate() ) ) // そのウイルス固有の感染率で
     {
       pushNewVirusCloneToInfectedVirusList( virus ); // 先頭だけ感染させる
-      clearStandByViruses();                     // 待機ウイルスをクリア
-      return true;                               // 終了
+      clearStandByViruses();  // 待機ウイルスをクリア
+      return true;            // 終了
     }
     //EACH( it_v, getStandByVirusList() ) {        // 待機ウイルスの中から
       //Virus& virus = **it_v;
