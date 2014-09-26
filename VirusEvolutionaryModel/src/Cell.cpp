@@ -3,9 +3,9 @@
 #include "Function.hpp"
 #include "Config.hpp"
 
-Cell :: Cell(int x, int y, int clen) :
+Cell :: Cell(int x, int y, const char* ctag) :
   __Location(x,y),
-  __Life( clen ),
+  __Life( ctag ),
   max_virus_can_have_( CELL_MAX_VIRUS_CAN_HAVE )
 {
 
@@ -119,13 +119,13 @@ bool Cell :: canPushNewVirus()
 //  CellLand
 //
 //----------------------------------------------------------------------
-CellLand :: CellLand( int width, int height, int clen ) :
+CellLand :: CellLand( int width, int height, const char *ctag ) :
   __Landscape( width, height )                   // 土地を初期化
 {
   // 新しい細胞を追加
   FOR( h, height ) {
     FOR( w, width ) {
-      cell_list_.push_back( new Cell(w, h, clen) );
+      cell_list_.push_back( new Cell(w, h, ctag) );
     }
   }
 }

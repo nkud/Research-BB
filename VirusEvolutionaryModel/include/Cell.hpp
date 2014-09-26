@@ -13,7 +13,7 @@ class Virus;
 class Cell : public __Location, public __Life
 {
   public:
-    Cell( int x, int y, int clen);
+    Cell( int x, int y, const char *ctag);
     bool isInfected();                           ///< 感染の真偽
     bool isNotInfected();                        ///< 未感染の真偽
 
@@ -48,7 +48,7 @@ class Cell : public __Location, public __Life
 class CellLand : public __Landscape
 {
   public:
-    CellLand( int width, int height, int clen );
+    CellLand( int width, int height, const char *ctag );
     Cell& getCellAt( int x, int y );
     VECTOR(Cell *) getNeighborsAt( Cell& cell ); ///< 近隣を取得する
     VECTOR(Cell *)& getCellList() { return cell_list_; }
