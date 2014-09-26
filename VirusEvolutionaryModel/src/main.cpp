@@ -182,6 +182,10 @@ void run_host_pathogen_model( Human& human )
           if( probability( 100 * cell.calcDensityOfVirusSize() ) )
           {                                      // 細胞内のウイルス密度に比例して
             cell.clearInfectedViruses();         // ウイルスを除去して
+            Tcell& tcell = tcell.clone();
+            if( probability( TCELL_MEMORY_RATE ) ) {
+              tcell.becomeMemoryTcell();
+            }
             new_tcell.push_back( &( tcell.clone() ) ); // T細胞を増やす
             break;
           }
@@ -198,12 +202,13 @@ void run_host_pathogen_model( Human& human )
   	Tcell& tcell = **it_tcell;
     tcell.aging();                              // 老化する
     if (tcell.willDie( TCELL_LIFESPAN )) {      // 寿命を超えれば
-      if( probability( TCELL_MEMORY_RATE ) ) // 指定された確率で
-      {
-        tcell.becomeMemoryTcell(); // 記憶細胞になる
-      } else {
+      // if( probability( TCELL_MEMORY_RATE ) ) // 指定された確率で
+      // {
+      //   // @todo おかしい！！！！！！！！！！！！！！
+      //   tcell.becomeMemoryTcell(); // 記憶細胞になる
+      // } else {
         human.eraseTcell( it_tcell );                    // 削除される
-      }
+      // }
     } else {
       it_tcell++;
     }
