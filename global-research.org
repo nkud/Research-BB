@@ -1,0 +1,28 @@
+#+TITLE: 研究まとめ
+#+AUTHOR: Naoki Ueda
+#+OPTIONS: \n:t H:1 toc:t creator:nil num:nil author:nil email:nil timestamp:nil
+#+LANGUAGE: ja
+#+LaTeX_CLASS: normal
+#+STARTUP: content
+#+HTML_HEAD: <style type="text/css">body {font-family:"andale mono";font-size:0.7em;}</style>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="report.css" />
+
+* 問題点
+
+** メモリーT細胞の処理がおかしい
+
+*** ウイルスとマッチしていなくても記憶している可能性がある。
+
+** 細胞が死なないから、増殖が止まらない
+
+* Todo
+
+** 調査するパラメータを設定する
+
+*** T細胞が殺傷した数 /term
+* 考察
+
+** だんだん感染する速度が早くなっていってる
+[[file:VirusEvolutionaryModel/master/result-140926-123303-notitle/stat/index.html]]
+
+* Wiki
