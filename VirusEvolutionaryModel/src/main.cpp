@@ -57,6 +57,7 @@ main()
   }
 
   Virus *virus = new Virus( V_TAG );             // 新しいウイルスを初期化
+  LOG( virus->getCString() );
   humans[0]->getCellLand().getCellAt(0,0).pushNewVirusCloneToInfectedVirusList(*virus);
   //----------------------------------------------------------------------
   //  計算開始
@@ -111,12 +112,28 @@ main()
     //----------------------------------------------------------------------
     int infcount = 0;
     EACH( it_human, humans) {
-      if ((*it_human)->isSusceptible())
+      Human& human = **it_human;
+      if (human.isSusceptible())
       {
       } else {
         infcount++;
       }
     }
+
+    // ログ ====
+    Human& humanzero = *humans[0];
+    CellLand& celllandzero = humanzero.getCellLand();
+    EACH( it_cell, celllandzero.getCellList() ) {
+      Cell& cell = **it_cell;
+      // LOG( cell.getGene().getCString() );
+    }
+    VECTOR(Tcell *)& tcell_list = humans[0]->getTcellList(); // T細胞リストを取得
+    EACH( it_tc, tcell_list ) {
+      Tcell& tcell = **it_tc;
+      LOG( tcell.getGene().getCString() );
+    }
+    // ====
+    
     output_value_with_term("inf-human.txt", infcount );
     output_value_with_term("tcell-size.txt", humans[0]->getTcellList().size() );
     output_value_with_term("dense.txt", humans[0]->getCellLand().calcDensityOfInfectedVirus() );
@@ -154,9 +171,9 @@ void run_host_pathogen_model( Human& human )
     VECTOR(Cell *) neighbors = cell_land.getNeighborsAt( **it_cell ); // 近隣の細胞を取得し
     EACH( it_neighbor, neighbors )
     {                                            // 各近隣に対して
-      double prob = 100 * (*it_neighbor)->calcDensityOfVirusSize();
+      double density = 100 * (*it_neighbor)->calcDensityOfVirusSize();
       // if( probability( prob ) )                  // その近隣のウイルス密度に比例して
-      if( prob > V_ONE_STEP_GROWTH_THRESHOLD )
+      if( density > V_ONE_STEP_GROWTH_THRESHOLD )
       {
         (*it_cell)->contact( **it_neighbor );      // 接触させる
       }
@@ -197,23 +214,22 @@ void run_host_pathogen_model( Human& human )
     tcell_list.push_back( *it_tcell );           // 追加する
   }
   //  T細胞の寿命
+  int count_normal_tcell = 0;
   FOREACH( it_tcell, tcell_list )
-  {
+  {  // 全T細胞に対して
   	Tcell& tcell = **it_tcell;
     tcell.aging();                              // 老化する
-    if (tcell.willDie( TCELL_LIFESPAN )) {      // 寿命を超えれば
-      // if( probability( TCELL_MEMORY_RATE ) ) // 指定された確率で
-      // {
-      //   // @todo おかしい！！！！！！！！！！！！！！
-      //   tcell.becomeMemoryTcell(); // 記憶細胞になる
-      // } else {
-        human.eraseTcell( it_tcell );                    // 削除される
-      // }
+    if ( ! tcell.isMemoryTcell() ) {
+      count_normal_tcell++;
+    }
+    if (tcell.willDie( TCELL_LIFESPAN )) {      // メモリーT細胞ではなく寿命を超えれば
+      human.eraseTcell( it_tcell );             // 削除して
     } else {
       it_tcell++;
     }
   }
-  while( ! human.enoughNumberOfTcellToRemove( TCELL_MINIMUM_SIZE ) ) {
+  // while( ! human.enoughNumberOfTcellToRemove( TCELL_MINIMUM_SIZE ) ) {
+  FOR( i, std::max( 0, TCELL_MINIMUM_SIZE - count_normal_tcell ) ) {
     Tcell *newt = new Tcell( TCELL_LEN );
     newt->randomLocate( cell_land );
     tcell_list.push_back( newt );

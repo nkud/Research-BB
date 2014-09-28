@@ -51,10 +51,10 @@ bool Cell :: infection()
     int n = getStandByVirusList().size();  // 待機ウイルス数を取得して
     if( n <= 0 ) return false;             // ０なら終了する
     int pos = uniform_int( 0, n-1 );       // 配列の中からランダムに１つ選び
-    Virus& virus = *(getStandByVirusList().at( pos )); // そのウイルスを取得する
-    if( probability( virus.getInfectionRate( *this ) ) ) // そのウイルス固有の感染率で
+    Virus& virus = *(getStandByVirusList().at( pos )); // その待機ウイルスを取得する
+    if( probability( virus.getInfectionRateForCell( *this ) ) ) // そのウイルス固有の感染率で
     {
-      pushNewVirusCloneToInfectedVirusList( virus ); // 先頭だけ感染させる
+      pushNewVirusCloneToInfectedVirusList( virus );  // 感染させて
       clearStandByViruses();  // 待機ウイルスをクリア
       return true;            // 終了
     }

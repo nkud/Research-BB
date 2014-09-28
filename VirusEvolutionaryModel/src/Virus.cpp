@@ -18,7 +18,7 @@ int Virus :: getInfectionRate() {
   return V_INF_RATE;
 }
 
-int Virus :: getInfectionRate( Cell& cell ) {
+int Virus :: getInfectionRateForCell( Cell& cell ) {
   int rate = 100 - getAdaptationRateForCell( cell );
   return rate;
 }
@@ -31,5 +31,6 @@ int Virus :: getAdaptationRateForCell( Cell& cell ) {
   int rate = 0;
   int ham_dis = minimumHammingDistanceFor( cell.getGene() );
   rate = (double)ham_dis / getLen() * 100;
+
   return rate;
 }
