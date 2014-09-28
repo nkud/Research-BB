@@ -8,6 +8,14 @@ Gene :: Gene( const char *tag )
   tag_ = std::string(tag);                       // 文字列で初期化
 }
 
+int Gene :: value() {
+  int sum = 0;
+  FOR( i, getLen() ) {
+    sum += getTagNumAt(i);
+  }
+  return sum;
+}
+
 Gene :: Gene( std::string& tag )
 {
   tag_ = std::string(tag);                       // 文字列で初期化

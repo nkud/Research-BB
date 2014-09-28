@@ -27,6 +27,8 @@ class Gene
   void mutation( int prob );                    ///< 突然変異する
   const char *getCString() { return tag_.c_str(); }
 
+  int value();
+
   int minimumHammingDistanceFor( Gene& other );  ///< 最小ハミング距離を返す
 
  private:

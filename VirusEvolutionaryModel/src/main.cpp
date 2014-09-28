@@ -50,7 +50,7 @@ main()
   FOR( i, HUMAN_SIZE ) {                          // 初期設定の数だけ
     h = new Human( TCELL_LEN,
       TCELL_MINIMUM_SIZE,
-      new CellLand(CELL_LAND_WIDTH, CELL_LAND_HEIGHT, "0000000000")
+      new CellLand(CELL_LAND_WIDTH, CELL_LAND_HEIGHT, "1111111111")
       ); // 新しくヒトを初期化
     h->randomLocate(*humanLand);              // ランダムに土地に配置して
     humans.push_back( h );                    // 配列に追加していく
@@ -180,9 +180,39 @@ void run_host_pathogen_model( Human& human )
     }
   }
   //  細胞の感染
+  int count_new_virus = 0;  // 新しいウイルス数をカウント
+  int sum_new_virus_value = 0;  // 新しいウイルスの評価値をカウント
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
-    (*it_cell)->infection();                     // 感染させる
+    // (*it_cell)->infection();                     // 感染させる
+    Cell& cell = **it_cell;
+    if( cell.canPushNewVirus() ) 
+    {                      // ウイルスに感染できる状態なら
+      int n = cell.getStandByVirusList().size();  // 待機ウイルス数を取得して
+      if( n > 0 )
+      {
+        int pos = uniform_int( 0, n-1 );       // 配列の中からランダムに１つ選び
+        Virus& virus = *(cell.getStandByVirusList().at( pos )); // その待機ウイルスを取得する
+        if( probability( virus.getInfectionRateForCell( cell ) ) ) // そのウイルス固有の感染率で
+        {
+          cell.pushNewVirusCloneToInfectedVirusList( virus );  // 感染させる
+          if( Term::Instance().isInterval(100) ) {
+            count_new_virus++;  // 新しいウイルス数をカウント
+            sum_new_virus_value = virus.value(); // 新しいウイルスの評価値をカウント
+          }
+        }
+      }
+    }
+    cell.clearStandByViruses();                         // 待機ウイルスをクリア
   }
+  if( Term::Instance().isInterval(100) ){  // 平均評価値を出力
+    double ave = 0;
+    if( count_new_virus > 0 ) {
+      ave = (double)sum_new_virus_value / count_new_virus;
+      ECHO( ave );
+      output_value_with_term("ave-newvirus-value.txt", ave );
+    }
+  }
+
   //  T細胞の殺傷
   VECTOR(Tcell *) new_tcell;
   EACH( it_tcell, tcell_list ) {                    // 各T細胞に対して
@@ -229,6 +259,7 @@ void run_host_pathogen_model( Human& human )
     }
   }
   // while( ! human.enoughNumberOfTcellToRemove( TCELL_MINIMUM_SIZE ) ) {
+  // 普通のT細胞を補完
   FOR( i, std::max( 0, TCELL_MINIMUM_SIZE - count_normal_tcell ) ) {
     Tcell *newt = new Tcell( TCELL_LEN );
     newt->randomLocate( cell_land );
