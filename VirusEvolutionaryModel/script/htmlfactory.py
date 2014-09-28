@@ -55,11 +55,24 @@ def output_header(f, htext, h):
     """ 見出しを設定する """
     output_line(f, '<h%d>%s</h%d>' % (h, htext, h))
 
+def output_comment(f, text):
+    output_line(f, '<!-- %s -->' % text)
+
+def output_begin_legend( f, title ):
+    output_comment( f, 'GRAPH FIELD' )
+    output_line(f, '<fieldset><legend>%s</legend>' % title)
+
+def output_end_legend( f ):
+    output_line(f, '</fieldset>')
+        
+
 def output_section(f, htext, h, *imgs):
     """ 見出し、画像をセットし、セクションを作る """
-    output_header(f, htext, h)
+    # output_header(f, htext, h)
+    output_begin_legend(f, htext)
     for img in imgs:
         output_img(f, RESULT_WIDTH, img)
+    output_end_legend(f)
 
 def get_date_string():
     """ 日付の文字列を取得する """
@@ -123,7 +136,7 @@ class HtmlFactory(object):
 
         if len(self.config_) > 0:
             output_header(self.file, 'Config', 2)
-            output_line(self.file, '<table>')
+            output_line(self.file, '<table class="config">')
             for line in self.config_:
                 output_line(self.file, line)
             output_line(self.file, '</table>')

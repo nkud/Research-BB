@@ -1,8 +1,22 @@
 table {
   font-size: 0.9em;
   font-family: monospace;
-  border: 1px solid #ccc;
 }
 td {
   width: 15em;
+}
+
+fieldset {
+    padding: 10px;
+    margin: 20px;
+    border: 1px solid #ccc;
+}
+
+legend {
+    font-family: "times new roman";
+    font-size: 20px;
+}
+
+.config {
+    border: 1px solid #ccc;
 }
