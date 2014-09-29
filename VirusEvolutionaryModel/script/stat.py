@@ -10,9 +10,9 @@ def main():
     # pf.initialize_for_plot(fplot)
     # pf.set_terminal(fplot)
     pfactory = pf.PlotFactory('auto.plt')
-    pfactory.setFont = 'arial,16'
-    pfactory.setImage('Denity', 'Term', 'Rate', 'density', (pf.TXT('../bin/dense'), 'density'))
-    pfactory.setImage('Average', 'Term', 'Value', 'ave-newvirus', (pf.TXT('../bin/ave-newvirus-value'), 'average'))
+    pfactory.setFont = 'verdana,13'
+    pfactory.setImage('Density', 'Term', 'Rate', 'density', (pf.TXT('../bin/dense'), 'density'))
+    pfactory.setImage('Average', 'Term', 'Value', 'ave-newvirus', (pf.TXT('../bin/ave-newvirus-value'), 'average'))    
     pfactory.setImage('Denity', 'Term', 'Rate', 'v-density', (pf.TXT('../bin/v-dense'), 'density'))
     pfactory.setImage('Denity', 'Term', 'Rate', 'v-density2', (pf.TXT('../bin/v-dense2'), 'density'))
     pfactory.setImage('TcellSize', 'Term', 'Size', 'tcell-size', (pf.TXT('../bin/tcell-size'), 'size'))

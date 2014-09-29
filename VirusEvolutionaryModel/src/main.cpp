@@ -50,7 +50,7 @@ main()
   FOR( i, HUMAN_SIZE ) {                          // 初期設定の数だけ
     h = new Human( TCELL_LEN,
       TCELL_MINIMUM_SIZE,
-      new CellLand(CELL_LAND_WIDTH, CELL_LAND_HEIGHT, "1111111111")
+      new CellLand(CELL_LAND_WIDTH, CELL_LAND_HEIGHT, "0000000000")
       ); // 新しくヒトを初期化
     h->randomLocate(*humanLand);              // ランダムに土地に配置して
     humans.push_back( h );                    // 配列に追加していく
@@ -127,11 +127,6 @@ main()
       Cell& cell = **it_cell;
       // LOG( cell.getGene().getCString() );
     }
-    VECTOR(Tcell *)& tcell_list = humans[0]->getTcellList(); // T細胞リストを取得
-    EACH( it_tc, tcell_list ) {
-      Tcell& tcell = **it_tc;
-      LOG( tcell.getGene().getCString() );
-    }
     // ====
     
     output_value_with_term("inf-human.txt", infcount );
@@ -195,20 +190,19 @@ void run_host_pathogen_model( Human& human )
         if( probability( virus.getInfectionRateForCell( cell ) ) ) // そのウイルス固有の感染率で
         {
           cell.pushNewVirusCloneToInfectedVirusList( virus );  // 感染させる
-          if( Term::Instance().isInterval(100) ) {
+          if( Term::Instance().isInterval(10) ) {
             count_new_virus++;  // 新しいウイルス数をカウント
-            sum_new_virus_value = virus.value(); // 新しいウイルスの評価値をカウント
+            sum_new_virus_value += virus.value(); // 新しいウイルスの評価値をカウント
           }
         }
       }
     }
     cell.clearStandByViruses();                         // 待機ウイルスをクリア
   }
-  if( Term::Instance().isInterval(100) ){  // 平均評価値を出力
+  if( Term::Instance().isInterval(10) ){  // 平均評価値を出力
     double ave = 0;
     if( count_new_virus > 0 ) {
       ave = (double)sum_new_virus_value / count_new_virus;
-      ECHO( ave );
       output_value_with_term("ave-newvirus-value.txt", ave );
     }
   }

@@ -8,17 +8,17 @@ CONFIGUREを無くしたい
 import os
 
 DEFAULT_EXT = 'png'
-DEFAULT_IMG_SIZE = '1200,280'
+DEFAULT_IMG_SIZE = '1200,200'
 DEFAULT_LINE_STYLE = 'w boxes'
-DEFAULT_FONT = 'times new roman,15'
+DEFAULT_FONT = 'courier,11'
 ### CONFIGURE #################################################################
 INIT_LINE_STYLE = 'set style line 1 lw 2'
 LINE_STYLE = 'w boxes'
-IMG_SIZE = '1200,280'
-RESULT_WIDTH = 1000
+# IMG_SIZE = '1200,280'
+# RESULT_WIDTH = 1000
 CSS_DIR = '../template/result.css'
 IMG_EXT = 'png'
-FONT = 'times new roman,13'
+FONT = 'verdana,13'
 
 IMG_DIR = 'image/'
 TXT_DIR = ''
@@ -63,9 +63,9 @@ def initialize_for_plot(f):
     """
     output_line(f, INIT_LINE_STYLE)
     # output_line(f, 'set terminal png size '+IMG_SIZE)
-    output_line(f, 'set key below right')
+    output_line(f, 'set key top left')
     #output_line(f, 'set key box lt 0 lw 1 ')
-    output_line(f, 'set key textcolor lt 0')
+    # output_line(f, 'set key textcolor lt 0')
     output_line(f, 'set xl textcolor lt 0')
     output_line(f, 'set yl textcolor lt 0')
 
