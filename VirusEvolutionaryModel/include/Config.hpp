@@ -8,9 +8,9 @@
 #define HUMAN_SIZE                     1         ///< 初期ヒト数 white
 #define HUMAN_LAND_WIDTH               10        ///< ヒト土地ヨコ white
 #define HUMAN_LAND_HEIGHT              10        ///< ヒト土地タテ white
-#define CELL_MAX_VIRUS_CAN_HAVE        100       ///< 最大保持ウイルス数 gray
-#define CELL_LAND_WIDTH                30        ///< 細胞土地ヨコ gray
-#define CELL_LAND_HEIGHT               30        ///< 細胞土地タテ gray
+#define CELL_MAX_VIRUS_CAN_HAVE        50        ///< 最大保持ウイルス数 gray
+#define CELL_LAND_WIDTH                20        ///< 細胞土地ヨコ gray
+#define CELL_LAND_HEIGHT               20        ///< 細胞土地タテ gray
 #define TCELL_LEN                      10        ///< T細胞遺伝子長 yellow
 #define TCELL_MINIMUM_SIZE             10        ///< 最小T細胞数 yellow
 #define TCELL_LIFESPAN                 30        ///< T細胞寿命 yellow

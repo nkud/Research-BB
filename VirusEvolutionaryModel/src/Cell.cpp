@@ -34,6 +34,7 @@ double Cell :: calcDensityOfVirusSize() const
   return dense;
 }
 
+// 使っていない
 void Cell :: contact( Cell& neighbor )
 {
   EACH( it_v, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得し
@@ -42,6 +43,7 @@ void Cell :: contact( Cell& neighbor )
   }
 }
 
+// 使っていない
 bool Cell :: infection()
 {
   // 待機ウイルスからランダムに選び、感染させる
