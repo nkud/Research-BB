@@ -146,10 +146,20 @@ main()
     Human& humanzero = *humans[0];
     CellLand& celllandzero = humanzero.getCellLand();
     EACH( it_cell, celllandzero.getCellList() ) {
-      Cell& cell = **it_cell;
+      // Cell& cell = **it_cell;
       // LOG( cell.getGene().getCString() );
     }
     // ====
+
+    // 感染者マップ
+    if( Term::Instance().isInterval( 100 ) ) {
+      EACH( it_human, humans ) {
+        Human& human = **it_human;
+        if( ! human.isSusceptible() ) {
+          
+        }
+      }
+    }
     
     output_value_with_term("inf-human.txt", infcount );
     output_value_with_term("tcell-size.txt", humans[0]->getTcellList().size() );
