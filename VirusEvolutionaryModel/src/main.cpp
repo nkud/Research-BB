@@ -97,13 +97,35 @@ main()
       // ヒトの接触
       EACH( it_human, humans ) {                 // 各ヒトに対して
         VECTOR(Human *) neighbors = humanLand->getNeighborsAt( **it_human );
+        Human& human = **it_human;
         EACH( it_neighbor, neighbors ) {
-          (*it_human)->contact( **it_neighbor ); // 接触させる
+          Human& neighbor = **it_neighbor;
+          // (*it_human)->contact( **it_neighbor ); // 接触させる
+          if( neighbor.isSymptomaticPeriod() ) {
+            EACH( it_virus, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得して
+              Virus& virus = **it_virus;
+              human.pushVirusToStandByVirusList( virus );
+            }            
+          }
         }
       }
       // ヒトの感染
+      // 待機ウイルスからランダムに１つ選び、
+      // 感染せる
       EACH( it_human, humans ) {                 // 各ヒトに対して
-        (*it_human)->infection();                // 感染させる
+        // XXX: あってる？？？？？
+        Human& human = **it_human;
+        // (*it_human)->infection();                // 感染させる
+        if( human.isSusceptible() ) {                        // 未感染なら
+          EACH( it_v, human.getStandByVirusList() ) {        // 各待機ウイルスに対して
+            Cell& zerocell = human.getCellLand().getCellAt(0,0);
+            Virus& virus = **it_v;
+            zerocell.pushNewVirusCloneToInfectedVirusList(virus); // 左上に感染させる
+            // XXX: １つだけ！！
+            break;
+          }
+        }
+        human.clearStandByViruses();
       }
     }
 #endif
