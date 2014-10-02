@@ -79,6 +79,9 @@ bool Human :: infection()
   if( isSusceptible() ) {                        // 未感染なら
     EACH( it_v, getStandByVirusList() ) {        // 各待機ウイルスに対して
       getCellLand().getCellAt(0,0).pushNewVirusCloneToInfectedVirusList(*((*it_v)->clone())); // 左上に感染させる
+      // XXX: １つだけ！！
+      clearStandByViruses();
+      return true;
     }
     clearStandByViruses();
     return true;

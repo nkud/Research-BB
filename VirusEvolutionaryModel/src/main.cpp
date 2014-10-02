@@ -228,11 +228,13 @@ void run_host_pathogen_model( Human& human )
           if( probability( 100 * cell.calcDensityOfVirusSize() ) )
           {                                      // 細胞内のウイルス密度に比例して
             cell.clearInfectedViruses();         // ウイルスを除去して
-            Tcell& newtcell = tcell.clone();     // クローンを作成し
-            if( probability( TCELL_MEMORY_RATE ) ) {  // 記憶率の確率で
-              newtcell.becomeMemoryTcell();           // そのクローンをメモリーT細胞にする
+            FOR( i, TCELL_CLONE_SIZE ) {         // T細胞のクローン数だけ
+              Tcell& newtcell = tcell.clone();     // クローンを作成し
+              if( probability( TCELL_MEMORY_RATE ) ) {  // 記憶率の確率で
+                newtcell.becomeMemoryTcell();           // そのクローンをメモリーT細胞にする
+              }
+              new_tcell.push_back( &newtcell ); // T細胞を増やす
             }
-            new_tcell.push_back( &newtcell ); // T細胞を増やす
             break;
           }
         }
