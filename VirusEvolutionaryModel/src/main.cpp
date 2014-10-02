@@ -10,6 +10,8 @@
 
 #include "Config.hpp"
 
+#include <sstream>
+
 using namespace std;
 
 #define HUMAN_SYSTEM
@@ -129,6 +131,16 @@ main()
       }
     }
 #endif
+
+    // ログ ====
+    Human& humanzero = *humans[0];
+    CellLand& celllandzero = humanzero.getCellLand();
+    EACH( it_cell, celllandzero.getCellList() ) {
+      // Cell& cell = **it_cell;
+      // LOG( cell.getGene().getCString() );
+    }
+    // ====
+    
     //----------------------------------------------------------------------
     //  ファイル出力
     //----------------------------------------------------------------------
@@ -142,22 +154,18 @@ main()
       }
     }
 
-    // ログ ====
-    Human& humanzero = *humans[0];
-    CellLand& celllandzero = humanzero.getCellLand();
-    EACH( it_cell, celllandzero.getCellList() ) {
-      // Cell& cell = **it_cell;
-      // LOG( cell.getGene().getCString() );
-    }
-    // ====
-
     // 感染者マップ
     if( Term::Instance().isInterval( 100 ) ) {
+      std::stringstream hmap_fname;
+      hmap_fname << Term::Instance().getTerm();
+      hmap_fname << "_hmap.txt";
+      std::ofstream hmap_ofs(hmap_fname.str());
       EACH( it_human, humans ) {
         Human& human = **it_human;
-        if( ! human.isSusceptible() ) {
-          
-        }
+        hmap_ofs << human.getX() << SEPARATOR;
+        hmap_ofs << human.getY() << SEPARATOR;
+        hmap_ofs << 1 << SEPARATOR;
+        hmap_ofs << ENDL;
       }
     }
     

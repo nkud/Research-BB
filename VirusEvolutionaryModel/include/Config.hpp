@@ -2,10 +2,10 @@
 #ifndef ___CONFIG_HPP
 #define ___CONFIG_HPP
 
-#define TERM                           5000      ///< 最大実行期間 white
+#define TERM                           1000      ///< 最大実行期間 white
 #define HUMAN_INTERVAL                 1         ///< ヒト実行間隔 white
 #define IMMUNE_INTERVAL                1         ///< 免疫実行間隔 white
-#define HUMAN_SIZE                     1         ///< 初期ヒト数 white
+#define HUMAN_SIZE                     10        ///< 初期ヒト数 white
 #define HUMAN_LAND_WIDTH               20        ///< ヒト土地ヨコ white
 #define HUMAN_LAND_HEIGHT              20        ///< ヒト土地タテ white
 #define CELL_MAX_VIRUS_CAN_HAVE        100       ///< 最大保持ウイルス数 gray
