@@ -2,7 +2,7 @@
 #ifndef ___CONFIG_HPP
 #define ___CONFIG_HPP
 
-#define TERM                           1000      ///< 最大実行期間 white
+#define TERM                           5000      ///< 最大実行期間 white
 #define HUMAN_INTERVAL                 1         ///< ヒト実行間隔 white
 #define IMMUNE_INTERVAL                1         ///< 免疫実行間隔 white
 #define HUMAN_SIZE                     100       ///< 初期ヒト数 white
@@ -11,12 +11,12 @@
 #define CELL_MAX_VIRUS_CAN_HAVE        100       ///< 最大保持ウイルス数 gray
 #define CELL_LAND_WIDTH                10        ///< 細胞土地ヨコ gray
 #define CELL_LAND_HEIGHT               10        ///< 細胞土地タテ gray
-#define TCELL_LEN                      5         ///< T細胞遺伝子長 yellow
+#define TCELL_LEN                      3         ///< T細胞遺伝子長 yellow
 #define TCELL_MINIMUM_SIZE             10        ///< 最小T細胞数 yellow
 #define TCELL_LIFESPAN                 30        ///< T細胞寿命 yellow
 #define TCELL_MEMORY_RATE              10        ///< 記憶率 yellow
 #define TCELL_CLONE_SIZE               1         ///< クローン数 yellow
-#define V_TAG                          5         ///< ウイルス遺伝子長 skyblue
+#define V_TAG                          3         ///< ウイルス遺伝子長 skyblue
 #define V_REPRODUCTIVE_RATE            80        ///< 増殖率 skyblue
 #define V_INF_RATE                     100       ///< 感染率 skyblue
 #define V_MUTATION_RATE                30        ///< 突然変異率 skyblue
