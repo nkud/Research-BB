@@ -107,7 +107,7 @@ main()
             EACH( it_virus, neighbor.getInfectedVirusList() ) { // 感染ウイルスを取得して
               Virus& virus = **it_virus;
               human.pushVirusToStandByVirusList( virus );
-            }            
+            }
           }
         }
       }
@@ -131,64 +131,49 @@ main()
       }
     }
 #endif
-
-    // ログ ====
-    Human& humanzero = *humans[0];
-    CellLand& celllandzero = humanzero.getCellLand();
-    EACH( it_cell, celllandzero.getCellList() ) {
-      // Cell& cell = **it_cell;
-      // LOG( cell.getGene().getCString() );
-    }
-    // ====
     
     //----------------------------------------------------------------------
     //  ファイル出力
     //----------------------------------------------------------------------
+
+    // 感染者マップ
+    // if( Term::Instance().isInterval( 100 ) ) {
+    //   std::stringstream hmap_fname;
+    //   hmap_fname << Term::Instance().getTerm();
+    //   hmap_fname << "_hmap.txt";
+    //   std::ofstream hmap_ofs(hmap_fname.str());
+    //   FOR( i, humanLand->getWidth() )
+    //   {
+    //     FOR( j, humanLand->getHeight() )
+    //     {
+    //       VECTOR(Human *)& humans = humanLand->getHumanListAt( i, j );
+    //       if( humans.size() > 0 )
+    //       {
+    //         EACH( it_human, humans )
+    //         {
+    //           Human& human = **it_human;
+    //           hmap_ofs << human.getX() << SEPARATOR;
+    //           hmap_ofs << human.getY() << SEPARATOR;
+    //           hmap_ofs << human.getCellLand().calcDensityOfInfectedVirus() << SEPARATOR;
+    //           hmap_ofs << ENDL;
+    //         }
+    //       }
+    //       hmap_ofs << ENDL;
+    //     }
+    //   }
+    // }
+
     int infcount = 0;
     EACH( it_human, humans) {
       Human& human = **it_human;
       if (human.isSusceptible())
       {
       } else {
+        ASSERT( human.isSymptomaticPeriod() || human.isIncubationPeriod() );
         infcount++;
       }
     }
 
-    // 感染者マップ
-    if( Term::Instance().isInterval( 100 ) ) {
-      std::stringstream hmap_fname;
-      hmap_fname << Term::Instance().getTerm();
-      hmap_fname << "_hmap.txt";
-      std::ofstream hmap_ofs(hmap_fname.str());
-      FOR( i, humanLand->getWidth() )
-      {
-        FOR( j, humanLand->getHeight() )
-        {
-          VECTOR(Human *)& humans = humanLand->getHumanListAt( i, j );
-          if( humans.size() > 0 )
-          {
-            EACH( it_human, humans )
-            {
-              Human& human = **it_human;
-              hmap_ofs << human.getX() << SEPARATOR;
-              hmap_ofs << human.getY() << SEPARATOR;
-              hmap_ofs << human.getCellLand().calcDensityOfInfectedVirus() << SEPARATOR;
-              hmap_ofs << ENDL;
-            }
-          }
-          hmap_ofs << ENDL;
-        }
-      }
-      // EACH( it_human, humans )
-      // {
-      //   Human& human = **it_human;
-      //   hmap_ofs << human.getX() << SEPARATOR;
-      //   hmap_ofs << human.getY() << SEPARATOR;
-      //   hmap_ofs << human.getCellLand().calcDensityOfInfectedVirus() << SEPARATOR;
-      //   hmap_ofs << ENDL << ENDL;
-      // }
-    }
-    
     output_value_with_term("inf-human.txt", infcount );
     output_value_with_term("tcell-size.txt", humans[0]->getTcellList().size() );
     output_value_with_term("dense.txt", humans[0]->getCellLand().calcDensityOfInfectedVirus() );
