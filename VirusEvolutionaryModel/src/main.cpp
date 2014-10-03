@@ -7,6 +7,7 @@
 #include "Random.hpp"
 #include "FileFactory.hpp"
 #include "Benchmark.hpp"
+#include "VirusCounter.hpp"
 
 #include "Config.hpp"
 
@@ -68,6 +69,9 @@ main()
   ECHO("計算開始");
   while( term.loop() )                           // 最大実行期間までループする
   {
+    // カウンターをリセット
+    VirusCounter::Instance().clearData();
+
     if(term.isInterval(100)) {                   // 途中経過を表示
       ECHO( term.getTerm() << ", " << term.calcEstimatedRemainingTime());
     }
@@ -137,11 +141,17 @@ main()
     //----------------------------------------------------------------------
 
     // 感染者マップ
-    // if( Term::Instance().isInterval( 100 ) ) {
-    //   std::stringstream hmap_fname;
-    //   hmap_fname << Term::Instance().getTerm();
-    //   hmap_fname << "_hmap.txt";
-    //   std::ofstream hmap_ofs(hmap_fname.str());
+    if( Term::Instance().isInterval( 100 ) ) {
+      std::stringstream hmap_fname;
+
+      hmap_fname << Term::Instance().getTerm();
+      hmap_fname << "_hmap.txt";
+      std::ofstream hmap_ofs(hmap_fname.str());
+
+      std::stringstream vvalue_fname;
+      vvalue_fname << Term::Instance().getTerm();
+      vvalue_fname << "_vvaluemap.txt";
+      std::ofstream vvalue_ofs( vvalue_fname.str() );
     //   FOR( i, humanLand->getWidth() )
     //   {
     //     FOR( j, humanLand->getHeight() )
@@ -150,18 +160,25 @@ main()
     //       if( humans.size() > 0 )
     //       {
     //         EACH( it_human, humans )
-    //         {
-    //           Human& human = **it_human;
-    //           hmap_ofs << human.getX() << SEPARATOR;
-    //           hmap_ofs << human.getY() << SEPARATOR;
-    //           hmap_ofs << human.getCellLand().calcDensityOfInfectedVirus() << SEPARATOR;
-    //           hmap_ofs << ENDL;
-    //         }
-    //       }
-    //       hmap_ofs << ENDL;
+          //   {
+          //     Human& human = **it_human;
+          //     hmap_ofs << human.getX() << SEPARATOR;
+          //     hmap_ofs << human.getY() << SEPARATOR;
+          //     hmap_ofs << human.getCellLand().calcDensityOfInfectedVirus() << SEPARATOR;
+          //     hmap_ofs << ENDL;
+          //   }
+          // }
+          // hmap_ofs << ENDL;
     //     }
     //   }
-    // }
+      EACH( key, VirusCounter::Instance().getVirusValueMap() )
+      {
+        vvalue_ofs << (*key).first << SEPARATOR;
+        vvalue_ofs << (*key).second << SEPARATOR;
+        vvalue_ofs << ENDL;
+      }
+    }
+    
 
     int infcount = 0;
     EACH( it_human, humans) {
@@ -243,6 +260,7 @@ void run_host_pathogen_model( Human& human )
           if( Term::Instance().isInterval(10) ) {
             count_new_virus++;  // 新しいウイルス数をカウント
             sum_new_virus_value += virus.value(); // 新しいウイルスの評価値をカウント
+            VirusCounter::Instance().addNewVirusData( virus );
           }
         }
       }
