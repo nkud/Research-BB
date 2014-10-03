@@ -160,13 +160,33 @@ main()
       hmap_fname << Term::Instance().getTerm();
       hmap_fname << "_hmap.txt";
       std::ofstream hmap_ofs(hmap_fname.str());
-      EACH( it_human, humans ) {
-        Human& human = **it_human;
-        hmap_ofs << human.getX() << SEPARATOR;
-        hmap_ofs << human.getY() << SEPARATOR;
-        hmap_ofs << 1 << SEPARATOR;
-        hmap_ofs << ENDL;
+      FOR( i, humanLand->getWidth() )
+      {
+        FOR( j, humanLand->getHeight() )
+        {
+          VECTOR(Human *)& humans = humanLand->getHumanListAt( i, j );
+          if( humans.size() > 0 )
+          {
+            EACH( it_human, humans )
+            {
+              Human& human = **it_human;
+              hmap_ofs << human.getX() << SEPARATOR;
+              hmap_ofs << human.getY() << SEPARATOR;
+              hmap_ofs << human.getCellLand().calcDensityOfInfectedVirus() << SEPARATOR;
+              hmap_ofs << ENDL;
+            }
+          }
+          hmap_ofs << ENDL;
+        }
       }
+      // EACH( it_human, humans )
+      // {
+      //   Human& human = **it_human;
+      //   hmap_ofs << human.getX() << SEPARATOR;
+      //   hmap_ofs << human.getY() << SEPARATOR;
+      //   hmap_ofs << human.getCellLand().calcDensityOfInfectedVirus() << SEPARATOR;
+      //   hmap_ofs << ENDL << ENDL;
+      // }
     }
     
     output_value_with_term("inf-human.txt", infcount );
