@@ -11,7 +11,7 @@
 
 ** evolutionary invation analysis
 
-** figure caption
+** Figure Caption
 
 ** 細胞の受容体と、T細胞の受容体は別？同じなら、ウイルスの淘汰といろいろ関連性が生まれてくる
 * 前回セミナーの内容
@@ -24,6 +24,9 @@
 
 *** その前後で、なにかが変化しているのではないか。
 
+* TODO
+
+** Figure Captionを印刷して読む
 * 変更点・進歩状況
 ** Invasion Fitness
 

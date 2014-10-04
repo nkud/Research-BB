@@ -231,13 +231,19 @@ void run_host_pathogen_model( Human& human )
       double density = 100 * (*it_neighbor)->calcDensityOfVirusSize();
       Cell& cell = **it_cell;
       Cell& neighbor = **it_neighbor;
-      // if( probability( prob ) )                  // その近隣のウイルス密度に比例して
-      if( density > V_ONE_STEP_GROWTH_THRESHOLD )
+      if( density > V_ONE_STEP_GROWTH_THRESHOLD ) // ウイルス密度が閾値を超えていれば
       {
         // (*it_cell)->contact( **it_neighbor );      // 接触させる
-        EACH( it_v, neighbor.getInfectedVirusList() ) {
-          cell.pushVirusToStandByVirusList( **it_v );
-        }
+        
+        int size = neighbor.getInfectedVirusListSize();  // 近隣の感染ウイルスの中から
+        int pos = uniform_int( 0, size-1 );              // ランダムに１つ選び
+        Virus& virus = *( neighbor.getInfectedVirusList().at( pos ) ); // そのウイルスを
+        cell.pushVirusToStandByVirusList( virus );  // 自分の待機ウイルスに追加する
+        
+        // cell.pushVirusToStandByVirusList( neighbor.popInfectedVirus() );
+        // EACH( it_v, neighbor.getInfectedVirusList() ) {
+        //   cell.pushVirusToStandByVirusList( **it_v );
+        // }
       }
     }
   }
