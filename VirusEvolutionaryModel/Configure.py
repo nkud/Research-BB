@@ -117,6 +117,7 @@ class Configure(Tkinter.Frame):
     self.setParameter(human_panel, '初期ヒト数', 'HUMAN_SIZE')
     self.setParameter(human_panel, 'ヒト土地ヨコ', 'HUMAN_LAND_WIDTH')
     self.setParameter(human_panel, 'ヒト土地タテ', 'HUMAN_LAND_HEIGHT')
+    self.setParameter(human_panel, '発症閾値', 'H_SYMPTOMATIC_THRESHOLD')
 # 細胞
     cell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=0)    
     self.setParameter(cell_panel, '最大保持ウイルス数', 'CELL_MAX_VIRUS_CAN_HAVE', 'gray')

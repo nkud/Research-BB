@@ -3,6 +3,7 @@
 #include "Cell.hpp"
 #include "Tcell.hpp"
 #include "Function.hpp"
+#include "Config.hpp"
 
 
 Human :: Human( int tlen, int tsize, CellLand *land ) :
@@ -118,8 +119,9 @@ bool Human :: isSusceptible()
 
 bool Human :: isIncubationPeriod()
 {
-  double threshold = 0.6; // XXX
-  if( getCellLand().calcDensityOfInfectedVirus() < threshold )
+  // double threshold = 0.6; // XXX
+  int threshold = H_SYMPTOMATIC_THRESHOLD;
+  if( getCellLand().calcDensityOfInfectedVirus() < ((double)threshold/100) )
     return true;
   else
     return false;

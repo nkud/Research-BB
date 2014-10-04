@@ -8,6 +8,7 @@
 #define HUMAN_SIZE                     1         ///< 初期ヒト数 white
 #define HUMAN_LAND_WIDTH               30        ///< ヒト土地ヨコ white
 #define HUMAN_LAND_HEIGHT              30        ///< ヒト土地タテ white
+#define H_SYMPTOMATIC_THRESHOLD        10        ///< 発症閾値 white
 #define CELL_MAX_VIRUS_CAN_HAVE        100       ///< 最大保持ウイルス数 gray
 #define CELL_LAND_WIDTH                30        ///< 細胞土地ヨコ gray
 #define CELL_LAND_HEIGHT               30        ///< 細胞土地タテ gray

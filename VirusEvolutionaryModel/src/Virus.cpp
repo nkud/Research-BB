@@ -14,9 +14,9 @@ Virus *Virus :: clone()
   return newv;
 }
 
-int Virus :: getInfectionRate() {
-  return V_INF_RATE;
-}
+// int Virus :: getInfectionRate() {
+//   return V_INF_RATE;
+// }
 
 int Virus :: getInfectionRateForCell( Cell& cell ) {
   int rate = 100 - getAdaptationRateForCell( cell );

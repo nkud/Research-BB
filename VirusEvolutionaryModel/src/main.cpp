@@ -343,8 +343,8 @@ void run_host_pathogen_model( Human& human )
     {                                            // 感染細胞かつ余裕があれば
       if( cell.canPushNewVirus() and cell.isInfected() )
       {                                          // 増殖率で
-        Virus *virus = cell.getInfectedVirusList()[0]; // 先頭のウイルスを
-        cell.pushNewVirusCloneToInfectedVirusList( *virus ); // １つクローンする
+        Virus& virus = *( cell.getInfectedVirusList().at( 0 ) ); // 先頭のウイルスを
+        cell.pushNewVirusCloneToInfectedVirusList( virus ); // １つクローンする
       }
     }
   }
