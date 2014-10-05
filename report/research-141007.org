@@ -7,14 +7,14 @@
 #+HTML_HEAD: <style type="text/css">body {font-family:"verdana";font-size:0.7em;}</style>
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="report.css" />
 
-* キーワード・疑問点
+* COMMENT キーワード・疑問点
 
 ** evolutionary invation analysis
 
 ** Figure Caption
 
 ** 細胞の受容体と、T細胞の受容体は別？同じなら、ウイルスの淘汰といろいろ関連性が生まれてくる
-* 前回セミナーの内容
+* COMMENT 前回セミナーの内容
 
 ** Invasion Fitnessについて調べる。
 
@@ -24,7 +24,7 @@
 
 *** その前後で、なにかが変化しているのではないか。
 
-* TODO
+* COMMENT TODO
 
 ** Figure Captionを印刷して読む
 * 変更点・進歩状況
@@ -35,6 +35,9 @@
 ** 宿主内ウイルス密度がほぼ１００％から減らない場合の結果について。
 
 *** 計算の後半で、T細胞により感染細胞が除去され未感染細胞に戻ったとしても、周りの感染細胞から即座に感染することで、またすぐ感染細胞になってしまうからと考えられる。
+
+* 結果
+
 * 現モデルによる計算の流れ（宿主内動態）
 1) T細胞の移動
    1) T細胞が細胞土地の上を移動する。
