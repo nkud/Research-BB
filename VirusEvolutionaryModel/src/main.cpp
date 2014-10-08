@@ -190,6 +190,21 @@ main()
         infcount++;
       }
     }
+    if( Term::Instance().isInterval( 100 ) )
+    {
+      Human& humanzero = *humans[0];
+      Cell& cellzero = humanzero.getCellLand().getCellAt(0,0);
+      std::stringstream cellzero_virus_fname;
+      cellzero_virus_fname << Term::Instance().getTerm();
+      cellzero_virus_fname << "_cellzerov.txt";
+      std::ofstream cellzero_virus_ofs( cellzero_virus_fname.str() );
+      EACH( it_v, cellzero.getInfectedVirusList() )
+      {
+        Virus& virus = **it_v;
+        cellzero_virus_ofs << virus.getTagString();
+        cellzero_virus_ofs << ENDL;
+      }
+    }
 
     output_value_with_term("inf-human.txt", infcount );
     output_value_with_term("tcell-size.txt", humans[0]->getTcellList().size() );
