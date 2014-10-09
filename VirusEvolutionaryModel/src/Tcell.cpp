@@ -21,6 +21,7 @@ Tcell :: Tcell( int len ) :
 Tcell& Tcell :: clone()
 {
   Tcell *newtcell = new Tcell( getGene().getCString() ); // 新しいT細胞を作成
+  ASSERT( getGene().getTagString() == newtcell->getGene().getTagString() );
   newtcell->setX(getX());                        // 座標を
   newtcell->setY(getY());                        // 同じ位置にして
   return *newtcell;                              // 返す

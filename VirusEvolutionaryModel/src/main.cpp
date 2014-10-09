@@ -205,6 +205,25 @@ main()
         cellzero_virus_ofs << ENDL;
       }
     }
+    if( Term::Instance().isInterval( 1000 ) )
+    {
+      Human& humanzero = *humans[0];
+      VECTOR(Tcell *)& tcell_list = humanzero.getTcellList();
+      std::stringstream tcell_list_fname;
+      tcell_list_fname << Term::Instance().getTerm();
+      tcell_list_fname << "_tcell_list.txt";
+      std::ofstream tcell_list_ofs( tcell_list_fname.str() );
+      EACH( it_tcell, tcell_list )
+      {
+        Tcell& tcell = **it_tcell;
+        tcell_list_ofs << tcell.getGene().getTagString() << SEPARATOR;
+        tcell_list_ofs << tcell.getX() << SEPARATOR;
+        tcell_list_ofs << tcell.getY() << SEPARATOR;
+        tcell_list_ofs << tcell.getAge() << SEPARATOR;
+        LOG(tcell.getX());
+        tcell_list_ofs << ENDL;
+      }
+    }
 
     output_value_with_term("inf-human.txt", infcount );
     output_value_with_term("tcell-size.txt", humans[0]->getTcellList().size() );
