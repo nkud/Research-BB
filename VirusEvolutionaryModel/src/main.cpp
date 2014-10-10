@@ -205,6 +205,25 @@ main()
         cellzero_virus_ofs << ENDL;
       }
     }
+    // 細胞内密度マップ
+    if( Term::Instance().isInterval( 100 ) ) {      
+      Human& humanzero = *humans[0];
+      CellLand& cellland = humanzero.getCellLand();
+      std::stringstream cell_vmap_fname;
+      cell_vmap_fname << Term::Instance().getTerm();
+      cell_vmap_fname << "_cell_vmap.txt";
+      std::ofstream cell_vmap_ofs( cell_vmap_fname.str() );
+      FOR( i, cellland.getHeight() ) {
+        FOR(j , cellland.getWidth() ) {
+          Cell& cell = cellland.getCellAt(i, j);
+          cell_vmap_ofs << cell.getX() << SEPARATOR;
+          cell_vmap_ofs << cell.getY() << SEPARATOR;
+          cell_vmap_ofs << cell.calcDensityOfVirusSize() <<SEPARATOR;
+          cell_vmap_ofs << ENDL;
+        }
+        cell_vmap_ofs << ENDL;        
+      }
+    }
     if( Term::Instance().isInterval( 1000 ) )
     {
       Human& humanzero = *humans[0];
