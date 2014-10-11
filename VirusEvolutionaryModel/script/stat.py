@@ -4,6 +4,8 @@
 import plotfactory as pf
 import htmlfactory as hf
 
+HOME_DIR = '~/workspace/AgentBasedEpidemicMode/VirusEvolutionaryModel'
+
 def main():
     # plot
     pfactory = pf.PlotFactory('auto.plt')
@@ -35,6 +37,7 @@ def main():
     hfactory.setSection('全ウイルス数', 2, hf.IMG('virus-size'))
     hfactory.setSection('感染しているかどうか', 2, hf.IMG('is-infection'))
     hfactory.setSection('平均評価値', 2, hf.IMG('ave-newvirus'))
+    hfactory.setSection('アニメ', 2, 'animation.gif')
     
     hfactory.generate()
 
