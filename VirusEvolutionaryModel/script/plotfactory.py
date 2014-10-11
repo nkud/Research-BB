@@ -161,8 +161,6 @@ class PlotFactory(object):
         for img in self.image_list_:
             output_img(self.fo, img[0], img[1], img[2], img[3], *img[4])
 
-        plot_animation(1000, 10);
-
     def setImage(self, title, xlabel, ylabel, imgname,  *inputs):
         """ 画像をセット
         Args:
@@ -190,11 +188,11 @@ def plot_animation(last_term, interval):
     fframe.write('set yl textcolor lt 0;set zrange[0:100];\n')
     fframe.write('set title title(n);\n')
     fframe.write('set view map;\n')
-    fframe.write('splot file(n) w pm3d title "num";\n')
+    fframe.write('splot file(n) w pm3d;\n')
     fframe.write('if(n<%d) n=n+%d; reread;' % (last_term-1, interval))
 
     fanim = open('animation.plt', 'w')
-    fanim.write('set terminal gif animate optimize size 600,600 delay 10;\n')
+    fanim.write('set terminal gif animate optimize size 600,600 delay 15;\n')
     fanim.write('set output "animation.gif";\n')
     # fanim.write('set title font "times new roman,12";\n')
     fanim.write('set style line 1 lw 2;\n')

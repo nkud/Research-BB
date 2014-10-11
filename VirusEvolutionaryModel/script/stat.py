@@ -20,6 +20,7 @@ def main():
     pfactory.setImage('IsIncubation', 'Term', 'Count', 'is-infection', (pf.TXT('../bin/isInfection'), 'count', 'w boxes'))
     pfactory.setImage('IsInfection', 'Term', 'Count', 'inf-human', (pf.TXT('../bin/inf-human'), 'count', 'w l'))
     pfactory.setImage('VirusSize', 'Term', 'Size', 'virus-size', (pf.TXT('../bin/virus-size'), 'size', 'w boxes'))
+    pf.plot_animation( 3000, 10 )
     
     pfactory.generate()
 
@@ -37,7 +38,7 @@ def main():
     hfactory.setSection('全ウイルス数', 2, hf.IMG('virus-size'))
     hfactory.setSection('感染しているかどうか', 2, hf.IMG('is-infection'))
     hfactory.setSection('平均評価値', 2, hf.IMG('ave-newvirus'))
-    hfactory.setSection('アニメ', 2, 'animation.gif')
+    hfactory.setSection('細胞内密度アニメーション', 2, 'animation.gif')
     
     hfactory.generate()
 

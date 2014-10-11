@@ -152,25 +152,7 @@ main()
       vvalue_fname << Term::Instance().getTerm();
       vvalue_fname << "_vvaluemap.txt";
       std::ofstream vvalue_ofs( vvalue_fname.str() );
-    //   FOR( i, humanLand->getWidth() )
-    //   {
-    //     FOR( j, humanLand->getHeight() )
-    //     {
-    //       VECTOR(Human *)& humans = humanLand->getHumanListAt( i, j );
-    //       if( humans.size() > 0 )
-    //       {
-    //         EACH( it_human, humans )
-          //   {
-          //     Human& human = **it_human;
-          //     hmap_ofs << human.getX() << SEPARATOR;
-          //     hmap_ofs << human.getY() << SEPARATOR;
-          //     hmap_ofs << human.getCellLand().calcDensityOfInfectedVirus() << SEPARATOR;
-          //     hmap_ofs << ENDL;
-          //   }
-          // }
-          // hmap_ofs << ENDL;
-    //     }
-    //   }
+
       EACH( key, VirusCounter::Instance().getVirusValueMap() )
       {
         vvalue_ofs << (*key).first << SEPARATOR;
