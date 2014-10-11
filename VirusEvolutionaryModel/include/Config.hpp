@@ -2,7 +2,7 @@
 #ifndef ___CONFIG_HPP
 #define ___CONFIG_HPP
 
-#define TERM                           5000    ///< 最大実行期間 white
+#define TERM                           3000      ///< 最大実行期間 white
 #define HUMAN_INTERVAL                 1         ///< ヒト実行間隔 white
 #define IMMUNE_INTERVAL                1         ///< 免疫実行間隔 white
 #define HUMAN_SIZE                     1         ///< 初期ヒト数 white
@@ -20,6 +20,6 @@
 #define V_TAG                          5         ///< ウイルス遺伝子長 skyblue
 #define V_REPRODUCTIVE_RATE            80        ///< 増殖率 skyblue
 #define V_MUTATION_RATE                30        ///< 突然変異率 skyblue
-#define V_ONE_STEP_GROWTH_THRESHOLD    50        ///< 一段階増殖閾値 skyblue
+#define V_ONE_STEP_GROWTH_THRESHOLD    30        ///< 一段階増殖閾値 skyblue
 
 #endif

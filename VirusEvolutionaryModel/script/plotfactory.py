@@ -96,13 +96,13 @@ def set_terminal(f, ext, imgsize, font):
     """
     output_line(f, 'set terminal %s size %s font "%s";' % (ext, imgsize, font))
 
-def plot_with_title(f, text='notitle', title='notitle', using='1:2'):
+def plot_with_title(f, text='notitle', title='notitle', linestyle=LINE_STYLE, using='1:2'):
     """ Plot File With Title, Using """
-    output_line(f, 'plot "%s" using %s %s title "%s"' % (text, using, LINE_STYLE, title))
+    output_line(f, 'plot "%s" using %s %s title "%s"' % (text, using, linestyle, title))
 
-def replot_with_title(f, text='notitle', title='notitle', using='1:2'):
+def replot_with_title(f, text='notitle', title='notitle', linestyle=LINE_STYLE, using='1:2'):
     """ Replot File With Title, Using """
-    output_line(f, 'replot "%s" using %s %s title "%s"' % (text, using, LINE_STYLE, title))
+    output_line(f, 'replot "%s" using %s %s title "%s"' % (text, using, linestyle, title))
 
 def end_plot(f):
     output_line(f, 'replot')
@@ -111,6 +111,7 @@ def end_plot(f):
 def output_img(f, title, xl, yl, imgname, *inputs):
     """ 画像を出力する
     Args:
+
         f: ファイルオブジェクト
         title: グラフのタイトル
         xl: x軸のラベル
@@ -121,20 +122,20 @@ def output_img(f, title, xl, yl, imgname, *inputs):
     set_img_title_and_label(f, title, xl, yl)
     first = True
     for i in inputs:
-        if len(i)==2:
-            iname, ll = i[0], i[1]
+        if len(i)==3:
+            iname, ll, ls = i[0], i[1], i[2]
             if first:
-                plot_with_title(f, iname, ll)
+                plot_with_title(f, iname, ll, ls)
                 first = False
                 continue
-            replot_with_title(f, iname, ll)
-        elif len(i)==3:
-            iname, ll, using = i[0], i[1], i[2]
+            replot_with_title(f, iname, ll, ls)
+        elif len(i)==4:
+            iname, ll, using, ls = i[0], i[1], i[2], i[3]
             if first:
-                plot_with_title(f, iname, ll, using)
+                plot_with_title(f, iname, ll, ls, using)
                 first = False
                 continue
-            replot_with_title(f, iname, ll, using)
+            replot_with_title(f, iname, ll, ls, using)
     set_output(f, imgname)
     end_plot(f)
 
@@ -161,11 +162,21 @@ class PlotFactory(object):
             output_img(self.fo, img[0], img[1], img[2], img[3], *img[4])
 
     def setImage(self, title, xlabel, ylabel, imgname,  *inputs):
-        """ 画像をセット """
+        """ 画像をセット
+        Args:
+        title 画像のタイトル
+        xlabel x軸のタイトル
+        ylabel y軸のタイトル
+        imgname 出力画像名
+        inputs (入力ファイル名, 汎用タイトル)
+        """
         self.image_list_.append( (title, xlabel, ylabel, imgname, inputs) )
+        
     def setExtension(self, ext):
         self.extension_ = ext
+        
     def setImageSize(self, imgsize):
         self.image_size_ = imgsize
+        
     def setFont(self, font):
         self.font_ = font

@@ -206,7 +206,7 @@ main()
       }
     }
     // 細胞内密度マップ
-    if( Term::Instance().isInterval( 100 ) ) {      
+    if( Term::Instance().isInterval( 10 ) ) {
       Human& humanzero = *humans[0];
       CellLand& cellland = humanzero.getCellLand();
       std::stringstream cell_vmap_fname;
@@ -218,7 +218,7 @@ main()
           Cell& cell = cellland.getCellAt(i, j);
           cell_vmap_ofs << cell.getX() << SEPARATOR;
           cell_vmap_ofs << cell.getY() << SEPARATOR;
-          cell_vmap_ofs << cell.calcDensityOfVirusSize() <<SEPARATOR;
+          cell_vmap_ofs << 100 * cell.calcDensityOfVirusSize() <<SEPARATOR;
           cell_vmap_ofs << ENDL;
         }
         cell_vmap_ofs << ENDL;        
