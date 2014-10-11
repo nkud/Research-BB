@@ -7,6 +7,11 @@
 #+HTML_HEAD: <style type="text/css">body {font-family:"andale mono";font-size:0.7em;}</style>
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="report.css" />
 
+* ノート
+
+** T細胞
+
+*** T細胞による防御反応は、ウイルスを含む細胞に反応できるかどうかにかかっている
 * 問題点
 
 ** メモリーT細胞の処理がおかしい
