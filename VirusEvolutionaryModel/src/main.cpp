@@ -269,12 +269,12 @@ void run_host_pathogen_model( Human& human )
       if( density > V_ONE_STEP_GROWTH_THRESHOLD ) // ウイルス密度が閾値を超えていれば
       {
         // (*it_cell)->contact( **it_neighbor );      // 接触させる
-        
+
         int size = neighbor.getInfectedVirusListSize();  // 近隣の感染ウイルスの中から
         int pos = uniform_int( 0, size-1 );              // ランダムに１つ選び
         Virus& virus = *( neighbor.getInfectedVirusList().at( pos ) ); // そのウイルスを
         cell.pushVirusToStandByVirusList( virus );  // 自分の待機ウイルスに追加する
-        
+
         // cell.pushVirusToStandByVirusList( neighbor.popInfectedVirus() );
         // EACH( it_v, neighbor.getInfectedVirusList() ) {
         //   cell.pushVirusToStandByVirusList( **it_v );
@@ -288,7 +288,7 @@ void run_host_pathogen_model( Human& human )
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
     // (*it_cell)->infection();                     // 感染させる
     Cell& cell = **it_cell;
-    if( cell.canPushNewVirus() ) 
+    if( cell.canPushNewVirus() )
     {                      // ウイルスに感染できる状態なら
       int n = cell.getStandByVirusList().size();  // 待機ウイルス数を取得して
       if( n > 0 )
@@ -319,7 +319,7 @@ void run_host_pathogen_model( Human& human )
   //  T細胞の殺傷
   VECTOR(Tcell *) new_tcell;
   EACH( it_tcell, tcell_list ) {                    // 各T細胞に対して
-  	Tcell& tcell = **it_tcell;
+    Tcell& tcell = **it_tcell;
     int x = tcell.getX();                    // 座標を
     int y = tcell.getY();                    // 取得して
     Cell& cell = cell_land.getCellAt(x, y);      // その位置の細胞を取得して
@@ -352,7 +352,7 @@ void run_host_pathogen_model( Human& human )
   int count_normal_tcell = 0;
   FOREACH( it_tcell, tcell_list )
   {  // 全T細胞に対して
-  	Tcell& tcell = **it_tcell;
+    Tcell& tcell = **it_tcell;
     tcell.aging();                              // 老化する
     if ( ! tcell.isMemoryTcell() ) {
       count_normal_tcell++;
