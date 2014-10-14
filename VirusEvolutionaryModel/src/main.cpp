@@ -135,7 +135,7 @@ main()
       }
     }
 #endif
-    
+
     //----------------------------------------------------------------------
     //  ファイル出力
     //----------------------------------------------------------------------
@@ -160,7 +160,6 @@ main()
         vvalue_ofs << ENDL;
       }
     }
-    
 
     int infcount = 0;
     EACH( it_human, humans) {
@@ -203,7 +202,7 @@ main()
           cell_vmap_ofs << 100 * cell.calcDensityOfVirusSize() <<SEPARATOR;
           cell_vmap_ofs << ENDL;
         }
-        cell_vmap_ofs << ENDL;        
+        cell_vmap_ofs << ENDL;
       }
     }
     if( Term::Instance().isInterval( 1000 ) )
