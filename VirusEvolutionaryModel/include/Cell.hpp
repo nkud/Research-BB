@@ -12,34 +12,42 @@ class Virus;
 /// 細胞
 class Cell : public __Location, public __Life
 {
-  public:
-    Cell( int x, int y, const char *ctag);
-    bool isInfected();                           ///< 感染の真偽
-    bool isNotInfected();                        ///< 未感染の真偽
+ public:
+  Cell( int x, int y, const char *ctag);
+  bool isInfected();                           ///< 感染の真偽
+  bool isNotInfected();                        ///< 未感染の真偽
 
-    // ホスト関数
-    void clearInfectedViruses();                 ///< 感染ウイルスをクリア
-    void clearStandByViruses();                  ///< 待機ウイルスをクリア
+  // ホスト関数
+  void clearInfectedViruses();                 ///< 感染ウイルスをクリア
+  void clearStandByViruses();                  ///< 待機ウイルスをクリア
 
-    VECTOR(Virus *)& getInfectedVirusList();     ///< 感染ウイルスリストを取得
-    VECTOR(Virus *)& getStandByVirusList();      ///< 待機ウイルスリストを取得
+  VECTOR(Virus *)& getInfectedVirusList();     ///< 感染ウイルスリストを取得
+  VECTOR(Virus *)& getStandByVirusList();      ///< 待機ウイルスリストを取得
 
-    void pushVirusToStandByVirusList( Virus& v ); ///< 待機ウイルスに追加
-    void pushNewVirusCloneToInfectedVirusList( Virus& v ); // クローンを感染ウイルスに追加
-    bool canPushNewVirus();                      ///< 新しいウイルスを追加できるか評価
+  void pushVirusToStandByVirusList( Virus& v ); ///< 待機ウイルスに追加
+  void pushNewVirusCloneToInfectedVirusList( Virus& v ); // クローンを感染ウイルスに追加
+  bool canPushNewVirus();                      ///< 新しいウイルスを追加できるか評価
 
-    void contact( Cell& neighbors );             ///< ホストと接触
-    bool infection();                            ///< 待機ウイルスを感染させる
+  void contact( Cell& neighbors );             ///< ホストと接触
+  bool infection();                            ///< 待機ウイルスを感染させる
 
-    int getInfectedVirusListSize() const { return infected_virus_list_.size(); }
+  int getInfectedVirusListSize() const { return infected_virus_list_.size(); }
 
-    double calcDensityOfVirusSize() const;       ///< 細胞の最大保持ウイルス数に対する現ウイルス密度を計算
-    int getMaxSizeOfInfectedVirus() const { return max_virus_can_have_; }
+  double calcDensityOfVirusSize() const;       ///< 細胞の最大保持ウイルス数に対する現ウイルス密度を計算
+  int getMaxSizeOfInfectedVirus() const { return max_virus_can_have_; }
 
-  private:
-    int max_virus_can_have_;                     ///< 最大感染ウイルス数
-    VECTOR(Virus *) infected_virus_list_;        ///< 感染ウイルスリスト
-    VECTOR(Virus *) stand_by_virus_list_;        ///< 待機ウイルスリスト
+  void died();
+  bool isAlive();  ///< 細胞が生きているかを評価
+  void incrementDeathAge() { death_age_++; }
+  void reborn() { death_age_ = -1; }
+  int getDeathAge() { return death_age_; }
+
+ private:
+  int max_virus_can_have_;                     ///< 最大感染ウイルス数
+  VECTOR(Virus *) infected_virus_list_;        ///< 感染ウイルスリスト
+  VECTOR(Virus *) stand_by_virus_list_;        ///< 待機ウイルスリスト
+
+  int death_age_;  // 死亡してからの期間
 };
 
 /**

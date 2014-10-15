@@ -15,6 +15,8 @@
 
 using namespace std;
 
+#define CELL_REPRODUCTIVE_SPAN 10
+
 #define HUMAN_SYSTEM
 #define IMMUNE_SYSTEM
 
@@ -286,8 +288,9 @@ void run_host_pathogen_model( Human& human )
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
     // (*it_cell)->infection();                     // 感染させる
     Cell& cell = **it_cell;
-    if( cell.canPushNewVirus() )
-    {                      // ウイルスに感染できる状態なら
+
+    if( cell.isAlive() and cell.canPushNewVirus() )  // 細胞が生存していて
+    {  // ウイルスに感染できる状態なら
       int n = cell.getStandByVirusList().size();  // 待機ウイルス数を取得して
       if( n > 0 )
       {
@@ -321,15 +324,27 @@ void run_host_pathogen_model( Human& human )
     int x = tcell.getX();                    // 座標を
     int y = tcell.getY();                    // 取得して
     Cell& cell = cell_land.getCellAt(x, y);      // その位置の細胞を取得して
+
+    if( cell.isAlive() ) {      // 細胞が生存していれば
+    } else {                    // そうでなければ
+      cell.incrementDeathAge(); // 死齢を増やして
+      if( cell.getDeathAge() > CELL_REPRODUCTIVE_SPAN ) {
+        cell.reborn();
+      }
+      continue;                 // スキップ
+    }
+
     if( cell.isInfected() )
     {                                            // 細胞が感染していて
+      ASSERT( cell.isAlive() );                  // 細胞は生存しているはず
       EACH( it_v, cell.getInfectedVirusList() )
       {                                          // 各感染ウイルスのどれかに対して
         if( tcell.hasReceptorMatching( **it_v ) )
         {                                        // 受容体を所持していれば
           if( probability( 100 * cell.calcDensityOfVirusSize() ) )
           {                                      // 細胞内のウイルス密度に比例して
-            cell.clearInfectedViruses();         // ウイルスを除去して
+            cell.died();                         // 殺傷される
+            // cell.clearInfectedViruses();         // ウイルスを除去して
             FOR( i, TCELL_CLONE_SIZE ) {         // T細胞のクローン数だけ
               Tcell& newtcell = tcell.clone();     // クローンを作成し
               if( probability( TCELL_MEMORY_RATE ) ) {  // 記憶率の確率で

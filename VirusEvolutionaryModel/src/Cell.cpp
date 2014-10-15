@@ -8,7 +8,21 @@ Cell :: Cell(int x, int y, const char* ctag) :
   __Life( ctag ),
   max_virus_can_have_( CELL_MAX_VIRUS_CAN_HAVE )
 {
+  death_age_ = -1;    // 死齢
+}
 
+bool Cell :: isAlive() {
+  if( death_age_ < 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+void Cell :: died()
+{
+  clearInfectedViruses();  // 感染ウイルスを削除
+  death_age_ = 0;          // 死齢を０に設定
 }
 
 bool Cell :: isInfected()

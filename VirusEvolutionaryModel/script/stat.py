@@ -9,9 +9,9 @@ HOME_DIR = '~/workspace/AgentBasedEpidemicMode/VirusEvolutionaryModel'
 def main():
     # plot
     pfactory = pf.PlotFactory('auto.plt')
-    
+
     pfactory.setFont = 'verdana,13'
-    
+
     pfactory.setImage('Density', 'Term', 'Rate', 'density', (pf.TXT('../bin/dense'), 'density', 'w boxes'))
     pfactory.setImage('Average', 'Term', 'Value', 'ave-newvirus', (pf.TXT('../bin/ave-newvirus-value'), 'average', 'w boxes'))
     pfactory.setImage('Denity', 'Term', 'Rate', 'v-density', (pf.TXT('../bin/v-dense'), 'density', 'w boxes'))
@@ -21,15 +21,15 @@ def main():
     pfactory.setImage('IsInfection', 'Term', 'Count', 'inf-human', (pf.TXT('../bin/inf-human'), 'count', 'w l'))
     pfactory.setImage('VirusSize', 'Term', 'Size', 'virus-size', (pf.TXT('../bin/virus-size'), 'size', 'w boxes'))
     pf.plot_animation( 3000, 10 )
-    
+
     pfactory.generate()
 
     # html
     hfactory = hf.HtmlFactory('index.html')
-    
-    hfactory.setConfig('../include/Config.hpp')    
+
+    hfactory.setConfig('../include/Config.hpp')
     hfactory.setCss('../asset/layout.css')
-    
+
     hfactory.setSection('感染細胞数 / 全細胞数', 2, hf.IMG('density'))
     hfactory.setSection('全T細胞数', 2, hf.IMG('tcell-size'))
     hfactory.setSection('細胞０の細胞内密度', 2, hf.IMG('v-density'))
@@ -39,7 +39,7 @@ def main():
     hfactory.setSection('感染しているかどうか', 2, hf.IMG('is-infection'))
     hfactory.setSection('平均評価値', 2, hf.IMG('ave-newvirus'))
     hfactory.setSection('細胞内密度アニメーション', 2, 'animation.gif')
-    
+
     hfactory.generate()
 
 if __name__ == '__main__':

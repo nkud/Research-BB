@@ -171,13 +171,13 @@ class PlotFactory(object):
         inputs (入力ファイル名, 汎用タイトル)
         """
         self.image_list_.append( (title, xlabel, ylabel, imgname, inputs) )
-        
+
     def setExtension(self, ext):
         self.extension_ = ext
-        
+
     def setImageSize(self, imgsize):
         self.image_size_ = imgsize
-        
+
     def setFont(self, font):
         self.font_ = font
 
@@ -192,7 +192,7 @@ def plot_animation(last_term, interval):
     fframe.write('if(n<%d) n=n+%d; reread;' % (last_term-1, interval))
 
     fanim = open('animation.plt', 'w')
-    fanim.write('set terminal gif animate optimize size 600,600 delay 15;\n')
+    fanim.write('set terminal gif animate optimize size 600,600 delay 5;\n')
     fanim.write('set output "animation.gif";\n')
     # fanim.write('set title font "times new roman,12";\n')
     fanim.write('set style line 1 lw 2;\n')
