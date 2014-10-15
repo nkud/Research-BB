@@ -119,10 +119,13 @@ class Configure(Tkinter.Frame):
     self.setParameter(human_panel, 'ヒト土地タテ', 'HUMAN_LAND_HEIGHT')
     self.setParameter(human_panel, '発症閾値', 'H_SYMPTOMATIC_THRESHOLD')
 # 細胞
-    cell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=0)    
+    cell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=0)
     self.setParameter(cell_panel, '最大保持ウイルス数', 'CELL_MAX_VIRUS_CAN_HAVE', 'gray')
     self.setParameter(cell_panel, '細胞土地ヨコ', 'CELL_LAND_WIDTH', 'gray')
     self.setParameter(cell_panel, '細胞土地タテ', 'CELL_LAND_HEIGHT', 'gray')
+    self.setParameter(cell_panel, '細胞土地タテ', 'CELL_LAND_HEIGHT', 'gray')
+    self.setParameter(cell_panel, '細胞の再生産期間', 'CELL_REPRODUCTIVE_SPAN', 'gray')
+
 # T細胞
     tcell_panel = Tkinter.Frame(self, relief=Tkinter.GROOVE, bd=0)
     self.setParameter(tcell_panel, 'T細胞遺伝子長', 'TCELL_LEN', 'yellow')
@@ -140,7 +143,7 @@ class Configure(Tkinter.Frame):
 # パック
     term_panel.pack( padx=5, pady=5 )
     human_panel.pack( padx=5, pady=5 )
-    cell_panel.pack( padx=5, pady=5 )  
+    cell_panel.pack( padx=5, pady=5 )
     tcell_panel.pack( padx=5, pady=5 )
     virus_panel.pack( padx=5, pady=5 )
 # ボタン
@@ -169,9 +172,9 @@ class Configure(Tkinter.Frame):
     output_line(fo, '#ifndef ___CONFIG_HPP')
     output_line(fo, '#define ___CONFIG_HPP\n')
     for paramname in self.parameter_.keys():
-        output_define(fo, 
+        output_define(fo,
           paramname,
-          self.parameter_[paramname].getValue(), 
+          self.parameter_[paramname].getValue(),
           self.parameter_[paramname].getTitle(),
           self.parameter_[paramname].getColor())
     output_line(fo, '\n#endif')

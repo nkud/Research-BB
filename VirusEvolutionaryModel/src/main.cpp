@@ -15,8 +15,6 @@
 
 using namespace std;
 
-#define CELL_REPRODUCTIVE_SPAN 10
-
 #define HUMAN_SYSTEM
 #define IMMUNE_SYSTEM
 
