@@ -220,7 +220,6 @@ main()
         tcell_list_ofs << tcell.getX() << SEPARATOR;
         tcell_list_ofs << tcell.getY() << SEPARATOR;
         tcell_list_ofs << tcell.getAge() << SEPARATOR;
-        LOG(tcell.getX());
         tcell_list_ofs << ENDL;
       }
     }
