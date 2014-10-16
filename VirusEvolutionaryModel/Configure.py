@@ -183,7 +183,7 @@ class Configure(Tkinter.Frame):
   def setParameter(self, master, title, name, color='white'):
     if name not in self.info_:
         self.info_[name] = 0
-    self.parameter_[name] = ParameterField(master, title, name, self.info_[name], 10000, color)
+    self.parameter_[name] = ParameterField(master, title, name, self.info_[name], 100000, color)
 
   def readConfig(self):
     """ コンフィグを読み込む """
