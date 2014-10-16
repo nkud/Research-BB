@@ -259,20 +259,22 @@ void run_host_pathogen_model( Human& human )
   //  細胞の接触
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
     Cell& cell = **it_cell;
-    if( cell.canPushNewVirus() ) {
+
+    if( cell.canPushNewVirus() ) {  // 最大ウイルス保持ウイルスを超えていればスキップ
     } else { continue; }
-    VECTOR(Cell *) neighbors = cell_land.getNeighborsAt( **it_cell ); // 近隣の細胞を取得し
-    Cell& cell = **it_cell;
-    if( cell.isAlive() ) {
+
+    if( cell.isAlive() ) {  // 死亡していればスキップ
     } else {
       continue;
     }
+
+    VECTOR(Cell *) neighbors = cell_land.getNeighborsAt( **it_cell ); // 近隣の細胞を取得し
     EACH( it_neighbor, neighbors )
     {                                            // 各近隣に対して
       double density = 100 * (*it_neighbor)->calcDensityOfVirusSize();
       Cell& neighbor = **it_neighbor;
       if( neighbor.isAlive() )
-      {  
+      {
       } else {
         continue;
       }
