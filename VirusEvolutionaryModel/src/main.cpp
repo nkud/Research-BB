@@ -273,6 +273,7 @@ void run_host_pathogen_model( Human& human )
       Cell& neighbor = **it_neighbor;
 
       if( neighbor.isDead() )
+
         continue;
 
       if( density > V_ONE_STEP_GROWTH_THRESHOLD ) // ウイルス密度が閾値を超えていれば
