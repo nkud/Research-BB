@@ -4,32 +4,8 @@
 import collections
 import datetime
 
-### CONFIGURE #################################################################
-INIT_LINE_STYLE = 'set style line 1 lw 2'
-LINE_STYLE = 'w l'
-IMG_SIZE = '1200,300'
-RESULT_WIDTH = 1000
-IMG_EXT = 'png'
-FONT = 'times new roman,13'
-
-IMG_DIR = ''
-TXT_DIR = ''
-CONFIG_FNAME = '../include/Config.hpp'
-INFO_FNAME = 'INFO.txt'
-###############################################################################
-
 """ HTML生成関数
 """
-
-def IMG(img):
-    """ 画像の拡張子を設定
-    Args:
-        img 画像の名前
-    Returns:
-        拡張子付きのファイル名
-    """
-    return '%s%s.%s' % (IMG_DIR, img, IMG_EXT)
-
 def output_line(f, line):
     """ １行出力するして開業
     Args:
@@ -38,17 +14,16 @@ def output_line(f, line):
     """
     f.write(line+'\n')
 
-def output_img(f, width, *imgfnames):
+def output_img(f, *imgfnames):
     """ 画像を設定する
     Args:
         f ファイルオブジェクト
-        width 画像の幅
         imgfnames 画像ファイル名
     """
     output_line(f, '<!-- IMAGE -->')
     output_line(f, '<table class="graph">')
     for fname in imgfnames:
-        output_line(f, '\t<tr><td><img src="%s" width="%d"/></td></tr>' % (fname, width))
+        output_line(f, '\t<tr><td><img src="%s" /></td></tr>' % fname)
     output_line(f, '</table>')
 
 def output_header(f, htext, h):
@@ -71,7 +46,7 @@ def output_section(f, htext, h, *imgs):
     # output_header(f, htext, h)
     output_begin_legend(f, htext)
     for img in imgs:
-        output_img(f, RESULT_WIDTH, img)
+        output_img(f, img)
     output_end_legend(f)
 
 def get_date_string():

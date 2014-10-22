@@ -20,7 +20,7 @@ def main():
     pfactory.setImage('IsIncubation', 'Term', 'Count', 'is-infection', (pf.TXT('../bin/isInfection'), 'count', 'w boxes'))
     pfactory.setImage('IsInfection', 'Term', 'Count', 'inf-human', (pf.TXT('../bin/inf-human'), 'count', 'w l'))
     pfactory.setImage('VirusSize', 'Term', 'Size', 'virus-size', (pf.TXT('../bin/virus-size'), 'size', 'w boxes'))
-    pf.plot_animation( 3000, 10 )
+    pf.plot_animation( 10000, 10 )
 
     pfactory.generate()
 
@@ -30,14 +30,14 @@ def main():
     hfactory.setConfig('../include/Config.hpp')
     hfactory.setCss('../asset/layout.css')
 
-    hfactory.setSection('感染細胞数 / 全細胞数', 2, hf.IMG('density'))
-    hfactory.setSection('全T細胞数', 2, hf.IMG('tcell-size'))
-    hfactory.setSection('細胞０の細胞内密度', 2, hf.IMG('v-density'))
-    hfactory.setSection('細胞１の細胞内密度', 2, hf.IMG('v-density2'))
-    hfactory.setSection('感染ヒト数', 2, hf.IMG('inf-human'))
-    hfactory.setSection('全ウイルス数', 2, hf.IMG('virus-size'))
-    hfactory.setSection('感染しているかどうか', 2, hf.IMG('is-infection'))
-    hfactory.setSection('平均評価値', 2, hf.IMG('ave-newvirus'))
+    hfactory.setSection('感染細胞数 / 全細胞数', 2, pf.IMG('density'))
+    hfactory.setSection('全T細胞数', 2, pf.IMG('tcell-size'))
+    hfactory.setSection('細胞０の細胞内密度', 2, pf.IMG('v-density'))
+    hfactory.setSection('細胞１の細胞内密度', 2, pf.IMG('v-density2'))
+    hfactory.setSection('感染ヒト数', 2, pf.IMG('inf-human'))
+    hfactory.setSection('全ウイルス数', 2, pf.IMG('virus-size'))
+    hfactory.setSection('感染しているかどうか', 2, pf.IMG('is-infection'))
+    hfactory.setSection('平均評価値', 2, pf.IMG('ave-newvirus'))
     hfactory.setSection('細胞内密度アニメーション', 2, 'animation.gif')
 
     hfactory.generate()

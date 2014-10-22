@@ -8,19 +8,17 @@ CONFIGUREを無くしたい
 import os
 
 DEFAULT_EXT = 'png'
-DEFAULT_IMG_SIZE = '1200,200'
+DEFAULT_IMG_SIZE = '1000,200'
 DEFAULT_LINE_STYLE = 'w boxes'
 DEFAULT_FONT = 'courier,11'
 ### CONFIGURE #################################################################
 INIT_LINE_STYLE = 'set style line 1 lw 2'
 LINE_STYLE = 'w boxes'
-# IMG_SIZE = '1200,280'
-# RESULT_WIDTH = 1000
+
 CSS_DIR = '../template/result.css'
 IMG_EXT = 'png'
 FONT = 'verdana,13'
 
-IMG_DIR = 'image/'
 TXT_DIR = ''
 CONFIG_FNAME = '../include/Config.h'
 INFO_FNAME = 'INFO.txt'
@@ -33,7 +31,7 @@ def IMG(img):
     Returns:
         拡張子付きのファイル名
     """
-    return '%s%s.%s' % (IMG_DIR, img, IMG_EXT)
+    return '%s.%s' % (img, IMG_EXT)
 
 def TXT(title, ext='txt'):
     """ テキストファイルの拡張子を設定
