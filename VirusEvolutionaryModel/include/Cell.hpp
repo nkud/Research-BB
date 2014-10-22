@@ -38,6 +38,7 @@ class Cell : public __Location, public __Life
 
   void died();
   bool isAlive();  ///< 細胞が生きているかを評価
+  bool isDead() { if(isAlive()) return false; else return true; }
   void incrementDeathAge() { death_age_++; }
   void reborn() { death_age_ = -1; }
   int getDeathAge() { return death_age_; }

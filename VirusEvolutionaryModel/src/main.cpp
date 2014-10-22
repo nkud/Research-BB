@@ -259,27 +259,24 @@ void run_host_pathogen_model( Human& human )
   //  細胞の接触
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
     Cell& cell = **it_cell;
+
+    if( cell.isDead() )
+      continue;
     if( cell.canPushNewVirus() ) {
     } else { continue; }
+
     VECTOR(Cell *) neighbors = cell_land.getNeighborsAt( **it_cell ); // 近隣の細胞を取得し
-    Cell& cell = **it_cell;
-    if( cell.isAlive() ) {
-    } else {
-      continue;
-    }
+
     EACH( it_neighbor, neighbors )
     {                                            // 各近隣に対して
       double density = 100 * (*it_neighbor)->calcDensityOfVirusSize();
       Cell& neighbor = **it_neighbor;
-      if( neighbor.isAlive() )
-      {  
-      } else {
+
+      if( neighbor.isDead() )
         continue;
-      }
+
       if( density > V_ONE_STEP_GROWTH_THRESHOLD ) // ウイルス密度が閾値を超えていれば
       {
-        // (*it_cell)->contact( **it_neighbor );      // 接触させる
-
         int size = neighbor.getInfectedVirusListSize();  // 近隣の感染ウイルスの中から
         int pos = uniform_int( 0, size-1 );              // ランダムに１つ選び
         Virus& virus = *( neighbor.getInfectedVirusList().at( pos ) ); // そのウイルスを
@@ -299,7 +296,17 @@ void run_host_pathogen_model( Human& human )
     // (*it_cell)->infection();                     // 感染させる
     Cell& cell = **it_cell;
 
-    if( cell.isAlive() and cell.canPushNewVirus() )  // 細胞が生存していて
+    if( cell.isDead() ) {      // 細胞が生存していれば
+      cell.incrementDeathAge(); // 死齢を増やして
+      if( cell.getDeathAge() > CELL_REPRODUCTIVE_SPAN ) {
+        cell.reborn();
+      }
+      continue;                 // スキップ
+    }
+
+    ASSERT( cell.isAlive() );
+
+    if( cell.canPushNewVirus() )  // 細胞が生存していて
     {  // ウイルスに感染できる状態なら
       int n = cell.getStandByVirusList().size();  // 待機ウイルス数を取得して
       if( n > 0 )
@@ -334,15 +341,6 @@ void run_host_pathogen_model( Human& human )
     int x = tcell.getX();                    // 座標を
     int y = tcell.getY();                    // 取得して
     Cell& cell = cell_land.getCellAt(x, y);      // その位置の細胞を取得して
-
-    if( cell.isAlive() ) {      // 細胞が生存していれば
-    } else {                    // そうでなければ
-      cell.incrementDeathAge(); // 死齢を増やして
-      if( cell.getDeathAge() > CELL_REPRODUCTIVE_SPAN ) {
-        cell.reborn();
-      }
-      continue;                 // スキップ
-    }
 
     if( cell.isInfected() )
     {                                            // 細胞が感染していて
@@ -397,6 +395,7 @@ void run_host_pathogen_model( Human& human )
   EACH( it_cell, cell_list )
   {                                              // 各細胞に対して
     Cell& cell = **it_cell;
+    if( cell.isDead() ) continue;
     if( probability( V_REPRODUCTIVE_RATE ) )
     {                                            // 感染細胞かつ余裕があれば
       if( cell.canPushNewVirus() and cell.isInfected() )
