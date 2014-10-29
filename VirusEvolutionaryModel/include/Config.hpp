@@ -12,8 +12,8 @@
 #define CELL_MAX_VIRUS_CAN_HAVE        100       ///< 最大保持ウイルス数 gray
 #define CELL_LAND_WIDTH                30        ///< 細胞土地ヨコ gray
 #define CELL_LAND_HEIGHT               30        ///< 細胞土地タテ gray
-#define CELL_REPRODUCTIVE_SPAN         100       ///< 細胞の再生産期間 gray
-#define TCELL_LEN                      100       ///< T細胞遺伝子長 yellow
+#define CELL_REPRODUCTIVE_SPAN         0         ///< 細胞の再生産期間 gray
+#define TCELL_LEN                      10        ///< T細胞遺伝子長 yellow
 #define TCELL_MINIMUM_SIZE             100       ///< 最小T細胞数 yellow
 #define TCELL_LIFESPAN                 10        ///< T細胞寿命 yellow
 #define TCELL_MEMORY_RATE              10        ///< 記憶率 yellow

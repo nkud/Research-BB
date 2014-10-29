@@ -1,5 +1,6 @@
 #include "Gene.hpp"
 #include "Function.hpp"
+#include "Config.hpp"
 
 #include <string>
 
@@ -42,6 +43,10 @@ void Gene :: mutation( int prob ) {
       break;
 
       case 1:
+      if (getLen() <= TCELL_LEN)
+      {
+        break;
+      }
       getTagString().erase( getTagString().begin() );
       break;
       
@@ -50,6 +55,10 @@ void Gene :: mutation( int prob ) {
       break;
 
       case 3:
+      if (getLen() <= TCELL_LEN)
+      {
+        break;
+      }
       getTagString().erase( --getTagString().end() );
       break;
       

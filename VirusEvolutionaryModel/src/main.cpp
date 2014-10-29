@@ -341,7 +341,7 @@ void run_host_pathogen_model( Human& human )
     }
   }
 
-  //  T細胞の殺傷
+  //  ウイルスの殺傷
   VECTOR(Tcell *) new_tcell;
   EACH( it_tcell, tcell_list ) {                    // 各T細胞に対して
     Tcell& tcell = **it_tcell;
@@ -354,7 +354,9 @@ void run_host_pathogen_model( Human& human )
       ASSERT( cell.isAlive() );                  // 細胞は生存しているはず
       EACH( it_v, cell.getInfectedVirusList() )
       {                                          // 各感染ウイルスのどれかに対して
-        if( tcell.hasReceptorMatching( **it_v ) )
+        // if( tcell.hasReceptorMatching( **it_v ) )
+        Virus& virus = **it_v;
+        if( virus.isInclude( tcell.getGene() ) ) // ウイルスがT細胞のタグを含んでいれば
         {                                        // 受容体を所持していれば
           if( probability( 100 * cell.calcDensityOfVirusSize() ) )
           {                                      // 細胞内のウイルス密度に比例して
