@@ -293,6 +293,7 @@ void run_host_pathogen_model( Human& human )
   //  細胞の感染
   int count_new_virus = 0;  // 新しいウイルス数をカウント
   int sum_new_virus_value = 0;  // 新しいウイルスの評価値をカウント
+  int sum_new_virus_len = 0;
   EACH( it_cell, cell_list ) {                   // 各細胞に対して
     // (*it_cell)->infection();                     // 感染させる
     Cell& cell = **it_cell;
@@ -320,6 +321,7 @@ void run_host_pathogen_model( Human& human )
           if( Term::Instance().isInterval(10) ) {
             count_new_virus++;  // 新しいウイルス数をカウント
             sum_new_virus_value += virus.value(); // 新しいウイルスの評価値をカウント
+            sum_new_virus_len += virus.getLen();
             VirusCounter::Instance().addNewVirusData( virus );
           }
         }
@@ -327,15 +329,19 @@ void run_host_pathogen_model( Human& human )
     }
     cell.clearStandByViruses();                         // 待機ウイルスをクリア
   }
+
   if( Term::Instance().isInterval(10) ){  // 平均評価値を出力
     double ave = 0;
+    double avelen = 0;
     if( count_new_virus > 0 ) {
       ave = (double)sum_new_virus_value / count_new_virus;
+      avelen = (double)sum_new_virus_len / count_new_virus;
       output_value_with_term("ave-newvirus-value.txt", ave );
+      output_value_with_term("ave-newvirus-len.txt", avelen );
     }
   }
 
-  //  T細胞の殺傷
+  //  ウイルスの殺傷
   VECTOR(Tcell *) new_tcell;
   EACH( it_tcell, tcell_list ) {                    // 各T細胞に対して
     Tcell& tcell = **it_tcell;
@@ -348,7 +354,9 @@ void run_host_pathogen_model( Human& human )
       ASSERT( cell.isAlive() );                  // 細胞は生存しているはず
       EACH( it_v, cell.getInfectedVirusList() )
       {                                          // 各感染ウイルスのどれかに対して
-        if( tcell.hasReceptorMatching( **it_v ) )
+        // if( tcell.hasReceptorMatching( **it_v ) )
+        Virus& virus = **it_v;
+        if( virus.isInclude( tcell.getGene() ) ) // ウイルスがT細胞のタグを含んでいれば
         {                                        // 受容体を所持していれば
           if( probability( 100 * cell.calcDensityOfVirusSize() ) )
           {                                      // 細胞内のウイルス密度に比例して

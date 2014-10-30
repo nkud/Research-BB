@@ -29,7 +29,8 @@ int Virus :: getMutationRate() {
 
 int Virus :: getAdaptationRateForCell( Cell& cell ) {
   int rate = 0;
-  int ham_dis = minimumHammingDistanceFor( cell.getGene() );
+  // int ham_dis = minimumHammingDistanceFor( cell.getGene() );
+  int ham_dis = value();
   rate = (double)ham_dis / getLen() * 100;
 
   return rate;
