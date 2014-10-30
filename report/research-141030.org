@@ -1,0 +1,19 @@
+#+TITLE: 研究レポート
+#+AUTHOR: Naoki Ueda
+#+OPTIONS: \n:t H:1 toc:t author:nil email:nil timestamp:nil creator:nil num:t
+#+LANGUAGE:ja
+#+LaTeX_CLASS: normal
+#+STARTUP: content
+#+HTML_HEAD: <style type="text/css">body {font-family:"helvetica";font-size:0.7em;}</style>
+* モデル変更点
+** 突然変異の処理
+*** 遺伝子長が変化するようにした。
+* 実験結果
+** 現在試行錯誤しながら計算しているが、今までと比べて特に目新しい結果は得られていない。
+* 調べたこと
+** PLOS Comp Bioの論文
+*** 細胞の形態形成に関する論文が目についた。
+*** その他、現在読み込み中。
+* 質問
+** だいたいいつぐらいにから論文を書き始めるのか。
+** いつまでには結果が出るべきなのか。y
