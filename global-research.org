@@ -4,42 +4,81 @@
 #+LANGUAGE: ja
 #+LaTeX_CLASS: normal
 #+STARTUP: content
-#+HTML_HEAD: <style type="text/css">body {font-family:"andale mono";font-size:0.7em;}</style>
+#+HTML_HEAD: <style type="text/css">body {font-family:"Ricty";font-size:0.7em;}</style>
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="report.css" />
-
+* Query
+** TODO 血液内の白血球量は一定なのだろうか？                          :@lab:
+* 次にすること
+** TODO Figure Captionについて調べる
+** TODO Plos ComBio の記事を読む                                      :@lab:
+** TODO ウイルスの遺伝子をエピトープと感染力の部分に分ける
+* Note
+** 現在の微分方程式のモデルでは、限界が有るのではないか
+** ウイルスの突然変異、薬剤耐性などの細かいパラメータを組み込みにくい
+* 宿主内動態組込型ABM
+** DONE 細胞の感染の構成を見直す
+SCHEDULED: <2014-10-22 Wed>
 * ノート
-
 ** T細胞
-
 *** T細胞による防御反応は、ウイルスを含む細胞に反応できるかどうかにかかっている
 * 問題点
-
 ** メモリーT細胞の処理がおかしい
 
 *** ウイルスとマッチしていなくても記憶している可能性がある。
-
 ** 細胞が死なないから、増殖が止まらない
-
 * Todo
-
 ** 調査するパラメータを設定する
-
 *** T細胞が殺傷した数 /term
-
 ** 最初と最後のほうのグラフも出力するようにする
 * 考察
-
 ** だんだん感染する速度が早くなっていってる
 [[file:VirusEvolutionaryModel/master/result-140926-123303-notitle/stat/index.html]]
 
 * 単語集
-
 ** マルチポピュレーション
-
 ** メタポピュレーション
-
 ** パーティクルフィルタ
-
 ** ハイブリッドストカスティックモデル
-
 ** Invasion Fitness
+* 論文要約
+** MIT Press Journal Artificial Life
+** PLOS ComBio
+*** 動的に環境が変化する中での、ノイズを考慮した最適確率的な推測によるニューロンの突起の集合
+- 最近、ノイズを含むニューロンの突起？ネットワークによる
+- つまり、突起？を
+<2014-10-23 Thu>
+*** Regression Analysis of Combined Gene Expression Regulation in Acute Myeloid Leukemia<2014-10-23 Thu>
+**** 急性骨髄芽球性白血病における連結遺伝子発現制御の回帰分析
+*** Energy Landscape of All-Atom Protein-Protein Interactions Revealed by Multiscale Enhanced Sampling
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003901
+**** MSES法によって明らかになる
+**** タンパク質の全原子モデルと粗視化モデルを連成した新規アルゴリズムであるMultiscale enhanced sampling （MSES）法
+***** http://www.gsic.titech.ac.jp/node/556
+* 論文
+** Authors　著者
+** Title　題名
+- 免疫機構と易突然変異性ウイルスによる進化ゲームの安定性戦略？？
+** Keyword list　キーワード
+- 進化ゲーム
+- ウイルス
+- 細胞
+- ABM
+- 突然変異
+** Abstract　抄録
+** Contents
+*** Introduction　序文
+*** Methods　方法
+*** Results　結果
+*** Discussion　考察
+*** Acknowledgement　社寺
+*** Reference　参考文献
+*** Supplementary material　補足資料
+* 2014
+** 2014-10 October
+*** 2014-10-30 Thursday
+**** セミナー
+- セレンディピティ
+- 資料を読みまくる
+- 論文の執筆方法について読む
+- 一回、今までの文をまとめる
+[2014-10-30 Thu 23:15]
