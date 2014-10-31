@@ -40,6 +40,8 @@ SCHEDULED: <2014-10-22 Wed>
 ** パーティクルフィルタ
 ** ハイブリッドストカスティックモデル
 ** Invasion Fitness
+** 細胞接着分子, cell adhesion molecules, CAMs
+細胞接着を担う分子の総称。数百種類の分子が発見されている。
 * 論文要約
 ** MIT Press Journal Artificial Life
 ** PLOS ComBio
