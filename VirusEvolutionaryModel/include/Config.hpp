@@ -21,6 +21,6 @@
 #define V_TAG                          10        ///< ウイルス遺伝子長 skyblue
 #define V_REPRODUCTIVE_RATE            100       ///< 増殖率 skyblue
 #define V_MUTATION_RATE                30        ///< 突然変異率 skyblue
-#define V_ONE_STEP_GROWTH_THRESHOLD    30        ///< 一段階増殖閾値 skyblue
+#define V_ONE_STEP_GROWTH_THRESHOLD    50        ///< 一段階増殖閾値 skyblue
 
 #endif
