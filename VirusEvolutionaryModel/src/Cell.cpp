@@ -130,13 +130,19 @@ bool Cell :: canPushNewVirus()
     return false;
 }
 
+// T細胞の遺伝子長と同じ長さのエピトープとする
+// エピトープの長さをランダムにウイルスから切り離す
 VECTOR(std::string) Cell :: presentAntigenStrings()
 {
   VECTOR(std::string) antigens;
   EACH( it_v, getInfectedVirusList() )
   {
     Virus& virus = **it_v;
-    antigens.push_back( virus.getTagString() );
+    std::string tag = virus.getTagString();
+    int len = tag.size();
+    int epitopeLen = TCELL_LEN;
+    int begin = uniform_int( 0, len-epitopeLen );
+    antigens.push_back( tag.substr( begin, epitopeLen ) );
   }
   return antigens;
 }
