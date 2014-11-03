@@ -171,6 +171,12 @@ pack:
 test:
 	@cd $(test_dir); $(MAKE) -f $(test_make_name)
 
+info:
+	@$(COLORECHO)
+	@$(PRINT) '==> Information'
+	@$(CLRECHO)
+	@less --QUIT-AT-EOF include/Config.hpp
+
 all: $(TARGET) run stat tail
 
 -include $(depend)
