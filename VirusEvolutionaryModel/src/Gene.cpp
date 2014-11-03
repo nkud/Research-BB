@@ -150,6 +150,16 @@ bool Gene :: isInclude( Gene& other )
   }
 }
 
+bool Gene :: isIncludeString( std::string tag )
+{
+  if( getTagString().find( tag )  == std::string::npos )
+  {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 //----------------------------------------------------------------------
 //  __Life
 //----------------------------------------------------------------------
