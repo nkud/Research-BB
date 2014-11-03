@@ -32,39 +32,39 @@ Gene :: Gene( int len )
 void Gene :: mutation( int prob ) {
   if( probability( prob ) ) 
   {
-    // int maxtag = 1;  // 最大タグ
-    // int len = getLen();  // 遺伝子の長さを取得
-    // int pos = uniform_int( 0, len-1 );
-    // setTagNumAt( uniform_int(0, maxtag), pos );
-    switch( uniform_int(0, 3) )
-    {
-      case 0:
-      getTagString().insert(0, rand_bool()?"0":"1");
-      break;
+    int maxtag = 1;  // 最大タグ
+    int len = getLen();  // 遺伝子の長さを取得
+    int pos = uniform_int( 0, len-1 );
+    setTagNumAt( uniform_int(0, maxtag), pos );
+    // switch( uniform_int(0, 3) )
+    // {
+    //   case 0:
+    //   getTagString().insert(0, rand_bool()?"0":"1");
+    //   break;
 
-      case 1:
-      if (getLen() <= TCELL_LEN)
-      {
-        break;
-      }
-      getTagString().erase( getTagString().begin() );
-      break;
+    //   case 1:
+    //   if (getLen() <= TCELL_LEN)
+    //   {
+    //     break;
+    //   }
+    //   getTagString().erase( getTagString().begin() );
+    //   break;
       
-      case 2:
-      getTagString() += rand_bool()?"0":"1";
-      break;
+    //   case 2:
+    //   getTagString() += rand_bool()?"0":"1";
+    //   break;
 
-      case 3:
-      if (getLen() <= TCELL_LEN)
-      {
-        break;
-      }
-      getTagString().erase( --getTagString().end() );
-      break;
+    //   case 3:
+    //   if (getLen() <= TCELL_LEN)
+    //   {
+    //     break;
+    //   }
+    //   getTagString().erase( --getTagString().end() );
+    //   break;
       
-      default:
-      break;
-    }
+    //   default:
+    //   break;
+    // }
   }
 }
 
