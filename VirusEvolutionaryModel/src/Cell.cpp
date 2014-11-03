@@ -130,6 +130,17 @@ bool Cell :: canPushNewVirus()
     return false;
 }
 
+VECTOR(std::string) Cell :: presentAntigenStrings()
+{
+  VECTOR(std::string) antigens;
+  EACH( it_v, getInfectedVirusList() )
+  {
+    Virus& virus = **it_v;
+    antigens.push_back( virus.getTagString() );
+  }
+  return antigens;
+}
+
 //----------------------------------------------------------------------
 //
 //  CellLand
