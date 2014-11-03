@@ -359,16 +359,16 @@ void run_host_pathogen_model( Human& human )
         std::string& tag = *it_tag;
         if ( tcell.getGene().getTagString() ==  tag ) // T細胞の遺伝子とエピトープが一致すれば
         {
+          if( probability( TCELL_MEMORY_RATE ) )
+          {
+            tcell.becomeMemoryTcell();
+          }
           if( probability(cell.calcDensityOfVirusSize() * 100))
           {
             cell.died();
             FOR( i, TCELL_CLONE_SIZE )
             {
               Tcell& newtcell = tcell.clone();
-              if( probability( TCELL_MEMORY_RATE ) )
-              {
-                newtcell.becomeMemoryTcell();
-              }
               new_tcell.push_back( &newtcell );
             }
             break;
