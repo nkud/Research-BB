@@ -123,7 +123,6 @@ class Configure(Tkinter.Frame):
     self.setParameter(cell_panel, '最大保持ウイルス数', 'CELL_MAX_VIRUS_CAN_HAVE', 'gray')
     self.setParameter(cell_panel, '細胞土地ヨコ', 'CELL_LAND_WIDTH', 'gray')
     self.setParameter(cell_panel, '細胞土地タテ', 'CELL_LAND_HEIGHT', 'gray')
-    self.setParameter(cell_panel, '細胞土地タテ', 'CELL_LAND_HEIGHT', 'gray')
     self.setParameter(cell_panel, '細胞の再生産期間', 'CELL_REPRODUCTIVE_SPAN', 'gray')
 
 # T細胞
