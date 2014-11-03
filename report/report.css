@@ -1,5 +1,5 @@
 body {
-    
+
 }
 
 .figure {
@@ -14,10 +14,14 @@ b {
 }
 
 h2 {
-    border-left: 10px solid black;
+    border-left: 5px solid #000;
     /* border-top: 1px solid #ccc; */
     /* border-bottom: 1px solid #ccc; */
     padding: 0px 10px;
+}
+
+.outline-2 {
+    /* border-left: 1px solid #000; */
 }
 
 h3 {
