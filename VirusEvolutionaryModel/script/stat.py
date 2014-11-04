@@ -34,7 +34,7 @@ def main():
         fnum = int( (f.split('_')[0]).split('/')[-1] )
         if lastterm < fnum:
             lastterm = fnum
-    pf.plot_animation( 1000, 10 )
+    pf.plot_animation( lastterm, 10 )
 
     pfactory.generate()
 
