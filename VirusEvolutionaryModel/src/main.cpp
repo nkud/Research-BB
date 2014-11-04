@@ -357,7 +357,7 @@ void run_host_pathogen_model( Human& human )
       EACH( it_tag, epitopes )
       {
         std::string& tag = *it_tag;
-        if ( tcell.getGene().getTagString() ==  tag ) // T細胞の遺伝子とエピトープが一致すれば
+        if ( tag.find(tcell.getGene().getTagString()) != std::string::npos ) // T細胞の遺伝子とエピトープが一致すれば
         {
           if( probability( TCELL_MEMORY_RATE ) )
           {

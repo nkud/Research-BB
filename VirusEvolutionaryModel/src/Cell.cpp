@@ -137,12 +137,13 @@ VECTOR(std::string) Cell :: presentAntigenStrings()
   VECTOR(std::string) antigens;
   EACH( it_v, getInfectedVirusList() )
   {
-    Virus& virus = **it_v;
-    std::string tag = virus.getTagString();
-    int len = tag.size();
-    int epitopeLen = TCELL_LEN;
-    int begin = uniform_int( 0, len-epitopeLen );
-    antigens.push_back( tag.substr( begin, epitopeLen ) );
+    antigens.push_back( (**it_v).getTagString() );
+    // Virus& virus = **it_v;
+    // std::string tag = virus.getTagString();
+    // int len = tag.size();
+    // int epitopeLen = TCELL_LEN;
+    // int begin = uniform_int( 0, len-epitopeLen );
+    // antigens.push_back( tag.substr( begin, epitopeLen ) );
   }
   return antigens;
 }
