@@ -4,7 +4,7 @@
 #+LANGUAGE: ja
 #+LaTeX_CLASS: normal
 #+STARTUP: content
-#+HTML_HEAD: <style type="text/css">body {font-family:"Ricty";font-size:0.7em;}</style>
+#+HTML_HEAD: <style type="text/css">body {font-family:"helvetica";font-size:0.7em;}</style>
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="report/report.css" />
 * ノート
 ** T細胞
@@ -27,7 +27,7 @@
 - https://www.youtube.com/watch?v=RO8MP3wMvqg
 ** 2014-11 November
 *** 2014-11-01 Saturday
-**** 細胞にとりつくウイルスとは別に、T細胞に取り付くウイルスを追加する
+**** HOLD 細胞にとりつくウイルスとは別に、T細胞に取り付くウイルスを追加する
 **** SIVからHIVに突然変異した
 **** TODO Figure Captionについて調べる
 **** TODO CD4陽性・陰性の違い
@@ -38,14 +38,22 @@
 * Note
 ** 現在の微分方程式のモデルでは、限界が有るのではないか
 ** ウイルスの突然変異、薬剤耐性などの細かいパラメータを組み込みにくい
-* 単語集
+* Wiki
 ** マルチポピュレーション
 ** メタポピュレーション
 ** パーティクルフィルタ
 ** ハイブリッドストカスティックモデル
 ** Invasion Fitness
-** 細胞接着分子, cell adhesion molecules, CAMs
-細胞接着を担う分子の総称。数百種類の分子が発見されている。
+** HIV-1
+*** 塩基配列により、４つのグループに分類される
+**** Group M（Major）
+世界的に分布しているウイルスの多くがグループMに属し、A、B、C、D、E（後に組換え体であるCRF01_AEである事が判明　純粋なEは未発見）、F、G、H、J、Kの10のサブタイプに分類される。更にこのサブタイプ間での組換え体（CRF：circulating recombinant form）が存在し、15種類が確認されている。日本での感染者の主なサブタイプは、サブタイプBとCRF01_AEであり、サブタイプBがおよそ75%、CRF01_AEが20%、残りがその他のサブタイプとなっている。
+**** Group O（Outlier）
+西アフリカや中央アフリカで主に認められる。
+**** Group N（non-M/non-O）
+1998年にカメルーンでの感染者に発見された。
+**** Group P（pending）
+2009年、フランス在住のカメルーン人女性に、ゴリラ由来のHIV-1とみられる新種が発見された。
 * 論文要約
 ** MIT Press Journal Artificial Life
 ** PLOS ComBio
@@ -81,5 +89,3 @@ http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003901
 * Bookmark
 ** HIV-1について
 *** http://www.idimsut.jp/imsutid/imsutid02.htm
-* 論文
-** 
