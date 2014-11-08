@@ -1,0 +1,60 @@
+#+TITLE: 参考文献
+#+AUTHOR: Naoki Ueda
+#+OPTIONS: \n:t H:2 toc:t creator:nil num:nil author:nil email:nil timestamp:t
+#+LANGUAGE: ja
+#+LaTeX_CLASS: normal
+#+INFOJS_OPT: view:nil
+#+STARTUP: content
+#+HTML_HEAD: <style type="text/css">body {font-family:serif;font-size:0.6em;}</style>
+#+HTML_HEAD: <style type="text/css">body {padding-left: 30px;}</style>
+#+HTML_HEAD: <style type="text/css">.outline-3 {margin-top:30px;}</style>
+#+HTML_HEAD: <style type="text/css">h2 {border-left: 5px solid #000;padding:0px 10px;}</style>
+#+HTML_HEAD: <style type="text/css">h3 {margin-bottom:-6px;}</style>
+#+HTML_HEAD: <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ["\\(","\\)"]] } });</script>
+#+HTML_HEAD: <script type="text/javascript"src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+#+HTML_HEAD: <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
+* 参考文献
+** /書式: 論文のタイトル/
+*** /_記事へのリンク_/
+*** /コメントなど/
+**** 「 --- 」: 本文抜粋, 引用
+**** ' --- ' : 単語, キーワード
+** The Route of HIV Escape from Immune Response Targeting Multiple Sites Is Determined by the Cost-Benefit Tradeoff of Escape Mutations
+*** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003878
+** IDEPI: Rapid Prediction of HIV-1 Antibody Epitopes and Other Phenotypic Features from Sequence Data Using a Flexible Machine Learning Platform
+*** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003842
+*** 「治癒とワクチンが、HIV-1についての研究の最終的なゴールだが、依然、よく理解出来ていない。」
+** Estimating Costs and Benefits of CTL Escape Mutations in SIV/HIV Infection
+*** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.0020024
+** Modeling Viral Evolutionary Dynamics after Telaprevir-Based Treatment
+*** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003772
+*** 「テラプレビルを用いた治療でSBVに至らなかった場合、'telaprevir-resistant variant'が増える」？
+**** テラプレビル耐性ウイルス？
+** Telaprevir for Previously Treated Chronic HCV Infection
+*** http://www.nejm.org/doi/full/10.1056/NEJMoa0908014
+*** 'テラプレビル'
+**** プロテアーゼ阻害薬
+** Evolutionary Modeling of Rate Shifts Reveals Specificity Determinants in HIV-1 Subtypes
+*** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1000214
+*** 新しいベイシアン法を用いて、site-specific rate shiftsを特定する
+** An Evolutionary-Network Model Reveals Stratified Interactions in the V3 Loop of the HIV-1 Envelope
+*** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.0030231
+*** 'The third variable loop, V3, V3 loop'
+**** HIVの一部
+**** エンベロープの一部にあるV3によって、ヒトの免疫細胞に感染する
+***** http://en.wikipedia.org/wiki/V3_loop
+** Evolutionary Accessibility of Mutational Pathways <2011-08-18 Thu>
+*** http://www.ploscompbiol.org/article/info:doi/10.1371/journal.pcbi.1002134
+** Evolutionary Analysis of Human Immunodeficiency Virus Type 1 Therapies Based on Conditionally Replicating Vectors
+*** http://www.ploscompbiol.org/article/info:doi/10.1371/journal.pcbi.1002744
+*** モデル：'within-host co-evolutionary dynamics of HIV-1'
+** Evolution of Scaling Emergence in Large-Scale Spatial Epidemic Spreading
+*** http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0021197
+*** Zipf's law と Heaps' law について
+**** ジップの法則
+***** 「出現頻度がk 番目に大きい要素が全体に占める割合が1/k に比例するという経験則である。」
+****** http://ja.wikipedia.org/wiki/ジップの法則
+***** 経験則
+**** ヒープの法則？
+***** 文書の中の異なる単語の語数についての式
+***** 経験則
