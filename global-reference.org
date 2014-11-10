@@ -5,7 +5,7 @@
 #+LaTeX_CLASS: normal
 #+INFOJS_OPT: view:nil
 #+STARTUP: content
-#+HTML_HEAD: <style type="text/css">body {font-family:monospace;font-size:1em;}</style>
+#+HTML_HEAD: <style type="text/css">body {font-family:helvetica;font-size:0.7em;}</style>
 #+HTML_HEAD: <style type="text/css">body {padding-left: 30px;}</style>
 #+HTML_HEAD: <style type="text/css">.outline-3 {margin-top:30px;border-top:1px dotted #aaa;}</style>
 #+HTML_HEAD: <style type="text/css">h2 {border-left: 5px solid #000;padding:0px 10px;}</style>
@@ -62,12 +62,19 @@
 ** The Role of Compensatory Mutations in the Emergence of Drug Resistance
 *** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.0020137
 *** 'gonorrhea transmission dynamics'
+** An Evolutionary Model-Based Algorithm for Accurate Phylogenetic Breakpoint Mapping and Subtype Prediction in HIV-1
+*** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1000581
+*** 'SCUEAL': Subtype Classification Using Evolutionary ALgorithm
+** An HIV Epidemic Model Based on Viral Load Dynamics: Value in Assessing Empirical Trends in HIV Virulence and Community Viral Load <2014-06-19 Thu>
+*** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003673
+*** Evolutionary model based on HIV viral load dynamics
+**** HIVの毒性を評価するためのモデル??
 * COMMENT メモ
 ** ドーキンス的には、人間にとっての薬もミームか？
 ** 注目する内容
 *** 使用しているモデル
 *** 研究・論文の目的
-* 構成
+* COMMENT 構成
 ** Authors　著者
 ** Title　題名
 ** Keyword list　キーワード
