@@ -5,7 +5,7 @@
 #+LaTeX_CLASS: normal
 #+INFOJS_OPT: view:nil
 #+STARTUP: content
-#+HTML_HEAD: <style type="text/css">body {font-family:helvetica;font-size:0.7em;}</style>
+#+HTML_HEAD: <style type="text/css">body {font-family:verdana;font-size:0.6em;}</style>
 #+HTML_HEAD: <style type="text/css">body {padding-left: 30px;}</style>
 #+HTML_HEAD: <style type="text/css">.outline-3 {margin-top:30px;border-top:1px dotted #aaa;}</style>
 #+HTML_HEAD: <style type="text/css">h2 {border-left: 5px solid #000;padding:0px 10px;}</style>
@@ -44,7 +44,7 @@
 **** HIVの一部
 **** エンベロープの一部にあるV3によって、ヒトの免疫細胞に感染する
 ***** http://en.wikipedia.org/wiki/V3_loop
-** Evolutionary Accessibility of Mutational Pathways <2011-08-18 Thu>
+** <2011-08-18 Thu> Evolutionary Accessibility of Mutational Pathways
 *** http://www.ploscompbiol.org/article/info:doi/10.1371/journal.pcbi.1002134
 ** Evolutionary Analysis of Human Immunodeficiency Virus Type 1 Therapies Based on Conditionally Replicating Vectors
 *** http://www.ploscompbiol.org/article/info:doi/10.1371/journal.pcbi.1002744
@@ -65,10 +65,14 @@
 ** An Evolutionary Model-Based Algorithm for Accurate Phylogenetic Breakpoint Mapping and Subtype Prediction in HIV-1
 *** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1000581
 *** 'SCUEAL': Subtype Classification Using Evolutionary ALgorithm
-** An HIV Epidemic Model Based on Viral Load Dynamics: Value in Assessing Empirical Trends in HIV Virulence and Community Viral Load <2014-06-19 Thu>
+** <2014-06-19 Thu> An HIV Epidemic Model Based on Viral Load Dynamics: Value in Assessing Empirical Trends in HIV Virulence and Community Viral Load
 *** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003673
 *** Evolutionary model based on HIV viral load dynamics
 **** HIVの毒性を評価するためのモデル??
+** <2011-05-05 Thu> Modeling Evolutionary Dynamics of Epigenetic Mutations in Hierarchically Organized Tumors
+*** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1001132
+*** 'novel cellular Potts model'
+**** がん細胞の？？？によって引き起こされる悪性腫瘍の動きを明らかにする
 * COMMENT メモ
 ** ドーキンス的には、人間にとっての薬もミームか？
 ** 注目する内容
