@@ -14,12 +14,9 @@ Virus *Virus :: clone()
   return newv;
 }
 
-// int Virus :: getInfectionRate() {
-//   return V_INF_RATE;
-// }
-
 int Virus :: getInfectionRateForCell( Cell& cell ) {
-  int rate = 100 - getAdaptationRateForCell( cell );
+  // 100 - 細胞にとのハミング距離
+  int rate = 100 - getFitnessRateForCell( cell );
   return rate;
 }
 
@@ -27,10 +24,10 @@ int Virus :: getMutationRate() {
   return V_MUTATION_RATE;
 }
 
-int Virus :: getAdaptationRateForCell( Cell& cell ) {
+int Virus :: getFitnessRateForCell( Cell& cell ) {
   int rate = 0;
   // int ham_dis = minimumHammingDistanceFor( cell.getGene() );
-  int ham_dis = value();
+  int ham_dis = value();                         // つまり遺伝子コードの重み
   rate = (double)ham_dis / getLen() * 100;
 
   return rate;

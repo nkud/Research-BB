@@ -147,8 +147,8 @@ stat:
 	@$(CLRECHO)
 	@$(MKDIR) $(stat_dir)
 	@cd $(stat_dir); $(PY) ../script/stat.py
-	@cd $(stat_dir); $(PLOT) auto.plt 1>/dev/null 2>/dev/null
-	@cd $(stat_dir); $(PLOT) animation.plt 1>/dev/null 2>/dev/null
+	@cd $(stat_dir); $(PLOT) auto.plt 1>/dev/null
+	@cd $(stat_dir); $(PLOT) animation.plt 1>/dev/null
 	@$(PRINT) 'done'
 
 open:

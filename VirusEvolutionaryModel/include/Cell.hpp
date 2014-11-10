@@ -43,6 +43,8 @@ class Cell : public __Location, public __Life
   void reborn() { death_age_ = -1; }
   int getDeathAge() { return death_age_; }
 
+  VECTOR(std::string) presentAntigenStrings(); ///< 抗原提示を行う
+
  private:
   int max_virus_can_have_;                     ///< 最大感染ウイルス数
   VECTOR(Virus *) infected_virus_list_;        ///< 感染ウイルスリスト

@@ -1,15 +1,16 @@
 #+TITLE: 参考文献
 #+AUTHOR: Naoki Ueda
-#+OPTIONS: \n:t H:2 toc:t creator:nil num:nil author:nil email:nil timestamp:t
+#+OPTIONS: \n:nil H:2 toc:t creator:nil num:nil author:nil email:nil timestamp:t
 #+LANGUAGE: ja
 #+LaTeX_CLASS: normal
 #+INFOJS_OPT: view:nil
 #+STARTUP: content
-#+HTML_HEAD: <style type="text/css">body {font-family:serif;font-size:0.6em;}</style>
+#+HTML_HEAD: <style type="text/css">body {font-family:monospace;font-size:1em;}</style>
 #+HTML_HEAD: <style type="text/css">body {padding-left: 30px;}</style>
-#+HTML_HEAD: <style type="text/css">.outline-3 {margin-top:30px;}</style>
+#+HTML_HEAD: <style type="text/css">.outline-3 {margin-top:30px;border-top:1px dotted #aaa;}</style>
 #+HTML_HEAD: <style type="text/css">h2 {border-left: 5px solid #000;padding:0px 10px;}</style>
-#+HTML_HEAD: <style type="text/css">h3 {margin-bottom:-6px;}</style>
+#+HTML_HEAD: <style type="text/css">h3 {font-size:1em;margin-bottom:-10px;}</style>
+#+HTML_HEAD: <style type="text/css">li {margin: 3px;}</style>
 #+HTML_HEAD: <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ["\\(","\\)"]] } });</script>
 #+HTML_HEAD: <script type="text/javascript"src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 #+HTML_HEAD: <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
@@ -58,3 +59,23 @@
 **** ヒープの法則？
 ***** 文書の中の異なる単語の語数についての式
 ***** 経験則
+** The Role of Compensatory Mutations in the Emergence of Drug Resistance
+*** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.0020137
+*** 'gonorrhea transmission dynamics'
+* COMMENT メモ
+** ドーキンス的には、人間にとっての薬もミームか？
+** 注目する内容
+*** 使用しているモデル
+*** 研究・論文の目的
+* 構成
+** Authors　著者
+** Title　題名
+** Keyword list　キーワード
+** Abstract　抄録
+** Introduction　序文
+** Methods　方法
+** Results　結果
+** Discussion　考察
+** Acknowledgement　社寺
+** Reference　参考文献
+** Supplementary material　補足資料

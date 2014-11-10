@@ -16,6 +16,7 @@ class Gene
   ~Gene() { }
 
   bool isInclude( Gene& other );               ///< タグを含んでいるか評価
+  bool isIncludeString( std::string tag );
   bool hasEqualTagTo( Gene& other );           ///< タグが等しいか評価
 
   void initTagRandom();                        ///< タグをランダムに設定

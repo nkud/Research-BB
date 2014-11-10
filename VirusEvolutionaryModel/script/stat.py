@@ -3,6 +3,8 @@
 
 import plotfactory as pf
 import htmlfactory as hf
+import os
+import sys
 
 HOME_DIR = '~/workspace/AgentBasedEpidemicMode/VirusEvolutionaryModel'
 
@@ -21,7 +23,18 @@ def main():
     pfactory.setImage('IsIncubation', 'Term', 'Count', 'is-infection', (pf.TXT('../bin/isInfection'), 'count', 'w boxes'))
     pfactory.setImage('IsInfection', 'Term', 'Count', 'inf-human', (pf.TXT('../bin/inf-human'), 'count', 'w l'))
     pfactory.setImage('VirusSize', 'Term', 'Size', 'virus-size', (pf.TXT('../bin/virus-size'), 'size', 'w boxes'))
-    pf.plot_animation( 10000, 10 )
+
+
+
+# アニメーション
+    import glob
+    fl = glob.glob("../bin/*cell_vmap.txt*")
+    lastterm = 0
+    for f in fl:
+        fnum = int( (f.split('_')[0]).split('/')[-1] )
+        if lastterm < fnum:
+            lastterm = fnum
+    pf.plot_animation( lastterm, 10 )
 
     pfactory.generate()
 

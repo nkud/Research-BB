@@ -352,27 +352,51 @@ void run_host_pathogen_model( Human& human )
     if( cell.isInfected() )
     {                                            // 細胞が感染していて
       ASSERT( cell.isAlive() );                  // 細胞は生存しているはず
-      EACH( it_v, cell.getInfectedVirusList() )
-      {                                          // 各感染ウイルスのどれかに対して
-        // if( tcell.hasReceptorMatching( **it_v ) )
-        Virus& virus = **it_v;
-        if( virus.isInclude( tcell.getGene() ) ) // ウイルスがT細胞のタグを含んでいれば
-        {                                        // 受容体を所持していれば
-          if( probability( 100 * cell.calcDensityOfVirusSize() ) )
-          {                                      // 細胞内のウイルス密度に比例して
-            cell.died();                         // 殺傷される
-            // cell.clearInfectedViruses();         // ウイルスを除去して
-            FOR( i, TCELL_CLONE_SIZE ) {         // T細胞のクローン数だけ
-              Tcell& newtcell = tcell.clone();     // クローンを作成し
-              if( probability( TCELL_MEMORY_RATE ) ) {  // 記憶率の確率で
-                newtcell.becomeMemoryTcell();           // そのクローンをメモリーT細胞にする
-              }
-              new_tcell.push_back( &newtcell ); // T細胞を増やす
+
+      VECTOR(std::string) epitopes = cell.presentAntigenStrings(); // 細胞による抗原提示
+      EACH( it_tag, epitopes )
+      {
+        std::string& tag = *it_tag;
+        if ( tag.find(tcell.getGene().getTagString()) != std::string::npos ) // T細胞の遺伝子とエピトープが一致すれば
+        {
+          if( probability( TCELL_MEMORY_RATE ) )
+          {
+            tcell.becomeMemoryTcell();
+          }
+          if( probability(cell.calcDensityOfVirusSize() * 100))
+          {
+            cell.died();
+            FOR( i, TCELL_CLONE_SIZE )
+            {
+              Tcell& newtcell = tcell.clone();
+              new_tcell.push_back( &newtcell );
             }
             break;
           }
         }
       }
+
+      // EACH( it_v, cell.getInfectedVirusList() )
+      // {                                          // 各感染ウイルスのどれかに対して
+      //   // if( tcell.hasReceptorMatching( **it_v ) )
+      //   Virus& virus = **it_v;
+      //   if( virus.isInclude( tcell.getGene() ) ) // ウイルスがT細胞のタグを含んでいれば
+      //   {                                        // 受容体を所持していれば
+      //     if( probability( 100 * cell.calcDensityOfVirusSize() ) )
+      //     {                                      // 細胞内のウイルス密度に比例して
+      //       cell.died();                         // 殺傷される
+      //       // cell.clearInfectedViruses();         // ウイルスを除去して
+      //       FOR( i, TCELL_CLONE_SIZE ) {         // T細胞のクローン数だけ
+      //         Tcell& newtcell = tcell.clone();     // クローンを作成し
+      //         if( probability( TCELL_MEMORY_RATE ) ) {  // 記憶率の確率で
+      //           newtcell.becomeMemoryTcell();           // そのクローンをメモリーT細胞にする
+      //         }
+      //         new_tcell.push_back( &newtcell ); // T細胞を増やす
+      //       }
+      //       break;
+      //     }
+      //   }
+      // }
     }
   }
   EACH( it_tcell, new_tcell ) {                  // 新しいT細胞を
