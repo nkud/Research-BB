@@ -1,29 +1,47 @@
 #+TITLE: 参考文献
 #+AUTHOR: Naoki Ueda
-#+OPTIONS: \n:nil H:2 toc:t creator:nil num:nil author:nil email:nil timestamp:t
+#+OPTIONS: \n:t H:2 toc:t creator:nil num:nil author:nil email:nil timestamp:t pri:t ':t
 #+LANGUAGE: ja
 #+LaTeX_CLASS: normal
 #+INFOJS_OPT: view:nil
 #+STARTUP: content
-#+HTML_HEAD: <style type="text/css">body {font-family:verdana;font-size:0.6em;}</style>
-#+HTML_HEAD: <style type="text/css">body {padding-left: 30px;}</style>
-#+HTML_HEAD: <style type="text/css">.outline-3 {margin-top:30px;border-top:1px dotted #aaa;}</style>
-#+HTML_HEAD: <style type="text/css">h2 {border-left: 5px solid #000;padding:0px 10px;}</style>
-#+HTML_HEAD: <style type="text/css">h3 {font-size:1em;margin-bottom:-10px;}</style>
-#+HTML_HEAD: <style type="text/css">li {margin: 3px;}</style>
-#+HTML_HEAD: <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ["\\(","\\)"]] } });</script>
-#+HTML_HEAD: <script type="text/javascript"src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
-#+HTML_HEAD: <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
+#+LINK_UP:
+#+STYLE: <style type="text/css">body {font-family:verdana;font-size:0.6em;}</style>
+#+STYLE: <style type="text/css">body {padding-left: 30px;}</style>
+#+STYLE: <style type="text/css">.outline-3 {margin-top:30px;border-top:1px dotted #aaa;}</style>
+#+STYLE: <style type="text/css">h2 {border-left: 1em solid #000;padding:0px 10px;margin-top:50px;}</style>
+#+STYLE: <style type="text/css">h3 {font-size:1em;margin-bottom:-10px;}</style>
+#+STYLE: <style type="text/css">li {margin: 3px;}</style>
+#+STYLE: <style type="text/css">.outline-3 a {color:#ccc;}</style>
+#+STYLE: <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ["\\(","\\)"]] } });</script>
+#+STYLE: <script type="text/javascript"src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+#+STYLE: <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
+#+HTML_LINK_HOME:
+#+HTML_LINK_UP: global-reference.html
 * 参考文献
 ** /書式: 論文のタイトル/
 *** /_記事へのリンク_/
 *** /コメントなど/
 **** 「 --- 」: 本文抜粋, 引用
 **** ' --- ' : 単語, キーワード
-** The Route of HIV Escape from Immune Response Targeting Multiple Sites Is Determined by the Cost-Benefit Tradeoff of Escape Mutations
-*** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003878
+** [#A] <2015-10-30 Fri> The Route of HIV Escape from Immune Response Targeting Multiple Sites Is Determined by the Cost-Benefit Tradeoff of Escape Mutations
+Rebecca Batorsky, Rinat A. Sergeev, Igor M. Rouzine
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003878
+*** HIVのモデルを使用
+**** 目的
+***** 与えられた抗原エスケープが起きるかどうか
+***** 人口の中で残るかどうか
+***** 突然変異がCTLの反応にどういった影響を及ぼすのか
+*** model includes _target cells_, _infected cells_ and _multiple CTL clones_
+*** Reference:
+**** Control of Viremia in Simian Immunodeficiency Virus Infection by CD8+ Lymphocytes
+http://www.sciencemag.org/content/283/5403/857.short
+**** Dramatic Rise in Plasma Viremia after CD8+ T Cell Depletion in Simian Immunodeficiency Virus–infected Macaques
+http://jem.rupress.org/content/189/6/991
+**** [#A] Anti-Immunology: Evasion of the Host Immune System by Bacterial and Viral Pathogens
+http://www.sciencedirect.com/science/article/pii/S0092867406001322
 ** IDEPI: Rapid Prediction of HIV-1 Antibody Epitopes and Other Phenotypic Features from Sequence Data Using a Flexible Machine Learning Platform
-*** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003842
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003842
 *** 「治癒とワクチンが、HIV-1についての研究の最終的なゴールだが、依然、よく理解出来ていない。」
 ** Estimating Costs and Benefits of CTL Escape Mutations in SIV/HIV Infection
 *** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.0020024
@@ -35,7 +53,7 @@
 *** http://www.nejm.org/doi/full/10.1056/NEJMoa0908014
 *** 'テラプレビル'
 **** プロテアーゼ阻害薬
-** Evolutionary Modeling of Rate Shifts Reveals Specificity Determinants in HIV-1 Subtypes
+** Evolutionary Modeling of Rate Shifts Reveals Specificity Determinants in HIV-1 Subtypese
 *** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1000214
 *** 新しいベイシアン法を用いて、site-specific rate shiftsを特定する
 ** An Evolutionary-Network Model Reveals Stratified Interactions in the V3 Loop of the HIV-1 Envelope
@@ -73,6 +91,16 @@
 *** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1001132
 *** 'novel cellular Potts model'
 **** がん細胞の？？？によって引き起こされる悪性腫瘍の動きを明らかにする
+** <2007-02-01 Thu> An Immune Algorithm for Protein Structure Prediction on Lattice Models
+*** http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4079612
+** Analysis of an Immune Algorithm for Protein Structure Prediction
+** A New Genetic Algorithm for Simplified Protein Structure Prediction
+** Estimate of effective recombination rate and average selection coefficient for HIV in chronic infection
+Rebecca Batorskya, Mary F. Kearneyb, Sarah E. Palmerb, Frank Maldarellib, Igor M. Rouzinec,1, and John M. Coffin
+*** http://www.pnas.org/content/108/14/5661.short
+* その他
+** Table of Contents: PLOS Computational Biology: Ten Simple Rules
+*** http://www.ploscollections.org/article/browse/issue/info%3Adoi%2F10.1371%2Fissue.pcol.v03.i01
 * COMMENT メモ
 ** ドーキンス的には、人間にとっての薬もミームか？
 ** 注目する内容
