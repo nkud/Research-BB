@@ -98,6 +98,9 @@ http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003842
 ** Estimate of effective recombination rate and average selection coefficient for HIV in chronic infection
 Rebecca Batorskya, Mary F. Kearneyb, Sarah E. Palmerb, Frank Maldarellib, Igor M. Rouzinec,1, and John M. Coffin
 *** http://www.pnas.org/content/108/14/5661.short
+** Anti-Immunology: Evasion of the Host Immune System by Bacterial and Viral Pathogens
+http://www.sciencedirect.com/science/article/pii/S0092867406001322
+*** あんまり関係ないかも
 * その他
 ** Table of Contents: PLOS Computational Biology: Ten Simple Rules
 *** http://www.ploscollections.org/article/browse/issue/info%3Adoi%2F10.1371%2Fissue.pcol.v03.i01
