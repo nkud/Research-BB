@@ -1,30 +1,32 @@
 #+TITLE: 参考文献
 #+AUTHOR: Naoki Ueda
-#+OPTIONS: \n:t H:2 toc:t creator:nil num:nil author:nil email:nil timestamp:t pri:t ':t
+#+OPTIONS: \n:t H:2 toc:t creator:nil num:nil author:nil email:nil timestamp:t
+#+OPTIONS: pri:t
 #+LANGUAGE: ja
 #+LaTeX_CLASS: normal
 #+INFOJS_OPT: view:nil
 #+STARTUP: content
 #+LINK_UP:
-#+STYLE: <style type="text/css">body {font-family:verdana;font-size:0.6em;}</style>
-#+STYLE: <style type="text/css">body {padding-left: 30px;}</style>
-#+STYLE: <style type="text/css">.outline-3 {margin-top:30px;border-top:1px dotted #aaa;}</style>
-#+STYLE: <style type="text/css">h2 {border-left: 1em solid #000;padding:0px 10px;margin-top:50px;}</style>
-#+STYLE: <style type="text/css">h3 {font-size:1em;margin-bottom:-10px;}</style>
-#+STYLE: <style type="text/css">li {margin: 3px;}</style>
-#+STYLE: <style type="text/css">.outline-3 a {color:#ccc;}</style>
-#+STYLE: <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ["\\(","\\)"]] } });</script>
-#+STYLE: <script type="text/javascript"src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
-#+STYLE: <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
+#+HTML_HEAD: <style type="text/css">body {font-family:verdana;font-size:0.6em;}</style>
+#+HTML_HEAD: <style type="text/css">body {padding-left: 30px;}</style>
+#+HTML_HEAD: <style type="text/css">.outline-3 {margin-top:30px;border-top:1px dotted #aaa;}</style>
+#+HTML_HEAD: <style type="text/css">h2 {border-left: 1em solid #000;padding:0px 10px;margin-top:50px;}</style>
+#+HTML_HEAD: <style type="text/css">h3 {font-size:1em;margin-bottom:-10px;}</style>
+#+HTML_HEAD: <style type="text/css">li {margin: 3px;}</style>
+#+HTML_HEAD: <style type="text/css">.outline-3 a {color:#ccc;}</style>
+#+HTML_HEAD: <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ["\\(","\\)"]] } });</script>
+#+HTML_HEAD: <script type="text/javascript"src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+#+HTML_HEAD: <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
 #+HTML_LINK_HOME:
 #+HTML_LINK_UP: global-reference.html
+#+TODO: ★ ★★ ★★★ | DONE
 * 参考文献
 ** /書式: 論文のタイトル/
 *** /_記事へのリンク_/
 *** /コメントなど/
 **** 「 --- 」: 本文抜粋, 引用
 **** ' --- ' : 単語, キーワード
-** [#A] <2015-10-30 Fri> The Route of HIV Escape from Immune Response Targeting Multiple Sites Is Determined by the Cost-Benefit Tradeoff of Escape Mutations
+** ★★★ <2015-10-30 Fri> The Route of HIV Escape from Immune Response Targeting Multiple Sites Is Determined by the Cost-Benefit Tradeoff of Escape Mutations
 Rebecca Batorsky, Rinat A. Sergeev, Igor M. Rouzine
 http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003878
 *** HIVのモデルを使用
@@ -44,7 +46,7 @@ http://www.sciencedirect.com/science/article/pii/S0092867406001322
 http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003842
 *** 「治癒とワクチンが、HIV-1についての研究の最終的なゴールだが、依然、よく理解出来ていない。」
 ** Estimating Costs and Benefits of CTL Escape Mutations in SIV/HIV Infection
-*** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.0020024
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.0020024
 ** Modeling Viral Evolutionary Dynamics after Telaprevir-Based Treatment
 *** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003772
 *** 「テラプレビルを用いた治療でSBVに至らなかった場合、'telaprevir-resistant variant'が増える」？
@@ -95,9 +97,10 @@ http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003842
 *** http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4079612
 ** Analysis of an Immune Algorithm for Protein Structure Prediction
 ** A New Genetic Algorithm for Simplified Protein Structure Prediction
-** Estimate of effective recombination rate and average selection coefficient for HIV in chronic infection
+** ★★ <2011-04-05 Tue> Estimate of effective recombination rate and average selection coefficient for HIV in chronic infection
 Rebecca Batorskya, Mary F. Kearneyb, Sarah E. Palmerb, Frank Maldarellib, Igor M. Rouzinec,1, and John M. Coffin
-*** http://www.pnas.org/content/108/14/5661.short
+http://www.pnas.org/content/108/14/5661.short
+*** モンテカルロ法
 * その他
 ** Table of Contents: PLOS Computational Biology: Ten Simple Rules
 *** http://www.ploscollections.org/article/browse/issue/info%3Adoi%2F10.1371%2Fissue.pcol.v03.i01
