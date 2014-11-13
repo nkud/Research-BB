@@ -29,13 +29,24 @@
 #+HTML_HEAD: <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
 #+HTML_LINK_HOME:
 #+HTML_LINK_UP: global-reference.html
-#+TODO: ★ ★★ ★★★ | DONE
+#+TODO: ★ ★★ ★★★ | ☆
 * 参考文献
 ** /書式: 論文のタイトル/
 *** /_記事へのリンク_/
 *** /コメントなど/
 **** 「 --- 」: 本文抜粋, 引用
 **** ' --- ' : 単語, キーワード
+** ★★★ <2012-10-25 木> Modeling Protective Anti-Tumor Immunity via Preventative Cancer Vaccines Using a Hybrid Agent-based and Delay Differential Equation Approach
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1002742
+*** ABMとDDEs(delay differential equations)を用いて、hybrid ABM-DDE systemとしている。
+*** 目的：がんに対して、初期の腫瘍を排除するためにCTLを刺激するワクチンを発展させようとするこれからの戦略は果たして妥当か、もしそうなら、どれだけの抗癌CTLが必要になるのかを評価するため。
+** Core Structure of gp41 from the HIV Envelope Glycoprotein
+http://www.sciencedirect.com/science/article/pii/S0092867400802056#
+** Population Genetics Study of Isoniazid Resistance Mutations and Evolution of Multidrug-Resistant Mycobacterium tuberculosis
+http://aac.asm.org/content/50/8/2640.short
+** Evolution of digital organisms at high mutation rates leads to survival of the attest
+http://www.nature.com/nature/journal/v412/n6844/abs/412331a0.html
+*** 進化：変異率の高いデジタル生物を進化させると適応度のピーク状態が最も長く持続するものが生き残る
 ** ★★★ <2015-10-30 Fri> The Route of HIV Escape from Immune Response Targeting Multiple Sites Is Determined by the Cost-Benefit Tradeoff of Escape Mutations
 Rebecca Batorsky, Rinat A. Sergeev, Igor M. Rouzine
 http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003878
@@ -114,6 +125,7 @@ http://www.pnas.org/content/108/14/5661.short
 ** Anti-Immunology: Evasion of the Host Immune System by Bacterial and Viral Pathogens
 http://www.sciencedirect.com/science/article/pii/S0092867406001322
 *** あんまり関係ないかも
+* MIT-Artificial Life
 * その他
 ** Table of Contents: PLOS Computational Biology: Ten Simple Rules
 *** http://www.ploscollections.org/article/browse/issue/info%3Adoi%2F10.1371%2Fissue.pcol.v03.i01
