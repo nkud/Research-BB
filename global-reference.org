@@ -7,6 +7,16 @@
 #+INFOJS_OPT: view:nil
 #+STARTUP: content
 #+LINK_UP:
+#+STYLE: <style type="text/css">body {font-family:verdana;font-size:0.6em;}</style>
+#+STYLE: <style type="text/css">body {padding-left: 30px;}</style>
+#+STYLE: <style type="text/css">.outline-3 {margin-top:30px;border-top:1px dotted #aaa;}</style>
+#+STYLE: <style type="text/css">h2 {border-left: 1em solid #000;padding:0px 10px;margin-top:50px;}</style>
+#+STYLE: <style type="text/css">h3 {font-size:1em;margin-bottom:-10px;}</style>
+#+STYLE: <style type="text/css">li {margin: 3px;}</style>
+#+STYLE: <style type="text/css">.outline-3 a {color:#ccc;}</style>
+#+STYLE: <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ["\\(","\\)"]] } });</script>
+#+STYLE: <script type="text/javascript"src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+#+STYLE: <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
 #+HTML_HEAD: <style type="text/css">body {font-family:verdana;font-size:0.6em;}</style>
 #+HTML_HEAD: <style type="text/css">body {padding-left: 30px;}</style>
 #+HTML_HEAD: <style type="text/css">.outline-3 {margin-top:30px;border-top:1px dotted #aaa;}</style>
