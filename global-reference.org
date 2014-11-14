@@ -29,19 +29,26 @@
 #+HTML_HEAD: <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
 #+HTML_LINK_HOME:
 #+HTML_LINK_UP: global-reference.html
-#+TODO: ★ ★★ ★★★ | ☆
+#+TODO: ★ ★★ ★★★ ☆ | ✔ 
 * 参考文献
 ** /書式: 論文のタイトル/
 *** /_記事へのリンク_/
 *** /コメントなど/
 **** 「 --- 」: 本文抜粋, 引用
 **** ' --- ' : 単語, キーワード
+** ☆ Little Italy: An Agent-Based Approach to the Estimation of Contact Patterns- Fitting Predicted Matrices to Serological Data
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1001021
+*** 実際のイタリアのデータを使用して、モデルを作成している。
+** ★★ Agent-Based Model of Therapeutic Adipose-Derived Stromal Cell Trafficking during Ischemia Predicts Ability To Roll on P-Selectin
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1000294
+** ★ <2008-04-01 火> Cell-free HTLV-1 infects dendritic cells leading to transmission and transformation of CD4(+) T cells
+http://www.ncbi.nlm.nih.gov/pubmed/18376405
 ** ★★★ <2012-10-25 木> Modeling Protective Anti-Tumor Immunity via Preventative Cancer Vaccines Using a Hybrid Agent-based and Delay Differential Equation Approach
 http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1002742
 *** ABMとDDEs(delay differential equations)を用いて、hybrid ABM-DDE systemとしている。
-*** 目的：がんに対して、初期の腫瘍を排除するためにCTLを刺激するワクチンを発展させようとするこれからの戦略は果たして妥当か、もしそうなら、どれだけの抗癌CTLが必要になるのかを評価するため。
+*** 目的：がんに対するこれからの戦略は妥当か。戦略とは、初期の腫瘍を排除するためにCTLを刺激するワクチンを発展させるというもの。もし妥当なら、どれだけの抗癌CTLが必要になるのかを評価するため。
 ** Core Structure of gp41 from the HIV Envelope Glycoprotein
-http://www.sciencedirect.com/science/article/pii/S0092867400802056#
+http://www.sciencedirect.com/science/article/pii/S0092867400802056
 ** Population Genetics Study of Isoniazid Resistance Mutations and Evolution of Multidrug-Resistant Mycobacterium tuberculosis
 http://aac.asm.org/content/50/8/2640.short
 ** Evolution of digital organisms at high mutation rates leads to survival of the attest
@@ -100,13 +107,13 @@ http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.0020024
 **** ヒープの法則？
 ***** 文書の中の異なる単語の語数についての式
 ***** 経験則
-** The Role of Compensatory Mutations in the Emergence of Drug Resistance
+** ★★★ <2006-10-01 日> The Role of Compensatory Mutations in the Emergence of Drug Resistance
 *** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.0020137
 *** 'gonorrhea transmission dynamics'
-** An Evolutionary Model-Based Algorithm for Accurate Phylogenetic Breakpoint Mapping and Subtype Prediction in HIV-1
+** ★★ An Evolutionary Model-Based Algorithm for Accurate Phylogenetic Breakpoint Mapping and Subtype Prediction in HIV-1
 *** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1000581
 *** 'SCUEAL': Subtype Classification Using Evolutionary ALgorithm
-** <2014-06-19 Thu> An HIV Epidemic Model Based on Viral Load Dynamics: Value in Assessing Empirical Trends in HIV Virulence and Community Viral Load
+** ★★★ <2014-06-19 Thu> An HIV Epidemic Model Based on Viral Load Dynamics: Value in Assessing Empirical Trends in HIV Virulence and Community Viral Load
 *** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003673
 *** Evolutionary model based on HIV viral load dynamics
 **** HIVの毒性を評価するためのモデル??
