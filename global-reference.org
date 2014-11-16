@@ -5,8 +5,9 @@
 #+LANGUAGE: ja
 #+LaTeX_CLASS: normal
 #+INFOJS_OPT: view:nil
-#+STARTUP: content
+#+STARTUP: overview
 #+LINK_UP:
+#+TOC: tables
 #+HTML_HEAD: <style type="text/css">body {font-family:verdana;font-size:0.6em;}</style>
 #+HTML_HEAD: <style type="text/css">body {padding-left: 30px;}</style>
 #+HTML_HEAD: <style type="text/css">.outline-3 {margin-top:30px;border-top:1px dotted #aaa;}</style>
@@ -21,11 +22,15 @@
 #+HTML_LINK_UP: global-reference.html
 #+TODO: ★ ★★ ★★★ | DONE
 * 参考文献
-** /書式: 論文のタイトル/
-*** /_記事へのリンク_/
-*** /コメントなど/
+:PROPERTIES:
+:VISIBILITY: children
+:END:
+** (論文のタイトル)
+*** _記事へのリンク_
+*** コメントなど
 **** 「 --- 」: 本文抜粋, 引用
 **** ' --- ' : 単語, キーワード
+*** ★ : 注目度
 ** ★★★ <2015-10-30 Fri> The Route of HIV Escape from Immune Response Targeting Multiple Sites Is Determined by the Cost-Benefit Tradeoff of Escape Mutations
 Rebecca Batorsky, Rinat A. Sergeev, Igor M. Rouzine
 http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003878
