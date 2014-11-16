@@ -8,6 +8,16 @@
 #+STARTUP: overview
 #+LINK_UP:
 #+TOC: tables
+#+STYLE: <style type="text/css">body {font-family:verdana;font-size:0.6em;}</style>
+#+STYLE: <style type="text/css">body {padding-left: 30px;}</style>
+#+STYLE: <style type="text/css">.outline-3 {margin-top:30px;border-top:1px dotted #aaa;}</style>
+#+STYLE: <style type="text/css">h2 {border-left: 1em solid #000;padding:0px 10px;margin-top:50px;}</style>
+#+STYLE: <style type="text/css">h3 {font-size:1em;margin-bottom:-10px;}</style>
+#+STYLE: <style type="text/css">li {margin: 3px;}</style>
+#+STYLE: <style type="text/css">.outline-3 a {color:#ccc;}</style>
+#+STYLE: <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ["\\(","\\)"]] } });</script>
+#+STYLE: <script type="text/javascript"src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+#+STYLE: <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
 #+HTML_HEAD: <style type="text/css">body {font-family:verdana;font-size:0.6em;}</style>
 #+HTML_HEAD: <style type="text/css">body {padding-left: 30px;}</style>
 #+HTML_HEAD: <style type="text/css">.outline-3 {margin-top:30px;border-top:1px dotted #aaa;}</style>
@@ -20,7 +30,7 @@
 #+HTML_HEAD: <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
 #+HTML_LINK_HOME:
 #+HTML_LINK_UP: global-reference.html
-#+TODO: ★ ★★ ★★★ | DONE
+#+TODO: ★ ★★ ★★★ ☆ | ✔ 
 * 参考文献
 :PROPERTIES:
 :VISIBILITY: children
@@ -31,6 +41,24 @@
 **** 「 --- 」: 本文抜粋, 引用
 **** ' --- ' : 単語, キーワード
 *** ★ : 注目度
+** ☆ Little Italy: An Agent-Based Approach to the Estimation of Contact Patterns- Fitting Predicted Matrices to Serological Data
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1001021
+*** 実際のイタリアのデータを使用して、モデルを作成している。
+** ★★ Agent-Based Model of Therapeutic Adipose-Derived Stromal Cell Trafficking during Ischemia Predicts Ability To Roll on P-Selectin
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1000294
+** ★ <2008-04-01 火> Cell-free HTLV-1 infects dendritic cells leading to transmission and transformation of CD4(+) T cells
+http://www.ncbi.nlm.nih.gov/pubmed/18376405
+** ★★★ <2012-10-25 木> Modeling Protective Anti-Tumor Immunity via Preventative Cancer Vaccines Using a Hybrid Agent-based and Delay Differential Equation Approach
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1002742
+*** ABMとDDEs(delay differential equations)を用いて、hybrid ABM-DDE systemとしている。
+*** 目的：がんに対するこれからの戦略は妥当か。戦略とは、初期の腫瘍を排除するためにCTLを刺激するワクチンを発展させるというもの。もし妥当なら、どれだけの抗癌CTLが必要になるのかを評価するため。
+** Core Structure of gp41 from the HIV Envelope Glycoprotein
+http://www.sciencedirect.com/science/article/pii/S0092867400802056
+** Population Genetics Study of Isoniazid Resistance Mutations and Evolution of Multidrug-Resistant Mycobacterium tuberculosis
+http://aac.asm.org/content/50/8/2640.short
+** Evolution of digital organisms at high mutation rates leads to survival of the attest
+http://www.nature.com/nature/journal/v412/n6844/abs/412331a0.html
+*** 進化：変異率の高いデジタル生物を進化させると適応度のピーク状態が最も長く持続するものが生き残る
 ** ★★★ <2015-10-30 Fri> The Route of HIV Escape from Immune Response Targeting Multiple Sites Is Determined by the Cost-Benefit Tradeoff of Escape Mutations
 Rebecca Batorsky, Rinat A. Sergeev, Igor M. Rouzine
 http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003878
@@ -84,13 +112,13 @@ http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.0020024
 **** ヒープの法則？
 ***** 文書の中の異なる単語の語数についての式
 ***** 経験則
-** The Role of Compensatory Mutations in the Emergence of Drug Resistance
+** ★★★ <2006-10-01 日> The Role of Compensatory Mutations in the Emergence of Drug Resistance
 *** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.0020137
 *** 'gonorrhea transmission dynamics'
-** An Evolutionary Model-Based Algorithm for Accurate Phylogenetic Breakpoint Mapping and Subtype Prediction in HIV-1
+** ★★ An Evolutionary Model-Based Algorithm for Accurate Phylogenetic Breakpoint Mapping and Subtype Prediction in HIV-1
 *** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1000581
 *** 'SCUEAL': Subtype Classification Using Evolutionary ALgorithm
-** <2014-06-19 Thu> An HIV Epidemic Model Based on Viral Load Dynamics: Value in Assessing Empirical Trends in HIV Virulence and Community Viral Load
+** ★★★ <2014-06-19 Thu> An HIV Epidemic Model Based on Viral Load Dynamics: Value in Assessing Empirical Trends in HIV Virulence and Community Viral Load
 *** http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003673
 *** Evolutionary model based on HIV viral load dynamics
 **** HIVの毒性を評価するためのモデル??
@@ -109,6 +137,7 @@ http://www.pnas.org/content/108/14/5661.short
 ** Anti-Immunology: Evasion of the Host Immune System by Bacterial and Viral Pathogens
 http://www.sciencedirect.com/science/article/pii/S0092867406001322
 *** あんまり関係ないかも
+* MIT-Artificial Life
 * その他
 ** Table of Contents: PLOS Computational Biology: Ten Simple Rules
 *** http://www.ploscollections.org/article/browse/issue/info%3Adoi%2F10.1371%2Fissue.pcol.v03.i01
