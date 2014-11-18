@@ -30,7 +30,7 @@
 #+HTML_HEAD: <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
 #+HTML_LINK_HOME:
 #+HTML_LINK_UP: global-reference.html
-#+TODO: ★ ★★ ★★★ ☆ | ✔ 
+#+TODO: ★ ★★ ★★★ ☆ | ×
 * 参考文献
 :PROPERTIES:
 :VISIBILITY: children
@@ -41,6 +41,15 @@
 **** 「 --- 」: 本文抜粋, 引用
 **** ' --- ' : 単語, キーワード
 *** ★ : 注目度
+** ★★★ Viral diversity limits immune diversity in asymptomatic phase of HIV infection
+http://www.ncbi.nlm.nih.gov/pubmed/18342352
+*** HIVの高原エスケープによる多様性の閾値について。この閾値を超えると、CTLが制御できなくなる。
+** Demographic modeling of transient amplifying cell population growth
+http://www.ncbi.nlm.nih.gov/pubmed/24245725
+** × Population genetics study of isoniazid resistance mutations and evolution of multidrug-resistant Mycobacterium tuberculosis.
+http://www.ncbi.nlm.nih.gov/pubmed/16870753
+*** イソニアジド、結核に対する薬として使用されるが、急速に耐性菌を出現させる。これの信ぴょう性のために？実験している。
+*** あんまり関係ないかも。
 ** ☆ Little Italy: An Agent-Based Approach to the Estimation of Contact Patterns- Fitting Predicted Matrices to Serological Data
 http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1001021
 *** 実際のイタリアのデータを使用して、モデルを作成している。
