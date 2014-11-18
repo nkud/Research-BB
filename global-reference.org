@@ -30,7 +30,7 @@
 #+HTML_HEAD: <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
 #+HTML_LINK_HOME:
 #+HTML_LINK_UP: global-reference.html
-#+TODO: ★ ★★ ★★★ ☆ | ×
+#+TODO: 未読 ★ ★★ ★★★ ☆ | ×
 * 参考文献
 :PROPERTIES:
 :VISIBILITY: children
@@ -41,6 +41,46 @@
 **** 「 --- 」: 本文抜粋, 引用
 **** ' --- ' : 単語, キーワード
 *** ★ : 注目度
+** 表記・記号
+*** 未読 未読
+*** ★ 注目度：小
+*** ★★ 注目度：中
+*** ★★★ 注目度：大
+*** ☆ 関係ないけど面白そう
+*** × 関係なし
+** 未読 Quantification of HTLV-1 Clonality and TCR Diversity
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003646
+** 未読 Coping with Viral Diversity in HIV Vaccine Design
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.0030075
+** 未読 Viral Phylodynamics
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1002947
+** 未読 Integrating Phylodynamics and Epidemiology to Estimate Transmission Diversity in Viral Epidemics
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1002876
+** 未読 Viral Population Estimation Using Pyrosequencing
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1000074
+** 未読 Automated Analysis of a Diverse Synapse Population
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1002976
+** 未読 Viral Quasispecies Assembly via Maximal Clique Enumeration
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003515
+** 未読 Viral Capsid Proteins Are Segregated in Structural Fold Space
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1002905
+** 未読 Sensitive Detection of Viral Transcripts in Human Tumor Transcriptomes
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003228
+** 未読 Rates of CTL Killing in Persistent Viral Infection In Vivo
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003534
+** 未読 An HIV Epidemic Model Based on Viral Load Dynamics: Value in Assessing Empirical Trends in HIV Virulence and Community Viral Load
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003673
+** 未読 Antigenic Diversity, Transmission Mechanisms, and the Evolution of Pathogens
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1000536
+** 未読 Persisting Viral Sequences Shape Microbial CRISPR-based Immunity
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1002475
+** 未読 Quantification of HTLV-1 Clonality and TCR Diversity
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003646
+** 未読 Viral Proteins Acquired from a Host Converge to Simplified Domain Architectures
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1002364
+** × Coping with Viral Diversity in HIV Vaccine Design: A Response to Nickle et al.
+http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.0040015
+*** 自分たちの前のモデルと比べてるだけ
 ** ★★★ Viral diversity limits immune diversity in asymptomatic phase of HIV infection
 http://www.ncbi.nlm.nih.gov/pubmed/18342352
 *** HIVの高原エスケープによる多様性の閾値について。この閾値を超えると、CTLが制御できなくなる。
