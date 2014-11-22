@@ -48,8 +48,9 @@
 *** ★★★ 注目度：大
 *** ☆ 関係ないけど面白そう
 *** × 関係なし
-** 未読 Quantification of HTLV-1 Clonality and TCR Diversity
+** ★★ Quantification of HTLV-1 Clonality and TCR Diversity
 http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003646
+*** TCRの種類などを推定できるモデルを構築するのが目的
 ** 未読 Coping with Viral Diversity in HIV Vaccine Design
 http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.0030075
 ** 未読 Viral Phylodynamics
