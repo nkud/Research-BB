@@ -27,3 +27,5 @@ __*
 !.gitignore
 *.html
 .#*
+
+*.tex
