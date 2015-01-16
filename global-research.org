@@ -5,6 +5,7 @@
 #+LaTeX_CLASS: normal
 #+STARTUP: content
 #+HTML_HEAD: <style type="text/css">body {font-family:"helvetica";font-size:0.7em;}</style>
+#+STYLE: <style type="text/css">body {font-family:"helvetica";font-size:0.7em;}</style>
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="report/report.css" />
 * ノート
 ** T細胞
