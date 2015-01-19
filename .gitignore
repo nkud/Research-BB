@@ -29,3 +29,7 @@ __*
 .#*
 
 *.tex
+*.aux
+*.bbl
+*.fdb_latexmk
+*.log
