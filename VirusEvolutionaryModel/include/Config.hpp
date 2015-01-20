@@ -9,11 +9,11 @@
 #define HUMAN_LAND_WIDTH               20        ///< ヒト土地ヨコ white
 #define HUMAN_LAND_HEIGHT              20        ///< ヒト土地タテ white
 #define H_SYMPTOMATIC_THRESHOLD        60        ///< 発症閾値 white
-#define CELL_MAX_VIRUS_CAN_HAVE        10        ///< 最大保持ウイルス数 gray
+#define CELL_MAX_VIRUS_CAN_HAVE        100       ///< 最大保持ウイルス数 gray
 #define CELL_LAND_WIDTH                100       ///< 細胞土地ヨコ gray
 #define CELL_LAND_HEIGHT               100       ///< 細胞土地タテ gray
 #define CELL_REPRODUCTIVE_SPAN         0         ///< 細胞の再生産期間 gray
-#define TCELL_LEN                      10        ///< T細胞遺伝子長 yellow
+#define TCELL_LEN                      6         ///< T細胞遺伝子長 yellow
 #define TCELL_MINIMUM_SIZE             100       ///< 最小T細胞数 yellow
 #define TCELL_LIFESPAN                 20        ///< T細胞寿命 yellow
 #define TCELL_MEMORY_RATE              2         ///< 記憶率 yellow
