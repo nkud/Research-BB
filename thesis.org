@@ -4,10 +4,10 @@
 #+LANGUAGE: ja
 #+LaTeX_CLASS: thesis
 #+STARTUP: contente
-#+HTML_HEAD: <style type="text/css">body {font-family:"verdana";font-size:15px;}</style>
+#+HTML_HEAD: <style type="text/css">body {font-family:"georgia";font-size:13px;}</style>
 #+HTML_HEAD: <style type="text/css">body {padding:10px 50px;}</style>
-#+HTML_HEAD: <style type="text/css">body {background:#f5f5f5;}</style>
-#+HTML_HEAD: <style type="text/css">#content {width:800px;margin:auto;box-shadow: 3px 5px 5px 5px rgba(0,0,0,0.4);}</style>
+#+HTML_HEAD: <style type="text/css">body {background:#555;}</style>
+#+HTML_HEAD: <style type="text/css">#content {width:800px;margin:auto;border:1px #ddd solid;background:white;}</style>
 #+HTML_HEAD: <style type="text/css">#content {padding:50px;}</style>
 #+HTML_HEAD: <script type="text/javascript"src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 #+HTML_HEAD: <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ["\(","\)"]] },displayAlign:"center"});</script>
@@ -18,10 +18,11 @@
 - がん免疫エディティングについて
 がんは最近ホットな話題。
 がん免疫エディティングは特にそうである。
+- Cancer Immunoediting is hallmark of cancer.
 * 構成
 ** 序文
 *** 背景説明
-他分野である可能性が高い。
+- 他分野である可能性が高い。
 *** 先行研究紹介
 *** 問題点を指摘する
 *** 問題を設定する

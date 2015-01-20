@@ -2,7 +2,7 @@
 #ifndef ___CONFIG_HPP
 #define ___CONFIG_HPP
 
-#define TERM                           100000    ///< 最大実行期間 white
+#define TERM                           1000      ///< 最大実行期間 white
 #define HUMAN_INTERVAL                 1         ///< ヒト実行間隔 white
 #define IMMUNE_INTERVAL                1         ///< 免疫実行間隔 white
 #define HUMAN_SIZE                     1         ///< 初期ヒト数 white

@@ -29,3 +29,8 @@ __*
 .#*
 
 *.tex
+
+# latex
+*.aux
+*.log
+*.fdb_latexmk
