@@ -28,9 +28,9 @@ __*
 *.html
 .#*
 
-*.tex
-
 # latex
+*.tex
 *.aux
-*.log
+*.bbl
 *.fdb_latexmk
+*.log
