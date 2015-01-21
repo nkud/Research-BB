@@ -28,6 +28,7 @@ __*
 *.html
 .#*
 
+# latex
 *.tex
 *.aux
 *.bbl
