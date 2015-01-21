@@ -1,27 +1,34 @@
 #+TITLE: Master's Thesis
 #+AUTHOR: Naoki Ueda
-#+OPTIONS: \n:t H:1 toc:nil author:nil email:nil timestamp:nil creator:nil num:nil
+#+OPTIONS: \n:nil H:2 toc:nil author:nil email:nil timestamp:nil creator:nil num:nil
 #+LANGUAGE: ja
 #+LaTeX_CLASS: thesis
 #+STARTUP: contente
-#+HTML_HEAD: <style type="text/css">body {font-family:"georgia";font-size:13px;}</style>
+#+HTML_HEAD: <style type="text/css">body {font-family:"メイリオ";font-size:13px;}</style>
 #+HTML_HEAD: <style type="text/css">body {padding:10px 50px;}</style>
 #+HTML_HEAD: <style type="text/css">body {background:#222;}</style>
 #+HTML_HEAD: <style type="text/css">#content {width:800px;margin:auto;border:1px #ddd solid;background:white;}</style>
 #+HTML_HEAD: <style type="text/css">#content {padding:50px;}</style>
-#+HTML_HEAD: <style type="text/css">#content {background:#fff;}</style>
+#+HTML_HEAD: <style type="text/css">#content {background:#fff;border-radius:5px}</style>
+#+HTML_HEAD: <style type="text/css">h2 {text-decoration:underline;color:gray;}</style>
 #+HTML_HEAD: <script type="text/javascript"src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 #+HTML_HEAD: <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ["\(","\)"]] },displayAlign:"center"});</script>
 #+HTML_HEAD: <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
 * 修士論文
 ** 序論
-- がんについて
-- がん免疫エディティングについて
-がんは最近ホットな話題。
-がん免疫エディティングは特にそうである。
-- Cancer Immunoediting is hallmark of cancer.
-先行研究では、高い代謝を持つ
-* COMMENT 構成
+- 免疫監視説とは、「癌細胞は頻繁に体内で生じているが、通常は、臨床で診断可能になるほど増殖する前に排除される」という説である。
+  つまり腫瘍は、腫瘍細胞が免疫監視機構から逃避した時のみ発生することとなる。
+  免疫監視説を支持する証拠の１つとして、免疫力の低下した患者では癌の発生頻度が増加することがあげられる。
+* Note
+** Hallmarks of Cancer
+*** 血管新生の励起
+*** 細胞死への抵抗
+*** 発育抑制からの逃避
+*** 進化と転移の活性化
+** 嫌気的解糖
+- 無酸素状態時の解糖系の経路のこと。グルコースからピルビン酸まで分解し、その後電子伝達系などが停止している場合には、ピルビン酸から更にアルコールや乳酸などに分解を行う。その主たる目的は嫌気状態でもATPの生産を行うこと、また再び解糖系を稼動させるためにNADHの酸化を行うことにある。
+- がん細胞はエネルギー産生を、嫌気性解糖に依存しているので、正常細胞の何十倍もの多くの glucose を必要とする。
+* 構成
 ** 序文
 *** 背景説明
 - 他分野である可能性が高い。
@@ -35,7 +42,7 @@
 *** 得られた結果を説明する
 *** 得られた結果の価値を検討する
 *** 本論文の構成を述べる
-* COMMENT プロット
+* プロット
 ** Authors　著者
 ** Title　題名
 ** Keyword list　キーワード
