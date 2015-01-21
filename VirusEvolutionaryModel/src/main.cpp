@@ -33,7 +33,8 @@ void run_host_pathogen_model( Human& human );
 int
 main()
 {
-  Random::Instance().setRandomStrategy( new __MersenneTwister ); // 乱数生成器をメルセンヌに設定
+  Random::Instance().setRandomStrategy( new __MersenneTwister() ); // 乱数生成器をメルセンヌに設定
+  //Random::Instance().setRandomStrategy( new __Standard() );
   ECHO("Started Virus Evolutionary Model");
   ECHO("version 1.0");
   ECHO(__cplusplus);
@@ -50,11 +51,14 @@ main()
   ECHO("ヒト初期化");
   VECTOR(Human *) humans;
   Human *h;
+  // ヒトを初期設定の数だけ新しく作成する。
+  // 各ヒトに対しては、
+  // 細胞土地を作成する。
   FOR( i, HUMAN_SIZE ) {                          // 初期設定の数だけ
     h = new Human( TCELL_LEN,
-      TCELL_MINIMUM_SIZE,
-      new CellLand(CELL_LAND_WIDTH, CELL_LAND_HEIGHT, "0000000000")
-      ); // 新しくヒトを初期化
+                   TCELL_MINIMUM_SIZE,
+                   new CellLand(CELL_LAND_WIDTH, CELL_LAND_HEIGHT, "0000000000")
+                   );
     h->randomLocate(*humanLand);              // ランダムに土地に配置して
     humans.push_back( h );                    // 配列に追加していく
   }
