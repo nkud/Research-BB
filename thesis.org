@@ -9,7 +9,7 @@
 #+HTML_HEAD: <style type="text/css">body {background:#222;}</style>
 #+HTML_HEAD: <style type="text/css">#content {width:800px;margin:auto;}</style>
 #+HTML_HEAD: <style type="text/css">#content {padding:50px;}</style>
-#+HTML_HEAD: <style type="text/css">#content {border:1px solid gray;background:#fff;}</style>
+#+HTML_HEAD: <style type="text/css">#content {background:#fff;}</style>
 #+HTML_HEAD: <script type="text/javascript"src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 #+HTML_HEAD: <script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ["\(","\)"]] },displayAlign:"center"});</script>
 #+HTML_HEAD: <meta http-equiv="X-UA-Compatible" CONTENT="IE=EmulateIE7" />
