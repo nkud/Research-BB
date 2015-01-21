@@ -33,7 +33,8 @@ void run_host_pathogen_model( Human& human );
 int
 main()
 {
-  Random::Instance().setRandomStrategy( new __MersenneTwister ); // 乱数生成器をメルセンヌに設定
+  Random::Instance().setRandomStrategy( new __MersenneTwister() ); // 乱数生成器をメルセンヌに設定
+  //Random::Instance().setRandomStrategy( new __Standard() );
   ECHO("Started Virus Evolutionary Model");
   ECHO("version 1.0");
   ECHO(__cplusplus);
