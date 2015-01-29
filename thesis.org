@@ -4,7 +4,7 @@
 #+LANGUAGE: ja
 #+LaTeX_CLASS: thesis
 #+STARTUP: contente
-#+HTML_HEAD: <style type="text/css">body {font-family:"メイリオ";font-size:13px;}</style>
+#+HTML_HEAD: <style type="text/css">body {font-family:"メイリオ";font-size:1em;}</style>
 #+HTML_HEAD: <style type="text/css">body {padding:10px 50px;}</style>
 #+HTML_HEAD: <style type="text/css">body {background:#222;}</style>
 #+HTML_HEAD: <style type="text/css">#content {width:800px;margin:auto;border:1px #ddd solid;background:white;}</style>
